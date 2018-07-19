@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using GeoCoordinatePortable;
 
 namespace IndoorNavigation
 {
     public partial class Convert
     {
-        public static (float Longitude, float Latitude) ToCoordinate(Guid UUID)
+        public static GeoCoordinate ToCoordinate(Guid UUID)
         {
             string[] IdShards = UUID.ToString().Split('-');
             string LonHexStr = IdShards[2] + IdShards[3];
@@ -15,7 +16,7 @@ namespace IndoorNavigation
             float Longitude = BitConverter.ToSingle(HexToBytes(LonHexStr), 0);
             float Latitude = BitConverter.ToSingle(HexToBytes(LatHexStr), 0);
 
-            return (Longitude, Latitude);
+            return new GeoCoordinate(Latitude,Longitude);
         }
 
         private static byte[] HexToBytes(string Hex)

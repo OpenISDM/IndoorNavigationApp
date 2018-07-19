@@ -15,6 +15,6 @@ namespace IndoorNavigation.Models
     public class LocationAssociation
     {
         public Guid LocationA { get; set; }
-        public Guid LocatiobB { get; set; }
+        public Guid LocationB { get; set; }
     }
 }

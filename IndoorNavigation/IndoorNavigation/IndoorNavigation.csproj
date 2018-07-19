@@ -10,6 +10,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Modules\Navigation\" />
+    <ProjectReference Include="..\..\GeoCoordinatePortable\GeoCoordinatePortable.csproj" />
   </ItemGroup>
 </Project>
