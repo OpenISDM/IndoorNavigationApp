@@ -5,11 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dijkstra.NET" Version="1.0.8" />
-    <PackageReference Include="Xamarin.Forms" Version="3.1.0.637273" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Modules\Navigation\" />
+    <PackageReference Include="Xamarin.Forms" Version="3.0.0.561731" />
   </ItemGroup>
 </Project>
