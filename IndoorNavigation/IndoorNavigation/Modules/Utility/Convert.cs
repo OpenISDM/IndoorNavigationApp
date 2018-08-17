@@ -5,6 +5,9 @@ using GeoCoordinatePortable;
 
 namespace IndoorNavigation
 {
+    /// <summary>
+    /// Data conversion tool for indoor navigation
+    /// </summary>
     public partial class Convert
     {
         /// <summary>

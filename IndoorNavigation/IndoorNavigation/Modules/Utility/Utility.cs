@@ -6,12 +6,28 @@ using IndoorNavigation.Models;
 
 namespace IndoorNavigation.Modules.Utility
 {
+    /// <summary>
+    /// General variable
+    /// </summary>
     public class Utility
     {
-        public static List<BeaconGroup> BeaconGroups;
-        public static List<LocationAssociation> LocationAssociations;
+        /// <summary>
+        /// All beacons
+        /// </summary>
+        public static List<BeaconModel> Beacons;
+        /// <summary>
+        /// All beacon groups
+        /// </summary>
+        public static List<BeaconGroupModel> BeaconGroups;
+        /// <summary>
+        /// Location connect
+        /// </summary>
+        public static List<LocationConnectModel> LocationConnect;
     }
 
+    /// <summary>
+    /// 計算旋轉角度
+    /// </summary>
     public class RotateAngle
     {
         /// <summary>
@@ -21,15 +37,16 @@ namespace IndoorNavigation.Modules.Utility
         /// <param name="Previous">上一個位置</param>
         /// <param name="Next">下一個位置</param>
         /// <returns></returns>
-        public static int GetRotateAngle(GeoCoordinate Current, GeoCoordinate Previous, GeoCoordinate Next)
+        public static int GetRotateAngle(
+            GeoCoordinate Current, GeoCoordinate Previous, GeoCoordinate Next)
         {
             double CosineANS = CosineAngle(Current, Previous, Next);
-            double OuterProductANS = OuterProductAngle(Current, Previous, Next);
+            double OuterProductANS = OuterProductAngle(Current,Previous,Next);
 
             if (OuterProductANS < 0)
-                return System.Convert.ToInt32(180 - CosineANS * 180 / Math.PI);
+                return System.Convert.ToInt32(180 - CosineANS*180/Math.PI);
             else
-                return -System.Convert.ToInt32(180 - CosineANS * 180 / Math.PI);
+                return -System.Convert.ToInt32(180 - CosineANS*180/Math.PI);
         }
 
         /// <summary>
@@ -39,14 +56,17 @@ namespace IndoorNavigation.Modules.Utility
         /// <param name="Previous">上一個位置</param>
         /// <param name="Next">下一個位置</param>
         /// <returns></returns>
-        private static double CosineAngle(GeoCoordinate Current, GeoCoordinate Previous, GeoCoordinate Next)
+        private static double CosineAngle(
+            GeoCoordinate Current, GeoCoordinate Previous, GeoCoordinate Next)
         {
             double CenterToTarget = Current.GetDistanceTo(Next);
             double CenterToFace = Current.GetDistanceTo(Previous);
             double FaceToTarget = Previous.GetDistanceTo(Next);
 
             return Math.Acos(
-                (CenterToTarget * CenterToTarget + CenterToFace * CenterToFace - FaceToTarget * FaceToTarget) /
+                (CenterToTarget * CenterToTarget + 
+                CenterToFace * CenterToFace - 
+                FaceToTarget * FaceToTarget) /
                 (2 * CenterToTarget * CenterToFace));
         }
 
@@ -57,7 +77,8 @@ namespace IndoorNavigation.Modules.Utility
         /// <param name="Previous">上一個位置</param>
         /// <param name="Next">下一個位置</param>
         /// <returns></returns>
-        private static double OuterProductAngle(GeoCoordinate Current, GeoCoordinate Previous, GeoCoordinate Next)
+        private static double OuterProductAngle(
+            GeoCoordinate Current, GeoCoordinate Previous, GeoCoordinate Next)
         {
             double Xa, Xb, Ya, Yb;
             double Angle;
@@ -68,7 +89,8 @@ namespace IndoorNavigation.Modules.Utility
             Xb = Next.Longitude - Current.Longitude;
             Yb = Next.Latitude - Current.Latitude;
 
-            double c = Math.Sqrt(Xa * Xa + Ya * Ya) * Math.Sqrt(Xb * Xb + Yb * Yb);
+            double c = 
+                Math.Sqrt(Xa * Xa + Ya * Ya) * Math.Sqrt(Xb * Xb + Yb * Yb);
             Angle = Math.Asin((Xa * Yb - Xb * Ya) / c);
 
             return Angle;
