@@ -1,13 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using GeoCoordinatePortable;
 
 namespace IndoorNavigation.Models
 {
     /// <summary>
-    /// Beacon Model
+    /// Beacon group
+    /// </summary>
+    public abstract class BeaconGroup
+    {
+        /// <summary>
+        /// Group id
+        /// </summary>
+        public Guid Id { get; set; }
+
+        /// <summary>
+        /// ex: Police station
+        /// </summary>
+        public string Name { get; set; }
+    }
+
+    /// <summary>
+    /// Location connect
+    /// </summary>
+    public abstract class LocationConnect
+    {
+        /// <summary>
+        /// Is it a two-way road?
+        /// </summary>
+        public bool IsTwoWay { get; set; }
+    }
+
+    /// <summary>
+    /// 表示要監聽的Beacon。 包含 監聽的門檻值、安裝樓層、Beacon安裝方向
     /// </summary>
     public class BeaconModel
     {
@@ -24,31 +50,21 @@ namespace IndoorNavigation.Models
         /// </summary>
         public int Floor { get; set; }
         /// <summary>
+        /// Beacon 安裝方向
         /// Beacon 上的箭頭指向的參考座標
         /// </summary>
         public GeoCoordinate MarkCoordinate { get; set; }
     }
 
     /// <summary>
-    /// Beacon group model
+    /// 一個Beacon群體，此群體視為一個地點
     /// </summary>
-    public class BeaconGroupModel
+    public class BeaconGroupModel : BeaconGroup, IBeaconGroupModel
     {
         /// <summary>
-        /// Group id
+        /// Beacon 集合
         /// </summary>
-        public Guid Id { get; set; }
-
-        /// <summary>
-        /// Police station
-        /// </summary>
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Beacons
-        /// </summary>
-        public List<BeaconModel> Beacons =
-            new List<BeaconModel>();
+        public List<BeaconModel> Beacons { get; set; }
 
         /// <summary>
         /// Group coordinate
@@ -58,7 +74,7 @@ namespace IndoorNavigation.Models
             get
             {
                 // 取得群組內所有Beacon的座標
-                List<GeoCoordinate> Coordinates = 
+                List<GeoCoordinate> Coordinates =
                     Beacons
                     .Select(c => Convert.ToCoordinate(c.UUID))
                     .ToList();
@@ -73,29 +89,54 @@ namespace IndoorNavigation.Models
                 }
 
                 return new GeoCoordinate(
-                    TotalLatitude / Coordinates.Count(), 
+                    TotalLatitude / Coordinates.Count(),
                     TotalLongitude / Coordinates.Count());
             }
         }
     }
 
     /// <summary>
-    /// Location connect model
-    /// Pay attention to direction
+    /// 一個Beacon群體，此群體視為一個地點，此物件用於離線地圖資料
     /// </summary>
-    public class LocationConnectModel
+    public class BeaconGroupModelForMapFile : BeaconGroup, 
+        IBeaconGroupModelForMapFile
     {
         /// <summary>
-        /// Location A
+        /// Beacon 集合
+        /// </summary>
+        public List<Guid> Beacons { get; set; }
+    }
+
+    /// <summary>
+    /// 連接兩個地點的道路
+    /// Pay attention to direction
+    /// </summary>
+    public class LocationConnectModel : LocationConnect, ILocationConnectModel
+    {
+        /// <summary>
+        /// 地點A
         /// </summary>
         public BeaconGroupModel BeaconA { get; set; }
         /// <summary>
-        /// Location B
+        /// 地點B
         /// </summary>
         public BeaconGroupModel BeaconB { get; set; }
+    }
+
+    /// <summary>
+    /// 連接兩個地點的道路，此物件用於離線地圖資料
+    /// Pay attention to direction
+    /// </summary>
+    public class LocationConnectModelForMapFile : LocationConnect, 
+        ILocationConnectModelForMapFile
+    {
         /// <summary>
-        /// Is it a two-way road?
+        /// 地點A
         /// </summary>
-        public bool IsTwoWay { get; set; }
+        public Guid BeaconA { get; set; }
+        /// <summary>
+        /// 地點B
+        /// </summary>
+        public Guid BeaconB { get; set; }
     }
 }
