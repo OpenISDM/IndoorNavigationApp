@@ -5,6 +5,22 @@ using GeoCoordinatePortable;
 
 namespace IndoorNavigation.Models
 {
+    public abstract class Beacon
+    {
+        /// <summary>
+        /// Beacon UUID
+        /// </summary>
+        public Guid UUID { get; set; }
+        /// <summary>
+        /// Threshold (RSSI)
+        /// </summary>
+        public int Threshold { get; set; }
+        /// <summary>
+        /// Beacon installed floor
+        /// </summary>
+        public int Floor { get; set; }
+    }
+
     /// <summary>
     /// Beacon group
     /// </summary>
@@ -33,22 +49,30 @@ namespace IndoorNavigation.Models
     }
 
     /// <summary>
-    /// 表示要監聽的Beacon。 包含 監聽的門檻值、安裝樓層、Beacon安裝方向
+    /// 表示要監聽的IBeacon。 包含 監聽的門檻值、安裝樓層、Beacon安裝位置、
+    /// Major、Minor
     /// </summary>
-    public class BeaconModel
+    public class IBeaconModel : Beacon, IIBeacon
     {
         /// <summary>
-        /// Beacon UUID
+        /// IBeacon Major field
         /// </summary>
-        public Guid UUID { get; set; }
+        public int Major { get; set; }
         /// <summary>
-        /// Threshold (RSSI)
+        /// IBeacon Minor field
         /// </summary>
-        public int Threshold { get; set; }
+        public int Minor { get; set; }
         /// <summary>
-        /// Beacon installed floor
+        /// IBeacon coordinate
         /// </summary>
-        public int Floor { get; set; }
+        public GeoCoordinate IBeaconCoordinate { get; set; }
+    }
+
+    /// <summary>
+    /// 表示要監聽的Beacon。 包含 監聽的門檻值、安裝樓層、Beacon安裝方向
+    /// </summary>
+    public class LBeaconModel : Beacon, ILBeacon
+    {
         /// <summary>
         /// Beacon 安裝方向
         /// Beacon 上的箭頭指向的參考座標
@@ -64,7 +88,7 @@ namespace IndoorNavigation.Models
         /// <summary>
         /// Beacon 集合
         /// </summary>
-        public List<BeaconModel> Beacons { get; set; }
+        public List<Beacon> Beacons { get; set; }
 
         /// <summary>
         /// Group coordinate
@@ -76,7 +100,7 @@ namespace IndoorNavigation.Models
                 // 取得群組內所有Beacon的座標
                 List<GeoCoordinate> Coordinates =
                     Beacons
-                    .Select(c => Convert.ToCoordinate(c.UUID))
+                    .Select(c => c.GetCoordinate())
                     .ToList();
 
                 // 將群組內所有Beacon座標取平均，計算群組中心座標
@@ -98,7 +122,7 @@ namespace IndoorNavigation.Models
     /// <summary>
     /// 一個Beacon群體，此群體視為一個地點，此物件用於離線地圖資料
     /// </summary>
-    public class BeaconGroupModelForMapFile : BeaconGroup, 
+    public class BeaconGroupModelForMapFile : BeaconGroup,
         IBeaconGroupModelForMapFile
     {
         /// <summary>
@@ -127,7 +151,7 @@ namespace IndoorNavigation.Models
     /// 連接兩個地點的道路，此物件用於離線地圖資料
     /// Pay attention to direction
     /// </summary>
-    public class LocationConnectModelForMapFile : LocationConnect, 
+    public class LocationConnectModelForMapFile : LocationConnect,
         ILocationConnectModelForMapFile
     {
         /// <summary>

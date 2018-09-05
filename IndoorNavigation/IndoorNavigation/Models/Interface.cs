@@ -4,6 +4,31 @@ using System.Collections.Generic;
 
 namespace IndoorNavigation.Models
 {
+    public interface IIBeacon
+    {
+        /// <summary>
+        /// IBeacon Major field
+        /// </summary>
+        int Major { get; set; }
+        /// <summary>
+        /// IBeacon Minor field
+        /// </summary>
+        int Minor { get; set; }
+        /// <summary>
+        /// IBeacon coordinate
+        /// </summary>
+        GeoCoordinate IBeaconCoordinate { get; set; }
+    }
+
+    public interface ILBeacon
+    {
+        /// <summary>
+        /// Beacon 安裝方向
+        /// Beacon 上的箭頭指向的參考座標
+        /// </summary>
+        GeoCoordinate MarkCoordinate { get; set; }
+    }
+
     /// <summary>
     /// 一個群體內有多個Beacon
     /// </summary>
@@ -12,7 +37,7 @@ namespace IndoorNavigation.Models
         /// <summary>
         /// Beacon 集合
         /// </summary>
-        List<BeaconModel> Beacons { get; set; }
+        List<Beacon> Beacons { get; set; }
         /// <summary>
         /// 群組中心點座標
         /// </summary>
