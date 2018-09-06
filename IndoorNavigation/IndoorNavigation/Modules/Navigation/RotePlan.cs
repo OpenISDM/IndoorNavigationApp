@@ -3,7 +3,6 @@ using Dijkstra.NET.Model;
 using Dijkstra.NET.Extensions;
 using IndoorNavigation.Models;
 using System.Linq;
-using IndoorNavigation.Modules.Utility;
 using System;
 
 namespace IndoorNavigation.Modules.Navigation

@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using GeoCoordinatePortable;
 using IndoorNavigation.Models;
+using IndoorNavigation.Modules.Navigation;
 
-namespace IndoorNavigation.Modules.Utility
+namespace IndoorNavigation.Modules
 {
     public class Utility
     {
+        public static List<Beacon> Beacons;
         public static List<BeaconGroupModel> BeaconGroups;
-        public static List<LocationConnectModel> LocationAssociations;
+        public static List<LocationConnectModel> LocationConnects;
+        public static RoutePlan Route;
     }
 
     public class RotateAngle
