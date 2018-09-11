@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
 using GeoCoordinatePortable;
 using IndoorNavigation.Models;
 using IndoorNavigation.Modules.Navigation;
@@ -12,6 +16,53 @@ namespace IndoorNavigation.Modules
         public static List<BeaconGroupModel> BeaconGroups;
         public static List<LocationConnectModel> LocationConnects;
         public static RoutePlan Route;
+
+        //跳過SSL檢查
+        private static bool ValidateServerCertificate(Object sender,
+            X509Certificate certificate,
+            X509Chain chain,
+            SslPolicyErrors sslPolicyErrors)
+        {
+            return true;
+        }
+
+        public static string DownloadMap(string URL)
+        {
+            try
+            {
+                //跳過SSL檢查
+                ServicePointManager.ServerCertificateValidationCallback
+                    = new RemoteCertificateValidationCallback
+                    (ValidateServerCertificate);
+
+                var request = WebRequest.Create(URL) as HttpWebRequest;
+                request.Method = WebRequestMethods.Http.Get;
+                request.ContentType = "application/json";
+
+                using (var response = (HttpWebResponse)request.GetResponse())
+                {
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        using (var stream = response.GetResponseStream())
+                        {
+                            using (var reader = new StreamReader(stream))
+                            {
+                                var retMsg = reader.ReadToEnd();
+                                retMsg = retMsg.Trim(new char[] { '"' });
+                                retMsg = retMsg.Replace(@"\", "");
+                                return retMsg;
+                            }
+                        }
+                    }
+                }
+
+                throw new ArgumentException("Download faild");
+            }
+            catch(Exception ex)
+            {
+                throw new ArgumentException(ex.Message);
+            }
+        }
     }
 
     public class RotateAngle

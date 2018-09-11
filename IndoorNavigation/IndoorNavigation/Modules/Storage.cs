@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using IndoorNavigation.Models;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace IndoorNavigation.Modules
 {
@@ -40,7 +41,7 @@ namespace IndoorNavigation.Modules
             try
             {
                 // 轉換Beacon及地圖相關資料
-                dynamic Data = JsonConvert.DeserializeObject(LoadFile(Place));
+                JObject Data = JsonConvert.DeserializeObject<JObject>(LoadFile(Place));
 
                 string BeaconJson = Data["Beacon"].ToString();
                 Utility.Beacons = BeaconJson.ToBeacons();
