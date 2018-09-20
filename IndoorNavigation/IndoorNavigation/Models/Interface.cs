@@ -7,14 +7,6 @@ namespace IndoorNavigation.Models
     public interface IIBeacon
     {
         /// <summary>
-        /// IBeacon Major field
-        /// </summary>
-        int Major { get; set; }
-        /// <summary>
-        /// IBeacon Minor field
-        /// </summary>
-        int Minor { get; set; }
-        /// <summary>
         /// IBeacon coordinate
         /// </summary>
         GeoCoordinate IBeaconCoordinate { get; set; }

@@ -12,6 +12,14 @@ namespace IndoorNavigation.Models
         /// </summary>
         public Guid UUID { get; set; }
         /// <summary>
+        /// IBeacon Major field
+        /// </summary>
+        public int Major { get; set; }
+        /// <summary>
+        /// IBeacon Minor field
+        /// </summary>
+        public int Minor { get; set; }
+        /// <summary>
         /// Threshold (RSSI)
         /// </summary>
         public int Threshold { get; set; }
@@ -54,14 +62,6 @@ namespace IndoorNavigation.Models
     /// </summary>
     public class IBeaconModel : Beacon, IIBeacon
     {
-        /// <summary>
-        /// IBeacon Major field
-        /// </summary>
-        public int Major { get; set; }
-        /// <summary>
-        /// IBeacon Minor field
-        /// </summary>
-        public int Minor { get; set; }
         /// <summary>
         /// IBeacon coordinate
         /// </summary>
