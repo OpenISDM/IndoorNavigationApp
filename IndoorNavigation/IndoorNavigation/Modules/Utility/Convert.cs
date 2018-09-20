@@ -4,6 +4,7 @@ using System.Linq;
 using GeoCoordinatePortable;
 using IndoorNavigation.Models;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace IndoorNavigation
 {
@@ -57,7 +58,7 @@ namespace IndoorNavigation
 
             try
             {
-                dynamic Json = JsonConvert.DeserializeObject(JsonString);
+                JObject Json = JsonConvert.DeserializeObject<JObject>(JsonString);
 
                 // 取得lBeacon資料
                 List<LBeaconModel> lBeacons = 
