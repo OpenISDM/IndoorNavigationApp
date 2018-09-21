@@ -77,13 +77,13 @@ namespace IndoorNavigation.Modules
         public static int GetRotateAngle(GeoCoordinate Current, 
             GeoCoordinate Previous, GeoCoordinate Next)
         {
-            double CosineANS = CosineAngle(Current, Previous, Next);
-            double OuterProductANS = OuterProductAngle(Current,Previous,Next);
+            double cosineANS = CosineAngle(Current, Previous, Next);
+            double outerProductANS = OuterProductAngle(Current,Previous,Next);
 
-            if (OuterProductANS < 0)
-                return System.Convert.ToInt32(180 - CosineANS * 180/Math.PI);
+            if (outerProductANS < 0)
+                return System.Convert.ToInt32(180 - cosineANS * 180/Math.PI);
             else
-                return -System.Convert.ToInt32(180 - CosineANS * 180/Math.PI);
+                return -System.Convert.ToInt32(180 - cosineANS * 180/Math.PI);
         }
 
         /// <summary>
@@ -96,15 +96,15 @@ namespace IndoorNavigation.Modules
         private static double CosineAngle(GeoCoordinate Current, 
             GeoCoordinate Previous, GeoCoordinate Next)
         {
-            double CenterToTarget = Current.GetDistanceTo(Next);
-            double CenterToFace = Current.GetDistanceTo(Previous);
-            double FaceToTarget = Previous.GetDistanceTo(Next);
+            double centerToTarget = Current.GetDistanceTo(Next);
+            double centerToFace = Current.GetDistanceTo(Previous);
+            double faceToTarget = Previous.GetDistanceTo(Next);
 
             return Math.Acos(
-                (CenterToTarget * CenterToTarget + 
-                CenterToFace * CenterToFace - 
-                FaceToTarget * FaceToTarget) /
-                (2 * CenterToTarget * CenterToFace));
+                (centerToTarget * centerToTarget + 
+                centerToFace * centerToFace - 
+                faceToTarget * faceToTarget) /
+                (2 * centerToTarget * centerToFace));
         }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace IndoorNavigation.Modules
             GeoCoordinate Previous, GeoCoordinate Next)
         {
             double Xa, Xb, Ya, Yb;
-            double Angle;
+            double angle;
 
             Xa = Previous.Longitude - Current.Longitude;
             Ya = Previous.Latitude - Current.Latitude;
@@ -129,9 +129,9 @@ namespace IndoorNavigation.Modules
             double c = Math.Sqrt(Xa * Xa + Ya * Ya) * 
                 Math.Sqrt(Xb * Xb + Yb * Yb);
 
-            Angle = Math.Asin((Xa * Yb - Xb * Ya) / c);
+            angle = Math.Asin((Xa * Yb - Xb * Ya) / c);
 
-            return Angle;
+            return angle;
         }
     }
 }

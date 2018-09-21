@@ -10,11 +10,11 @@ namespace IndoorNavigation.Modules
 {
     public static class MapStorage
     {
-        private static readonly string MapFolder =
+        private static readonly string mapFolder =
             Path.Combine(Environment.GetFolderPath(
                     Environment.SpecialFolder.LocalApplicationData), "Maps");
 
-        private static object FileLock = new object();
+        private static object fileLock = new object();
 
         /// <summary>
         /// 傳回地圖存放區的所有場所名稱
@@ -23,10 +23,10 @@ namespace IndoorNavigation.Modules
         public static string[] GetAllPlace()
         {
             // 檢查地圖資料夾是否存在
-            if (!Directory.Exists(MapFolder))
-                Directory.CreateDirectory(MapFolder);
+            if (!Directory.Exists(mapFolder))
+                Directory.CreateDirectory(mapFolder);
 
-            return Directory.GetFiles(MapFolder)
+            return Directory.GetFiles(mapFolder)
                 .Select(path => Path.GetFileName(path))
                 .OrderBy(file => file).ToArray();
         }
@@ -41,12 +41,12 @@ namespace IndoorNavigation.Modules
             try
             {
                 // 轉換Beacon及地圖相關資料
-                JObject Data = JsonConvert.DeserializeObject<JObject>(LoadFile(Place));
+                JObject data = JsonConvert.DeserializeObject<JObject>(LoadFile(Place));
 
-                string BeaconJson = Data["Beacon"].ToString();
-                Utility.Beacons = BeaconJson.ToBeacons();
-                Utility.BeaconGroups = (JsonConvert.DeserializeObject<List<BeaconGroupModelForMapFile>>(Data["BeaconGroup"].ToString()) as List<BeaconGroupModelForMapFile>).ToBeaconGroup(Utility.Beacons);
-                Utility.LocationConnects = (JsonConvert.DeserializeObject<List<LocationConnectModelForMapFile>>(Data["LocationConnect"].ToString()) as List<LocationConnectModelForMapFile>).ToLocationConnect(Utility.BeaconGroups);
+                string beaconJson = data["Beacon"].ToString();
+                Utility.Beacons = beaconJson.ToBeacons();
+                Utility.BeaconGroups = (JsonConvert.DeserializeObject<List<BeaconGroupModelForMapFile>>(data["BeaconGroup"].ToString()) as List<BeaconGroupModelForMapFile>).ToBeaconGroup(Utility.Beacons);
+                Utility.LocationConnects = (JsonConvert.DeserializeObject<List<LocationConnectModelForMapFile>>(data["LocationConnect"].ToString()) as List<LocationConnectModelForMapFile>).ToLocationConnect(Utility.BeaconGroups);
 
                 // 初始化路徑規劃物件及設定地圖資料
                 Utility.Route = new Navigation.RoutePlan(
@@ -68,21 +68,21 @@ namespace IndoorNavigation.Modules
         /// <returns></returns>
         private static string LoadFile(string FileName)
         {
-            string FilePath = Path.Combine(MapFolder, FileName);
+            string filePath = Path.Combine(mapFolder, FileName);
 
             // 檢查地圖資料夾是否存在
-            if (!Directory.Exists(MapFolder))
+            if (!Directory.Exists(mapFolder))
             {
-                Directory.CreateDirectory(MapFolder);
+                Directory.CreateDirectory(mapFolder);
                 return string.Empty;
             }
 
             // 檢查地圖檔案是否存在
-            if (!File.Exists(FilePath))
+            if (!File.Exists(filePath))
                 return string.Empty;
 
-            lock(FileLock)
-                return File.ReadAllText(FilePath);
+            lock(fileLock)
+                return File.ReadAllText(filePath);
         }
 
         /// <summary>
@@ -93,16 +93,16 @@ namespace IndoorNavigation.Modules
         /// <returns></returns>
         public static bool SaveMapInformation(string Place,string MapDatas)
         {
-            string FilePath = Path.Combine(MapFolder, Place);
+            string filePath = Path.Combine(mapFolder, Place);
             try
             {
                 // 檢查地圖資料夾是否存在
-                if (!Directory.Exists(MapFolder))
-                    Directory.CreateDirectory(MapFolder);
+                if (!Directory.Exists(mapFolder))
+                    Directory.CreateDirectory(mapFolder);
 
                 // 寫入地圖資料
-                lock (FileLock)
-                    File.WriteAllText(FilePath, MapDatas);
+                lock (fileLock)
+                    File.WriteAllText(filePath, MapDatas);
 
                 return true;
             }
@@ -118,14 +118,14 @@ namespace IndoorNavigation.Modules
         /// <param name="Place"></param>
         public static void DeleteMap(string Place)
         {
-            string FilePath = Path.Combine(MapFolder, Place);
+            string filePath = Path.Combine(mapFolder, Place);
 
             // 檢查地圖資料夾是否存在
-            if (!Directory.Exists(MapFolder))
-                Directory.CreateDirectory(MapFolder);
+            if (!Directory.Exists(mapFolder))
+                Directory.CreateDirectory(mapFolder);
 
-            lock (FileLock)
-                File.Delete(FilePath);
+            lock (fileLock)
+                File.Delete(filePath);
         }
 
         /// <summary>
@@ -133,8 +133,8 @@ namespace IndoorNavigation.Modules
         /// </summary>
         public static void DeleteAllMap()
         {
-            foreach (string Place in GetAllPlace())
-                DeleteMap(Place);
+            foreach (string place in GetAllPlace())
+                DeleteMap(place);
         }
     }
 }

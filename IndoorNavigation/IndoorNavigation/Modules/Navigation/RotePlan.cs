@@ -12,9 +12,9 @@ namespace IndoorNavigation.Modules.Navigation
     /// </summary>
     public class RoutePlan
     {
-        private Graph<BeaconGroupModel, string> Map =
+        private Graph<BeaconGroupModel, string> map =
             new Graph<BeaconGroupModel, string>();
-        private List<LocationConnectModel> LocationConnects;
+        private List<LocationConnectModel> locationConnects;
 
         /// <summary>
         /// 路徑規劃
@@ -26,33 +26,33 @@ namespace IndoorNavigation.Modules.Navigation
         {
             // 加入地點
             foreach (var BeaconGroup in BeaconGroups)
-                Map.AddNode(BeaconGroup);
+                map.AddNode(BeaconGroup);
 
             // 設定道路
-            this.LocationConnects = LocationConnects;
-            foreach (var LocationConnect in LocationConnects)
+            this.locationConnects = LocationConnects;
+            foreach (var locationConnect in LocationConnects)
             {
                 // 取得兩個地點間的距離
                 // 距離以公分為單位
-                int Distance = System.Convert.ToInt32(
-                    LocationConnect.BeaconA.Coordinate
-                    .GetDistanceTo(LocationConnect.BeaconB.Coordinate) * 100);
+                int distance = System.Convert.ToInt32(
+                    locationConnect.BeaconA.Coordinate
+                    .GetDistanceTo(locationConnect.BeaconB.Coordinate) * 100);
 
-                uint BeaconA = Map.Where(BeaconGroup =>
-                        BeaconGroup.Item == LocationConnect.BeaconA)
+                uint beaconA = map.Where(BeaconGroup =>
+                        BeaconGroup.Item == locationConnect.BeaconA)
                         .Select(BeaconGroup => BeaconGroup.Key).First();
-                uint BeaconB = Map.Where(BeaconGroup =>
-                        BeaconGroup.Item == LocationConnect.BeaconB)
+                uint beaconB = map.Where(BeaconGroup =>
+                        BeaconGroup.Item == locationConnect.BeaconB)
                         .Select(BeaconGroup => BeaconGroup.Key).First();
 
                 // 將兩個地點連接起來
-                if (LocationConnect.IsTwoWay)
+                if (locationConnect.IsTwoWay)
                 {
-                    Map.Connect(BeaconA,BeaconB,Distance,string.Empty);
-                    Map.Connect(BeaconB,BeaconA,Distance,string.Empty);
+                    map.Connect(beaconA,beaconB,distance,string.Empty);
+                    map.Connect(beaconB,beaconA,distance,string.Empty);
                 }
                 else
-                    Map.Connect(BeaconA,BeaconB,Distance,string.Empty);
+                    map.Connect(beaconA,beaconB,distance,string.Empty);
             }
         }
 
@@ -65,50 +65,50 @@ namespace IndoorNavigation.Modules.Navigation
         public Queue<(BeaconGroupModel Next, int Angle)> GetPath(
             Beacon StartBeacon, BeaconGroupModel EndPoint)
         {
-            var StartPoingKey = Map
+            var startPoingKey = map
                 .Where(BeaconGroup => BeaconGroup.Item.Beacons
                 .Contains(StartBeacon)).Select(c => c.Key).First();
-            var EndPointKey = Map
+            var endPointKey = map
                 .Where(c => c.Item == EndPoint).Select(c => c.Key).First();
             // 取得最佳路線
-            var Path = Map.Dijkstra(StartPoingKey, EndPointKey).GetPath();
+            var path = map.Dijkstra(startPoingKey, endPointKey).GetPath();
 
-            Queue<(BeaconGroupModel Next, int Angle)> PathQueue =
+            Queue<(BeaconGroupModel Next, int Angle)> pathQueue =
                 new Queue<(BeaconGroupModel Next, int Angle)>();
             // 計算走向下一個地點要旋轉的角度
-            for (int i = 0; i < Path.Count() - 1; i++)
+            for (int i = 0; i < path.Count() - 1; i++)
             {
-                BeaconGroupModel CurrentPoint = Map[Path.ToList()[i]].Item;
-                BeaconGroupModel NextPoint = Map[Path.ToList()[i + 1]].Item;
+                BeaconGroupModel currentPoint = map[path.ToList()[i]].Item;
+                BeaconGroupModel nextPoint = map[path.ToList()[i + 1]].Item;
 
                 if (i == 0)
                     // 檢查起始點是否為LBeacon
                     // LBeacon上方有提示使用者一開始要面向的方向
                     if (StartBeacon.GetType() == typeof(LBeaconModel))
-                        PathQueue.Enqueue((NextPoint,
+                        pathQueue.Enqueue((nextPoint,
                             RotateAngle.GetRotateAngle(
                             StartBeacon.GetCoordinate(),
                             (StartBeacon as LBeaconModel).MarkCoordinate,
-                            NextPoint.Coordinate
+                            nextPoint.Coordinate
                             )));
                     else
-                        PathQueue.Enqueue(
-                            (NextPoint, int.MinValue));
+                        pathQueue.Enqueue(
+                            (nextPoint, int.MinValue));
                 else
                 {
-                    BeaconGroupModel PreviousPoint = 
-                        Map[Path.ToList()[i - 1]].Item;
+                    BeaconGroupModel previousPoint = 
+                        map[path.ToList()[i - 1]].Item;
 
-                    PathQueue.Enqueue((NextPoint,
+                    pathQueue.Enqueue((nextPoint,
                         RotateAngle.GetRotateAngle(
-                        CurrentPoint.Coordinate,
-                        PreviousPoint.Coordinate,
-                        NextPoint.Coordinate
+                        currentPoint.Coordinate,
+                        previousPoint.Coordinate,
+                        nextPoint.Coordinate
                         )));
                 }
             }
 
-            return PathQueue;
+            return pathQueue;
         }
 
         /// <summary>
@@ -123,54 +123,54 @@ namespace IndoorNavigation.Modules.Navigation
             Beacon CurrentBeacon,
             BeaconGroupModel EndPoint)
         {
-            var StartPoingKey = Map
+            var startPoingKey = map
                 .Where(beaconGroup => beaconGroup.Item.Beacons
                 .Contains(CurrentBeacon)).Select(c => c.Key).First();
-            var EndPointKey = Map
+            var endPointKey = map
                 .Where(c => c.Item == EndPoint).Select(c => c.Key).First();
 
             //檢查上一個位置與現在位置是否連接
-            if (this.LocationConnects.Where(c =>
-            (c.BeaconA == Map[StartPoingKey] && c.BeaconB == PreviousPoint) ||
-            (c.BeaconA == PreviousPoint && c.BeaconB == Map[StartPoingKey]))
+            if (this.locationConnects.Where(c =>
+            (c.BeaconA == map[startPoingKey] && c.BeaconB == PreviousPoint) ||
+            (c.BeaconA == PreviousPoint && c.BeaconB == map[startPoingKey]))
             .Count() == 0)
                 new ArgumentException(
                     "The current point is independent of the previous point."
                     );
 
             // 取得最佳路線
-            var Path = Map.Dijkstra(StartPoingKey, EndPointKey).GetPath();
+            var path = map.Dijkstra(startPoingKey, endPointKey).GetPath();
 
-            Queue<(BeaconGroupModel Next, int Angle)> PathQueue =
+            Queue<(BeaconGroupModel Next, int Angle)> pathQueue =
                 new Queue<(BeaconGroupModel Next, int Angle)>();
 
             // 計算走向下一個地點要旋轉的角度
-            for (int i = 0; i < Path.Count() - 1; i++)
+            for (int i = 0; i < path.Count() - 1; i++)
             {
-                BeaconGroupModel CurrentPoint = Map[Path.ToList()[i]].Item;
-                BeaconGroupModel NextPoint = Map[Path.ToList()[i + 1]].Item;
+                BeaconGroupModel currentPoint = map[path.ToList()[i]].Item;
+                BeaconGroupModel nextPoint = map[path.ToList()[i + 1]].Item;
 
                 if (i == 0)
-                    PathQueue.Enqueue((NextPoint,
+                    pathQueue.Enqueue((nextPoint,
                         RotateAngle.GetRotateAngle(
-                        CurrentPoint.Coordinate,
+                        currentPoint.Coordinate,
                         PreviousPoint.Coordinate,
-                        NextPoint.Coordinate
+                        nextPoint.Coordinate
                         )));
                 else
                 {
-                    PreviousPoint = Map[Path.ToList()[i - 1]].Item;
+                    PreviousPoint = map[path.ToList()[i - 1]].Item;
 
-                    PathQueue.Enqueue((NextPoint,
+                    pathQueue.Enqueue((nextPoint,
                         RotateAngle.GetRotateAngle(
-                        CurrentPoint.Coordinate,
+                        currentPoint.Coordinate,
                         PreviousPoint.Coordinate,
-                        NextPoint.Coordinate
+                        nextPoint.Coordinate
                         )));
                 }
             }
 
-            return PathQueue;
+            return pathQueue;
         }
     }
 }
