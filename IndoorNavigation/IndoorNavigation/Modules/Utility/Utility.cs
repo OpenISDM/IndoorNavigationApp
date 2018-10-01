@@ -16,6 +16,7 @@ namespace IndoorNavigation.Modules
         public static List<BeaconGroupModel> BeaconGroups;
         public static List<LocationConnectModel> LocationConnects;
         public static RoutePlan Route;
+        public static SignalProcessModule SignalProcess;
 
         //跳過SSL檢查
         private static bool ValidateServerCertificate(Object sender,

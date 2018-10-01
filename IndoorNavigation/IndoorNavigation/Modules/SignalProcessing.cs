@@ -10,7 +10,7 @@ namespace IndoorNavigation.Modules
     /// <summary>
     /// beacon訊號後處理
     /// </summary>
-    public class SignalProcess:IDisposable
+    public class SignalProcessModule : IDisposable
     {
         private Thread SignalProcessThread;
         private  List<BeaconSignalModel> BeaconSignalBuffer = 
@@ -18,7 +18,7 @@ namespace IndoorNavigation.Modules
         private bool Switch = true;
         private object BufferLock = new object();
 
-        public SignalProcess()
+        public SignalProcessModule()
         {
             SignalProcessThread = 
                 new Thread(SignalProcessWork){ IsBackground = true};
@@ -53,7 +53,7 @@ namespace IndoorNavigation.Modules
                 {
                     // remove buffer old data
                     foreach (var BeaconSignal in BeaconSignalBuffer.Where(c =>
-                    c.Timestamp < DateTime.Now.AddMilliseconds(-500)))
+                    c.Timestamp < DateTime.Now.AddMilliseconds(-1000)))
                         BeaconSignalBuffer.Remove(BeaconSignal);
 
                     // Average the intensity of all Beacon signals
@@ -106,8 +106,8 @@ namespace IndoorNavigation.Modules
                     }
                 }
 
-                // wait 500s or wait module close
-                SpinWait.SpinUntil(() => Switch, 500);
+                // wait 1s or wait module close
+                SpinWait.SpinUntil(() => Switch, 1000);
             }
 
             Debug.WriteLine("Signal process close");
