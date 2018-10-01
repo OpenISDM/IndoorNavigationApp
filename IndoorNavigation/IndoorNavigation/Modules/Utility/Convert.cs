@@ -27,16 +27,16 @@ namespace IndoorNavigation
             if (beacon.GetType() == typeof(LBeaconModel))
             {
                 // Combine coordinate Hex data from UUID
-                string[] IdShards =
+                string[] idShards =
                     (beacon as LBeaconModel).UUID.ToString().Split('-');
-                string LonHexStr = IdShards[2] + IdShards[3];
-                string LatHexStr = IdShards[4].Substring(4, 8);
+                string lonHexStr = idShards[2] + idShards[3];
+                string latHexStr = idShards[4].Substring(4, 8);
 
                 // Convert coordinate hex data to coordinate
-                float Longitude = HexToFloat(LonHexStr);
-                float Latitude = HexToFloat(LatHexStr);
+                float longitude = HexToFloat(lonHexStr);
+                float latitude = HexToFloat(latHexStr);
 
-                return new GeoCoordinate(Latitude, Longitude);
+                return new GeoCoordinate(latitude, longitude);
             }
             else if (beacon.GetType() == typeof(IBeaconModel))
             {
@@ -54,26 +54,26 @@ namespace IndoorNavigation
         /// <returns></returns>
         public static List<Beacon> ToBeacons(this string JsonString)
         {
-            List<Beacon> Beacons = new List<Beacon>();
+            List<Beacon> beacons = new List<Beacon>();
 
             try
             {
-                JObject Json = JsonConvert.DeserializeObject<JObject>(JsonString);
+                JObject json = JsonConvert.DeserializeObject<JObject>(JsonString);
 
                 // 取得lBeacon資料
                 List<LBeaconModel> lBeacons = 
                     JsonConvert.DeserializeObject<List<LBeaconModel>>
-                    (Json["lBeacons"].ToString());
+                    (json["lBeacons"].ToString());
 
                 // 取得iBeacon資料
                 List<IBeaconModel> iBeacons = 
                     JsonConvert.DeserializeObject<List<IBeaconModel>>
-                    (Json["iBeacons"].ToString());
+                    (json["iBeacons"].ToString());
 
-                Beacons.AddRange(lBeacons);
-                Beacons.AddRange(iBeacons);
+                beacons.AddRange(lBeacons);
+                beacons.AddRange(iBeacons);
 
-                return Beacons;
+                return beacons;
             }
             catch
             {
