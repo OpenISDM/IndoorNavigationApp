@@ -10,19 +10,19 @@ namespace IndoorNavigation.Modules
     /// <summary>
     /// beacon訊號後處理
     /// </summary>
-    public class SignalProcess:IDisposable
+    public class SignalProcessModule : IDisposable
     {
-        private Thread SignalProcessThread;
-        private  List<BeaconSignalModel> BeaconSignalBuffer = 
+        private Thread signalProcessThread;
+        private  List<BeaconSignalModel> beaconSignalBuffer = 
             new List<BeaconSignalModel>();
-        private bool Switch = true;
-        private object BufferLock = new object();
+        private bool threadSwitch = true;
+        private object bufferLock = new object();
 
-        public SignalProcess()
+        public SignalProcessModule()
         {
-            SignalProcessThread = 
+            signalProcessThread = 
                 new Thread(SignalProcessWork){ IsBackground = true};
-            SignalProcessThread.Start();
+            signalProcessThread.Start();
         }
 
         /// <summary>
@@ -32,42 +32,42 @@ namespace IndoorNavigation.Modules
         public void AddSignal(List<BeaconSignalModel> Signals)
         {
             // Beacon訊號過濾，保留存在地圖記錄的Beacon訊號
-            IEnumerable<BeaconSignalModel> _Signals = Signals
-                .Where(Signal => Utility.Beacons
+            IEnumerable<BeaconSignalModel> signals = Signals
+                .Where(signal => Utility.Beacons
                 .Select(beacon => (beacon.UUID,beacon.Major,beacon.Minor))
-                .Contains((Signal.UUID, Signal.Major, Signal.Minor)));
+                .Contains((signal.UUID, signal.Major, signal.Minor)));
 
-            lock (BufferLock)
-                BeaconSignalBuffer.AddRange(_Signals);
+            lock (bufferLock)
+                beaconSignalBuffer.AddRange(signals);
         }
 
         private void SignalProcessWork()
         {
-            while (Switch)
+            while (threadSwitch)
             {
-                List<BeaconSignal> SignalAverageList = 
+                List<BeaconSignal> signalAverageList = 
                     new List<BeaconSignal>();
 
                 // SignalProcess
-                lock (BufferLock)
+                lock (bufferLock)
                 {
                     // remove buffer old data
-                    foreach (var BeaconSignal in BeaconSignalBuffer.Where(c =>
-                    c.Timestamp < DateTime.Now.AddMilliseconds(-500)))
-                        BeaconSignalBuffer.Remove(BeaconSignal);
+                    foreach (var beaconSignal in beaconSignalBuffer.Where(c =>
+                    c.Timestamp < DateTime.Now.AddMilliseconds(-1000)))
+                        beaconSignalBuffer.Remove(beaconSignal);
 
                     // Average the intensity of all Beacon signals
-                    var Beacons = BeaconSignalBuffer
+                    var beacons = beaconSignalBuffer
                         .Select(c => (c.UUID, c.Major, c.Minor)).Distinct();
-                    foreach (var (UUID, Major, Minor) in Beacons)
+                    foreach (var (UUID, Major, Minor) in beacons)
                     {
-                        SignalAverageList.Add(
+                        signalAverageList.Add(
                             new BeaconSignal {
                                 UUID = (UUID, Major, Minor).UUID,
                                 Major = (UUID, Major, Minor).Major,
                                 Minor = (UUID, Major, Minor).Minor,
                                 RSSI = System.Convert.ToInt32(
-                                    BeaconSignalBuffer
+                                    beaconSignalBuffer
                                     .Where(c => 
                                     c.UUID == (UUID, Major, Minor).UUID && 
                                     c.Major == (UUID, Major, Minor).Major && 
@@ -78,10 +78,10 @@ namespace IndoorNavigation.Modules
                 }
 
                 // Find the beacon closest to me
-                if (SignalAverageList.Count() > 0)
+                if (signalAverageList.Count() > 0)
                 {
                     // 尋找所有滿足門檻值條件的訊號
-                    var nearbySignal = (from single in SignalAverageList
+                    var nearbySignal = (from single in signalAverageList
                                         from beacon in Utility.Beacons
                                         where (single.UUID == beacon.UUID && 
                                         single.Major == beacon.Major && 
@@ -106,8 +106,8 @@ namespace IndoorNavigation.Modules
                     }
                 }
 
-                // wait 500s or wait module close
-                SpinWait.SpinUntil(() => Switch, 500);
+                // wait 1s or wait module close
+                SpinWait.SpinUntil(() => threadSwitch, 1000);
             }
 
             Debug.WriteLine("Signal process close");
@@ -115,7 +115,7 @@ namespace IndoorNavigation.Modules
 
         public void Dispose()
         {
-            Switch = false;
+            threadSwitch = false;
         }
     }
 }

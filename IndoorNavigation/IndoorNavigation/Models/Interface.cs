@@ -76,4 +76,17 @@ namespace IndoorNavigation.Models
         /// </summary>
         Guid BeaconB { get; set; }
     }
+
+    /// <summary>
+    /// 實作與beacon scan物件連接的介面
+    /// 在IOS和Android專案各有一個Beacon scan物件
+    /// Beacon scan功能必須使用系統原生API
+    /// </summary>
+    public interface IBeaconScan
+    {
+        void Init(Action<List<BeaconSignalModel>> SendSignalFunction);
+        void StartScan(List<Guid> BeaconsUUID);
+        void StopScan();
+        void Close();
+    }
 }
