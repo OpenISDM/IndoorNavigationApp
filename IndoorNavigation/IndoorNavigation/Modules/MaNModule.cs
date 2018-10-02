@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 using System.Threading;
 
 namespace IndoorNavigation.Modules
@@ -73,10 +72,12 @@ namespace IndoorNavigation.Modules
         /// 設定目前位置的Beacon
         /// </summary>
         /// <param name="CurrentBeacon"></param>
-        public void SetCurrentBeacon(Beacon CurrentBeacon)
+        private void HandleSignalProcess(object sender, EventArgs e)
         {
+            Beacon currentBeacon = 
+                (e as SignalProcessEventArgs).CurrentBeacon;
             lock (currentBeaconLock)
-                currentBeacon = CurrentBeacon;
+                this.currentBeacon = currentBeacon;
             waitEvent.Set();
             waitEvent.Reset();
         }
@@ -118,4 +119,20 @@ namespace IndoorNavigation.Modules
         #endregion
 
     }
+
+    #region MaN module Event Handler
+    public class MaNEEvent
+    {
+        public event EventHandler MaNEventHandler;
+
+        public void OnEventCall(MaNEventArgs e)
+        {
+            MaNEventHandler(this, e);
+        }
+    }
+
+    public class MaNEventArgs : EventArgs
+    {
+    }
+    #endregion
 }
