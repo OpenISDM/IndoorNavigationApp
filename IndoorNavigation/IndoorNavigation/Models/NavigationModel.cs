@@ -23,4 +23,10 @@ namespace IndoorNavigation.Models
         public int TxPower { get; set; }
         public DateTime Timestamp { get; set; }
     }
+
+    public class NextInstructionModel
+    {
+        public BeaconGroupModel NextPoint { get; set; }
+        public int Angle { get; set; }
+    }
 }

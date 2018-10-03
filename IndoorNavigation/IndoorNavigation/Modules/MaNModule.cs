@@ -3,23 +3,34 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
+using System.Linq;
 
 namespace IndoorNavigation.Modules
 {
+    /// <summary>
+    /// 通知模組
+    /// </summary>
     class MaNModule : IDisposable
     {
         private Thread MaNThread;
         private bool threadSwitch = true;
         private bool IsReachingTheDestination = false;
         private Beacon currentBeacon = null;
-        private Queue<(BeaconGroupModel Next, int Angle)> pathQueue;
+        private NextInstructionModel NextInstruction;
+        private Queue<NextInstructionModel> pathQueue;
         private ManualResetEvent waitEvent = new ManualResetEvent(false);
         private ManualResetEvent navigationTaskWaitEvent = 
             new ManualResetEvent(false);
-        private object currentBeaconLock = new object();
+        private object resourceLock = new object();
 
+        public MaNEEvent Event;
+
+        /// <summary>
+        /// 初始化一個新的通知模組
+        /// </summary>
         public MaNModule()
         {
+            Event = new MaNEEvent();
             MaNThread = new Thread(MaNWork) { IsBackground = true};
             MaNThread.Start();
         }
@@ -28,15 +39,111 @@ namespace IndoorNavigation.Modules
         {
             while (threadSwitch)
             {
+                // 等待導航任務
                 navigationTaskWaitEvent.WaitOne();
                 while (!IsReachingTheDestination)
                 {
+                    lock(resourceLock)
+                        // NextInstruction=null代表現在導航開始的第一個位置
+                        if (NextInstruction == null)
+                        {
+                            NextInstruction = pathQueue.Dequeue();
+                            double distance = NextInstruction.NextPoint
+                                .Coordinate
+                                .GetDistanceTo(currentBeacon.GetCoordinate());
 
+                            Event.OnEventCall(new MaNEventArgs
+                            {
+                                Angle = NextInstruction.Angle,
+                                Distance = distance
+                            });
+                        }
+                        else
+                        {
+                            BeaconGroupModel currentPoint = 
+                                Utility.BeaconGroups
+                            .Where(c => c.Beacons.Contains(currentBeacon))
+                            .First();
+
+                            // 檢查現在位置是否跟規劃的下一個位置一樣
+                            if (currentPoint == NextInstruction.NextPoint)
+                            {
+                                NextInstruction = pathQueue.Dequeue();
+                                double distance = NextInstruction.NextPoint
+                                    .Coordinate
+                                    .GetDistanceTo(
+                                    currentBeacon.GetCoordinate());
+
+                                Event.OnEventCall(new MaNEventArgs
+                                {
+                                    Angle = NextInstruction.Angle,
+                                    Distance = distance
+                                });
+                            }
+                            else
+                            {
+                                Event.OnEventCall(
+                                    NavigationRouteCorrection(currentPoint));
+                            }
+                        }
+
+                    NextInstruction = pathQueue.Dequeue();
+
+
+                    // 等待最佳Beacon事件
                     waitEvent.WaitOne();
                 }
             }
 
             Debug.WriteLine("MaN module close");
+        }
+
+        /// <summary>
+        /// 修正導航路線
+        /// </summary>
+        /// <param name="CurrentPoint"></param>
+        /// <returns></returns>
+        private MaNEventArgs NavigationRouteCorrection
+            (BeaconGroupModel CurrentPoint)
+        {
+            // 如果現在位置為導航路線的其中一個點
+            if (pathQueue.Where(c => c.NextPoint == CurrentPoint).Count() > 0)
+            {
+                // 將路線佇列中的移除，直到佇列dequeue出來的位置=現在位置
+                var CurrentInstruction = pathQueue
+                    .Where(c => c.NextPoint == CurrentPoint).First();
+                while (pathQueue.Dequeue() != CurrentInstruction) ;
+
+                // 繼續導航
+                NextInstruction = pathQueue.Dequeue();
+                double distance = NextInstruction.NextPoint
+                    .Coordinate
+                    .GetDistanceTo(currentBeacon.GetCoordinate());
+
+                return new MaNEventArgs
+                {
+                    Distance = distance,
+                    Angle = NextInstruction.Angle
+                };
+            }
+            else
+            {
+                // 重新規劃路徑，並繼續導航
+                var EndPoint = 
+                    pathQueue.ToArray()[pathQueue.Count() - 1].NextPoint;
+                pathQueue = Utility.Route.GetPath(currentBeacon, EndPoint);
+
+                NextInstruction = pathQueue.Dequeue();
+                double distance = NextInstruction.NextPoint
+                    .Coordinate
+                    .GetDistanceTo(currentBeacon.GetCoordinate());
+
+                return new MaNEventArgs
+                {
+                    Distance = distance,
+                    Angle = NextInstruction.Angle
+                };
+            }
         }
 
         /// <summary>
@@ -46,7 +153,7 @@ namespace IndoorNavigation.Modules
         {
             // 暫停MaN Thread 等待設定新的導航目的地
             IsReachingTheDestination = true;
-            lock(currentBeaconLock)
+            lock(resourceLock)
                 currentBeacon = null;
             waitEvent.Set();
             waitEvent.Reset();
@@ -61,7 +168,7 @@ namespace IndoorNavigation.Modules
             // 規劃導航路徑
             if (currentBeacon == null)
                 waitEvent.WaitOne();
-            lock(currentBeaconLock)
+            lock(resourceLock)
                 pathQueue = Utility.Route.GetPath(currentBeacon,EndPoint);
 
             navigationTaskWaitEvent.Set();
@@ -76,10 +183,16 @@ namespace IndoorNavigation.Modules
         {
             Beacon currentBeacon = 
                 (e as SignalProcessEventArgs).CurrentBeacon;
-            lock (currentBeaconLock)
-                this.currentBeacon = currentBeacon;
-            waitEvent.Set();
-            waitEvent.Reset();
+
+            // 檢查本次Signal Process事件的Current Beacon
+            // 是否和Current Beacon相同
+            if (this.currentBeacon != currentBeacon)
+            {
+                lock (resourceLock)
+                    this.currentBeacon = currentBeacon;
+                waitEvent.Set();
+                waitEvent.Reset();
+            }
         }
 
         #region IDisposable Support
@@ -133,6 +246,14 @@ namespace IndoorNavigation.Modules
 
     public class MaNEventArgs : EventArgs
     {
+        /// <summary>
+        /// 旋轉角度
+        /// </summary>
+        public int Angle { get; set; }
+        /// <summary>
+        /// 到下個點的距離
+        /// </summary>
+        public double Distance { get; set; }
     }
     #endregion
 }

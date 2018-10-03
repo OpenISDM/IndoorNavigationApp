@@ -62,7 +62,7 @@ namespace IndoorNavigation.Modules.Navigation
         /// <param name="StartBeacon"></param>
         /// <param name="EndPoint"></param>
         /// <returns></returns>
-        public Queue<(BeaconGroupModel Next, int Angle)> GetPath(
+        public Queue<NextInstructionModel> GetPath(
             Beacon StartBeacon, BeaconGroupModel EndPoint)
         {
             var startPoingKey = map
@@ -73,8 +73,8 @@ namespace IndoorNavigation.Modules.Navigation
             // 取得最佳路線
             var path = map.Dijkstra(startPoingKey, endPointKey).GetPath();
 
-            Queue<(BeaconGroupModel Next, int Angle)> pathQueue =
-                new Queue<(BeaconGroupModel Next, int Angle)>();
+            Queue<NextInstructionModel> pathQueue =
+                new Queue<NextInstructionModel>();
             // 計算走向下一個地點要旋轉的角度
             for (int i = 0; i < path.Count() - 1; i++)
             {
@@ -85,26 +85,29 @@ namespace IndoorNavigation.Modules.Navigation
                     // 檢查起始點是否為LBeacon
                     // LBeacon上方有提示使用者一開始要面向的方向
                     if (StartBeacon.GetType() == typeof(LBeaconModel))
-                        pathQueue.Enqueue((nextPoint,
-                            RotateAngle.GetRotateAngle(
-                            StartBeacon.GetCoordinate(),
-                            (StartBeacon as LBeaconModel).MarkCoordinate,
-                            nextPoint.Coordinate
-                            )));
+                        pathQueue.Enqueue(new NextInstructionModel {
+                            NextPoint = nextPoint,
+                            Angle = RotateAngle.GetRotateAngle(
+                                    StartBeacon.GetCoordinate(),
+                                    (StartBeacon as LBeaconModel)
+                                    .MarkCoordinate,
+                                    nextPoint.Coordinate)
+                        });
                     else
-                        pathQueue.Enqueue(
-                            (nextPoint, int.MinValue));
+                        pathQueue.Enqueue(new NextInstructionModel {
+                            NextPoint = nextPoint, Angle = int.MaxValue});
                 else
                 {
                     BeaconGroupModel previousPoint = 
                         map[path.ToList()[i - 1]].Item;
 
-                    pathQueue.Enqueue((nextPoint,
-                        RotateAngle.GetRotateAngle(
+                    pathQueue.Enqueue(new NextInstructionModel {
+                        NextPoint = nextPoint,
+                        Angle = RotateAngle.GetRotateAngle(
                         currentPoint.Coordinate,
                         previousPoint.Coordinate,
-                        nextPoint.Coordinate
-                        )));
+                        nextPoint.Coordinate)
+                    });
                 }
             }
 
@@ -118,7 +121,7 @@ namespace IndoorNavigation.Modules.Navigation
         /// <param name="CurrentBeacon"></param>
         /// <param name="EndPoint"></param>
         /// <returns></returns>
-        public Queue<(BeaconGroupModel Next, int Angle)> RegainPath(
+        public Queue<NextInstructionModel> RegainPath(
             BeaconGroupModel PreviousPoint,
             Beacon CurrentBeacon,
             BeaconGroupModel EndPoint)
@@ -141,8 +144,8 @@ namespace IndoorNavigation.Modules.Navigation
             // 取得最佳路線
             var path = map.Dijkstra(startPoingKey, endPointKey).GetPath();
 
-            Queue<(BeaconGroupModel Next, int Angle)> pathQueue =
-                new Queue<(BeaconGroupModel Next, int Angle)>();
+            Queue<NextInstructionModel> pathQueue =
+                new Queue<NextInstructionModel>();
 
             // 計算走向下一個地點要旋轉的角度
             for (int i = 0; i < path.Count() - 1; i++)
@@ -151,22 +154,26 @@ namespace IndoorNavigation.Modules.Navigation
                 BeaconGroupModel nextPoint = map[path.ToList()[i + 1]].Item;
 
                 if (i == 0)
-                    pathQueue.Enqueue((nextPoint,
-                        RotateAngle.GetRotateAngle(
+                    pathQueue.Enqueue(new NextInstructionModel {
+                        NextPoint = nextPoint,
+                        Angle = RotateAngle.GetRotateAngle(
                         currentPoint.Coordinate,
                         PreviousPoint.Coordinate,
                         nextPoint.Coordinate
-                        )));
+                        )
+                    });
                 else
                 {
                     PreviousPoint = map[path.ToList()[i - 1]].Item;
 
-                    pathQueue.Enqueue((nextPoint,
-                        RotateAngle.GetRotateAngle(
+                    pathQueue.Enqueue(new NextInstructionModel {
+                        NextPoint = nextPoint,
+                        Angle = RotateAngle.GetRotateAngle(
                         currentPoint.Coordinate,
                         PreviousPoint.Coordinate,
                         nextPoint.Coordinate
-                        )));
+                        )
+                    });
                 }
             }
 
