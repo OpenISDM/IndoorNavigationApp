@@ -15,10 +15,11 @@ namespace IndoorNavigation.Modules
         private Thread MaNThread;
         private bool threadSwitch = true;
         private bool IsReachingTheDestination = false;
-        private Beacon currentBeacon = null;
-        private NextInstructionModel NextInstruction;
+        private Beacon currentBeacon;
+        private BeaconGroupModel previousPoint;
+        private NextInstructionModel nextInstruction;
         private Queue<NextInstructionModel> pathQueue;
-        private ManualResetEvent waitEvent = new ManualResetEvent(false);
+        private ManualResetEvent bestBeacon = new ManualResetEvent(false);
         private ManualResetEvent navigationTaskWaitEvent = 
             new ManualResetEvent(false);
         private object resourceLock = new object();
@@ -43,55 +44,74 @@ namespace IndoorNavigation.Modules
                 navigationTaskWaitEvent.WaitOne();
                 while (!IsReachingTheDestination)
                 {
+                    BeaconGroupModel currentPoint;
                     lock(resourceLock)
-                        // NextInstruction=null代表現在導航開始的第一個位置
-                        if (NextInstruction == null)
+                        currentPoint = Utility.BeaconGroups
+                            .Where(c => c.Beacons.Contains(currentBeacon))
+                            .First();
+
+                    var EndPoint =
+                        pathQueue.ToArray()[pathQueue.Count() - 1].NextPoint;
+
+                    // 檢查是否抵達目的地
+                    if (currentPoint == EndPoint)
+                    {
+                        Event.OnEventCall(new MaNEventArgs
                         {
-                            NextInstruction = pathQueue.Dequeue();
-                            double distance = NextInstruction.NextPoint
-                                .Coordinate
-                                .GetDistanceTo(currentBeacon.GetCoordinate());
+                            Status = NavigationStatus.Arrival
+                        });
+                        break;
+                    }
+
+                    lock (resourceLock)
+                        // NextInstruction=null代表現在導航開始的第一個位置
+                        if (nextInstruction == null)
+                        {
+                            nextInstruction = pathQueue.Dequeue();
 
                             Event.OnEventCall(new MaNEventArgs
                             {
-                                Angle = NextInstruction.Angle,
-                                Distance = distance
+                                Status = NavigationStatus.DirectionCorrection
                             });
                         }
                         else
                         {
-                            BeaconGroupModel currentPoint = 
-                                Utility.BeaconGroups
-                            .Where(c => c.Beacons.Contains(currentBeacon))
-                            .First();
-
                             // 檢查現在位置是否跟規劃的下一個位置一樣
-                            if (currentPoint == NextInstruction.NextPoint)
+                            if (currentPoint == nextInstruction.NextPoint)
                             {
-                                NextInstruction = pathQueue.Dequeue();
-                                double distance = NextInstruction.NextPoint
+                                nextInstruction = pathQueue.Dequeue();
+                                double distance = nextInstruction.NextPoint
                                     .Coordinate
                                     .GetDistanceTo(
                                     currentBeacon.GetCoordinate());
 
                                 Event.OnEventCall(new MaNEventArgs
                                 {
-                                    Angle = NextInstruction.Angle,
+                                    Status = NavigationStatus.Run,
+                                    Angle = nextInstruction.Angle,
                                     Distance = distance
                                 });
                             }
                             else
                             {
+                                // 先通知走錯路，再通知下一步怎麼走
+                                Event.OnEventCall(new MaNEventArgs
+                                {
+                                    Status = NavigationStatus.RouteCorrection
+                                });
+
                                 Event.OnEventCall(
-                                    NavigationRouteCorrection(currentPoint));
+                                    NavigationRouteCorrection(currentPoint,
+                                    EndPoint));
                             }
                         }
 
-                    NextInstruction = pathQueue.Dequeue();
 
+                    // 等待抵達下一個最佳Beacon附近事件
+                    bestBeacon.WaitOne();
 
-                    // 等待最佳Beacon事件
-                    waitEvent.WaitOne();
+                    // 將現在的位置變成上一個位置
+                    previousPoint = currentPoint;
                 }
             }
 
@@ -104,7 +124,8 @@ namespace IndoorNavigation.Modules
         /// <param name="CurrentPoint"></param>
         /// <returns></returns>
         private MaNEventArgs NavigationRouteCorrection
-            (BeaconGroupModel CurrentPoint)
+            (BeaconGroupModel CurrentPoint,
+            BeaconGroupModel EndPoint)
         {
             // 如果現在位置為導航路線的其中一個點
             if (pathQueue.Where(c => c.NextPoint == CurrentPoint).Count() > 0)
@@ -115,34 +136,57 @@ namespace IndoorNavigation.Modules
                 while (pathQueue.Dequeue() != CurrentInstruction) ;
 
                 // 繼續導航
-                NextInstruction = pathQueue.Dequeue();
-                double distance = NextInstruction.NextPoint
+                nextInstruction = pathQueue.Dequeue();
+                double distance = nextInstruction.NextPoint
                     .Coordinate
                     .GetDistanceTo(currentBeacon.GetCoordinate());
 
                 return new MaNEventArgs
                 {
+                    Status = NavigationStatus.Run,
                     Distance = distance,
-                    Angle = NextInstruction.Angle
+                    Angle = nextInstruction.Angle
                 };
             }
             else
             {
-                // 重新規劃路徑，並繼續導航
-                var EndPoint = 
-                    pathQueue.ToArray()[pathQueue.Count() - 1].NextPoint;
-                pathQueue = Utility.Route.GetPath(currentBeacon, EndPoint);
-
-                NextInstruction = pathQueue.Dequeue();
-                double distance = NextInstruction.NextPoint
-                    .Coordinate
-                    .GetDistanceTo(currentBeacon.GetCoordinate());
-
-                return new MaNEventArgs
+                // 檢查現在所在位置是否與上一個位置連接
+                // 有連接可以不用校正方向
+                if (Utility.LocationConnects
+                    .Where(c => c.BeaconA == CurrentPoint && 
+                    c.BeaconB == previousPoint).Count() > 0 || 
+                    Utility.LocationConnects
+                    .Where(c => c.BeaconA == previousPoint && 
+                    c.BeaconB == CurrentPoint).Count() > 0)
                 {
-                    Distance = distance,
-                    Angle = NextInstruction.Angle
-                };
+                    // 重新規劃路徑，並繼續導航
+                    pathQueue = Utility.Route.RegainPath(previousPoint, 
+                        currentBeacon, EndPoint);
+                    nextInstruction = pathQueue.Dequeue();
+                    double distance = nextInstruction.NextPoint
+                        .Coordinate
+                        .GetDistanceTo(
+                        currentBeacon.GetCoordinate());
+
+                    return new MaNEventArgs
+                    {
+                        Status = NavigationStatus.Run,
+                        Angle = nextInstruction.Angle,
+                        Distance = distance
+                    };
+
+                }
+                else
+                {
+                    // 重新規劃路徑，並且校正方向再繼續導航
+                    pathQueue = Utility.Route.GetPath(currentBeacon,EndPoint);
+                    nextInstruction = pathQueue.Dequeue();
+
+                    return new MaNEventArgs
+                    {
+                        Status = NavigationStatus.DirectionCorrection
+                    };
+                }
             }
         }
 
@@ -155,8 +199,8 @@ namespace IndoorNavigation.Modules
             IsReachingTheDestination = true;
             lock(resourceLock)
                 currentBeacon = null;
-            waitEvent.Set();
-            waitEvent.Reset();
+            bestBeacon.Set();
+            bestBeacon.Reset();
         }
 
         /// <summary>
@@ -167,7 +211,7 @@ namespace IndoorNavigation.Modules
         {
             // 規劃導航路徑
             if (currentBeacon == null)
-                waitEvent.WaitOne();
+                bestBeacon.WaitOne();
             lock(resourceLock)
                 pathQueue = Utility.Route.GetPath(currentBeacon,EndPoint);
 
@@ -190,8 +234,8 @@ namespace IndoorNavigation.Modules
             {
                 lock (resourceLock)
                     this.currentBeacon = currentBeacon;
-                waitEvent.Set();
-                waitEvent.Reset();
+                bestBeacon.Set();
+                bestBeacon.Reset();
             }
         }
 
@@ -234,6 +278,14 @@ namespace IndoorNavigation.Modules
     }
 
     #region MaN module Event Handler
+    public enum NavigationStatus
+    {
+        Run = 0,
+        Arrival,
+        RouteCorrection,
+        DirectionCorrection
+    }
+
     public class MaNEEvent
     {
         public event EventHandler MaNEventHandler;
@@ -246,6 +298,10 @@ namespace IndoorNavigation.Modules
 
     public class MaNEventArgs : EventArgs
     {
+        /// <summary>
+        /// 導航狀態
+        /// </summary>
+        public NavigationStatus Status { get; set; }
         /// <summary>
         /// 旋轉角度
         /// </summary>

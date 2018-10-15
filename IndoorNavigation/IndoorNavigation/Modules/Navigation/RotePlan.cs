@@ -82,20 +82,33 @@ namespace IndoorNavigation.Modules.Navigation
                 BeaconGroupModel nextPoint = map[path.ToList()[i + 1]].Item;
 
                 if (i == 0)
-                    // 檢查起始點是否為LBeacon
-                    // LBeacon上方有提示使用者一開始要面向的方向
-                    if (StartBeacon.GetType() == typeof(LBeaconModel))
-                        pathQueue.Enqueue(new NextInstructionModel {
-                            NextPoint = nextPoint,
-                            Angle = RotateAngle.GetRotateAngle(
-                                    StartBeacon.GetCoordinate(),
-                                    (StartBeacon as LBeaconModel)
-                                    .MarkCoordinate,
-                                    nextPoint.Coordinate)
-                        });
-                    else
-                        pathQueue.Enqueue(new NextInstructionModel {
-                            NextPoint = nextPoint, Angle = int.MaxValue});
+                {
+                    pathQueue.Enqueue(new NextInstructionModel
+                    {
+                        NextPoint = nextPoint,
+                        Angle = int.MaxValue
+                    });
+
+                    // 之前開會討論要在LBeacon上貼標籤來校正起始方向
+                    //// 檢查起始點是否為LBeacon
+                    //// LBeacon上方有提示使用者一開始要面向的方向
+                    //if (StartBeacon.GetType() == typeof(LBeaconModel))
+                    //    pathQueue.Enqueue(new NextInstructionModel
+                    //    {
+                    //        NextPoint = nextPoint,
+                    //        Angle = RotateAngle.GetRotateAngle(
+                    //                StartBeacon.GetCoordinate(),
+                    //                (StartBeacon as LBeaconModel)
+                    //                .MarkCoordinate,
+                    //                nextPoint.Coordinate)
+                    //    });
+                    //else
+                    //    pathQueue.Enqueue(new NextInstructionModel
+                    //    {
+                    //        NextPoint = nextPoint,
+                    //        Angle = int.MaxValue
+                    //    });
+                }
                 else
                 {
                     BeaconGroupModel previousPoint = 
