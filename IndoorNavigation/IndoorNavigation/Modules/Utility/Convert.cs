@@ -29,8 +29,8 @@ namespace IndoorNavigation
                 // Combine coordinate Hex data from UUID
                 string[] idShards =
                     (beacon as LBeaconModel).UUID.ToString().Split('-');
-                string lonHexStr = idShards[2] + idShards[3];
-                string latHexStr = idShards[4].Substring(4, 8);
+                string latHexStr = idShards[2] + idShards[3];
+                string lonHexStr = idShards[4].Substring(4, 8);
 
                 // Convert coordinate hex data to coordinate
                 float longitude = HexToFloat(lonHexStr);
