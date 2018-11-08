@@ -12,7 +12,7 @@ namespace IndoorNavigation.Modules
 {
     public class Utility
     {
-        public static List<Beacon> Beacons;
+        public static Dictionary<Guid,Beacon> Beacons;
         public static List<BeaconGroupModel> BeaconGroups;
         public static List<LocationConnectModel> LocationConnects;
         public static RoutePlan Route;

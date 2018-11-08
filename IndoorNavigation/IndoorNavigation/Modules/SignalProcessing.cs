@@ -13,6 +13,8 @@ namespace IndoorNavigation.Modules
     public class SignalProcessModule : IDisposable
     {
         private Thread signalProcessThread;
+        private ManualResetEvent threadClosedWait = 
+            new ManualResetEvent(false);
         private  List<BeaconSignalModel> beaconSignalBuffer = 
             new List<BeaconSignalModel>();
         private bool threadSwitch = true;
@@ -35,7 +37,7 @@ namespace IndoorNavigation.Modules
         {
             // Beacon訊號過濾，保留存在地圖記錄的Beacon訊號
             IEnumerable<BeaconSignalModel> signals = Signals
-                .Where(signal => Utility.Beacons
+                .Where(signal => Utility.Beacons.Values
                 .Select(beacon => (beacon.UUID,beacon.Major,beacon.Minor))
                 .Contains((signal.UUID, signal.Major, signal.Minor)));
 
@@ -85,10 +87,9 @@ namespace IndoorNavigation.Modules
                     // 尋找所有滿足門檻值條件的訊號
                     var nearbySignal = (from single in signalAverageList
                                         from beacon in Utility.Beacons
-                                        where (single.UUID == beacon.UUID && 
-                                        single.Major == beacon.Major && 
-                                        single.Minor == beacon.Minor && 
-                                        single.RSSI >= beacon.Threshold)
+                                        where (
+                                        single.UUID == beacon.Value.UUID && 
+                                        single.RSSI >= beacon.Value.Threshold)
                                         select single);
 
                     // Find the beacon closest to me, then send an event 
@@ -96,12 +97,8 @@ namespace IndoorNavigation.Modules
                     if (nearbySignal.Count() > 0)
                     {
                         var bestNearbySignal = nearbySignal.First();
-                        Beacon bestNearbyBeacon = Utility.Beacons
-                            .Where(beacon => 
-                            beacon.UUID == bestNearbySignal.UUID && 
-                            beacon.Major == bestNearbySignal.Major && 
-                            beacon.Minor == bestNearbySignal.Minor)
-                            .First();
+                        Beacon bestNearbyBeacon = 
+                            Utility.Beacons[bestNearbySignal.UUID];
 
                         // Send event to MaN module
                         Event.OnEventCall(new SignalProcessEventArgs {
@@ -114,6 +111,8 @@ namespace IndoorNavigation.Modules
             }
 
             Debug.WriteLine("Signal process close");
+            threadClosedWait.Set();
+            threadClosedWait.Reset();
         }
 
         #region IDisposable Support
@@ -126,20 +125,30 @@ namespace IndoorNavigation.Modules
                 if (disposing)
                 {
                     // TODO: 處置受控狀態 (受控物件)。
+                    threadSwitch = false;
+                    threadClosedWait.WaitOne();
+
+                    threadClosedWait.Dispose();
                 }
 
                 // TODO: 釋放非受控資源 (非受控物件) 並覆寫下方的完成項。
                 // TODO: 將大型欄位設為 null。
+
+                signalProcessThread = null;
+                threadClosedWait = null;
+                beaconSignalBuffer = null;
+                bufferLock = null;
 
                 disposedValue = true;
             }
         }
 
         // TODO: 僅當上方的 Dispose(bool disposing) 具有會釋放非受控資源的程式碼時，才覆寫完成項。
-        // ~SignalProcessModule() {
-        //   // 請勿變更這個程式碼。請將清除程式碼放入上方的 Dispose(bool disposing) 中。
-        //   Dispose(false);
-        // }
+        ~SignalProcessModule()
+        {
+            // 請勿變更這個程式碼。請將清除程式碼放入上方的 Dispose(bool disposing) 中。
+            Dispose(false);
+        }
 
         // 加入這個程式碼的目的在正確實作可處置的模式。
         public void Dispose()

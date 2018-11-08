@@ -44,7 +44,7 @@ namespace IndoorNavigation.Modules
                 JObject data = JsonConvert.DeserializeObject<JObject>(LoadFile(Place));
 
                 string beaconJson = data["Beacon"].ToString();
-                Utility.Beacons = beaconJson.ToBeacons();
+                Utility.Beacons = beaconJson.ToBeacons().ToDictionary(beacon => beacon.UUID);
                 Utility.BeaconGroups = (JsonConvert.DeserializeObject<List<BeaconGroupModelForMapFile>>(data["BeaconGroup"].ToString()) as List<BeaconGroupModelForMapFile>).ToBeaconGroup(Utility.Beacons);
                 Utility.LocationConnects = (JsonConvert.DeserializeObject<List<LocationConnectModelForMapFile>>(data["LocationConnect"].ToString()) as List<LocationConnectModelForMapFile>).ToLocationConnect(Utility.BeaconGroups);
 

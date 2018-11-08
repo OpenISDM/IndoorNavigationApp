@@ -97,13 +97,13 @@ namespace IndoorNavigation
         /// <returns></returns>
         public static List<BeaconGroupModel> ToBeaconGroup(
             this List<BeaconGroupModelForMapFile> BeaconGroups,
-            List<Beacon> Beacons)
+            Dictionary<Guid,Beacon> Beacons)
         {
             return BeaconGroups.Select(BeaconGroup => new BeaconGroupModel
             {
                 Id = BeaconGroup.Id,
                 Name = BeaconGroup.Name,
-                Beacons = Beacons.Where(Beacon =>
+                Beacons = Beacons.Values.Where(Beacon =>
                 BeaconGroup.Beacons.Contains(Beacon.UUID)).ToList()
             }).ToList();
         }
