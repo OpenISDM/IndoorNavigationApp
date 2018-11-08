@@ -46,6 +46,13 @@ namespace IndoorNavigation
             throw new ArgumentException("Unrecognized Beacon type.");
         }
 
+        public static float GetFloor(Guid UUID)
+        {
+            string[] idShards = UUID.ToString().Split('-');
+            string floorHexStr = idShards[0];
+            return HexToFloat(floorHexStr);
+        }
+
         /// <summary>
         /// 擴充功能
         /// 將記錄Beacons的Json字串轉換成Beacon list

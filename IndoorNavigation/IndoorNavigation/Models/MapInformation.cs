@@ -26,7 +26,7 @@ namespace IndoorNavigation.Models
         /// <summary>
         /// Beacon installed floor
         /// </summary>
-        public int Floor { get; set; }
+        public virtual float Floor { get; set; }
     }
 
     /// <summary>
@@ -78,6 +78,8 @@ namespace IndoorNavigation.Models
         /// Beacon 上的箭頭指向的參考座標
         /// </summary>
         public GeoCoordinate MarkCoordinate { get; set; }
+
+        public override float Floor { get { return Convert.GetFloor(UUID); } }
     }
 
     /// <summary>
