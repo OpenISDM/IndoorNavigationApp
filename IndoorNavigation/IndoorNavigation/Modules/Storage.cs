@@ -1,4 +1,31 @@
-﻿using System;
+﻿/*
+ * Copyright (c) 2018 Academia Sinica, Institude of Information Science
+ *
+ * License:
+ *      GPL 3.0 : The content of this file is subject to the terms and 
+ *      conditions defined in file 'COPYING.txt', which is part of this source
+ *      code package.
+ *
+ * Project Name:
+ * 
+ *      IndoorNavigation
+ * 
+ * File Description:
+ * File Name:
+ * 
+ *      Storage.cs
+ * 
+ * Abstract:
+ *      
+ *      提供存取手機儲存空間的方法
+ *
+ * Authors:
+ * 
+ *      Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
+ * 
+ */
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,6 +35,9 @@ using Newtonsoft.Json.Linq;
 
 namespace IndoorNavigation.Modules
 {
+    /// <summary>
+    /// 提供可以快速存取本地儲存空間內地圖資料的方法
+    /// </summary>
     public static class MapStorage
     {
         private static readonly string mapFolder =
@@ -41,12 +71,21 @@ namespace IndoorNavigation.Modules
             try
             {
                 // 轉換Beacon及地圖相關資料
-                JObject data = JsonConvert.DeserializeObject<JObject>(LoadFile(Place));
+                JObject data = 
+                    JsonConvert.DeserializeObject<JObject>(LoadFile(Place));
 
+                // 從Json字串轉換成物件
                 string beaconJson = data["Beacon"].ToString();
-                Utility.Beacons = beaconJson.ToBeacons().ToDictionary(beacon => beacon.UUID);
-                Utility.BeaconGroups = (JsonConvert.DeserializeObject<List<BeaconGroupModelForMapFile>>(data["BeaconGroup"].ToString()) as List<BeaconGroupModelForMapFile>).ToBeaconGroup(Utility.Beacons);
-                Utility.LocationConnects = (JsonConvert.DeserializeObject<List<LocationConnectModelForMapFile>>(data["LocationConnect"].ToString()) as List<LocationConnectModelForMapFile>).ToLocationConnect(Utility.BeaconGroups);
+                Utility.Beacons = 
+                    beaconJson.ToBeacons().ToDictionary(beacon =>beacon.UUID);
+                Utility.BeaconGroups = JsonConvert.DeserializeObject
+                    <List<BeaconGroupModelForMapFile>>
+                    (data["BeaconGroup"].ToString())
+                    .ToBeaconGroup(Utility.Beacons);
+                Utility.LocationConnects = JsonConvert.DeserializeObject
+                    <List<LocationConnectModelForMapFile>>
+                    (data["LocationConnect"].ToString())
+                    .ToLocationConnect(Utility.BeaconGroups);
 
                 // 初始化路徑規劃物件及設定地圖資料
                 Utility.Route = new Navigation.RoutePlan(

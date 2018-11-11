@@ -1,10 +1,40 @@
-﻿using System;
+﻿/*
+ * Copyright (c) 2018 Academia Sinica, Institude of Information Science
+ *
+ * License:
+ *      GPL 3.0 : The content of this file is subject to the terms and 
+ *      conditions defined in file 'COPYING.txt', which is part of this source
+ *      code package.
+ *
+ * Project Name:
+ * 
+ *      IndoorNavigation
+ * 
+ * File Description:
+ * File Name:
+ * 
+ *      MapInformation.cs
+ * 
+ * Abstract:
+ *      
+ *      地圖上的物件，這些物件包含:Beacon物件、Beacon群組物件、用來記錄連接兩個位置的物件
+ *
+ * Authors:
+ * 
+ *      Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
+ * 
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using GeoCoordinatePortable;
 
 namespace IndoorNavigation.Models
 {
+    /// <summary>
+    /// Beacon
+    /// </summary>
     public abstract class Beacon
     {
         /// <summary>
@@ -69,17 +99,18 @@ namespace IndoorNavigation.Models
     }
 
     /// <summary>
-    /// 表示要監聽的Beacon。 包含 監聽的門檻值、安裝樓層、Beacon安裝方向
+    /// 表示要監聽的LBeacon。 包含 監聽的門檻值、安裝樓層、Beacon安裝方向
     /// </summary>
     public class LBeaconModel : Beacon, ILBeacon
     {
         /// <summary>
         /// Beacon 安裝方向
         /// Beacon 上的箭頭指向的參考座標
+        /// 目前版本尚未使用
         /// </summary>
         public GeoCoordinate MarkCoordinate { get; set; }
 
-        public override float Floor { get { return Convert.GetFloor(UUID); } }
+        public override float Floor { get { return this.GetFloor(); } }
     }
 
     /// <summary>
@@ -94,6 +125,7 @@ namespace IndoorNavigation.Models
 
         /// <summary>
         /// Group coordinate
+        /// 假如這個群組有2顆Beacon並排，兩顆Beacon中間的位置為Beacon群組的座標
         /// </summary>
         public GeoCoordinate Coordinate
         {
@@ -101,9 +133,7 @@ namespace IndoorNavigation.Models
             {
                 // 取得群組內所有Beacon的座標
                 List<GeoCoordinate> Coordinates =
-                    Beacons
-                    .Select(c => c.GetCoordinate())
-                    .ToList();
+                    Beacons.Select(c => c.GetCoordinate()).ToList();
 
                 // 將群組內所有Beacon座標取平均，計算群組中心座標
                 double TotalLatitude = 0; double TotalLongitude = 0;
@@ -122,7 +152,7 @@ namespace IndoorNavigation.Models
     }
 
     /// <summary>
-    /// 一個Beacon群體，此群體視為一個地點，此物件用於離線地圖資料
+    /// 一個Beacon群體，此群體視為一個地點，此物件用於儲存在手機上的離線地圖資料
     /// </summary>
     public class BeaconGroupModelForMapFile : BeaconGroup,
         IBeaconGroupModelForMapFile
@@ -150,7 +180,7 @@ namespace IndoorNavigation.Models
     }
 
     /// <summary>
-    /// 連接兩個地點的道路，此物件用於離線地圖資料
+    /// 連接兩個地點的道路，此物件用於儲存在手機上的離線地圖資料
     /// Pay attention to direction
     /// </summary>
     public class LocationConnectModelForMapFile : LocationConnect,

@@ -1,4 +1,31 @@
-﻿using IndoorNavigation.Models;
+﻿/*
+ * Copyright (c) 2018 Academia Sinica, Institude of Information Science
+ *
+ * License:
+ *      GPL 3.0 : The content of this file is subject to the terms and 
+ *      conditions defined in file 'COPYING.txt', which is part of this source
+ *      code package.
+ *
+ * Project Name:
+ * 
+ *      IndoorNavigation
+ * 
+ * File Description:
+ * File Name:
+ * 
+ *      MaNModule.cs
+ * 
+ * Abstract:
+ *      
+ *      Monitor and Notification module負責監視使用者移動的路線，在使用者走錯路之後傳送event給UI通知使用者，並為使用者重新規劃路線
+ *
+ * Authors:
+ * 
+ *      Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
+ * 
+ */
+
+using IndoorNavigation.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -14,7 +41,7 @@ namespace IndoorNavigation.Modules
     {
         private Thread MaNThread;
         private bool threadSwitch = true;
-        private bool IsReachingTheDestination = false;
+        private bool IsReachingDestination = false;
         private Beacon currentBeacon;
         private BeaconGroupModel previousPoint;
         private NextInstructionModel nextInstruction;
@@ -22,7 +49,10 @@ namespace IndoorNavigation.Modules
         private ManualResetEvent bestBeacon = new ManualResetEvent(false);
         private ManualResetEvent navigationTaskWaitEvent = 
             new ManualResetEvent(false);
+        private ManualResetEvent threadClosedWait =
+            new ManualResetEvent(false);
         private object resourceLock = new object();
+        private EventHandler HSignalProcess;
 
         public MaNEEvent Event;
 
@@ -34,6 +64,8 @@ namespace IndoorNavigation.Modules
             Event = new MaNEEvent();
             MaNThread = new Thread(MaNWork) { IsBackground = true};
             MaNThread.Start();
+            HSignalProcess = new EventHandler(HandleSignalProcess);
+            Utility.SignalProcess.Event.SignalProcessEventHandler += HSignalProcess;
         }
 
         private void MaNWork()
@@ -42,18 +74,19 @@ namespace IndoorNavigation.Modules
             {
                 // 等待導航任務
                 navigationTaskWaitEvent.WaitOne();
-                while (!IsReachingTheDestination)
+                while (!IsReachingDestination)
                 {
+                    // 從目前的Beacon找出現在所在的位置
                     BeaconGroupModel currentPoint;
                     lock(resourceLock)
                         currentPoint = Utility.BeaconGroups
                             .Where(c => c.Beacons.Contains(currentBeacon))
                             .First();
 
+                    // 檢查是否抵達目的地
                     var EndPoint =
                         pathQueue.ToArray()[pathQueue.Count() - 1].NextPoint;
 
-                    // 檢查是否抵達目的地
                     if (currentPoint == EndPoint)
                     {
                         Event.OnEventCall(new MaNEventArgs
@@ -63,8 +96,10 @@ namespace IndoorNavigation.Modules
                         break;
                     }
 
+
                     lock (resourceLock)
                         // NextInstruction=null代表現在導航開始的第一個位置
+                        // 目前版本第一個位置必須讓使用者先隨便行走，到達第二個位置再校正方向
                         if (nextInstruction == null)
                         {
                             nextInstruction = pathQueue.Dequeue();
@@ -76,7 +111,7 @@ namespace IndoorNavigation.Modules
                         }
                         else
                         {
-                            // 檢查現在位置是否跟規劃的下一個位置一樣
+                            // 檢查是否抵達下一個位置
                             if (currentPoint == nextInstruction.NextPoint)
                             {
                                 nextInstruction = pathQueue.Dequeue();
@@ -116,6 +151,8 @@ namespace IndoorNavigation.Modules
             }
 
             Debug.WriteLine("MaN module close");
+            threadClosedWait.Set();
+            threadClosedWait.Reset();
         }
 
         /// <summary>
@@ -130,7 +167,7 @@ namespace IndoorNavigation.Modules
             // 如果現在位置為導航路線的其中一個點
             if (pathQueue.Where(c => c.NextPoint == CurrentPoint).Count() > 0)
             {
-                // 將路線佇列中的移除，直到佇列dequeue出來的位置=現在位置
+                // 將路線佇列中的位置移除，直到佇列dequeue出來的位置=現在位置
                 var CurrentInstruction = pathQueue
                     .Where(c => c.NextPoint == CurrentPoint).First();
                 while (pathQueue.Dequeue() != CurrentInstruction) ;
@@ -196,7 +233,7 @@ namespace IndoorNavigation.Modules
         public void StopNavigation()
         {
             // 暫停MaN Thread 等待設定新的導航目的地
-            IsReachingTheDestination = true;
+            IsReachingDestination = true;
             lock(resourceLock)
                 currentBeacon = null;
             bestBeacon.Set();
@@ -220,7 +257,7 @@ namespace IndoorNavigation.Modules
         }
 
         /// <summary>
-        /// 設定目前位置的Beacon
+        /// 接收來自signal process model傳送的最佳Beacon
         /// </summary>
         /// <param name="CurrentBeacon"></param>
         private void HandleSignalProcess(object sender, EventArgs e)
@@ -240,7 +277,7 @@ namespace IndoorNavigation.Modules
         }
 
         #region IDisposable Support
-        private bool disposedValue = false; // 偵測多餘的呼叫
+        private bool disposedValue = false;
 
         protected virtual void Dispose(bool disposing)
         {
@@ -248,29 +285,31 @@ namespace IndoorNavigation.Modules
             {
                 if (disposing)
                 {
-                    // TODO: 處置受控狀態 (受控物件)。
+                    Utility.SignalProcess.Event.SignalProcessEventHandler -= HSignalProcess;
+                    threadSwitch = false;
+                    navigationTaskWaitEvent.Set();
+                    bestBeacon.Set();
+                    threadClosedWait.WaitOne();
+                    navigationTaskWaitEvent.Dispose();
+                    bestBeacon.Dispose();
+                    threadClosedWait.Dispose();
                 }
 
-                threadSwitch = false;
-                // TODO: 釋放非受控資源 (非受控物件) 並覆寫下方的完成項。
-                // TODO: 將大型欄位設為 null。
+                MaNThread = null;
+                resourceLock = null;
 
                 disposedValue = true;
             }
         }
 
-        // TODO: 僅當上方的 Dispose(bool disposing) 具有會釋放非受控資源的程式碼時，才覆寫完成項。
-        // ~MaNModule() {
-        //   // 請勿變更這個程式碼。請將清除程式碼放入上方的 Dispose(bool disposing) 中。
-        //   Dispose(false);
-        // }
+        ~MaNModule()
+        {
+            Dispose(false);
+        }
 
-        // 加入這個程式碼的目的在正確實作可處置的模式。
         public void Dispose()
         {
-            // 請勿變更這個程式碼。請將清除程式碼放入上方的 Dispose(bool disposing) 中。
             Dispose(true);
-            // TODO: 如果上方的完成項已被覆寫，即取消下行的註解狀態。
             // GC.SuppressFinalize(this);
         }
         #endregion
@@ -278,6 +317,7 @@ namespace IndoorNavigation.Modules
     }
 
     #region MaN module Event Handler
+
     public enum NavigationStatus
     {
         Run = 0,
@@ -311,5 +351,6 @@ namespace IndoorNavigation.Modules
         /// </summary>
         public double Distance { get; set; }
     }
+
     #endregion
 }

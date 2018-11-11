@@ -1,9 +1,42 @@
-﻿using GeoCoordinatePortable;
+﻿/*
+ * Copyright (c) 2018 Academia Sinica, Institude of Information Science
+ *
+ * License:
+ *      GPL 3.0 : The content of this file is subject to the terms and 
+ *      conditions defined in file 'COPYING.txt', which is part of this source
+ *      code package.
+ *
+ * Project Name:
+ * 
+ *      IndoorNavigation
+ * 
+ * File Description:
+ * File Name:
+ * 
+ *      Interfa.cs
+ * 
+ * Abstract:
+ *      
+ *      Define the interface required to connect IOS projects and 
+ *      Android project and map information.
+ *
+ * Authors:
+ * 
+ *      Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
+ * 
+ */
+
+using GeoCoordinatePortable;
 using System;
 using System.Collections.Generic;
 
 namespace IndoorNavigation.Models
 {
+    #region Map information interface
+
+    /// <summary>
+    /// 保留給IBeacon資訊使用的介面
+    /// </summary>
     public interface IIBeacon
     {
         /// <summary>
@@ -12,11 +45,15 @@ namespace IndoorNavigation.Models
         GeoCoordinate IBeaconCoordinate { get; set; }
     }
 
+    /// <summary>
+    /// LBeacon資訊
+    /// </summary>
     public interface ILBeacon
     {
         /// <summary>
         /// Beacon 安裝方向
         /// Beacon 上的箭頭指向的參考座標
+        /// 目前版本尚未使用
         /// </summary>
         GeoCoordinate MarkCoordinate { get; set; }
     }
@@ -37,7 +74,7 @@ namespace IndoorNavigation.Models
     }
 
     /// <summary>
-    /// 一個群體內有多個Beacon，用於離線地圖資料
+    /// 一個群體內有多個Beacon，用於儲存在手機上的離線地圖資料
     /// </summary>
     public interface IBeaconGroupModelForMapFile
     {
@@ -63,7 +100,7 @@ namespace IndoorNavigation.Models
     }
 
     /// <summary>
-    /// 一個道路連接兩個地點，用於離線地圖資料
+    /// 一個道路連接兩個地點，用於儲存在手機上的離線地圖資料
     /// </summary>
     public interface ILocationConnectModelForMapFile
     {
@@ -77,10 +114,14 @@ namespace IndoorNavigation.Models
         Guid BeaconB { get; set; }
     }
 
+    #endregion
+
+    #region Interface for connecting IOS projects and Android projects
+
     /// <summary>
     /// 實作與beacon scan物件連接的介面
     /// 在IOS和Android專案各有一個Beacon scan物件
-    /// Beacon scan功能必須使用系統原生API
+    /// Beacon scan功能必須使用系統提供的原生API
     /// </summary>
     public interface IBeaconScan
     {
@@ -89,4 +130,6 @@ namespace IndoorNavigation.Models
         void StopScan();
         void Close();
     }
+
+    #endregion
 }

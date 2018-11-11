@@ -1,4 +1,31 @@
-﻿using IndoorNavigation.Models;
+﻿/*
+ * Copyright (c) 2018 Academia Sinica, Institude of Information Science
+ *
+ * License:
+ *      GPL 3.0 : The content of this file is subject to the terms and 
+ *      conditions defined in file 'COPYING.txt', which is part of this source
+ *      code package.
+ *
+ * Project Name:
+ * 
+ *      IndoorNavigation
+ * 
+ * File Description:
+ * File Name:
+ * 
+ *      SignalProcessing.cs
+ * 
+ * Abstract:
+ *      
+ *      接收來自IOS或Android原生API回傳的附近Beacon狀態，再計算出最佳的Beacon
+ *
+ * Authors:
+ * 
+ *      Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
+ * 
+ */
+
+using IndoorNavigation.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,7 +35,7 @@ using System.Linq;
 namespace IndoorNavigation.Modules
 {
     /// <summary>
-    /// beacon訊號後處理
+    /// beacon訊號處理
     /// </summary>
     public class SignalProcessModule : IDisposable
     {
@@ -22,6 +49,9 @@ namespace IndoorNavigation.Modules
 
         public SignalProcessEvent Event = new SignalProcessEvent();
 
+        /// <summary>
+        /// 初始化訊號處理物件
+        /// </summary>
         public SignalProcessModule()
         {
             signalProcessThread = 
@@ -30,7 +60,7 @@ namespace IndoorNavigation.Modules
         }
 
         /// <summary>
-        /// 插入搜尋到的Beacon訊號至Buffer
+        /// 插入發現的Beacon訊號至Buffer
         /// </summary>
         /// <param name="Signals"></param>
         public void AddSignal(List<BeaconSignalModel> Signals)
@@ -116,7 +146,7 @@ namespace IndoorNavigation.Modules
         }
 
         #region IDisposable Support
-        private bool disposedValue = false; // 偵測多餘的呼叫
+        private bool disposedValue = false;
 
         protected virtual void Dispose(bool disposing)
         {
@@ -124,15 +154,12 @@ namespace IndoorNavigation.Modules
             {
                 if (disposing)
                 {
-                    // TODO: 處置受控狀態 (受控物件)。
                     threadSwitch = false;
                     threadClosedWait.WaitOne();
 
                     threadClosedWait.Dispose();
                 }
 
-                // TODO: 釋放非受控資源 (非受控物件) 並覆寫下方的完成項。
-                // TODO: 將大型欄位設為 null。
 
                 signalProcessThread = null;
                 threadClosedWait = null;
@@ -143,19 +170,14 @@ namespace IndoorNavigation.Modules
             }
         }
 
-        // TODO: 僅當上方的 Dispose(bool disposing) 具有會釋放非受控資源的程式碼時，才覆寫完成項。
         ~SignalProcessModule()
         {
-            // 請勿變更這個程式碼。請將清除程式碼放入上方的 Dispose(bool disposing) 中。
             Dispose(false);
         }
 
-        // 加入這個程式碼的目的在正確實作可處置的模式。
         public void Dispose()
         {
-            // 請勿變更這個程式碼。請將清除程式碼放入上方的 Dispose(bool disposing) 中。
             Dispose(true);
-            // TODO: 如果上方的完成項已被覆寫，即取消下行的註解狀態。
             // GC.SuppressFinalize(this);
         }
         #endregion

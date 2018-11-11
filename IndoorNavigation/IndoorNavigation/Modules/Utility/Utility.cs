@@ -1,4 +1,31 @@
-﻿using System;
+﻿/*
+ * Copyright (c) 2018 Academia Sinica, Institude of Information Science
+ *
+ * License:
+ *      GPL 3.0 : The content of this file is subject to the terms and 
+ *      conditions defined in file 'COPYING.txt', which is part of this source
+ *      code package.
+ *
+ * Project Name:
+ * 
+ *      IndoorNavigation
+ * 
+ * File Description:
+ * File Name:
+ * 
+ *      Utility.cs
+ * 
+ * Abstract:
+ *      
+ *      公共使用的變數和方法
+ *
+ * Authors:
+ * 
+ *      Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
+ * 
+ */
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
@@ -27,15 +54,22 @@ namespace IndoorNavigation.Modules
             return true;
         }
 
+        /// <summary>
+        /// 從Server下載地圖資料
+        /// </summary>
+        /// <param name="URL"></param>
+        /// <returns></returns>
         public static string DownloadMap(string URL)
         {
             try
             {
-                //跳過SSL檢查
+                // 跳過SSL檢查
+                // 如果Server沒有使用受信任的憑證，WebRequest物件會丟出錯誤
                 ServicePointManager.ServerCertificateValidationCallback
                     = new RemoteCertificateValidationCallback
                     (ValidateServerCertificate);
 
+                // 下載資料
                 var request = WebRequest.Create(URL) as HttpWebRequest;
                 request.Method = WebRequestMethods.Http.Get;
                 request.ContentType = "application/json";
@@ -69,7 +103,7 @@ namespace IndoorNavigation.Modules
     public class RotateAngle
     {
         /// <summary>
-        /// 水平角度(含方向)
+        /// 計算旋轉角度(含方向)
         /// </summary>
         /// <param name="Current">現在位置</param>
         /// <param name="Previous">上一個位置</param>
@@ -78,44 +112,44 @@ namespace IndoorNavigation.Modules
         public static int GetRotateAngle(GeoCoordinate Current, 
             GeoCoordinate Previous, GeoCoordinate Next)
         {
-            double cosineANS = CosineAngle(Current, Previous, Next);
-            double outerProductANS = OuterProductAngle(Current,Previous,Next);
+            double cosineAngle = CalculatingCosineAngle(Current, Previous, Next);
+            double outerProductAngle = CalculatingOuterProductAngle(Current,Previous,Next);
 
-            if (outerProductANS < 0)
-                return System.Convert.ToInt32(180 - cosineANS * 180/Math.PI);
+            if (outerProductAngle < 0)
+                return System.Convert.ToInt32(180 - cosineAngle * 180/Math.PI);
             else
-                return -System.Convert.ToInt32(180 - cosineANS * 180/Math.PI);
+                return -System.Convert.ToInt32(180 - cosineAngle * 180/Math.PI);
         }
 
         /// <summary>
-        /// 餘弦定理角度
+        /// 餘弦定理計算角度
         /// </summary>
         /// <param name="Current">現在位置</param>
         /// <param name="Previous">上一個位置</param>
         /// <param name="Next">下一個位置</param>
         /// <returns></returns>
-        private static double CosineAngle(GeoCoordinate Current, 
+        private static double CalculatingCosineAngle(GeoCoordinate Current, 
             GeoCoordinate Previous, GeoCoordinate Next)
         {
-            double centerToTarget = Current.GetDistanceTo(Next);
-            double centerToFace = Current.GetDistanceTo(Previous);
-            double faceToTarget = Previous.GetDistanceTo(Next);
+            double centerToNext = Current.GetDistanceTo(Next);
+            double centerToPrevious = Current.GetDistanceTo(Previous);
+            double PreviousToNext = Previous.GetDistanceTo(Next);
 
             return Math.Acos(
-                (centerToTarget * centerToTarget + 
-                centerToFace * centerToFace - 
-                faceToTarget * faceToTarget) /
-                (2 * centerToTarget * centerToFace));
+                (centerToNext * centerToNext + 
+                centerToPrevious * centerToPrevious - 
+                PreviousToNext * PreviousToNext) /
+                (2 * centerToNext * centerToPrevious));
         }
 
         /// <summary>
-        /// 外積算角度
+        /// 外積算計算角度
         /// </summary>
         /// <param name="Current">現在位置</param>
         /// <param name="Previous">上一個位置</param>
         /// <param name="Next">下一個位置</param>
         /// <returns></returns>
-        private static double OuterProductAngle(GeoCoordinate Current, 
+        private static double CalculatingOuterProductAngle(GeoCoordinate Current, 
             GeoCoordinate Previous, GeoCoordinate Next)
         {
             double Xa, Xb, Ya, Yb;

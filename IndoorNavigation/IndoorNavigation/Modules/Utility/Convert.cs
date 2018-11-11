@@ -1,4 +1,31 @@
-﻿using System;
+﻿/*
+ * Copyright (c) 2018 Academia Sinica, Institude of Information Science
+ *
+ * License:
+ *      GPL 3.0 : The content of this file is subject to the terms and 
+ *      conditions defined in file 'COPYING.txt', which is part of this source
+ *      code package.
+ *
+ * Project Name:
+ * 
+ *      IndoorNavigation
+ * 
+ * File Description:
+ * File Name:
+ * 
+ *      Convert.cs
+ * 
+ * Abstract:
+ *      
+ *      一些型態轉換的方法
+ *
+ * Authors:
+ * 
+ *      Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
+ * 
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using GeoCoordinatePortable;
@@ -11,15 +38,13 @@ namespace IndoorNavigation
     /// <summary>
     /// Data conversion tool for indoor navigation
     /// </summary>
-    /// <summary>
-    /// Data conversion tool for indoor navigation
-    /// </summary>
     public static partial class Convert
     {
         /// <summary>
-        /// Convert UUID to a Coordinate object.
+        /// 擴充功能
+        /// 從Beacon物件提起座標
         /// </summary>
-        /// <param name="UUID"></param>
+        /// <param name="beacon"></param>
         /// <returns></returns>
         public static GeoCoordinate GetCoordinate(this
             Beacon beacon)
@@ -46,16 +71,41 @@ namespace IndoorNavigation
             throw new ArgumentException("Unrecognized Beacon type.");
         }
 
-        public static float GetFloor(Guid UUID)
+        /// <summary>
+        /// 擴充功能
+        /// 從Beacon物件提起座標
+        /// </summary>
+        /// <param name="UUID"></param>
+        /// <returns></returns>
+        public static float GetFloor(this LBeaconModel LBeacon)
         {
-            string[] idShards = UUID.ToString().Split('-');
+            string[] idShards = LBeacon.UUID.ToString().Split('-');
             string floorHexStr = idShards[0];
             return HexToFloat(floorHexStr);
         }
 
         /// <summary>
+        /// Convert hex string content to a float.
+        /// 0xff20f342 -> 121.564445F
+        /// </summary>
+        /// <param name="Hex"></param>
+        /// <returns></returns>
+        private static float HexToFloat(string Hex)
+        {
+            // Hex string content to a byte array.
+            byte[] Bytes = new byte[4];
+            Bytes[0] = System.Convert.ToByte(Hex.Substring(0, 2), 16);
+            Bytes[1] = System.Convert.ToByte(Hex.Substring(2, 2), 16);
+            Bytes[2] = System.Convert.ToByte(Hex.Substring(4, 2), 16);
+            Bytes[3] = System.Convert.ToByte(Hex.Substring(6, 2), 16);
+
+            // byte array to a float.
+            return BitConverter.ToSingle(Bytes, 0);
+        }
+
+        /// <summary>
         /// 擴充功能
-        /// 將記錄Beacons的Json字串轉換成Beacon list
+        /// 將記錄Beacons資訊的Json字串轉換成Beacon list
         /// </summary>
         /// <param name="JsonString"></param>
         /// <returns></returns>
@@ -130,23 +180,5 @@ namespace IndoorNavigation
             }).ToList();
         }
 
-        /// <summary>
-        /// Convert hex string content to a float.
-        /// 0xff20f342 -> 121.564445F
-        /// </summary>
-        /// <param name="Hex"></param>
-        /// <returns></returns>
-        private static float HexToFloat(string Hex)
-        {
-            // Hex string content to a byte array.
-            byte[] Bytes = new byte[4];
-            Bytes[0] = System.Convert.ToByte(Hex.Substring(0, 2), 16);
-            Bytes[1] = System.Convert.ToByte(Hex.Substring(2, 2), 16);
-            Bytes[2] = System.Convert.ToByte(Hex.Substring(4, 2), 16);
-            Bytes[3] = System.Convert.ToByte(Hex.Substring(6, 2), 16);
-
-            // byte array to a float.
-            return BitConverter.ToSingle(Bytes, 0);
-        }
     }
 }
