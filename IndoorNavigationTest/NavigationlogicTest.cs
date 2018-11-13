@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using System;
 using System.Linq;
+using IndoorNavigation;
 
 namespace IndoorNavigationTest
 {
@@ -43,7 +44,7 @@ namespace IndoorNavigationTest
         }
 
         [TestMethod]
-        public void MapStorageAccessAndMapDataConvert()
+        public void MapStorageAccessAndMapDataConvertTest()
         {
             var MapJson = JsonConvert.SerializeObject(
                 new
@@ -80,6 +81,20 @@ namespace IndoorNavigationTest
             Assert.AreEqual(1, position2.Beacons.Where(c => c == B1).Count());
             Assert.AreEqual(1, position2.Beacons.Where(c => c == B1).Count());
             Assert.AreEqual(1, Utility.LocationConnects.Where(c => c.BeaconA == position1 && c.BeaconB == position2).Count());
+        }
+
+        [TestMethod]
+        public void UUIDConvertTest()
+        {
+            var A1 = Utility.Beacons[Guid.Parse("0000803f-0000-7b3d-c941-0000c15ef342")];
+            Assert.AreEqual(25.15502, A1.GetCoordinate().Latitude,0.00001);
+            Assert.AreEqual(121.68507, A1.GetCoordinate().Longitude, 0.00001);
+            Assert.AreEqual(1, A1.Floor);
+
+            var B2 = Utility.Beacons[Guid.Parse("0000803f-0000-563d-c941-0000d55ef342")];
+            Assert.AreEqual(25.15495, B2.GetCoordinate().Latitude, 0.00001);
+            Assert.AreEqual(121.68522, B2.GetCoordinate().Longitude, 0.00001);
+            Assert.AreEqual(1, A1.Floor);
         }
     }
 }
