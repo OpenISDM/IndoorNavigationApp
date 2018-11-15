@@ -2,27 +2,28 @@
  * Copyright (c) 2018 Academia Sinica, Institude of Information Science
  *
  * License:
- *      GPL 3.0 : The content of this file is subject to the terms and 
+ *      GPL 3.0 : The content of this file is subject to the terms and
  *      conditions defined in file 'COPYING.txt', which is part of this source
  *      code package.
  *
  * Project Name:
- * 
+ *
  *      IndoorNavigation
- * 
+ *
  * File Description:
  * File Name:
- * 
+ *
  *      MapInformation.cs
- * 
+ *
  * Abstract:
- *      
- *      地圖上的物件，這些物件包含:Beacon物件、Beacon群組物件、用來記錄連接兩個位置的物件
+ *
+ *      The elements on the map: Beacon element, Beacon group element and the
+ *      element for connecting two locations
  *
  * Authors:
- * 
+ *
  *      Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
- * 
+ *
  */
 
 using System;
@@ -87,7 +88,8 @@ namespace IndoorNavigation.Models
     }
 
     /// <summary>
-    /// 表示要監聽的IBeacon。 包含 監聽的門檻值、安裝樓層、Beacon安裝位置、
+    /// The monitor of LBeacon, including the threshold, floor of installation
+    /// and the location.
     /// Major、Minor
     /// </summary>
     public class IBeaconModel : Beacon, IIBeacon
@@ -99,14 +101,15 @@ namespace IndoorNavigation.Models
     }
 
     /// <summary>
-    /// 表示要監聽的LBeacon。 包含 監聽的門檻值、安裝樓層、Beacon安裝方向
+    /// The monitor of LBeacon, including the threshold, floor of installation
+    /// and direction of installation.
     /// </summary>
     public class LBeaconModel : Beacon, ILBeacon
     {
         /// <summary>
-        /// Beacon 安裝方向
-        /// Beacon 上的箭頭指向的參考座標
-        /// 目前版本尚未使用
+        /// Beacon's direction of installation
+        /// Beacon's reffered coordinate where the arrow points to
+        /// Not be used in this version
         /// </summary>
         public GeoCoordinate MarkCoordinate { get; set; }
 
@@ -114,28 +117,30 @@ namespace IndoorNavigation.Models
     }
 
     /// <summary>
-    /// 一個Beacon群體，此群體視為一個地點
+    /// A group of beacons that is regarded as a location
     /// </summary>
     public class BeaconGroupModel : BeaconGroup, IBeaconGroupModel
     {
         /// <summary>
-        /// Beacon 集合
+        /// Beacon's union
         /// </summary>
         public List<Beacon> Beacons { get; set; }
 
         /// <summary>
         /// Group coordinate
-        /// 假如這個群組有2顆Beacon並排，兩顆Beacon中間的位置為Beacon群組的座標
+        /// Assume there are two parallel Lbeacons, the central coordinate are
+        /// regarded as the group's coordinate.
         /// </summary>
         public GeoCoordinate Coordinate
         {
             get
             {
-                // 取得群組內所有Beacon的座標
+                // Get all the LBeacon's coordinate in the group
                 List<GeoCoordinate> Coordinates =
                     Beacons.Select(c => c.GetCoordinate()).ToList();
 
-                // 將群組內所有Beacon座標取平均，計算群組中心座標
+                // Compute the average of the coordinate of all the LBeaocns in
+                // order to get the central coordinate.
                 double TotalLatitude = 0; double TotalLongitude = 0;
 
                 foreach (GeoCoordinate Coordinate in Coordinates)
@@ -152,46 +157,48 @@ namespace IndoorNavigation.Models
     }
 
     /// <summary>
-    /// 一個Beacon群體，此群體視為一個地點，此物件用於儲存在手機上的離線地圖資料
+    /// A group of LBeacon which is regarded as a location. This element is used
+    ///to store the map data when the network connection is down.
     /// </summary>
     public class BeaconGroupModelForMapFile : BeaconGroup,
         IBeaconGroupModelForMapFile
     {
         /// <summary>
-        /// Beacon 集合
+        /// Beacon's union
         /// </summary>
         public List<Guid> Beacons { get; set; }
     }
 
     /// <summary>
-    /// 連接兩個地點的道路
+    /// Path connecting two nodes
     /// Pay attention to direction
     /// </summary>
     public class LocationConnectModel : LocationConnect, ILocationConnectModel
     {
         /// <summary>
-        /// 地點A
+        /// Location A
         /// </summary>
         public BeaconGroupModel BeaconA { get; set; }
         /// <summary>
-        /// 地點B
+        /// Location B
         /// </summary>
         public BeaconGroupModel BeaconB { get; set; }
     }
 
     /// <summary>
-    /// 連接兩個地點的道路，此物件用於儲存在手機上的離線地圖資料
+    /// A path connects two nodes. It is used to store the map data in the
+    /// phone when the Internet is unconnected.
     /// Pay attention to direction
     /// </summary>
     public class LocationConnectModelForMapFile : LocationConnect,
         ILocationConnectModelForMapFile
     {
         /// <summary>
-        /// 地點A
+        /// Location A
         /// </summary>
         public Guid BeaconA { get; set; }
         /// <summary>
-        /// 地點B
+        /// Location B
         /// </summary>
         public Guid BeaconB { get; set; }
     }

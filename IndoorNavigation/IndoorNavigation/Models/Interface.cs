@@ -2,28 +2,28 @@
  * Copyright (c) 2018 Academia Sinica, Institude of Information Science
  *
  * License:
- *      GPL 3.0 : The content of this file is subject to the terms and 
+ *      GPL 3.0 : The content of this file is subject to the terms and
  *      conditions defined in file 'COPYING.txt', which is part of this source
  *      code package.
  *
  * Project Name:
- * 
+ *
  *      IndoorNavigation
- * 
+ *
  * File Description:
  * File Name:
- * 
+ *
  *      Interfa.cs
- * 
+ *
  * Abstract:
- *      
- *      Define the interface required to connect IOS projects and 
+ *
+ *      Define the interface required to connect IOS projects and
  *      Android project and map information.
  *
  * Authors:
- * 
+ *
  *      Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
- * 
+ *
  */
 
 using GeoCoordinatePortable;
@@ -35,7 +35,7 @@ namespace IndoorNavigation.Models
     #region Map information interface
 
     /// <summary>
-    /// 保留給IBeacon資訊使用的介面
+    /// The interface reserved for IBeacon data
     /// </summary>
     public interface IIBeacon
     {
@@ -51,65 +51,67 @@ namespace IndoorNavigation.Models
     public interface ILBeacon
     {
         /// <summary>
-        /// Beacon 安裝方向
-        /// Beacon 上的箭頭指向的參考座標
-        /// 目前版本尚未使用
+        /// The direction of Beacon's installation
+        /// The reffered coordinate for the arrow on the Beacon
+        /// Not be used for this version
         /// </summary>
         GeoCoordinate MarkCoordinate { get; set; }
     }
 
     /// <summary>
-    /// 一個群體內有多個Beacon
+    /// There are multiple Beacons in a group
     /// </summary>
     public interface IBeaconGroupModel
     {
         /// <summary>
-        /// Beacon 集合
+        /// Beacon's union
         /// </summary>
         List<Beacon> Beacons { get; set; }
         /// <summary>
-        /// 群組中心點座標
+        /// The center coordinate of the group
         /// </summary>
         GeoCoordinate Coordinate { get; }
     }
 
     /// <summary>
-    /// 一個群體內有多個Beacon，用於儲存在手機上的離線地圖資料
+    /// There are multiple Beacons in a group. It is used to store the map data
+    /// in the phone when the Internet is unconnected.
     /// </summary>
     public interface IBeaconGroupModelForMapFile
     {
         /// <summary>
-        /// Beacon 集合
+        /// Beacon's union
         /// </summary>
         List<Guid> Beacons { get; set; }
     }
 
     /// <summary>
-    /// 一個道路連接兩個地點
+    /// A path connects two nodes
     /// </summary>
     public interface ILocationConnectModel
     {
         /// <summary>
-        /// 地點A
+        /// Location A
         /// </summary>
         BeaconGroupModel BeaconA { get; set; }
         /// <summary>
-        /// 地點B
+        /// Location B
         /// </summary>
         BeaconGroupModel BeaconB { get; set; }
     }
 
     /// <summary>
-    /// 一個道路連接兩個地點，用於儲存在手機上的離線地圖資料
+    /// A path connects two nodes. It is used to store the map data in the
+    /// phone when the Internet is unconnected.
     /// </summary>
     public interface ILocationConnectModelForMapFile
     {
         /// <summary>
-        /// 地點A
+        /// Location A
         /// </summary>
         Guid BeaconA { get; set; }
         /// <summary>
-        /// 地點B
+        /// Location B
         /// </summary>
         Guid BeaconB { get; set; }
     }
@@ -119,9 +121,9 @@ namespace IndoorNavigation.Models
     #region Interface for connecting IOS projects and Android projects
 
     /// <summary>
-    /// 實作與beacon scan物件連接的介面
-    /// 在IOS和Android專案各有一個Beacon scan物件
-    /// Beacon scan功能必須使用系統提供的原生API
+    /// The interface with beacon scan module
+    /// There is one Beacon scan module for each version, IOS and Android.
+    /// Beacon scan module has to use the original API provided by system
     /// </summary>
     public interface IBeaconScan
     {
