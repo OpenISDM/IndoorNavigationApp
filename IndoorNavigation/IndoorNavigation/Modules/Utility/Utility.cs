@@ -2,27 +2,27 @@
  * Copyright (c) 2018 Academia Sinica, Institude of Information Science
  *
  * License:
- *      GPL 3.0 : The content of this file is subject to the terms and 
+ *      GPL 3.0 : The content of this file is subject to the terms and
  *      conditions defined in file 'COPYING.txt', which is part of this source
  *      code package.
  *
  * Project Name:
- * 
+ *
  *      IndoorNavigation
- * 
+ *
  * File Description:
  * File Name:
- * 
+ *
  *      Utility.cs
- * 
+ *
  * Abstract:
- *      
- *      公共使用的變數和方法
+ *
+ *      The public variables and functions
  *
  * Authors:
- * 
+ *
  *      Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
- * 
+ *
  */
 
 using System;
@@ -45,7 +45,7 @@ namespace IndoorNavigation.Modules
         public static RoutePlan Route;
         public static SignalProcessModule SignalProcess;
 
-        //跳過SSL檢查
+        // Skip SSL checking
         private static bool ValidateServerCertificate(Object sender,
             X509Certificate certificate,
             X509Chain chain,
@@ -55,7 +55,7 @@ namespace IndoorNavigation.Modules
         }
 
         /// <summary>
-        /// 從Server下載地圖資料
+        /// Download map information from Server
         /// </summary>
         /// <param name="URL"></param>
         /// <returns></returns>
@@ -63,8 +63,9 @@ namespace IndoorNavigation.Modules
         {
             try
             {
-                // 跳過SSL檢查
-                // 如果Server沒有使用受信任的憑證，WebRequest物件會丟出錯誤
+                // Skip SSL checking
+                // If the server doesn't use validated license, WebRequest
+                // element would return error.
                 ServicePointManager.ServerCertificateValidationCallback
                     = new RemoteCertificateValidationCallback
                     (ValidateServerCertificate);
@@ -103,13 +104,13 @@ namespace IndoorNavigation.Modules
     public class RotateAngle
     {
         /// <summary>
-        /// 計算旋轉角度(含方向)
+        /// Compute the angle to turn, including direction.
         /// </summary>
-        /// <param name="Current">現在位置</param>
-        /// <param name="Previous">上一個位置</param>
-        /// <param name="Next">下一個位置</param>
+        /// <param name="Current">current location</param>
+        /// <param name="Previous">last location</param>
+        /// <param name="Next">next location</param>
         /// <returns></returns>
-        public static int GetRotateAngle(GeoCoordinate Current, 
+        public static int GetRotateAngle(GeoCoordinate Current,
             GeoCoordinate Previous, GeoCoordinate Next)
         {
             double cosineAngle = CalculatingCosineAngle(Current, Previous, Next);
@@ -122,13 +123,13 @@ namespace IndoorNavigation.Modules
         }
 
         /// <summary>
-        /// 餘弦定理計算角度
+        /// The angle computed by law of cosines
         /// </summary>
-        /// <param name="Current">現在位置</param>
-        /// <param name="Previous">上一個位置</param>
-        /// <param name="Next">下一個位置</param>
+        /// <param name="Current">Current location</param>
+        /// <param name="Previous">last location </param>
+        /// <param name="Next">next location </param>
         /// <returns></returns>
-        private static double CalculatingCosineAngle(GeoCoordinate Current, 
+        private static double CalculatingCosineAngle(GeoCoordinate Current,
             GeoCoordinate Previous, GeoCoordinate Next)
         {
             double centerToNext = Current.GetDistanceTo(Next);
@@ -136,20 +137,20 @@ namespace IndoorNavigation.Modules
             double PreviousToNext = Previous.GetDistanceTo(Next);
 
             return Math.Acos(
-                (centerToNext * centerToNext + 
-                centerToPrevious * centerToPrevious - 
+                (centerToNext * centerToNext +
+                centerToPrevious * centerToPrevious -
                 PreviousToNext * PreviousToNext) /
                 (2 * centerToNext * centerToPrevious));
         }
 
         /// <summary>
-        /// 外積算計算角度
+        /// Compute angle by croos product 
         /// </summary>
-        /// <param name="Current">現在位置</param>
-        /// <param name="Previous">上一個位置</param>
-        /// <param name="Next">下一個位置</param>
+        /// <param name="Current">Current location </param>
+        /// <param name="Previous">last location </param>
+        /// <param name="Next">next location</param>
         /// <returns></returns>
-        private static double CalculatingOuterProductAngle(GeoCoordinate Current, 
+        private static double CalculatingOuterProductAngle(GeoCoordinate Current,
             GeoCoordinate Previous, GeoCoordinate Next)
         {
             double Xa, Xb, Ya, Yb;
@@ -161,7 +162,7 @@ namespace IndoorNavigation.Modules
             Xb = Next.Longitude - Current.Longitude;
             Yb = Next.Latitude - Current.Latitude;
 
-            double c = Math.Sqrt(Xa * Xa + Ya * Ya) * 
+            double c = Math.Sqrt(Xa * Xa + Ya * Ya) *
                 Math.Sqrt(Xb * Xb + Yb * Yb);
 
             angle = Math.Asin((Xa * Yb - Xb * Ya) / c);

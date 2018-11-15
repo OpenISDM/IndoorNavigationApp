@@ -2,27 +2,27 @@
  * Copyright (c) 2018 Academia Sinica, Institude of Information Science
  *
  * License:
- *      GPL 3.0 : The content of this file is subject to the terms and 
+ *      GPL 3.0 : The content of this file is subject to the terms and
  *      conditions defined in file 'COPYING.txt', which is part of this source
  *      code package.
  *
  * Project Name:
- * 
+ *
  *      IndoorNavigation
- * 
+ *
  * File Description:
  * File Name:
- * 
+ *
  *      Convert.cs
- * 
+ *
  * Abstract:
- *      
- *      一些型態轉換的方法
+ *
+ *      The conversion method for some modules
  *
  * Authors:
- * 
+ *
  *      Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
- * 
+ *
  */
 
 using System;
@@ -41,8 +41,8 @@ namespace IndoorNavigation
     public static partial class Convert
     {
         /// <summary>
-        /// 擴充功能
-        /// 從Beacon物件提起座標
+        /// Expanded function
+        /// Acquire the coordinate from the LBeacon
         /// </summary>
         /// <param name="beacon"></param>
         /// <returns></returns>
@@ -72,8 +72,8 @@ namespace IndoorNavigation
         }
 
         /// <summary>
-        /// 擴充功能
-        /// 從Beacon物件提起座標
+        /// Expanded function
+        /// Acquire the coordinate from the LBeacon
         /// </summary>
         /// <param name="UUID"></param>
         /// <returns></returns>
@@ -104,8 +104,9 @@ namespace IndoorNavigation
         }
 
         /// <summary>
-        /// 擴充功能
-        /// 將記錄Beacons資訊的Json字串轉換成Beacon list
+        /// Expanded function
+        /// Convert the JSON file recording information of LBeacon to lBeacon
+        /// list.
         /// </summary>
         /// <param name="JsonString"></param>
         /// <returns></returns>
@@ -117,13 +118,13 @@ namespace IndoorNavigation
             {
                 JObject json = JsonConvert.DeserializeObject<JObject>(JsonString);
 
-                // 取得lBeacon資料
-                List<LBeaconModel> lBeacons = 
+                // Aquire information of LBeacon
+                List<LBeaconModel> lBeacons =
                     JsonConvert.DeserializeObject<List<LBeaconModel>>
                     (json["lBeacons"].ToString());
 
-                // 取得iBeacon資料
-                List<IBeaconModel> iBeacons = 
+                // Aquire information of iBeacon
+                List<IBeaconModel> iBeacons =
                     JsonConvert.DeserializeObject<List<IBeaconModel>>
                     (json["iBeacons"].ToString());
 
@@ -139,8 +140,8 @@ namespace IndoorNavigation
         }
 
         /// <summary>
-        /// 擴充功能
-        /// 從BeaconGroupModelForMapFiles 轉換成 BeaconGroupModels
+        /// Expanded function
+        /// Convert BeaconGroupModelForMapFiles to BeaconGroupModels
         /// </summary>
         /// <param name="BeaconGroups"></param>
         /// <param name="Beacons"></param>
@@ -159,8 +160,8 @@ namespace IndoorNavigation
         }
 
         /// <summary>
-        /// 擴充功能
-        /// 從 LocationConnectModelForMapFiles 轉換成 LocationConnectModels
+        /// Expanded function 
+        /// Convert LocationConnectModelForMapFiles to LocationConnectModels
         /// </summary>
         /// <param name="LocationConnects"></param>
         /// <param name="BeaconGroups"></param>
