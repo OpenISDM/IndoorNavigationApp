@@ -2,27 +2,28 @@
  * Copyright (c) 2018 Academia Sinica, Institude of Information Science
  *
  * License:
- *      GPL 3.0 : The content of this file is subject to the terms and 
+ *      GPL 3.0 : The content of this file is subject to the terms and
  *      conditions defined in file 'COPYING.txt', which is part of this source
  *      code package.
  *
  * Project Name:
- * 
+ *
  *      IndoorNavigation
- * 
+ *
  * File Description:
  * File Name:
- * 
+ *
  *      SignalProcessing.cs
- * 
+ *
  * Abstract:
- *      
- *      接收來自IOS或Android原生API回傳的附近Beacon狀態，再計算出最佳的Beacon
+ *
+ *      It receives status of nearby Beacons by the API from IOS or Android,
+ *      and generate the perfect Beacon
  *
  * Authors:
- * 
+ *
  *      Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
- * 
+ *
  */
 
 using IndoorNavigation.Models;
@@ -35,14 +36,14 @@ using System.Linq;
 namespace IndoorNavigation.Modules
 {
     /// <summary>
-    /// beacon訊號處理
+    /// Signal procssing for LBeacon
     /// </summary>
     public class SignalProcessModule : IDisposable
     {
         private Thread signalProcessThread;
-        private ManualResetEvent threadClosedWait = 
+        private ManualResetEvent threadClosedWait =
             new ManualResetEvent(false);
-        private  List<BeaconSignalModel> beaconSignalBuffer = 
+        private  List<BeaconSignalModel> beaconSignalBuffer =
             new List<BeaconSignalModel>();
         private bool threadSwitch = true;
         private object bufferLock = new object();
@@ -50,22 +51,23 @@ namespace IndoorNavigation.Modules
         public SignalProcessEvent Event = new SignalProcessEvent();
 
         /// <summary>
-        /// 初始化訊號處理物件
+        /// Initialize the elements for signal procssing
         /// </summary>
         public SignalProcessModule()
         {
-            signalProcessThread = 
+            signalProcessThread =
                 new Thread(SignalProcessWork){ IsBackground = true};
             signalProcessThread.Start();
         }
 
         /// <summary>
-        /// 插入發現的Beacon訊號至Buffer
+        /// Insert the signal of founded Beacon
         /// </summary>
         /// <param name="Signals"></param>
         public void AddSignal(List<BeaconSignalModel> Signals)
         {
-            // Beacon訊號過濾，保留存在地圖記錄的Beacon訊號
+            // Beacon signal filter，it keeps the Beacon's signal recorded in
+            // the graph
             IEnumerable<BeaconSignalModel> signals = Signals
                 .Where(signal => Utility.Beacons.Values
                 .Select(beacon => (beacon.UUID,beacon.Major,beacon.Minor))
@@ -79,7 +81,7 @@ namespace IndoorNavigation.Modules
         {
             while (threadSwitch)
             {
-                List<BeaconSignal> signalAverageList = 
+                List<BeaconSignal> signalAverageList =
                     new List<BeaconSignal>();
 
                 // SignalProcess
@@ -102,9 +104,9 @@ namespace IndoorNavigation.Modules
                                 Minor = (UUID, Major, Minor).Minor,
                                 RSSI = System.Convert.ToInt32(
                                     beaconSignalBuffer
-                                    .Where(c => 
-                                    c.UUID == (UUID, Major, Minor).UUID && 
-                                    c.Major == (UUID, Major, Minor).Major && 
+                                    .Where(c =>
+                                    c.UUID == (UUID, Major, Minor).UUID &&
+                                    c.Major == (UUID, Major, Minor).Major &&
                                     c.Minor == (UUID, Major, Minor).Minor)
                                     .Select(c => c.RSSI).Average())
                             });
@@ -114,20 +116,20 @@ namespace IndoorNavigation.Modules
                 // Find the beacon closest to me
                 if (signalAverageList.Count() > 0)
                 {
-                    // 尋找所有滿足門檻值條件的訊號
+                    // Scan all the signal that satisfies the threshold
                     var nearbySignal = (from single in signalAverageList
                                         from beacon in Utility.Beacons
                                         where (
-                                        single.UUID == beacon.Value.UUID && 
+                                        single.UUID == beacon.Value.UUID &&
                                         single.RSSI >= beacon.Value.Threshold)
                                         select single);
 
-                    // Find the beacon closest to me, then send an event 
+                    // Find the beacon closest to me, then send an event
                     // to MaN
                     if (nearbySignal.Count() > 0)
                     {
                         var bestNearbySignal = nearbySignal.First();
-                        Beacon bestNearbyBeacon = 
+                        Beacon bestNearbyBeacon =
                             Utility.Beacons[bestNearbySignal.UUID];
 
                         // Send event to MaN module

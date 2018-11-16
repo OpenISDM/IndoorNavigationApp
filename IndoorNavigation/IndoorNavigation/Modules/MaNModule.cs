@@ -2,27 +2,29 @@
  * Copyright (c) 2018 Academia Sinica, Institude of Information Science
  *
  * License:
- *      GPL 3.0 : The content of this file is subject to the terms and 
+ *      GPL 3.0 : The content of this file is subject to the terms and
  *      conditions defined in file 'COPYING.txt', which is part of this source
  *      code package.
  *
  * Project Name:
- * 
+ *
  *      IndoorNavigation
- * 
+ *
  * File Description:
  * File Name:
- * 
+ *
  *      MaNModule.cs
- * 
+ *
  * Abstract:
- *      
- *      Monitor and Notification module負責監視使用者移動的路線，在使用者走錯路之後傳送event給UI通知使用者，並為使用者重新規劃路線
+ *
+ *      Monitor and Notification module is respondsible for monitoring user's
+ *      path. After the user gets to the wrong way, this module sends an event
+ *      to notice the user and redirects the path. 
  *
  * Authors:
- * 
+ *
  *      Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
- * 
+ *
  */
 
 using IndoorNavigation.Models;
@@ -35,7 +37,7 @@ using System.Linq;
 namespace IndoorNavigation.Modules
 {
     /// <summary>
-    /// 通知模組
+    /// Notification module
     /// </summary>
     class MaNModule : IDisposable
     {
@@ -47,7 +49,7 @@ namespace IndoorNavigation.Modules
         private NextInstructionModel nextInstruction;
         private Queue<NextInstructionModel> pathQueue;
         private ManualResetEvent bestBeacon = new ManualResetEvent(false);
-        private ManualResetEvent navigationTaskWaitEvent = 
+        private ManualResetEvent navigationTaskWaitEvent =
             new ManualResetEvent(false);
         private ManualResetEvent threadClosedWait =
             new ManualResetEvent(false);
@@ -57,7 +59,7 @@ namespace IndoorNavigation.Modules
         public MaNEEvent Event;
 
         /// <summary>
-        /// 初始化一個新的通知模組
+        /// Initialize a new Notification model
         /// </summary>
         public MaNModule()
         {
@@ -72,18 +74,18 @@ namespace IndoorNavigation.Modules
         {
             while (threadSwitch)
             {
-                // 等待導航任務
+                // Wait for the navigatino task
                 navigationTaskWaitEvent.WaitOne();
                 while (!IsReachingDestination)
                 {
-                    // 從目前的Beacon找出現在所在的位置
+                    // Find the current position from the current Beacon
                     BeaconGroupModel currentPoint;
                     lock(resourceLock)
                         currentPoint = Utility.BeaconGroups
                             .Where(c => c.Beacons.Contains(currentBeacon))
                             .First();
 
-                    // 檢查是否抵達目的地
+                    // Check if he arrives the destination
                     var EndPoint =
                         pathQueue.ToArray()[pathQueue.Count() - 1].NextPoint;
 
@@ -98,8 +100,10 @@ namespace IndoorNavigation.Modules
 
 
                     lock (resourceLock)
-                        // NextInstruction=null代表現在導航開始的第一個位置
-                        // 目前版本第一個位置必須讓使用者先隨便行走，到達第二個位置再校正方向
+                        // if NextInstruction=null, it represents the navigation
+                        // starts at the first location.
+                        // The current version, user has to walk in random way,
+                        // once he reaches the second location then calibration.
                         if (nextInstruction == null)
                         {
                             nextInstruction = pathQueue.Dequeue();
@@ -111,7 +115,7 @@ namespace IndoorNavigation.Modules
                         }
                         else
                         {
-                            // 檢查是否抵達下一個位置
+                            // Check if the user reachs the next location
                             if (currentPoint == nextInstruction.NextPoint)
                             {
                                 nextInstruction = pathQueue.Dequeue();
@@ -129,7 +133,7 @@ namespace IndoorNavigation.Modules
                             }
                             else
                             {
-                                // 先通知走錯路，再通知下一步怎麼走
+                                // Alter the wrong path, and tell the next step
                                 Event.OnEventCall(new MaNEventArgs
                                 {
                                     Status = NavigationStatus.RouteCorrection
@@ -142,10 +146,10 @@ namespace IndoorNavigation.Modules
                         }
 
 
-                    // 等待抵達下一個最佳Beacon附近事件
+                    // Wait for the event of next best Beacon
                     bestBeacon.WaitOne();
 
-                    // 將現在的位置變成上一個位置
+                    // Change the current location to the last location
                     previousPoint = currentPoint;
                 }
             }
@@ -156,7 +160,7 @@ namespace IndoorNavigation.Modules
         }
 
         /// <summary>
-        /// 修正導航路線
+        /// Modify the navigation path
         /// </summary>
         /// <param name="CurrentPoint"></param>
         /// <returns></returns>
@@ -164,15 +168,16 @@ namespace IndoorNavigation.Modules
             (BeaconGroupModel CurrentPoint,
             BeaconGroupModel EndPoint)
         {
-            // 如果現在位置為導航路線的其中一個點
+            // If the current location is in the path
             if (pathQueue.Where(c => c.NextPoint == CurrentPoint).Count() > 0)
             {
-                // 將路線佇列中的位置移除，直到佇列dequeue出來的位置=現在位置
+                // Remove the location in the queue of path until the dequeued
+                // location is the same as current location
                 var CurrentInstruction = pathQueue
                     .Where(c => c.NextPoint == CurrentPoint).First();
                 while (pathQueue.Dequeue() != CurrentInstruction) ;
 
-                // 繼續導航
+                // Keep navigation
                 nextInstruction = pathQueue.Dequeue();
                 double distance = nextInstruction.NextPoint
                     .Coordinate
@@ -187,17 +192,18 @@ namespace IndoorNavigation.Modules
             }
             else
             {
-                // 檢查現在所在位置是否與上一個位置連接
-                // 有連接可以不用校正方向
+                // Check the current location if is connected to the last
+                // location. If the Wifi is connected, it dosn't need to
+                // calibrate the direction
                 if (Utility.LocationConnects
-                    .Where(c => c.BeaconA == CurrentPoint && 
-                    c.BeaconB == previousPoint).Count() > 0 || 
+                    .Where(c => c.BeaconA == CurrentPoint &&
+                    c.BeaconB == previousPoint).Count() > 0 ||
                     Utility.LocationConnects
-                    .Where(c => c.BeaconA == previousPoint && 
+                    .Where(c => c.BeaconA == previousPoint &&
                     c.BeaconB == CurrentPoint).Count() > 0)
                 {
-                    // 重新規劃路徑，並繼續導航
-                    pathQueue = Utility.Route.RegainPath(previousPoint, 
+                    // Replan the path, and keep navigating
+                    pathQueue = Utility.Route.RegainPath(previousPoint,
                         currentBeacon, EndPoint);
                     nextInstruction = pathQueue.Dequeue();
                     double distance = nextInstruction.NextPoint
@@ -215,7 +221,7 @@ namespace IndoorNavigation.Modules
                 }
                 else
                 {
-                    // 重新規劃路徑，並且校正方向再繼續導航
+                    // Replan the path and calibrate the direction
                     pathQueue = Utility.Route.GetPath(currentBeacon,EndPoint);
                     nextInstruction = pathQueue.Dequeue();
 
@@ -228,11 +234,11 @@ namespace IndoorNavigation.Modules
         }
 
         /// <summary>
-        /// 停止導航
+        /// Stop navigation
         /// </summary>
         public void StopNavigation()
         {
-            // 暫停MaN Thread 等待設定新的導航目的地
+            // Stop MaN Thread, and wait for setting to a new destination
             IsReachingDestination = true;
             lock(resourceLock)
                 currentBeacon = null;
@@ -241,12 +247,12 @@ namespace IndoorNavigation.Modules
         }
 
         /// <summary>
-        /// 設定目的地
+        /// Set the destination
         /// </summary>
         /// <param name="EndPoint"></param>
         public void SetDestination(BeaconGroupModel EndPoint)
         {
-            // 規劃導航路徑
+            // Plan the navigation path
             if (currentBeacon == null)
                 bestBeacon.WaitOne();
             lock(resourceLock)
@@ -257,16 +263,16 @@ namespace IndoorNavigation.Modules
         }
 
         /// <summary>
-        /// 接收來自signal process model傳送的最佳Beacon
+        /// Receive the best Beacon returned by signal process model
         /// </summary>
         /// <param name="CurrentBeacon"></param>
         private void HandleSignalProcess(object sender, EventArgs e)
         {
-            Beacon currentBeacon = 
+            Beacon currentBeacon =
                 (e as SignalProcessEventArgs).CurrentBeacon;
 
-            // 檢查本次Signal Process事件的Current Beacon
-            // 是否和Current Beacon相同
+            // Check this event of signal processing from the current Beacon if
+            // is the same as currrent Beacon
             if (this.currentBeacon != currentBeacon)
             {
                 lock (resourceLock)
@@ -339,15 +345,15 @@ namespace IndoorNavigation.Modules
     public class MaNEventArgs : EventArgs
     {
         /// <summary>
-        /// 導航狀態
+        /// Status of navigation
         /// </summary>
         public NavigationStatus Status { get; set; }
         /// <summary>
-        /// 旋轉角度
+        /// The angle of turn
         /// </summary>
         public int Angle { get; set; }
         /// <summary>
-        /// 到下個點的距離
+        /// The distance to next location
         /// </summary>
         public double Distance { get; set; }
     }

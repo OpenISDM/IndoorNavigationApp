@@ -2,27 +2,27 @@
  * Copyright (c) 2018 Academia Sinica, Institude of Information Science
  *
  * License:
- *      GPL 3.0 : The content of this file is subject to the terms and 
+ *      GPL 3.0 : The content of this file is subject to the terms and
  *      conditions defined in file 'COPYING.txt', which is part of this source
  *      code package.
  *
  * Project Name:
- * 
+ *
  *      IndoorNavigation
- * 
+ *
  * File Description:
  * File Name:
- * 
+ *
  *      Storage.cs
- * 
+ *
  * Abstract:
- *      
- *      提供存取手機儲存空間的方法
+ *
+ *      This provides the methods for cell phone's storage
  *
  * Authors:
- * 
+ *
  *      Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
- * 
+ *
  */
 
 using System;
@@ -36,7 +36,7 @@ using Newtonsoft.Json.Linq;
 namespace IndoorNavigation.Modules
 {
     /// <summary>
-    /// 提供可以快速存取本地儲存空間內地圖資料的方法
+    /// It porvides the fast method to load and save data in local storage
     /// </summary>
     public static class MapStorage
     {
@@ -47,12 +47,12 @@ namespace IndoorNavigation.Modules
         private static object fileLock = new object();
 
         /// <summary>
-        /// 傳回地圖存放區的所有場所名稱
+        /// Return all the name of the locations.
         /// </summary>
         /// <returns></returns>
         public static string[] GetAllPlace()
         {
-            // 檢查地圖資料夾是否存在
+            // Check the folder of map if it is exist
             if (!Directory.Exists(mapFolder))
                 Directory.CreateDirectory(mapFolder);
 
@@ -62,7 +62,7 @@ namespace IndoorNavigation.Modules
         }
 
         /// <summary>
-        /// 載入地圖
+        /// Load the map
         /// </summary>
         /// <param name="Place"></param>
         /// <returns></returns>
@@ -70,13 +70,13 @@ namespace IndoorNavigation.Modules
         {
             try
             {
-                // 轉換Beacon及地圖相關資料
-                JObject data = 
+                // Convert corresponding data of LBeacon
+                JObject data =
                     JsonConvert.DeserializeObject<JObject>(LoadFile(Place));
 
-                // 從Json字串轉換成物件
+                // Convert the JSON to element 
                 string beaconJson = data["Beacon"].ToString();
-                Utility.Beacons = 
+                Utility.Beacons =
                     beaconJson.ToBeacons().ToDictionary(beacon =>beacon.UUID);
                 Utility.BeaconGroups = JsonConvert.DeserializeObject
                     <List<BeaconGroupModelForMapFile>>
@@ -87,9 +87,9 @@ namespace IndoorNavigation.Modules
                     (data["LocationConnect"].ToString())
                     .ToLocationConnect(Utility.BeaconGroups);
 
-                // 初始化路徑規劃物件及設定地圖資料
+                // Initialize path plannig and the data for setting map
                 Utility.Route = new Navigation.RoutePlan(
-                    Utility.BeaconGroups, 
+                    Utility.BeaconGroups,
                     Utility.LocationConnects);
 
                 return true;
@@ -101,7 +101,7 @@ namespace IndoorNavigation.Modules
         }
 
         /// <summary>
-        /// 傳回指定場所的地圖資料
+        /// Return specific information of the location
         /// </summary>
         /// <param name="FileName"></param>
         /// <returns></returns>
@@ -109,14 +109,14 @@ namespace IndoorNavigation.Modules
         {
             string filePath = Path.Combine(mapFolder, FileName);
 
-            // 檢查地圖資料夾是否存在
+            // Check the folder of map if it is exist
             if (!Directory.Exists(mapFolder))
             {
                 Directory.CreateDirectory(mapFolder);
                 return string.Empty;
             }
 
-            // 檢查地圖檔案是否存在
+            // Check the file of map if it is exist
             if (!File.Exists(filePath))
                 return string.Empty;
 
@@ -125,7 +125,7 @@ namespace IndoorNavigation.Modules
         }
 
         /// <summary>
-        /// 儲存場所的地圖資料
+        /// Store the map information of a location
         /// </summary>
         /// <param name="Place"></param>
         /// <param name="MapDatas"></param>
@@ -135,11 +135,11 @@ namespace IndoorNavigation.Modules
             string filePath = Path.Combine(mapFolder, Place);
             try
             {
-                // 檢查地圖資料夾是否存在
+                // Check the folder of map if it is exist
                 if (!Directory.Exists(mapFolder))
                     Directory.CreateDirectory(mapFolder);
 
-                // 寫入地圖資料
+                // Write map information
                 lock (fileLock)
                     File.WriteAllText(filePath, MapDatas);
 
@@ -152,14 +152,14 @@ namespace IndoorNavigation.Modules
         }
 
         /// <summary>
-        /// 刪除指定場所的地圖資料
+        /// Delete specific map information
         /// </summary>
         /// <param name="Place"></param>
         public static void DeleteMap(string Place)
         {
             string filePath = Path.Combine(mapFolder, Place);
 
-            // 檢查地圖資料夾是否存在
+            // Check the folder of map if it is exist
             if (!Directory.Exists(mapFolder))
                 Directory.CreateDirectory(mapFolder);
 
@@ -168,7 +168,7 @@ namespace IndoorNavigation.Modules
         }
 
         /// <summary>
-        /// 刪除所有地圖資料
+        /// Delete all map information
         /// </summary>
         public static void DeleteAllMap()
         {
