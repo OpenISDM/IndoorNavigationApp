@@ -113,13 +113,15 @@ namespace IndoorNavigation.Modules
         public static int GetRotateAngle(GeoCoordinate Current,
             GeoCoordinate Previous, GeoCoordinate Next)
         {
-            double cosineAngle = CalculatingCosineAngle(Current, Previous, Next);
-            double outerProductAngle = CalculatingOuterProductAngle(Current,Previous,Next);
+            double cosineAngle = 
+                CalculatingCosineAngle(Current, Previous, Next);
+            double outerProductAngle = 
+                CalculatingOuterProductAngle(Current,Previous,Next);
 
             if (outerProductAngle < 0)
-                return System.Convert.ToInt32(180 - cosineAngle * 180/Math.PI);
+                return System.Convert.ToInt32(180-cosineAngle*180/Math.PI);
             else
-                return -System.Convert.ToInt32(180 - cosineAngle * 180/Math.PI);
+                return -System.Convert.ToInt32(180-cosineAngle*180/Math.PI);
         }
 
         /// <summary>
@@ -150,8 +152,8 @@ namespace IndoorNavigation.Modules
         /// <param name="Previous">last location </param>
         /// <param name="Next">next location</param>
         /// <returns></returns>
-        private static double CalculatingOuterProductAngle(GeoCoordinate Current,
-            GeoCoordinate Previous, GeoCoordinate Next)
+        private static double CalculatingOuterProductAngle(
+            GeoCoordinate Current,GeoCoordinate Previous, GeoCoordinate Next)
         {
             double Xa, Xb, Ya, Yb;
             double angle;

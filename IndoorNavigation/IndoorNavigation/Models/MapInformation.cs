@@ -139,8 +139,8 @@ namespace IndoorNavigation.Models
                 List<GeoCoordinate> Coordinates =
                     Beacons.Select(c => c.GetCoordinate()).ToList();
 
-                // Compute the average of the coordinate of all the LBeaocns in
-                // order to get the central coordinate.
+                // Compute the average of the coordinate of all the LBeaocns 
+                // in order to get the central coordinate.
                 double TotalLatitude = 0; double TotalLongitude = 0;
 
                 foreach (GeoCoordinate Coordinate in Coordinates)
@@ -157,8 +157,8 @@ namespace IndoorNavigation.Models
     }
 
     /// <summary>
-    /// A group of LBeacon which is regarded as a location. This element is used
-    ///to store the map data when the network connection is down.
+    /// A group of LBeacon which is regarded as a location. This element is 
+    /// used to store the map data when the network connection is down.
     /// </summary>
     public class BeaconGroupModelForMapFile : BeaconGroup,
         IBeaconGroupModelForMapFile

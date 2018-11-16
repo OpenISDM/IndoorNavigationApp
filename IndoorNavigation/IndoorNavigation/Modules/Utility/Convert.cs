@@ -116,7 +116,8 @@ namespace IndoorNavigation
 
             try
             {
-                JObject json = JsonConvert.DeserializeObject<JObject>(JsonString);
+                JObject json = 
+                    JsonConvert.DeserializeObject<JObject>(JsonString);
 
                 // Aquire information of LBeacon
                 List<LBeaconModel> lBeacons =

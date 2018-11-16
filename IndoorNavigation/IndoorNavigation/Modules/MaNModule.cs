@@ -67,7 +67,8 @@ namespace IndoorNavigation.Modules
             MaNThread = new Thread(MaNWork) { IsBackground = true};
             MaNThread.Start();
             HSignalProcess = new EventHandler(HandleSignalProcess);
-            Utility.SignalProcess.Event.SignalProcessEventHandler += HSignalProcess;
+            Utility.SignalProcess.Event.SignalProcessEventHandler += 
+                HSignalProcess;
         }
 
         private void MaNWork()
@@ -100,10 +101,11 @@ namespace IndoorNavigation.Modules
 
 
                     lock (resourceLock)
-                        // if NextInstruction=null, it represents the navigation
-                        // starts at the first location.
-                        // The current version, user has to walk in random way,
-                        // once he reaches the second location then calibration.
+                        // if NextInstruction=null, it represents the 
+                        // navigation starts at the first location.
+                        // The current version, user has to walk in random 
+                        // way, once he reaches the second location then 
+                        // calibration.
                         if (nextInstruction == null)
                         {
                             nextInstruction = pathQueue.Dequeue();
@@ -133,7 +135,8 @@ namespace IndoorNavigation.Modules
                             }
                             else
                             {
-                                // Alter the wrong path, and tell the next step
+                                // Alter the wrong path, 
+                                // and tell the next step
                                 Event.OnEventCall(new MaNEventArgs
                                 {
                                     Status = NavigationStatus.RouteCorrection
@@ -271,8 +274,8 @@ namespace IndoorNavigation.Modules
             Beacon currentBeacon =
                 (e as SignalProcessEventArgs).CurrentBeacon;
 
-            // Check this event of signal processing from the current Beacon if
-            // is the same as currrent Beacon
+            // Check this event of signal processing from the current Beacon 
+            // if is the same as currrent Beacon
             if (this.currentBeacon != currentBeacon)
             {
                 lock (resourceLock)
@@ -291,7 +294,8 @@ namespace IndoorNavigation.Modules
             {
                 if (disposing)
                 {
-                    Utility.SignalProcess.Event.SignalProcessEventHandler -= HSignalProcess;
+                    Utility.SignalProcess.Event.SignalProcessEventHandler -= 
+                        HSignalProcess;
                     threadSwitch = false;
                     navigationTaskWaitEvent.Set();
                     bestBeacon.Set();

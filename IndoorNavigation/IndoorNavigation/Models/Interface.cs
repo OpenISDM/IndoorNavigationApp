@@ -74,8 +74,8 @@ namespace IndoorNavigation.Models
     }
 
     /// <summary>
-    /// There are multiple Beacons in a group. It is used to store the map data
-    /// in the phone when the Internet is unconnected.
+    /// There are multiple Beacons in a group. It is used to store the map 
+    /// data in the phone when the Internet is unconnected.
     /// </summary>
     public interface IBeaconGroupModelForMapFile
     {

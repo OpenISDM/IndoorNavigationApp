@@ -116,7 +116,8 @@ namespace IndoorNavigation.Modules.Navigation
                 if (i == 0)
                 {
                     // Don't need to compute the direction because user should
-                    // get the wrong way first, and then calibrate the direction
+                    // get the wrong way first, and then calibrate the 
+                    // direction
                     pathQueue.Enqueue(new NextInstructionModel
                     {
                         NextPoint = nextPoint,
@@ -188,7 +189,8 @@ namespace IndoorNavigation.Modules.Navigation
             var endPointKey = map
                 .Where(c => c.Item == EndPoint).Select(c => c.Key).First();
 
-            // Check the current location if is connected to the last location.
+            // Check the current location if is connected to the last 
+            // location.
             // If the user skips more than two location, the last location is
             // less meaningful.
             if (this.locationConnects.Where(c =>
@@ -215,8 +217,8 @@ namespace IndoorNavigation.Modules.Navigation
 
                 if (i == 0)
                 {
-                    // The function of redirection can use last node to compute
-                    // the angle to turn
+                    // The function of redirection can use last node to 
+                    // compute the angle to turn
                     int angle = RotateAngle.GetRotateAngle(
                         currentPoint.Coordinate,
                         PreviousPoint.Coordinate,
