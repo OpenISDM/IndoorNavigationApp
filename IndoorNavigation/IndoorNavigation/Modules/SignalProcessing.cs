@@ -88,8 +88,13 @@ namespace IndoorNavigation.Modules
                 lock (bufferLock)
                 {
                     // remove buffer old data
-                    foreach (var beaconSignal in beaconSignalBuffer.Where(c =>
-                    c.Timestamp < DateTime.Now.AddMilliseconds(-1000)))
+                    List<BeaconSignalModel> roveSignalBuffer =
+                        new List<BeaconSignalModel>();
+                    
+                    roveSignalBuffer.AddRange(beaconSignalBuffer.Where(c =>
+                        c.Timestamp < DateTime.Now.AddMilliseconds(-1000)));
+
+                    foreach (var beaconSignal in roveSignalBuffer)
                         beaconSignalBuffer.Remove(beaconSignal);
 
                     // Average the intensity of all Beacon signals

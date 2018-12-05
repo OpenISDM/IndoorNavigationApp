@@ -28,207 +28,207 @@ namespace IndoorNavigationTest
             {
                 new LBeaconModel{
                     UUID = Guid.Parse("0000803f-0000-7b3d-c941-0000c15ef342"),
-                    Threshold = 60
+                    Threshold = -60
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("0000803f-0000-4c3d-c941-0000c35ef342"),
-                    Threshold = 70
+                    Threshold = -70
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("0000803f-0000-803d-c941-0000d45ef342"),
-                    Threshold = 75
+                    Threshold = -75
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("0000803f-0000-563d-c941-0000d55ef342"),
-                    Threshold = 65
+                    Threshold = -65
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("0000803f-0000-863d-c941-0000ea5ef342"),
-                    Threshold = 55
+                    Threshold = -55
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("0000803f-0000-563d-c941-0000e85ef342"),
-                    Threshold = 70
+                    Threshold = -70
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("0000803f-0000-183d-c941-0000eb5ef342"),
-                    Threshold = 60
+                    Threshold = -60
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("0000803f-0000-223d-c941-0000ff5ef342"),
-                    Threshold = 50
+                    Threshold = -50
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("0000803f-0000-223d-c941-0000175ff342"),
-                    Threshold = 40
+                    Threshold = -40
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("0000803f-0000-de3c-c941-0000ed5ef342"),
-                    Threshold = 30
+                    Threshold = -30
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("0000803f-0000-ee3c-c941-0000005ff342"),
-                    Threshold = 80
+                    Threshold = -80
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("0000803f-0000-f33c-c941-0000195ff342"),
-                    Threshold = 50
+                    Threshold = -50
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("0000803f-0000-b43c-c941-0000ed5ef342"),
-                    Threshold = 40
+                    Threshold = -40
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("0000803f-0000-be3c-c941-0000025ff342"),
-                    Threshold = 55
+                    Threshold = -55
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("0000803f-0000-be3c-c941-0000185ff342"),
-                    Threshold = 55
+                    Threshold = -55
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("0000803f-0000-aa3d-c941-0000375ff342"),
-                    Threshold = 45
+                    Threshold = -45
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("0000803f-0000-713d-c941-0000395ff342"),
-                    Threshold = 50
+                    Threshold = -50
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("0000803f-0000-b03d-c941-0000575ff342"),
-                    Threshold = 55
+                    Threshold = -55
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("0000803f-0000-763d-c941-0000575ff342"),
-                    Threshold = 70
+                    Threshold = -70
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("0000803f-0000-323d-c941-0000585ff342"),
-                    Threshold = 80
+                    Threshold = -80
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("0000803f-0000-f83c-c941-00005a5ff342"),
-                    Threshold = 90
+                    Threshold = -90
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("0000803f-0000-b93c-c941-00005a5ff342"),
-                    Threshold = 40
+                    Threshold = -40
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("0000803f-0000-ee3c-c941-0000395ff342"),
-                    Threshold = 60
+                    Threshold = -60
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("0000803f-0000-be3c-c941-0000395ff342"),
-                    Threshold = 80
+                    Threshold = -80
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("00000000-0000-7b3d-c941-0000ae5ef342"),
-                    Threshold = 75
+                    Threshold = -75
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("00000000-0000-a03d-c941-0000695ff342"),
-                    Threshold = 40
+                    Threshold = -40
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("00000000-0000-8a3c-c941-0000045ff342"),
-                    Threshold = 50
+                    Threshold = -50
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("00000040-0000-7b3d-c941-0000c15ef342"),
-                    Threshold = 80
+                    Threshold = -80
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("00000040-0000-4c3d-c941-0000c35ef342"),
-                    Threshold = 55
+                    Threshold = -55
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("00000040-0000-803d-c941-0000d45ef342"),
-                    Threshold = 65
+                    Threshold = -65
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("00000040-0000-563d-c941-0000d55ef342"),
-                    Threshold = 75
+                    Threshold = -75
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("00000040-0000-863d-c941-0000ea5ef342"),
-                    Threshold = 95
+                    Threshold = -95
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("00000040-0000-563d-c941-0000e85ef342"),
-                    Threshold = 45
+                    Threshold = -45
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("00000040-0000-183d-c941-0000eb5ef342"),
-                    Threshold = 55
+                    Threshold = -55
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("00000040-0000-223d-c941-0000ff5ef342"),
-                    Threshold = 80
+                    Threshold = -80
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("00000040-0000-223d-c941-0000175ff342"),
-                    Threshold = 70
+                    Threshold = -70
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("00000040-0000-de3c-c941-0000ed5ef342"),
-                    Threshold = 60
+                    Threshold = -60
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("00000040-0000-ee3c-c941-0000005ff342"),
-                    Threshold = 50
+                    Threshold = -50
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("00000040-0000-f33c-c941-0000195ff342"),
-                    Threshold = 45
+                    Threshold = -45
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("00000040-0000-b43c-c941-0000ed5ef342"),
-                    Threshold = 35
+                    Threshold = -35
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("00000040-0000-be3c-c941-0000025ff342"),
-                    Threshold = 50
+                    Threshold = -50
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("00000040-0000-be3c-c941-0000185ff342"),
-                    Threshold = 50
+                    Threshold = -50
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("00000040-0000-aa3d-c941-0000375ff342"),
-                    Threshold = 55
+                    Threshold = -55
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("00000040-0000-713d-c941-0000395ff342"),
-                    Threshold = 60
+                    Threshold = -60
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("00000040-0000-b03d-c941-0000575ff342"),
-                    Threshold = 55
+                    Threshold = -55
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("00000040-0000-763d-c941-0000575ff342"),
-                    Threshold = 50
+                    Threshold = -50
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("00000040-0000-323d-c941-0000585ff342"),
-                    Threshold = 45
+                    Threshold = -45
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("00000040-0000-f83c-c941-00005a5ff342"),
-                    Threshold = 60
+                    Threshold = -60
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("00000040-0000-b93c-c941-00005a5ff342"),
-                    Threshold = 65
+                    Threshold = -65
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("00000040-0000-ee3c-c941-0000395ff342"),
-                    Threshold = 55
+                    Threshold = -55
                 },
                 new LBeaconModel{
                     UUID = Guid.Parse("00000040-0000-be3c-c941-0000395ff342"),
-                    Threshold = 50
+                    Threshold = -50
                 }
             };
 

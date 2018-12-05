@@ -4,16 +4,24 @@ using Newtonsoft.Json;
 using System;
 using System.Linq;
 using IndoorNavigation;
+using System.Collections.Generic;
+using IndoorNavigation.Models;
+using System.Threading;
 
 namespace IndoorNavigationTest
 {
     [TestClass]
     public class NavigationlogicTest
     {
+        private ManualResetEvent bestBeaconWait = new ManualResetEvent(false);
+        private Beacon bestBeacon = null;
+
         [TestInitialize]
         public void TestInit()
         {
             GenerateMapData.Generate();
+            Utility.SignalProcess = new SignalProcessModule();
+            Utility.SignalProcess.Event.SignalProcessEventHandler += new EventHandler(HandleSignalProcess);
         }
 
         [TestMethod]
@@ -95,6 +103,65 @@ namespace IndoorNavigationTest
             Assert.AreEqual(25.15495, B2.GetCoordinate().Latitude, 0.00001);
             Assert.AreEqual(121.68522, B2.GetCoordinate().Longitude, 0.00001);
             Assert.AreEqual(1, A1.Floor);
+        }
+
+        [TestMethod, Timeout(30000)]
+        public void SignalProcessTest()
+        {
+            Utility.SignalProcess.AddSignal(
+                new List<BeaconSignalModel> {
+                    new BeaconSignalModel
+                    {
+                        UUID = Guid.Parse("0000803f-0000-563d-c941-0000d55ef342"),
+                        RSSI = -20
+                    }});
+
+            Utility.SignalProcess.AddSignal(
+                new List<BeaconSignalModel> {
+                    new BeaconSignalModel
+                    {
+                        UUID = Guid.Parse("0000803f-0000-863d-c941-0000ea5ef342"),
+                        RSSI = -30
+                    }});
+
+            var ANSBeacon = Utility.Beacons[Guid.Parse("0000803f-0000-563d-c941-0000d55ef342")];
+            bestBeaconWait.WaitOne();
+            Assert.AreEqual(ANSBeacon, bestBeacon);
+
+            Utility.SignalProcess.AddSignal(
+                new List<BeaconSignalModel> {
+                    new BeaconSignalModel
+                    {
+                        UUID = Guid.Parse("0000803f-0000-563d-c941-0000d55ef342"),
+                        RSSI = -63
+                    }});
+
+            Utility.SignalProcess.AddSignal(
+                new List<BeaconSignalModel> {
+                    new BeaconSignalModel
+                    {
+                        UUID = Guid.Parse("0000803f-0000-863d-c941-0000ea5ef342"),
+                        RSSI = -57
+                    }});
+
+            ANSBeacon = Utility.Beacons[Guid.Parse("0000803f-0000-563d-c941-0000d55ef342")];
+            bestBeaconWait.WaitOne();
+            Assert.AreEqual(ANSBeacon, bestBeacon);
+        }
+
+        /// <summary>
+        /// 接收來自signal process model傳送的最佳Beacon
+        /// </summary>
+        /// <param name="CurrentBeacon"></param>
+        private void HandleSignalProcess(object sender, EventArgs e)
+        {
+            Beacon currentBeacon =
+                (e as SignalProcessEventArgs).CurrentBeacon;
+
+            bestBeacon = currentBeacon;
+
+            bestBeaconWait.Set();
+            bestBeaconWait.Reset();
         }
     }
 }

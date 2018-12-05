@@ -53,6 +53,11 @@ namespace IndoorNavigation.Models
     {
         public int TxPower { get; set; }
         public DateTime Timestamp { get; set; }
+
+        public BeaconSignalModel()
+        {
+            Timestamp = DateTime.Now;
+        }
     }
 
     /// <summary>
