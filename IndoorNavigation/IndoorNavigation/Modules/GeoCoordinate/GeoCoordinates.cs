@@ -7,12 +7,12 @@ namespace GeoCoordinatePortable
     /// Represents a geographical location that is determined by latitude and longitude
     /// coordinates. May also include altitude, accuracy, speed, and course information.
     /// </summary>
-    public class GeoCoordinate : IEquatable<GeoCoordinate>
+    public class GeoCoordinates : IEquatable<GeoCoordinates>
     {
         /// <summary>
-        /// Represents a <see cref="GeoCoordinate"/> object that has unknown latitude and longitude fields.
+        /// Represents a <see cref="GeoCoordinates"/> object that has unknown latitude and longitude fields.
         /// </summary>
-        public static readonly GeoCoordinate Unknown = new GeoCoordinate();
+        public static readonly GeoCoordinates Unknown = new GeoCoordinates();
         private double _course;
         private double _horizontalAccuracy;
         private double _latitude;
@@ -23,7 +23,7 @@ namespace GeoCoordinatePortable
         /// <summary>
         /// Initializes a new instance of GeoCoordinate that has no data fields set.
         /// </summary>
-        public GeoCoordinate()
+        public GeoCoordinates()
             : this(double.NaN, double.NaN)
         {
         }
@@ -34,7 +34,7 @@ namespace GeoCoordinatePortable
         /// <param name="latitude">The latitude of the location. May range from -90.0 to 90.0. </param>
         /// <param name="longitude">The longitude of the location. May range from -180.0 to 180.0.</param>
         /// <exception cref="T:System.ArgumentOutOfRangeException">Latitude or longitude is out of range.</exception>
-        public GeoCoordinate(double latitude, double longitude)
+        public GeoCoordinates(double latitude, double longitude)
             : this(latitude, longitude, double.NaN)
         {
         }
@@ -48,7 +48,7 @@ namespace GeoCoordinatePortable
         /// <exception cref="T:System.ArgumentOutOfRangeException">
         ///     latitude, longitude or altitude is out of range.
         /// </exception>
-        public GeoCoordinate(double latitude, double longitude, double altitude)
+        public GeoCoordinates(double latitude, double longitude, double altitude)
             : this(latitude, longitude, altitude, double.NaN, double.NaN, double.NaN, double.NaN)
         {
         }
@@ -80,7 +80,7 @@ namespace GeoCoordinatePortable
         /// <exception cref="T:System.ArgumentOutOfRangeException">
         ///     If latitude, longitude, horizontalAccuracy, verticalAccuracy, course is out of range.
         /// </exception>
-        public GeoCoordinate(double latitude, double longitude, double altitude, double horizontalAccuracy,
+        public GeoCoordinates(double latitude, double longitude, double altitude, double horizontalAccuracy,
             double verticalAccuracy, double speed, double course)
         {
             Latitude = latitude;
@@ -227,7 +227,7 @@ namespace GeoCoordinatePortable
         ///     true if the GeoCoordinate objects are equal; otherwise, false.
         /// </returns>
         /// <param name="other">The GeoCoordinate object to compare to the calling object.</param>
-        public bool Equals(GeoCoordinate other)
+        public bool Equals(GeoCoordinates other)
         {
             if (ReferenceEquals(other, null))
                 return false;
@@ -250,7 +250,7 @@ namespace GeoCoordinatePortable
         /// </returns>
         /// <param name="left">The first GeoCoordinate to compare.</param>
         /// <param name="right">The second GeoCoordinate to compare.</param>
-        public static bool operator ==(GeoCoordinate left, GeoCoordinate right)
+        public static bool operator ==(GeoCoordinates left, GeoCoordinates right)
         {
             if (ReferenceEquals(left, null))
                 return ReferenceEquals(right, null);
@@ -266,7 +266,7 @@ namespace GeoCoordinatePortable
         /// </returns>
         /// <param name="left">The first GeoCoordinate to compare.</param>
         /// <param name="right">The second GeoCoordinate to compare.</param>
-        public static bool operator !=(GeoCoordinate left, GeoCoordinate right)
+        public static bool operator !=(GeoCoordinates left, GeoCoordinates right)
         {
             return !(left == right);
         }
@@ -279,7 +279,7 @@ namespace GeoCoordinatePortable
         ///     The distance between the two coordinates, in meters.
         /// </returns>
         /// <param name="other">The GeoCoordinate for the location to calculate the distance to.</param>
-        public double GetDistanceTo(GeoCoordinate other)
+        public double GetDistanceTo(GeoCoordinates other)
         {
             if (double.IsNaN(Latitude) || double.IsNaN(Longitude) || double.IsNaN(other.Latitude) ||
                 double.IsNaN(other.Longitude))
@@ -318,7 +318,7 @@ namespace GeoCoordinatePortable
         /// <param name="obj">The object to compare the GeoCoordinate to.</param>
         public override bool Equals(object obj)
         {
-            return Equals(obj as GeoCoordinate);
+            return Equals(obj as GeoCoordinates);
         }
 
         /// <summary>

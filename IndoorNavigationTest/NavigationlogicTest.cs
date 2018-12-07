@@ -27,27 +27,27 @@ namespace IndoorNavigationTest
         [TestMethod]
         public void StorageTest()
         {
-            MapStorage.DeleteAllMap();
-            MapStorage.SaveMapInformation("test1","");
-            MapStorage.SaveMapInformation("test1", "");
-            string[] Maps = MapStorage.GetAllPlace();
+            NavigraphStorage.DeleteAllMap();
+            NavigraphStorage.SaveMapInformation("test1","");
+            NavigraphStorage.SaveMapInformation("test1", "");
+            string[] Maps = NavigraphStorage.GetAllPlace();
             Assert.AreEqual(1, Maps.Length);
 
-            MapStorage.SaveMapInformation("test2", "");
-            MapStorage.SaveMapInformation("test3", "");
-            Maps = MapStorage.GetAllPlace();
+            NavigraphStorage.SaveMapInformation("test2", "");
+            NavigraphStorage.SaveMapInformation("test3", "");
+            Maps = NavigraphStorage.GetAllPlace();
             Assert.AreEqual(3, Maps.Length);
 
-            MapStorage.DeleteMap("test4");
-            Maps = MapStorage.GetAllPlace();
+            NavigraphStorage.DeleteNavigraph("test4");
+            Maps = NavigraphStorage.GetAllPlace();
             Assert.AreEqual(3, Maps.Length);
 
-            MapStorage.DeleteMap("test3");
-            Maps = MapStorage.GetAllPlace();
+            NavigraphStorage.DeleteNavigraph("test3");
+            Maps = NavigraphStorage.GetAllPlace();
             Assert.AreEqual(2, Maps.Length);
 
-            MapStorage.DeleteAllMap();
-            Maps = MapStorage.GetAllPlace();
+            NavigraphStorage.DeleteAllMap();
+            Maps = NavigraphStorage.GetAllPlace();
             Assert.AreEqual(0, Maps.Length);
         }
 
@@ -62,13 +62,13 @@ namespace IndoorNavigationTest
                     LocationConnect = Utility.LocationConnects.ToJsonString()
                 });
 
-            MapStorage.SaveMapInformation("Map1", MapJson);
-            string[] Maps = MapStorage.GetAllPlace();
+            NavigraphStorage.SaveMapInformation("Map1", MapJson);
+            string[] Maps = NavigraphStorage.GetAllPlace();
             Assert.AreEqual(1, Maps.Length);
             Utility.Beacons = null;
             Utility.BeaconGroups = null;
             Utility.LocationConnects = null;
-            MapStorage.LoadMap("Map1");
+            NavigraphStorage.LoadNavigraph("Map1");
 
             var A1 = Utility.Beacons[Guid.Parse("0000803f-0000-7b3d-c941-0000c15ef342")];
             var A2 = Utility.Beacons[Guid.Parse("0000803f-0000-4c3d-c941-0000c35ef342")];
@@ -95,13 +95,13 @@ namespace IndoorNavigationTest
         public void UUIDConvertTest()
         {
             var A1 = Utility.Beacons[Guid.Parse("0000803f-0000-7b3d-c941-0000c15ef342")];
-            Assert.AreEqual(25.15502, A1.GetCoordinate().Latitude,0.00001);
-            Assert.AreEqual(121.68507, A1.GetCoordinate().Longitude, 0.00001);
+            Assert.AreEqual(25.15502, A1.GetCoordinates().Latitude,0.00001);
+            Assert.AreEqual(121.68507, A1.GetCoordinates().Longitude, 0.00001);
             Assert.AreEqual(1, A1.Floor);
 
             var B2 = Utility.Beacons[Guid.Parse("0000803f-0000-563d-c941-0000d55ef342")];
-            Assert.AreEqual(25.15495, B2.GetCoordinate().Latitude, 0.00001);
-            Assert.AreEqual(121.68522, B2.GetCoordinate().Longitude, 0.00001);
+            Assert.AreEqual(25.15495, B2.GetCoordinates().Latitude, 0.00001);
+            Assert.AreEqual(121.68522, B2.GetCoordinates().Longitude, 0.00001);
             Assert.AreEqual(1, A1.Floor);
         }
 
@@ -150,7 +150,7 @@ namespace IndoorNavigationTest
         }
 
         /// <summary>
-        /// 接收來自signal process model傳送的最佳Beacon
+        /// 接收來?signal process model傳送?最佳Beacon
         /// </summary>
         /// <param name="CurrentBeacon"></param>
         private void HandleSignalProcess(object sender, EventArgs e)

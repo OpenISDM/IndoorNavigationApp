@@ -122,9 +122,9 @@ namespace IndoorNavigation.Modules
                             {
                                 nextInstruction = pathQueue.Dequeue();
                                 double distance = nextInstruction.NextPoint
-                                    .Coordinate
+                                    .Coordinates
                                     .GetDistanceTo(
-                                    currentBeacon.GetCoordinate());
+                                    currentBeacon.GetCoordinates());
 
                                 Event.OnEventCall(new MaNEventArgs
                                 {
@@ -183,8 +183,8 @@ namespace IndoorNavigation.Modules
                 // Keep navigation
                 nextInstruction = pathQueue.Dequeue();
                 double distance = nextInstruction.NextPoint
-                    .Coordinate
-                    .GetDistanceTo(currentBeacon.GetCoordinate());
+                    .Coordinates
+                    .GetDistanceTo(currentBeacon.GetCoordinates());
 
                 return new MaNEventArgs
                 {
@@ -210,9 +210,9 @@ namespace IndoorNavigation.Modules
                         currentBeacon, EndPoint);
                     nextInstruction = pathQueue.Dequeue();
                     double distance = nextInstruction.NextPoint
-                        .Coordinate
+                        .Coordinates
                         .GetDistanceTo(
-                        currentBeacon.GetCoordinate());
+                        currentBeacon.GetCoordinates());
 
                     return new MaNEventArgs
                     {

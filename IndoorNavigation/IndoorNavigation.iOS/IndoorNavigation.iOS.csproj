@@ -161,7 +161,7 @@
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
     <ProjectReference Include="..\IndoorNavigation\IndoorNavigation.csproj">
-      <Project>{02A1BEDA-3D43-416D-9F82-662928EA645E}</Project>
+      <Project>{36779A2B-18D9-4509-BAE5-01652A9D37E8}</Project>
       <Name>IndoorNavigation</Name>
     </ProjectReference>
   </ItemGroup>

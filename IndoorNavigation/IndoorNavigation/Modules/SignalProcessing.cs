@@ -11,14 +11,18 @@
  *      IndoorNavigation
  *
  * File Description:
+ * 
+ *      This file contains class to receive status of nearby Beacons by the API
+ *      from IOS or Android, and find the Beacon within the threshold and have
+ *      the highest value.
+ * 
  * File Name:
  *
  *      SignalProcessing.cs
  *
  * Abstract:
- *
- *      It receives status of nearby Beacons by the API from IOS or Android,
- *      and generate the perfect Beacon
+ * 
+ *      
  *
  * Authors:
  *
@@ -36,7 +40,7 @@ using System.Linq;
 namespace IndoorNavigation.Modules
 {
     /// <summary>
-    /// Signal procssing for LBeacon
+    /// Signal processing of LBeacon
     /// </summary>
     public class SignalProcessModule : IDisposable
     {
@@ -45,13 +49,14 @@ namespace IndoorNavigation.Modules
             new ManualResetEvent(false);
         private  List<BeaconSignalModel> beaconSignalBuffer =
             new List<BeaconSignalModel>();
-        private bool threadSwitch = true;
+        private bool isThreadRunning = true;
         private object bufferLock = new object();
 
         public SignalProcessEvent Event = new SignalProcessEvent();
 
         /// <summary>
-        /// Initialize the elements for signal procssing
+        /// Launch the thread to find the Beacon within the threshold and have 
+        /// the highest value in background when this class is startup.
         /// </summary>
         public SignalProcessModule()
         {
@@ -61,12 +66,12 @@ namespace IndoorNavigation.Modules
         }
 
         /// <summary>
-        /// Insert the signal of founded Beacon
+        /// Insert the signal of discovered Beacon into the buffer(List)
         /// </summary>
         /// <param name="Signals"></param>
         public void AddSignal(List<BeaconSignalModel> Signals)
         {
-            // Beacon signal filter，it keeps the Beacon's signal recorded in
+            // Beacon signal filter, keeps the Beacon's signal recorded in
             // the graph
             IEnumerable<BeaconSignalModel> signals = Signals
                 .Where(signal => Utility.Beacons.Values
@@ -79,7 +84,7 @@ namespace IndoorNavigation.Modules
 
         private void SignalProcessWork()
         {
-            while (threadSwitch)
+            while (isThreadRunning)
             {
                 List<BeaconSignal> signalAverageList =
                     new List<BeaconSignal>();
@@ -92,7 +97,7 @@ namespace IndoorNavigation.Modules
                         new List<BeaconSignalModel>();
                     
                     roveSignalBuffer.AddRange(beaconSignalBuffer.Where(c =>
-                        c.Timestamp < DateTime.Now.AddMilliseconds(-1000)));
+                        c.Timestamp < DateTime.Now.AddMilliseconds(-1000) ));
 
                     foreach (var beaconSignal in roveSignalBuffer)
                         beaconSignalBuffer.Remove(beaconSignal);
@@ -144,7 +149,7 @@ namespace IndoorNavigation.Modules
                 }
 
                 // wait 1s or wait module close
-                SpinWait.SpinUntil(() => threadSwitch, 1000);
+                SpinWait.SpinUntil(() => isThreadRunning, 1000);
             }
 
             Debug.WriteLine("Signal process close");
@@ -161,7 +166,7 @@ namespace IndoorNavigation.Modules
             {
                 if (disposing)
                 {
-                    threadSwitch = false;
+                    isThreadRunning = false;
                     threadClosedWait.WaitOne();
 
                     threadClosedWait.Dispose();
