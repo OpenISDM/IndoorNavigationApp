@@ -33,19 +33,21 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace IndoorNavigation.Modules
 {
     /// <summary>
     /// Notification module
     /// </summary>
-    class MaNModule : IDisposable
+    public class MaNModule : IDisposable
     {
         private Thread MaNThread;
         private bool threadSwitch = true;
         private bool IsReachingDestination = false;
         private Beacon currentBeacon;
         private BeaconGroupModel previousPoint;
+        private BeaconGroupModel endPoint;
         private NextInstructionModel nextInstruction;
         private Queue<NextInstructionModel> pathQueue;
         private ManualResetEvent bestBeacon = new ManualResetEvent(false);
@@ -55,7 +57,6 @@ namespace IndoorNavigation.Modules
             new ManualResetEvent(false);
         private object resourceLock = new object();
         private EventHandler HSignalProcess;
-
         public MaNEEvent Event;
 
         /// <summary>
@@ -86,21 +87,19 @@ namespace IndoorNavigation.Modules
                             .Where(c => c.Beacons.Contains(currentBeacon))
                             .First();
 
-                    // Check if he arrives the destination
-                    var EndPoint =
-                        pathQueue.ToArray()[pathQueue.Count() - 1].NextPoint;
-
-                    if (currentPoint == EndPoint)
-                    {
-                        Event.OnEventCall(new MaNEventArgs
-                        {
-                            Status = NavigationStatus.Arrival
-                        });
-                        break;
-                    }
-
 
                     lock (resourceLock)
+                    {
+                        // Check if he arrives the destination
+                        if (currentPoint == endPoint)
+                        {
+                            Event.OnEventCall(new MaNEventArgs
+                            {
+                                Status = NavigationStatus.Arrival
+                            });
+                            break;
+                        }
+
                         // if NextInstruction=null, it represents the 
                         // navigation starts at the first location.
                         // The current version, user has to walk in random 
@@ -144,10 +143,10 @@ namespace IndoorNavigation.Modules
 
                                 Event.OnEventCall(
                                     NavigationRouteCorrection(currentPoint,
-                                    EndPoint));
+                                    endPoint));
                             }
                         }
-
+                    }
 
                     // Wait for the event of next best Beacon
                     bestBeacon.WaitOne();
@@ -255,14 +254,19 @@ namespace IndoorNavigation.Modules
         /// <param name="EndPoint"></param>
         public void SetDestination(BeaconGroupModel EndPoint)
         {
-            // Plan the navigation path
-            if (currentBeacon == null)
-                bestBeacon.WaitOne();
-            lock(resourceLock)
-                pathQueue = Utility.Route.GetPath(currentBeacon,EndPoint);
+            Task.Run(() => {
+                // Plan the navigation path
+                if (currentBeacon == null)
+                    bestBeacon.WaitOne();
+                lock (resourceLock)
+                {
+                    pathQueue = Utility.Route.GetPath(currentBeacon, EndPoint);
+                    endPoint = EndPoint;
+                }
 
-            navigationTaskWaitEvent.Set();
-            navigationTaskWaitEvent.Reset();
+                navigationTaskWaitEvent.Set();
+                navigationTaskWaitEvent.Reset();
+            });
         }
 
         /// <summary>

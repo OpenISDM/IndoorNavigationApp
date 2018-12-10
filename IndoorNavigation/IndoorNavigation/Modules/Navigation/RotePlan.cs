@@ -194,8 +194,10 @@ namespace IndoorNavigation.Modules.Navigation
             // If the user skips more than two location, the last location is
             // less meaningful.
             if (this.locationConnects.Where(c =>
-            (c.BeaconA == map[startPoingKey] && c.BeaconB == PreviousPoint) ||
-            (c.BeaconA == PreviousPoint && c.BeaconB == map[startPoingKey]))
+            (c.BeaconA == map[startPoingKey].Item && 
+            c.BeaconB == PreviousPoint) ||
+            (c.BeaconA == PreviousPoint && 
+            c.BeaconB == map[startPoingKey].Item))
             .Count() == 0)
                 throw new ArgumentException(
                     "The current point is independent of the previous point."

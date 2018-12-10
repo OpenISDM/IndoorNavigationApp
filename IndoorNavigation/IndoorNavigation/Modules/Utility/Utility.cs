@@ -44,6 +44,7 @@ namespace IndoorNavigation.Modules
         public static List<LocationConnectModel> LocationConnects;
         public static RoutePlan Route;
         public static SignalProcessModule SignalProcess;
+        public static MaNModule MaN;
 
         // Skip SSL checking
         private static bool ValidateServerCertificate(Object sender,
