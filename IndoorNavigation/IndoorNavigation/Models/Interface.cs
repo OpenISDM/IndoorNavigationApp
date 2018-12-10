@@ -13,12 +13,12 @@
  * File Description:
  * File Name:
  *
- *      Interfa.cs
+ *      Interface.cs
  *
  * Abstract:
  *
- *      Define the interface required to connect IOS projects and
- *      Android project and map information.
+ *      This file contain the definition of the interface required to connect 
+ *      IOS projects and Android project and navigation graph information.
  *
  * Authors:
  *
@@ -32,7 +32,7 @@ using System.Collections.Generic;
 
 namespace IndoorNavigation.Models
 {
-    #region Map information interface
+    #region Interface of navigation graph attribute
 
     /// <summary>
     /// The interface reserved for IBeacon data
@@ -42,7 +42,7 @@ namespace IndoorNavigation.Models
         /// <summary>
         /// IBeacon coordinate
         /// </summary>
-        GeoCoordinate IBeaconCoordinate { get; set; }
+        GeoCoordinates IBeaconCoordinates { get; set; }
     }
 
     /// <summary>
@@ -53,13 +53,14 @@ namespace IndoorNavigation.Models
         /// <summary>
         /// The direction of Beacon's installation
         /// The reffered coordinate for the arrow on the Beacon
-        /// Not be used for this version
+        /// Not used in this version
         /// </summary>
-        GeoCoordinate MarkCoordinate { get; set; }
+        GeoCoordinates MarkCoordinates { get; set; }
     }
 
     /// <summary>
     /// There are multiple Beacons in a group
+    /// All beacons in the group mark a single waypoint
     /// </summary>
     public interface IBeaconGroupModel
     {
@@ -70,14 +71,14 @@ namespace IndoorNavigation.Models
         /// <summary>
         /// The center coordinate of the group
         /// </summary>
-        GeoCoordinate Coordinate { get; }
+        GeoCoordinates Coordinates { get; }
     }
 
     /// <summary>
-    /// There are multiple Beacons in a group. It is used to store the map 
-    /// data in the phone when the Internet is unconnected.
+    /// There are multiple Beacons in a group, each group mark a waypoint
+    /// The file is used to store the navigation graph data in the phone
     /// </summary>
-    public interface IBeaconGroupModelForMapFile
+    public interface IBeaconGroupModelForNavigraphFile
     {
         /// <summary>
         /// Beacon's union
@@ -86,7 +87,7 @@ namespace IndoorNavigation.Models
     }
 
     /// <summary>
-    /// A path connects two nodes
+    /// A path connects two waypoints
     /// </summary>
     public interface ILocationConnectModel
     {
@@ -101,10 +102,10 @@ namespace IndoorNavigation.Models
     }
 
     /// <summary>
-    /// A path connects two nodes. It is used to store the map data in the
-    /// phone when the Internet is unconnected.
+    /// A path connects two nodes. It is used to store the navigation graph
+    /// data in the phone.
     /// </summary>
-    public interface ILocationConnectModelForMapFile
+    public interface ILocationConnectModelForNavigraphFile
     {
         /// <summary>
         /// Location A

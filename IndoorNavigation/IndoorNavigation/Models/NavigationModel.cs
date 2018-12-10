@@ -11,13 +11,17 @@
  *      IndoorNavigation
  *
  * File Description:
+ * 
+ *      This file contains models which have Beacon's attribute and data
+ *      of route planning, these are used for navigator.
+ * 
  * File Name:
  *
  *      NavigationModel.cs
  *
  * Abstract:
  *
- *      The model would be used by each module
+ *      TODO: add abstract of this project
  *
  * Authors:
  *
@@ -35,13 +39,7 @@ namespace IndoorNavigation.Models
     public class BeaconSignal
     {
         public Guid UUID { get; set; }
-        /// <summary>
-        /// IBeacon Major field
-        /// </summary>
         public int Major { get; set; }
-        /// <summary>
-        /// IBeacon Minor field
-        /// </summary>
         public int Minor { get; set; }
         public int RSSI { get; set; }
     }
@@ -61,7 +59,7 @@ namespace IndoorNavigation.Models
     }
 
     /// <summary>
-    /// The information of next location
+    /// Instruction of next location to be delivered at the next waypoint
     /// </summary>
     public class NextInstructionModel
     {
@@ -70,7 +68,7 @@ namespace IndoorNavigation.Models
         /// </summary>
         public BeaconGroupModel NextPoint { get; set; }
         /// <summary>
-        /// The angle to turn to next location
+        /// The angle to turn to the next waypoint
         /// </summary>
         public int Angle { get; set; }
     }

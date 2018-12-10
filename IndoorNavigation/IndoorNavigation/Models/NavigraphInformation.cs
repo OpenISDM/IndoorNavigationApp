@@ -13,12 +13,12 @@
  * File Description:
  * File Name:
  *
- *      MapInformation.cs
+ *      NavigraphInformation.cs
  *
  * Abstract:
  *
- *      The elements on the map: Beacon element, Beacon group element and the
- *      element for connecting two locations
+ *      The elements of the navigation graph include beacon element, 
+ *      beacon group element and the element for connecting two waypoints
  *
  * Authors:
  *
@@ -34,7 +34,7 @@ using GeoCoordinatePortable;
 namespace IndoorNavigation.Models
 {
     /// <summary>
-    /// Beacon
+    /// The attribute of beacon
     /// </summary>
     public abstract class Beacon
     {
@@ -51,17 +51,17 @@ namespace IndoorNavigation.Models
         /// </summary>
         public int Minor { get; set; }
         /// <summary>
-        /// Threshold (RSSI)
+        /// Threshold RSSI level
         /// </summary>
         public int Threshold { get; set; }
         /// <summary>
-        /// Beacon installed floor
+        /// The floor on which the beacon is installed
         /// </summary>
         public virtual float Floor { get; set; }
     }
 
     /// <summary>
-    /// Beacon group
+    /// Beacon group containing multiple beacons that mark a single waypoint
     /// </summary>
     public abstract class BeaconGroup
     {
@@ -71,7 +71,7 @@ namespace IndoorNavigation.Models
         public Guid Id { get; set; }
 
         /// <summary>
-        /// ex: Police station
+        /// Name of the waypoint
         /// </summary>
         public string Name { get; set; }
     }
@@ -82,42 +82,41 @@ namespace IndoorNavigation.Models
     public abstract class LocationConnect
     {
         /// <summary>
-        /// Is it a two-way road?
+        /// Is it a two ways path?
         /// </summary>
         public bool IsTwoWay { get; set; }
     }
 
     /// <summary>
-    /// The monitor of LBeacon, including the threshold, floor of installation
-    /// and the location.
-    /// Major、Minor
+    /// The attribute of LBeacon, including it threshold, floor of installation
+    /// and it location and Major, Minor
     /// </summary>
     public class IBeaconModel : Beacon, IIBeacon
     {
         /// <summary>
-        /// IBeacon coordinate
+        /// LBeacon coordinates
         /// </summary>
-        public GeoCoordinate IBeaconCoordinate { get; set; }
+        public GeoCoordinates IBeaconCoordinates { get; set; }
     }
 
     /// <summary>
-    /// The monitor of LBeacon, including the threshold, floor of installation
+    /// The monitor of LBeacon, including the rssi threshold, floor of installation
     /// and direction of installation.
     /// </summary>
     public class LBeaconModel : Beacon, ILBeacon
     {
         /// <summary>
         /// Beacon's direction of installation
-        /// Beacon's reffered coordinate where the arrow points to
+        /// Beacon's reffered coordinates where the arrow points to
         /// Not be used in this version
         /// </summary>
-        public GeoCoordinate MarkCoordinate { get; set; }
+        public GeoCoordinates MarkCoordinates { get; set; }
 
         public override float Floor { get { return this.GetFloor(); } }
     }
 
     /// <summary>
-    /// A group of beacons that is regarded as a location
+    /// A group of beacons that are used to mark a waypoint
     /// </summary>
     public class BeaconGroupModel : BeaconGroup, IBeaconGroupModel
     {
@@ -127,41 +126,41 @@ namespace IndoorNavigation.Models
         public List<Beacon> Beacons { get; set; }
 
         /// <summary>
-        /// Group coordinate
-        /// Assume there are two parallel Lbeacons, the central coordinate are
-        /// regarded as the group's coordinate.
+        /// Group coordinates
+        /// The coordinate pf a Beacon group is the centroid
+        /// of the beacon group
         /// </summary>
-        public GeoCoordinate Coordinate
+        public GeoCoordinates Coordinates
         {
             get
             {
-                // Get all the LBeacon's coordinate in the group
-                List<GeoCoordinate> Coordinates =
-                    Beacons.Select(c => c.GetCoordinate()).ToList();
+                // Get all the LBeacon's coordinates in the group
+                List<GeoCoordinates> coordinates =
+                    Beacons.Select(c => c.GetCoordinates()).ToList();
 
-                // Compute the average of the coordinate of all the LBeaocns 
-                // in order to get the central coordinate.
+                // Compute the average of the coordinates of all the LBeaocns 
+                // in order to get the central coordinates.
                 double TotalLatitude = 0; double TotalLongitude = 0;
 
-                foreach (GeoCoordinate Coordinate in Coordinates)
+                foreach (GeoCoordinates _coordinate in coordinates)
                 {
-                    TotalLatitude += Coordinate.Latitude;
-                    TotalLongitude += Coordinate.Longitude;
+                    TotalLatitude += _coordinate.Latitude;
+                    TotalLongitude += _coordinate.Longitude;
                 }
 
-                return new GeoCoordinate(
-                    TotalLatitude / Coordinates.Count(),
-                    TotalLongitude / Coordinates.Count());
+                return new GeoCoordinates(
+                    TotalLatitude / coordinates.Count(),
+                    TotalLongitude / coordinates.Count());
             }
         }
     }
 
     /// <summary>
-    /// A group of LBeacon which is regarded as a location. This element is 
-    /// used to store the map data when the network connection is down.
+    /// A group of LBeacons that are used to mark a waypoint. This element is 
+    /// used to store the offline navigation graph data on the phone.
     /// </summary>
     public class BeaconGroupModelForMapFile : BeaconGroup,
-        IBeaconGroupModelForMapFile
+        IBeaconGroupModelForNavigraphFile
     {
         /// <summary>
         /// Beacon's union
@@ -170,8 +169,8 @@ namespace IndoorNavigation.Models
     }
 
     /// <summary>
-    /// Path connecting two nodes
-    /// Pay attention to direction
+    /// Path connecting two waypoints
+    /// Consider one way or two ways
     /// </summary>
     public class LocationConnectModel : LocationConnect, ILocationConnectModel
     {
@@ -186,12 +185,12 @@ namespace IndoorNavigation.Models
     }
 
     /// <summary>
-    /// A path connects two nodes. It is used to store the map data in the
-    /// phone when the Internet is unconnected.
-    /// Pay attention to direction
+    /// A path connects two waypoints. The file is used to store
+    /// the navigation graph data in the phone.
+    /// Consider one way or two ways
     /// </summary>
     public class LocationConnectModelForMapFile : LocationConnect,
-        ILocationConnectModelForMapFile
+        ILocationConnectModelForNavigraphFile
     {
         /// <summary>
         /// Location A

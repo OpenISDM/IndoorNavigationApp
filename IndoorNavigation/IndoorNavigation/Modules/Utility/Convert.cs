@@ -11,13 +11,16 @@
  *      IndoorNavigation
  *
  * File Description:
+ *
+ *      This class provides conversion methods for some modules
+ *
  * File Name:
  *
  *      Convert.cs
  *
  * Abstract:
  *
- *      The conversion method for some modules
+ *      
  *
  * Authors:
  *
@@ -42,11 +45,11 @@ namespace IndoorNavigation
     {
         /// <summary>
         /// Expanded function
-        /// Acquire the coordinate from the LBeacon
+        /// Acquire the coordinates from the LBeacon
         /// </summary>
         /// <param name="beacon"></param>
         /// <returns></returns>
-        public static GeoCoordinate GetCoordinate(this
+        public static GeoCoordinates GetCoordinates(this
             Beacon beacon)
         {
             if (beacon.GetType() == typeof(LBeaconModel))
@@ -57,15 +60,15 @@ namespace IndoorNavigation
                 string latHexStr = idShards[2] + idShards[3];
                 string lonHexStr = idShards[4].Substring(4, 8);
 
-                // Convert coordinate hex data to coordinate
+                // Convert coordinate hex data to coordinates
                 float longitude = HexToFloat(lonHexStr);
                 float latitude = HexToFloat(latHexStr);
 
-                return new GeoCoordinate(latitude, longitude);
+                return new GeoCoordinates(latitude, longitude);
             }
             else if (beacon.GetType() == typeof(IBeaconModel))
             {
-                return (beacon as IBeaconModel).IBeaconCoordinate;
+                return (beacon as IBeaconModel).IBeaconCoordinates;
             }
 
             throw new ArgumentException("Unrecognized Beacon type.");
@@ -73,7 +76,7 @@ namespace IndoorNavigation
 
         /// <summary>
         /// Expanded function
-        /// Acquire the coordinate from the LBeacon
+        /// Acquire the coordinates from the LBeacon
         /// </summary>
         /// <param name="UUID"></param>
         /// <returns></returns>
@@ -105,8 +108,7 @@ namespace IndoorNavigation
 
         /// <summary>
         /// Expanded function
-        /// Convert the JSON file recording information of LBeacon to lBeacon
-        /// list.
+        /// Convert the navigation graph infomation(JSON file) to Beacon List
         /// </summary>
         /// <param name="JsonString"></param>
         /// <returns></returns>

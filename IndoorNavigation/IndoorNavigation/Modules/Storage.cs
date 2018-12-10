@@ -11,13 +11,16 @@
  *      IndoorNavigation
  *
  * File Description:
+ *
+ *      Classes in this file provides the methods for storage on the cell phone
+ *
  * File Name:
  *
  *      Storage.cs
  *
  * Abstract:
  *
- *      This provides the methods for cell phone's storage
+ *      
  *
  * Authors:
  *
@@ -36,37 +39,39 @@ using Newtonsoft.Json.Linq;
 namespace IndoorNavigation.Modules
 {
     /// <summary>
-    /// It porvides the fast method to load and save data in local storage
+    /// This class provides the fast method to load and save data in local 
+    /// storage.
     /// </summary>
-    public static class MapStorage
+    public static class NavigraphStorage
     {
-        private static readonly string mapFolder =
+        private static readonly string navigraphFolder =
             Path.Combine(Environment.GetFolderPath(
-                    Environment.SpecialFolder.LocalApplicationData), "Maps");
+                    Environment.SpecialFolder.LocalApplicationData),
+                    "Navigraph");
 
         private static object fileLock = new object();
 
         /// <summary>
-        /// Return all the name of the locations.
+        /// This method returns the name of all the locations.
         /// </summary>
         /// <returns></returns>
         public static string[] GetAllPlace()
         {
-            // Check the folder of map if it is exist
-            if (!Directory.Exists(mapFolder))
-                Directory.CreateDirectory(mapFolder);
+            // Check the folder of navigation graph if it is exist
+            if (!Directory.Exists(navigraphFolder))
+                Directory.CreateDirectory(navigraphFolder);
 
-            return Directory.GetFiles(mapFolder)
+            return Directory.GetFiles(navigraphFolder)
                 .Select(path => Path.GetFileName(path))
                 .OrderBy(file => file).ToArray();
         }
 
         /// <summary>
-        /// Load the map
+        /// This method loads the navigation graph
         /// </summary>
         /// <param name="Place"></param>
         /// <returns></returns>
-        public static bool LoadMap(string Place)
+        public static bool LoadNavigraph(string Place)
         {
             try
             {
@@ -107,12 +112,12 @@ namespace IndoorNavigation.Modules
         /// <returns></returns>
         private static string LoadFile(string FileName)
         {
-            string filePath = Path.Combine(mapFolder, FileName);
+            string filePath = Path.Combine(navigraphFolder, FileName);
 
             // Check the folder of map if it is exist
-            if (!Directory.Exists(mapFolder))
+            if (!Directory.Exists(navigraphFolder))
             {
-                Directory.CreateDirectory(mapFolder);
+                Directory.CreateDirectory(navigraphFolder);
                 return string.Empty;
             }
 
@@ -125,19 +130,20 @@ namespace IndoorNavigation.Modules
         }
 
         /// <summary>
-        /// Store the map information of a location
+        /// Store the navigation graph information of a location
+        /// i.e: First floor of a building
         /// </summary>
         /// <param name="Place"></param>
         /// <param name="MapDatas"></param>
         /// <returns></returns>
         public static bool SaveMapInformation(string Place,string MapDatas)
         {
-            string filePath = Path.Combine(mapFolder, Place);
+            string filePath = Path.Combine(navigraphFolder, Place);
             try
             {
                 // Check the folder of map if it is exist
-                if (!Directory.Exists(mapFolder))
-                    Directory.CreateDirectory(mapFolder);
+                if (!Directory.Exists(navigraphFolder))
+                    Directory.CreateDirectory(navigraphFolder);
 
                 // Write map information
                 lock (fileLock)
@@ -155,13 +161,13 @@ namespace IndoorNavigation.Modules
         /// Delete specific map information
         /// </summary>
         /// <param name="Place"></param>
-        public static void DeleteMap(string Place)
+        public static void DeleteNavigraph(string Place)
         {
-            string filePath = Path.Combine(mapFolder, Place);
+            string filePath = Path.Combine(navigraphFolder, Place);
 
             // Check the folder of map if it is exist
-            if (!Directory.Exists(mapFolder))
-                Directory.CreateDirectory(mapFolder);
+            if (!Directory.Exists(navigraphFolder))
+                Directory.CreateDirectory(navigraphFolder);
 
             lock (fileLock)
                 File.Delete(filePath);
@@ -173,7 +179,7 @@ namespace IndoorNavigation.Modules
         public static void DeleteAllMap()
         {
             foreach (string place in GetAllPlace())
-                DeleteMap(place);
+                DeleteNavigraph(place);
         }
     }
 }
