@@ -279,6 +279,55 @@ namespace IndoorNavigationTest
             Utility.MaN.StopNavigation();
         }
 
+        [TestMethod, Timeout(10000)]
+        public void ReNavigationTest()
+        {
+            var routePath = Utility.Route.GetPath(Utility.Beacons[Guid.Parse("0000803f-0000-7b3d-c941-0000c15ef342")], Utility.BeaconGroups.Where(c => c.Name == "K1F").First());
+            Utility.MaN.SetDestination(Utility.BeaconGroups.Where(c => c.Name == "K1F").First());
+            // A
+            Utility.SignalProcess.Event.OnEventCall(new SignalProcessEventArgs { CurrentBeacon = Utility.Beacons[Guid.Parse("0000803f-0000-7b3d-c941-0000c15ef342")] });
+            WaitEvent.WaitOne();
+            routePath.Dequeue();
+            Assert.AreEqual(NavigationStatus.DirectionCorrection, maNEventArgs.Status);
+            // B
+            Utility.SignalProcess.Event.OnEventCall(new SignalProcessEventArgs { CurrentBeacon = Utility.Beacons[Guid.Parse("0000803f-0000-803d-c941-0000d45ef342")] });
+            WaitEvent.WaitOne();
+            Assert.AreEqual(routePath.Dequeue().Angle, maNEventArgs.Angle);
+            // C
+            Utility.SignalProcess.Event.OnEventCall(new SignalProcessEventArgs { CurrentBeacon = Utility.Beacons[Guid.Parse("0000803f-0000-863d-c941-0000ea5ef342")] });
+            WaitEvent.WaitOne();
+            Assert.AreEqual(routePath.Dequeue().Angle, maNEventArgs.Angle);
+            // D
+            Utility.SignalProcess.Event.OnEventCall(new SignalProcessEventArgs { CurrentBeacon = Utility.Beacons[Guid.Parse("0000803f-0000-183d-c941-0000eb5ef342")] });
+            WaitEvent.WaitOne();
+            Assert.AreEqual(routePath.Dequeue().Angle, maNEventArgs.Angle);
+            // 重新計算解答
+            routePath = Utility.Route.RegainPath(Utility.BeaconGroups.Where(c => c.Name == "D1F").First(), Utility.Beacons[Guid.Parse("0000803f-0000-713d-c941-0000395ff342")], Utility.BeaconGroups.Where(c => c.Name == "K1F").First());
+            // G
+            Utility.SignalProcess.Event.OnEventCall(new SignalProcessEventArgs { CurrentBeacon = Utility.Beacons[Guid.Parse("0000803f-0000-713d-c941-0000395ff342")] });
+            WaitEvent.WaitOne();
+            Assert.AreEqual(NavigationStatus.RouteCorrection, maNEventArgs.Status);
+            WaitEvent.WaitOne();
+            Assert.AreEqual(routePath.Dequeue().Angle, maNEventArgs.Angle);
+            // H
+            Utility.SignalProcess.Event.OnEventCall(new SignalProcessEventArgs { CurrentBeacon = Utility.Beacons[Guid.Parse("0000803f-0000-b03d-c941-0000575ff342")] });
+            WaitEvent.WaitOne();
+            Assert.AreEqual(routePath.Dequeue().Angle, maNEventArgs.Angle);
+            // I
+            Utility.SignalProcess.Event.OnEventCall(new SignalProcessEventArgs { CurrentBeacon = Utility.Beacons[Guid.Parse("0000803f-0000-323d-c941-0000585ff342")] });
+            WaitEvent.WaitOne();
+            Assert.AreEqual(routePath.Dequeue().Angle, maNEventArgs.Angle);
+            // J
+            Utility.SignalProcess.Event.OnEventCall(new SignalProcessEventArgs { CurrentBeacon = Utility.Beacons[Guid.Parse("0000803f-0000-f83c-c941-00005a5ff342")] });
+            WaitEvent.WaitOne();
+            Assert.AreEqual(routePath.Dequeue().Angle, maNEventArgs.Angle);
+            // K
+            Utility.SignalProcess.Event.OnEventCall(new SignalProcessEventArgs { CurrentBeacon = Utility.Beacons[Guid.Parse("0000803f-0000-b93c-c941-00005a5ff342")] });
+            WaitEvent.WaitOne();
+            Assert.AreEqual(NavigationStatus.Arrival, maNEventArgs.Status);
+            Utility.MaN.StopNavigation();
+        }
+
         private void HandleSignalProcess(object sender, EventArgs e)
         {
             Beacon currentBeacon =
