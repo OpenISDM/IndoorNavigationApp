@@ -13,7 +13,7 @@
  * File Description:
  * 
  *      This file contains class to receive status of nearby Beacons by the API
- *      from IOS or Android, and find the Beacon within the threshold and have
+ *      from iOS or Android, and find the Beacon within the threshold and have
  *      the highest value.
  * 
  * File Name:
@@ -47,7 +47,7 @@ namespace IndoorNavigation.Modules
         private Thread signalProcessThread;
         private ManualResetEvent threadClosedWait =
             new ManualResetEvent(false);
-        private  List<BeaconSignalModel> beaconSignalBuffer =
+        private List<BeaconSignalModel> beaconSignalBuffer =
             new List<BeaconSignalModel>();
         private bool isThreadRunning = true;
         private object bufferLock = new object();
@@ -61,7 +61,7 @@ namespace IndoorNavigation.Modules
         public SignalProcessModule()
         {
             signalProcessThread =
-                new Thread(SignalProcessWork){ IsBackground = true};
+                new Thread(SignalProcessWork) { IsBackground = true };
             signalProcessThread.Start();
         }
 
@@ -74,8 +74,8 @@ namespace IndoorNavigation.Modules
             // Beacon signal filter, keeps the Beacon's signal recorded in
             // the graph
             IEnumerable<BeaconSignalModel> signals = Signals
-                .Where(signal => Utility.Beacons.Values
-                .Select(beacon => (beacon.UUID,beacon.Major,beacon.Minor))
+                .Where(signal => Utility.BeaconsDict.Values
+                .Select(beacon => (beacon.UUID, beacon.Major, beacon.Minor))
                 .Contains((signal.UUID, signal.Major, signal.Minor)));
 
             lock (bufferLock)
@@ -95,9 +95,9 @@ namespace IndoorNavigation.Modules
                     // remove buffer old data
                     List<BeaconSignalModel> roveSignalBuffer =
                         new List<BeaconSignalModel>();
-                    
+
                     roveSignalBuffer.AddRange(beaconSignalBuffer.Where(c =>
-                        c.Timestamp < DateTime.Now.AddMilliseconds(-1000) ));
+                        c.Timestamp < DateTime.Now.AddMilliseconds(-1000)));
 
                     foreach (var beaconSignal in roveSignalBuffer)
                         beaconSignalBuffer.Remove(beaconSignal);
@@ -108,7 +108,8 @@ namespace IndoorNavigation.Modules
                     foreach (var (UUID, Major, Minor) in beacons)
                     {
                         signalAverageList.Add(
-                            new BeaconSignal {
+                            new BeaconSignal
+                            {
                                 UUID = (UUID, Major, Minor).UUID,
                                 Major = (UUID, Major, Minor).Major,
                                 Minor = (UUID, Major, Minor).Minor,
@@ -124,31 +125,33 @@ namespace IndoorNavigation.Modules
                 }
 
                 // Find the beacon closest to me
-                if (signalAverageList.Count() > 0)
+                if (signalAverageList.Any())
                 {
                     // Scan all the signal that satisfies the threshold
-                    var nearbySignal = (from single in signalAverageList
-                                        from beacon in Utility.Beacons
+                    var nearbySignal = (from signal in signalAverageList
+                                        from beacon in Utility.BeaconsDict
                                         where (
-                                        single.UUID == beacon.Value.UUID &&
-                                        single.RSSI >= beacon.Value.Threshold)
-                                        select single);
+                                        signal.UUID == beacon.Value.UUID &&
+                                        signal.RSSI >= beacon.Value.Threshold)
+                                        select signal);
 
-                    // Find the beacon closest to me, then send an event
+                    // Find the beacon which closest to me, then send an event
                     // to MaN
-                    if (nearbySignal.Count() > 0)
+                    if (nearbySignal.Any())
                     {
                         var bestNearbySignal = nearbySignal.First();
                         Beacon bestNearbyBeacon =
-                            Utility.Beacons[bestNearbySignal.UUID];
+                            Utility.BeaconsDict[bestNearbySignal.UUID];
 
                         // Send event to MaN module
-                        Event.OnEventCall(new SignalProcessEventArgs {
-                            CurrentBeacon = bestNearbyBeacon });
+                        Event.OnEventCall(new SignalProcessEventArgs
+                        {
+                            CurrentBeacon = bestNearbyBeacon
+                        });
                     }
                 }
 
-                // wait 1s or wait module close
+                // wait 1 sec or wait module close
                 SpinWait.SpinUntil(() => isThreadRunning, 1000);
             }
 

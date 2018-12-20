@@ -13,12 +13,12 @@ namespace GeoCoordinatePortable
         /// Represents a <see cref="GeoCoordinates"/> object that has unknown latitude and longitude fields.
         /// </summary>
         public static readonly GeoCoordinates Unknown = new GeoCoordinates();
-        private double _course;
-        private double _horizontalAccuracy;
-        private double _latitude;
-        private double _longitude;
-        private double _speed;
-        private double _verticalAccuracy;
+        private double course;
+        private double horizontalAccuracy;
+        private double latitude;
+        private double longitude;
+        private double speed;
+        private double verticalAccuracy;
 
         /// <summary>
         /// Initializes a new instance of GeoCoordinate that has no data fields set.
@@ -101,14 +101,14 @@ namespace GeoCoordinatePortable
         /// <exception cref="T:System.ArgumentOutOfRangeException">Latitude is set outside the valid range.</exception>
         public double Latitude
         {
-            get { return _latitude; }
+            get { return latitude; }
             set
             {
                 if (value > 90.0 || value < -90.0)
                 {
                     throw new ArgumentOutOfRangeException("Latitude", "Argument must be in range of -90 to 90");
                 }
-                _latitude = value;
+                latitude = value;
             }
         }
 
@@ -121,14 +121,14 @@ namespace GeoCoordinatePortable
         /// <exception cref="T:System.ArgumentOutOfRangeException">Longitude is set outside the valid range.</exception>
         public double Longitude
         {
-            get { return _longitude; }
+            get { return longitude; }
             set
             {
                 if (value > 180.0 || value < -180.0)
                 {
                     throw new ArgumentOutOfRangeException("Longitude", "Argument must be in range of -180 to 180");
                 }
-                _longitude = value;
+                longitude = value;
             }
         }
 
@@ -141,12 +141,12 @@ namespace GeoCoordinatePortable
         /// <exception cref="T:System.ArgumentOutOfRangeException">HorizontalAccuracy is set outside the valid range.</exception>
         public double HorizontalAccuracy
         {
-            get { return _horizontalAccuracy; }
+            get { return horizontalAccuracy; }
             set
             {
                 if (value < 0.0)
                     throw new ArgumentOutOfRangeException("HorizontalAccuracy", "Argument must be non negative");
-                _horizontalAccuracy = value == 0.0 ? double.NaN : value;
+                horizontalAccuracy = value == 0.0 ? double.NaN : value;
             }
         }
 
@@ -159,12 +159,12 @@ namespace GeoCoordinatePortable
         /// <exception cref="T:System.ArgumentOutOfRangeException">VerticalAccuracy is set outside the valid range.</exception>
         public double VerticalAccuracy
         {
-            get { return _verticalAccuracy; }
+            get { return verticalAccuracy; }
             set
             {
                 if (value < 0.0)
                     throw new ArgumentOutOfRangeException("VerticalAccuracy", "Argument must be non negative");
-                _verticalAccuracy = value == 0.0 ? double.NaN : value;
+                verticalAccuracy = value == 0.0 ? double.NaN : value;
             }
         }
 
@@ -177,12 +177,12 @@ namespace GeoCoordinatePortable
         /// <exception cref="System.ArgumentOutOfRangeException">Speed is set outside the valid range.</exception>
         public double Speed
         {
-            get { return _speed; }
+            get { return speed; }
             set
             {
                 if (value < 0.0)
                     throw new ArgumentOutOfRangeException("speed", "Argument must be non negative");
-                _speed = value;
+                speed = value;
             }
         }
 
@@ -195,12 +195,12 @@ namespace GeoCoordinatePortable
         /// <exception cref="T:System.ArgumentOutOfRangeException">Course is set outside the valid range.</exception>
         public double Course
         {
-            get { return _course; }
+            get { return course; }
             set
             {
                 if (value < 0.0 || value > 360.0)
                     throw new ArgumentOutOfRangeException("course", "Argument must be in range 0 to 360");
-                _course = value;
+                course = value;
             }
         }
 

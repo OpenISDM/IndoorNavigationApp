@@ -11,14 +11,17 @@
  *      IndoorNavigation
  *
  * File Description:
+ *
+ *      The elements of the navigation graph include beacon element, 
+ *      beacon group element and the element for connecting two waypoints
+ *
  * File Name:
  *
  *      NavigraphInformation.cs
  *
  * Abstract:
  *
- *      The elements of the navigation graph include beacon element, 
- *      beacon group element and the element for connecting two waypoints
+ *      
  *
  * Authors:
  *
@@ -116,9 +119,9 @@ namespace IndoorNavigation.Models
     }
 
     /// <summary>
-    /// A group of beacons that are used to mark a waypoint
+    /// A group of beacons that are used to mark a waypoint.
     /// </summary>
-    public class BeaconGroupModel : BeaconGroup, IBeaconGroupModel
+    public class WaypointModel : BeaconGroup, IBeaconGroupModel
     {
         /// <summary>
         /// Beacon's union
@@ -128,29 +131,29 @@ namespace IndoorNavigation.Models
         /// <summary>
         /// Group coordinates
         /// The coordinate pf a Beacon group is the centroid
-        /// of the beacon group
+        /// of the beacon group.
         /// </summary>
         public GeoCoordinates Coordinates
         {
             get
             {
                 // Get all the LBeacon's coordinates in the group
-                List<GeoCoordinates> coordinates =
+                List<GeoCoordinates> _Coordinates =
                     Beacons.Select(c => c.GetCoordinates()).ToList();
 
                 // Compute the average of the coordinates of all the LBeaocns 
                 // in order to get the central coordinates.
                 double TotalLatitude = 0; double TotalLongitude = 0;
 
-                foreach (GeoCoordinates _coordinate in coordinates)
+                foreach (GeoCoordinates coordinate in _Coordinates)
                 {
-                    TotalLatitude += _coordinate.Latitude;
-                    TotalLongitude += _coordinate.Longitude;
+                    TotalLatitude += coordinate.Latitude;
+                    TotalLongitude += coordinate.Longitude;
                 }
 
                 return new GeoCoordinates(
-                    TotalLatitude / coordinates.Count(),
-                    TotalLongitude / coordinates.Count());
+                    TotalLatitude / _Coordinates.Count(),
+                    TotalLongitude / _Coordinates.Count());
             }
         }
     }
@@ -169,19 +172,19 @@ namespace IndoorNavigation.Models
     }
 
     /// <summary>
-    /// Path connecting two waypoints
-    /// Consider one way or two ways
+    /// Path connecting two waypoints.
+    /// Consider one way or two ways.
     /// </summary>
     public class LocationConnectModel : LocationConnect, ILocationConnectModel
     {
         /// <summary>
         /// Location A
         /// </summary>
-        public BeaconGroupModel BeaconA { get; set; }
+        public WaypointModel BeaconA { get; set; }
         /// <summary>
         /// Location B
         /// </summary>
-        public BeaconGroupModel BeaconB { get; set; }
+        public WaypointModel BeaconB { get; set; }
     }
 
     /// <summary>

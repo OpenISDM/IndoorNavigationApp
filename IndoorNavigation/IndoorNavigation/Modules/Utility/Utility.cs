@@ -11,13 +11,16 @@
  *      IndoorNavigation
  *
  * File Description:
+ *
+ *      The global variables and functions
+ *
  * File Name:
  *
  *      Utility.cs
  *
  * Abstract:
  *
- *      The public variables and functions
+ *      
  *
  * Authors:
  *
@@ -39,8 +42,8 @@ namespace IndoorNavigation.Modules
 {
     public class Utility
     {
-        public static Dictionary<Guid,Beacon> Beacons;
-        public static List<BeaconGroupModel> BeaconGroups;
+        public static Dictionary<Guid,Beacon> BeaconsDict;
+        public static List<WaypointModel> Waypoints;
         public static List<LocationConnectModel> LocationConnects;
         public static RoutePlan Route;
         public static SignalProcessModule SignalProcess;
@@ -105,7 +108,7 @@ namespace IndoorNavigation.Modules
     public class RotateAngle
     {
         /// <summary>
-        /// Compute the angle to turn, including direction, at the next waypoint
+        /// Compute the angle to turn, including direction at the next waypoint
         /// </summary>
         /// <param name="Current">current location</param>
         /// <param name="Previous">last location</param>
@@ -154,7 +157,7 @@ namespace IndoorNavigation.Modules
         /// <param name="Next">next location</param>
         /// <returns></returns>
         private static double CalculatingOuterProductAngle(
-            GeoCoordinates Current,GeoCoordinates Previous, GeoCoordinates Next)
+            GeoCoordinates Current,GeoCoordinates Previous,GeoCoordinates Next)
         {
             double Xa, Xb, Ya, Yb;
             double angle;

@@ -11,13 +11,16 @@
  *      IndoorNavigation
  *
  * File Description:
+ * 
+ *      The algorithm of route planning.
+ * 
  * File Name:
  *
  *      RoutePlan.cs
  *
  * Abstract:
  *
- *      The algorithm of tour planning
+ *      
  *
  * Authors:
  *
@@ -40,21 +43,21 @@ namespace IndoorNavigation.Modules.Navigation
     /// </summary>
     public class RoutePlan
     {
-        private Graph<BeaconGroupModel, string> navigraph =
-            new Graph<BeaconGroupModel, string>();
+        private Graph<WaypointModel, string> navigraph =
+            new Graph<WaypointModel, string>();
         private readonly List<LocationConnectModel> locationConnects;
 
         /// <summary>
         /// Initialize the element
         /// </summary>
-        /// <param name="BeaconGroups">Location information </param>
+        /// <param name="Waypoints">Location information </param>
         /// <param name="LocationConnects">the path information </param>
-        public RoutePlan(List<BeaconGroupModel> BeaconGroups,
+        public RoutePlan(List<WaypointModel> Waypoints,
             List<LocationConnectModel> LocationConnects)
         {
-            // Add a location
-            foreach (var BeaconGroup in BeaconGroups)
-                navigraph.AddNode(BeaconGroup);
+            // Add a waypoint
+            foreach (var waypoint in Waypoints)
+                navigraph.AddNode(waypoint);
 
             // Set the path
             this.locationConnects = LocationConnects;
@@ -73,33 +76,36 @@ namespace IndoorNavigation.Modules.Navigation
                         BeaconGroup.Item == locationConnect.BeaconB)
                         .Select(BeaconGroup => BeaconGroup.Key).First();
 
-                // Connect two locations
+                // Connect two waypoints
                 if (locationConnect.IsTwoWay)
                 {
-                    navigraph.Connect(beaconAKey,beaconBKey,distance,string.Empty);
-                    navigraph.Connect(beaconBKey,beaconAKey,distance,string.Empty);
+                    navigraph.Connect(beaconAKey, beaconBKey,
+                                        distance, string.Empty);
+                    navigraph.Connect(beaconBKey, beaconAKey,
+                                        distance, string.Empty);
                 }
                 else
-                    navigraph.Connect(beaconAKey,beaconBKey,distance,string.Empty);
+                    navigraph.Connect(beaconAKey, beaconBKey,
+                                        distance, string.Empty);
             }
         }
 
         /// <summary>
-        /// Get the best path
+        /// Get the optimal path
         /// </summary>
         /// <param name="StartBeacon"></param>
-        /// <param name="EndPoint"></param>
+        /// <param name="EndWaypoint"></param>
         /// <returns></returns>
         public Queue<NextInstructionModel> GetPath(
-            Beacon StartBeacon, BeaconGroupModel EndPoint)
+            Beacon StartBeacon, WaypointModel EndWaypoint)
         {
             // Find where is the the start beacon and find the key vaule
             uint startPoingKey = navigraph
                 .Where(BeaconGroup => BeaconGroup.Item.Beacons
                 .Contains(StartBeacon)).Select(c => c.Key).First();
             uint endPointKey = navigraph
-                .Where(c => c.Item == EndPoint).Select(c => c.Key).First();
-            // Get the best path
+                .Where(c => c.Item == EndWaypoint).Select(c => c.Key).First();
+            // Get the optimal path
             var path = navigraph.Dijkstra(startPoingKey, endPointKey).GetPath();
 
             Queue<NextInstructionModel> pathQueue =
@@ -108,19 +114,18 @@ namespace IndoorNavigation.Modules.Navigation
             for (int i = 0; i < path.Count() - 1; i++)
             {
                 // Get the current location and next location
-                BeaconGroupModel currentPoint = navigraph[path.ToList()[i]].Item;
-                BeaconGroupModel nextPoint = navigraph[path.ToList()[i + 1]].Item;
+                WaypointModel currentWaypoint = navigraph[path.ToList()[i]].Item;
+                WaypointModel nextWaypoint = navigraph[path.ToList()[i + 1]].Item;
 
                 // If i=0, it represented that it needs to compute the initial
-                // directino fo start point
+                // direction fo start point
                 if (i == 0)
                 {
                     // Don't need to compute the direction because user should
-                    // get the wrong way first, and then calibrate the 
-                    // direction
+                    // get the wrong way first, and then calibrate the direction
                     pathQueue.Enqueue(new NextInstructionModel
                     {
-                        NextPoint = nextPoint,
+                        NextWaypoint = nextWaypoint,
                         Angle = int.MaxValue
                     });
 
@@ -150,18 +155,18 @@ namespace IndoorNavigation.Modules.Navigation
                 else
                 {
                     // Last location
-                    BeaconGroupModel previousPoint =
+                    WaypointModel previousWaypoint =
                         navigraph[path.ToList()[i - 1]].Item;
 
                     // Compute the angle to turn. It is also be stored with
                     // next location to the path queue.
                     int angle = RotateAngle.GetRotateAngle(
-                        currentPoint.Coordinates,
-                        previousPoint.Coordinates,
-                        nextPoint.Coordinates);
+                        currentWaypoint.Coordinates,
+                        previousWaypoint.Coordinates,
+                        nextWaypoint.Coordinates);
 
                     pathQueue.Enqueue(new NextInstructionModel {
-                        NextPoint = nextPoint,
+                        NextWaypoint = nextWaypoint,
                         Angle = angle
                     });
                 }
@@ -171,23 +176,23 @@ namespace IndoorNavigation.Modules.Navigation
         }
 
         /// <summary>
-        /// Reacquire the best path
+        /// Reacquire the optimal path
         /// </summary>
-        /// <param name="PreviousPoint"></param>
+        /// <param name="PreviousWaypoint"></param>
         /// <param name="CurrentBeacon"></param>
-        /// <param name="EndPoint"></param>
+        /// <param name="EndWaypoint"></param>
         /// <returns></returns>
         public Queue<NextInstructionModel> RegainPath(
-            BeaconGroupModel PreviousPoint,
+            WaypointModel PreviousWaypoint,
             Beacon CurrentBeacon,
-            BeaconGroupModel EndPoint)
+            WaypointModel EndWaypoint)
         {
             // Find where is the the start beacon and find the key vaule
             var startPoingKey = navigraph
                 .Where(beaconGroup => beaconGroup.Item.Beacons
                 .Contains(CurrentBeacon)).Select(c => c.Key).First();
             var endPointKey = navigraph
-                .Where(c => c.Item == EndPoint).Select(c => c.Key).First();
+                .Where(c => c.Item == EndWaypoint).Select(c => c.Key).First();
 
             // Check the current location if is connected to the last 
             // location.
@@ -195,15 +200,15 @@ namespace IndoorNavigation.Modules.Navigation
             // less meaningful.
             if (this.locationConnects.Where(c =>
             (c.BeaconA == navigraph[startPoingKey].Item && 
-            c.BeaconB == PreviousPoint) ||
-            (c.BeaconA == PreviousPoint && 
+            c.BeaconB == PreviousWaypoint) ||
+            (c.BeaconA == PreviousWaypoint && 
             c.BeaconB == navigraph[startPoingKey].Item))
             .Count() == 0)
                 throw new ArgumentException(
                     "The current point is independent of the previous point."
                     );
 
-            // Get the best path
+            // Get the optimal path
             var path = navigraph.Dijkstra(startPoingKey, endPointKey).GetPath();
 
             Queue<NextInstructionModel> pathQueue =
@@ -213,8 +218,8 @@ namespace IndoorNavigation.Modules.Navigation
             for (int i = 0; i < path.Count() - 1; i++)
             {
                 // Acquire the current and next location
-                BeaconGroupModel currentPoint = navigraph[path.ToList()[i]].Item;
-                BeaconGroupModel nextPoint = navigraph[path.ToList()[i + 1]].Item;
+                WaypointModel currentWaypoint = navigraph[path.ToList()[i]].Item;
+                WaypointModel nextWaypoint = navigraph[path.ToList()[i + 1]].Item;
 
 
                 if (i == 0)
@@ -222,27 +227,27 @@ namespace IndoorNavigation.Modules.Navigation
                     // The function of redirection can use last node to 
                     // compute the angle to turn
                     int angle = RotateAngle.GetRotateAngle(
-                        currentPoint.Coordinates,
-                        PreviousPoint.Coordinates,
-                        nextPoint.Coordinates
+                        currentWaypoint.Coordinates,
+                        PreviousWaypoint.Coordinates,
+                        nextWaypoint.Coordinates
                     );
                     pathQueue.Enqueue(new NextInstructionModel
                     {
-                        NextPoint = nextPoint,
+                        NextWaypoint = nextWaypoint,
                         Angle = angle
                     });
                 }
                 else
                 {
                     // Use the last node in the queue to compute the angle
-                    PreviousPoint = navigraph[path.ToList()[i - 1]].Item;
+                    PreviousWaypoint = navigraph[path.ToList()[i - 1]].Item;
                     int angle = RotateAngle.GetRotateAngle(
-                        currentPoint.Coordinates,
-                        PreviousPoint.Coordinates,
-                        nextPoint.Coordinates
+                        currentWaypoint.Coordinates,
+                        PreviousWaypoint.Coordinates,
+                        nextWaypoint.Coordinates
                         );
                     pathQueue.Enqueue(new NextInstructionModel {
-                        NextPoint = nextPoint,
+                        NextWaypoint = nextWaypoint,
                         Angle = angle
                     });
                 }

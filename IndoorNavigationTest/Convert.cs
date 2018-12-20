@@ -21,7 +21,7 @@ namespace IndoorNavigationTest
                 });
         }
 
-        public static string ToJsonString(this List<BeaconGroupModel> BeaconGroups)
+        public static string ToJsonString(this List<WaypointModel> BeaconGroups)
         {
             List<BeaconGroupModelForMapFile> BeaconGroupModels = BeaconGroups.Select(BeaconGroup => new BeaconGroupModelForMapFile { Id = BeaconGroup.Id, Name = BeaconGroup.Name, Beacons = BeaconGroup.Beacons.Select(Beacon => Beacon.UUID).ToList() }).ToList();
             return JsonConvert.SerializeObject(BeaconGroupModels);

@@ -12,7 +12,7 @@
  *
  * File Description:
  *
- *      Classes in this file provides the methods for storage on the cell phone
+ *      Classes in this file provides the methods for storage on the phone
  *
  * File Name:
  *
@@ -81,20 +81,20 @@ namespace IndoorNavigation.Modules
 
                 // Convert the JSON to element 
                 string beaconJson = data["Beacon"].ToString();
-                Utility.Beacons =
+                Utility.BeaconsDict =
                     beaconJson.ToBeacons().ToDictionary(beacon =>beacon.UUID);
-                Utility.BeaconGroups = JsonConvert.DeserializeObject
+                Utility.Waypoints = JsonConvert.DeserializeObject
                     <List<BeaconGroupModelForMapFile>>
                     (data["BeaconGroup"].ToString())
-                    .ToBeaconGroup(Utility.Beacons);
+                    .ToBeaconGroup(Utility.BeaconsDict);
                 Utility.LocationConnects = JsonConvert.DeserializeObject
                     <List<LocationConnectModelForMapFile>>
                     (data["LocationConnect"].ToString())
-                    .ToLocationConnect(Utility.BeaconGroups);
+                    .ToLocationConnect(Utility.Waypoints);
 
                 // Initialize path plannig and the data for setting map
                 Utility.Route = new Navigation.RoutePlan(
-                    Utility.BeaconGroups,
+                    Utility.Waypoints,
                     Utility.LocationConnects);
 
                 return true;
@@ -106,7 +106,7 @@ namespace IndoorNavigation.Modules
         }
 
         /// <summary>
-        /// Return specific information of the location
+        /// Return specific information of the navigation graph
         /// </summary>
         /// <param name="FileName"></param>
         /// <returns></returns>
@@ -131,12 +131,13 @@ namespace IndoorNavigation.Modules
 
         /// <summary>
         /// Store the navigation graph information of a location
-        /// i.e: First floor of a building
+        /// e.g., First floor of a building
         /// </summary>
         /// <param name="Place"></param>
-        /// <param name="MapDatas"></param>
+        /// <param name="NavigraphDatas"></param>
         /// <returns></returns>
-        public static bool SaveMapInformation(string Place,string MapDatas)
+        public static bool SaveMapInformation(
+            string Place, string NavigraphDatas)
         {
             string filePath = Path.Combine(navigraphFolder, Place);
             try
@@ -147,7 +148,7 @@ namespace IndoorNavigation.Modules
 
                 // Write map information
                 lock (fileLock)
-                    File.WriteAllText(filePath, MapDatas);
+                    File.WriteAllText(filePath, NavigraphDatas);
 
                 return true;
             }

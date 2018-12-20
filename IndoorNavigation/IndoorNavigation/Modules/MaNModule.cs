@@ -11,15 +11,18 @@
  *      IndoorNavigation
  *
  * File Description:
+ * 
+ *      Monitor and Notification module is respondsible for monitoring user's
+ *      path. After the user gets to the wrong way, this module sends an event
+ *      to notice the user and redirects the path.
+ * 
  * File Name:
  *
  *      MaNModule.cs
  *
  * Abstract:
  *
- *      Monitor and Notification module is respondsible for monitoring user's
- *      path. After the user gets to the wrong way, this module sends an event
- *      to notice the user and redirects the path. 
+ *       
  *
  * Authors:
  *
@@ -43,14 +46,15 @@ namespace IndoorNavigation.Modules
     public class MaNModule : IDisposable
     {
         private Thread MaNThread;
-        private bool threadSwitch = true;
-        private bool IsReachingDestination = false;
+        private bool isThreadRunning = true;
+        private bool isReachingDestination = false;
         private Beacon currentBeacon;
-        private BeaconGroupModel previousPoint;
-        private BeaconGroupModel endPoint;
+        private WaypointModel previousWaypoint;
+        private WaypointModel endWaypoint;
         private NextInstructionModel nextInstruction;
         private Queue<NextInstructionModel> pathQueue;
-        private ManualResetEvent bestBeacon = new ManualResetEvent(false);
+        private ManualResetEvent nextBeaconWaitEvent = 
+            new ManualResetEvent(false);
         private ManualResetEvent navigationTaskWaitEvent =
             new ManualResetEvent(false);
         private ManualResetEvent threadClosedWait =
@@ -60,38 +64,37 @@ namespace IndoorNavigation.Modules
         public MaNEEvent Event;
 
         /// <summary>
-        /// Initialize a new Notification model
+        /// Initialize a Monitor and Notification Model
         /// </summary>
         public MaNModule()
         {
             Event = new MaNEEvent();
-            MaNThread = new Thread(MaNWork) { IsBackground = true};
+            MaNThread = new Thread(MaNWork) { IsBackground = true };
             MaNThread.Start();
             HSignalProcess = new EventHandler(HandleSignalProcess);
-            Utility.SignalProcess.Event.SignalProcessEventHandler += 
+            Utility.SignalProcess.Event.SignalProcessEventHandler +=
                 HSignalProcess;
         }
 
         private void MaNWork()
         {
-            while (threadSwitch)
+            while (isThreadRunning)
             {
-                // Wait for the navigatino task
+                // Wait for the navigation task
                 navigationTaskWaitEvent.WaitOne();
-                while (!IsReachingDestination)
+                while (!isReachingDestination)
                 {
                     // Find the current position from the current Beacon
-                    BeaconGroupModel currentPoint;
-                    lock(resourceLock)
-                        currentPoint = Utility.BeaconGroups
-                            .Where(c => c.Beacons.Contains(currentBeacon))
-                            .First();
+                    WaypointModel currentWaypoint;
+                    lock (resourceLock)
+                        currentWaypoint = Utility.Waypoints
+                            .First(c => c.Beacons.Contains(currentBeacon));
 
 
                     lock (resourceLock)
                     {
                         // Check if he arrives the destination
-                        if (currentPoint == endPoint)
+                        if (currentWaypoint == endWaypoint)
                         {
                             Event.OnEventCall(new MaNEventArgs
                             {
@@ -100,8 +103,8 @@ namespace IndoorNavigation.Modules
                             break;
                         }
 
-                        // if NextInstruction=null, it represents the 
-                        // navigation starts at the first location.
+                        // if NextInstruction is null, it represents the 
+                        // navigation starts at the first waypoint.
                         // The current version, user has to walk in random 
                         // way, once he reaches the second location then 
                         // calibration.
@@ -111,16 +114,16 @@ namespace IndoorNavigation.Modules
 
                             Event.OnEventCall(new MaNEventArgs
                             {
-                                Status = NavigationStatus.DirectionCorrection
+                                Status = NavigationStatus.DirectionCorrect
                             });
                         }
                         else
                         {
                             // Check if the user reachs the next location
-                            if (currentPoint == nextInstruction.NextPoint)
+                            if (currentWaypoint == nextInstruction.NextWaypoint)
                             {
                                 nextInstruction = pathQueue.Dequeue();
-                                double distance = nextInstruction.NextPoint
+                                double distance = nextInstruction.NextWaypoint
                                     .Coordinates
                                     .GetDistanceTo(
                                     currentBeacon.GetCoordinates());
@@ -138,21 +141,21 @@ namespace IndoorNavigation.Modules
                                 // and tell the next step
                                 Event.OnEventCall(new MaNEventArgs
                                 {
-                                    Status = NavigationStatus.RouteCorrection
+                                    Status = NavigationStatus.RouteCorrect
                                 });
 
                                 Event.OnEventCall(
-                                    NavigationRouteCorrection(currentPoint,
-                                    endPoint));
+                                    NavigationRouteCorrection(currentWaypoint,
+                                    endWaypoint));
                             }
                         }
                     }
 
-                    // Wait for the event of next best Beacon
-                    bestBeacon.WaitOne();
+                    // Wait for the event of next Beacon
+                    nextBeaconWaitEvent.WaitOne();
 
                     // Change the current location to the last location
-                    previousPoint = currentPoint;
+                    previousWaypoint = currentWaypoint;
                 }
             }
 
@@ -164,24 +167,23 @@ namespace IndoorNavigation.Modules
         /// <summary>
         /// Modify the navigation path
         /// </summary>
-        /// <param name="CurrentPoint"></param>
+        /// <param name="CurrentWaypoint"></param>
         /// <returns></returns>
         private MaNEventArgs NavigationRouteCorrection
-            (BeaconGroupModel CurrentPoint,
-            BeaconGroupModel EndPoint)
+            (WaypointModel CurrentWaypoint, WaypointModel EndWaypoint)
         {
             // If the current location is in the path
-            if (pathQueue.Where(c => c.NextPoint == CurrentPoint).Count() > 0)
+            if (pathQueue.Where(c => c.NextWaypoint == CurrentWaypoint).Count() > 0)
             {
                 // Remove the location in the queue of path until the dequeued
                 // location is the same as current location
                 var CurrentInstruction = pathQueue
-                    .Where(c => c.NextPoint == CurrentPoint).First();
+                        .First(c => c.NextWaypoint == CurrentWaypoint);
                 while (pathQueue.Dequeue() != CurrentInstruction) ;
 
-                // Keep navigation
+                // Keep navigating
                 nextInstruction = pathQueue.Dequeue();
-                double distance = nextInstruction.NextPoint
+                double distance = nextInstruction.NextWaypoint
                     .Coordinates
                     .GetDistanceTo(currentBeacon.GetCoordinates());
 
@@ -194,21 +196,21 @@ namespace IndoorNavigation.Modules
             }
             else
             {
-                // Check the current location if is connected to the last
-                // location. If the Wifi is connected, it dosn't need to
-                // calibrate the direction
+                // Check the current waypoint whether is connected to the 
+                // previous waypoint in the navigation graph.
+                // If connected, it dosn't need to calibrate the direction.
                 if (Utility.LocationConnects
-                    .Where(c => c.BeaconA == CurrentPoint &&
-                    c.BeaconB == previousPoint).Count() > 0 ||
+                    .Any(c => c.BeaconA == CurrentWaypoint &&
+                    c.BeaconB == previousWaypoint) ||
                     Utility.LocationConnects
-                    .Where(c => c.BeaconA == previousPoint &&
-                    c.BeaconB == CurrentPoint).Count() > 0)
+                    .Any(c => c.BeaconA == previousWaypoint &&
+                    c.BeaconB == CurrentWaypoint))
                 {
                     // Replan the path, and keep navigating
-                    pathQueue = Utility.Route.RegainPath(previousPoint,
-                        currentBeacon, EndPoint);
+                    pathQueue = Utility.Route.RegainPath(previousWaypoint,
+                        currentBeacon, EndWaypoint);
                     nextInstruction = pathQueue.Dequeue();
-                    double distance = nextInstruction.NextPoint
+                    double distance = nextInstruction.NextWaypoint
                         .Coordinates
                         .GetDistanceTo(
                         currentBeacon.GetCoordinates());
@@ -224,12 +226,12 @@ namespace IndoorNavigation.Modules
                 else
                 {
                     // Replan the path and calibrate the direction
-                    pathQueue = Utility.Route.GetPath(currentBeacon,EndPoint);
+                    pathQueue = Utility.Route.GetPath(currentBeacon, EndWaypoint);
                     nextInstruction = pathQueue.Dequeue();
 
                     return new MaNEventArgs
                     {
-                        Status = NavigationStatus.DirectionCorrection
+                        Status = NavigationStatus.DirectionCorrect
                     };
                 }
             }
@@ -241,27 +243,29 @@ namespace IndoorNavigation.Modules
         public void StopNavigation()
         {
             // Stop MaN Thread, and wait for setting to a new destination
-            IsReachingDestination = true;
-            lock(resourceLock)
+            isReachingDestination = true;
+            lock (resourceLock)
                 currentBeacon = null;
-            bestBeacon.Set();
-            bestBeacon.Reset();
+            nextBeaconWaitEvent.Set();
+            nextBeaconWaitEvent.Reset();
         }
 
         /// <summary>
         /// Set the destination
         /// </summary>
-        /// <param name="EndPoint"></param>
-        public void SetDestination(BeaconGroupModel EndPoint)
+        /// <param name="EndWaypoint"></param>
+        public void SetDestination(WaypointModel EndWaypoint)
         {
-            Task.Run(() => {
+            Task.Run(() =>
+            {
                 // Plan the navigation path
                 if (currentBeacon == null)
-                    bestBeacon.WaitOne();
+                    nextBeaconWaitEvent.WaitOne();
+
                 lock (resourceLock)
                 {
-                    pathQueue = Utility.Route.GetPath(currentBeacon, EndPoint);
-                    endPoint = EndPoint;
+                    pathQueue = Utility.Route.GetPath(currentBeacon, EndWaypoint);
+                    endWaypoint = EndWaypoint;
                 }
 
                 navigationTaskWaitEvent.Set();
@@ -270,22 +274,22 @@ namespace IndoorNavigation.Modules
         }
 
         /// <summary>
-        /// Receive the best Beacon returned by signal process model
+        /// Receive the next Beacon returned by signal process model
         /// </summary>
         /// <param name="CurrentBeacon"></param>
         private void HandleSignalProcess(object sender, EventArgs e)
         {
-            Beacon currentBeacon =
+            Beacon _currentBeacon =
                 (e as SignalProcessEventArgs).CurrentBeacon;
 
             // Check this event of signal processing from the current Beacon 
-            // if is the same as currrent Beacon
-            if (this.currentBeacon != currentBeacon)
+            // if it is the same as currrent Beacon
+            if (this.currentBeacon != _currentBeacon)
             {
                 lock (resourceLock)
-                    this.currentBeacon = currentBeacon;
-                bestBeacon.Set();
-                bestBeacon.Reset();
+                    this.currentBeacon = _currentBeacon;
+                nextBeaconWaitEvent.Set();
+                nextBeaconWaitEvent.Reset();
             }
         }
 
@@ -298,14 +302,14 @@ namespace IndoorNavigation.Modules
             {
                 if (disposing)
                 {
-                    Utility.SignalProcess.Event.SignalProcessEventHandler -= 
+                    Utility.SignalProcess.Event.SignalProcessEventHandler -=
                         HSignalProcess;
-                    threadSwitch = false;
+                    isThreadRunning = false;
                     navigationTaskWaitEvent.Set();
-                    bestBeacon.Set();
+                    nextBeaconWaitEvent.Set();
                     threadClosedWait.WaitOne();
                     navigationTaskWaitEvent.Dispose();
-                    bestBeacon.Dispose();
+                    nextBeaconWaitEvent.Dispose();
                     threadClosedWait.Dispose();
                 }
 
@@ -336,8 +340,8 @@ namespace IndoorNavigation.Modules
     {
         Run = 0,
         Arrival,
-        RouteCorrection,
-        DirectionCorrection
+        RouteCorrect,
+        DirectionCorrect
     }
 
     public class MaNEEvent

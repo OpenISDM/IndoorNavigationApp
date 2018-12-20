@@ -13,12 +13,12 @@ namespace IndoorNavigationTest
         {
             Dictionary<Guid,Beacon> beacons = GenerateBeacons().ToDictionary(c => c.UUID);
 
-            List<BeaconGroupModel> beaconGroups = GenerateBeaconGroup(beacons);
+            List<WaypointModel> beaconGroups = GenerateBeaconGroup(beacons);
 
             List<LocationConnectModel> locationConnects = GenerateLocationConnect(beaconGroups);
 
-            Utility.Beacons = beacons;
-            Utility.BeaconGroups = beaconGroups;
+            Utility.BeaconsDict = beacons;
+            Utility.Waypoints = beaconGroups;
             Utility.LocationConnects = locationConnects;
         }
 
@@ -250,11 +250,11 @@ namespace IndoorNavigationTest
             return beacons;
         }
 
-        private static List<BeaconGroupModel> GenerateBeaconGroup(Dictionary<Guid, Beacon> beacons)
+        private static List<WaypointModel> GenerateBeaconGroup(Dictionary<Guid, Beacon> beacons)
         {
-            List<BeaconGroupModel> beaconGroups = new List<BeaconGroupModel>()
+            List<WaypointModel> beaconGroups = new List<WaypointModel>()
             {
-                new BeaconGroupModel
+                new WaypointModel
                 {
                     Id = Guid.NewGuid(),
                     Name = "A1F",
@@ -263,7 +263,7 @@ namespace IndoorNavigationTest
                         beacons[Guid.Parse("0000803f-0000-4c3d-c941-0000c35ef342")]
                     }
                 },
-                new BeaconGroupModel
+                new WaypointModel
                 {
                     Id = Guid.NewGuid(),
                     Name = "B1F",
@@ -272,7 +272,7 @@ namespace IndoorNavigationTest
                         beacons[Guid.Parse("0000803f-0000-563d-c941-0000d55ef342")]
                     }
                 },
-                new BeaconGroupModel
+                new WaypointModel
                 {
                     Id = Guid.NewGuid(),
                     Name = "C1F",
@@ -281,7 +281,7 @@ namespace IndoorNavigationTest
                         beacons[Guid.Parse("0000803f-0000-563d-c941-0000e85ef342")]
                     }
                 },
-                new BeaconGroupModel
+                new WaypointModel
                 {
                     Id = Guid.NewGuid(),
                     Name = "D1F",
@@ -291,7 +291,7 @@ namespace IndoorNavigationTest
                         beacons[Guid.Parse("0000803f-0000-223d-c941-0000175ff342")]
                     }
                 },
-                new BeaconGroupModel
+                new WaypointModel
                 {
                     Id = Guid.NewGuid(),
                     Name = "E1F",
@@ -301,7 +301,7 @@ namespace IndoorNavigationTest
                         beacons[Guid.Parse("0000803f-0000-f33c-c941-0000195ff342")]
                     }
                 },
-                new BeaconGroupModel
+                new WaypointModel
                 {
                     Id = Guid.NewGuid(),
                     Name = "F1F",
@@ -311,7 +311,7 @@ namespace IndoorNavigationTest
                         beacons[Guid.Parse("0000803f-0000-be3c-c941-0000185ff342")]
                     }
                 },
-                new BeaconGroupModel
+                new WaypointModel
                 {
                     Id = Guid.NewGuid(),
                     Name = "G1F",
@@ -320,7 +320,7 @@ namespace IndoorNavigationTest
                         beacons[Guid.Parse("0000803f-0000-713d-c941-0000395ff342")]
                     }
                 },
-                new BeaconGroupModel
+                new WaypointModel
                 {
                     Id = Guid.NewGuid(),
                     Name = "H1F",
@@ -329,7 +329,7 @@ namespace IndoorNavigationTest
                         beacons[Guid.Parse("0000803f-0000-763d-c941-0000575ff342")]
                     }
                 },
-                new BeaconGroupModel
+                new WaypointModel
                 {
                     Id = Guid.NewGuid(),
                     Name = "I1F",
@@ -337,7 +337,7 @@ namespace IndoorNavigationTest
                         beacons[Guid.Parse("0000803f-0000-323d-c941-0000585ff342")]
                     }
                 },
-                new BeaconGroupModel
+                new WaypointModel
                 {
                     Id = Guid.NewGuid(),
                     Name = "J1F",
@@ -345,7 +345,7 @@ namespace IndoorNavigationTest
                         beacons[Guid.Parse("0000803f-0000-f83c-c941-00005a5ff342")]
                     }
                 },
-                new BeaconGroupModel
+                new WaypointModel
                 {
                     Id = Guid.NewGuid(),
                     Name = "K1F",
@@ -353,7 +353,7 @@ namespace IndoorNavigationTest
                         beacons[Guid.Parse("0000803f-0000-b93c-c941-00005a5ff342")]
                     }
                 },
-                new BeaconGroupModel
+                new WaypointModel
                 {
                     Id = Guid.NewGuid(),
                     Name = "L1F",
@@ -362,7 +362,7 @@ namespace IndoorNavigationTest
                         beacons[Guid.Parse("0000803f-0000-be3c-c941-0000395ff342")]
                     }
                 },
-                new BeaconGroupModel
+                new WaypointModel
                 {
                     Id = Guid.NewGuid(),
                     Name = "M",
@@ -370,7 +370,7 @@ namespace IndoorNavigationTest
                         beacons[Guid.Parse("00000000-0000-7b3d-c941-0000ae5ef342")]
                     }
                 },
-                new BeaconGroupModel
+                new WaypointModel
                 {
                     Id = Guid.NewGuid(),
                     Name = "N",
@@ -378,7 +378,7 @@ namespace IndoorNavigationTest
                         beacons[Guid.Parse("00000000-0000-a03d-c941-0000695ff342")]
                     }
                 },
-                new BeaconGroupModel
+                new WaypointModel
                 {
                     Id = Guid.NewGuid(),
                     Name = "O",
@@ -387,7 +387,7 @@ namespace IndoorNavigationTest
                         
                     }
                 },
-                new BeaconGroupModel
+                new WaypointModel
                 {
                     Id = Guid.NewGuid(),
                     Name = "A2F",
@@ -396,7 +396,7 @@ namespace IndoorNavigationTest
                         beacons[Guid.Parse("00000040-0000-4c3d-c941-0000c35ef342")]
                     }
                 },
-                new BeaconGroupModel
+                new WaypointModel
                 {
                     Id = Guid.NewGuid(),
                     Name = "B2F",
@@ -405,7 +405,7 @@ namespace IndoorNavigationTest
                         beacons[Guid.Parse("00000040-0000-563d-c941-0000d55ef342")]
                     }
                 },
-                new BeaconGroupModel
+                new WaypointModel
                 {
                     Id = Guid.NewGuid(),
                     Name = "C2F",
@@ -414,7 +414,7 @@ namespace IndoorNavigationTest
                         beacons[Guid.Parse("00000040-0000-563d-c941-0000e85ef342")]
                     }
                 },
-                new BeaconGroupModel
+                new WaypointModel
                 {
                     Id = Guid.NewGuid(),
                     Name = "D2F",
@@ -424,7 +424,7 @@ namespace IndoorNavigationTest
                         beacons[Guid.Parse("00000040-0000-223d-c941-0000175ff342")]
                     }
                 },
-                new BeaconGroupModel
+                new WaypointModel
                 {
                     Id = Guid.NewGuid(),
                     Name = "E2F",
@@ -434,7 +434,7 @@ namespace IndoorNavigationTest
                         beacons[Guid.Parse("00000040-0000-f33c-c941-0000195ff342")]
                     }
                 },
-                new BeaconGroupModel
+                new WaypointModel
                 {
                     Id = Guid.NewGuid(),
                     Name = "F2F",
@@ -444,7 +444,7 @@ namespace IndoorNavigationTest
                         beacons[Guid.Parse("00000040-0000-be3c-c941-0000185ff342")]
                     }
                 },
-                new BeaconGroupModel
+                new WaypointModel
                 {
                     Id = Guid.NewGuid(),
                     Name = "G2F",
@@ -453,7 +453,7 @@ namespace IndoorNavigationTest
                         beacons[Guid.Parse("00000040-0000-713d-c941-0000395ff342")]
                     }
                 },
-                new BeaconGroupModel
+                new WaypointModel
                 {
                     Id = Guid.NewGuid(),
                     Name = "H2F",
@@ -462,7 +462,7 @@ namespace IndoorNavigationTest
                         beacons[Guid.Parse("00000040-0000-763d-c941-0000575ff342")]
                     }
                 },
-                new BeaconGroupModel
+                new WaypointModel
                 {
                     Id = Guid.NewGuid(),
                     Name = "I2F",
@@ -470,7 +470,7 @@ namespace IndoorNavigationTest
                         beacons[Guid.Parse("00000040-0000-323d-c941-0000585ff342")]
                     }
                 },
-                new BeaconGroupModel
+                new WaypointModel
                 {
                     Id = Guid.NewGuid(),
                     Name = "J2F",
@@ -478,7 +478,7 @@ namespace IndoorNavigationTest
                         beacons[Guid.Parse("00000040-0000-f83c-c941-00005a5ff342")]
                     }
                 },
-                new BeaconGroupModel
+                new WaypointModel
                 {
                     Id = Guid.NewGuid(),
                     Name = "K2F",
@@ -486,7 +486,7 @@ namespace IndoorNavigationTest
                         beacons[Guid.Parse("00000040-0000-b93c-c941-00005a5ff342")]
                     }
                 },
-                new BeaconGroupModel
+                new WaypointModel
                 {
                     Id = Guid.NewGuid(),
                     Name = "L2F",
@@ -500,7 +500,7 @@ namespace IndoorNavigationTest
             return beaconGroups;
         }
 
-        private static List<LocationConnectModel> GenerateLocationConnect(List<BeaconGroupModel> beaconGroups)
+        private static List<LocationConnectModel> GenerateLocationConnect(List<WaypointModel> beaconGroups)
         {
             List<LocationConnectModel> locationConnects = new List<LocationConnectModel>()
             {

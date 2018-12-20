@@ -19,7 +19,7 @@ namespace IndoorNavigation.iOS
         public void Init(Action<List<BeaconSignalModel>> SendSignalFunction)
         {
             locationManager = new CLLocationManager();
-            // IOS 8.0以上需要開啟定位權限
+            // iOS 8.0以上需要開啟定位權限
             if (UIDevice.CurrentDevice.CheckSystemVersion(8, 0))
             {
                 locationManager.RequestWhenInUseAuthorization();

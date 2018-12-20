@@ -66,7 +66,7 @@ namespace IndoorNavigation.Models
         /// <summary>
         /// Next location
         /// </summary>
-        public BeaconGroupModel NextPoint { get; set; }
+        public WaypointModel NextWaypoint { get; set; }
         /// <summary>
         /// The angle to turn to the next waypoint
         /// </summary>

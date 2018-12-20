@@ -11,14 +11,17 @@
  *      IndoorNavigation
  *
  * File Description:
+ *
+ *      This file contain the definition of the interface required to connect 
+ *      Android/iOS project and navigation graph information.
+ *
  * File Name:
  *
  *      Interface.cs
  *
  * Abstract:
  *
- *      This file contain the definition of the interface required to connect 
- *      IOS projects and Android project and navigation graph information.
+ *      
  *
  * Authors:
  *
@@ -94,11 +97,11 @@ namespace IndoorNavigation.Models
         /// <summary>
         /// Location A
         /// </summary>
-        BeaconGroupModel BeaconA { get; set; }
+        WaypointModel BeaconA { get; set; }
         /// <summary>
         /// Location B
         /// </summary>
-        BeaconGroupModel BeaconB { get; set; }
+        WaypointModel BeaconB { get; set; }
     }
 
     /// <summary>
@@ -119,7 +122,7 @@ namespace IndoorNavigation.Models
 
     #endregion
 
-    #region Interface for connecting IOS projects and Android projects
+    #region Interface for connecting iOS project and Android project
 
     /// <summary>
     /// The interface with beacon scan module
