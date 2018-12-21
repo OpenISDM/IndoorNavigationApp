@@ -92,7 +92,7 @@ namespace IndoorNavigation.Modules
                     (data["LocationConnect"].ToString())
                     .ToLocationConnect(Utility.Waypoints);
 
-                // Initialize path plannig and the data for setting map
+                // Initialize path planning and the data for setting map
                 Utility.Route = new Navigation.RoutePlan(
                     Utility.Waypoints,
                     Utility.LocationConnects);

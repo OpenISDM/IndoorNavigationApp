@@ -163,7 +163,7 @@ namespace IndoorNavigationTest
             Utility.SignalProcess.Event.OnEventCall(new SignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-7b3d-c941-0000c15ef342")]});
             WaitEvent.WaitOne();
             routePath.Dequeue();
-            Assert.AreEqual(NavigationStatus.DirectionCorrect,maNEventArgs.Status);
+            Assert.AreEqual(NavigationStatus.AdjustDirection,maNEventArgs.Status);
             // B
             Utility.SignalProcess.Event.OnEventCall(new SignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-803d-c941-0000d45ef342")] });
             WaitEvent.WaitOne();
@@ -203,11 +203,11 @@ namespace IndoorNavigationTest
             // D
             Utility.SignalProcess.Event.OnEventCall(new SignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-223d-c941-0000ff5ef342")] });
             WaitEvent.WaitOne();
-            Assert.AreEqual(NavigationStatus.DirectionCorrect, maNEventArgs.Status);
+            Assert.AreEqual(NavigationStatus.AdjustDirection, maNEventArgs.Status);
             // C
             Utility.SignalProcess.Event.OnEventCall(new SignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-563d-c941-0000e85ef342")] });
             WaitEvent.WaitOne();
-            Assert.AreEqual(NavigationStatus.RouteCorrect, maNEventArgs.Status);
+            Assert.AreEqual(NavigationStatus.AdjustRoute, maNEventArgs.Status);
             WaitEvent.WaitOne();
             Assert.AreEqual(routePath.Dequeue().Angle, maNEventArgs.Angle);
             // D
@@ -242,7 +242,7 @@ namespace IndoorNavigationTest
             Utility.SignalProcess.Event.OnEventCall(new SignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-7b3d-c941-0000c15ef342")] });
             WaitEvent.WaitOne();
             routePath.Dequeue();
-            Assert.AreEqual(NavigationStatus.DirectionCorrect, maNEventArgs.Status);
+            Assert.AreEqual(NavigationStatus.AdjustDirection, maNEventArgs.Status);
             // B
             Utility.SignalProcess.Event.OnEventCall(new SignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-803d-c941-0000d45ef342")] });
             WaitEvent.WaitOne();
@@ -265,7 +265,7 @@ namespace IndoorNavigationTest
             // F
             Utility.SignalProcess.Event.OnEventCall(new SignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-be3c-c941-0000185ff342")] });
             WaitEvent.WaitOne();
-            Assert.AreEqual(NavigationStatus.RouteCorrect, maNEventArgs.Status);
+            Assert.AreEqual(NavigationStatus.AdjustRoute, maNEventArgs.Status);
             WaitEvent.WaitOne();
             Assert.AreEqual(routePath.Dequeue().Angle, maNEventArgs.Angle);
             // L
@@ -288,7 +288,7 @@ namespace IndoorNavigationTest
             Utility.SignalProcess.Event.OnEventCall(new SignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-7b3d-c941-0000c15ef342")] });
             WaitEvent.WaitOne();
             routePath.Dequeue();
-            Assert.AreEqual(NavigationStatus.DirectionCorrect, maNEventArgs.Status);
+            Assert.AreEqual(NavigationStatus.AdjustDirection, maNEventArgs.Status);
             // B
             Utility.SignalProcess.Event.OnEventCall(new SignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-803d-c941-0000d45ef342")] });
             WaitEvent.WaitOne();
@@ -306,7 +306,7 @@ namespace IndoorNavigationTest
             // G
             Utility.SignalProcess.Event.OnEventCall(new SignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-713d-c941-0000395ff342")] });
             WaitEvent.WaitOne();
-            Assert.AreEqual(NavigationStatus.RouteCorrect, maNEventArgs.Status);
+            Assert.AreEqual(NavigationStatus.AdjustRoute, maNEventArgs.Status);
             WaitEvent.WaitOne();
             Assert.AreEqual(routePath.Dequeue().Angle, maNEventArgs.Angle);
             // H

@@ -114,7 +114,7 @@ namespace IndoorNavigation.Modules
 
                             Event.OnEventCall(new MaNEventArgs
                             {
-                                Status = NavigationStatus.DirectionCorrect
+                                Status = NavigationStatus.AdjustDirection
                             });
                         }
                         else
@@ -141,7 +141,7 @@ namespace IndoorNavigation.Modules
                                 // and tell the next step
                                 Event.OnEventCall(new MaNEventArgs
                                 {
-                                    Status = NavigationStatus.RouteCorrect
+                                    Status = NavigationStatus.AdjustRoute
                                 });
 
                                 Event.OnEventCall(
@@ -231,7 +231,7 @@ namespace IndoorNavigation.Modules
 
                     return new MaNEventArgs
                     {
-                        Status = NavigationStatus.DirectionCorrect
+                        Status = NavigationStatus.AdjustDirection
                     };
                 }
             }
@@ -340,8 +340,8 @@ namespace IndoorNavigation.Modules
     {
         Run = 0,
         Arrival,
-        RouteCorrect,
-        DirectionCorrect
+        AdjustRoute,
+        AdjustDirection
     }
 
     public class MaNEEvent
