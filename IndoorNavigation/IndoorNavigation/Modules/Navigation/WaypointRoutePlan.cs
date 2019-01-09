@@ -41,7 +41,7 @@ namespace IndoorNavigation.Modules.Navigation
     /// route planning
     /// Dijkstra algorithm
     /// </summary>
-    public class RoutePlan
+    public class WaypointRoutePlan
     {
         private Graph<WaypointModel, string> navigraph =
             new Graph<WaypointModel, string>();
@@ -52,7 +52,7 @@ namespace IndoorNavigation.Modules.Navigation
         /// </summary>
         /// <param name="Waypoints">Location information </param>
         /// <param name="LocationConnects">the path information </param>
-        public RoutePlan(List<WaypointModel> Waypoints,
+        public WaypointRoutePlan(List<WaypointModel> Waypoints,
             List<LocationConnectModel> LocationConnects)
         {
             // Add a waypoint
@@ -96,7 +96,7 @@ namespace IndoorNavigation.Modules.Navigation
         /// <param name="StartBeacon"></param>
         /// <param name="EndWaypoint"></param>
         /// <returns></returns>
-        public Queue<NextInstructionModel> GetPath(
+        public Queue<NextStepModel> GetPath(
             Beacon StartBeacon, WaypointModel EndWaypoint)
         {
             // Find where is the the start beacon and find the key vaule
@@ -108,8 +108,8 @@ namespace IndoorNavigation.Modules.Navigation
             // Get the optimal path
             var path = navigraph.Dijkstra(startPoingKey, endPointKey).GetPath();
 
-            Queue<NextInstructionModel> pathQueue =
-                new Queue<NextInstructionModel>();
+            Queue<NextStepModel> pathQueue =
+                new Queue<NextStepModel>();
             // Compute the angle to the next location
             for (int i = 0; i < path.Count() - 1; i++)
             {
@@ -123,7 +123,7 @@ namespace IndoorNavigation.Modules.Navigation
                 {
                     // Don't need to compute the direction because user should
                     // get the wrong way first, and then calibrate the direction
-                    pathQueue.Enqueue(new NextInstructionModel
+                    pathQueue.Enqueue(new NextStepModel
                     {
                         NextWaypoint = nextWaypoint,
                         Angle = int.MaxValue
@@ -165,7 +165,7 @@ namespace IndoorNavigation.Modules.Navigation
                         previousWaypoint.Coordinates,
                         nextWaypoint.Coordinates);
 
-                    pathQueue.Enqueue(new NextInstructionModel {
+                    pathQueue.Enqueue(new NextStepModel {
                         NextWaypoint = nextWaypoint,
                         Angle = angle
                     });
@@ -182,7 +182,7 @@ namespace IndoorNavigation.Modules.Navigation
         /// <param name="CurrentBeacon"></param>
         /// <param name="EndWaypoint"></param>
         /// <returns></returns>
-        public Queue<NextInstructionModel> RegainPath(
+        public Queue<NextStepModel> RegainPath(
             WaypointModel PreviousWaypoint,
             Beacon CurrentBeacon,
             WaypointModel EndWaypoint)
@@ -211,8 +211,8 @@ namespace IndoorNavigation.Modules.Navigation
             // Get the optimal path
             var path = navigraph.Dijkstra(startPoingKey, endPointKey).GetPath();
 
-            Queue<NextInstructionModel> pathQueue =
-                new Queue<NextInstructionModel>();
+            Queue<NextStepModel> pathQueue =
+                new Queue<NextStepModel>();
 
             // Compute the angle to turn to next location
             for (int i = 0; i < path.Count() - 1; i++)
@@ -231,7 +231,7 @@ namespace IndoorNavigation.Modules.Navigation
                         PreviousWaypoint.Coordinates,
                         nextWaypoint.Coordinates
                     );
-                    pathQueue.Enqueue(new NextInstructionModel
+                    pathQueue.Enqueue(new NextStepModel
                     {
                         NextWaypoint = nextWaypoint,
                         Angle = angle
@@ -246,7 +246,7 @@ namespace IndoorNavigation.Modules.Navigation
                         PreviousWaypoint.Coordinates,
                         nextWaypoint.Coordinates
                         );
-                    pathQueue.Enqueue(new NextInstructionModel {
+                    pathQueue.Enqueue(new NextStepModel {
                         NextWaypoint = nextWaypoint,
                         Angle = angle
                     });

@@ -150,7 +150,7 @@ namespace IndoorNavigation
         /// <param name="Beacons"></param>
         /// <returns></returns>
         public static List<WaypointModel> ToBeaconGroup(
-            this List<BeaconGroupModelForMapFile> BeaconGroups,
+            this List<BeaconGroupModelForNavigraphFile> BeaconGroups,
             Dictionary<Guid,Beacon> Beacons)
         {
             return BeaconGroups.Select(BeaconGroup => new WaypointModel
@@ -170,7 +170,7 @@ namespace IndoorNavigation
         /// <param name="BeaconGroups"></param>
         /// <returns></returns>
         public static List<LocationConnectModel> ToLocationConnect(
-            this List<LocationConnectModelForMapFile> LocationConnects,
+            this List<LocationConnectModelForNavigraphFile> LocationConnects,
             List<WaypointModel> BeaconGroups)
         {
             return LocationConnects.Select(LocationConnect =>

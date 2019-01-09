@@ -21,12 +21,13 @@ namespace IndoorNavigationTest
         [TestInitialize]
         public void TestInit()
         {
+            Console.WriteLine("TestInit is starting......");
             GenerateMapData.Generate();
             Utility.SignalProcess = new SignalProcessModule();
             Utility.SignalProcess.Event.SignalProcessEventHandler += new EventHandler(HandleSignalProcess);
-            Utility.Route = new RoutePlan(Utility.Waypoints,Utility.LocationConnects);
+            Utility.WaypointRoute = new WaypointRoutePlan(Utility.Waypoints,Utility.LocationConnects);
             Utility.MaN = new MaNModule();
-            Utility.MaN.Event.MaNEventHandler += new EventHandler(HandleMaNModule);
+            Utility.MaN.MaNevent.MaNEventHandler += new EventHandler(HandleMaNModule);
         }
 
         [TestMethod]
@@ -83,6 +84,10 @@ namespace IndoorNavigationTest
             Assert.AreEqual(-70, A2.Threshold);
             Assert.AreEqual(-75, B1.Threshold);
             Assert.AreEqual(-65, B2.Threshold);
+            Assert.AreEqual(BeaconType.Waypoint, A1.Type);
+            Assert.AreEqual(BeaconType.Waypoint, A2.Type);
+            Assert.AreEqual(BeaconType.Waypoint, B1.Type);
+            Assert.AreEqual(BeaconType.Waypoint, B2.Type);
 
             var position1 = Utility.Waypoints.Where(c => c.Name == "A1F").First();
             var position2 = Utility.Waypoints.Where(c => c.Name == "B1F").First();
@@ -157,7 +162,7 @@ namespace IndoorNavigationTest
         [TestMethod, Timeout(10000)]
         public void NavigationTest()
         {
-            var routePath = Utility.Route.GetPath(Utility.BeaconsDict[Guid.Parse("0000803f-0000-7b3d-c941-0000c15ef342")], Utility.Waypoints.Where(c => c.Name == "K1F").First());
+            var routePath = Utility.WaypointRoute.GetPath(Utility.BeaconsDict[Guid.Parse("0000803f-0000-7b3d-c941-0000c15ef342")], Utility.Waypoints.Where(c => c.Name == "K1F").First());
             Utility.MaN.SetDestination(Utility.Waypoints.Where(c => c.Name == "K1F").First());
             // A
             Utility.SignalProcess.Event.OnEventCall(new SignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-7b3d-c941-0000c15ef342")]});
@@ -198,7 +203,7 @@ namespace IndoorNavigationTest
         [TestMethod, Timeout(10000)]
         public void StartingPointCorrection()
         {
-            var routePath = Utility.Route.RegainPath(Utility.Waypoints.Where(c => c.Name == "D1F").First(),Utility.BeaconsDict[Guid.Parse("0000803f-0000-563d-c941-0000e85ef342")], Utility.Waypoints.Where(c => c.Name == "K1F").First());
+            var routePath = Utility.WaypointRoute.RegainPath(Utility.Waypoints.Where(c => c.Name == "D1F").First(),Utility.BeaconsDict[Guid.Parse("0000803f-0000-563d-c941-0000e85ef342")], Utility.Waypoints.Where(c => c.Name == "K1F").First());
             Utility.MaN.SetDestination(Utility.Waypoints.Where(c => c.Name == "K1F").First());
             // D
             Utility.SignalProcess.Event.OnEventCall(new SignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-223d-c941-0000ff5ef342")] });
@@ -236,7 +241,7 @@ namespace IndoorNavigationTest
         [TestMethod, Timeout(10000)]
         public void SkipSomeLocationsTest()
         {
-            var routePath = Utility.Route.GetPath(Utility.BeaconsDict[Guid.Parse("0000803f-0000-7b3d-c941-0000c15ef342")], Utility.Waypoints.Where(c => c.Name == "K1F").First());
+            var routePath = Utility.WaypointRoute.GetPath(Utility.BeaconsDict[Guid.Parse("0000803f-0000-7b3d-c941-0000c15ef342")], Utility.Waypoints.Where(c => c.Name == "K1F").First());
             Utility.MaN.SetDestination(Utility.Waypoints.Where(c => c.Name == "K1F").First());
             // A
             Utility.SignalProcess.Event.OnEventCall(new SignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-7b3d-c941-0000c15ef342")] });
@@ -282,7 +287,7 @@ namespace IndoorNavigationTest
         [TestMethod, Timeout(10000)]
         public void ReNavigationTest()
         {
-            var routePath = Utility.Route.GetPath(Utility.BeaconsDict[Guid.Parse("0000803f-0000-7b3d-c941-0000c15ef342")], Utility.Waypoints.Where(c => c.Name == "K1F").First());
+            var routePath = Utility.WaypointRoute.GetPath(Utility.BeaconsDict[Guid.Parse("0000803f-0000-7b3d-c941-0000c15ef342")], Utility.Waypoints.Where(c => c.Name == "K1F").First());
             Utility.MaN.SetDestination(Utility.Waypoints.Where(c => c.Name == "K1F").First());
             // A
             Utility.SignalProcess.Event.OnEventCall(new SignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-7b3d-c941-0000c15ef342")] });
@@ -301,8 +306,8 @@ namespace IndoorNavigationTest
             Utility.SignalProcess.Event.OnEventCall(new SignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-183d-c941-0000eb5ef342")] });
             WaitEvent.WaitOne();
             Assert.AreEqual(routePath.Dequeue().Angle, maNEventArgs.Angle);
-            // ?·s­pºâ¸Ñµª
-            routePath = Utility.Route.RegainPath(Utility.Waypoints.Where(c => c.Name == "D1F").First(), Utility.BeaconsDict[Guid.Parse("0000803f-0000-713d-c941-0000395ff342")], Utility.Waypoints.Where(c => c.Name == "K1F").First());
+            // ?ï¿½sï¿½pï¿½ï¿½Ñµï¿½
+            routePath = Utility.WaypointRoute.RegainPath(Utility.Waypoints.Where(c => c.Name == "D1F").First(), Utility.BeaconsDict[Guid.Parse("0000803f-0000-713d-c941-0000395ff342")], Utility.Waypoints.Where(c => c.Name == "K1F").First());
             // G
             Utility.SignalProcess.Event.OnEventCall(new SignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-713d-c941-0000395ff342")] });
             WaitEvent.WaitOne();

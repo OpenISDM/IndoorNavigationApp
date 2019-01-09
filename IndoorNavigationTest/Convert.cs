@@ -23,13 +23,13 @@ namespace IndoorNavigationTest
 
         public static string ToJsonString(this List<WaypointModel> BeaconGroups)
         {
-            List<BeaconGroupModelForMapFile> BeaconGroupModels = BeaconGroups.Select(BeaconGroup => new BeaconGroupModelForMapFile { Id = BeaconGroup.Id, Name = BeaconGroup.Name, Beacons = BeaconGroup.Beacons.Select(Beacon => Beacon.UUID).ToList() }).ToList();
+            List<BeaconGroupModelForNavigraphFile> BeaconGroupModels = BeaconGroups.Select(BeaconGroup => new BeaconGroupModelForNavigraphFile { Id = BeaconGroup.Id, Name = BeaconGroup.Name, Beacons = BeaconGroup.Beacons.Select(Beacon => Beacon.UUID).ToList() }).ToList();
             return JsonConvert.SerializeObject(BeaconGroupModels);
         }
 
         public static string ToJsonString(this List<LocationConnectModel> LocationConnects)
         {
-            List<LocationConnectModelForMapFile> LocationConnectModelForMapFiles = LocationConnects.Select(LocationConnect => new LocationConnectModelForMapFile { BeaconA = LocationConnect.BeaconA.Id, BeaconB = LocationConnect.BeaconB.Id, IsTwoWay = LocationConnect.IsTwoWay }).ToList();
+            List<LocationConnectModelForNavigraphFile> LocationConnectModelForMapFiles = LocationConnects.Select(LocationConnect => new LocationConnectModelForNavigraphFile { BeaconA = LocationConnect.BeaconA.Id, BeaconB = LocationConnect.BeaconB.Id, IsTwoWay = LocationConnect.IsTwoWay }).ToList();
             return JsonConvert.SerializeObject(LocationConnectModelForMapFiles);
         }
     }

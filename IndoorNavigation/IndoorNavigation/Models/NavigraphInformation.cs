@@ -61,6 +61,19 @@ namespace IndoorNavigation.Models
         /// The floor on which the beacon is installed
         /// </summary>
         public virtual float Floor { get; set; }
+        /// <summary>
+        /// The types of Beacon
+        /// </summary>
+        public BeaconType Type { get; set; }
+    }
+
+    public enum BeaconType
+    {
+        Waypoint = 0,
+        iBeacon,
+        Eddystone,
+        AltBeacon,
+        GeoBeacon
     }
 
     /// <summary>
@@ -162,7 +175,7 @@ namespace IndoorNavigation.Models
     /// A group of LBeacons that are used to mark a waypoint. This element is 
     /// used to store the offline navigation graph data on the phone.
     /// </summary>
-    public class BeaconGroupModelForMapFile : BeaconGroup,
+    public class BeaconGroupModelForNavigraphFile : BeaconGroup,
         IBeaconGroupModelForNavigraphFile
     {
         /// <summary>
@@ -192,7 +205,7 @@ namespace IndoorNavigation.Models
     /// the navigation graph data in the phone.
     /// Consider one way or two ways
     /// </summary>
-    public class LocationConnectModelForMapFile : LocationConnect,
+    public class LocationConnectModelForNavigraphFile : LocationConnect,
         ILocationConnectModelForNavigraphFile
     {
         /// <summary>

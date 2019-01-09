@@ -61,7 +61,7 @@ namespace IndoorNavigation.Models
     /// <summary>
     /// Instruction of next location to be delivered at the next waypoint
     /// </summary>
-    public class NextInstructionModel
+    public class NextStepModel
     {
         /// <summary>
         /// Next location

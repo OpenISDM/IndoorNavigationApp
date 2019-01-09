@@ -51,24 +51,24 @@ namespace IndoorNavigation.Modules
         private Beacon currentBeacon;
         private WaypointModel previousWaypoint;
         private WaypointModel endWaypoint;
-        private NextInstructionModel nextInstruction;
-        private Queue<NextInstructionModel> pathQueue;
-        private ManualResetEvent nextBeaconWaitEvent = 
+        private NextStepModel nextStep;
+        private Queue<NextStepModel> pathQueue;
+        private ManualResetEvent nextBeaconWaitEvent =
             new ManualResetEvent(false);
         private ManualResetEvent navigationTaskWaitEvent =
             new ManualResetEvent(false);
         private ManualResetEvent threadClosedWait =
             new ManualResetEvent(false);
         private object resourceLock = new object();
-        private EventHandler HSignalProcess;
-        public MaNEEvent Event;
+        private readonly EventHandler HSignalProcess;
+        public MaNEvent MaNevent;
 
         /// <summary>
         /// Initialize a Monitor and Notification Model
         /// </summary>
         public MaNModule()
         {
-            Event = new MaNEEvent();
+            MaNevent = new MaNEvent();
             MaNThread = new Thread(MaNWork) { IsBackground = true };
             MaNThread.Start();
             HSignalProcess = new EventHandler(HandleSignalProcess);
@@ -96,7 +96,7 @@ namespace IndoorNavigation.Modules
                         // Check if he arrives the destination
                         if (currentWaypoint == endWaypoint)
                         {
-                            Event.OnEventCall(new MaNEventArgs
+                            MaNevent.OnEventCall(new MaNEventArgs
                             {
                                 Status = NavigationStatus.Arrival
                             });
@@ -108,11 +108,11 @@ namespace IndoorNavigation.Modules
                         // The current version, user has to walk in random 
                         // way, once he reaches the second location then 
                         // calibration.
-                        if (nextInstruction == null)
+                        if (nextStep == null)
                         {
-                            nextInstruction = pathQueue.Dequeue();
+                            nextStep = pathQueue.Dequeue();
 
-                            Event.OnEventCall(new MaNEventArgs
+                            MaNevent.OnEventCall(new MaNEventArgs
                             {
                                 Status = NavigationStatus.AdjustDirection
                             });
@@ -120,18 +120,18 @@ namespace IndoorNavigation.Modules
                         else
                         {
                             // Check if the user reachs the next location
-                            if (currentWaypoint == nextInstruction.NextWaypoint)
+                            if (currentWaypoint == nextStep.NextWaypoint)
                             {
-                                nextInstruction = pathQueue.Dequeue();
-                                double distance = nextInstruction.NextWaypoint
+                                nextStep = pathQueue.Dequeue();
+                                double distance = nextStep.NextWaypoint
                                     .Coordinates
                                     .GetDistanceTo(
                                     currentBeacon.GetCoordinates());
 
-                                Event.OnEventCall(new MaNEventArgs
+                                MaNevent.OnEventCall(new MaNEventArgs
                                 {
                                     Status = NavigationStatus.Run,
-                                    Angle = nextInstruction.Angle,
+                                    Angle = nextStep.Angle,
                                     Distance = distance
                                 });
                             }
@@ -139,12 +139,12 @@ namespace IndoorNavigation.Modules
                             {
                                 // Alter the wrong path, 
                                 // and tell the next step
-                                Event.OnEventCall(new MaNEventArgs
+                                MaNevent.OnEventCall(new MaNEventArgs
                                 {
                                     Status = NavigationStatus.AdjustRoute
                                 });
 
-                                Event.OnEventCall(
+                                MaNevent.OnEventCall(
                                     NavigationRouteCorrection(currentWaypoint,
                                     endWaypoint));
                             }
@@ -173,7 +173,7 @@ namespace IndoorNavigation.Modules
             (WaypointModel CurrentWaypoint, WaypointModel EndWaypoint)
         {
             // If the current location is in the path
-            if (pathQueue.Where(c => c.NextWaypoint == CurrentWaypoint).Count() > 0)
+            if (pathQueue.Any(c => c.NextWaypoint == CurrentWaypoint))
             {
                 // Remove the location in the queue of path until the dequeued
                 // location is the same as current location
@@ -182,8 +182,8 @@ namespace IndoorNavigation.Modules
                 while (pathQueue.Dequeue() != CurrentInstruction) ;
 
                 // Keep navigating
-                nextInstruction = pathQueue.Dequeue();
-                double distance = nextInstruction.NextWaypoint
+                nextStep = pathQueue.Dequeue();
+                double distance = nextStep.NextWaypoint
                     .Coordinates
                     .GetDistanceTo(currentBeacon.GetCoordinates());
 
@@ -191,7 +191,7 @@ namespace IndoorNavigation.Modules
                 {
                     Status = NavigationStatus.Run,
                     Distance = distance,
-                    Angle = nextInstruction.Angle
+                    Angle = nextStep.Angle
                 };
             }
             else
@@ -207,10 +207,10 @@ namespace IndoorNavigation.Modules
                     c.BeaconB == CurrentWaypoint))
                 {
                     // Replan the path, and keep navigating
-                    pathQueue = Utility.Route.RegainPath(previousWaypoint,
+                    pathQueue = Utility.WaypointRoute.RegainPath(previousWaypoint,
                         currentBeacon, EndWaypoint);
-                    nextInstruction = pathQueue.Dequeue();
-                    double distance = nextInstruction.NextWaypoint
+                    nextStep = pathQueue.Dequeue();
+                    double distance = nextStep.NextWaypoint
                         .Coordinates
                         .GetDistanceTo(
                         currentBeacon.GetCoordinates());
@@ -218,7 +218,7 @@ namespace IndoorNavigation.Modules
                     return new MaNEventArgs
                     {
                         Status = NavigationStatus.Run,
-                        Angle = nextInstruction.Angle,
+                        Angle = nextStep.Angle,
                         Distance = distance
                     };
 
@@ -226,8 +226,8 @@ namespace IndoorNavigation.Modules
                 else
                 {
                     // Replan the path and calibrate the direction
-                    pathQueue = Utility.Route.GetPath(currentBeacon, EndWaypoint);
-                    nextInstruction = pathQueue.Dequeue();
+                    pathQueue = Utility.WaypointRoute.GetPath(currentBeacon, EndWaypoint);
+                    nextStep = pathQueue.Dequeue();
 
                     return new MaNEventArgs
                     {
@@ -264,7 +264,7 @@ namespace IndoorNavigation.Modules
 
                 lock (resourceLock)
                 {
-                    pathQueue = Utility.Route.GetPath(currentBeacon, EndWaypoint);
+                    pathQueue = Utility.WaypointRoute.GetPath(currentBeacon, EndWaypoint);
                     endWaypoint = EndWaypoint;
                 }
 
@@ -344,7 +344,7 @@ namespace IndoorNavigation.Modules
         AdjustDirection
     }
 
-    public class MaNEEvent
+    public class MaNEvent
     {
         public event EventHandler MaNEventHandler;
 

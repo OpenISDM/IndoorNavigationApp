@@ -40,12 +40,12 @@ using IndoorNavigation.Modules.Navigation;
 
 namespace IndoorNavigation.Modules
 {
-    public class Utility
+    public static class Utility
     {
-        public static Dictionary<Guid,Beacon> BeaconsDict;
+        public static Dictionary<Guid, Beacon> BeaconsDict;
         public static List<WaypointModel> Waypoints;
         public static List<LocationConnectModel> LocationConnects;
-        public static RoutePlan Route;
+        public static WaypointRoutePlan WaypointRoute;
         public static SignalProcessModule SignalProcess;
         public static MaNModule MaN;
 
@@ -98,7 +98,7 @@ namespace IndoorNavigation.Modules
 
                 throw new ArgumentException("Download faild");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new ArgumentException(ex.Message);
             }
@@ -117,15 +117,15 @@ namespace IndoorNavigation.Modules
         public static int GetRotateAngle(GeoCoordinates Current,
             GeoCoordinates Previous, GeoCoordinates Next)
         {
-            double cosineAngle = 
+            double cosineAngle =
                 CalculatingCosineAngle(Current, Previous, Next);
-            double outerProductAngle = 
-                CalculatingOuterProductAngle(Current,Previous,Next);
+            double outerProductAngle =
+                CalculatingOuterProductAngle(Current, Previous, Next);
 
             if (outerProductAngle < 0)
-                return System.Convert.ToInt32(180-cosineAngle*180/Math.PI);
+                return System.Convert.ToInt32(180 - cosineAngle * 180 / Math.PI);
             else
-                return -System.Convert.ToInt32(180-cosineAngle*180/Math.PI);
+                return -System.Convert.ToInt32(180 - cosineAngle * 180 / Math.PI);
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace IndoorNavigation.Modules
         /// <param name="Next">next location</param>
         /// <returns></returns>
         private static double CalculatingOuterProductAngle(
-            GeoCoordinates Current,GeoCoordinates Previous,GeoCoordinates Next)
+            GeoCoordinates Current, GeoCoordinates Previous, GeoCoordinates Next)
         {
             double Xa, Xb, Ya, Yb;
             double angle;

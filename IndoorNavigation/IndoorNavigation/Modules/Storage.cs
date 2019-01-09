@@ -84,16 +84,16 @@ namespace IndoorNavigation.Modules
                 Utility.BeaconsDict =
                     beaconJson.ToBeacons().ToDictionary(beacon =>beacon.UUID);
                 Utility.Waypoints = JsonConvert.DeserializeObject
-                    <List<BeaconGroupModelForMapFile>>
+                    <List<BeaconGroupModelForNavigraphFile>>
                     (data["BeaconGroup"].ToString())
                     .ToBeaconGroup(Utility.BeaconsDict);
                 Utility.LocationConnects = JsonConvert.DeserializeObject
-                    <List<LocationConnectModelForMapFile>>
+                    <List<LocationConnectModelForNavigraphFile>>
                     (data["LocationConnect"].ToString())
                     .ToLocationConnect(Utility.Waypoints);
 
                 // Initialize path planning and the data for setting map
-                Utility.Route = new Navigation.RoutePlan(
+                Utility.WaypointRoute = new Navigation.WaypointRoutePlan(
                     Utility.Waypoints,
                     Utility.LocationConnects);
 
