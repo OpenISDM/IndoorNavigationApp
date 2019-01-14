@@ -48,6 +48,7 @@ namespace IndoorNavigation.Modules
         public static WaypointRoutePlan WaypointRoute;
         public static SignalProcessModule SignalProcess;
         public static MaNModule MaN;
+        public static Container Service;
 
         // Skip SSL checking
         private static bool ValidateServerCertificate(Object sender,

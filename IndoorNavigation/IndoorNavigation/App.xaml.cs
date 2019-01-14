@@ -20,6 +20,8 @@ namespace IndoorNavigation
 		protected override void OnStart ()
 		{
             // Handle when your app starts
+            Utility.Service = new Container();
+
             Utility.SignalProcess = new SignalProcessModule();
             var SendSignalFunction = new Action<List<BeaconSignalModel>>
                 (Utility.SignalProcess.AddSignal);
