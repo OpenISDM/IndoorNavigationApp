@@ -131,11 +131,28 @@ namespace IndoorNavigation.Models
     /// </summary>
     public interface IBeaconScan
     {
-        void Init(Action<List<BeaconSignalModel>> SendSignalFunction);
         void StartScan(List<Guid> BeaconsUUID);
         void StopScan();
         void Close();
+        BeaconScanEvent Event { get; }
     }
 
+    #endregion
+
+    #region Interface for navigation algorithm
+    public interface INavigationAlgorithm
+    {
+        void Work();
+        void StopNavigation();
+        ISignalProcessingAlgorithm CreateSignalProcessingAlgorithm();
+        bool IsReachingDestination { get; }
+    }
+    #endregion
+
+    #region Interface for signal processing algorithm
+    public interface ISignalProcessingAlgorithm
+    {
+        void SignalProcessing();
+    }
     #endregion
 }

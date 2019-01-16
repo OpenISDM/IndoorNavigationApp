@@ -12,12 +12,13 @@ namespace IndoorNavigation.iOS
 {
     class BeaconScan : IBeaconScan
     {
-        private static Action<List<BeaconSignalModel>> sendSignalFunction;
         private static CLLocationManager locationManager;
         private static List<CLBeaconRegion> beaconsRegion;
+        public BeaconScanEvent Event { get; private set; }
 
-        public void Init(Action<List<BeaconSignalModel>> SendSignalFunction)
+        public BeaconScan()
         {
+            Event = new BeaconScanEvent();
             locationManager = new CLLocationManager();
             // iOS 8.0以上需要開啟定位權限
             if (UIDevice.CurrentDevice.CheckSystemVersion(8, 0))
@@ -25,7 +26,6 @@ namespace IndoorNavigation.iOS
                 locationManager.RequestWhenInUseAuthorization();
             }
 
-            sendSignalFunction = SendSignalFunction;
             locationManager.DidRangeBeacons += HandleDidRangeBeacons;
         }
 
@@ -61,7 +61,11 @@ namespace IndoorNavigation.iOS
                     Minor = c.Minor.Int32Value,
                     RSSI = (int)c.Rssi,
                 }).ToList();
-            sendSignalFunction.Invoke(Signals);
+
+            Event.OnEventCall(new BeaconScanEventArgs
+            {
+                Signals = Signals
+            });
         }
 
         public void Close()

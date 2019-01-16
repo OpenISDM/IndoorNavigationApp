@@ -48,20 +48,12 @@ namespace IndoorNavigation.Modules
         private Thread signalProcessThread;
         private ManualResetEvent threadClosedWait =
             new ManualResetEvent(false);
-        private ManualResetEvent nextBeaconWaitEvent =
+        private ManualResetEvent AlogorithmWaitEvent =
             new ManualResetEvent(false);
-
-        public volatile List<BeaconSignalModel> beaconSignalBuffer =
-            new List<BeaconSignalModel>();
-
-        private BeaconType currentBeaconType;
-
+        private ISignalProcessingAlgorithm signalProcessingAlgorithm;
         private bool isThreadRunning = true;
-        private object bufferLock = new object();
-        // private Semaphore bufferSemaphore = new Semaphore(0, 1, "BufferLock");
-        private Mutex bufferMutex;
 
-        public SignalProcessEvent Event = new SignalProcessEvent();
+        public SignalProcessEvent Event { get; private set; }
 
         /// <summary>
         /// Launch the thread to find the Beacon within the threshold and have 
@@ -69,49 +61,18 @@ namespace IndoorNavigation.Modules
         /// </summary>
         public SignalProcessModule()
         {
-            Event.SignalProcessEventHandler +=
-                new EventHandler(GetCurrentBeaconType);
-
-            // bufferSemaphore = new Semaphore(0, 1, "BufferLock");
-            bufferMutex = new Mutex(false, "BufferLock");
-            currentBeaconType = BeaconType.Waypoint;
+            Event = new SignalProcessEvent();
 
             signalProcessThread =
                 new Thread(SignalProcessWork) { IsBackground = true };
             signalProcessThread.Start();
         }
 
-        /// <summary>
-        /// Insert the signal of discovered Beacon into the buffer(List)
-        /// </summary>
-        /// <param name="Signals"></param>
-        public void AddSignal(List<BeaconSignalModel> Signals)
-        {
-            // Beacon signal filter, keeps the Beacon's signal recorded in
-            // the graph
-            IEnumerable<BeaconSignalModel> signals = Signals
-                .Where(signal => Utility.BeaconsDict.Values
-                .Select(beacon => (beacon.UUID, beacon.Major, beacon.Minor))
-                .Contains((signal.UUID, signal.Major, signal.Minor)));
-
-            //lock (bufferLock)
-            //bufferSemaphore.WaitOne();
-            bufferMutex.WaitOne();
-            beaconSignalBuffer.AddRange(signals);
-            bufferMutex.ReleaseMutex();
-            //bufferSemaphore.Release();
-        }
-
         private void SignalProcessWork()
         {
-            ISignalProcessingAlgorithm signalProcessingAlgorithm;
-
             while (isThreadRunning)
             {
-                nextBeaconWaitEvent.WaitOne(1000);
-                nextBeaconWaitEvent.Reset();
-
-                signalProcessingAlgorithm = AlgorithmFactory.CreateSignalProcessing(currentBeaconType);
+                AlogorithmWaitEvent.WaitOne();
                 signalProcessingAlgorithm.SignalProcessing();
 
                 // wait 1 sec or wait module close
@@ -123,13 +84,12 @@ namespace IndoorNavigation.Modules
             threadClosedWait.Reset();
         }
 
-        private void GetCurrentBeaconType(object sender, EventArgs e)
+        public void SetAlogorithm(
+            ISignalProcessingAlgorithm SignalProcessingAlgorithm)
         {
-            Beacon _currentBeacon = 
-                (e as SignalProcessEventArgs).CurrentBeacon;
-
-            currentBeaconType = _currentBeacon.Type;
-            nextBeaconWaitEvent.Set();
+            signalProcessingAlgorithm = SignalProcessingAlgorithm;
+            AlogorithmWaitEvent.Set();
+            AlogorithmWaitEvent.Reset();
         }
 
         #region IDisposable Support
@@ -141,22 +101,18 @@ namespace IndoorNavigation.Modules
             {
                 if (disposing)
                 {
-                    Event.SignalProcessEventHandler -=
-                        new EventHandler(GetCurrentBeaconType);
                     isThreadRunning = false;
                     threadClosedWait.WaitOne();
 
                     threadClosedWait.Dispose();
-                    nextBeaconWaitEvent.Set();
-                    nextBeaconWaitEvent.Dispose();
+                    AlogorithmWaitEvent.Set();
+                    AlogorithmWaitEvent.Dispose();
                 }
 
 
                 signalProcessThread = null;
                 threadClosedWait = null;
-                nextBeaconWaitEvent = null;
-                beaconSignalBuffer = null;
-                bufferLock = null;
+                AlogorithmWaitEvent = null;
 
                 disposedValue = true;
             }
@@ -180,15 +136,10 @@ namespace IndoorNavigation.Modules
     {
         public event EventHandler SignalProcessEventHandler;
 
-        public void OnEventCall(SignalProcessEventArgs e)
+        public void OnEventCall(EventArgs e)
         {
             SignalProcessEventHandler(this, e);
         }
-    }
-
-    public class SignalProcessEventArgs : EventArgs
-    {
-        public Beacon CurrentBeacon { get; set; }
     }
     #endregion
 }

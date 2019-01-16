@@ -23,9 +23,7 @@ namespace IndoorNavigation
             Utility.Service = new Container();
 
             Utility.SignalProcess = new SignalProcessModule();
-            var SendSignalFunction = new Action<List<BeaconSignalModel>>
-                (Utility.SignalProcess.AddSignal);
-            DependencyService.Get<IBeaconScan>().Init(SendSignalFunction);
+            Utility.BeaconScanAPI = DependencyService.Get<IBeaconScan>();
         }
 
 		protected override void OnSleep ()

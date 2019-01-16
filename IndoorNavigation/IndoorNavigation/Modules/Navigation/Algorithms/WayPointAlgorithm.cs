@@ -229,7 +229,7 @@ namespace IndoorNavigation.Modules.Navigation.Algorithms
         private void HandleSignalProcess(object sender, EventArgs e)
         {
             Beacon _currentBeacon =
-                (e as SignalProcessEventArgs).CurrentBeacon;
+                (e as WayPointSignalProcessEventArgs).CurrentBeacon;
 
             // Check this event of signal processing from the current Beacon 
             // if it is the same as currrent Beacon

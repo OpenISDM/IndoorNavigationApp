@@ -52,7 +52,7 @@ namespace IndoorNavigation.Modules
             new ManualResetEvent(false);
         private ManualResetEvent threadClosedWait =
             new ManualResetEvent(false);
-        public MaNEEvent Event;
+        public MaNEEvent Event { get; private set; }
         private INavigationAlgorithm navigationAlgorithm;
 
         /// <summary>

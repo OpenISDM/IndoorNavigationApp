@@ -8,11 +8,15 @@ namespace IndoorNavigation.Modules.SignalProcessingAlgorithms
 {
     public class WaypointSignalProcessing : ISignalProcessingAlgorithm
     {
-        private Mutex bufferMutex;
+        public List<BeaconSignalModel> beaconSignalBuffer =
+            new List<BeaconSignalModel>();
+        private readonly EventHandler HBeaconScan;
+        private object bufferLock = new object();
 
         public WaypointSignalProcessing()
         {
-            bufferMutex = Mutex.OpenExisting("BufferLock");
+            HBeaconScan = new EventHandler(HandleBeaconScan);
+            Utility.BeaconScanAPI.Event.BeaconScanEventHandler += HBeaconScan;
         }
 
         public void SignalProcessing()
@@ -24,38 +28,36 @@ namespace IndoorNavigation.Modules.SignalProcessingAlgorithms
             List<BeaconSignalModel> removeSignalBuffer =
                 new List<BeaconSignalModel>();
 
-            bufferMutex.WaitOne();
-            
-            removeSignalBuffer.AddRange(
-                Utility.SignalProcess.beaconSignalBuffer.Where(c =>
-                c.Timestamp < DateTime.Now.AddMilliseconds(-1000)));
-
-            foreach (var obsoleteBeaconSignal in removeSignalBuffer)
-                Utility.SignalProcess.beaconSignalBuffer.
-                Remove(obsoleteBeaconSignal);
-
-            // Average the intensity of all Beacon signals
-            var beacons = Utility.SignalProcess.beaconSignalBuffer
-                .Select(c => (c.UUID, c.Major, c.Minor)).Distinct();
-            
-            foreach (var (UUID, Major, Minor) in beacons)
+            lock (bufferLock)
             {
-                signalAverageList.Add(
-                    new BeaconSignal
-                    {
-                        UUID = (UUID, Major, Minor).UUID,
-                        Major = (UUID, Major, Minor).Major,
-                        Minor = (UUID, Major, Minor).Minor,
-                        RSSI = System.Convert.ToInt32(
-                            Utility.SignalProcess.beaconSignalBuffer
-                            .Where(c =>
-                            c.UUID == (UUID, Major, Minor).UUID &&
-                            c.Major == (UUID, Major, Minor).Major &&
-                            c.Minor == (UUID, Major, Minor).Minor)
-                            .Select(c => c.RSSI).Average())
-                    });
+                removeSignalBuffer.AddRange(
+                beaconSignalBuffer.Where(c =>
+                    c.Timestamp < DateTime.Now.AddMilliseconds(-1000)));
+
+                foreach (var obsoleteBeaconSignal in removeSignalBuffer)
+                    beaconSignalBuffer.Remove(obsoleteBeaconSignal);
+
+                // Average the intensity of all Beacon signals
+                var beacons = beaconSignalBuffer
+                    .Select(c => (c.UUID, c.Major, c.Minor)).Distinct();
+
+                foreach (var (UUID, Major, Minor) in beacons)
+                {
+                    signalAverageList.Add(
+                        new BeaconSignal
+                        {
+                            UUID = (UUID, Major, Minor).UUID,
+                            Major = (UUID, Major, Minor).Major,
+                            Minor = (UUID, Major, Minor).Minor,
+                            RSSI = System.Convert.ToInt32(
+                                beaconSignalBuffer.Where(c =>
+                                c.UUID == (UUID, Major, Minor).UUID &&
+                                c.Major == (UUID, Major, Minor).Major &&
+                                c.Minor == (UUID, Major, Minor).Minor)
+                                .Select(c => c.RSSI).Average())
+                        });
+                }
             }
-            bufferMutex.ReleaseMutex();
         
             // Find the beacon which closest to me
             if (signalAverageList.Any())
@@ -78,11 +80,38 @@ namespace IndoorNavigation.Modules.SignalProcessingAlgorithms
 
                     // Send event to MaN module
                     Utility.SignalProcess.Event.OnEventCall(
-                        new SignalProcessEventArgs
+                        new WayPointSignalProcessEventArgs
                         {CurrentBeacon = bestNearbyBeacon});
                 }
             }
 
         }
+
+        private void HandleBeaconScan(object sender, EventArgs e)
+        {
+            // Beacon signal filter, keeps the Beacon's signal recorded in
+            // the graph
+            IEnumerable<BeaconSignalModel> signals = 
+                (e as BeaconScanEventArgs).Signals
+                .Where(signal => Utility.BeaconsDict.Values
+                .Select(beacon => (beacon.UUID, beacon.Major, beacon.Minor))
+                .Contains((signal.UUID, signal.Major, signal.Minor)));
+
+            lock (bufferLock)
+                beaconSignalBuffer.AddRange(signals);
+
+        }
+
+        ~WaypointSignalProcessing()
+        {
+            Utility.BeaconScanAPI.Event.BeaconScanEventHandler -= HBeaconScan;
+            beaconSignalBuffer = null;
+            bufferLock = null;
+        }
+    }
+
+    public class WayPointSignalProcessEventArgs : EventArgs
+    {
+        public Beacon CurrentBeacon { get; set; }
     }
 }

@@ -49,6 +49,7 @@ namespace IndoorNavigation.Modules
         public static SignalProcessModule SignalProcess;
         public static MaNModule MaN;
         public static Container Service;
+        public static IBeaconScan BeaconScanAPI;
 
         // Skip SSL checking
         private static bool ValidateServerCertificate(Object sender,
