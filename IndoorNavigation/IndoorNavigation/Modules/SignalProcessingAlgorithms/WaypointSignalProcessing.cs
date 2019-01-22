@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using IndoorNavigation.Models;
-using System.Threading;
 
 namespace IndoorNavigation.Modules.SignalProcessingAlgorithms
 {
@@ -65,10 +64,10 @@ namespace IndoorNavigation.Modules.SignalProcessingAlgorithms
                 // Scan all the signal that satisfies the threshold
                 var nearbySignal = (from signal in signalAverageList
                                     from beacon in Utility.BeaconsDict
-                                        where (
+                                    where (
                                         signal.UUID == beacon.Value.UUID &&
                                         signal.RSSI >= beacon.Value.Threshold)
-                                        select signal);
+                                    select signal);
 
                 // Find the beacon which closest to me, then send an event
                 // to MaN

@@ -35,8 +35,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
-using System.Linq;
-using IndoorNavigation.Modules.SignalProcessingAlgorithms;
 
 namespace IndoorNavigation.Modules
 {
@@ -52,6 +50,7 @@ namespace IndoorNavigation.Modules
             new ManualResetEvent(false);
         private ISignalProcessingAlgorithm signalProcessingAlgorithm;
         private bool isThreadRunning = true;
+        private object algorithmLock = new object();
 
         public SignalProcessEvent Event { get; private set; }
 
@@ -63,6 +62,10 @@ namespace IndoorNavigation.Modules
         {
             Event = new SignalProcessEvent();
 
+            signalProcessingAlgorithm = 
+                Utility.Service.Get<ISignalProcessingAlgorithm>
+                ("Default signal process algorithm");
+
             signalProcessThread =
                 new Thread(SignalProcessWork) { IsBackground = true };
             signalProcessThread.Start();
@@ -72,8 +75,11 @@ namespace IndoorNavigation.Modules
         {
             while (isThreadRunning)
             {
-                AlogorithmWaitEvent.WaitOne();
-                signalProcessingAlgorithm.SignalProcessing();
+                AlogorithmWaitEvent.WaitOne(1000);
+                AlogorithmWaitEvent.Reset();
+
+                lock(algorithmLock)
+                    signalProcessingAlgorithm.SignalProcessing();
 
                 // wait 1 sec or wait module close
                 SpinWait.SpinUntil(() => isThreadRunning, 1000);
@@ -87,9 +93,9 @@ namespace IndoorNavigation.Modules
         public void SetAlogorithm(
             ISignalProcessingAlgorithm SignalProcessingAlgorithm)
         {
-            signalProcessingAlgorithm = SignalProcessingAlgorithm;
+            lock(algorithmLock)
+                signalProcessingAlgorithm = SignalProcessingAlgorithm;
             AlogorithmWaitEvent.Set();
-            AlogorithmWaitEvent.Reset();
         }
 
         #region IDisposable Support
@@ -99,11 +105,11 @@ namespace IndoorNavigation.Modules
         {
             if (!disposedValue)
             {
+                isThreadRunning = false;
+                threadClosedWait.WaitOne();
+
                 if (disposing)
                 {
-                    isThreadRunning = false;
-                    threadClosedWait.WaitOne();
-
                     threadClosedWait.Dispose();
                     AlogorithmWaitEvent.Set();
                     AlogorithmWaitEvent.Dispose();

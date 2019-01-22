@@ -3,11 +3,10 @@ using IndoorNavigation.Modules.SignalProcessingAlgorithms;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace IndoorNavigation.Modules.Navigation.Algorithms
+namespace IndoorNavigation.Modules.Navigation
 {
     public class WayPointAlgorithm : INavigationAlgorithm, IDisposable
     {
@@ -30,7 +29,9 @@ namespace IndoorNavigation.Modules.Navigation.Algorithms
             HSignalProcess = new EventHandler(HandleSignalProcess);
             Utility.SignalProcess.Event.SignalProcessEventHandler +=
                 HSignalProcess;
-            signalProcessingAlgorithm = new WaypointSignalProcessing();
+            signalProcessingAlgorithm = 
+                Utility.Service.Get<ISignalProcessingAlgorithm>
+                ("Way point signal processing algorithm");
         }
 
         public void Work()

@@ -32,12 +32,8 @@
 
 using IndoorNavigation.Models;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
-using System.Linq;
-using System.Threading.Tasks;
-using IndoorNavigation.Modules.Navigation.Algorithms;
 
 namespace IndoorNavigation.Modules
 {
