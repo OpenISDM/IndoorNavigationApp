@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Threading;
 using IndoorNavigation.Models;
+using IndoorNavigation.Modules.Navigation;
 
 namespace IndoorNavigation.Modules
 {
@@ -10,7 +11,7 @@ namespace IndoorNavigation.Modules
         //private Thread IPSThread;
         private ManualResetEvent threadClosedWait =
             new ManualResetEvent(false);
-        private INavigationAlgorithm navigationAlgorithm;
+        public INavigationAlgorithm navigationAlgorithm { get; private set; }
 
         public IPSModule()
         {
@@ -23,6 +24,11 @@ namespace IndoorNavigation.Modules
 
             //IPSThread = new Thread(Work);
             //IPSThread.Start();
+        }
+
+        public void SetSetDestination(WaypointModel waypoint)
+        {
+            (navigationAlgorithm as WayPointAlgorithm).SetDestination(waypoint);
         }
 
         private void Work()

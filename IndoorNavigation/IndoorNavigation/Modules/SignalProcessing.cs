@@ -46,8 +46,6 @@ namespace IndoorNavigation.Modules
         private Thread signalProcessThread;
         private ManualResetEvent threadClosedWait =
             new ManualResetEvent(false);
-        private ManualResetEvent AlogorithmWaitEvent =
-            new ManualResetEvent(false);
         private ISignalProcessingAlgorithm signalProcessingAlgorithm;
         private bool isThreadRunning = true;
         private object algorithmLock = new object();
@@ -75,9 +73,6 @@ namespace IndoorNavigation.Modules
         {
             while (isThreadRunning)
             {
-                AlogorithmWaitEvent.WaitOne(1000);
-                AlogorithmWaitEvent.Reset();
-
                 lock(algorithmLock)
                     signalProcessingAlgorithm.SignalProcessing();
 
@@ -95,7 +90,6 @@ namespace IndoorNavigation.Modules
         {
             lock(algorithmLock)
                 signalProcessingAlgorithm = SignalProcessingAlgorithm;
-            AlogorithmWaitEvent.Set();
         }
 
         #region IDisposable Support
@@ -111,14 +105,11 @@ namespace IndoorNavigation.Modules
                 if (disposing)
                 {
                     threadClosedWait.Dispose();
-                    AlogorithmWaitEvent.Set();
-                    AlogorithmWaitEvent.Dispose();
                 }
 
 
                 signalProcessThread = null;
                 threadClosedWait = null;
-                AlogorithmWaitEvent = null;
 
                 disposedValue = true;
             }
