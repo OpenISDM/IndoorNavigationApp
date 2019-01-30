@@ -138,7 +138,7 @@ namespace IndoorNavigation.Modules
 
         public void OnEventCall(EventArgs e)
         {
-            MaNEventHandler(this, e);
+            MaNEventHandler?.Invoke(this, e);
         }
     }
 

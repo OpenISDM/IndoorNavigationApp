@@ -135,7 +135,7 @@ namespace IndoorNavigation.Modules
 
         public void OnEventCall(EventArgs e)
         {
-            SignalProcessEventHandler(this, e);
+            SignalProcessEventHandler?.Invoke(this, e);
         }
     }
     #endregion
