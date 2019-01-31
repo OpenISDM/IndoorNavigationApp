@@ -2,6 +2,7 @@
 using IndoorNavigation.Modules.SignalProcessingAlgorithms;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -36,6 +37,7 @@ namespace IndoorNavigation.Modules.Navigation
 
         public void Work()
         {
+            Debug.WriteLine("Wait event hash key on wait one: {0}", navigationTaskWaitEvent.GetHashCode());
             // Wait for the navigation task
             navigationTaskWaitEvent.WaitOne();
             while (!IsReachingDestination)
@@ -218,6 +220,7 @@ namespace IndoorNavigation.Modules.Navigation
                     endWaypoint = EndWaypoint;
                 }
 
+                Debug.WriteLine("Wait event hash key on set: {0}", navigationTaskWaitEvent.GetHashCode());
                 navigationTaskWaitEvent.Set();
                 navigationTaskWaitEvent.Reset();
             });

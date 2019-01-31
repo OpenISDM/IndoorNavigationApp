@@ -49,7 +49,7 @@ namespace IndoorNavigation.Modules
         {
             if (!disposedValue)
             {
-                threadClosedWait.WaitOne();
+                //threadClosedWait.WaitOne();
 
                 if (disposing)
                 {

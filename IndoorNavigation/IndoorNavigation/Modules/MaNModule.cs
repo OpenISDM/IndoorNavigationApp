@@ -67,6 +67,7 @@ namespace IndoorNavigation.Modules
             {
                 // 等待演算法套用
                 navigationAlgorithmWait.WaitOne();
+                Debug.WriteLine("IPS init");
                 if (isThreadRunning)
                     navigationAlgorithm.Work();
             }
@@ -100,6 +101,7 @@ namespace IndoorNavigation.Modules
             {
                 isThreadRunning = false;
                 navigationAlgorithmWait.Set();
+                navigationAlgorithm.StopNavigation();
                 threadClosedWait.WaitOne();
 
                 if (disposing)
