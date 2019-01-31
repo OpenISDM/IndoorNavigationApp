@@ -9,7 +9,7 @@ namespace IndoorNavigation.Modules
     public class IPSModule : IDisposable
     {
         //private Thread IPSThread;
-        private ManualResetEvent threadClosedWait =
+        private ManualResetEvent threadWait =
             new ManualResetEvent(false);
         public INavigationAlgorithm navigationAlgorithm { get; private set; }
 
@@ -24,6 +24,9 @@ namespace IndoorNavigation.Modules
 
             //IPSThread = new Thread(Work);
             //IPSThread.Start();
+            //threadWait.WaitOne();
+
+            Debug.WriteLine("IPSModule initialization completed.");
         }
 
         public void SetSetDestination(WaypointModel waypoint)
@@ -34,12 +37,13 @@ namespace IndoorNavigation.Modules
         private void Work()
         {
             // IPS algorithms
-
+            threadWait.Set();
+            threadWait.Reset();
 
 
             Debug.WriteLine("IPS module close");
-            threadClosedWait.Set();
-            threadClosedWait.Reset();
+            threadWait.Set();
+            threadWait.Reset();
         }
 
         #region IDisposable Support
@@ -53,7 +57,7 @@ namespace IndoorNavigation.Modules
 
                 if (disposing)
                 {
-                    threadClosedWait.Dispose();
+                    threadWait.Dispose();
                     // TODO: 處置受控狀態 (受控物件)。
                 }
 

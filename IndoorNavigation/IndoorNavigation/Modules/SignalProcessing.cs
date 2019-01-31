@@ -44,7 +44,7 @@ namespace IndoorNavigation.Modules
     public class SignalProcessModule : IDisposable
     {
         private Thread signalProcessThread;
-        private ManualResetEvent threadClosedWait =
+        private ManualResetEvent threadWait =
             new ManualResetEvent(false);
         private ISignalProcessingAlgorithm signalProcessingAlgorithm;
         private bool isThreadRunning = true;
@@ -67,10 +67,16 @@ namespace IndoorNavigation.Modules
             signalProcessThread =
                 new Thread(SignalProcessWork) { IsBackground = true };
             signalProcessThread.Start();
+            threadWait.WaitOne();
+
+            Debug.WriteLine("SignalProcessModule initialization completed.");
         }
 
         private void SignalProcessWork()
         {
+            threadWait.Set();
+            threadWait.Reset();
+
             while (isThreadRunning)
             {
                 lock(algorithmLock)
@@ -81,8 +87,8 @@ namespace IndoorNavigation.Modules
             }
 
             Debug.WriteLine("Signal process close");
-            threadClosedWait.Set();
-            threadClosedWait.Reset();
+            threadWait.Set();
+            threadWait.Reset();
         }
 
         public void SetAlogorithm(
@@ -100,16 +106,16 @@ namespace IndoorNavigation.Modules
             if (!disposedValue)
             {
                 isThreadRunning = false;
-                threadClosedWait.WaitOne();
+                threadWait.WaitOne();
 
                 if (disposing)
                 {
-                    threadClosedWait.Dispose();
+                    threadWait.Dispose();
                 }
 
 
                 signalProcessThread = null;
-                threadClosedWait = null;
+                threadWait = null;
 
                 disposedValue = true;
             }

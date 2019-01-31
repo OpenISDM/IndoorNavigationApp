@@ -46,7 +46,7 @@ namespace IndoorNavigation.Modules
         private bool isThreadRunning = true;
         private ManualResetEvent navigationAlgorithmWait =
             new ManualResetEvent(false);
-        private ManualResetEvent threadClosedWait =
+        private ManualResetEvent threadWait =
             new ManualResetEvent(false);
         public MaNEEvent Event { get; private set; }
         private INavigationAlgorithm navigationAlgorithm;
@@ -59,22 +59,27 @@ namespace IndoorNavigation.Modules
             Event = new MaNEEvent();
             MaNThread = new Thread(MaNWork) { IsBackground = true };
             MaNThread.Start();
+            threadWait.WaitOne();
+
+            Debug.WriteLine("MaNModule initialization completed.");
         }
 
         private void MaNWork()
         {
+            threadWait.Set();
+            threadWait.Reset();
+
             while (isThreadRunning)
             {
                 // 等待演算法套用
                 navigationAlgorithmWait.WaitOne();
-                Debug.WriteLine("IPS init");
                 if (isThreadRunning)
                     navigationAlgorithm.Work();
             }
 
             Debug.WriteLine("MaN module close");
-            threadClosedWait.Set();
-            threadClosedWait.Reset();
+            threadWait.Set();
+            threadWait.Reset();
         }
 
         public void SetAlgorithm(INavigationAlgorithm NavigationAlgorithm)
@@ -102,14 +107,14 @@ namespace IndoorNavigation.Modules
                 isThreadRunning = false;
                 navigationAlgorithmWait.Set();
                 navigationAlgorithm.StopNavigation();
-                threadClosedWait.WaitOne();
+                threadWait.WaitOne();
 
                 if (disposing)
                 {
                     navigationAlgorithmWait.Dispose();
-                    threadClosedWait.Dispose();
+                    threadWait.Dispose();
                     navigationAlgorithmWait = null;
-                    threadClosedWait = null;
+                    threadWait = null;
                 }
 
                 MaNThread = null;
