@@ -148,6 +148,15 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon20.png">
       <Visible>false</Visible>
     </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\path-guide-2%281242x2688%29.png" />
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\path-guide-2%28828x1792%29.png" />
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\path-guide-2%281125x2436%29.png" />
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\path-guide-2%281242x2208%29.png" />
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\path-guide-2%28750x1334%29.png" />
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\path-guide-2%28640x960%29.png" />
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\path-guide-2%28640x1136%29.png" />
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\path-guide-2%28320x480%29.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -156,7 +165,7 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="3.2.0.839982" />
+    <PackageReference Include="Xamarin.Forms" Version="3.4.0.1029999" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
@@ -164,5 +173,13 @@
       <Project>{36779A2B-18D9-4509-BAE5-01652A9D37E8}</Project>
       <Name>IndoorNavigation</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\navigation_button.png" />
+    <BundleResource Include="Resources\tracking_button.png" />
+    <BundleResource Include="Resources\setting_imagebutton.png" />
+    <BundleResource Include="Resources\position_FAB.png" />
+    <BundleResource Include="Resources\location_icon.png" />
+    <BundleResource Include="Resources\position_FAB_white.png" />
   </ItemGroup>
 </Project>

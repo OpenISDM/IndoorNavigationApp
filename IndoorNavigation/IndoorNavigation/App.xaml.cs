@@ -15,7 +15,7 @@ namespace IndoorNavigation
 		{
 			InitializeComponent();
 
-			MainPage = new MainPage();
+			MainPage = new NavigationPage(new MainPage());
 		}
 
 		protected override void OnStart ()
@@ -28,7 +28,8 @@ namespace IndoorNavigation
                 ("Way point signal processing algorithm");
             Utility.Service.Add<WayPointAlgorithm>("Way point algorithm");
 
-            // Beacon scan api 待修正，需等待地圖資訊載入再註冊
+            // Beacon scan api must adjust later, it should regist after
+			// navigraph is be loaded.
             Utility.BeaconScanAPI = DependencyService.Get<IBeaconScan>();
             Utility.SignalProcess = new SignalProcessModule();
             Utility.MaN = new MaNModule();
