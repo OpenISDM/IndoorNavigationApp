@@ -55,6 +55,9 @@
     <PackageReference Include="Xamarin.Android.Support.v4" Version="27.0.2.1" />
     <PackageReference Include="Xamarin.Android.Support.v7.CardView" Version="27.0.2.1" />
     <PackageReference Include="Xamarin.Android.Support.v7.MediaRouter" Version="27.0.2.1" />
+    <PackageReference Include="AiForms.SettingsView">
+      <Version>0.4.13</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
@@ -93,6 +96,7 @@
     <AndroidResource Include="Resources\drawable\location_icon.png" />
     <AndroidResource Include="Resources\drawable\position_FAB.png" />
     <AndroidResource Include="Resources\drawable\position_FAB_white.png" />
+    <AndroidResource Include="Resources\drawable\icon.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable-hdpi\" />

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using IndoorNavigation.Views.Navigator;
+using IndoorNavigation.Views.Setting;
 
 namespace IndoorNavigation
 {
@@ -27,6 +28,11 @@ namespace IndoorNavigation
                 default:
                     break;
             }
+        }
+
+        async void SettingImageButton_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new SettingTableViewPage());
         }
 
         async void NavigatorButton_Clicked(object sender, EventArgs e)

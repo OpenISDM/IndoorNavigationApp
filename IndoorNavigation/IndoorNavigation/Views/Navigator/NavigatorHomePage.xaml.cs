@@ -12,7 +12,8 @@ namespace IndoorNavigation.Views.Navigator
         {
             InitializeComponent();
 
-            //LocationListView.ItemsSource = GetLocationList();
+            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#009FCC");
+            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
 
             LocationListView.ItemsSource = GetLocationList();
         }
