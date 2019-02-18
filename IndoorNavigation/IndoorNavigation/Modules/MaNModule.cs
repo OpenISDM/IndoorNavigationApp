@@ -60,6 +60,7 @@ namespace IndoorNavigation.Modules
             MaNThread = new Thread(MaNWork) { IsBackground = true };
             MaNThread.Start();
             threadWait.WaitOne();
+            threadWait.Reset();
 
             Debug.WriteLine("MaNModule initialization completed.");
         }
@@ -67,26 +68,24 @@ namespace IndoorNavigation.Modules
         private void MaNWork()
         {
             threadWait.Set();
-            threadWait.Reset();
 
             while (isThreadRunning)
             {
                 // 等待演算法套用
                 navigationAlgorithmWait.WaitOne();
+                navigationAlgorithmWait.Reset();
                 if (isThreadRunning)
                     navigationAlgorithm.Work();
             }
 
             Debug.WriteLine("MaN module close");
             threadWait.Set();
-            threadWait.Reset();
         }
 
         public void SetAlgorithm(INavigationAlgorithm NavigationAlgorithm)
         {
             navigationAlgorithm = NavigationAlgorithm;
             navigationAlgorithmWait.Set();
-            navigationAlgorithmWait.Reset();
         }
 
         /// <summary>
@@ -106,8 +105,10 @@ namespace IndoorNavigation.Modules
             {
                 isThreadRunning = false;
                 navigationAlgorithmWait.Set();
-                navigationAlgorithm.StopNavigation();
+                if (navigationAlgorithm != null)
+                    navigationAlgorithm.StopNavigation();
                 threadWait.WaitOne();
+                threadWait.Reset();
 
                 if (disposing)
                 {

@@ -11,9 +11,18 @@ namespace IndoorNavigation.Modules
         //private Thread IPSThread;
         private ManualResetEvent threadWait =
             new ManualResetEvent(false);
-        public INavigationAlgorithm navigationAlgorithm { get; private set; }
-
+        private INavigationAlgorithm navigationAlgorithm;
         public IPSModule()
+        {
+            //IPSThread = new Thread(Work);
+            //IPSThread.Start();
+            //threadWait.WaitOne();
+            //threadWait.Reset();
+
+            Debug.WriteLine("IPSModule initialization completed.");
+        }
+
+        public void SetSetDestination(WaypointModel waypoint)
         {
             // Temporary
             navigationAlgorithm = Utility.Service
@@ -22,28 +31,23 @@ namespace IndoorNavigation.Modules
             Utility.SignalProcess.SetAlogorithm(
                 navigationAlgorithm.CreateSignalProcessingAlgorithm());
 
-            //IPSThread = new Thread(Work);
-            //IPSThread.Start();
-            //threadWait.WaitOne();
-
-            Debug.WriteLine("IPSModule initialization completed.");
+            (navigationAlgorithm as WayPointAlgorithm).SetDestination(waypoint);
         }
 
-        public void SetSetDestination(WaypointModel waypoint)
+        public void StopNavigation()
         {
-            (navigationAlgorithm as WayPointAlgorithm).SetDestination(waypoint);
+            if (navigationAlgorithm != null)
+                navigationAlgorithm.StopNavigation();
         }
 
         private void Work()
         {
             // IPS algorithms
             threadWait.Set();
-            threadWait.Reset();
 
 
             Debug.WriteLine("IPS module close");
             threadWait.Set();
-            threadWait.Reset();
         }
 
         #region IDisposable Support
@@ -53,7 +57,9 @@ namespace IndoorNavigation.Modules
         {
             if (!disposedValue)
             {
+                StopNavigation();
                 //threadClosedWait.WaitOne();
+                //threadWait.Reset();
 
                 if (disposing)
                 {

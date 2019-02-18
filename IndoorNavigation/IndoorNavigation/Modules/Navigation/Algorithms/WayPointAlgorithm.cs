@@ -2,7 +2,6 @@
 using IndoorNavigation.Modules.SignalProcessingAlgorithms;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -37,9 +36,9 @@ namespace IndoorNavigation.Modules.Navigation
 
         public void Work()
         {
-            Debug.WriteLine("Wait event hash key on wait one: {0}", navigationTaskWaitEvent.GetHashCode());
             // Wait for the navigation task
             navigationTaskWaitEvent.WaitOne();
+            navigationTaskWaitEvent.Reset();
             while (!IsReachingDestination)
             {
                 // Find the current position from the current Beacon
@@ -111,6 +110,7 @@ namespace IndoorNavigation.Modules.Navigation
 
                 // Wait for the event of next Beacon
                 nextBeaconWaitEvent.WaitOne();
+                nextBeaconWaitEvent.Reset();
 
                 // Change the current location to the last location
                 previousWaypoint = currentWaypoint;
@@ -212,7 +212,10 @@ namespace IndoorNavigation.Modules.Navigation
             {
                 // Plan the navigation path
                 if (currentBeacon == null)
+                {
                     nextBeaconWaitEvent.WaitOne();
+                    nextBeaconWaitEvent.Reset();
+                }
 
                 lock (resourceLock)
                 {
@@ -220,9 +223,7 @@ namespace IndoorNavigation.Modules.Navigation
                     endWaypoint = EndWaypoint;
                 }
 
-                Debug.WriteLine("Wait event hash key on set: {0}", navigationTaskWaitEvent.GetHashCode());
                 navigationTaskWaitEvent.Set();
-                navigationTaskWaitEvent.Reset();
             });
         }
 
@@ -242,7 +243,6 @@ namespace IndoorNavigation.Modules.Navigation
                 lock (resourceLock)
                     this.currentBeacon = _currentBeacon;
                 nextBeaconWaitEvent.Set();
-                nextBeaconWaitEvent.Reset();
             }
         }
 
@@ -257,7 +257,6 @@ namespace IndoorNavigation.Modules.Navigation
                 lock (resourceLock)
                     currentBeacon = null;
                 nextBeaconWaitEvent.Set();
-                nextBeaconWaitEvent.Reset();
                 Utility.SignalProcess.Event.SignalProcessEventHandler -=
                         HSignalProcess;
                 navigationTaskWaitEvent.Set();

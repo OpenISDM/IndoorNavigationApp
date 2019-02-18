@@ -68,6 +68,7 @@ namespace IndoorNavigation.Modules
                 new Thread(SignalProcessWork) { IsBackground = true };
             signalProcessThread.Start();
             threadWait.WaitOne();
+            threadWait.Reset();
 
             Debug.WriteLine("SignalProcessModule initialization completed.");
         }
@@ -75,7 +76,6 @@ namespace IndoorNavigation.Modules
         private void SignalProcessWork()
         {
             threadWait.Set();
-            threadWait.Reset();
 
             while (isThreadRunning)
             {
@@ -88,7 +88,6 @@ namespace IndoorNavigation.Modules
 
             Debug.WriteLine("Signal process close");
             threadWait.Set();
-            threadWait.Reset();
         }
 
         public void SetAlogorithm(
@@ -107,7 +106,7 @@ namespace IndoorNavigation.Modules
             {
                 isThreadRunning = false;
                 threadWait.WaitOne();
-
+                threadWait.Reset();
                 if (disposing)
                 {
                     threadWait.Dispose();
