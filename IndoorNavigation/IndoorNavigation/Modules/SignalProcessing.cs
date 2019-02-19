@@ -31,6 +31,7 @@
  */
 
 using IndoorNavigation.Models;
+using IndoorNavigation.Modules.SignalProcessingAlgorithms;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -141,6 +142,10 @@ namespace IndoorNavigation.Modules
         public void OnEventCall(EventArgs e)
         {
             SignalProcessEventHandler?.Invoke(this, e);
+#if DEBUG
+            if (SignalProcessEventHandler != null)
+                Debug.WriteLineIf(e.GetType() == typeof(WayPointSignalProcessEventArgs), string.Format("Signal Process: Send UUID: {0} to MaN algorithm", (e as WayPointSignalProcessEventArgs).CurrentBeacon.UUID));
+#endif
         }
     }
     #endregion

@@ -9,15 +9,14 @@ namespace IndoorNavigation.Modules
     public class IPSModule : IDisposable
     {
         //private Thread IPSThread;
-        private ManualResetEvent threadWait =
-            new ManualResetEvent(false);
+        private AutoResetEvent threadWait =
+            new AutoResetEvent(false);
         private INavigationAlgorithm navigationAlgorithm;
         public IPSModule()
         {
             //IPSThread = new Thread(Work);
             //IPSThread.Start();
             //threadWait.WaitOne();
-            //threadWait.Reset();
 
             Debug.WriteLine("IPSModule initialization completed.");
         }

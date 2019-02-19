@@ -31,6 +31,7 @@
  */
 
 using IndoorNavigation.Models;
+using IndoorNavigation.Modules.Navigation;
 using System;
 using System.Diagnostics;
 using System.Threading;
@@ -44,10 +45,10 @@ namespace IndoorNavigation.Modules
     {
         private Thread MaNThread;
         private bool isThreadRunning = true;
-        private ManualResetEvent navigationAlgorithmWait =
-            new ManualResetEvent(false);
-        private ManualResetEvent threadWait =
-            new ManualResetEvent(false);
+        private AutoResetEvent navigationAlgorithmWait =
+            new AutoResetEvent(false);
+        private AutoResetEvent threadWait =
+            new AutoResetEvent(false);
         public MaNEEvent Event { get; private set; }
         private INavigationAlgorithm navigationAlgorithm;
 
@@ -60,7 +61,6 @@ namespace IndoorNavigation.Modules
             MaNThread = new Thread(MaNWork) { IsBackground = true };
             MaNThread.Start();
             threadWait.WaitOne();
-            threadWait.Reset();
 
             Debug.WriteLine("MaNModule initialization completed.");
         }
@@ -73,7 +73,6 @@ namespace IndoorNavigation.Modules
             {
                 // 等待演算法套用
                 navigationAlgorithmWait.WaitOne();
-                navigationAlgorithmWait.Reset();
                 if (isThreadRunning)
                     navigationAlgorithm.Work();
             }
@@ -108,7 +107,6 @@ namespace IndoorNavigation.Modules
                 if (navigationAlgorithm != null)
                     navigationAlgorithm.StopNavigation();
                 threadWait.WaitOne();
-                threadWait.Reset();
 
                 if (disposing)
                 {
@@ -147,6 +145,10 @@ namespace IndoorNavigation.Modules
         public void OnEventCall(EventArgs e)
         {
             MaNEventHandler?.Invoke(this, e);
+#if DEBUG
+            if (MaNEventHandler != null)
+                Debug.WriteLineIf(e.GetType() == typeof(WayPointEventArgs), string.Format("MaN module: Send event, content is status: {0} and angle: {1}", (e as WayPointEventArgs).Status, (e as WayPointEventArgs).Angle));
+#endif
         }
     }
 

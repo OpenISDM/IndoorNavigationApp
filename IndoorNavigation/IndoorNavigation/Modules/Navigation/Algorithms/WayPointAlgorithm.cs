@@ -2,6 +2,7 @@
 using IndoorNavigation.Modules.SignalProcessingAlgorithms;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,10 +16,10 @@ namespace IndoorNavigation.Modules.Navigation
         private WaypointModel endWaypoint;
         private NextStepModel nextInstruction;
         private Queue<NextStepModel> pathQueue;
-        private ManualResetEvent nextBeaconWaitEvent =
-            new ManualResetEvent(false);
-        private ManualResetEvent navigationTaskWaitEvent =
-            new ManualResetEvent(false);
+        private AutoResetEvent nextBeaconWaitEvent =
+            new AutoResetEvent(false);
+        private AutoResetEvent navigationTaskWaitEvent =
+            new AutoResetEvent(false);
         private object resourceLock = new object();
         private readonly EventHandler HSignalProcess;
         private ISignalProcessingAlgorithm signalProcessingAlgorithm;
@@ -38,7 +39,6 @@ namespace IndoorNavigation.Modules.Navigation
         {
             // Wait for the navigation task
             navigationTaskWaitEvent.WaitOne();
-            navigationTaskWaitEvent.Reset();
             while (!IsReachingDestination)
             {
                 // Find the current position from the current Beacon
@@ -110,7 +110,6 @@ namespace IndoorNavigation.Modules.Navigation
 
                 // Wait for the event of next Beacon
                 nextBeaconWaitEvent.WaitOne();
-                nextBeaconWaitEvent.Reset();
 
                 // Change the current location to the last location
                 previousWaypoint = currentWaypoint;
@@ -214,7 +213,6 @@ namespace IndoorNavigation.Modules.Navigation
                 if (currentBeacon == null)
                 {
                     nextBeaconWaitEvent.WaitOne();
-                    nextBeaconWaitEvent.Reset();
                 }
 
                 lock (resourceLock)
@@ -235,6 +233,7 @@ namespace IndoorNavigation.Modules.Navigation
         {
             Beacon _currentBeacon =
                 (e as WayPointSignalProcessEventArgs).CurrentBeacon;
+            Debug.WriteLine("Way point algorithm: Receive UUID: {0}", (e as WayPointSignalProcessEventArgs).CurrentBeacon.UUID);
 
             // Check this event of signal processing from the current Beacon 
             // if it is the same as currrent Beacon

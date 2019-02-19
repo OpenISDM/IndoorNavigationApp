@@ -64,16 +64,6 @@ namespace IndoorNavigation.Models
         /// <summary>
         /// The types of Beacon
         /// </summary>
-        public BeaconType Type { get; set; }
-    }
-
-    public enum BeaconType
-    {
-        Waypoint = 0,
-        iBeacon,
-        Eddystone,
-        AltBeacon,
-        GeoBeacon
     }
 
     /// <summary>
