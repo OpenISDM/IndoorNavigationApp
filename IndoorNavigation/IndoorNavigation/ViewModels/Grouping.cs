@@ -5,11 +5,11 @@ using System.Collections;
 
 namespace IndoorNavigation.ViewModels
 {
-    public class Grouping<K, T> : ObservableCollection<T>
+    public class Grouping<TKey, TValue> : ObservableCollection<TValue>
     {
-        public K Key { get; private set; }
+        public TKey Key { get; private set; }
 
-        public Grouping(K key, IEnumerable<T> items)
+        public Grouping(TKey key, IEnumerable<TValue> items)
         {
             Key = key;
             foreach (var item in items)
