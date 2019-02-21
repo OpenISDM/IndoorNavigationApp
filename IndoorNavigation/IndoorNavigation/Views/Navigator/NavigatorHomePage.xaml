@@ -12,7 +12,7 @@
         </Grid.RowDefinitions>
         
         <SearchBar x:Name="NaviSearchBar" Grid.Row="0" 
-                   Placeholder="type your destination"
+                   Placeholder="Search your destination"
                    CancelButtonColor="White"
                    TextChanged="NaviSearchBar_TextChanged"
                    BackgroundColor="#009FCC"
@@ -76,6 +76,7 @@
             <Button
                 x:Name="FindLocationFAB"
                 Image="position_FAB_white.png"
+                BackgroundColor="Transparent"
                 WidthRequest="25"
                 HeightRequest="25"
                 Pressed="FindLocationFAB_Pressed"

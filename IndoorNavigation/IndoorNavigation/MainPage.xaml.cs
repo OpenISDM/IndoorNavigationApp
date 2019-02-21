@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using IndoorNavigation.Views.Navigator;
 using IndoorNavigation.Views.Setting;
+using Xamarin.Forms.Xaml;
 
 namespace IndoorNavigation
 {
+    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainPage : ContentPage
     {
         public MainPage()
@@ -21,8 +23,10 @@ namespace IndoorNavigation
             switch (Device.RuntimePlatform)
             {
                 case Device.Android:
-                    NavigatorButton.Padding = new Thickness(20, 1, 1, 1);
-                    TrackingButton.Padding = new Thickness(20, 1, 1, 1);
+                    NavigatorButton.Padding = new Thickness(30, 1, 1, 1);
+                    AbsoluteLayout.SetLayoutBounds(NavigatorButton, new Rectangle(0.5, 0.52, 0.7, 0.1));
+                    TrackingButton.Padding = new Thickness(30, 1, 1, 1);
+                    AbsoluteLayout.SetLayoutBounds(TrackingButton, new Rectangle(0.5, 0.78, 0.7, 0.1));
                     break;
 
                 default:
