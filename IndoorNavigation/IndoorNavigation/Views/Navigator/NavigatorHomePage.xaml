@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="IndoorNavigation.Views.Navigator.NavigatorHomePage"
+             Title="Let's Navigator">
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        
+        <SearchBar x:Name="NaviSearchBar" Grid.Row="0" 
+                   Placeholder="Search your destination"
+                   CancelButtonColor="White"
+                   TextChanged="NaviSearchBar_TextChanged"
+                   BackgroundColor="#009FCC"
+                   VerticalOptions="StartAndExpand"/>
+        
+        <ListView x:Name="LocationListView" Grid.Row="1" Grid.RowSpan="2"
+                  Margin="10, 5, 10,10" HasUnevenRows="true"
+                  ItemTapped="LocationListView_ItemTapped"
+                  ItemSelected="LocationListView_ItemSelected"
+                  IsPullToRefreshEnabled="true"
+                  Refreshing="LocationListView_Refreshing"
+                  IsGroupingEnabled="true"
+                  GroupDisplayBinding="{Binding Key}">
+            
+            <ListView.GroupHeaderTemplate>
+                <DataTemplate>
+                    <ViewCell Height="35">
+                        <StackLayout VerticalOptions="CenterAndExpand"
+                                     Padding="15, 1, 1, 1">
+                            <Label Text="{Binding Key}"
+                                   TextColor="#009FCC"
+                                   FontAttributes="Bold"/>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.GroupHeaderTemplate>
+            
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell Height="70">
+                        <StackLayout Orientation="Horizontal"
+                                     Padding="20, 20, 20, 1">
+                            
+                            <!--<Label Text="ICON"/>-->
+                            <Image Source="location_icon.png"
+                                   Margin="1, 1, 1, 15"/>
+                            
+                            <StackLayout HorizontalOptions="StartAndExpand"
+                                         Padding="40, 1, 1, 1">
+                                <Label Text="{Binding Name}"
+                                       TextColor="#009FCC"/>
+                            </StackLayout>
+                            
+                            <Label Text="{Binding Distance, StringFormat='{0:F1}m'}"/>
+                            
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            
+        </ListView>
+        
+        <Frame x:Name="ButtonFrame"
+               Grid.Row="2"
+               HorizontalOptions="EndAndExpand"
+               CornerRadius="32"
+               BackgroundColor="#009FCC"
+               BorderColor="#009FCC"
+               Margin="1, 1, 15, 20"
+               HasShadow="true">
+            <Button
+                x:Name="FindLocationFAB"
+                Image="position_FAB_white.png"
+                BackgroundColor="Transparent"
+                WidthRequest="25"
+                HeightRequest="25"
+                Pressed="FindLocationFAB_Pressed"
+                Released="FindLocationFAB_Released"
+                Clicked="FindLocationFAB_Clicked"
+            />
+        </Frame>
+        
+    </Grid>
+    
+</ContentPage>

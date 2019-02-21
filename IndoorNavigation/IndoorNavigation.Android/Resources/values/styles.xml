@@ -27,4 +27,16 @@
   <style name="AppCompatDialogStyle" parent="Theme.AppCompat.Light.Dialog">
     <item name="colorAccent">#FF4081</item>
   </style>
+    
+  <style name="splashscreen" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="android:layout_width">wrap_content</item>     
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:windowBackground">@drawable/splash_screen_2</item>
+    <item name="android:windowNoTitle">true</item>
+    <item name="android:windowIsTranslucent">false</item>
+    <item name="android:windowIsFloating">false</item>
+    <item name="android:backgroundDimEnabled">true</item>
+    <item name="android:gravity">fill_horizontal|fill_vertical</item>
+  </style>
+    
 </resources>

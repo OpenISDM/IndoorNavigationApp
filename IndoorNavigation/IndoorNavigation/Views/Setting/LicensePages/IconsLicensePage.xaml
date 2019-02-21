@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             x:Class="IndoorNavigation.Views.Setting.LicensePages.IconsLicensePage"
+             Title="License">
+    
+    <ContentPage.Content>
+        
+        <StackLayout Padding="20">
+            
+            <Label>
+                <!-- &#10; is breakline -->
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="FLATICONS&#10;" />
+                        
+                        <!-- Navigation Icon -->
+                        <Span Text="&#10;Navigation Icon made by " 
+                              FontSize="14"
+                              FontAttributes="Bold"/>
+                        <Span Text="Smashicons"
+                              TextColor="Blue"
+                              FontSize="14"
+                              FontAttributes="Bold">
+                            <Span.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding HyperlinkClickCommand}"
+                                                      CommandParameter="https://www.flaticon.com/authors/smashicons/"/>
+                            </Span.GestureRecognizers>
+                        </Span>
+                        <Span Text=" from www.flaticon.com&#10;" 
+                              FontSize="14"
+                              FontAttributes="Bold"/>
+                        
+                        <!-- Eye on magnifying glass Icon -->
+                        <Span Text="&#10;Eye on magnifying glass Icon made by " 
+                              FontSize="14"
+                              FontAttributes="Bold"/>
+                         <Span Text="Freepik"
+                              TextColor="Blue"
+                              FontSize="14"
+                              FontAttributes="Bold">
+                            <Span.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding HyperlinkClickCommand}"
+                                                      CommandParameter="https://www.flaticon.com/authors/freepik/"/>
+                            </Span.GestureRecognizers>
+                        </Span>
+                        <Span Text=" from www.flaticon.com&#10;" 
+                              FontSize="14"
+                              FontAttributes="Bold"/>
+                        
+                        <!-- Nut Icon -->
+                        <Span Text="&#10;Nut Icon made by " 
+                              FontSize="14"
+                              FontAttributes="Bold"/>
+                        <Span Text="Bogdan Rosu"
+                              TextColor="Blue"
+                              FontSize="14"
+                              FontAttributes="Bold">
+                            <Span.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding HyperlinkClickCommand}"
+                                                      CommandParameter="https://www.flaticon.com/authors/bogdan-rosu/"/>
+                            </Span.GestureRecognizers>
+                        </Span>
+                        <Span Text=" from www.flaticon.com&#10;" 
+                              FontSize="14"
+                              FontAttributes="Bold"/>
+                        
+                        <!-- Placeholder Icon -->
+                        <Span Text="&#10;Placeholder Icon made by " 
+                              FontSize="14"
+                              FontAttributes="Bold"/>
+                        <Span Text="Smashicons"
+                              TextColor="Blue"
+                              FontSize="14"
+                              FontAttributes="Bold">
+                            <Span.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding HyperlinkClickCommand}"
+                                                      CommandParameter="https://www.flaticon.com/authors/smashicons/"/>
+                            </Span.GestureRecognizers>
+                        </Span>
+                        <Span Text=" from www.flaticon.com&#10;" 
+                              FontSize="14"
+                              FontAttributes="Bold"/>
+                        
+                        <!-- Placeholder(FAB) Icon -->
+                        <Span Text="&#10;Placeholder(floating action button) Icon made by " 
+                              FontSize="14"
+                              FontAttributes="Bold"/>
+                        <Span Text="Smashicons"
+                              TextColor="Blue"
+                              FontSize="14"
+                              FontAttributes="Bold">
+                            <Span.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding HyperlinkClickCommand}"
+                                                      CommandParameter="https://www.flaticon.com/authors/smashicons/"/>
+                            </Span.GestureRecognizers>
+                        </Span>
+                        <Span Text=" from www.flaticon.com&#10;" 
+                              FontSize="14"
+                              FontAttributes="Bold"/>
+                        
+                        <!-- Placeholder(FAB) Icon -->
+                        <Span Text="&#10;Placeholder(floating action button) Icon made by " 
+                              FontSize="14"
+                              FontAttributes="Bold"/>
+                        <Span Text="Freepik"
+                              TextColor="Blue"
+                              FontSize="14"
+                              FontAttributes="Bold">
+                            <Span.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding HyperlinkClickCommand}"
+                                                      CommandParameter="https://www.flaticon.com/authors/freepik/"/>
+                            </Span.GestureRecognizers>
+                        </Span>
+                        <Span Text=" from www.flaticon.com&#10;" 
+                              FontSize="14"
+                              FontAttributes="Bold"/>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            
+        </StackLayout>
+        
+    </ContentPage.Content>
+    
+</ContentPage>
