@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using Xamarin.Forms;
 
-namespace IndoorNavigation.Views.Setting.LicensePages
+namespace IndoorNavigation.Views.Settings.LicensePages
 {
     public partial class LicenseMainPage : ContentPage
     {

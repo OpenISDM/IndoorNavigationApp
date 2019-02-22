@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Xamarin.Forms;
 using System.Windows.Input;
 
-namespace IndoorNavigation.Views.Setting.LicensePages
+namespace IndoorNavigation.Views.Settings.LicensePages
 {
     public partial class IconsLicensePage : ContentPage
     {

@@ -24,9 +24,9 @@
     <Folder Include="ViewModels\" />
     <Folder Include="Views\" />
     <Folder Include="Modules\SignalProcessingAlgorithms\" />
-    <Folder Include="Views\Navigator\" />
-    <Folder Include="Views\Setting\" />
-    <Folder Include="Views\Setting\LicensePages\" />
+    <Folder Include="Views\Navigation\" />
+    <Folder Include="Views\Settings\" />
+    <Folder Include="Views\Settings\LicensePages\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Views\Navigator\MyPage.xaml.cs" />
