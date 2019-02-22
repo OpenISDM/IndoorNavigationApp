@@ -185,5 +185,8 @@
     <BundleResource Include="Resources\location_icon.png" />
     <BundleResource Include="Resources\position_FAB_white.png" />
     <BundleResource Include="Resources\icon.png" />
+    <BundleResource Include="Resources\tabitem1_navigator.png" />
+    <BundleResource Include="Resources\tabitem2_routes.png" />
+    <BundleResource Include="Resources\tabitem3_setting.png" />
   </ItemGroup>
 </Project>

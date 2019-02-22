@@ -51,7 +51,8 @@
             <sv:Section Title="Setting">
                 <sv:CommandCell IconSource="icon.png" IconSize="60,60"
                                 Title="BeDIS Xamarin" Description="openISDM@sinica.com"/>
-                <sv:LabelCell Title="圖資名稱" ValueText="OpenHouse" />
+                <!--<sv:LabelCell Title="圖資名稱" ValueText="OpenHouse" />-->
+                <sv:TextPickerCell Title="選擇圖資" SelectedItem="OpenHouse" Items="{Binding NaviGraphItems}"/>
                 <sv:CommandCell Title="下載圖資"/>
                 <sv:NumberPickerCell Title="字體大小" Min="0" Max="50" Number="15" PickerTitle="Select size" />
                 <sv:SwitchCell Title="藍芽開啟" On="true"/>

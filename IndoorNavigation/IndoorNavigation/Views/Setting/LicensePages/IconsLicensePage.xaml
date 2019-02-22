@@ -115,6 +115,57 @@
                         <Span Text=" from www.flaticon.com&#10;" 
                               FontSize="14"
                               FontAttributes="Bold"/>
+                        
+                        <!-- Cursor  Icon -->
+                        <Span Text="&#10;Cursor Icon(tab item icon) made by " 
+                              FontSize="14"
+                              FontAttributes="Bold"/>
+                        <Span Text="Freepik"
+                              TextColor="Blue"
+                              FontSize="14"
+                              FontAttributes="Bold">
+                            <Span.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding HyperlinkClickCommand}"
+                                                      CommandParameter="https://www.flaticon.com/authors/freepik/"/>
+                            </Span.GestureRecognizers>
+                        </Span>
+                        <Span Text=" from www.flaticon.com&#10;" 
+                              FontSize="14"
+                              FontAttributes="Bold"/>
+                        
+                        <!-- Road sign Icon -->
+                        <Span Text="&#10;Road sign Icon(tab item icon) made by " 
+                              FontSize="14"
+                              FontAttributes="Bold"/>
+                        <Span Text="Freepik"
+                              TextColor="Blue"
+                              FontSize="14"
+                              FontAttributes="Bold">
+                            <Span.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding HyperlinkClickCommand}"
+                                                      CommandParameter="https://www.flaticon.com/authors/freepik/"/>
+                            </Span.GestureRecognizers>
+                        </Span>
+                        <Span Text=" from www.flaticon.com&#10;" 
+                              FontSize="14"
+                              FontAttributes="Bold"/>
+                        
+                        <!-- Gears Icon -->
+                        <Span Text="&#10;Gears Icon(tab item icon) made by " 
+                              FontSize="14"
+                              FontAttributes="Bold"/>
+                        <Span Text="Freepik"
+                              TextColor="Blue"
+                              FontSize="14"
+                              FontAttributes="Bold">
+                            <Span.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding HyperlinkClickCommand}"
+                                                      CommandParameter="https://www.flaticon.com/authors/freepik/"/>
+                            </Span.GestureRecognizers>
+                        </Span>
+                        <Span Text=" from www.flaticon.com&#10;" 
+                              FontSize="14"
+                              FontAttributes="Bold"/>
                     </FormattedString>
                 </Label.FormattedText>
             </Label>

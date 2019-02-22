@@ -97,6 +97,9 @@
     <AndroidResource Include="Resources\drawable\position_FAB.png" />
     <AndroidResource Include="Resources\drawable\position_FAB_white.png" />
     <AndroidResource Include="Resources\drawable\icon.png" />
+    <AndroidResource Include="Resources\drawable\tabitem1_navigator.png" />
+    <AndroidResource Include="Resources\drawable\tabitem2_routes.png" />
+    <AndroidResource Include="Resources\drawable\tabitem3_setting.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable-hdpi\" />
