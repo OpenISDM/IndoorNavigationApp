@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using IndoorNavigation.Views.Settings.LicensePages;
 using Xamarin.Forms;
+using IndoorNavigation.Models;
 
 namespace IndoorNavigation.Views.Settings
 {
@@ -25,9 +26,15 @@ namespace IndoorNavigation.Views.Settings
             NaviGraphItems.Add("中研院");
         }
 
-        async void LicenseBtn_Tapped(object sender, System.EventArgs e)
+        async void LicenseBtn_Tapped(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new LicenseMainPage());
+        }
+
+        async void DownloadMapBtn_Tapped(object sender, EventArgs e)
+        {
+            IQrCodeDecoder qrCodeDecoder = DependencyService.Get<IQrCodeDecoder>();
+            await qrCodeDecoder.ScanAsync();
         }
     }
 }

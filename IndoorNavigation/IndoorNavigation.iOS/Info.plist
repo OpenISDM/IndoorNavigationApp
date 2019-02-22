@@ -23,7 +23,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>IndoorNavigation</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.companyname.IndoorNavigation</string>
+	<string>com.OpenISDM.IndoorNavigation</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>CFBundleName</key>
@@ -32,5 +32,7 @@
 	<string>Assets.xcassets/AppIcon.appiconset</string>
 	<key>XSLaunchImageAssets</key>
 	<string>Assets.xcassets/LaunchImage.launchimage</string>
+	<key>NSCameraUsageDescription</key>
+	<string>This app needs to access a camera to scan the barcode.</string>
 </dict>
 </plist>

@@ -32,6 +32,7 @@
 using GeoCoordinatePortable;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace IndoorNavigation.Models
 {
@@ -137,6 +138,10 @@ namespace IndoorNavigation.Models
         BeaconScanEvent Event { get; }
     }
 
+    public interface IQrCodeDecoder
+    {
+        Task<string> ScanAsync();
+    }
     #endregion
 
     #region Interface for navigation algorithm
