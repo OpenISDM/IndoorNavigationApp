@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Xamarin.Forms;
 using System.Linq;
 using IndoorNavigation.ViewModels;
+using System.Diagnostics;
 
 namespace IndoorNavigation.Views.Navigator
 {
@@ -11,6 +12,18 @@ namespace IndoorNavigation.Views.Navigator
         public NavigatorHomePage()
         {
             InitializeComponent();
+
+            NavigationPage.SetBackButtonTitle(this, "選擇目的地");
+
+            switch (Device.RuntimePlatform)
+            {
+                case Device.Android:
+                    NaviSearchBar.BackgroundColor = Color.White;
+                    break;
+
+                default:
+                    break;
+            }
 
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#009FCC");
             ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
@@ -23,10 +36,15 @@ namespace IndoorNavigation.Views.Navigator
             LocationListView.ItemsSource = GetLocationList(e.NewTextValue);
         }
 
-        void LocationListView_ItemTapped(object sender, ItemTappedEventArgs e)
+        async void LocationListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             if (e.Item is Location location)
-                DisplayAlert("Turn to next page?", location.Name, "OK", "Cancel");
+            {
+                var answser = await DisplayAlert("Turn to next page?", location.Name, "OK", "Cancel");
+                if (answser)
+                    await Navigation.PushAsync(new NavigatorTabbedPage());
+            }
+
         }
 
         void LocationListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
