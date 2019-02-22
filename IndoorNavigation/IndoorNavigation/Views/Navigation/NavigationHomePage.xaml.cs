@@ -5,15 +5,15 @@ using System.Linq;
 using IndoorNavigation.ViewModels;
 using System.Diagnostics;
 
-namespace IndoorNavigation.Views.Navigator
+namespace IndoorNavigation.Views.Navigation
 {
-    public partial class NavigatorHomePage : ContentPage
+    public partial class NavigationHomePage : ContentPage
     {
-        public NavigatorHomePage()
+        public NavigationHomePage()
         {
             InitializeComponent();
 
-            NavigationPage.SetBackButtonTitle(this, "選擇目的地");
+            NavigationPage.SetBackButtonTitle(this, "Back");
 
             switch (Device.RuntimePlatform)
             {
@@ -42,7 +42,7 @@ namespace IndoorNavigation.Views.Navigator
             {
                 var answser = await DisplayAlert("Turn to next page?", location.Name, "OK", "Cancel");
                 if (answser)
-                    await Navigation.PushAsync(new NavigatorTabbedPage());
+                    await Navigation.PushAsync(new NavigationTabbedPage());
             }
 
         }

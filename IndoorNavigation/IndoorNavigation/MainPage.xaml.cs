@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
-using IndoorNavigation.Views.Navigator;
-using IndoorNavigation.Views.Setting;
+using IndoorNavigation.Views.Navigation;
+using IndoorNavigation.Views.Settings;
 using Xamarin.Forms.Xaml;
 
 namespace IndoorNavigation
@@ -41,7 +41,7 @@ namespace IndoorNavigation
 
         async void NavigatorButton_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new NavigatorHomePage());
+            await Navigation.PushAsync(new NavigationHomePage());
         }
     }
 }
