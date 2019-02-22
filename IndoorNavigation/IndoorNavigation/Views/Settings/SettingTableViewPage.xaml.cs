@@ -2,10 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using IndoorNavigation.Views.Setting.LicensePages;
+using IndoorNavigation.Views.Settings.LicensePages;
 using Xamarin.Forms;
 
-namespace IndoorNavigation.Views.Setting
+namespace IndoorNavigation.Views.Settings
 {
     public partial class SettingTableViewPage : ContentPage
     {
