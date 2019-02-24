@@ -44,7 +44,7 @@ namespace IndoorNavigation.Modules
     /// </summary>
     public static class NavigraphStorage
     {
-        private static readonly string navigraphFolder =
+        internal static readonly string navigraphFolder =
             Path.Combine(Environment.GetFolderPath(
                     Environment.SpecialFolder.LocalApplicationData),
                     "Navigraph");

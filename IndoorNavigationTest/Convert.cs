@@ -18,19 +18,19 @@ namespace IndoorNavigationTest
                 {
                     iBeacons = IBeacons,
                     lBeacons = LBeacons
-                });
+                }, Formatting.Indented);
         }
 
         public static string ToJsonString(this List<WaypointModel> BeaconGroups)
         {
             List<BeaconGroupModelForNavigraphFile> BeaconGroupModels = BeaconGroups.Select(BeaconGroup => new BeaconGroupModelForNavigraphFile { Id = BeaconGroup.Id, Name = BeaconGroup.Name, Beacons = BeaconGroup.Beacons.Select(Beacon => Beacon.UUID).ToList() }).ToList();
-            return JsonConvert.SerializeObject(BeaconGroupModels);
+            return JsonConvert.SerializeObject(BeaconGroupModels, Formatting.Indented);
         }
 
         public static string ToJsonString(this List<LocationConnectModel> LocationConnects)
         {
             List<LocationConnectModelForNavigraphFile> LocationConnectModelForMapFiles = LocationConnects.Select(LocationConnect => new LocationConnectModelForNavigraphFile { BeaconA = LocationConnect.BeaconA.Id, BeaconB = LocationConnect.BeaconB.Id, IsTwoWay = LocationConnect.IsTwoWay }).ToList();
-            return JsonConvert.SerializeObject(LocationConnectModelForMapFiles);
+            return JsonConvert.SerializeObject(LocationConnectModelForMapFiles, Formatting.Indented);
         }
     }
 }

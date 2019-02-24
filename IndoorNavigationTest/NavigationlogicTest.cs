@@ -10,6 +10,8 @@ using System.Threading;
 using IndoorNavigation.Modules.Navigation;
 using IndoorNavigation.Modules.SignalProcessingAlgorithms;
 using System.Diagnostics;
+using Newtonsoft.Json.Linq;
+using System.IO;
 
 namespace IndoorNavigationTest
 {
@@ -124,6 +126,42 @@ namespace IndoorNavigationTest
 
             TestClose();
             Debug.WriteLine("MapStorageAccessAndMapDataConvertTest done.");
+        }
+
+        [TestMethod]
+        public void MapInformationCheckTest()
+        {
+            Debug.WriteLine("MapInformationCheckTest start.");
+
+            string json = @"{ 'name': 'James', 'hobbies': ['.NET', 'Blogging', 'Reading', 'Xbox', 'LOLCATS']}";
+            string str = "123";
+
+            bool IsJson = true;
+
+            try
+            {
+                var k = JToken.Parse(json);
+            }
+            catch
+            {
+                IsJson = false;
+            }
+
+            Assert.IsTrue(IsJson);
+
+            try
+            {
+                var k = JToken.Parse(str);
+            }
+            catch
+            {
+                IsJson = false;
+            }
+
+            Assert.IsFalse(IsJson);
+
+            TestClose();
+            Debug.WriteLine("MapInformationCheckTest done.");
         }
 
         [TestMethod]

@@ -30,6 +30,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Security;
@@ -37,6 +38,8 @@ using System.Security.Cryptography.X509Certificates;
 using GeoCoordinatePortable;
 using IndoorNavigation.Models;
 using IndoorNavigation.Modules.Navigation;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace IndoorNavigation.Modules
 {
@@ -65,47 +68,27 @@ namespace IndoorNavigation.Modules
         /// Download navigation graph from Server
         /// </summary>
         /// <param name="URL"></param>
+        /// <param name="navigraphName"></param>
         /// <returns></returns>
-        public static string DownloadNavigraph(string URL)
+        public static bool DownloadNavigraph(string URL, string navigraphName)
         {
+            string filePath = Path.Combine(NavigraphStorage.navigraphFolder, navigraphName);
             try
             {
-                // Skip SSL checking
-                // If the server doesn't use validated license, WebRequest
-                // element would return error.
-                ServicePointManager.ServerCertificateValidationCallback
-                    = new RemoteCertificateValidationCallback
-                    (ValidateServerCertificate);
+                if (!Directory.Exists(NavigraphStorage.navigraphFolder))
+                    Directory.CreateDirectory(NavigraphStorage.navigraphFolder);
 
-                // download data
-                var request = WebRequest.Create(URL) as HttpWebRequest;
-                request.Method = WebRequestMethods.Http.Get;
-                request.ContentType = "application/json";
+                using (WebClient webClient = new WebClient())
+                    webClient.DownloadFileAsync(new Uri(URL), filePath);
 
-                using (var response = (HttpWebResponse)request.GetResponse())
-                {
-                    if (response.StatusCode == HttpStatusCode.OK)
-                    {
-                        using (var stream = response.GetResponseStream())
-                        {
-                            using (var reader = new StreamReader(stream))
-                            {
-                                var retMsg = reader.ReadToEnd();
-                                retMsg = retMsg.Trim(new char[] { '"' });
-                                retMsg = retMsg.Replace(@"\", "");
-                                return retMsg;
-                            }
-                        }
-                    }
-                }
-
-                throw new ArgumentException("Download faild");
+                return true;
             }
-            catch (Exception ex)
+            catch
             {
-                throw new ArgumentException(ex.Message);
+                return false;
             }
         }
+
     }
 
     public class RotateAngle
