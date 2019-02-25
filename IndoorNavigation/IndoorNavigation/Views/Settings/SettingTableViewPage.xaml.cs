@@ -7,6 +7,8 @@ using Xamarin.Forms;
 using IndoorNavigation.Models;
 using IndoorNavigation.Modules;
 using Xamarin.Essentials;
+using Rg.Plugins.Popup.Services;
+using IndoorNavigation.Views.PopUpPage;
 
 namespace IndoorNavigation.Views.Settings
 {
@@ -35,18 +37,19 @@ namespace IndoorNavigation.Views.Settings
 
         async void DownloadMapBtn_Tapped(object sender, EventArgs e)
         {
-            IQrCodeDecoder qrCodeDecoder = DependencyService.Get<IQrCodeDecoder>();
-            string qrCodeValue = await qrCodeDecoder.ScanAsync();
-            if ((qrCodeValue.Substring(0, 7) == "http://") || (qrCodeValue.Substring(0, 8) == "https://"))
-            {
-                bool answer = await DisplayAlert("通知", "是否開啟網頁", "Yes", "No");
-                if (answer)
-                    await Browser.OpenAsync(qrCodeValue, BrowserLaunchMode.SystemPreferred);
-            }
-            else
-            {
-                await DisplayAlert("QrCode內容", qrCodeValue, "OK");
-            }
+            await PopupNavigation.Instance.PushAsync(new DownloadPopUpPage());
+            //IQrCodeDecoder qrCodeDecoder = DependencyService.Get<IQrCodeDecoder>();
+            //string qrCodeValue = await qrCodeDecoder.ScanAsync();
+            //if ((qrCodeValue.Substring(0, 7) == "http://") || (qrCodeValue.Substring(0, 8) == "https://"))
+            //{
+            //    bool answer = await DisplayAlert("通知", "是否開啟網頁", "Yes", "No");
+            //    if (answer)
+            //        await Browser.OpenAsync(qrCodeValue, BrowserLaunchMode.SystemPreferred);
+            //}
+            //else
+            //{
+            //    await DisplayAlert("QrCode內容", qrCodeValue, "OK");
+            //}
         }
     }
 }

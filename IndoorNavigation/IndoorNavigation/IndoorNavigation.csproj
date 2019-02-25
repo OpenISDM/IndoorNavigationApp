@@ -15,23 +15,27 @@
 
   <ItemGroup>
     <PackageReference Include="Dijkstra.NET" Version="1.1.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
     <PackageReference Include="Xamarin.Essentials" Version="1.0.1" />
     <PackageReference Include="Xamarin.Forms" Version="3.4.0.1029999" />
     <PackageReference Include="AiForms.SettingsView" Version="0.4.13" />
+    <PackageReference Include="ZXing.Net.Mobile" Version="2.4.1" />
     <PackageReference Include="ZXing.Net.Mobile.Forms" Version="2.4.1" />
     <PackageReference Include="Rg.Plugins.Popup" Version="1.1.5.188" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewModels\" />
-    <Folder Include="Views\" />
     <Folder Include="Modules\SignalProcessingAlgorithms\" />
     <Folder Include="Views\Navigation\" />
     <Folder Include="Views\Settings\" />
     <Folder Include="Views\Settings\LicensePages\" />
-    <Folder Include="Views\PopUpPage\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Views\Navigator\MyPage.xaml.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Views\PopUpPage\DownloadPopUpPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

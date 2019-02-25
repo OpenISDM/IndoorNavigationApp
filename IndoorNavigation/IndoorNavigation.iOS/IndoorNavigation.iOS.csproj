@@ -150,15 +150,33 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon20.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\path-guide-2%281242x2688%29.png" />
-    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\path-guide-2%28828x1792%29.png" />
-    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\path-guide-2%281125x2436%29.png" />
-    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\path-guide-2%281242x2208%29.png" />
-    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\path-guide-2%28750x1334%29.png" />
-    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\path-guide-2%28640x960%29.png" />
-    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\path-guide-2%28640x1136%29.png" />
-    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\path-guide-2%28320x480%29.png" />
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\path-guide-2%281242x2688%29.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\path-guide-2%28828x1792%29.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\path-guide-2%281125x2436%29.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\path-guide-2%281242x2208%29.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\path-guide-2%28750x1334%29.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\path-guide-2%28640x960%29.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\path-guide-2%28640x1136%29.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\path-guide-2%28320x480%29.png">
+      <Visible>false</Visible>
+    </ImageAsset>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -190,5 +208,11 @@
     <BundleResource Include="Resources\tabitem1_navigator.png" />
     <BundleResource Include="Resources\tabitem2_routes.png" />
     <BundleResource Include="Resources\tabitem3_setting.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\close_circle_button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\cloud-computing.png" />
   </ItemGroup>
 </Project>

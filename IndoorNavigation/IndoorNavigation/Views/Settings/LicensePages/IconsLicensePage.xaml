@@ -166,6 +166,23 @@
                         <Span Text=" from www.flaticon.com&#10;" 
                               FontSize="14"
                               FontAttributes="Bold"/>
+
+                        <!-- Cloud computing Icon -->
+                        <Span Text="&#10;Cloud computing Icon made by " 
+                              FontSize="14"
+                              FontAttributes="Bold"/>
+                        <Span Text="Smashicons"
+                              TextColor="Blue"
+                              FontSize="14"
+                              FontAttributes="Bold">
+                            <Span.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding HyperlinkClickCommand}"
+                                                      CommandParameter="https://www.flaticon.com/authors/smashicons/"/>
+                            </Span.GestureRecognizers>
+                        </Span>
+                        <Span Text=" from www.flaticon.com&#10;" 
+                              FontSize="14"
+                              FontAttributes="Bold"/>
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
