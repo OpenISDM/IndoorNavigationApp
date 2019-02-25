@@ -6,19 +6,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IndoorNavigation.Modules;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace IndoorNavigation.Views.PopUpPage
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class DownloadPopUpPage : PopupPage
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class DownloadPopUpPage : PopupPage
     {
-		public DownloadPopUpPage ()
-		{
-			InitializeComponent ();
-		}
+        public string DownloadURL { get; set; }
+
+        public DownloadPopUpPage()
+        {
+            InitializeComponent();
+        }
 
         protected override void OnAppearingAnimationBegin()
         {
@@ -50,6 +53,8 @@ namespace IndoorNavigation.Views.PopUpPage
 
             mapNameLabel.TranslationX = FileNameEntry.TranslationX = -10;
             mapNameLabel.Opacity = FileNameEntry.Opacity = 0;
+
+            this.FileNameEntry.Text = "";
         }
 
         protected override async Task OnAppearingAnimationEndAsync()
@@ -110,11 +115,23 @@ namespace IndoorNavigation.Views.PopUpPage
 
         private async void OnSave(object sender, EventArgs e)
         {
-            //var loadingPage = new LoadingPopupPage();
-            //await Navigation.PushPopupAsync(loadingPage);
-            //await Task.Delay(2000);
-            //await Navigation.RemovePopupPageAsync(loadingPage);
-            //await Navigation.PushPopupAsync(new LoginSuccessPopupPage());
+            if (!string.IsNullOrEmpty(DownloadURL) && !string.IsNullOrEmpty(FileNameEntry.Text))
+            {
+                if (Utility.DownloadNavigraph(DownloadURL, FileNameEntry.Text))
+                {
+                    await DisplayAlert("訊息", "地圖下載完成", "OK");
+                }
+                else
+                {
+                    await DisplayAlert("錯誤", "地圖下載失敗", "OK");
+                }
+            }
+            else
+            {
+                await DisplayAlert("錯誤", "地圖下載失敗", "OK");
+            }
+
+            CloseAllPopup();
         }
 
         private void OnCloseButtonTapped(object sender, EventArgs e)

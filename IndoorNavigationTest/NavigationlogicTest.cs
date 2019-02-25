@@ -129,42 +129,6 @@ namespace IndoorNavigationTest
         }
 
         [TestMethod]
-        public void MapInformationCheckTest()
-        {
-            Debug.WriteLine("MapInformationCheckTest start.");
-
-            string json = @"{ 'name': 'James', 'hobbies': ['.NET', 'Blogging', 'Reading', 'Xbox', 'LOLCATS']}";
-            string str = "123";
-
-            bool IsJson = true;
-
-            try
-            {
-                var k = JToken.Parse(json);
-            }
-            catch
-            {
-                IsJson = false;
-            }
-
-            Assert.IsTrue(IsJson);
-
-            try
-            {
-                var k = JToken.Parse(str);
-            }
-            catch
-            {
-                IsJson = false;
-            }
-
-            Assert.IsFalse(IsJson);
-
-            TestClose();
-            Debug.WriteLine("MapInformationCheckTest done.");
-        }
-
-        [TestMethod]
         public void UUIDConvertTest()
         {
             Debug.WriteLine("UUIDConvertTest start.");
