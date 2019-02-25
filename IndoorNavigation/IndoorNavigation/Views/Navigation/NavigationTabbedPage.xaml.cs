@@ -25,19 +25,49 @@ namespace IndoorNavigation.Views.Navigation
             }
         }
 
-        void NavigatorTab_Tapped(object sender, System.EventArgs e)
+        void NavigationTab_Tapped(object sender, EventArgs e)
         {
-            DisplayAlert("Turn to next page?", "Navigator", "Cancel");
+            var page = new TabbedPageNavigation();
+            TabbedContentView.Content = page.Content;
+
+            NavigationTabImage.Source = "tabitem1_navigator_tabbed.png";
+            NavigationTabLabel.TextColor = Color.FromHex("#009FCC");
+
+            //recover other item pic and color
+            RoutesTabImage.Source = "tabitem2_routes.png";
+            RoutesTabLabel.TextColor = Color.FromHex("#808080");
+            SettingTabImage.Source = "tabitem3_setting.png";
+            SettingTabLabel.TextColor = Color.FromHex("#808080");
         }
 
-        void RoutesTab_Tapped(object sender, System.EventArgs e)
+        void RoutesTab_Tapped(object sender, EventArgs e)
         {
-            DisplayAlert("Turn to next page?", "Routes", "Cancel");
+            var page = new TabbedPageRoutes();
+            TabbedContentView.Content = page.Content;
+
+            RoutesTabImage.Source = "tabitem2_routes_tabbed.png";
+            RoutesTabLabel.TextColor = Color.FromHex("#009FCC");
+
+            //recover other item pic and color
+            NavigationTabImage.Source = "tabitem1_navigator.png";
+            NavigationTabLabel.TextColor = Color.FromHex("#808080");
+            SettingTabImage.Source = "tabitem3_setting.png";
+            SettingTabLabel.TextColor = Color.FromHex("#808080");
         }
 
-        void SettingTab_Tapped(object sender, System.EventArgs e)
+        void SettingTab_Tapped(object sender, EventArgs e)
         {
-            DisplayAlert("Turn to next page?", "Setting", "Cancel");
+            var page = new TabbedPageSetting();
+            TabbedContentView.Content = page.Content;
+
+            SettingTabImage.Source = "tabitem3_setting_tabbed.png";
+            SettingTabLabel.TextColor = Color.FromHex("#009FCC");
+
+            //recover other item pic and color
+            NavigationTabImage.Source = "tabitem1_navigator.png";
+            NavigationTabLabel.TextColor = Color.FromHex("#808080");
+            RoutesTabImage.Source = "tabitem2_routes.png";
+            RoutesTabLabel.TextColor = Color.FromHex("#808080");
         }
     }
 }

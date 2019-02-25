@@ -165,9 +165,12 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="3.4.0.1029999" />
+    <PackageReference Include="Xamarin.Forms" Version="3.5.0.169047" />
     <PackageReference Include="AiForms.SettingsView">
       <Version>0.4.13</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.CustomControls.ProgressBarView">
+      <Version>1.0.2</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
@@ -188,5 +191,16 @@
     <BundleResource Include="Resources\tabitem1_navigator.png" />
     <BundleResource Include="Resources\tabitem2_routes.png" />
     <BundleResource Include="Resources\tabitem3_setting.png" />
+    <BundleResource Include="Resources\tabitem3_setting_tabbed.png" />
+    <BundleResource Include="Resources\tabitem2_routes_tabbed.png" />
+    <BundleResource Include="Resources\tabitem1_navigator_tabbed.png" />
+    <BundleResource Include="Resources\Arrow_up.png" />
+    <BundleResource Include="Resources\Arrow_left.png" />
+    <BundleResource Include="Resources\Arrow_right.png" />
+    <BundleResource Include="Resources\Arrow_frontright.png" />
+    <BundleResource Include="Resources\Arrow_frontleft.png" />
+    <BundleResource Include="Resources\Arrow_down.png" />
+    <BundleResource Include="Resources\Arrow_rearright.png" />
+    <BundleResource Include="Resources\Arrow_rearleft.png" />
   </ItemGroup>
 </Project>

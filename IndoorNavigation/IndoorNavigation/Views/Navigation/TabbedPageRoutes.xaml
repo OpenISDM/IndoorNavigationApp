@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             x:Class="IndoorNavigation.Views.Navigation.TabbedPageRoutes">
+    
+    <ContentPage.Content>
+        
+        <Grid ColumnSpacing="0" RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            
+            <Grid ColumnSpacing="0" RowSpacing="0" Grid.Row="0">
+                <StackLayout BackgroundColor="Black">
+                    
+                </StackLayout>
+            </Grid>
+            
+        </Grid>
+        
+    </ContentPage.Content>
+    
+</ContentPage>
