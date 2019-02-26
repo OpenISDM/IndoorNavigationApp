@@ -10,6 +10,13 @@ namespace IndoorNavigation.Views.Navigation
         public TabbedPageNavigation()
         {
             InitializeComponent();
+
+            // custom CurrentInstruction UI for iphone X/XR/XS/XS Max
+            if (Application.Current.MainPage.Height > 800)
+            {
+                CurrentInstructionLabel.Margin = new Thickness(1, 50, 1, -2);
+                CurrentInstructionImage.Scale = 0.7;
+            }
         }
 
         //async void Entry_TextChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
