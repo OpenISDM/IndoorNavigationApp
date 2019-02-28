@@ -92,6 +92,9 @@ namespace IndoorNavigation.Views.Settings
         private void ReloadNaviGraphItems()
         {
             NaviGraphItems.Clear();
+            NaviGraphItems.Add("--請選擇圖資--");
+            if (Utility.Waypoints == null)
+                MapPicker.SelectedItem = "--請選擇圖資--";
 
             foreach (var naviGraphName in NavigraphStorage.GetAllPlace())
                 NaviGraphItems.Add(naviGraphName);
