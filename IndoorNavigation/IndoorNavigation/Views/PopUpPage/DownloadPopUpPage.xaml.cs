@@ -1,26 +1,23 @@
-﻿using Rg.Plugins.Popup.Extensions;
-using Rg.Plugins.Popup.Pages;
+﻿using Rg.Plugins.Popup.Pages;
 using Rg.Plugins.Popup.Services;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using IndoorNavigation.Modules;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using System.Threading;
 
 namespace IndoorNavigation.Views.PopUpPage
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class DownloadPopUpPage : PopupPage
     {
-        public string DownloadURL { get; set; }
+        public DownloadPopUpPageEvent Event { get; private set; }
 
         public DownloadPopUpPage()
         {
             InitializeComponent();
+            Event = new DownloadPopUpPageEvent();
         }
 
         protected override void OnAppearingAnimationBegin()
@@ -115,23 +112,15 @@ namespace IndoorNavigation.Views.PopUpPage
 
         private async void OnSave(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(DownloadURL) && !string.IsNullOrEmpty(FileNameEntry.Text))
+            if (!string.IsNullOrEmpty(FileNameEntry.Text))
             {
-                if (Utility.DownloadNavigraph(DownloadURL, FileNameEntry.Text))
-                {
-                    await DisplayAlert("訊息", "地圖下載完成", "OK");
-                }
-                else
-                {
-                    await DisplayAlert("錯誤", "地圖下載失敗", "OK");
-                }
+                Event.OnEventCall(new DownloadPopUpPageEventArgs { FileName = FileNameEntry.Text });
+                CloseAllPopup();
             }
             else
             {
-                await DisplayAlert("錯誤", "地圖下載失敗", "OK");
+                await DisplayAlert("訊息", "請輸入地圖名稱", "OK");
             }
-
-            CloseAllPopup();
         }
 
         private void OnCloseButtonTapped(object sender, EventArgs e)
@@ -150,5 +139,23 @@ namespace IndoorNavigation.Views.PopUpPage
         {
             await PopupNavigation.Instance.PopAllAsync();
         }
+
     }
+
+    #region Download PopUp Page Event
+    public class DownloadPopUpPageEvent
+    {
+        public event EventHandler DownloadPopUpPageEventHandler;
+
+        public void OnEventCall(EventArgs e)
+        {
+            DownloadPopUpPageEventHandler?.Invoke(this, e);
+        }
+    }
+
+    public class DownloadPopUpPageEventArgs : EventArgs
+    { 
+        public string FileName { get; set; }
+    }
+    #endregion
 }

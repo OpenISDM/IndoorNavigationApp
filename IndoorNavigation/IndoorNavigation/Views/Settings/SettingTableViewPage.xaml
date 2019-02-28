@@ -54,6 +54,7 @@
                 <!--<sv:LabelCell Title="圖資名稱" ValueText="OpenHouse" />-->
                 <sv:TextPickerCell Title="選擇圖資" SelectedItem="OpenHouse" Items="{Binding NaviGraphItems}"/>
                 <sv:CommandCell x:Name="DownloadMapButton" Title="下載圖資" Tapped="DownloadMapBtn_Tapped"/>
+                <sv:CommandCell x:Name="CleanMapButton" Title="清除圖資" Tapped="CleanMapBtn_Tapped"/>
                 <sv:NumberPickerCell Title="字體大小" Min="0" Max="50" Number="15" PickerTitle="Select size" />
                 <sv:SwitchCell Title="藍芽開啟" On="true"/>
                 <sv:LabelCell Title="空間佔用" ValueText="0.31MB" />

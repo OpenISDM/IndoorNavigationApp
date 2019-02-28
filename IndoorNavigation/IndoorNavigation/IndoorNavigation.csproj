@@ -29,6 +29,7 @@
     <Folder Include="Views\Navigation\" />
     <Folder Include="Views\Settings\" />
     <Folder Include="Views\Settings\LicensePages\" />
+    <Folder Include="ViewModels\Interface\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Views\Navigator\MyPage.xaml.cs" />
