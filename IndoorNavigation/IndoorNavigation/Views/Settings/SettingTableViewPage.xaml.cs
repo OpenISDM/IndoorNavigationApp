@@ -9,6 +9,8 @@ using Rg.Plugins.Popup.Services;
 using IndoorNavigation.Views.PopUpPage;
 using IndoorNavigation.Modules;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Prism.Commands;
 
 namespace IndoorNavigation.Views.Settings
 {
@@ -19,6 +21,7 @@ namespace IndoorNavigation.Views.Settings
 
         // sample of TextPickerCell(選擇圖資, ref: https://github.com/muak/AiForms.SettingsView#textpickercell)
         public IList NaviGraphItems { get; } = new ObservableCollection<string>();
+        public ICommand SelectedMapCommand => new DelegateCommand(HandleSelectedMap);
 
         public SettingTableViewPage()
         {
@@ -78,6 +81,13 @@ namespace IndoorNavigation.Views.Settings
         {
             try
             {
+                // 移除已經載入的地圖資訊
+                Utility.Waypoints = null;
+                Utility.WaypointRoute = null;
+                Utility.BeaconsDict = null;
+                Utility.LocationConnects = null;
+
+                // 刪除所有地圖資料
                 NavigraphStorage.DeleteAllMap();
                 await DisplayAlert("訊息", "刪除成功", "OK");
                 ReloadNaviGraphItems();
@@ -91,8 +101,9 @@ namespace IndoorNavigation.Views.Settings
 
         private void ReloadNaviGraphItems()
         {
-            NaviGraphItems.Clear();
+            NaviGraphItems.Clear(); 
             NaviGraphItems.Add("--請選擇圖資--");
+
             if (Utility.Waypoints == null)
                 MapPicker.SelectedItem = "--請選擇圖資--";
 
@@ -127,6 +138,23 @@ namespace IndoorNavigation.Views.Settings
             }
 
             ReloadNaviGraphItems();
+        }
+
+        private void HandleSelectedMap()
+        {
+            if (MapPicker.SelectedItem.ToString() == "--請選擇圖資--")
+            {
+                // 移除已經載入的地圖資訊
+                Utility.Waypoints = null;
+                Utility.WaypointRoute = null;
+                Utility.BeaconsDict = null;
+                Utility.LocationConnects = null;
+            }
+            else
+            {
+                if (!NavigraphStorage.LoadNavigraph(MapPicker.SelectedItem.ToString()))
+                    MapPicker.SelectedItem = "--請選擇圖資--";
+            }
         }
     }
 }
