@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE;DEBUG;NETSTANDARD;NETSTANDARD2_0;__MOBILE__;__ANDROID__;__IOS__</DefineConstants>
     <DocumentationFile></DocumentationFile>
   </PropertyGroup>
 
@@ -18,8 +19,9 @@
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="Xamarin.Essentials" Version="1.0.1" />
     <PackageReference Include="Xamarin.Forms" Version="3.5.0.169047" />
-    <PackageReference Include="AiForms.SettingsView" Version="0.4.13" />
+    <PackageReference Include="AiForms.SettingsView" Version="0.4.15" />
     <PackageReference Include="Xamarin.CustomControls.ProgressBarView" Version="1.0.2" />
+    <PackageReference Include="AiForms.Effects" Version="1.3.1" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewModels\" />

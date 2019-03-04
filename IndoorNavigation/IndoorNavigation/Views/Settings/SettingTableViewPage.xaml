@@ -14,7 +14,7 @@
             <Color x:Key="TitleTextColor">#009FCC</Color>
             <!--Color x:Key="PaleBackColorPrimary"></Color-->
             <Color x:Key="PaleBackColorSecondary">#F2EDDA</Color>
-            <Color x:Key="DeepTextColor">#555555</Color>
+            <Color x:Key="DeepTextColor">#000</Color>
             <Color x:Key="NormalTextColor">#666666</Color>
             <Color x:Key="PaleTextColor">#999999</Color>
             <Color x:Key="EmphasisTextColor">#FF0000</Color>

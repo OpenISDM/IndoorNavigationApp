@@ -50,7 +50,7 @@
                    HorizontalOptions="Center" VerticalOptions="Center"/>
             
             <Image x:Name="NextInstructionImage" Grid.Row="4" Grid.Column="1" 
-                   Scale="0.8" Source="Arrow_up.png" Opacity="0.3"/>
+                   Scale="0.68" Source="Arrow_up.png" Opacity="0.3"/>
             
             <!-- &#10; is breakline -->
             <Label Grid.Row="4" Grid.Column="2" Margin="1, 1, 5, 1"

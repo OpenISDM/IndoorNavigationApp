@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-
+using System.Collections.ObjectModel;
 using Xamarin.Forms;
 
 namespace IndoorNavigation.Views.Navigation
@@ -29,6 +30,8 @@ namespace IndoorNavigation.Views.Navigation
         {
             var page = new TabbedPageNavigation();
             TabbedContentView.Content = page.Content;
+            BindingContext = page;
+            Title = "Navigation";
 
             NavigationTabImage.Source = "tabitem1_navigator_tabbed.png";
             NavigationTabLabel.TextColor = Color.FromHex("#009FCC");
@@ -44,6 +47,8 @@ namespace IndoorNavigation.Views.Navigation
         {
             var page = new TabbedPageRoutes();
             TabbedContentView.Content = page.Content;
+            BindingContext = page;
+            Title = "Routes";
 
             RoutesTabImage.Source = "tabitem2_routes_tabbed.png";
             RoutesTabLabel.TextColor = Color.FromHex("#009FCC");
@@ -59,6 +64,8 @@ namespace IndoorNavigation.Views.Navigation
         {
             var page = new TabbedPageSetting();
             TabbedContentView.Content = page.Content;
+            BindingContext = page;
+            Title = "Setting";
 
             SettingTabImage.Source = "tabitem3_setting_tabbed.png";
             SettingTabLabel.TextColor = Color.FromHex("#009FCC");
