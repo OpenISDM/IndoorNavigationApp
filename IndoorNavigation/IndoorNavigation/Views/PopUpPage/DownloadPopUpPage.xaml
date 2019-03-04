@@ -21,7 +21,7 @@
                 <StackLayout IsClippedToBounds="True" Padding="10, 5" Spacing="3">
                     <Image HorizontalOptions="Center" x:Name="OctocatImage" Margin="10" HeightRequest="150" WidthRequest="150">
                         <Image.Source>
-                            <OnPlatform x:TypeArguments="ImageSource" Android="cloud-computing.png" iOS="cloud-computing.png"/>
+                            <OnPlatform x:TypeArguments="ImageSource" Android="cloud_computing.png" iOS="cloud_computing.png"/>
                         </Image.Source>
                     </Image>
                     <Label HorizontalOptions="Center" x:Name="mapNameLabel" Style="{StaticResource EntryStyle}" Text="請輸入地圖名稱"/>

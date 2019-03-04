@@ -230,6 +230,6 @@
     <BundleResource Include="Resources\close_circle_button.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\cloud-computing.png" />
+    <BundleResource Include="Resources\cloud_computing.png" />
   </ItemGroup>
 </Project>
