@@ -28,6 +28,9 @@ namespace IndoorNavigation.Droid
             Xamarin.Forms.Forms.SetFlags("FastRenderers_Experimental");
             Rg.Plugins.Popup.Popup.Init(this, bundle);
             global::Xamarin.Forms.Forms.Init(this, bundle);
+
+            var a = new AiForms.Renderers.Droid.PickerCellRenderer();
+
             ZXing.Net.Mobile.Forms.Android.Platform.Init();
             LoadApplication(new App());
             Window.SetStatusBarColor(Android.Graphics.Color.Argb(255, 0, 160, 204));

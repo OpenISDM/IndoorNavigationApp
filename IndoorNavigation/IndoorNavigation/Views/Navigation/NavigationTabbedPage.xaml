@@ -13,6 +13,8 @@
                 <RowDefinition Height="80" />
             </Grid.RowDefinitions>
             
+            <ContentView x:Name="TabbedContentView" Grid.Row="0" />
+            
             <ActivityIndicator x:Name="LoadingIndicator"
                                IsEnabled="true"
                                IsRunning="false"
@@ -20,8 +22,6 @@
                                HorizontalOptions="Center"
                                VerticalOptions="Center"
                                Color="Black"/>
-            
-            <ContentView x:Name="TabbedContentView" Grid.Row="0" />
             
             <BoxView BackgroundColor="#666" Grid.Row="1" />
             
@@ -39,7 +39,7 @@
                     <Label x:Name="NavigationTabLabel" Text="Navigation" FontSize="15" TextColor="#808080" 
                            HorizontalOptions="Center" />
                     <StackLayout.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="NavigatorTab_Tapped" />
+                        <TapGestureRecognizer Tapped="NavigationTab_Tapped" />
                     </StackLayout.GestureRecognizers>
                 </StackLayout>
                 <!--Tab item 2-->

@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE;DEBUG;NETSTANDARD;NETSTANDARD2_0;__MOBILE__;__ANDROID__;__IOS__</DefineConstants>
     <DocumentationFile></DocumentationFile>
   </PropertyGroup>
 
@@ -17,12 +18,14 @@
     <PackageReference Include="Dijkstra.NET" Version="1.1.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
     <PackageReference Include="Xamarin.Essentials" Version="1.0.1" />
-    <PackageReference Include="Xamarin.Forms" Version="3.4.0.1029999" />
-    <PackageReference Include="AiForms.SettingsView" Version="0.4.13" />
     <PackageReference Include="ZXing.Net.Mobile" Version="2.4.1" />
     <PackageReference Include="ZXing.Net.Mobile.Forms" Version="2.4.1" />
     <PackageReference Include="Rg.Plugins.Popup" Version="1.1.5.188" />
     <PackageReference Include="Prism.Forms" Version="7.1.0.431" />
+    <PackageReference Include="Xamarin.Forms" Version="3.5.0.169047" />
+    <PackageReference Include="AiForms.SettingsView" Version="0.4.15" />
+    <PackageReference Include="Xamarin.CustomControls.ProgressBarView" Version="1.0.2" />
+    <PackageReference Include="AiForms.Effects" Version="1.3.1" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewModels\" />

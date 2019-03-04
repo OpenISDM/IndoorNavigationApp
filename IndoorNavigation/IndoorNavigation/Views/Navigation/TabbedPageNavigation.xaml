@@ -2,7 +2,76 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              x:Class="IndoorNavigation.Views.Navigation.TabbedPageNavigation"
-             Title="Indoor navigation">
+             xmlns:pb="clr-namespace:Xamarin.CustomControls;assembly=Xamarin.CustomControls.ProgressBarView">
+    
     <ContentPage.Content>
+        
+        <Grid ColumnSpacing="0" RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="77*" />
+                <RowDefinition Height="1" />
+                <RowDefinition Height="3.5*" />
+                <RowDefinition Height="1" />
+                <RowDefinition Height="20*" />
+            </Grid.RowDefinitions>
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30*"/>
+                <ColumnDefinition Width="35*"/>
+                <ColumnDefinition Width="35*"/>
+            </Grid.ColumnDefinitions>
+            
+            <StackLayout Grid.Row="0" Grid.ColumnSpan="3" Orientation="Vertical"
+                         HorizontalOptions="CenterAndExpand"
+                         VerticalOptions="CenterAndExpand">
+                <Label x:Name="CurrentInstructionLabel" Text="請左轉 然後直走"
+                       Margin="1, 50, 1, -28" FontSize="Large" Scale="1.8"
+                       HorizontalOptions="CenterAndExpand"
+                       VerticalOptions="Center"/>
+                <Image x:Name="CurrentInstructionImage" Source="Arrow_left.png"
+                       Scale="0.6" VerticalOptions="EndAndExpand"/>
+                
+            </StackLayout>
+            
+            <!--<ProgressBar x:Name="NavigationProgressBar" Grid.Row="1" Grid.ColumnSpan="2"
+                         Progress="0.6" ProgressColor="#009FCC"
+                         ScaleX="1" ScaleY="3" Margin="1, 1, 1, 10"/>-->
+            
+            <BoxView BackgroundColor="#000" Grid.Row="1"  Grid.ColumnSpan="3"/>
+            <pb:ProgressBarView x:Name="NavigatopmProgressBar"
+                                Grid.Row="2" Grid.ColumnSpan="3" Color="#009FCC"
+                                HeightRequest="1" Progress="60"
+                                LabelShowIntValuesOnly="false" LabelStringFormat="{}{0:0.0} %"
+                                LabelFontSize="15" LabelPosition="AfterBar" />
+            <BoxView BackgroundColor="#000" Grid.Row="3"  Grid.ColumnSpan="3"/>
+            
+            <Label Grid.Row="4" Grid.Column="0" Margin="5, 1, 1, 1"
+                   Text="NEXT:" FontSize="Large" Scale="1.3" Opacity="0.4"
+                   HorizontalOptions="Center" VerticalOptions="Center"/>
+            
+            <Image x:Name="NextInstructionImage" Grid.Row="4" Grid.Column="1" 
+                   Scale="0.68" Source="Arrow_up.png" Opacity="0.3"/>
+            
+            <!-- &#10; is breakline -->
+            <Label Grid.Row="4" Grid.Column="2" Margin="1, 1, 5, 1"
+                   FontSize="Large" Scale="1" HorizontalTextAlignment="Center"
+                   HorizontalOptions="Center" VerticalOptions="Center"
+                   Opacity="0.4">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span x:Name="NextInstructionLabel" Text="往電梯&#10;" />
+                        <Span x:Name="NextDirectionLabel" Text="直走"/>
+                    </FormattedString>
+                </Label.FormattedText>
+                
+            </Label>
+            
+            <!--<StackLayout Grid.Row="2" Grid.Column="0" BackgroundColor="Gray" Opacity="0.5" />
+            <StackLayout Grid.Row="2" Grid.Column="1" BackgroundColor="Blue" Opacity="0.3" />
+            <StackLayout Grid.Row="2" Grid.Column="2" BackgroundColor="Green" Opacity="0.5" />-->
+            
+        </Grid>
+        
     </ContentPage.Content>
+    
 </ContentPage>

@@ -25,6 +25,7 @@ namespace IndoorNavigation.iOS
             Rg.Plugins.Popup.Popup.Init();
             global::Xamarin.Forms.Forms.Init();
             AiForms.Renderers.iOS.SettingsViewInit.Init();
+            AiForms.Effects.iOS.Effects.Init();
 
             LoadApplication(new App());
 

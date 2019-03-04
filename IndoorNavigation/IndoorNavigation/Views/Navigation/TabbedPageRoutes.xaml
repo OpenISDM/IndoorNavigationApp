@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             x:Class="IndoorNavigation.Views.Navigation.TabbedPageRoutes">
+    
+    <ContentPage.Content>
+        
+        <ListView x:Name="RoutesListView" Margin="10, 5, 10,10" 
+                  HasUnevenRows="true"
+                  ItemSelected="RoutesListView_ItemSelected"
+                  IsGroupingEnabled="true"
+                  GroupDisplayBinding="{Binding Key}">
+            
+            <ListView.GroupHeaderTemplate>
+                <DataTemplate>
+                    <ViewCell Height="35">
+                        <StackLayout VerticalOptions="CenterAndExpand"
+                                     Padding="15, 1, 1, 1">
+                            <Label Text="{Binding Key}"
+                                   FontAttributes="Bold"
+                                   Margin="10, 1, 1, 1"/>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.GroupHeaderTemplate>
+            
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell Height="70">
+                        <StackLayout Orientation="Horizontal"
+                                     Padding="20, 20, 20, 1">
+                            
+                            <!--<Label Text="ICON"/>-->
+                            <Image x:Name="RoutesListViewImage" 
+                                   Source="{Binding ImageSrc}"
+                                   Opacity="{Binding OpacityValue}"
+                                   HorizontalOptions="StartAndExpand"
+                                   VerticalOptions="Center"
+                                   Margin="30, 1, 1, 1"
+                                   Scale="0.9" />
+                            
+                            <Label x:Name="RoutesListViewLabel" 
+                                   Text="{Binding Instruction}"
+                                   Opacity="{Binding OpacityValue}"
+                                   FontSize="Large"
+                                   HorizontalOptions="StartAndExpand"
+                                   VerticalOptions="Center"
+                                   Margin="1, 1, 1, 10" />
+                            
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            
+        </ListView>
+        
+    </ContentPage.Content>
+    
+</ContentPage>

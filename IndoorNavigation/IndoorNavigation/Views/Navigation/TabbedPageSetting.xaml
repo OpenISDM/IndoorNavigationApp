@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              xmlns:sv="clr-namespace:AiForms.Renderers;assembly=SettingsView"
-             x:Class="IndoorNavigation.Views.Settings.SettingTableViewPage"
-             Title="Setting">
+             xmlns:ef="clr-namespace:AiForms.Effects;assembly=AiForms.Effects"
+             x:Class="IndoorNavigation.Views.Navigation.TabbedPageSetting">
     
     <ContentPage.Resources>
         <!-- SettingsView properties settings -->
@@ -46,28 +46,39 @@
     
     <ContentPage.Content>
         
-        <sv:SettingsView HasUnevenRows="true">
+        <sv:SettingsView x:Name="NavigationSettingsView" HasUnevenRows="true" 
+                         HeaderHeight="36" 
+                         HeaderPadding="14,0,0,6" 
+                         HeaderTextVerticalAlign="End">
     
-            <sv:Section Title="Setting">
-                <sv:CommandCell IconSource="icon.png" IconSize="60,60"
-                                Title="BeDIS Xamarin" Description="openISDM@sinica.com"/>
-                <!--<sv:LabelCell Title="圖資名稱" ValueText="OpenHouse" />-->
-                <sv:TextPickerCell x:Name="MapPicker" Title="選擇圖資" Items="{Binding NaviGraphItems}" SelectedCommand="{Binding SelectedMapCommand}"/>
-                <sv:CommandCell x:Name="DownloadMapButton" Title="下載圖資" Tapped="DownloadMapBtn_Tapped"/>
-                <sv:CommandCell x:Name="CleanMapButton" Title="清除圖資" Tapped="CleanMapBtn_Tapped"/>
-                <sv:NumberPickerCell Title="字體大小" Min="0" Max="50" Number="15" PickerTitle="Select size" />
-                <sv:SwitchCell Title="藍芽開啟" On="true"/>
-                <sv:LabelCell Title="空間佔用" ValueText="0.31MB" />
+            <sv:Section Title="語音設定" >
+                <!--<ViewCell>
+                    <StackLayout Padding="16,8,8,8" Orientation="Horizontal">
+                        <Label Text="語音音量" VerticalOptions="Center"
+                               FontSize="{StaticResource BaseFontSize}"
+                               TextColor="{StaticResource DeepTextColor}"/>
+                        <Slider Minimum="0" Maximum="100" Value="50" 
+                                HorizontalOptions="FillAndExpand"
+                                ThumbColor="{StaticResource AccentColor}"
+                                ef:AlterColor.On="true"
+                                ef:AlterColor.Accent="{StaticResource AccentColor}" />
+                    </StackLayout>
+                </ViewCell>-->
+                <sv:TextPickerCell Title="語音選擇" SelectedItem="中文" 
+                                   Items="{Binding VoiceSearchItems}" />
+                <sv:CommandCell x:Name="TestVoiceButton" Title="播放測試語音"/>
+                <!--<sv:SwitchCell Title="透過藍芽播放語音" On="false"/>-->
             </sv:Section>
 
-            <sv:Section Title="License">
-                    <sv:CommandCell x:Name="LicenseButton" Title="版權聲明" Tapped="LicenseBtn_Tapped"/>
-                    <sv:CommandCell Title="隱私權保護政策"/>
-            </sv:Section>
-                
-            <sv:Section Title="Other">
-                    <sv:CommandCell Title="意見回饋與功能許願池"/>
-                    <sv:CommandCell Title="關於 BeDIS"/>
+            <!--<sv:Section Title="路線選項">
+                <sv:SwitchCell Title="避開樓梯" On="false"/>
+                <sv:SwitchCell Title="避開電梯" On="false"/>
+                <sv:SwitchCell Title="避開手扶梯" On="false"/>
+            </sv:Section>-->
+            
+            <sv:Section>
+                <sv:CommandCell x:Name="StopNavigation" Title="停止並結束導航" 
+                                TitleColor="Red"/>
             </sv:Section>
         
         </sv:SettingsView>
