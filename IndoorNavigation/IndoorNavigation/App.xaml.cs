@@ -30,10 +30,11 @@ namespace IndoorNavigation
 
             // Beacon scan api must adjust later, it should regist after
 			// navigraph is be loaded.
-            Utility.BeaconScanAPI = DependencyService.Get<IBeaconScan>();
-            Utility.SignalProcess = new SignalProcessModule();
-            Utility.MaN = new MaNModule();
-            Utility.IPS = new IPSModule();
+            // 由於android尚未實作beacon scanner的功能，如要在android上偵錯，請註解以下代碼
+            //Utility.BeaconScanAPI = DependencyService.Get<IBeaconScan>();
+            //Utility.SignalProcess = new SignalProcessModule();
+            //Utility.MaN = new MaNModule();
+            //Utility.IPS = new IPSModule();
         }
 
 		protected override void OnSleep ()
