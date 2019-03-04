@@ -30,7 +30,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using IndoorNavigation.Models;
@@ -127,11 +126,7 @@ namespace IndoorNavigation.Modules
                 return string.Empty;
 
             lock(fileLock)
-            {
-                string buffer = File.ReadAllText(filePath);
-                Debug.WriteLine(string.Format("載入地圖內容: {0}", buffer));
-                return buffer;
-            }
+                return File.ReadAllText(filePath);
         }
 
         /// <summary>
