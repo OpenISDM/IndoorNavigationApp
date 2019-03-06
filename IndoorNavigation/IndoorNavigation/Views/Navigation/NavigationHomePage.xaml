@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="IndoorNavigation.Views.Navigation.NavigationHomePage"
-             Title="Let's Navigator">
+             Title="{Binding Title}">
     
     <Grid>
         <Grid.RowDefinitions>
@@ -11,17 +11,24 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         
-        <SearchBar x:Name="NaviSearchBar" Grid.Row="0" 
+        <!--<SearchBar x:Name="NaviSearchBar" Grid.Row="0" 
                    Placeholder="Search your destination"
                    CancelButtonColor="White"
                    TextChanged="NaviSearchBar_TextChanged"
                    BackgroundColor="#009FCC"
+                   VerticalOptions="StartAndExpand"/>-->
+        
+        <SearchBar x:Name="NaviSearchBar" Grid.Row="0" 
+                   Placeholder="Search your destination"
+                   CancelButtonColor="White"
+                   Text="{Binding SearchedText, Mode=TwoWay}"
+                   BackgroundColor="#009FCC"
                    VerticalOptions="StartAndExpand"/>
         
         <ListView x:Name="LocationListView" Grid.Row="1" Grid.RowSpan="2"
+                  ItemsSource="{Binding GroupWaypoints}"
                   Margin="10, 5, 10,10" HasUnevenRows="true"
-                  ItemTapped="LocationListView_ItemTapped"
-                  ItemSelected="LocationListView_ItemSelected"
+                  SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
                   IsPullToRefreshEnabled="true"
                   Refreshing="LocationListView_Refreshing"
                   IsGroupingEnabled="true"
@@ -32,7 +39,7 @@
                     <ViewCell Height="35">
                         <StackLayout VerticalOptions="CenterAndExpand"
                                      Padding="15, 1, 1, 1">
-                            <Label Text="{Binding Key}"
+                            <Label Text="{Binding Key, StringFormat='{0}樓'}"
                                    TextColor="#009FCC"
                                    FontAttributes="Bold"/>
                         </StackLayout>
@@ -62,10 +69,10 @@
                                    VerticalOptions="Center"
                                    TextColor="#009FCC" Margin="40, 1, 1, 10" />
                             
-                            <Label Text="{Binding Distance, StringFormat='{0:F1}m'}"
+                            <!--<Label Text="{Binding Distance, StringFormat='{0:F1}m'}"
                                    HorizontalOptions="EndAndExpand"
                                    VerticalOptions="Center"
-                                   Margin="40, 1, 1, 10"/>
+                                   Margin="40, 1, 1, 10"/>-->
                             
                         </StackLayout>
                     </ViewCell>

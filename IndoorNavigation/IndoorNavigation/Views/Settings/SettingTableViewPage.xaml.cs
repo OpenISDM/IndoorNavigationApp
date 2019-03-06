@@ -46,8 +46,6 @@ namespace IndoorNavigation.Views.Settings
         async void DownloadMapBtn_Tapped(object sender, EventArgs e)
         {
 
-
-
 #if DEBUG
             string qrCodeValue = string.Empty;
             if (DeviceInfo.DeviceType == DeviceType.Virtual)
