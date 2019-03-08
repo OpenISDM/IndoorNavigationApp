@@ -6,11 +6,13 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DefineConstants>TRACE;DEBUG;NETSTANDARD;NETSTANDARD2_0;__MOBILE__;__ANDROID__;__IOS__</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NETSTANDARD;NETSTANDARD2_0</DefineConstants>
     <DocumentationFile></DocumentationFile>
+    <LangVersion>Latest</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType></DebugType>
     <DocumentationFile></DocumentationFile>
     <LangVersion>Latest</LangVersion>
   </PropertyGroup>

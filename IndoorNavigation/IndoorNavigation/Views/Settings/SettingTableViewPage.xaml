@@ -52,12 +52,9 @@
                 <sv:CommandCell IconSource="icon.png" IconSize="60,60"
                                 Title="BeDIS Xamarin" Description="openISDM@sinica.com"/>
                 <!--<sv:LabelCell Title="圖資名稱" ValueText="OpenHouse" />-->
-                <sv:TextPickerCell x:Name="MapPicker" Title="選擇圖資" Items="{Binding NaviGraphItems}" SelectedCommand="{Binding SelectedMapCommand}"/>
+                <sv:TextPickerCell x:Name="MapPicker" Title="選擇圖資" Items="{Binding SelectNaviGraphItems}" SelectedCommand="{Binding SelectedMapCommand}"/>
                 <sv:CommandCell x:Name="DownloadMapButton" Title="下載圖資" Tapped="DownloadMapBtn_Tapped"/>
-                <sv:CommandCell x:Name="CleanMapButton" Title="清除圖資" Tapped="CleanMapBtn_Tapped"/>
-                <sv:NumberPickerCell Title="字體大小" Min="0" Max="50" Number="15" PickerTitle="Select size" />
-                <sv:SwitchCell Title="藍芽開啟" On="true"/>
-                <sv:LabelCell Title="空間佔用" ValueText="0.31MB" />
+                <sv:TextPickerCell x:Name="CleanMapPicke" Title="清除圖資" Items="{Binding CleanNaviGraphItems}" SelectedCommand="{Binding CleanMapCommand}"/>
             </sv:Section>
 
             <sv:Section Title="License">

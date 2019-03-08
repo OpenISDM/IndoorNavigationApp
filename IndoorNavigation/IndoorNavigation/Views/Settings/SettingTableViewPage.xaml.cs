@@ -20,8 +20,10 @@ namespace IndoorNavigation.Views.Settings
         private string downloadURL;
 
         // sample of TextPickerCell(選擇圖資, ref: https://github.com/muak/AiForms.SettingsView#textpickercell)
-        public IList NaviGraphItems { get; } = new ObservableCollection<string>();
+        public IList SelectNaviGraphItems { get; } = new ObservableCollection<string>();
+        public IList CleanNaviGraphItems { get; } = new ObservableCollection<string>();
         public ICommand SelectedMapCommand => new DelegateCommand(HandleSelectedMap);
+        public ICommand CleanMapCommand => new DelegateCommand(async () => { await HandleCLeanMapAsync(); });
 
         public SettingTableViewPage()
         {
@@ -89,38 +91,22 @@ namespace IndoorNavigation.Views.Settings
             }
         }
 
-        async void CleanMapBtn_Tapped(object sender, EventArgs e)
-        {
-            try
-            {
-                // 移除已經載入的地圖資訊
-                Utility.Waypoints = null;
-                Utility.WaypointRoute = null;
-                Utility.BeaconsDict = null;
-                Utility.LocationConnects = null;
-
-                // 刪除所有地圖資料
-                NavigraphStorage.DeleteAllMap();
-                await DisplayAlert("訊息", "刪除成功", "OK");
-                ReloadNaviGraphItems();
-            }
-            catch
-            {
-                await DisplayAlert("錯誤", "刪除地圖時發生不明錯誤", "確定");
-                ReloadNaviGraphItems();
-            }
-        }
-
         private void ReloadNaviGraphItems()
         {
-            NaviGraphItems.Clear();
-            NaviGraphItems.Add("--請選擇圖資--");
+            SelectNaviGraphItems.Clear();
+            SelectNaviGraphItems.Add("--請選擇圖資--");
+
+            CleanNaviGraphItems.Clear();
+            CleanNaviGraphItems.Add("--全部--");
 
             if (Utility.Waypoints == null)
                 MapPicker.SelectedItem = "--請選擇圖資--";
 
             foreach (var naviGraphName in NavigraphStorage.GetAllPlace())
-                NaviGraphItems.Add(naviGraphName);
+            {
+                SelectNaviGraphItems.Add(naviGraphName);
+                CleanNaviGraphItems.Add(naviGraphName);
+            }
         }
 
         /// <summary>
@@ -167,6 +153,39 @@ namespace IndoorNavigation.Views.Settings
                 if (!NavigraphStorage.LoadNavigraph(MapPicker.SelectedItem.ToString()))
                     MapPicker.SelectedItem = "--請選擇圖資--";
             }
+        }
+
+        private async Task HandleCLeanMapAsync()
+        {
+            try
+            {
+                if (CleanMapPicke.SelectedItem.ToString() == "--全部--")
+                {
+                    if (await DisplayAlert("警告", "確定要刪除所有地圖嗎？", "Yes", "No"))
+                    {
+                        // 刪除所有地圖資料
+                        NavigraphStorage.DeleteAllMap();
+                        await DisplayAlert("訊息", "刪除成功", "OK");
+                    }
+                }
+                else
+                {
+                    if (await DisplayAlert("警告", string.Format("確定要刪除 地圖:{0} 嗎？",CleanMapPicke.SelectedItem), "Yes", "No"))
+                    {
+                        // 刪除選擇的地圖資料
+                        NavigraphStorage.DeleteNavigraph(CleanMapPicke.SelectedItem.ToString());
+                        await DisplayAlert("訊息", "刪除成功", "OK");
+                    }
+                }
+
+            }
+            catch
+            {
+                await DisplayAlert("錯誤", "刪除地圖時發生不明錯誤", "確定");
+            }
+
+            CleanMapPicke.SelectedItem = "";
+            ReloadNaviGraphItems();
         }
     }
 }
