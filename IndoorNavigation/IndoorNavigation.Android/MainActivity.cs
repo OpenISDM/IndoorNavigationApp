@@ -15,7 +15,6 @@ namespace IndoorNavigation.Droid
     {
         internal static MainActivity Instance { get; private set; }
 
-
         protected override void OnCreate(Bundle bundle)
         {
             //show splash screen

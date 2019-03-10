@@ -97,7 +97,6 @@
     <AndroidResource Include="Resources\drawable\splash_screen.jpg" />
     <AndroidResource Include="Resources\drawable\splash_screen_3.jpg" />
     <AndroidResource Include="Resources\drawable\splash_screen_2.jpg" />
-    <AndroidResource Include="Resources\drawable\setting_imagebutton.png" />
     <AndroidResource Include="Resources\drawable\tracking_button.png" />
     <AndroidResource Include="Resources\drawable\navigation_button.png" />
     <AndroidResource Include="Resources\drawable\location_icon.png" />
@@ -118,6 +117,7 @@
     <AndroidResource Include="Resources\drawable\Arrow_frontright.png" />
     <AndroidResource Include="Resources\drawable\Arrow_frontleft.png" />
     <AndroidResource Include="Resources\drawable\Arrow_down.png" />
+    <AndroidResource Include="Resources\drawable\settings_gears_imagebutton.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable-hdpi\" />

@@ -9273,7 +9273,7 @@ namespace IndoorNavigation.Droid
 			public const int position_FAB_white = 2130837818;
 			
 			// aapt resource value: 0x7f02013b
-			public const int setting_imagebutton = 2130837819;
+			public const int settings_gears_imagebutton = 2130837819;
 			
 			// aapt resource value: 0x7f02013c
 			public const int splash_screen = 2130837820;

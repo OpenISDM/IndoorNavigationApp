@@ -15,6 +15,11 @@ namespace IndoorNavigation
 
             // removes Navigation Bar
             NavigationPage.SetHasNavigationBar(this, false);
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
 
             switch (Device.RuntimePlatform)
             {
@@ -23,6 +28,18 @@ namespace IndoorNavigation
                     AbsoluteLayout.SetLayoutBounds(NavigatorButton, new Rectangle(0.5, 0.52, 0.7, 0.1));
                     TrackingButton.Padding = new Thickness(30, 1, 1, 1);
                     AbsoluteLayout.SetLayoutBounds(TrackingButton, new Rectangle(0.5, 0.78, 0.7, 0.1));
+                    break;
+
+                case Device.iOS:
+                    // customize CurrentInstruction UI for iPhone 5s/SE
+                    if (Height < 600)
+                    {
+                        WelcomeLabel.FontSize = 36;
+                        BeDISLabel.FontSize = 39;
+                        SloganLabel.Text = "";
+                        AbsoluteLayout.SetLayoutBounds(NavigatorButton, new Rectangle(0.5, 0.47, 0.7, 0.12));
+                        AbsoluteLayout.SetLayoutBounds(TrackingButton, new Rectangle(0.5, 0.75, 0.7, 0.12));
+                    }
                     break;
 
                 default:
