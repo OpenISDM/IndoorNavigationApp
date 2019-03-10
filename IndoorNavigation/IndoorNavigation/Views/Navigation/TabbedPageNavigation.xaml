@@ -8,15 +8,15 @@
         
         <Grid ColumnSpacing="0" RowSpacing="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="77*" />
+                <RowDefinition Height="75.5*" />
                 <RowDefinition Height="1" />
-                <RowDefinition Height="3.5*" />
+                <RowDefinition Height="4*" />
                 <RowDefinition Height="1" />
                 <RowDefinition Height="20*" />
             </Grid.RowDefinitions>
             
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="30*"/>
+                <ColumnDefinition Width="35*"/>
                 <ColumnDefinition Width="35*"/>
                 <ColumnDefinition Width="35*"/>
             </Grid.ColumnDefinitions>
@@ -24,12 +24,13 @@
             <StackLayout Grid.Row="0" Grid.ColumnSpan="3" Orientation="Vertical"
                          HorizontalOptions="CenterAndExpand"
                          VerticalOptions="CenterAndExpand">
-                <Label x:Name="CurrentInstructionLabel" Text="請左轉 然後直走"
-                       Margin="1, 50, 1, -28" FontSize="Large" Scale="1.8"
+                <Label x:Name="CurrentInstructionLabel" Text="{Binding CurrentStepLabel}"
+                       Margin="1, 50, 1, -40" FontSize="Large" Scale="1.8"
                        HorizontalOptions="CenterAndExpand"
                        VerticalOptions="Center"/>
-                <Image x:Name="CurrentInstructionImage" Source="Arrow_left.png"
-                       Scale="0.6" VerticalOptions="EndAndExpand"/>
+                <Image x:Name="CurrentInstructionImage" Source="{Binding CurrentStepImage}"
+                       Margin="1,1,1,32" Scale="0.55" 
+                       VerticalOptions="EndAndExpand" />
                 
             </StackLayout>
             
@@ -50,7 +51,8 @@
                    HorizontalOptions="Center" VerticalOptions="Center"/>
             
             <Image x:Name="NextInstructionImage" Grid.Row="4" Grid.Column="1" 
-                   Scale="0.68" Source="Arrow_up.png" Opacity="0.3"/>
+                   Scale="0.68" Source="{Binding NextStepImage}" Opacity="0.3"
+                   HorizontalOptions="Center"/>
             
             <!-- &#10; is breakline -->
             <Label Grid.Row="4" Grid.Column="2" Margin="1, 1, 5, 1"

@@ -23,10 +23,11 @@
     <AbsoluteLayout>
         
         <ImageButton
-            Source="setting_imagebutton.png"
+            Source="settings_gears_imagebutton.png"
             BackgroundColor="Transparent"
-            AbsoluteLayout.LayoutBounds="0.98, 0.01, 0.06, 0.06"
+            AbsoluteLayout.LayoutBounds="0.95, 0.01, 0.06, 0.06"
             AbsoluteLayout.LayoutFlags="All"
+            Scale="1.5"
             Clicked="SettingImageButton_Clicked"
         />
         
@@ -37,11 +38,11 @@
             <!-- &#10; is breakline -->
             <Label.FormattedText>
                 <FormattedString>
-                    <Span Text="Welcome to&#10;" FontSize="40"
+                    <Span x:Name="WelcomeLabel" Text="Welcome to&#10;" FontSize="40"
                           FontAttributes="Bold"/>
-                    <Span Text="BeDIS&#10;" FontSize="43" TextColor="#009FCC"
+                    <Span x:Name="BeDISLabel" Text="BeDIS&#10;" FontSize="43" TextColor="#009FCC"
                           FontAttributes="Bold" FontFamily=""/>
-                    <Span Text="&#10;You won't get lost from now&#10;" 
+                    <Span x:Name="SloganLabel" Text="&#10;You won't get lost from now&#10;" 
                           FontSize="Medium" FontAttributes="Italic"/>
                 </FormattedString>
             </Label.FormattedText>

@@ -206,7 +206,6 @@
   <ItemGroup>
     <BundleResource Include="Resources\navigation_button.png" />
     <BundleResource Include="Resources\tracking_button.png" />
-    <BundleResource Include="Resources\setting_imagebutton.png" />
     <BundleResource Include="Resources\position_FAB.png" />
     <BundleResource Include="Resources\location_icon.png" />
     <BundleResource Include="Resources\position_FAB_white.png" />
@@ -225,6 +224,7 @@
     <BundleResource Include="Resources\Arrow_down.png" />
     <BundleResource Include="Resources\Arrow_rearright.png" />
     <BundleResource Include="Resources\Arrow_rearleft.png" />
+    <BundleResource Include="Resources\settings_gears_imagebutton.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\close_circle_button.png" />

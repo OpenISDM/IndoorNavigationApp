@@ -49,16 +49,16 @@
                               FontAttributes="Bold"/>
                         
                         <!-- Nut Icon -->
-                        <Span Text="&#10;Nut Icon made by " 
+                        <Span Text="&#10;Settings gears Icon made by " 
                               FontSize="14"
                               FontAttributes="Bold"/>
-                        <Span Text="Bogdan Rosu"
+                        <Span Text="Freepik"
                               TextColor="Blue"
                               FontSize="14"
                               FontAttributes="Bold">
                             <Span.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding HyperlinkClickCommand}"
-                                                      CommandParameter="https://www.flaticon.com/authors/bogdan-rosu/"/>
+                                                      CommandParameter="https://www.flaticon.com/authors/freepik/"/>
                             </Span.GestureRecognizers>
                         </Span>
                         <Span Text=" from www.flaticon.com&#10;" 

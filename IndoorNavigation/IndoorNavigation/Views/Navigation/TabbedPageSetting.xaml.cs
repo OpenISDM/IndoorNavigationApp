@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Xamarin.Forms;
+using System.Diagnostics;
 
 namespace IndoorNavigation.Views.Navigation
 {
@@ -17,10 +18,19 @@ namespace IndoorNavigation.Views.Navigation
 
             VoiceSearchItems.Add("日文");
 
-#if __ANDROID__
-            NavigationSettingsView.HeaderHeight = 50;
-            NavigationSettingsView.HeaderPadding = new Thickness(14, 0, 0, 16);
-#endif
+            switch (Device.RuntimePlatform)
+            {
+                case Device.Android:
+                    NavigationSettingsView.HeaderHeight = 50;
+                    NavigationSettingsView.HeaderPadding = new Thickness(14, 0, 0, 16);
+                    break;
+
+                case Device.iOS:
+                    break;
+
+                default:
+                    break;
+            }
 
         }
     }

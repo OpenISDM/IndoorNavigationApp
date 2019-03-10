@@ -13,7 +13,7 @@ namespace IndoorNavigation.Droid
     [Activity(Label = "IndoorNavigation", Icon = "@mipmap/icon", Theme = "@style/splashscreen", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
-        protected override void OnCreate(Bundle bundle)
+        protected override void OnCreate(Bundle savedInstanceState)
         {
             //show splash screen
             base.Window.RequestFeature(WindowFeatures.ActionBar);
@@ -23,11 +23,11 @@ namespace IndoorNavigation.Droid
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
-            base.OnCreate(bundle);
+            base.OnCreate(savedInstanceState);
 
             Xamarin.Forms.Forms.SetFlags("FastRenderers_Experimental");
-            Rg.Plugins.Popup.Popup.Init(this, bundle);
-            global::Xamarin.Forms.Forms.Init(this, bundle);
+            Rg.Plugins.Popup.Popup.Init(this, savedInstanceState);
+            global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
 
             var a = new AiForms.Renderers.Droid.PickerCellRenderer();
 

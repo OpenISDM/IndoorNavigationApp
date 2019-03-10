@@ -13,7 +13,7 @@ using IndoorNavigation.Views.Settings;
 
 namespace IndoorNavigation.ViewModels.Navigation
 {
-    public class NaviHomePageViewModel : BaseViewModel
+    public class NaviHomePageViewModel : MvvmHelpers.BaseViewModel
     {
         //waypoints from Utility(source)
         private ObservableRangeCollection<WaypointModel> waypoints;
@@ -33,7 +33,7 @@ namespace IndoorNavigation.ViewModels.Navigation
             if (Utility.Waypoints == null)
             {
                 var mainPage = Application.Current.MainPage;
-                await mainPage.DisplayAlert("Opps...", "You should download navigation graph first", "Ok");
+                await mainPage.DisplayAlert("Opps...", "You should pick the navigation graph first", "OK");
                 await mainPage.Navigation.PushAsync(new SettingTableViewPage());
             }
             else

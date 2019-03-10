@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Xamarin.Forms;
+using System.Diagnostics;
+using IndoorNavigation.ViewModels.Navigation;
 
 namespace IndoorNavigation.Views.Navigation
 {
@@ -24,13 +26,18 @@ namespace IndoorNavigation.Views.Navigation
                 default:
                     break;
             }
+
+            tabbedNaviViewModel = new TabbedNaviViewModel();
+            tabbedPageNavigation = new TabbedPageNavigation();
         }
 
+        TabbedNaviViewModel tabbedNaviViewModel;
+        TabbedPageNavigation tabbedPageNavigation;
         void NavigationTab_Tapped(object sender, EventArgs e)
         {
-            var page = new TabbedPageNavigation();
-            TabbedContentView.Content = page.Content;
-            BindingContext = page;
+            TabbedContentView.Content = tabbedPageNavigation.Content;
+            //BindingContext = page;
+            BindingContext = tabbedNaviViewModel;
             Title = "Navigation";
 
             NavigationTabImage.Source = "tabitem1_navigator_tabbed.png";
@@ -47,7 +54,7 @@ namespace IndoorNavigation.Views.Navigation
         {
             var page = new TabbedPageRoutes();
             TabbedContentView.Content = page.Content;
-            BindingContext = page;
+            //BindingContext = page;
             Title = "Routes";
 
             RoutesTabImage.Source = "tabitem2_routes_tabbed.png";
@@ -64,7 +71,7 @@ namespace IndoorNavigation.Views.Navigation
         {
             var page = new TabbedPageSetting();
             TabbedContentView.Content = page.Content;
-            BindingContext = page;
+            //BindingContext = page;
             Title = "Setting";
 
             SettingTabImage.Source = "tabitem3_setting_tabbed.png";
