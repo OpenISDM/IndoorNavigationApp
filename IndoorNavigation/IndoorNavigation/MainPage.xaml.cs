@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 using IndoorNavigation.Views.Navigation;
 using IndoorNavigation.Views.Settings;
 using Xamarin.Forms.Xaml;
-using System.Diagnostics;
 
 namespace IndoorNavigation
 {

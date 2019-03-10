@@ -13,6 +13,9 @@ namespace IndoorNavigation.Droid
     [Activity(Label = "IndoorNavigation", Icon = "@mipmap/icon", Theme = "@style/splashscreen", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
+        internal static MainActivity Instance { get; private set; }
+
+
         protected override void OnCreate(Bundle bundle)
         {
             //show splash screen

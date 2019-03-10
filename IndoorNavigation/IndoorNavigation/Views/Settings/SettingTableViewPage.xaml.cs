@@ -91,6 +91,11 @@ namespace IndoorNavigation.Views.Settings
             }
         }
 
+        void SpeechTestBtn_Tapped(object sender, EventArgs e)
+        {
+            Utility.TextToSpeech.Speak("歡迎使用BeDIS室內導航");
+        }
+
         private void ReloadNaviGraphItems()
         {
             SelectNaviGraphItems.Clear();

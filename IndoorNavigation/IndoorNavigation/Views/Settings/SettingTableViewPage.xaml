@@ -55,6 +55,7 @@
                 <sv:TextPickerCell x:Name="MapPicker" Title="選擇圖資" Items="{Binding SelectNaviGraphItems}" SelectedCommand="{Binding SelectedMapCommand}"/>
                 <sv:CommandCell x:Name="DownloadMapButton" Title="下載圖資" Tapped="DownloadMapBtn_Tapped"/>
                 <sv:TextPickerCell x:Name="CleanMapPicke" Title="清除圖資" Items="{Binding CleanNaviGraphItems}" SelectedCommand="{Binding CleanMapCommand}"/>
+                <sv:CommandCell x:Name="SpeechTestButton" Title="語音測試" Tapped="SpeechTestBtn_Tapped"/>
             </sv:Section>
 
             <sv:Section Title="License">

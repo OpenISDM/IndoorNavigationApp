@@ -142,6 +142,11 @@ namespace IndoorNavigation.Models
     {
         Task<string> ScanAsync();
     }
+
+    public interface ITextToSpeech
+    {
+        void Speak(string text);
+    }
     #endregion
 
     #region Interface for navigation algorithm

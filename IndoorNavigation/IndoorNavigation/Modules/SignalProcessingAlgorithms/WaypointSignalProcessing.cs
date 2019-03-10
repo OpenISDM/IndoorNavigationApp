@@ -15,7 +15,7 @@ namespace IndoorNavigation.Modules.SignalProcessingAlgorithms
         public WaypointSignalProcessing()
         {
             HBeaconScan = new EventHandler(HandleBeaconScan);
-            Utility.BeaconScanAPI.Event.BeaconScanEventHandler += HBeaconScan;
+            Utility.BeaconScan.Event.BeaconScanEventHandler += HBeaconScan;
         }
 
         public void SignalProcessing()
@@ -103,7 +103,7 @@ namespace IndoorNavigation.Modules.SignalProcessingAlgorithms
 
         ~WaypointSignalProcessing()
         {
-            Utility.BeaconScanAPI.Event.BeaconScanEventHandler -= HBeaconScan;
+            Utility.BeaconScan.Event.BeaconScanEventHandler -= HBeaconScan;
             beaconSignalBuffer = null;
             bufferLock = null;
         }

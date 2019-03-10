@@ -53,7 +53,8 @@ namespace IndoorNavigation.Modules
         public static MaNModule MaN;
         public static Container Service;
         public static IPSModule IPS;
-        public static IBeaconScan BeaconScanAPI;
+        public static IBeaconScan BeaconScan;
+        public static ITextToSpeech TextToSpeech;
 
         // Skip SSL checking
         private static bool ValidateServerCertificate(Object sender,
