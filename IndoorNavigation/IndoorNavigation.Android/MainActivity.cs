@@ -17,6 +17,7 @@ namespace IndoorNavigation.Droid
 
         protected override void OnCreate(Bundle bundle)
         {
+            Instance = this;
             //show splash screen
             base.Window.RequestFeature(WindowFeatures.ActionBar);
             Thread.Sleep(600);
