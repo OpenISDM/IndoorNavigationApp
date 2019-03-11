@@ -35,6 +35,7 @@ namespace IndoorNavigation.Droid
             var a = new AiForms.Renderers.Droid.PickerCellRenderer();
 
             ZXing.Net.Mobile.Forms.Android.Platform.Init();
+            ZXing.Mobile.MobileBarcodeScanner.Initialize(this.Application);
             LoadApplication(new App());
             Window.SetStatusBarColor(Android.Graphics.Color.Argb(255, 0, 160, 204));
         }
