@@ -36,7 +36,7 @@ namespace IndoorNavigationTest
             Utility.Service.Add<WayPointAlgorithm>("Way point algorithm");
 
 
-            Utility.BeaconScanAPI = new BeaconScan();
+            Utility.BeaconScan = new BeaconScan();
             Utility.SignalProcess = new SignalProcessModule();
             Utility.SignalProcess.Event.SignalProcessEventHandler += HandleSignalProcess;
             Utility.WaypointRoute = new WaypointRoutePlan(Utility.Waypoints, Utility.LocationConnects);
@@ -151,7 +151,7 @@ namespace IndoorNavigationTest
         {
             Debug.WriteLine("SignalProcessTest start.");
 
-            Utility.BeaconScanAPI.Event.OnEventCall(new BeaconScanEventArgs
+            Utility.BeaconScan.Event.OnEventCall(new BeaconScanEventArgs
             {
                 Signals = new List<BeaconSignalModel> {
                     new BeaconSignalModel
@@ -161,7 +161,7 @@ namespace IndoorNavigationTest
                     }}
             });
 
-            Utility.BeaconScanAPI.Event.OnEventCall(new BeaconScanEventArgs
+            Utility.BeaconScan.Event.OnEventCall(new BeaconScanEventArgs
             {
                 Signals = new List<BeaconSignalModel> {
                     new BeaconSignalModel
@@ -175,7 +175,7 @@ namespace IndoorNavigationTest
             SignalProcessWaitEvent.WaitOne();
             Assert.AreEqual(ANSBeacon, bestBeacon);
 
-            Utility.BeaconScanAPI.Event.OnEventCall(new BeaconScanEventArgs
+            Utility.BeaconScan.Event.OnEventCall(new BeaconScanEventArgs
             {
                 Signals = new List<BeaconSignalModel> {
                     new BeaconSignalModel
@@ -185,7 +185,7 @@ namespace IndoorNavigationTest
                     }}
             });
 
-            Utility.BeaconScanAPI.Event.OnEventCall(new BeaconScanEventArgs
+            Utility.BeaconScan.Event.OnEventCall(new BeaconScanEventArgs
             {
                 Signals = new List<BeaconSignalModel> {
                     new BeaconSignalModel
