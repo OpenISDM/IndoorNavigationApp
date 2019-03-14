@@ -71,7 +71,7 @@ namespace IndoorNavigation.Modules
 
             while (isThreadRunning)
             {
-                // 等待演算法套用
+                // waiting for the algorithm to use
                 navigationAlgorithmWait.WaitOne();
                 if (isThreadRunning)
                     navigationAlgorithm.Work();
@@ -88,7 +88,7 @@ namespace IndoorNavigation.Modules
         }
 
         /// <summary>
-        /// Stop navigation
+        /// Stop navigation algorithm work
         /// </summary>
         public void StopNavigation()
         {

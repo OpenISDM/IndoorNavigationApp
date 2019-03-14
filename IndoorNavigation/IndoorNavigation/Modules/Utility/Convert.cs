@@ -45,7 +45,7 @@ namespace IndoorNavigation
     {
         /// <summary>
         /// Expanded function
-        /// Acquire the coordinates from the LBeacon
+        /// Acquire the coordinates from the Beacon
         /// </summary>
         /// <param name="beacon"></param>
         /// <returns></returns>
@@ -76,7 +76,7 @@ namespace IndoorNavigation
 
         /// <summary>
         /// Expanded function
-        /// Acquire the coordinates from the LBeacon
+        /// Acquire the floor from the LBeacon
         /// </summary>
         /// <param name="UUID"></param>
         /// <returns></returns>
@@ -88,8 +88,8 @@ namespace IndoorNavigation
         }
 
         /// <summary>
-        /// Convert hex string content to a float.
-        /// 0xff20f342 -> 121.564445F
+        /// Convert hex string content to the float.
+        /// e.g. 0xff20f342 -> 121.564445F
         /// </summary>
         /// <param name="Hex"></param>
         /// <returns></returns>

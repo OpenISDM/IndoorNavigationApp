@@ -26,7 +26,7 @@ namespace IndoorNavigation
                 ("Default signal process algorithm");
             Utility.Service.Add<WaypointSignalProcessing>
                 ("Way point signal processing algorithm");
-            Utility.Service.Add<WayPointAlgorithm>("Way point algorithm");
+            Utility.Service.Add<WaypointAlgorithm>("Way point algorithm");
 
             // Beacon scan api must adjust later, it should regist after
 			// navigraph is be loaded.

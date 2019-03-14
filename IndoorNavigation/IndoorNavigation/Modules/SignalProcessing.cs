@@ -27,6 +27,7 @@
  * Authors:
  *
  *      Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
+ *      Paul Chang, paulchang@iis.sinica.edu.tw
  *
  */
 

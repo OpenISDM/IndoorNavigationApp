@@ -21,7 +21,10 @@ namespace IndoorNavigation.Modules
             Debug.WriteLine("IPSModule initialization completed.");
         }
 
-        public void SetSetDestination(WaypointModel waypoint)
+        /// <summary>
+        /// Use IPS to set the destination
+        /// </summary>
+        public void SetDestination(WaypointModel waypoint)
         {
             // Temporary
             navigationAlgorithm = Utility.Service
@@ -30,7 +33,7 @@ namespace IndoorNavigation.Modules
             Utility.SignalProcess.SetAlogorithm(
                 navigationAlgorithm.CreateSignalProcessingAlgorithm());
 
-            (navigationAlgorithm as WayPointAlgorithm).SetDestination(waypoint);
+            (navigationAlgorithm as WaypointAlgorithm).SetDestination(waypoint);
         }
 
         public void StopNavigation()
@@ -43,7 +46,6 @@ namespace IndoorNavigation.Modules
         {
             // IPS algorithms
             threadWait.Set();
-
 
             Debug.WriteLine("IPS module close");
             threadWait.Set();

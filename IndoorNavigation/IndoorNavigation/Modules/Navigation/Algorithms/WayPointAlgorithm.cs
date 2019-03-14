@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace IndoorNavigation.Modules.Navigation
 {
-    public class WayPointAlgorithm : INavigationAlgorithm, IDisposable
+    public class WaypointAlgorithm : INavigationAlgorithm, IDisposable
     {
         private Beacon currentBeacon;
         private WaypointModel previousWaypoint;
@@ -24,7 +24,7 @@ namespace IndoorNavigation.Modules.Navigation
         private readonly EventHandler HSignalProcess;
         private ISignalProcessingAlgorithm signalProcessingAlgorithm;
 
-        public WayPointAlgorithm()
+        public WaypointAlgorithm()
         {
             IsReachingDestination = false;
             HSignalProcess = new EventHandler(HandleSignalProcess);
@@ -37,7 +37,7 @@ namespace IndoorNavigation.Modules.Navigation
 
         public void Work()
         {
-            // Wait for the navigation task
+            // Waiting for the destination set
             navigationTaskWaitEvent.WaitOne();
             while (!IsReachingDestination)
             {
@@ -50,7 +50,7 @@ namespace IndoorNavigation.Modules.Navigation
 
                 lock (resourceLock)
                 {
-                    // Check if he arrives the destination
+                    // Check whehter arrived the destination
                     if (currentWaypoint == endWaypoint)
                     {
                         Utility.MaN.Event.OnEventCall(new WayPointEventArgs
@@ -62,9 +62,6 @@ namespace IndoorNavigation.Modules.Navigation
 
                     // if NextInstruction is null, it represents the 
                     // navigation starts at the first waypoint.
-                    // The current version, user has to walk in random 
-                    // way, once he reaches the second location then 
-                    // calibration.
                     if (nextInstruction == null)
                     {
                         nextInstruction = pathQueue.Dequeue();
@@ -76,7 +73,7 @@ namespace IndoorNavigation.Modules.Navigation
                     }
                     else
                     {
-                        // Check if the user reachs the next location
+                        // Check if the user reachs the next waypoint
                         if (currentWaypoint == nextInstruction.NextWaypoint)
                         {
                             nextInstruction = pathQueue.Dequeue();
@@ -94,8 +91,7 @@ namespace IndoorNavigation.Modules.Navigation
                         }
                         else
                         {
-                            // Alter the wrong path, 
-                            // and tell the next step
+                            // Alter the wrong path, and tell the next step
                             Utility.MaN.Event.OnEventCall(new WayPointEventArgs
                             {
                                 Status = NavigationStatus.AdjustRoute
@@ -108,16 +104,16 @@ namespace IndoorNavigation.Modules.Navigation
                     }
                 }
 
-                // Wait for the event of next Beacon
+                // Waiting for the event of get next Beacon
                 nextBeaconWaitEvent.WaitOne();
 
-                // Change the current location to the last location
+                // Set the current waypoint to the previous waypoint
                 previousWaypoint = currentWaypoint;
             }
         }
 
         /// <summary>
-        /// Modify the navigation path
+        /// Calibrate the wrong path to get the correct path
         /// </summary>
         /// <param name="CurrentWaypoint"></param>
         /// <returns></returns>
@@ -202,7 +198,7 @@ namespace IndoorNavigation.Modules.Navigation
         public bool IsReachingDestination { get; private set; }
 
         /// <summary>
-        /// Set the destination
+        /// Set the destination and raise the event to run the algorithm
         /// </summary>
         /// <param name="EndWaypoint"></param>
         public void SetDestination(WaypointModel EndWaypoint)
@@ -236,7 +232,7 @@ namespace IndoorNavigation.Modules.Navigation
             Debug.WriteLine("Way point algorithm: Receive UUID: {0}", (e as WayPointSignalProcessEventArgs).CurrentBeacon.UUID);
 
             // Check this event of signal processing from the current Beacon 
-            // if it is the same as currrent Beacon
+            // if it is the same as current Beacon
             if (this.currentBeacon != _currentBeacon)
             {
                 lock (resourceLock)
@@ -280,7 +276,7 @@ namespace IndoorNavigation.Modules.Navigation
         }
 
         //TODO: 僅當上方的 Dispose(bool disposing) 具有會釋放非受控資源的程式碼時，才覆寫完成項。
-        ~WayPointAlgorithm()
+        ~WaypointAlgorithm()
         {
             // 請勿變更這個程式碼。請將清除程式碼放入上方的 Dispose(bool disposing) 中。
             Dispose(false);

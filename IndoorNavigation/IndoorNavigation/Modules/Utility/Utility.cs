@@ -66,14 +66,16 @@ namespace IndoorNavigation.Modules
         }
 
         /// <summary>
-        /// Download navigation graph from Server
+        /// Download navigation graph from specified server
         /// </summary>
         /// <param name="URL"></param>
         /// <param name="navigraphName"></param>
         /// <returns></returns>
         public static bool DownloadNavigraph(string URL, string navigraphName)
         {
-            string filePath = Path.Combine(NavigraphStorage.navigraphFolder, navigraphName);
+            string filePath = Path.Combine(NavigraphStorage.navigraphFolder, 
+                                            navigraphName);
+ 
             try
             {
                 if (!Directory.Exists(NavigraphStorage.navigraphFolder))
@@ -95,7 +97,7 @@ namespace IndoorNavigation.Modules
     public class RotateAngle
     {
         /// <summary>
-        /// Compute the angle to turn, including direction at the next waypoint
+        /// Compute both angle and direction to the next waypoint
         /// </summary>
         /// <param name="Current">current location</param>
         /// <param name="Previous">last location</param>
@@ -109,14 +111,14 @@ namespace IndoorNavigation.Modules
             double outerProductAngle =
                 CalculatingOuterProductAngle(Current, Previous, Next);
 
-            if (outerProductAngle < 0)
+            if (outerProductAngle < 0)  // turn right
                 return System.Convert.ToInt32(180 - cosineAngle * 180 / Math.PI);
-            else
+            else  // turn left
                 return -System.Convert.ToInt32(180 - cosineAngle * 180 / Math.PI);
         }
 
         /// <summary>
-        /// The angle compute by law of cosines
+        /// This angle computed by the law of cosines
         /// </summary>
         /// <param name="Current">Current location</param>
         /// <param name="Previous">last location </param>
@@ -137,9 +139,9 @@ namespace IndoorNavigation.Modules
         }
 
         /// <summary>
-        /// Compute angle by croos product 
+        /// Compute angle by outer product 
         /// </summary>
-        /// <param name="Current">Current location </param>
+        /// <param name="Current">current location </param>
         /// <param name="Previous">last location </param>
         /// <param name="Next">next location</param>
         /// <returns></returns>

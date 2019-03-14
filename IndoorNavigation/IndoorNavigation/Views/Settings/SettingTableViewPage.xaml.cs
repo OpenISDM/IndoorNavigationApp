@@ -169,7 +169,7 @@ namespace IndoorNavigation.Views.Settings
                     if (await DisplayAlert("警告", "確定要刪除所有地圖嗎？", "Yes", "No"))
                     {
                         // 刪除所有地圖資料
-                        NavigraphStorage.DeleteAllMap();
+                        NavigraphStorage.DeleteAllNavigraph();
                         await DisplayAlert("訊息", "刪除成功", "OK");
                     }
                 }

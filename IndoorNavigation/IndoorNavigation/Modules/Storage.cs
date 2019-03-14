@@ -92,7 +92,7 @@ namespace IndoorNavigation.Modules
                     (data["LocationConnect"].ToString())
                     .ToLocationConnect(Utility.Waypoints);
 
-                // Initialize path planning and the data for setting map
+                // Initialize path planning and the data for setting navigraph
                 Utility.WaypointRoute = new Navigation.WaypointRoutePlan(
                     Utility.Waypoints,
                     Utility.LocationConnects);
@@ -114,14 +114,14 @@ namespace IndoorNavigation.Modules
         {
             string filePath = Path.Combine(navigraphFolder, FileName);
 
-            // Check the folder of map if it is exist
+            // Check the folder of navigraph if it is exist
             if (!Directory.Exists(navigraphFolder))
             {
                 Directory.CreateDirectory(navigraphFolder);
                 return string.Empty;
             }
 
-            // Check the file of map if it is exist
+            // Check the file of navigraph if it is exist
             if (!File.Exists(filePath))
                 return string.Empty;
 
@@ -136,17 +136,17 @@ namespace IndoorNavigation.Modules
         /// <param name="Place"></param>
         /// <param name="NavigraphDatas"></param>
         /// <returns></returns>
-        public static bool SaveMapInformation(
+        public static bool SaveNavigraphInformation(
             string Place, string NavigraphDatas)
         {
             string filePath = Path.Combine(navigraphFolder, Place);
             try
             {
-                // Check the folder of map if it is exist
+                // Check the folder of navigraph if it is exist
                 if (!Directory.Exists(navigraphFolder))
                     Directory.CreateDirectory(navigraphFolder);
 
-                // Write map information
+                // Write navigraph information
                 lock (fileLock)
                     File.WriteAllText(filePath, NavigraphDatas);
 
@@ -159,14 +159,14 @@ namespace IndoorNavigation.Modules
         }
 
         /// <summary>
-        /// Delete specific map information
+        /// Delete specific navigation graph information
         /// </summary>
         /// <param name="Place"></param>
         public static void DeleteNavigraph(string Place)
         {
             string filePath = Path.Combine(navigraphFolder, Place);
 
-            // Check the folder of map if it is exist
+            // Check the folder of navigraph if it is exist
             if (!Directory.Exists(navigraphFolder))
                 Directory.CreateDirectory(navigraphFolder);
 
@@ -175,9 +175,9 @@ namespace IndoorNavigation.Modules
         }
 
         /// <summary>
-        /// Delete all map information
+        /// Delete all navigation graph information
         /// </summary>
-        public static void DeleteAllMap()
+        public static void DeleteAllNavigraph()
         {
             foreach (string place in GetAllPlace())
                 DeleteNavigraph(place);

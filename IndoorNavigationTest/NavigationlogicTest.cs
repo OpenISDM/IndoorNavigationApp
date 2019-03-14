@@ -33,7 +33,7 @@ namespace IndoorNavigationTest
                 ("Default signal process algorithm");
             Utility.Service.Add<WaypointSignalProcessing>
                 ("Way point signal processing algorithm");
-            Utility.Service.Add<WayPointAlgorithm>("Way point algorithm");
+            Utility.Service.Add<WaypointAlgorithm>("Way point algorithm");
 
 
             Utility.BeaconScan = new BeaconScan();
@@ -57,14 +57,14 @@ namespace IndoorNavigationTest
         public void StorageTest()
         {
             Debug.WriteLine("StorageTest start.");
-            NavigraphStorage.DeleteAllMap();
-            NavigraphStorage.SaveMapInformation("test1", "");
-            NavigraphStorage.SaveMapInformation("test1", "");
+            NavigraphStorage.DeleteAllNavigraph();
+            NavigraphStorage.SaveNavigraphInformation("test1", "");
+            NavigraphStorage.SaveNavigraphInformation("test1", "");
             string[] Maps = NavigraphStorage.GetAllPlace();
             Assert.AreEqual(1, Maps.Length);
 
-            NavigraphStorage.SaveMapInformation("test2", "");
-            NavigraphStorage.SaveMapInformation("test3", "");
+            NavigraphStorage.SaveNavigraphInformation("test2", "");
+            NavigraphStorage.SaveNavigraphInformation("test3", "");
             Maps = NavigraphStorage.GetAllPlace();
             Assert.AreEqual(3, Maps.Length);
 
@@ -76,7 +76,7 @@ namespace IndoorNavigationTest
             Maps = NavigraphStorage.GetAllPlace();
             Assert.AreEqual(2, Maps.Length);
 
-            NavigraphStorage.DeleteAllMap();
+            NavigraphStorage.DeleteAllNavigraph();
             Maps = NavigraphStorage.GetAllPlace();
             Assert.AreEqual(0, Maps.Length);
             TestClose();
@@ -96,7 +96,7 @@ namespace IndoorNavigationTest
                     LocationConnect = Utility.LocationConnects.ToJsonArray()
                 },Formatting.None);
 
-            NavigraphStorage.SaveMapInformation("Map1", MapJson);
+            NavigraphStorage.SaveNavigraphInformation("Map1", MapJson);
             string[] Maps = NavigraphStorage.GetAllPlace();
             Assert.AreEqual(1, Maps.Length);
             Utility.BeaconsDict = null;
@@ -207,7 +207,7 @@ namespace IndoorNavigationTest
         {
             Debug.WriteLine("NavigationTest start.");
             var routePath = Utility.WaypointRoute.GetPath(Utility.BeaconsDict[Guid.Parse("0000803f-0000-7b3d-c941-0000c15ef342")], Utility.Waypoints.First(c => c.Name == "K1F"));
-            Utility.IPS.SetSetDestination(Utility.Waypoints.First(c => c.Name == "K1F"));
+            Utility.IPS.SetDestination(Utility.Waypoints.First(c => c.Name == "K1F"));
             // A
             Utility.SignalProcess.Event.OnEventCall(new WayPointSignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-7b3d-c941-0000c15ef342")] });
             MaNWaitEvent.WaitOne();
@@ -252,7 +252,7 @@ namespace IndoorNavigationTest
             Debug.WriteLine("StartingPointCorrection start.");
 
             var routePath = Utility.WaypointRoute.RegainPath(Utility.Waypoints.First(c => c.Name == "D1F"), Utility.BeaconsDict[Guid.Parse("0000803f-0000-563d-c941-0000e85ef342")], Utility.Waypoints.First(c => c.Name == "K1F"));
-            Utility.IPS.SetSetDestination(Utility.Waypoints.First(c => c.Name == "K1F"));
+            Utility.IPS.SetDestination(Utility.Waypoints.First(c => c.Name == "K1F"));
             // D
             Utility.SignalProcess.Event.OnEventCall(new WayPointSignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-223d-c941-0000ff5ef342")] });
             MaNWaitEvent.WaitOne();
@@ -294,7 +294,7 @@ namespace IndoorNavigationTest
             Debug.WriteLine("SkipSomeLocationsTest start.");
 
             var routePath = Utility.WaypointRoute.GetPath(Utility.BeaconsDict[Guid.Parse("0000803f-0000-7b3d-c941-0000c15ef342")], Utility.Waypoints.First(c => c.Name == "K1F"));
-            Utility.IPS.SetSetDestination(Utility.Waypoints.First(c => c.Name == "K1F"));
+            Utility.IPS.SetDestination(Utility.Waypoints.First(c => c.Name == "K1F"));
             // A
             Utility.SignalProcess.Event.OnEventCall(new WayPointSignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-7b3d-c941-0000c15ef342")] });
             MaNWaitEvent.WaitOne();
@@ -343,7 +343,7 @@ namespace IndoorNavigationTest
         {
             Debug.WriteLine("ReNavigationTest start.");
             var routePath = Utility.WaypointRoute.GetPath(Utility.BeaconsDict[Guid.Parse("0000803f-0000-7b3d-c941-0000c15ef342")], Utility.Waypoints.First(c => c.Name == "K1F"));
-            Utility.IPS.SetSetDestination(Utility.Waypoints.First(c => c.Name == "K1F"));
+            Utility.IPS.SetDestination(Utility.Waypoints.First(c => c.Name == "K1F"));
             // A
             Utility.SignalProcess.Event.OnEventCall(new WayPointSignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-7b3d-c941-0000c15ef342")] });
             MaNWaitEvent.WaitOne();
