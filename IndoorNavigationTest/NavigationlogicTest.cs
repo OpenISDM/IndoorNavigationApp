@@ -91,10 +91,10 @@ namespace IndoorNavigationTest
             var MapJson = JsonConvert.SerializeObject(
                 new
                 {
-                    Beacon = Utility.BeaconsDict.Values.ToList().ToJsonString(),
-                    BeaconGroup = Utility.Waypoints.ToJsonString(),
-                    LocationConnect = Utility.LocationConnects.ToJsonString()
-                });
+                    Beacon = Utility.BeaconsDict.Values.ToList().ToJsonObject(),
+                    BeaconGroup = Utility.Waypoints.ToJsonArray(),
+                    LocationConnect = Utility.LocationConnects.ToJsonArray()
+                },Formatting.None);
 
             NavigraphStorage.SaveMapInformation("Map1", MapJson);
             string[] Maps = NavigraphStorage.GetAllPlace();
