@@ -51,7 +51,7 @@ namespace IndoorNavigation.Views.Settings
 #if DEBUG
             string qrCodeValue = string.Empty;
             if (DeviceInfo.DeviceType == DeviceType.Virtual)
-                qrCodeValue = "https://synology.3f.nssh.ntpc.edu.tw:5001/d/f/webapi/entry.cgi/%E6%B8%AC%E8%A9%A6%E5%9C%96%E8%B3%871?api=SYNO.SynologyDrive.Files&method=download&version=2&files=%5B%22id%3A473396815234867202%22%5D&force_download=false&_dc=1551632741219@OpenISDM";
+                qrCodeValue = "https://drive.google.com/a/gm.nssh.ntpc.edu.tw/uc?authuser=0&id=1t0aTpm5rC-Z6h66DXsv0UXrDBmHWK4Ja&export=download@OpenISDM";
             else
             {
                 IQrCodeDecoder qrCodeDecoder = DependencyService.Get<IQrCodeDecoder>();
