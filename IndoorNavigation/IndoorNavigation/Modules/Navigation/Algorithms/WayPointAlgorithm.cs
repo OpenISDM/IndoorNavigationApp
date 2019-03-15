@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace IndoorNavigation.Modules.Navigation
 {
+    /// <summary>
+    /// 用於航點導航的演算法
+    /// </summary>
     public class WaypointAlgorithm : INavigationAlgorithm, IDisposable
     {
         private Beacon currentBeacon;
@@ -24,6 +27,9 @@ namespace IndoorNavigation.Modules.Navigation
         private readonly EventHandler HSignalProcess;
         private ISignalProcessingAlgorithm signalProcessingAlgorithm;
 
+        /// <summary>
+        /// 初始化航點導航演算法
+        /// </summary>
         public WaypointAlgorithm()
         {
             IsReachingDestination = false;
@@ -185,16 +191,26 @@ namespace IndoorNavigation.Modules.Navigation
             }
         }
 
+        /// <summary>
+        /// 回傳航點導航對應的訊號處理演算法
+        /// </summary>
+        /// <returns></returns>
         public ISignalProcessingAlgorithm CreateSignalProcessingAlgorithm()
         {
             return signalProcessingAlgorithm;
         }
 
+        /// <summary>
+        /// 停止導航
+        /// </summary>
         public void StopNavigation()
         {
             Dispose();
         }
 
+        /// <summary>
+        /// 是否到達目的地
+        /// </summary>
         public bool IsReachingDestination { get; private set; }
 
         /// <summary>

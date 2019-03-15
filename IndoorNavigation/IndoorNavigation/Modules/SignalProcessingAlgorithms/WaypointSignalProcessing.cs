@@ -5,6 +5,9 @@ using IndoorNavigation.Models;
 
 namespace IndoorNavigation.Modules.SignalProcessingAlgorithms
 {
+    /// <summary>
+    /// 用於航點導航的訊號處理演算法
+    /// </summary>
     public class WaypointSignalProcessing : ISignalProcessingAlgorithm
     {
         public List<BeaconSignalModel> beaconSignalBuffer =
@@ -12,6 +15,9 @@ namespace IndoorNavigation.Modules.SignalProcessingAlgorithms
         private readonly EventHandler HBeaconScan;
         private object bufferLock = new object();
 
+        /// <summary>
+        /// 初始化訊號處理演算法
+        /// </summary>
         public WaypointSignalProcessing()
         {
             HBeaconScan = new EventHandler(HandleBeaconScan);

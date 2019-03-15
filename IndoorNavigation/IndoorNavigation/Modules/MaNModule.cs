@@ -81,6 +81,11 @@ namespace IndoorNavigation.Modules
             threadWait.Set();
         }
 
+        /// <summary>
+        /// 設定導航演算法
+        /// 例如:航點導航演算法或三角定位演算法
+        /// </summary>
+        /// <param name="NavigationAlgorithm"></param>
         public void SetAlgorithm(INavigationAlgorithm NavigationAlgorithm)
         {
             navigationAlgorithm = NavigationAlgorithm;

@@ -92,6 +92,11 @@ namespace IndoorNavigation.Modules
             threadWait.Set();
         }
 
+        /// <summary>
+        /// 套用訊號處理演算法
+        /// 例如:航點導航的訊號處理演算法或三角定位的訊號處理演算法...等
+        /// </summary>
+        /// <param name="SignalProcessingAlgorithm"></param>
         public void SetAlogorithm(
             ISignalProcessingAlgorithm SignalProcessingAlgorithm)
         {
