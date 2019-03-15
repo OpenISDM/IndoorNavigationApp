@@ -12,6 +12,7 @@
     <RootNamespace>IndoorNavigation.iOS</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
     <AssemblyName>IndoorNavigation.iOS</AssemblyName>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
@@ -186,7 +187,7 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="3.5.0.169047" />
+    <PackageReference Include="Xamarin.Forms" Version="3.6.0.220655" />
     <PackageReference Include="AiForms.SettingsView">
       <Version>0.4.15</Version>
     </PackageReference>
