@@ -10,7 +10,9 @@ namespace IndoorNavigation.Views.Navigation
 {
     public partial class NavigationTabbedPage : ContentPage
     {
-        public NavigationTabbedPage()
+        TabbedNaviViewModel tabbedNaviViewModel;
+
+        public NavigationTabbedPage(string Destination)
         {
             InitializeComponent();
 
@@ -27,40 +29,40 @@ namespace IndoorNavigation.Views.Navigation
                     break;
             }
 
-            tabbedNaviViewModel = new TabbedNaviViewModel();
+            tabbedNaviViewModel = new TabbedNaviViewModel(Destination);
             tabbedPageNavigation = new TabbedPageNavigation();
+            tabbedPageRoutes = new TabbedPageRoutes();
+
+            NavigationTab_Tapped(this, new EventArgs());
         }
 
-        TabbedNaviViewModel tabbedNaviViewModel;
         TabbedPageNavigation tabbedPageNavigation;
         void NavigationTab_Tapped(object sender, EventArgs e)
         {
             TabbedContentView.Content = tabbedPageNavigation.Content;
-            //BindingContext = page;
             BindingContext = tabbedNaviViewModel;
             Title = "Navigation";
 
             NavigationTabImage.Source = "tabitem1_navigator_tabbed.png";
             NavigationTabLabel.TextColor = Color.FromHex("#009FCC");
 
-            //recover other item pic and color
+            //recover other item's image and color
             RoutesTabImage.Source = "tabitem2_routes.png";
             RoutesTabLabel.TextColor = Color.FromHex("#808080");
             SettingTabImage.Source = "tabitem3_setting.png";
             SettingTabLabel.TextColor = Color.FromHex("#808080");
         }
 
+        TabbedPageRoutes tabbedPageRoutes;
         void RoutesTab_Tapped(object sender, EventArgs e)
         {
-            var page = new TabbedPageRoutes();
-            TabbedContentView.Content = page.Content;
-            //BindingContext = page;
+            TabbedContentView.Content = tabbedPageRoutes.Content;
             Title = "Routes";
 
             RoutesTabImage.Source = "tabitem2_routes_tabbed.png";
             RoutesTabLabel.TextColor = Color.FromHex("#009FCC");
 
-            //recover other item pic and color
+            //recover other item's image and color
             NavigationTabImage.Source = "tabitem1_navigator.png";
             NavigationTabLabel.TextColor = Color.FromHex("#808080");
             SettingTabImage.Source = "tabitem3_setting.png";
@@ -77,7 +79,7 @@ namespace IndoorNavigation.Views.Navigation
             SettingTabImage.Source = "tabitem3_setting_tabbed.png";
             SettingTabLabel.TextColor = Color.FromHex("#009FCC");
 
-            //recover other item pic and color
+            //recover other item's image and color
             NavigationTabImage.Source = "tabitem1_navigator.png";
             NavigationTabLabel.TextColor = Color.FromHex("#808080");
             RoutesTabImage.Source = "tabitem2_routes.png";

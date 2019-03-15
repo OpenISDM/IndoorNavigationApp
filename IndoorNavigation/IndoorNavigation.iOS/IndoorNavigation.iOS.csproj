@@ -227,6 +227,9 @@
     <BundleResource Include="Resources\Arrow_rearright.png" />
     <BundleResource Include="Resources\Arrow_rearleft.png" />
     <BundleResource Include="Resources\settings_gears_imagebutton.png" />
+    <BundleResource Include="Resources\Warning.png" />
+    <BundleResource Include="Resources\Waiting.png" />
+    <BundleResource Include="Resources\Arrived.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\close_circle_button.png" />

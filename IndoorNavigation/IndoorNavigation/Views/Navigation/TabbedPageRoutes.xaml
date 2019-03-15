@@ -7,6 +7,7 @@
         
         <ListView x:Name="RoutesListView" Margin="10, 5, 10,10" 
                   HasUnevenRows="true"
+                  ItemsSource="{Binding GroupRoutes}"
                   ItemSelected="RoutesListView_ItemSelected"
                   IsGroupingEnabled="true"
                   GroupDisplayBinding="{Binding Key}">
@@ -32,7 +33,7 @@
                             
                             <!--<Label Text="ICON"/>-->
                             <Image x:Name="RoutesListViewImage" 
-                                   Source="{Binding ImageSrc}"
+                                   Source="{Binding Image}"
                                    Opacity="{Binding OpacityValue}"
                                    HorizontalOptions="StartAndExpand"
                                    VerticalOptions="Center"

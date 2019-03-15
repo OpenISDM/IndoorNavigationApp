@@ -48,7 +48,7 @@
                               FontSize="14"
                               FontAttributes="Bold"/>
                         
-                        <!-- Nut Icon -->
+                        <!-- Settings gears Icon -->
                         <Span Text="&#10;Settings gears Icon made by " 
                               FontSize="14"
                               FontAttributes="Bold"/>
@@ -59,6 +59,23 @@
                             <Span.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding HyperlinkClickCommand}"
                                                       CommandParameter="https://www.flaticon.com/authors/freepik/"/>
+                            </Span.GestureRecognizers>
+                        </Span>
+                        <Span Text=" from www.flaticon.com&#10;" 
+                              FontSize="14"
+                              FontAttributes="Bold"/>
+                        
+                        <!-- Cloud computing Icon -->
+                        <Span Text="&#10;Cloud computing Icon made by " 
+                              FontSize="14"
+                              FontAttributes="Bold"/>
+                        <Span Text="Smashicons"
+                              TextColor="Blue"
+                              FontSize="14"
+                              FontAttributes="Bold">
+                            <Span.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding HyperlinkClickCommand}"
+                                                      CommandParameter="https://www.flaticon.com/authors/smashicons/"/>
                             </Span.GestureRecognizers>
                         </Span>
                         <Span Text=" from www.flaticon.com&#10;" 
@@ -166,9 +183,26 @@
                         <Span Text=" from www.flaticon.com&#10;" 
                               FontSize="14"
                               FontAttributes="Bold"/>
-
-                        <!-- Cloud computing Icon -->
-                        <Span Text="&#10;Cloud computing Icon made by " 
+                        
+                        <!-- Warning Icon -->
+                        <Span Text="&#10;Warning Icon made by " 
+                              FontSize="14"
+                              FontAttributes="Bold"/>
+                        <Span Text="Freepik"
+                              TextColor="Blue"
+                              FontSize="14"
+                              FontAttributes="Bold">
+                            <Span.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding HyperlinkClickCommand}"
+                                                      CommandParameter="https://www.flaticon.com/authors/freepik/"/>
+                            </Span.GestureRecognizers>
+                        </Span>
+                        <Span Text=" from www.flaticon.com&#10;" 
+                              FontSize="14"
+                              FontAttributes="Bold"/>
+                              
+                        <!-- Stopwatch Icon -->
+                        <Span Text="&#10;Stopwatch Icon made by " 
                               FontSize="14"
                               FontAttributes="Bold"/>
                         <Span Text="Smashicons"
@@ -183,6 +217,7 @@
                         <Span Text=" from www.flaticon.com&#10;" 
                               FontSize="14"
                               FontAttributes="Bold"/>
+                        
                     </FormattedString>
                 </Label.FormattedText>
             </Label>

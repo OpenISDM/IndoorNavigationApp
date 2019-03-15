@@ -119,6 +119,9 @@
     <AndroidResource Include="Resources\drawable\Arrow_frontleft.png" />
     <AndroidResource Include="Resources\drawable\Arrow_down.png" />
     <AndroidResource Include="Resources\drawable\settings_gears_imagebutton.png" />
+    <AndroidResource Include="Resources\drawable\Arrived.png" />
+    <AndroidResource Include="Resources\drawable\Waiting.png" />
+    <AndroidResource Include="Resources\drawable\Warning.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable-hdpi\" />

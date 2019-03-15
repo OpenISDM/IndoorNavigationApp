@@ -63,6 +63,7 @@ namespace IndoorNavigation.Views.Navigation
 
         void FindLocationFAB_Clicked(object sender, EventArgs e)
         {
+            //TODO
             //List<Grouping<string, Location>> locations = ((IEnumerable<Grouping<string, Location>>)LocationListView.ItemsSource).ToList();
             ////scroll to the first location of second group
             //LocationListView.ScrollTo(locations[1][0], ScrollToPosition.Start, true);

@@ -1,68 +1,171 @@
 ﻿using System;
+using System.Linq;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Diagnostics;
+using IndoorNavigation.Models;
+using IndoorNavigation.Modules;
+using IndoorNavigation.Modules.SignalProcessingAlgorithms;
+using System.Collections.Generic;
+using IndoorNavigation.Modules.Navigation;
+using MvvmHelpers;
 
 namespace IndoorNavigation.ViewModels.Navigation
 {
-    public class TabbedNaviViewModel : MvvmHelpers.BaseViewModel
+    public class TabbedNaviViewModel : MvvmHelpers.BaseViewModel, IDisposable
     {
-        public TabbedNaviViewModel()
+        private string destination;
+        private bool firstBeacon = true;
+        private bool wrongDirection = false;
+        private int currentStepNum = 0;
+        private List<NextStepModel> navigationPath;
+
+        public TabbedNaviViewModel(string Destination)
         {
-            //test animation of navigation instructions
-            DisplayImgTest();
+            destination = Destination;
+            returnedRoutes = new ObservableRangeCollection<RoutesDataClass>();
+            Utility.SignalProcess.Event.SignalProcessEventHandler += GetPathEvent;
+            Utility.MaN.Event.MaNEventHandler += GetNavigationStatusEvent;
+            Utility.IPS.SetDestination(Utility.Waypoints.First(
+                                        c => c.Name == destination));
         }
 
-        public async void DisplayImgTest()
+        private void DisplayInstructions(EventArgs waypointArgs)
         {
-            CurrentStepImage = "Arrow_down";
-            CurrentStepLabel = "請向後轉";
+            var _currentStep = navigationPath[currentStepNum++];
+            var _nextStep = navigationPath[currentStepNum];
+            NavigationProgress = currentStepNum / navigationPath.Count;
+            UpdateRoutes(currentStepNum);
+            string _currentStepImage, _currentStepLabel;
+            string _nextStepImage, _nextStepLabelName;
+            switch ((waypointArgs as WayPointEventArgs).Status)
+            {
+                //first step
+                case NavigationStatus.AdjustDirection:
+                    SetInstruction(_currentStep, out _currentStepImage, out _currentStepLabel);
+                    SetInstruction(_nextStep, out _nextStepImage, out _nextStepLabelName);
+                    CurrentStepImage = _currentStepImage;
+                    CurrentStepLabel = _currentStepLabel;
+                    NextStepImage = _nextStepImage;
+                    NextStepLabel = _nextStepLabelName;
+                    break;
 
-            NextStepImage = "Arrow_frontleft";
-            await Task.Delay(1500);
+                //keep navigation     
+                case NavigationStatus.Run:
+                    SetInstruction(_currentStep, out _currentStepImage, out _currentStepLabel);
+                    SetInstruction(_nextStep, out _nextStepImage, out _nextStepLabelName);
+                    CurrentStepImage = _currentStepImage;
+                    CurrentStepLabel = _currentStepLabel;
+                    NextStepImage = _nextStepImage;
+                    NextStepLabel = _nextStepLabelName;
+                    break;
 
-            CurrentStepImage = "Arrow_frontleft";
-            CurrentStepLabel = "請向左前方轉";
+                //re-navigation
+                case NavigationStatus.AdjustRoute:
+                    CurrentStepImage = "Warning";
+                    CurrentStepLabel = "走錯路囉,正在重新規劃路線";
+                    NextStepImage = "Waiting";
+                    NextStepLabel = " ";
+                    wrongDirection = true;
+                    break;
 
-            NextStepImage = "Arrow_frontright";
-            await Task.Delay(1500);
-
-            CurrentStepImage = "Arrow_frontright";
-            CurrentStepLabel = "請向右前方轉";
-
-            NextStepImage = "Arrow_left";
-            await Task.Delay(1500);
-
-            CurrentStepImage = "Arrow_left";
-            CurrentStepLabel = "請左轉";
-
-            NextStepImage = "Arrow_rearleft";
-            await Task.Delay(1500);
-
-            CurrentStepImage = "Arrow_rearleft";
-            CurrentStepLabel = "請向左後方轉";
-
-            NextStepImage = "Arrow_rearright";
-            await Task.Delay(1500);
-
-            CurrentStepImage = "Arrow_rearright";
-            CurrentStepLabel = "請向右後方轉";
-
-            NextStepImage = "Arrow_right";
-            await Task.Delay(1500);
-
-            CurrentStepImage = "Arrow_right";
-            CurrentStepLabel = "請右轉";
-
-            NextStepImage = "Arrow_up";
-            await Task.Delay(1500);
-
-            //CurrentStepImage = "Arrow_up";
-            //CurrentStepLabel = "請直走";
-            //await Task.Delay(1500);
-
+                //finish navigation
+                case NavigationStatus.Arrival:
+                    CurrentStepImage = "Arrived";
+                    CurrentStepLabel = "恭喜你！已到達終點囉";
+                    NextStepImage = "";
+                    NextStepLabel = " ";
+                    break;
+            }
         }
 
+        private void SetInstruction(NextStepModel step, out string stepImage, out string stepLabel)
+        {
+            switch(step.Angle)
+            {
+                //front
+                case int n when (n >= -5 && n <= 5):
+                    stepImage = "Arrow_front";
+                    stepLabel = string.Format("請向前方的{0}直走", step.NextWaypoint.Name);
+                    break;
+
+                //front-right
+                case int n when (n > 5 && n <= 75):
+                    stepImage = "Arrow_frontright";
+                    stepLabel = string.Format("請向右前方的{0}直走", step.NextWaypoint.Name);
+                    break;
+
+                //right
+                case int n when (n > 75 && n < 105):
+                    stepImage = "Arrow_right";
+                    stepLabel = string.Format("請向右轉 並朝{0}直走", step.NextWaypoint.Name);
+                    break;
+
+                //rear-right
+                case int n when (n > 105 && n < 175):
+                    stepImage = "Arrow_rearright";
+                    stepLabel = string.Format("請向右後方的{0}直走", step.NextWaypoint.Name);
+                    break;
+
+                //rear
+                case int n when (n >= 175 || n <= -175):
+                    stepImage = "Arrow_rear";
+                    stepLabel = string.Format("請向後轉 並朝{0}直走", step.NextWaypoint.Name);
+                    break;
+
+                //rear-left
+                case int n when (n > -175 && n <= -105):
+                    stepImage = "Arrow_rearleft";
+                    stepLabel = string.Format("請向左後方的{0}直走", step.NextWaypoint.Name);
+                    break;
+
+                //left
+                case int n when (n > -105 && n <= -75):
+                    stepImage = "Arrow_left";
+                    stepLabel = string.Format("請向左轉 並朝{0}直走", step.NextWaypoint.Name);
+                    break;
+
+                //front-left
+                case int n when (n > -75 && n < -5):
+                    stepImage = "Arrow_frontleft";
+                    stepLabel = string.Format("請向左前方的{0}直走", step.NextWaypoint.Name);
+                    break;
+
+                default:
+                    stepImage = "Warning";
+                    stepLabel = "You're get ERROR status";
+                    break;
+            }
+        }
+
+        private void GetPathEvent(object sender, EventArgs args)
+        {
+            Beacon currentBeacon =
+                (args as WayPointSignalProcessEventArgs).CurrentBeacon;
+
+            if ((firstBeacon || wrongDirection) && (currentBeacon != null))
+            {
+                currentStepNum = 0;
+                navigationPath = Utility.WaypointRoute.GetPath(currentBeacon,
+                                 Utility.Waypoints.First(
+                                 c => c.Name == destination)).ToList();
+                returnedRoutes.Clear();
+                UpdateRoutes(currentStepNum);
+
+                firstBeacon = false;
+                wrongDirection = false;
+            }
+        }
+
+        private void GetNavigationStatusEvent(object sender, EventArgs args)
+        {
+            if (!firstBeacon && !wrongDirection)
+            {
+                DisplayInstructions(args);
+            }
+        }
+
+        #region TabbedPageNavigation binding args
         private string currentStepLabelName;
         public string CurrentStepLabel
         {
@@ -100,7 +203,14 @@ namespace IndoorNavigation.ViewModels.Navigation
         {
             get
             {
-                return nextStepLabelName;
+                if (nextStepLabelName.Contains("的"))
+                {
+                    return nextStepLabelName.Replace("的", "&#10;");
+                }
+                else
+                {
+                    return nextStepLabelName.Split(' ')[0];
+                }
             }
 
             set
@@ -126,5 +236,114 @@ namespace IndoorNavigation.ViewModels.Navigation
                 }
             }
         }
+
+        private double navigationProgress;
+        public double NavigationProgress
+        {
+            get
+            {
+                return navigationProgress;
+            }
+
+            set
+            {
+                SetProperty(ref navigationProgress, value);
+            }
+        }
+        #endregion
+
+        #region TabbedPageRoutes binding args
+        ObservableRangeCollection<RoutesDataClass> returnedRoutes;
+
+        public IList<Grouping<string, RoutesDataClass>> GroupRoutes
+        {
+            get
+            {
+                if (returnedRoutes.Count > 0)
+                {
+                    return (from route in returnedRoutes
+                           orderby route.Order
+                           group route by route.Floor into routeGroup
+                           select new Grouping<string, RoutesDataClass>(routeGroup.Key, routeGroup)).ToList();
+                }
+
+                return null;
+            }
+        }
+
+        private void UpdateRoutes(int currentRouteNum)
+        {
+            if (currentRouteNum == 0)
+            {
+                for (int i = 0; i < navigationPath.Count; i++)
+                {
+                    SetInstruction(navigationPath[i], out string _instructionImage, out string _instructionLabel);
+                    returnedRoutes.Add(new RoutesDataClass
+                    {
+                        Order = i + 1,
+                        OpacityValue = (currentRouteNum == i) ? 1 : 0.3,
+                        Image = _instructionImage,
+                        Instruction = _instructionLabel,
+                        Floor = navigationPath[i].NextWaypoint.Beacons[0].Floor.ToString()
+                    });
+                }
+            }
+            else
+            {
+                returnedRoutes[currentRouteNum - 1].OpacityValue = 0.3;
+                returnedRoutes[currentRouteNum].OpacityValue = 1;
+            }
+
+            OnPropertyChanged("GroupRoutes");
+        }
+
+        public class RoutesDataClass
+        {
+            public int Order { get; set; }
+            public double OpacityValue { get; set; }
+            public string Image { get; set; }
+            public string Instruction { get; set; }
+            public string Floor { get; set; }
+        }
+        #endregion
+
+        #region IDisposable Support
+        private bool disposedValue = false; // 偵測多餘的呼叫
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                Utility.SignalProcess.Event.SignalProcessEventHandler -= GetPathEvent;
+                Utility.MaN.Event.MaNEventHandler -= GetNavigationStatusEvent;
+
+                if (disposing)
+                {
+                    // TODO: 處置 Managed 狀態 (Managed 物件)。
+                }
+
+                // TODO: 釋放 Unmanaged 資源 (Unmanaged 物件) 並覆寫下方的完成項。
+                // TODO: 將大型欄位設為 null。
+
+                disposedValue = true;
+            }
+        }
+
+        // TODO: 僅當上方的 Dispose(bool disposing) 具有會釋放 Unmanaged 資源的程式碼時，才覆寫完成項。
+        // ~TabbedNaviViewModel() {
+        //   // 請勿變更這個程式碼。請將清除程式碼放入上方的 Dispose(bool disposing) 中。
+        //   Dispose(false);
+        // }
+
+        // 加入這個程式碼的目的在正確實作可處置的模式。
+        public void Dispose()
+        {
+            // 請勿變更這個程式碼。請將清除程式碼放入上方的 Dispose(bool disposing) 中。
+            Dispose(true);
+            // TODO: 如果上方的完成項已被覆寫，即取消下行的註解狀態。
+            // GC.SuppressFinalize(this);
+        }
+        #endregion
+
     }
 }

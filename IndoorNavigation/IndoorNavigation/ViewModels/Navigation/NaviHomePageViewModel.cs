@@ -84,7 +84,7 @@ namespace IndoorNavigation.ViewModels.Navigation
             if (selectedItem != null)
             {
                 var navigation = Application.Current.MainPage.Navigation;
-                await navigation.PushAsync(new NavigationTabbedPage());
+                await navigation.PushAsync(new NavigationTabbedPage(selectedItem.Name));
             }
         }
 
