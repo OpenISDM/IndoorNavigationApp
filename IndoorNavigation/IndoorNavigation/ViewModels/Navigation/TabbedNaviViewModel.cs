@@ -315,6 +315,7 @@ namespace IndoorNavigation.ViewModels.Navigation
         {
             if (!disposedValue)
             {
+                Utility.BeaconScan.StopScan();
                 Utility.SignalProcess.Event.SignalProcessEventHandler -= GetPathEvent;
                 Utility.MaN.Event.MaNEventHandler -= GetNavigationStatusEvent;
 

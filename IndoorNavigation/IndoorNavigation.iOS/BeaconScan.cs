@@ -54,7 +54,7 @@ namespace IndoorNavigation.iOS
             CLRegionBeaconsRangedEventArgs e)
         {
             // 發送Beacon訊號強度和其它資訊到訊號分析模組
-            List<BeaconSignalModel> Signals = e.Beacons.Select(c => 
+            List<BeaconSignalModel> signals = e.Beacons.Select(c => 
                 new BeaconSignalModel {
                     UUID = Guid.Parse(c.ProximityUuid.AsString()),
                     Major = c.Major.Int32Value,
@@ -64,7 +64,7 @@ namespace IndoorNavigation.iOS
 
             Event.OnEventCall(new BeaconScanEventArgs
             {
-                Signals = Signals
+                Signals = signals
             });
         }
 

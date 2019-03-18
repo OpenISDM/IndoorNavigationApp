@@ -56,7 +56,7 @@ namespace IndoorNavigation.Modules.Navigation
 
                 lock (resourceLock)
                 {
-                    // Check whehter arrived the destination
+                    // Check whether arrived the destination
                     if (currentWaypoint == endWaypoint)
                     {
                         Utility.MaN.Event.OnEventCall(new WayPointEventArgs
@@ -79,7 +79,7 @@ namespace IndoorNavigation.Modules.Navigation
                     }
                     else
                     {
-                        // Check if the user reachs the next waypoint
+                        // Check if the user reaches the next waypoint
                         if (currentWaypoint == nextInstruction.NextWaypoint)
                         {
                             nextInstruction = pathQueue.Dequeue();
@@ -155,7 +155,7 @@ namespace IndoorNavigation.Modules.Navigation
             {
                 // Check the current waypoint whether is connected to the 
                 // previous waypoint in the navigation graph.
-                // If connected, it dosn't need to calibrate the direction.
+                // If connected, it doesn't need to calibrate the direction.
                 if (Utility.LocationConnects
                     .Any(c => c.BeaconA == CurrentWaypoint &&
                     c.BeaconB == previousWaypoint) ||
@@ -163,9 +163,9 @@ namespace IndoorNavigation.Modules.Navigation
                     .Any(c => c.BeaconA == previousWaypoint &&
                     c.BeaconB == CurrentWaypoint))
                 {
-                    // Replan the path, and keep navigating
+                    // Re-plan the path, and keep navigating
                     pathQueue = Utility.WaypointRoute.RegainPath(
-                                  previousWaypoint, currentBeacon, EndWaypoint);
+                                previousWaypoint, currentBeacon, EndWaypoint);
                     nextInstruction = pathQueue.Dequeue();
                     double distance = nextInstruction.NextWaypoint
                         .Coordinates
@@ -182,7 +182,7 @@ namespace IndoorNavigation.Modules.Navigation
                 }
                 else
                 {
-                    // Replan the path and calibrate the direction
+                    // Re-plan the path and calibrate the direction
                     pathQueue = Utility.WaypointRoute.GetPath(currentBeacon,
                                                                 EndWaypoint);
                     nextInstruction = pathQueue.Dequeue();

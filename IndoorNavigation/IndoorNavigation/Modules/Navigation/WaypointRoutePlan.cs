@@ -106,7 +106,7 @@ namespace IndoorNavigation.Modules.Navigation
             uint endPointKey = navigraph
                 .Where(c => c.Item == EndWaypoint).Select(c => c.Key).First();
             // Get the optimal path
-            var path = navigraph.Dijkstra(startPoingKey, endPointKey).GetPath();
+            var path = navigraph.Dijkstra(startPoingKey,endPointKey).GetPath();
 
             Queue<NextStepModel> pathQueue =
                 new Queue<NextStepModel>();
@@ -115,7 +115,7 @@ namespace IndoorNavigation.Modules.Navigation
             {
                 // Get the current location and next location
                 WaypointModel currentWaypoint=navigraph[path.ToList()[i]].Item;
-                WaypointModel nextWaypoint=navigraph[path.ToList()[i + 1]].Item;
+                WaypointModel nextWaypoint=navigraph[path.ToList()[i+1]].Item;
 
                 // If i=0, it represented that it needs to compute the initial
                 // direction fo start point
@@ -208,7 +208,7 @@ namespace IndoorNavigation.Modules.Navigation
                     );
 
             // Get the optimal path
-            var path = navigraph.Dijkstra(startPoingKey, endPointKey).GetPath();
+            var path = navigraph.Dijkstra(startPoingKey,endPointKey).GetPath();
 
             Queue<NextStepModel> pathQueue = new Queue<NextStepModel>();
 
@@ -217,7 +217,7 @@ namespace IndoorNavigation.Modules.Navigation
             {
                 // Acquire the current and next waypoint
                 WaypointModel currentWaypoint=navigraph[path.ToList()[i]].Item;
-                WaypointModel nextWaypoint=navigraph[path.ToList()[i + 1]].Item;
+                WaypointModel nextWaypoint=navigraph[path.ToList()[i+1]].Item;
 
                 if (i == 0)
                 {

@@ -79,7 +79,8 @@ namespace IndoorNavigation.Modules
             try
             {
                 if (!Directory.Exists(NavigraphStorage.navigraphFolder))
-                    Directory.CreateDirectory(NavigraphStorage.navigraphFolder);
+                    Directory.CreateDirectory(
+                        NavigraphStorage.navigraphFolder);
 
                 using (WebClient webClient = new WebClient())
                     webClient.DownloadFileAsync(new Uri(URL), filePath);
@@ -112,9 +113,9 @@ namespace IndoorNavigation.Modules
                 CalculatingOuterProductAngle(Current, Previous, Next);
 
             if (outerProductAngle < 0)  // turn right
-                return System.Convert.ToInt32(180 - cosineAngle * 180 / Math.PI);
+                return System.Convert.ToInt32(180 - cosineAngle*180/Math.PI);
             else  // turn left
-                return -System.Convert.ToInt32(180 - cosineAngle * 180 / Math.PI);
+                return -System.Convert.ToInt32(180 - cosineAngle*180/Math.PI);
         }
 
         /// <summary>
@@ -146,7 +147,7 @@ namespace IndoorNavigation.Modules
         /// <param name="Next">next location</param>
         /// <returns></returns>
         private static double CalculatingOuterProductAngle(
-            GeoCoordinates Current, GeoCoordinates Previous, GeoCoordinates Next)
+          GeoCoordinates Current, GeoCoordinates Previous, GeoCoordinates Next)
         {
             double Xa, Xb, Ya, Yb;
             double angle;

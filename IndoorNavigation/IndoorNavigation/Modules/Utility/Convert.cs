@@ -177,9 +177,9 @@ namespace IndoorNavigation
             new LocationConnectModel
             {
                 BeaconA = BeaconGroups.Where(BeaconGroup =>
-                BeaconGroup.Id == LocationConnect.BeaconA).First(),
+                    BeaconGroup.Id == LocationConnect.BeaconA).First(),
                 BeaconB = BeaconGroups.Where(BeaconGroup =>
-                BeaconGroup.Id == LocationConnect.BeaconB).First(),
+                    BeaconGroup.Id == LocationConnect.BeaconB).First(),
                 IsTwoWay = LocationConnect.IsTwoWay
             }).ToList();
         }
