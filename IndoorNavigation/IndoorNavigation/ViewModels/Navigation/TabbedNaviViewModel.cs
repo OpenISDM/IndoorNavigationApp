@@ -32,18 +32,18 @@ namespace IndoorNavigation.ViewModels.Navigation
 
         private void DisplayInstructions(EventArgs waypointArgs)
         {
-            var _currentStep = navigationPath[currentStepNum++];
-            var _nextStep = navigationPath[currentStepNum];
-            NavigationProgress = currentStepNum / navigationPath.Count;
             UpdateRoutes(currentStepNum);
+            var _currentStep = navigationPath[currentStepNum];
+            NavigationProgress = (currentStepNum + 1) / navigationPath.Count;
             string _currentStepImage, _currentStepLabel;
             string _nextStepImage, _nextStepLabelName;
+
             switch ((waypointArgs as WayPointEventArgs).Status)
             {
                 //first step
                 case NavigationStatus.AdjustDirection:
                     SetInstruction(_currentStep, out _currentStepImage, out _currentStepLabel);
-                    SetInstruction(_nextStep, out _nextStepImage, out _nextStepLabelName);
+                    SetInstruction(navigationPath[++currentStepNum], out _nextStepImage, out _nextStepLabelName);
                     CurrentStepImage = _currentStepImage;
                     CurrentStepLabel = _currentStepLabel;
                     NextStepImage = _nextStepImage;
@@ -53,7 +53,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                 //keep navigation     
                 case NavigationStatus.Run:
                     SetInstruction(_currentStep, out _currentStepImage, out _currentStepLabel);
-                    SetInstruction(_nextStep, out _nextStepImage, out _nextStepLabelName);
+                    SetInstruction(navigationPath[++currentStepNum], out _nextStepImage, out _nextStepLabelName);
                     CurrentStepImage = _currentStepImage;
                     CurrentStepLabel = _currentStepLabel;
                     NextStepImage = _nextStepImage;
@@ -75,6 +75,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                     CurrentStepLabel = "恭喜你！已到達終點囉";
                     NextStepImage = "";
                     NextStepLabel = " ";
+                    Dispose();
                     break;
             }
         }
