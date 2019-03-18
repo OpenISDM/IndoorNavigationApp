@@ -6,17 +6,29 @@ using IndoorNavigation.Modules.Navigation;
 
 namespace IndoorNavigation.Modules
 {
+    /// <summary>
+    /// 控制導航演算法，在適當時機切換導航演算法
+    /// </summary>
     public class IPSModule : IDisposable
     {
-        //private Thread IPSThread;
+        private Thread IPSThread;
         private AutoResetEvent threadWait =
             new AutoResetEvent(false);
+        private AutoResetEvent setDestinationWait =
+            new AutoResetEvent(false);
+
+        private bool isThreadRunning = true;
         private INavigationAlgorithm navigationAlgorithm;
+        private WaypointModel destination;
+
+        /// <summary>
+        /// 初始化IPS module
+        /// </summary>
         public IPSModule()
         {
-            //IPSThread = new Thread(Work);
-            //IPSThread.Start();
-            //threadWait.WaitOne();
+            IPSThread = new Thread(Work);
+            IPSThread.Start();
+            threadWait.WaitOne();
 
             Debug.WriteLine("IPSModule initialization completed.");
         }
@@ -26,16 +38,14 @@ namespace IndoorNavigation.Modules
         /// </summary>
         public void SetDestination(WaypointModel waypoint)
         {
-            // Temporary
-            navigationAlgorithm = Utility.Service
-                .Get<INavigationAlgorithm>("Waypoint algorithm");
-            Utility.MaN.SetAlgorithm(navigationAlgorithm);
-            Utility.SignalProcess.SetAlogorithm(
-                navigationAlgorithm.CreateSignalProcessingAlgorithm());
-
-            (navigationAlgorithm as WaypointAlgorithm).SetDestination(waypoint);
+            destination = waypoint;
+            setDestinationWait.Set();
+            setDestinationWait.WaitOne();
         }
 
+        /// <summary>
+        /// Stops the navigation.
+        /// </summary>
         public void StopNavigation()
         {
             if (navigationAlgorithm != null)
@@ -45,7 +55,29 @@ namespace IndoorNavigation.Modules
         private void Work()
         {
             // IPS algorithms
+            // Temporary
             threadWait.Set();
+
+            while(isThreadRunning)
+            {
+                setDestinationWait.WaitOne();
+
+                if (isThreadRunning)
+                {
+                    navigationAlgorithm = Utility.Service
+                        .Get<INavigationAlgorithm>("Waypoint algorithm");
+                    Utility.MaN.SetAlgorithm(navigationAlgorithm);
+                    Utility.SignalProcess.SetAlogorithm(
+                        navigationAlgorithm.CreateSignalProcessingAlgorithm());
+
+
+                    (navigationAlgorithm as WaypointAlgorithm)
+                        .SetDestination(destination);
+
+                    setDestinationWait.Set();
+                }
+
+            }
 
             Debug.WriteLine("IPS module close");
             threadWait.Set();
@@ -58,13 +90,15 @@ namespace IndoorNavigation.Modules
         {
             if (!disposedValue)
             {
+                isThreadRunning = false;
+                setDestinationWait.Set();
                 StopNavigation();
-                //threadClosedWait.WaitOne();
-                //threadWait.Reset();
+                threadWait.WaitOne();
 
                 if (disposing)
                 {
                     threadWait.Dispose();
+                    setDestinationWait.Dispose();
                     // TODO: 處置受控狀態 (受控物件)。
                 }
 
