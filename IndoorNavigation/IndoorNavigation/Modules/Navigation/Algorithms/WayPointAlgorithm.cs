@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace IndoorNavigation.Modules.Navigation
 {
     /// <summary>
-    /// 用於航點導航的演算法
+    /// The algorithm for waypoint navigation used
     /// </summary>
     public class WaypointAlgorithm : INavigationAlgorithm, IDisposable
     {
@@ -28,7 +28,7 @@ namespace IndoorNavigation.Modules.Navigation
         private ISignalProcessingAlgorithm signalProcessingAlgorithm;
 
         /// <summary>
-        /// 初始化航點導航演算法
+        /// Initializes the waypoint navigation algorithm
         /// </summary>
         public WaypointAlgorithm()
         {
@@ -36,9 +36,9 @@ namespace IndoorNavigation.Modules.Navigation
             HSignalProcess = new EventHandler(HandleSignalProcess);
             Utility.SignalProcess.Event.SignalProcessEventHandler +=
                 HSignalProcess;
-            signalProcessingAlgorithm = 
+            signalProcessingAlgorithm =
                 Utility.Service.Get<ISignalProcessingAlgorithm>
-                ("Way point signal processing algorithm");
+                ("Waypoint signal processing algorithm");
         }
 
         public void Work()
@@ -127,13 +127,16 @@ namespace IndoorNavigation.Modules.Navigation
             (WaypointModel CurrentWaypoint, WaypointModel EndWaypoint)
         {
             // If the current location is in the path
-            if (pathQueue.Where(c => c.NextWaypoint == CurrentWaypoint).Count() > 0)
+            if (pathQueue.Any(c => c.NextWaypoint == CurrentWaypoint))
             {
                 // Remove the location in the queue of path until the dequeued
                 // location is the same as current location
                 var CurrentInstruction = pathQueue
                         .First(c => c.NextWaypoint == CurrentWaypoint);
-                while (pathQueue.Dequeue() != CurrentInstruction) ;
+                while (pathQueue.Dequeue() != CurrentInstruction)
+                {
+                    //get the current path instruction
+                }
 
                 // Keep navigating
                 nextInstruction = pathQueue.Dequeue();
@@ -161,8 +164,8 @@ namespace IndoorNavigation.Modules.Navigation
                     c.BeaconB == CurrentWaypoint))
                 {
                     // Replan the path, and keep navigating
-                    pathQueue = Utility.WaypointRoute.RegainPath(previousWaypoint,
-                        currentBeacon, EndWaypoint);
+                    pathQueue = Utility.WaypointRoute.RegainPath(
+                                  previousWaypoint, currentBeacon, EndWaypoint);
                     nextInstruction = pathQueue.Dequeue();
                     double distance = nextInstruction.NextWaypoint
                         .Coordinates
@@ -180,7 +183,8 @@ namespace IndoorNavigation.Modules.Navigation
                 else
                 {
                     // Replan the path and calibrate the direction
-                    pathQueue = Utility.WaypointRoute.GetPath(currentBeacon, EndWaypoint);
+                    pathQueue = Utility.WaypointRoute.GetPath(currentBeacon,
+                                                                EndWaypoint);
                     nextInstruction = pathQueue.Dequeue();
 
                     return new WayPointEventArgs
@@ -192,7 +196,8 @@ namespace IndoorNavigation.Modules.Navigation
         }
 
         /// <summary>
-        /// 回傳航點導航對應的訊號處理演算法
+        /// Return the signal processing algorithm of corresponding 
+        /// navigation algorithm.
         /// </summary>
         /// <returns></returns>
         public ISignalProcessingAlgorithm CreateSignalProcessingAlgorithm()
@@ -201,7 +206,7 @@ namespace IndoorNavigation.Modules.Navigation
         }
 
         /// <summary>
-        /// 停止導航
+        /// Stop navigation and release the resources
         /// </summary>
         public void StopNavigation()
         {
@@ -209,7 +214,7 @@ namespace IndoorNavigation.Modules.Navigation
         }
 
         /// <summary>
-        /// 是否到達目的地
+        /// The boolean of whether reach the destination
         /// </summary>
         public bool IsReachingDestination { get; private set; }
 
@@ -229,7 +234,8 @@ namespace IndoorNavigation.Modules.Navigation
 
                 lock (resourceLock)
                 {
-                    pathQueue = Utility.WaypointRoute.GetPath(currentBeacon, EndWaypoint);
+                    pathQueue = Utility.WaypointRoute.GetPath(currentBeacon, 
+                                                                EndWaypoint);
                     endWaypoint = EndWaypoint;
                 }
 
@@ -245,7 +251,8 @@ namespace IndoorNavigation.Modules.Navigation
         {
             Beacon _currentBeacon =
                 (e as WayPointSignalProcessEventArgs).CurrentBeacon;
-            Debug.WriteLine("Way point algorithm: Receive UUID: {0}", (e as WayPointSignalProcessEventArgs).CurrentBeacon.UUID);
+            Debug.WriteLine("Waypoint algorithm: Receive UUID: {0}", 
+                      (e as WayPointSignalProcessEventArgs).CurrentBeacon.UUID);
 
             // Check this event of signal processing from the current Beacon 
             // if it is the same as current Beacon

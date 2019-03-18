@@ -6,7 +6,7 @@ using IndoorNavigation.Models;
 namespace IndoorNavigation.Modules.SignalProcessingAlgorithms
 {
     /// <summary>
-    /// 用於航點導航的訊號處理演算法
+    /// The signal processing algorithm for waypoint navigation used
     /// </summary>
     public class WaypointSignalProcessing : ISignalProcessingAlgorithm
     {
@@ -16,7 +16,7 @@ namespace IndoorNavigation.Modules.SignalProcessingAlgorithms
         private object bufferLock = new object();
 
         /// <summary>
-        /// 初始化訊號處理演算法
+        /// Initializes the signal processing algorithm
         /// </summary>
         public WaypointSignalProcessing()
         {

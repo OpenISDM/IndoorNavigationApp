@@ -53,7 +53,7 @@ namespace IndoorNavigation.Modules
         private INavigationAlgorithm navigationAlgorithm;
 
         /// <summary>
-        /// Initialize a Monitor and Notification Model
+        /// Initializes a Monitor and Notification Model
         /// </summary>
         public MaNModule()
         {
@@ -82,8 +82,8 @@ namespace IndoorNavigation.Modules
         }
 
         /// <summary>
-        /// 設定導航演算法
-        /// 例如:航點導航演算法或三角定位演算法
+        /// Set the navigation alogrithm
+        /// e.g. waypoint algorithm or triangulation algorithm
         /// </summary>
         /// <param name="NavigationAlgorithm"></param>
         public void SetAlgorithm(INavigationAlgorithm NavigationAlgorithm)

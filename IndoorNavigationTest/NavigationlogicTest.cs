@@ -32,8 +32,8 @@ namespace IndoorNavigationTest
             Utility.Service.Add<WaypointSignalProcessing>
                 ("Default signal process algorithm");
             Utility.Service.Add<WaypointSignalProcessing>
-                ("Way point signal processing algorithm");
-            Utility.Service.Add<WaypointAlgorithm>("Way point algorithm");
+                ("Waypoint signal processing algorithm");
+            Utility.Service.Add<WaypointAlgorithm>("Waypoint algorithm");
 
 
             Utility.BeaconScan = new BeaconScan();

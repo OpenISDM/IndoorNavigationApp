@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using IndoorNavigation.Modules;
@@ -25,8 +25,8 @@ namespace IndoorNavigation
             Utility.Service.Add<WaypointSignalProcessing>
                 ("Default signal process algorithm");
             Utility.Service.Add<WaypointSignalProcessing>
-                ("Way point signal processing algorithm");
-            Utility.Service.Add<WaypointAlgorithm>("Way point algorithm");
+                ("Waypoint signal processing algorithm");
+            Utility.Service.Add<WaypointAlgorithm>("Waypoint algorithm");
 
             // Beacon scan api must adjust later, it should regist after
 			// navigraph is be loaded.

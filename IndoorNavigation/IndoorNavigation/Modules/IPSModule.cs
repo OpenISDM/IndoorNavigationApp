@@ -28,7 +28,7 @@ namespace IndoorNavigation.Modules
         {
             // Temporary
             navigationAlgorithm = Utility.Service
-                .Get<INavigationAlgorithm>("Way point algorithm");
+                .Get<INavigationAlgorithm>("Waypoint algorithm");
             Utility.MaN.SetAlgorithm(navigationAlgorithm);
             Utility.SignalProcess.SetAlogorithm(
                 navigationAlgorithm.CreateSignalProcessingAlgorithm());
