@@ -1,34 +1,39 @@
 ﻿/*
- * Copyright (c) 2018 Academia Sinica, Institude of Information Science
- *
- * License:
- *      GPL 3.0 : The content of this file is subject to the terms and
- *      conditions defined in file 'COPYING.txt', which is part of this source
- *      code package.
- *
- * Project Name:
- *
- *      IndoorNavigation
- *
- * File Description:
- * 
- *      This file contains class to receive status of nearby Beacons by the API
- *      from iOS or Android, and find the Beacon within the threshold and have
- *      the highest value.
- * 
- * File Name:
- *
- *      SignalProcessing.cs
- *
- * Abstract:
- * 
- *      
- *
- * Authors:
- *
- *      Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
- *      Paul Chang, paulchang@iis.sinica.edu.tw
- *
+  Copyright (c) 2018 Academia Sinica, Institude of Information Science
+ 
+    License:
+        GPL 3.0 : The content of this file is subject to the terms and
+        conditions defined in file 'COPYING.txt', which is part of this source
+        code package.
+ 
+    Project Name:
+ 
+        IndoorNavigation
+ 
+    File Description:
+  
+        This file contains class to receive status of nearby Beacons by the 
+        API from iOS or Android, and find the Beacon within the threshold and
+        have the highest value.
+         
+    Version:
+
+        1.0.0-beta.1, 20190319
+ 
+    File Name:
+ 
+        SignalProcessing.cs
+ 
+    Abstract:
+
+        The mobile application of indoor navigation, it was built using 
+        Xamarin.Forms.     
+ 
+    Authors:
+ 
+        Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
+        Paul Chang, paulchang@iis.sinica.edu.tw
+ 
  */
 
 using IndoorNavigation.Models;
@@ -55,7 +60,7 @@ namespace IndoorNavigation.Modules
         public SignalProcessEvent Event { get; private set; }
 
         /// <summary>
-        /// Launch the thread to find the Beacon within the threshold and have 
+        /// Launch the thread to find the Beacon within the threshold and have
         /// the highest value in background when this class is startup.
         /// </summary>
         public SignalProcessModule()

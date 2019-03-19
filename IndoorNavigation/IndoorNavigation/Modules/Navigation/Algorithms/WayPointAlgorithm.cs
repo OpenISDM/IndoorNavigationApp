@@ -1,4 +1,35 @@
-﻿using IndoorNavigation.Models;
+﻿/*
+  Copyright (c) 2018 Academia Sinica, Institude of Information Science
+ 
+    License:
+        GPL 3.0 : The content of this file is subject to the terms and
+        conditions defined in file 'COPYING.txt', which is part of this source
+        code package.
+ 
+    Project Name:
+ 
+        IndoorNavigation
+ 
+    File Description:
+ 
+        The algorithm for waypoint navigation used
+
+    File Name:
+
+        WayPointAlgorithm.cs
+
+    Abstract:
+
+        The mobile application of indoor navigation, it was built using 
+        Xamarin.Forms.
+
+    Authors:
+ 
+        Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
+ 
+ */
+
+using IndoorNavigation.Models;
 using IndoorNavigation.Modules.SignalProcessingAlgorithms;
 using System;
 using System.Collections.Generic;
@@ -9,9 +40,6 @@ using System.Threading.Tasks;
 
 namespace IndoorNavigation.Modules.Navigation
 {
-    /// <summary>
-    /// The algorithm for waypoint navigation used
-    /// </summary>
     public class WaypointAlgorithm : INavigationAlgorithm, IDisposable
     {
         private Beacon currentBeacon;
@@ -88,20 +116,22 @@ namespace IndoorNavigation.Modules.Navigation
                                 .GetDistanceTo(
                                 currentBeacon.GetCoordinates());
 
-                            Utility.MaN.Event.OnEventCall(new WaypointEventArgs
-                            {
-                                Status = NavigationStatus.Run,
-                                Angle = nextInstruction.Angle,
-                                Distance = distance
-                            });
+                            Utility.MaN.Event.OnEventCall(
+                                new WaypointEventArgs
+                                {
+                                    Status = NavigationStatus.Run,
+                                    Angle = nextInstruction.Angle,
+                                    Distance = distance
+                                });
                         }
                         else
                         {
                             // Alter the wrong path, and tell the next step
-                            Utility.MaN.Event.OnEventCall(new WaypointEventArgs
-                            {
-                                Status = NavigationStatus.AdjustRoute
-                            });
+                            Utility.MaN.Event.OnEventCall(
+                                new WaypointEventArgs
+                                {
+                                    Status = NavigationStatus.AdjustRoute
+                                });
 
                             Utility.MaN.Event.OnEventCall(
                                 NavigationRouteCorrection(currentWaypoint,

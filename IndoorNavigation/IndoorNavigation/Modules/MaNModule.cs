@@ -1,33 +1,38 @@
 ﻿/*
- * Copyright (c) 2018 Academia Sinica, Institude of Information Science
- *
- * License:
- *      GPL 3.0 : The content of this file is subject to the terms and
- *      conditions defined in file 'COPYING.txt', which is part of this source
- *      code package.
- *
- * Project Name:
- *
- *      IndoorNavigation
- *
- * File Description:
- * 
- *      Monitor and Notification module is respondsible for monitoring user's
- *      path. After the user gets to the wrong way, this module sends an event
- *      to notice the user and redirects the path.
- * 
- * File Name:
- *
- *      MaNModule.cs
- *
- * Abstract:
- *
- *       
- *
- * Authors:
- *
- *      Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
- *
+  Copyright (c) 2018 Academia Sinica, Institude of Information Science
+ 
+    License:
+        GPL 3.0 : The content of this file is subject to the terms and
+        conditions defined in file 'COPYING.txt', which is part of this source
+        code package.
+
+    Project Name:
+ 
+        IndoorNavigation
+ 
+    File Description:
+  
+        Monitor and Notification module is respondsible for monitoring user's
+        path. After the user gets to the wrong way, this module sends an event
+        to notice the user and redirects the path.
+          
+    Version:
+
+        1.0.0-beta.1, 20190319
+
+    File Name:
+
+        MaNModule.cs
+
+    Abstract:
+
+        The mobile application of indoor navigation, it was built using 
+        Xamarin.Forms.
+
+    Authors:
+ 
+        Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
+ 
  */
 
 using IndoorNavigation.Models;

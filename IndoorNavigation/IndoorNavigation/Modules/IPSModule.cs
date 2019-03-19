@@ -1,4 +1,38 @@
-﻿using System;
+﻿/*
+  Copyright (c) 2018 Academia Sinica, Institude of Information Science
+ 
+    License:
+        GPL 3.0 : The content of this file is subject to the terms and
+        conditions defined in file 'COPYING.txt', which is part of this source
+        code package.
+
+    Project Name:
+ 
+        IndoorNavigation
+ 
+    File Description:
+        
+        Manage the navigation algorithm and switch it when needed       
+          
+    Version:
+
+        1.0.0-beta.1, 20190319
+
+    File Name:
+
+        IPSModule.cs
+
+    Abstract:
+
+        The mobile application of indoor navigation, it was built using 
+        Xamarin.Forms.
+
+    Authors:
+ 
+        Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
+ */
+
+using System;
 using System.Diagnostics;
 using System.Threading;
 using IndoorNavigation.Models;
@@ -6,10 +40,7 @@ using IndoorNavigation.Modules.Navigation;
 
 namespace IndoorNavigation.Modules
 {
-    /// <summary>
-    /// TODO: Add dynamic algorithm changing
-    /// Manage the navigation algorithm and switch it when needed
-    /// </summary>
+    //TODO: Add dynamic algorithm changing
     public class IPSModule : IDisposable
     {
         private Thread IPSThread;

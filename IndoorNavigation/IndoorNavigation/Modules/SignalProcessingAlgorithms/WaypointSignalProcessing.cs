@@ -1,13 +1,42 @@
-﻿using System;
+﻿/*
+  Copyright (c) 2018 Academia Sinica, Institude of Information Science
+ 
+    License:
+        GPL 3.0 : The content of this file is subject to the terms and
+        conditions defined in file 'COPYING.txt', which is part of this source
+        code package.
+ 
+    Project Name:
+ 
+        IndoorNavigation
+ 
+    File Description:
+ 
+        The signal processing algorithm for waypoint navigation used
+
+    File Name:
+
+        WaypointSignalProcessing.cs
+
+    Abstract:
+
+        The mobile application of indoor navigation, it was built using 
+        Xamarin.Forms.
+
+    Authors:
+ 
+        Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
+        Paul Chang, paulchang@iis.sinica.edu.tw
+ 
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using IndoorNavigation.Models;
 
 namespace IndoorNavigation.Modules.SignalProcessingAlgorithms
 {
-    /// <summary>
-    /// The signal processing algorithm for waypoint navigation used
-    /// </summary>
     public class WaypointSignalProcessing : ISignalProcessingAlgorithm
     {
         public List<BeaconSignalModel> beaconSignalBuffer =

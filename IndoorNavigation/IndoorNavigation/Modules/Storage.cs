@@ -1,31 +1,36 @@
 ﻿/*
- * Copyright (c) 2018 Academia Sinica, Institude of Information Science
- *
- * License:
- *      GPL 3.0 : The content of this file is subject to the terms and
- *      conditions defined in file 'COPYING.txt', which is part of this source
- *      code package.
- *
- * Project Name:
- *
- *      IndoorNavigation
- *
- * File Description:
- *
- *      Classes in this file provides the methods for storage on the phone
- *
- * File Name:
- *
- *      Storage.cs
- *
- * Abstract:
- *
- *      
- *
- * Authors:
- *
- *      Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
- *
+  Copyright (c) 2018 Academia Sinica, Institude of Information Science
+ 
+    License:
+        GPL 3.0 : The content of this file is subject to the terms and
+        conditions defined in file 'COPYING.txt', which is part of this source
+        code package.
+ 
+    Project Name:
+ 
+        IndoorNavigation
+ 
+    File Description:
+ 
+        Classes in this file provides the methods for storage on the phone
+       
+    Version:
+
+        1.0.0-beta.1, 20190319
+ 
+    File Name:
+ 
+        Storage.cs
+
+    Abstract:
+
+        The mobile application of indoor navigation, it was built using 
+        Xamarin.Forms.  
+
+    Authors:
+ 
+        Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
+
  */
 
 using System;

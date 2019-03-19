@@ -1,31 +1,32 @@
-﻿/*
- * Copyright (c) 2018 Academia Sinica, Institude of Information Science
- *
- * License:
- *      GPL 3.0 : The content of this file is subject to the terms and
- *      conditions defined in file 'COPYING.txt', which is part of this source
- *      code package.
- *
- * Project Name:
- *
- *      IndoorNavigation
- *
- * File Description:
- * 
- *      The algorithm of route planning.
- * 
- * File Name:
- *
- *      RoutePlan.cs
- *
- * Abstract:
- *
- *      
- *
- * Authors:
- *
- *      Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
- *
+﻿ /*
+  Copyright (c) 2018 Academia Sinica, Institude of Information Science
+ 
+    License:
+        GPL 3.0 : The content of this file is subject to the terms and
+        conditions defined in file 'COPYING.txt', which is part of this source
+        code package.
+ 
+    Project Name:
+ 
+        IndoorNavigation
+ 
+    File Description:
+ 
+        The algorithm of route planning
+
+    File Name:
+
+        WaypointRoutePlan.cs
+
+    Abstract:
+
+        The mobile application of indoor navigation, it was built using 
+        Xamarin.Forms.
+
+    Authors:
+ 
+        Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
+ 
  */
 
 using System.Collections.Generic;
@@ -66,7 +67,7 @@ namespace IndoorNavigation.Modules.Navigation
                 // Get the distance of two locations which in centimeter
                 int distance = System.Convert.ToInt32(
                     locationConnect.BeaconA.Coordinates
-                    .GetDistanceTo(locationConnect.BeaconB.Coordinates) * 100);
+                    .GetDistanceTo(locationConnect.BeaconB.Coordinates)*100);
 
                 // Get two connected location's key vaule
                 uint beaconAKey = navigraph.Where(BeaconGroup =>
@@ -106,7 +107,8 @@ namespace IndoorNavigation.Modules.Navigation
             uint endPointKey = navigraph
                 .Where(c => c.Item == EndWaypoint).Select(c => c.Key).First();
             // Get the optimal path
-            var path = navigraph.Dijkstra(startPoingKey,endPointKey).GetPath();
+            var path = navigraph.Dijkstra(startPoingKey, 
+                                            endPointKey).GetPath();
 
             Queue<NextStepModel> pathQueue =
                 new Queue<NextStepModel>();
@@ -114,15 +116,18 @@ namespace IndoorNavigation.Modules.Navigation
             for (int i = 0; i < path.Count() - 1; i++)
             {
                 // Get the current location and next location
-                WaypointModel currentWaypoint=navigraph[path.ToList()[i]].Item;
-                WaypointModel nextWaypoint=navigraph[path.ToList()[i+1]].Item;
+                WaypointModel currentWaypoint = 
+                                navigraph[path.ToList()[i]].Item;
+                WaypointModel nextWaypoint =
+                                 navigraph[path.ToList()[i + 1]].Item;
 
                 // If i=0, it represented that it needs to compute the initial
                 // direction fo start point
                 if (i == 0)
                 {
-                    // Don't need to compute the direction because user should
-                    // get the wrong way first, and then calibrate the direction
+                    // Don't need to compute the direction because user 
+                    // should get the wrong way first, 
+                    // and then calibrate the direction.
                     pathQueue.Enqueue(new NextStepModel
                     {
                         NextWaypoint = nextWaypoint,
@@ -194,9 +199,9 @@ namespace IndoorNavigation.Modules.Navigation
             var endPointKey = navigraph
                 .Where(c => c.Item == EndWaypoint).Select(c => c.Key).First();
 
-            // Check the current location whether is connected to the previous 
-            // location. If the user skips more than two location, the previous 
-            // location is useless.
+            // Check the current location whether is connected to the
+            // previous location. If the user skips more than two location,
+            // the previous location is useless.
             if (this.locationConnects.Where(c =>
             (c.BeaconA == navigraph[startPoingKey].Item && 
             c.BeaconB == PreviousWaypoint) ||
@@ -208,7 +213,8 @@ namespace IndoorNavigation.Modules.Navigation
                     );
 
             // Get the optimal path
-            var path = navigraph.Dijkstra(startPoingKey,endPointKey).GetPath();
+            var path = navigraph.Dijkstra(startPoingKey, 
+                                            endPointKey).GetPath();
 
             Queue<NextStepModel> pathQueue = new Queue<NextStepModel>();
 
@@ -216,8 +222,10 @@ namespace IndoorNavigation.Modules.Navigation
             for (int i = 0; i < path.Count() - 1; i++)
             {
                 // Acquire the current and next waypoint
-                WaypointModel currentWaypoint=navigraph[path.ToList()[i]].Item;
-                WaypointModel nextWaypoint=navigraph[path.ToList()[i+1]].Item;
+                WaypointModel currentWaypoint = 
+                                navigraph[path.ToList()[i]].Item;
+                WaypointModel nextWaypoint = 
+                                navigraph[path.ToList()[i + 1]].Item;
 
                 if (i == 0)
                 {
