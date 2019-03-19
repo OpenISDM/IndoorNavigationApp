@@ -144,7 +144,7 @@ namespace IndoorNavigation
 
         /// <summary>
         /// Expanded function
-        /// Convert BeaconGroupModelForMapFiles to BeaconGroupModels
+        /// Convert BeaconGroupModelForNavigraphFiles to BeaconGroupModels
         /// </summary>
         /// <param name="BeaconGroups"></param>
         /// <param name="Beacons"></param>
@@ -164,7 +164,8 @@ namespace IndoorNavigation
 
         /// <summary>
         /// Expanded function 
-        /// Convert LocationConnectModelForMapFiles to LocationConnectModels
+        /// Convert LocationConnectModelForNavigraphFiles to 
+        /// LocationConnectModels.
         /// </summary>
         /// <param name="LocationConnects"></param>
         /// <param name="BeaconGroups"></param>

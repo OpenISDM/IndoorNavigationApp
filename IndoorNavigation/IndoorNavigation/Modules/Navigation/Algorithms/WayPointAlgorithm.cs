@@ -59,7 +59,7 @@ namespace IndoorNavigation.Modules.Navigation
                     // Check whether arrived the destination
                     if (currentWaypoint == endWaypoint)
                     {
-                        Utility.MaN.Event.OnEventCall(new WayPointEventArgs
+                        Utility.MaN.Event.OnEventCall(new WaypointEventArgs
                         {
                             Status = NavigationStatus.Arrival
                         });
@@ -72,7 +72,7 @@ namespace IndoorNavigation.Modules.Navigation
                     {
                         nextInstruction = pathQueue.Dequeue();
 
-                        Utility.MaN.Event.OnEventCall(new WayPointEventArgs
+                        Utility.MaN.Event.OnEventCall(new WaypointEventArgs
                         {
                             Status = NavigationStatus.AdjustDirection
                         });
@@ -88,7 +88,7 @@ namespace IndoorNavigation.Modules.Navigation
                                 .GetDistanceTo(
                                 currentBeacon.GetCoordinates());
 
-                            Utility.MaN.Event.OnEventCall(new WayPointEventArgs
+                            Utility.MaN.Event.OnEventCall(new WaypointEventArgs
                             {
                                 Status = NavigationStatus.Run,
                                 Angle = nextInstruction.Angle,
@@ -98,7 +98,7 @@ namespace IndoorNavigation.Modules.Navigation
                         else
                         {
                             // Alter the wrong path, and tell the next step
-                            Utility.MaN.Event.OnEventCall(new WayPointEventArgs
+                            Utility.MaN.Event.OnEventCall(new WaypointEventArgs
                             {
                                 Status = NavigationStatus.AdjustRoute
                             });
@@ -123,7 +123,7 @@ namespace IndoorNavigation.Modules.Navigation
         /// </summary>
         /// <param name="CurrentWaypoint"></param>
         /// <returns></returns>
-        private WayPointEventArgs NavigationRouteCorrection
+        private WaypointEventArgs NavigationRouteCorrection
             (WaypointModel CurrentWaypoint, WaypointModel EndWaypoint)
         {
             // If the current location is in the path
@@ -144,7 +144,7 @@ namespace IndoorNavigation.Modules.Navigation
                     .Coordinates
                     .GetDistanceTo(currentBeacon.GetCoordinates());
 
-                return new WayPointEventArgs
+                return new WaypointEventArgs
                 {
                     Status = NavigationStatus.Run,
                     Distance = distance,
@@ -172,7 +172,7 @@ namespace IndoorNavigation.Modules.Navigation
                         .GetDistanceTo(
                         currentBeacon.GetCoordinates());
 
-                    return new WayPointEventArgs
+                    return new WaypointEventArgs
                     {
                         Status = NavigationStatus.Run,
                         Angle = nextInstruction.Angle,
@@ -187,7 +187,7 @@ namespace IndoorNavigation.Modules.Navigation
                                                                 EndWaypoint);
                     nextInstruction = pathQueue.Dequeue();
 
-                    return new WayPointEventArgs
+                    return new WaypointEventArgs
                     {
                         Status = NavigationStatus.AdjustDirection
                     };
@@ -265,7 +265,7 @@ namespace IndoorNavigation.Modules.Navigation
         }
 
         #region IDisposable Support
-        private bool disposedValue = false; // 偵測多餘的呼叫
+        private bool disposedValue = false; // To detect redundant calls
 
         protected virtual void Dispose(bool disposing)
         {
@@ -298,19 +298,19 @@ namespace IndoorNavigation.Modules.Navigation
             }
         }
 
-        //TODO: 僅當上方的 Dispose(bool disposing) 具有會釋放非受控資源的程式碼時，才覆寫完成項。
+        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
         ~WaypointAlgorithm()
         {
-            // 請勿變更這個程式碼。請將清除程式碼放入上方的 Dispose(bool disposing) 中。
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
             Dispose(false);
         }
 
-        // 加入這個程式碼的目的在正確實作可處置的模式。
+        // This code added to correctly implement the disposable pattern.
         public void Dispose()
         {
-            // 請勿變更這個程式碼。請將清除程式碼放入上方的 Dispose(bool disposing) 中。
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
             Dispose(true);
-            // TODO: 如果上方的完成項已被覆寫，即取消下行的註解狀態。
+            // TODO: uncomment the following line if the finalizer is overridden above.
             // GC.SuppressFinalize(this);
         }
         #endregion
@@ -324,7 +324,7 @@ namespace IndoorNavigation.Modules.Navigation
         AdjustDirection
     }
 
-    public class WayPointEventArgs : EventArgs
+    public class WaypointEventArgs : EventArgs
     {
         /// <summary>
         /// Status of navigation

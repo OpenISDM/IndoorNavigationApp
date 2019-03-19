@@ -38,7 +38,7 @@ namespace IndoorNavigation.ViewModels.Navigation
             string _currentStepImage, _currentStepLabel;
             string _nextStepImage, _nextStepLabelName;
 
-            switch ((waypointArgs as WayPointEventArgs).Status)
+            switch ((waypointArgs as WaypointEventArgs).Status)
             {
                 //first step
                 case NavigationStatus.AdjustDirection:
@@ -309,7 +309,7 @@ namespace IndoorNavigation.ViewModels.Navigation
         #endregion
 
         #region IDisposable Support
-        private bool disposedValue = false; // 偵測多餘的呼叫
+        private bool disposedValue = false; // To detect redundant calls
 
         protected virtual void Dispose(bool disposing)
         {
@@ -319,30 +319,31 @@ namespace IndoorNavigation.ViewModels.Navigation
                 Utility.SignalProcess.Event.SignalProcessEventHandler -= GetPathEvent;
                 Utility.MaN.Event.MaNEventHandler -= GetNavigationStatusEvent;
 
+                // dispose managed state (managed objects)
                 if (disposing)
                 {
-                    // TODO: 處置 Managed 狀態 (Managed 物件)。
+
                 }
 
-                // TODO: 釋放 Unmanaged 資源 (Unmanaged 物件) 並覆寫下方的完成項。
-                // TODO: 將大型欄位設為 null。
+                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
+                // TODO: set large fields to null.
 
                 disposedValue = true;
             }
         }
 
-        // TODO: 僅當上方的 Dispose(bool disposing) 具有會釋放 Unmanaged 資源的程式碼時，才覆寫完成項。
+        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
         // ~TabbedNaviViewModel() {
-        //   // 請勿變更這個程式碼。請將清除程式碼放入上方的 Dispose(bool disposing) 中。
+        //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
         //   Dispose(false);
         // }
 
-        // 加入這個程式碼的目的在正確實作可處置的模式。
+        // This code added to correctly implement the disposable pattern.
         public void Dispose()
         {
-            // 請勿變更這個程式碼。請將清除程式碼放入上方的 Dispose(bool disposing) 中。
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
             Dispose(true);
-            // TODO: 如果上方的完成項已被覆寫，即取消下行的註解狀態。
+            // TODO: uncomment the following line if the finalizer is overridden above.
             // GC.SuppressFinalize(this);
         }
         #endregion

@@ -82,7 +82,7 @@ namespace IndoorNavigation.Modules
         }
 
         /// <summary>
-        /// Set the navigation alogrithm
+        /// Set the navigation alogrithm via dependency injection
         /// e.g. waypoint algorithm or triangulation algorithm
         /// </summary>
         /// <param name="NavigationAlgorithm"></param>
@@ -93,7 +93,7 @@ namespace IndoorNavigation.Modules
         }
 
         /// <summary>
-        /// Stop navigation algorithm work
+        /// Stops the navigation algorithm
         /// </summary>
         public void StopNavigation()
         {
@@ -143,6 +143,9 @@ namespace IndoorNavigation.Modules
 
     }
 
+    /// <summary>
+    /// This event will notify the navigation status when finish each step
+    /// </summary>
     public class MaNEEvent
     {
         public event EventHandler MaNEventHandler;
@@ -152,7 +155,11 @@ namespace IndoorNavigation.Modules
             MaNEventHandler?.Invoke(this, e);
 #if DEBUG
             if (MaNEventHandler != null)
-                Debug.WriteLineIf(e.GetType() == typeof(WayPointEventArgs), string.Format("MaN module: Send event, content is status: {0} and angle: {1}", (e as WayPointEventArgs).Status, (e as WayPointEventArgs).Angle));
+                Debug.WriteLineIf(e.GetType() == typeof(WaypointEventArgs),
+                    string.Format("MaN module: Send event, " +
+                                  "content is status: {0} and angle: {1}",
+                                  (e as WaypointEventArgs).Status,
+                                  (e as WaypointEventArgs).Angle));
 #endif
         }
     }

@@ -212,35 +212,35 @@ namespace IndoorNavigationTest
             Utility.SignalProcess.Event.OnEventCall(new WayPointSignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-7b3d-c941-0000c15ef342")] });
             MaNWaitEvent.WaitOne();
             routePath.Dequeue();
-            Assert.AreEqual(NavigationStatus.AdjustDirection, (MaNEventArgs as WayPointEventArgs).Status);
+            Assert.AreEqual(NavigationStatus.AdjustDirection, (MaNEventArgs as WaypointEventArgs).Status);
             // B
             Utility.SignalProcess.Event.OnEventCall(new WayPointSignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-803d-c941-0000d45ef342")] });
             MaNWaitEvent.WaitOne();
-            Assert.AreEqual(routePath.Dequeue().Angle, (MaNEventArgs as WayPointEventArgs).Angle);
+            Assert.AreEqual(routePath.Dequeue().Angle, (MaNEventArgs as WaypointEventArgs).Angle);
             // C
             Utility.SignalProcess.Event.OnEventCall(new WayPointSignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-863d-c941-0000ea5ef342")] });
             MaNWaitEvent.WaitOne();
-            Assert.AreEqual(routePath.Dequeue().Angle, (MaNEventArgs as WayPointEventArgs).Angle);
+            Assert.AreEqual(routePath.Dequeue().Angle, (MaNEventArgs as WaypointEventArgs).Angle);
             // D
             Utility.SignalProcess.Event.OnEventCall(new WayPointSignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-183d-c941-0000eb5ef342")] });
             MaNWaitEvent.WaitOne();
-            Assert.AreEqual(routePath.Dequeue().Angle, (MaNEventArgs as WayPointEventArgs).Angle);
+            Assert.AreEqual(routePath.Dequeue().Angle, (MaNEventArgs as WaypointEventArgs).Angle);
             // E
             Utility.SignalProcess.Event.OnEventCall(new WayPointSignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-ee3c-c941-0000005ff342")] });
             MaNWaitEvent.WaitOne();
-            Assert.AreEqual(routePath.Dequeue().Angle, (MaNEventArgs as WayPointEventArgs).Angle);
+            Assert.AreEqual(routePath.Dequeue().Angle, (MaNEventArgs as WaypointEventArgs).Angle);
             // F
             Utility.SignalProcess.Event.OnEventCall(new WayPointSignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-be3c-c941-0000185ff342")] });
             MaNWaitEvent.WaitOne();
-            Assert.AreEqual(routePath.Dequeue().Angle, (MaNEventArgs as WayPointEventArgs).Angle);
+            Assert.AreEqual(routePath.Dequeue().Angle, (MaNEventArgs as WaypointEventArgs).Angle);
             // L
             Utility.SignalProcess.Event.OnEventCall(new WayPointSignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-be3c-c941-0000395ff342")] });
             MaNWaitEvent.WaitOne();
-            Assert.AreEqual(routePath.Dequeue().Angle, (MaNEventArgs as WayPointEventArgs).Angle);
+            Assert.AreEqual(routePath.Dequeue().Angle, (MaNEventArgs as WaypointEventArgs).Angle);
             // K
             Utility.SignalProcess.Event.OnEventCall(new WayPointSignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-b93c-c941-00005a5ff342")] });
             MaNWaitEvent.WaitOne();
-            Assert.AreEqual(NavigationStatus.Arrival, (MaNEventArgs as WayPointEventArgs).Status);
+            Assert.AreEqual(NavigationStatus.Arrival, (MaNEventArgs as WaypointEventArgs).Status);
             TestClose();
 
             Debug.WriteLine("NavigationTest done.");
@@ -256,33 +256,33 @@ namespace IndoorNavigationTest
             // D
             Utility.SignalProcess.Event.OnEventCall(new WayPointSignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-223d-c941-0000ff5ef342")] });
             MaNWaitEvent.WaitOne();
-            Assert.AreEqual(NavigationStatus.AdjustDirection, (MaNEventArgs as WayPointEventArgs).Status);
+            Assert.AreEqual(NavigationStatus.AdjustDirection, (MaNEventArgs as WaypointEventArgs).Status);
             // C
             Utility.SignalProcess.Event.OnEventCall(new WayPointSignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-563d-c941-0000e85ef342")] });
             MaNWaitEvent.WaitOne();
-            Assert.AreEqual(NavigationStatus.AdjustRoute, (MaNEventArgs as WayPointEventArgs).Status);
+            Assert.AreEqual(NavigationStatus.AdjustRoute, (MaNEventArgs as WaypointEventArgs).Status);
             MaNWaitEvent.WaitOne();
-            Assert.AreEqual(routePath.Dequeue().Angle, (MaNEventArgs as WayPointEventArgs).Angle);
+            Assert.AreEqual(routePath.Dequeue().Angle, (MaNEventArgs as WaypointEventArgs).Angle);
             // D
             Utility.SignalProcess.Event.OnEventCall(new WayPointSignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-223d-c941-0000ff5ef342")] });
             MaNWaitEvent.WaitOne();
-            Assert.AreEqual(routePath.Dequeue().Angle, (MaNEventArgs as WayPointEventArgs).Angle);
+            Assert.AreEqual(routePath.Dequeue().Angle, (MaNEventArgs as WaypointEventArgs).Angle);
             // E
             Utility.SignalProcess.Event.OnEventCall(new WayPointSignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-ee3c-c941-0000005ff342")] });
             MaNWaitEvent.WaitOne();
-            Assert.AreEqual(routePath.Dequeue().Angle, (MaNEventArgs as WayPointEventArgs).Angle);
+            Assert.AreEqual(routePath.Dequeue().Angle, (MaNEventArgs as WaypointEventArgs).Angle);
             // F
             Utility.SignalProcess.Event.OnEventCall(new WayPointSignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-be3c-c941-0000185ff342")] });
             MaNWaitEvent.WaitOne();
-            Assert.AreEqual(routePath.Dequeue().Angle, (MaNEventArgs as WayPointEventArgs).Angle);
+            Assert.AreEqual(routePath.Dequeue().Angle, (MaNEventArgs as WaypointEventArgs).Angle);
             // L
             Utility.SignalProcess.Event.OnEventCall(new WayPointSignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-be3c-c941-0000395ff342")] });
             MaNWaitEvent.WaitOne();
-            Assert.AreEqual(routePath.Dequeue().Angle, (MaNEventArgs as WayPointEventArgs).Angle);
+            Assert.AreEqual(routePath.Dequeue().Angle, (MaNEventArgs as WaypointEventArgs).Angle);
             // K
             Utility.SignalProcess.Event.OnEventCall(new WayPointSignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-b93c-c941-00005a5ff342")] });
             MaNWaitEvent.WaitOne();
-            Assert.AreEqual(NavigationStatus.Arrival, (MaNEventArgs as WayPointEventArgs).Status);
+            Assert.AreEqual(NavigationStatus.Arrival, (MaNEventArgs as WaypointEventArgs).Status);
             TestClose();
 
             Debug.WriteLine("StartingPointCorrection done.");
@@ -299,11 +299,11 @@ namespace IndoorNavigationTest
             Utility.SignalProcess.Event.OnEventCall(new WayPointSignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-7b3d-c941-0000c15ef342")] });
             MaNWaitEvent.WaitOne();
             routePath.Dequeue();
-            Assert.AreEqual(NavigationStatus.AdjustDirection, (MaNEventArgs as WayPointEventArgs).Status);
+            Assert.AreEqual(NavigationStatus.AdjustDirection, (MaNEventArgs as WaypointEventArgs).Status);
             // B
             Utility.SignalProcess.Event.OnEventCall(new WayPointSignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-803d-c941-0000d45ef342")] });
             MaNWaitEvent.WaitOne();
-            Assert.AreEqual(routePath.Dequeue().Angle, (MaNEventArgs as WayPointEventArgs).Angle);
+            Assert.AreEqual(routePath.Dequeue().Angle, (MaNEventArgs as WaypointEventArgs).Angle);
             //// C
             //Utility.SignalProcess.Event.OnEventCall(new SignalProcessEventArgs { CurrentBeacon = Utility.Beacons[Guid.Parse("0000803f-0000-863d-c941-0000ea5ef342")] });
             //WaitEvent.WaitOne();
@@ -322,17 +322,17 @@ namespace IndoorNavigationTest
             // F
             Utility.SignalProcess.Event.OnEventCall(new WayPointSignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-be3c-c941-0000185ff342")] });
             MaNWaitEvent.WaitOne();
-            Assert.AreEqual(NavigationStatus.AdjustRoute, (MaNEventArgs as WayPointEventArgs).Status);
+            Assert.AreEqual(NavigationStatus.AdjustRoute, (MaNEventArgs as WaypointEventArgs).Status);
             MaNWaitEvent.WaitOne();
-            Assert.AreEqual(routePath.Dequeue().Angle, (MaNEventArgs as WayPointEventArgs).Angle);
+            Assert.AreEqual(routePath.Dequeue().Angle, (MaNEventArgs as WaypointEventArgs).Angle);
             // L
             Utility.SignalProcess.Event.OnEventCall(new WayPointSignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-be3c-c941-0000395ff342")] });
             MaNWaitEvent.WaitOne();
-            Assert.AreEqual(routePath.Dequeue().Angle, (MaNEventArgs as WayPointEventArgs).Angle);
+            Assert.AreEqual(routePath.Dequeue().Angle, (MaNEventArgs as WaypointEventArgs).Angle);
             // K
             Utility.SignalProcess.Event.OnEventCall(new WayPointSignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-b93c-c941-00005a5ff342")] });
             MaNWaitEvent.WaitOne();
-            Assert.AreEqual(NavigationStatus.Arrival, (MaNEventArgs as WayPointEventArgs).Status);
+            Assert.AreEqual(NavigationStatus.Arrival, (MaNEventArgs as WaypointEventArgs).Status);
             TestClose();
 
             Debug.WriteLine("SkipSomeLocationsTest done.");
@@ -348,43 +348,43 @@ namespace IndoorNavigationTest
             Utility.SignalProcess.Event.OnEventCall(new WayPointSignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-7b3d-c941-0000c15ef342")] });
             MaNWaitEvent.WaitOne();
             routePath.Dequeue();
-            Assert.AreEqual(NavigationStatus.AdjustDirection, (MaNEventArgs as WayPointEventArgs).Status);
+            Assert.AreEqual(NavigationStatus.AdjustDirection, (MaNEventArgs as WaypointEventArgs).Status);
             // B
             Utility.SignalProcess.Event.OnEventCall(new WayPointSignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-803d-c941-0000d45ef342")] });
             MaNWaitEvent.WaitOne();
-            Assert.AreEqual(routePath.Dequeue().Angle, (MaNEventArgs as WayPointEventArgs).Angle);
+            Assert.AreEqual(routePath.Dequeue().Angle, (MaNEventArgs as WaypointEventArgs).Angle);
             // C
             Utility.SignalProcess.Event.OnEventCall(new WayPointSignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-863d-c941-0000ea5ef342")] });
             MaNWaitEvent.WaitOne();
-            Assert.AreEqual(routePath.Dequeue().Angle, (MaNEventArgs as WayPointEventArgs).Angle);
+            Assert.AreEqual(routePath.Dequeue().Angle, (MaNEventArgs as WaypointEventArgs).Angle);
             // D
             Utility.SignalProcess.Event.OnEventCall(new WayPointSignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-183d-c941-0000eb5ef342")] });
             MaNWaitEvent.WaitOne();
-            Assert.AreEqual(routePath.Dequeue().Angle, (MaNEventArgs as WayPointEventArgs).Angle);
+            Assert.AreEqual(routePath.Dequeue().Angle, (MaNEventArgs as WaypointEventArgs).Angle);
             // ?�s�p��ѵ�
             routePath = Utility.WaypointRoute.RegainPath(Utility.Waypoints.First(c => c.Name == "D1F"), Utility.BeaconsDict[Guid.Parse("0000803f-0000-713d-c941-0000395ff342")], Utility.Waypoints.First(c => c.Name == "K1F"));
             // G
             Utility.SignalProcess.Event.OnEventCall(new WayPointSignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-713d-c941-0000395ff342")] });
             MaNWaitEvent.WaitOne();
-            Assert.AreEqual(NavigationStatus.AdjustRoute, (MaNEventArgs as WayPointEventArgs).Status);
+            Assert.AreEqual(NavigationStatus.AdjustRoute, (MaNEventArgs as WaypointEventArgs).Status);
             MaNWaitEvent.WaitOne();
-            Assert.AreEqual(routePath.Dequeue().Angle, (MaNEventArgs as WayPointEventArgs).Angle);
+            Assert.AreEqual(routePath.Dequeue().Angle, (MaNEventArgs as WaypointEventArgs).Angle);
             // H
             Utility.SignalProcess.Event.OnEventCall(new WayPointSignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-b03d-c941-0000575ff342")] });
             MaNWaitEvent.WaitOne();
-            Assert.AreEqual(routePath.Dequeue().Angle, (MaNEventArgs as WayPointEventArgs).Angle);
+            Assert.AreEqual(routePath.Dequeue().Angle, (MaNEventArgs as WaypointEventArgs).Angle);
             // I
             Utility.SignalProcess.Event.OnEventCall(new WayPointSignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-323d-c941-0000585ff342")] });
             MaNWaitEvent.WaitOne();
-            Assert.AreEqual(routePath.Dequeue().Angle, (MaNEventArgs as WayPointEventArgs).Angle);
+            Assert.AreEqual(routePath.Dequeue().Angle, (MaNEventArgs as WaypointEventArgs).Angle);
             // J
             Utility.SignalProcess.Event.OnEventCall(new WayPointSignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-f83c-c941-00005a5ff342")] });
             MaNWaitEvent.WaitOne();
-            Assert.AreEqual(routePath.Dequeue().Angle, (MaNEventArgs as WayPointEventArgs).Angle);
+            Assert.AreEqual(routePath.Dequeue().Angle, (MaNEventArgs as WaypointEventArgs).Angle);
             // K
             Utility.SignalProcess.Event.OnEventCall(new WayPointSignalProcessEventArgs { CurrentBeacon = Utility.BeaconsDict[Guid.Parse("0000803f-0000-b93c-c941-00005a5ff342")] });
             MaNWaitEvent.WaitOne();
-            Assert.AreEqual(NavigationStatus.Arrival, (MaNEventArgs as WayPointEventArgs).Status);
+            Assert.AreEqual(NavigationStatus.Arrival, (MaNEventArgs as WaypointEventArgs).Status);
             TestClose();
 
             Debug.WriteLine("ReNavigationTest done.");
@@ -403,7 +403,7 @@ namespace IndoorNavigationTest
         private void HandleMaNModule(object sender, EventArgs e)
         {
             MaNEventArgs = e;
-            Debug.WriteLineIf(e.GetType() == typeof(WayPointEventArgs), string.Format("單元測試: 收到MaN事件, content is status: {0} and angle: {1}", (e as WayPointEventArgs).Status, (e as WayPointEventArgs).Angle));
+            Debug.WriteLineIf(e.GetType() == typeof(WaypointEventArgs), string.Format("單元測試: 收到MaN事件, content is status: {0} and angle: {1}", (e as WaypointEventArgs).Status, (e as WaypointEventArgs).Angle));
             MaNWaitEvent.Set();
         }
     }
