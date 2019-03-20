@@ -6,6 +6,10 @@ using IndoorNavigation.Models;
 using IndoorNavigation.Modules.SignalProcessingAlgorithms;
 using IndoorNavigation.Modules.Navigation;
 
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
+
 [assembly: XamlCompilation (XamlCompilationOptions.Compile)]
 namespace IndoorNavigation
 {
@@ -20,6 +24,10 @@ namespace IndoorNavigation
 
 		protected override void OnStart ()
 		{
+            AppCenter.Start("ios=3efcee27-6067-4f41-a94f-87c97d6b8118;" +
+                "android=8cc03d85-0d94-4cec-b4b6-808719a60857",
+                typeof(Analytics), typeof(Crashes));
+
             // Handle when your app starts
             Utility.Service = new Container();
             Utility.Service.Add<WaypointSignalProcessing>
