@@ -30,7 +30,7 @@ namespace IndoorNavigationTest
 
         public static JArray ToJsonArray(this List<LocationConnectModel> LocationConnects)
         {
-            List<LocationConnectModelForNavigraphFile> LocationConnectModelForMapFiles = LocationConnects.Select(LocationConnect => new LocationConnectModelForNavigraphFile { BeaconA = LocationConnect.BeaconA.Id, BeaconB = LocationConnect.BeaconB.Id, IsTwoWay = LocationConnect.IsTwoWay }).ToList();
+            List<LocationConnectModelForNavigraphFile> LocationConnectModelForMapFiles = LocationConnects.Select(LocationConnect => new LocationConnectModelForNavigraphFile { BeaconA = LocationConnect.BeaconA.Id, BeaconB = LocationConnect.BeaconB.Id, Target = LocationConnect.Target }).ToList();
             return JArray.FromObject(LocationConnectModelForMapFiles);
         }
     }

@@ -26,7 +26,6 @@
     Authors:
  
         Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
-        Paul Chang, paulchang@iis.sinica.edu.tw       
  
  */
 
@@ -36,7 +35,6 @@ using Dijkstra.NET.Extensions;
 using IndoorNavigation.Models;
 using System.Linq;
 using System;
-using GeoCoordinatePortable;
 
 namespace IndoorNavigation.Modules.Navigation
 {
@@ -69,9 +67,9 @@ namespace IndoorNavigation.Modules.Navigation
                 // Get the distance of two locations which in centimeter
                 int distance = System.Convert.ToInt32(
                     locationConnect.BeaconA.Coordinates
-                    .GetDistanceTo(locationConnect.BeaconB.Coordinates) * 100);
+                    .GetDistanceTo(locationConnect.BeaconB.Coordinates)*100);
 
-                // Get two connected location's key value
+                // Get two connected location's key vaule
                 uint beaconAKey = navigraph.Where(BeaconGroup =>
                         BeaconGroup.Item == locationConnect.BeaconA)
                         .Select(BeaconGroup => BeaconGroup.Key).First();
@@ -80,16 +78,8 @@ namespace IndoorNavigation.Modules.Navigation
                         .Select(BeaconGroup => BeaconGroup.Key).First();
 
                 // Connect the waypoint
-                if (locationConnect.IsTwoWay)
-                {
-                    navigraph.Connect(beaconAKey, beaconBKey,
-                                        distance, string.Empty);
-                    navigraph.Connect(beaconBKey, beaconAKey,
-                                        distance, string.Empty);
-                }
-                else
-                    navigraph.Connect(beaconAKey, beaconBKey,
-                                        distance, string.Empty);
+                navigraph.Connect(beaconAKey, beaconBKey,
+                    distance, string.Empty);
             }
         }
 
@@ -103,24 +93,25 @@ namespace IndoorNavigation.Modules.Navigation
             Beacon StartBeacon, WaypointModel EndWaypoint)
         {
             // Find where is the the start beacon and find the key vaule
-            uint startPointKey = navigraph
+            uint startPoingKey = navigraph
                 .Where(BeaconGroup => BeaconGroup.Item.Beacons
                 .Contains(StartBeacon)).Select(c => c.Key).First();
             uint endPointKey = navigraph
                 .Where(c => c.Item == EndWaypoint).Select(c => c.Key).First();
             // Get the optimal path
-            var path = navigraph.Dijkstra(startPointKey,
+            var path = navigraph.Dijkstra(startPoingKey, 
                                             endPointKey).GetPath();
 
-            Queue<NextStepModel> pathQueue = new Queue<NextStepModel>();
+            Queue<NextStepModel> pathQueue =
+                new Queue<NextStepModel>();
             // Compute the angle to the next location
             for (int i = 0; i < path.Count() - 1; i++)
             {
                 // Get the current location and next location
-                WaypointModel currentWaypoint =
+                WaypointModel currentWaypoint = 
                                 navigraph[path.ToList()[i]].Item;
                 WaypointModel nextWaypoint =
-                                navigraph[path.ToList()[i + 1]].Item;
+                                 navigraph[path.ToList()[i + 1]].Item;
 
                 // If i=0, it represented that it needs to compute the initial
                 // direction fo start point
@@ -140,7 +131,7 @@ namespace IndoorNavigation.Modules.Navigation
                     // LBeacon to show the initial direction
                     //// Check the starting point if is under the LBeacon
                     //// There is a sign on LBeacon to show the user where is
-                    //// the direction to face first. 
+                    //// the diresction to face first. 
                     //if (StartBeacon.GetType() == typeof(LBeaconModel))
                     //    pathQueue.Enqueue(new NextInstructionModel
                     //    {
@@ -171,8 +162,7 @@ namespace IndoorNavigation.Modules.Navigation
                         previousWaypoint.Coordinates,
                         nextWaypoint.Coordinates);
 
-                    pathQueue.Enqueue(new NextStepModel
-                    {
+                    pathQueue.Enqueue(new NextStepModel {
                         NextWaypoint = nextWaypoint,
                         Angle = angle
                     });
@@ -204,18 +194,18 @@ namespace IndoorNavigation.Modules.Navigation
             // Check the current location whether is connected to the
             // previous location. If the user skips more than two location,
             // the previous location is useless.
-            if (!locationConnects.Any(c =>
-            (c.BeaconA == navigraph[startPoingKey].Item &&
+            if (this.locationConnects.Where(c =>
+            (c.BeaconA == navigraph[startPoingKey].Item && 
             c.BeaconB == PreviousWaypoint) ||
-            (c.BeaconA == PreviousWaypoint &&
-            c.BeaconB == navigraph[startPoingKey].Item)))
-            {
-                throw new ArgumentException("The current waypoint is " +
-                    "independent of the previous waypoint.");
-            }
+            (c.BeaconA == PreviousWaypoint && 
+            c.BeaconB == navigraph[startPoingKey].Item))
+            .Count() == 0)
+                throw new ArgumentException(
+                    "The current point is independent of the previous point."
+                    );
 
             // Get the optimal path
-            var path = navigraph.Dijkstra(startPoingKey,
+            var path = navigraph.Dijkstra(startPoingKey, 
                                             endPointKey).GetPath();
 
             Queue<NextStepModel> pathQueue = new Queue<NextStepModel>();
@@ -224,9 +214,9 @@ namespace IndoorNavigation.Modules.Navigation
             for (int i = 0; i < path.Count() - 1; i++)
             {
                 // Acquire the current and next waypoint
-                WaypointModel currentWaypoint =
+                WaypointModel currentWaypoint = 
                                 navigraph[path.ToList()[i]].Item;
-                WaypointModel nextWaypoint =
+                WaypointModel nextWaypoint = 
                                 navigraph[path.ToList()[i + 1]].Item;
 
                 if (i == 0)
@@ -253,8 +243,7 @@ namespace IndoorNavigation.Modules.Navigation
                         PreviousWaypoint.Coordinates,
                         nextWaypoint.Coordinates
                         );
-                    pathQueue.Enqueue(new NextStepModel
-                    {
+                    pathQueue.Enqueue(new NextStepModel {
                         NextWaypoint = nextWaypoint,
                         Angle = angle
                     });
@@ -263,85 +252,5 @@ namespace IndoorNavigation.Modules.Navigation
 
             return pathQueue;
         }
-
-        /* Find error point by using tree search within threshold distance */
-        /*
-        /// <summary>
-        /// Get the beacon list for beacon scanning 
-        /// </summary>
-        public List<List<Guid>> GetScanList(
-                                    List<NextStepModel> NavigationPath,
-                                    double ThresholdDistance)
-        {
-            List<List<Guid>> returnedList = new List<List<Guid>>();
-
-            List<Guid> _tempGuidList;
-            for (int i = 0; i < NavigationPath.Count - 1; i++)
-            {
-                _tempGuidList = new List<Guid>();
-
-                //find the branch that is both connect with current step node
-                //but not connect with next step node
-                var adjacentBeacons = GetConnectedBeacons(NavigationPath[i].NextWaypoint.Beacons,
-                                                          NavigationPath, i);
-
-                //add the previous beacon to _tempGuidList
-                if (i != 0)
-                    _tempGuidList.Add(NavigationPath[i - 1].NextWaypoint.Beacons[0].UUID);
-
-                for (int j = 0; j < adjacentBeacons.Count(); j++)
-                {
-                    if (NavigationPath[i].NextWaypoint.Beacons[0].GetCoordinates().GetDistanceTo(
-                        adjacentBeacons.ElementAt(j)[0].GetCoordinates()) >= ThresholdDistance)
-                    {
-                        _tempGuidList.AddRange(from beacon in adjacentBeacons.ElementAt(j)
-                                               select beacon.UUID);
-                    }
-                    else
-                    {
-                        IEnumerable<List<Beacon>> connectedBeacon = GetConnectedBeacons(adjacentBeacons.ElementAt(j), NavigationPath, i);
-
-                        if (connectedBeacon.Any())
-                        {
-                            //remove the connected beacons that included in 
-                            //the adjacentBeacons list
-                            adjacentBeacons = adjacentBeacons.Concat(from beaconList in connectedBeacon
-                                                                     where !beaconList.Intersect(adjacentBeacons.SelectMany(list => list)).Any()
-                                                                     select beaconList);
-                        }
-                    }
-                }
-
-                returnedList.Add(_tempGuidList.Distinct().ToList());
-            }
-
-            return returnedList;
-        }
-
-        /// <summary>
-        /// Get the beacon which is connect with
-        /// </summary>
-        private IEnumerable<List<Beacon>> GetConnectedBeacons(List<Beacon> previousConnectedBeacon, 
-                                                              List<NextStepModel> navigationPath, int indexOfPath)
-        {
-            var returnedList = (from locationConnect in Utility.LocationConnects
-                                where locationConnect.BeaconA.Beacons.Intersect(previousConnectedBeacon).Any() &&
-                                      !locationConnect.BeaconB.Beacons.Intersect(navigationPath[indexOfPath].NextWaypoint.Beacons).Any() &&
-                                      !locationConnect.BeaconB.Beacons.Intersect(navigationPath[indexOfPath + 1].NextWaypoint.Beacons).Any()
-                                select locationConnect.BeaconB.Beacons).
-                               Concat(from locationConnect in Utility.LocationConnects
-                                      where locationConnect.BeaconB.Beacons.Intersect(previousConnectedBeacon).Any() &&
-                                            !locationConnect.BeaconA.Beacons.Intersect(navigationPath[indexOfPath].NextWaypoint.Beacons).Any() &&
-                                            !locationConnect.BeaconA.Beacons.Intersect(navigationPath[indexOfPath + 1].NextWaypoint.Beacons).Any()
-                                      select locationConnect.BeaconA.Beacons);
-
-            //filter the beacon which is from previous step
-            if (indexOfPath != 0)
-                returnedList = returnedList.Where(b => !b.Intersect(navigationPath[indexOfPath - 1].NextWaypoint.Beacons).Any());
-
-            return returnedList;
-        }
-        */
-
     }
 }

@@ -508,181 +508,181 @@ namespace IndoorNavigationTest
                 {
                     BeaconA = beaconGroups.Where(c => c.Name == "A1F").First(),
                     BeaconB = beaconGroups.Where(c => c.Name == "B1F").First(),
-                    IsTwoWay = true
+                    Target = "電視"
                 },
                 new LocationConnectModel
                 {
                     BeaconA = beaconGroups.Where(c => c.Name == "B1F").First(),
                     BeaconB = beaconGroups.Where(c => c.Name == "C1F").First(),
-                    IsTwoWay = true
+                    Target = "警察局"
                 },
                 new LocationConnectModel
                 {
                     BeaconA = beaconGroups.Where(c => c.Name == "C1F").First(),
                     BeaconB = beaconGroups.Where(c => c.Name == "D1F").First(),
-                    IsTwoWay = true
+                    Target = "廁所"
                 },
                 new LocationConnectModel
                 {
                     BeaconA = beaconGroups.Where(c => c.Name == "D1F").First(),
                     BeaconB = beaconGroups.Where(c => c.Name == "E1F").First(),
-                    IsTwoWay = true
+                    Target = "教室"
                 },
                 new LocationConnectModel
                 {
                     BeaconA = beaconGroups.Where(c => c.Name == "E1F").First(),
                     BeaconB = beaconGroups.Where(c => c.Name == "F1F").First(),
-                    IsTwoWay = true
+                    Target = string.Empty
                 },
                 new LocationConnectModel
                 {
                     BeaconA = beaconGroups.Where(c => c.Name == "F1F").First(),
                     BeaconB = beaconGroups.Where(c => c.Name == "L1F").First(),
-                    IsTwoWay = true
+                    Target = string.Empty
                 },
                 new LocationConnectModel
                 {
                     BeaconA = beaconGroups.Where(c => c.Name == "L1F").First(),
                     BeaconB = beaconGroups.Where(c => c.Name == "K1F").First(),
-                    IsTwoWay = true
+                    Target = "市政府"
                 },
                 new LocationConnectModel
                 {
                     BeaconA = beaconGroups.Where(c => c.Name == "K1F").First(),
                     BeaconB = beaconGroups.Where(c => c.Name == "J1F").First(),
-                    IsTwoWay = true
+                    Target = "樓梯"
                 },
                 new LocationConnectModel
                 {
                     BeaconA = beaconGroups.Where(c => c.Name == "J1F").First(),
                     BeaconB = beaconGroups.Where(c => c.Name == "I1F").First(),
-                    IsTwoWay = true
+                    Target = "走廊"
                 },
                 new LocationConnectModel
                 {
                     BeaconA = beaconGroups.Where(c => c.Name == "I1F").First(),
                     BeaconB = beaconGroups.Where(c => c.Name == "H1F").First(),
-                    IsTwoWay = true
+                    Target = "辦公室"
                 },
                 new LocationConnectModel
                 {
                     BeaconA = beaconGroups.Where(c => c.Name == "H1F").First(),
                     BeaconB = beaconGroups.Where(c => c.Name == "G1F").First(),
-                    IsTwoWay = true
+                    Target = "7-11"
                 },
                 new LocationConnectModel
                 {
                     BeaconA = beaconGroups.Where(c => c.Name == "G1F").First(),
                     BeaconB = beaconGroups.Where(c => c.Name == "D1F").First(),
-                    IsTwoWay = true
+                    Target = "交流道"
                 },
                 new LocationConnectModel
                 {
                     BeaconA = beaconGroups.Where(c => c.Name == "A1F").First(),
                     BeaconB = beaconGroups.Where(c => c.Name == "M").First(),
-                    IsTwoWay = true
+                    Target = "肯德基"
                 },
                 new LocationConnectModel
                 {
                     BeaconA = beaconGroups.Where(c => c.Name == "A2F").First(),
                     BeaconB = beaconGroups.Where(c => c.Name == "M").First(),
-                    IsTwoWay = true
+                    Target = "原價屋"
                 },
                 new LocationConnectModel
                 {
                     BeaconA = beaconGroups.Where(c => c.Name == "H1F").First(),
                     BeaconB = beaconGroups.Where(c => c.Name == "N").First(),
-                    IsTwoWay = true
+                    Target = string.Empty
                 },
                 new LocationConnectModel
                 {
                     BeaconA = beaconGroups.Where(c => c.Name == "H2F").First(),
                     BeaconB = beaconGroups.Where(c => c.Name == "N").First(),
-                    IsTwoWay = true
+                    Target = string.Empty
                 },
                 new LocationConnectModel
                 {
                     BeaconA = beaconGroups.Where(c => c.Name == "F1F").First(),
                     BeaconB = beaconGroups.Where(c => c.Name == "O").First(),
-                    IsTwoWay = true
+                    Target = string.Empty
                 },
                 new LocationConnectModel
                 {
                     BeaconA = beaconGroups.Where(c => c.Name == "F2F").First(),
                     BeaconB = beaconGroups.Where(c => c.Name == "O").First(),
-                    IsTwoWay = true
+                    Target = "學校"
                 },
                 new LocationConnectModel
                 {
                     BeaconA = beaconGroups.Where(c => c.Name == "A2F").First(),
                     BeaconB = beaconGroups.Where(c => c.Name == "B2F").First(),
-                    IsTwoWay = true
+                    Target = "中研院"
                 },
                 new LocationConnectModel
                 {
                     BeaconA = beaconGroups.Where(c => c.Name == "B2F").First(),
                     BeaconB = beaconGroups.Where(c => c.Name == "C2F").First(),
-                    IsTwoWay = true
+                    Target = "派出所"
                 },
                 new LocationConnectModel
                 {
                     BeaconA = beaconGroups.Where(c => c.Name == "C2F").First(),
                     BeaconB = beaconGroups.Where(c => c.Name == "D2F").First(),
-                    IsTwoWay = true
+                    Target = "Google"
                 },
                 new LocationConnectModel
                 {
                     BeaconA = beaconGroups.Where(c => c.Name == "D2F").First(),
                     BeaconB = beaconGroups.Where(c => c.Name == "E2F").First(),
-                    IsTwoWay = true
+                    Target = string.Empty
                 },
                 new LocationConnectModel
                 {
                     BeaconA = beaconGroups.Where(c => c.Name == "E2F").First(),
                     BeaconB = beaconGroups.Where(c => c.Name == "F2F").First(),
-                    IsTwoWay = true
+                    Target = "Yahoo"
                 },
                 new LocationConnectModel
                 {
                     BeaconA = beaconGroups.Where(c => c.Name == "F2F").First(),
                     BeaconB = beaconGroups.Where(c => c.Name == "L2F").First(),
-                    IsTwoWay = true
+                    Target = "Apple"
                 },
                 new LocationConnectModel
                 {
                     BeaconA = beaconGroups.Where(c => c.Name == "L2F").First(),
                     BeaconB = beaconGroups.Where(c => c.Name == "K2F").First(),
-                    IsTwoWay = true
+                    Target = string.Empty
                 },
                 new LocationConnectModel
                 {
                     BeaconA = beaconGroups.Where(c => c.Name == "K2F").First(),
                     BeaconB = beaconGroups.Where(c => c.Name == "J2F").First(),
-                    IsTwoWay = true
+                    Target = string.Empty
                 },
                 new LocationConnectModel
                 {
                     BeaconA = beaconGroups.Where(c => c.Name == "J2F").First(),
                     BeaconB = beaconGroups.Where(c => c.Name == "I2F").First(),
-                    IsTwoWay = true
+                    Target = "公車站"
                 },
                 new LocationConnectModel
                 {
                     BeaconA = beaconGroups.Where(c => c.Name == "I2F").First(),
                     BeaconB = beaconGroups.Where(c => c.Name == "H2F").First(),
-                    IsTwoWay = true
+                    Target = "捷運站"
                 },
                 new LocationConnectModel
                 {
                     BeaconA = beaconGroups.Where(c => c.Name == "H2F").First(),
                     BeaconB = beaconGroups.Where(c => c.Name == "G2F").First(),
-                    IsTwoWay = true
+                    Target = "總統府"
                 },
                 new LocationConnectModel
                 {
                     BeaconA = beaconGroups.Where(c => c.Name == "G2F").First(),
                     BeaconB = beaconGroups.Where(c => c.Name == "D2F").First(),
-                    IsTwoWay = true
+                    Target = "101"
                 }
             };
 

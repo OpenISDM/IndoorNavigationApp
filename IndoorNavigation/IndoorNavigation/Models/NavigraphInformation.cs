@@ -88,9 +88,9 @@ namespace IndoorNavigation.Models
     public abstract class LocationConnect
     {
         /// <summary>
-        /// Is it a two ways path?
+        /// Indicates the name of the target which is facing
         /// </summary>
-        public bool IsTwoWay { get; set; }
+        public string Target { get; set; }
     }
 
     /// <summary>

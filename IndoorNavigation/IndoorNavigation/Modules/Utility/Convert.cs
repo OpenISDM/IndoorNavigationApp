@@ -119,7 +119,7 @@ namespace IndoorNavigation
 
             try
             {
-                JObject json =
+                JObject json = 
                     JsonConvert.DeserializeObject<JObject>(JsonString);
 
                 // Aquire information of LBeacon
@@ -152,7 +152,7 @@ namespace IndoorNavigation
         /// <returns></returns>
         public static List<WaypointModel> ToBeaconGroup(
             this List<BeaconGroupModelForNavigraphFile> BeaconGroups,
-            Dictionary<Guid, Beacon> Beacons)
+            Dictionary<Guid,Beacon> Beacons)
         {
             return BeaconGroups.Select(BeaconGroup => new WaypointModel
             {
@@ -178,11 +178,11 @@ namespace IndoorNavigation
             return LocationConnects.Select(LocationConnect =>
             new LocationConnectModel
             {
-                BeaconA = BeaconGroups.First(BeaconGroup =>
-                    BeaconGroup.Id == LocationConnect.BeaconA),
-                BeaconB = BeaconGroups.First(BeaconGroup =>
-                    BeaconGroup.Id == LocationConnect.BeaconB),
-                IsTwoWay = LocationConnect.IsTwoWay
+                BeaconA = BeaconGroups.Where(BeaconGroup =>
+                    BeaconGroup.Id == LocationConnect.BeaconA).First(),
+                BeaconB = BeaconGroups.Where(BeaconGroup =>
+                    BeaconGroup.Id == LocationConnect.BeaconB).First(),
+                Target = LocationConnect.Target
             }).ToList();
         }
 
