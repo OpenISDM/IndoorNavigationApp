@@ -57,7 +57,7 @@ namespace IndoorNavigation.Modules.SignalProcessingAlgorithms
         {
             // this List used to save the mean value of signals
             List<BeaconSignal> signalAverageList =
-                    new List<BeaconSignal>();
+                new List<BeaconSignal>();
             // remove the obsolete data from buffer
             List<BeaconSignalModel> removeSignalBuffer =
                 new List<BeaconSignalModel>();
@@ -65,7 +65,7 @@ namespace IndoorNavigation.Modules.SignalProcessingAlgorithms
             lock (bufferLock)
             {
                 removeSignalBuffer.AddRange(
-                beaconSignalBuffer.Where(c =>
+                    beaconSignalBuffer.Where(c =>
                     c.Timestamp < DateTime.Now.AddMilliseconds(-1000)));
 
                 foreach (var obsoleteBeaconSignal in removeSignalBuffer)
