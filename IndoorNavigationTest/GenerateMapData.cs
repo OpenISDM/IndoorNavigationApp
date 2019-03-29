@@ -506,182 +506,182 @@ namespace IndoorNavigationTest
             {
                 new LocationConnectModel
                 {
-                    BeaconA = beaconGroups.Where(c => c.Name == "A1F").First(),
-                    BeaconB = beaconGroups.Where(c => c.Name == "B1F").First(),
+                    SourceWaypoint = beaconGroups.Where(c => c.Name == "A1F").First(),
+                    TargetWaypoint = beaconGroups.Where(c => c.Name == "B1F").First(),
                     Target = "電視"
                 },
                 new LocationConnectModel
                 {
-                    BeaconA = beaconGroups.Where(c => c.Name == "B1F").First(),
-                    BeaconB = beaconGroups.Where(c => c.Name == "C1F").First(),
+                    SourceWaypoint = beaconGroups.Where(c => c.Name == "B1F").First(),
+                    TargetWaypoint = beaconGroups.Where(c => c.Name == "C1F").First(),
                     Target = "警察局"
                 },
                 new LocationConnectModel
                 {
-                    BeaconA = beaconGroups.Where(c => c.Name == "C1F").First(),
-                    BeaconB = beaconGroups.Where(c => c.Name == "D1F").First(),
+                    SourceWaypoint = beaconGroups.Where(c => c.Name == "C1F").First(),
+                    TargetWaypoint = beaconGroups.Where(c => c.Name == "D1F").First(),
                     Target = "廁所"
                 },
                 new LocationConnectModel
                 {
-                    BeaconA = beaconGroups.Where(c => c.Name == "D1F").First(),
-                    BeaconB = beaconGroups.Where(c => c.Name == "E1F").First(),
+                    SourceWaypoint = beaconGroups.Where(c => c.Name == "D1F").First(),
+                    TargetWaypoint = beaconGroups.Where(c => c.Name == "E1F").First(),
                     Target = "教室"
                 },
                 new LocationConnectModel
                 {
-                    BeaconA = beaconGroups.Where(c => c.Name == "E1F").First(),
-                    BeaconB = beaconGroups.Where(c => c.Name == "F1F").First(),
+                    SourceWaypoint = beaconGroups.Where(c => c.Name == "E1F").First(),
+                    TargetWaypoint = beaconGroups.Where(c => c.Name == "F1F").First(),
                     Target = string.Empty
                 },
                 new LocationConnectModel
                 {
-                    BeaconA = beaconGroups.Where(c => c.Name == "F1F").First(),
-                    BeaconB = beaconGroups.Where(c => c.Name == "L1F").First(),
+                    SourceWaypoint = beaconGroups.Where(c => c.Name == "F1F").First(),
+                    TargetWaypoint = beaconGroups.Where(c => c.Name == "L1F").First(),
                     Target = string.Empty
                 },
                 new LocationConnectModel
                 {
-                    BeaconA = beaconGroups.Where(c => c.Name == "L1F").First(),
-                    BeaconB = beaconGroups.Where(c => c.Name == "K1F").First(),
+                    SourceWaypoint = beaconGroups.Where(c => c.Name == "L1F").First(),
+                    TargetWaypoint = beaconGroups.Where(c => c.Name == "K1F").First(),
                     Target = "市政府"
                 },
                 new LocationConnectModel
                 {
-                    BeaconA = beaconGroups.Where(c => c.Name == "K1F").First(),
-                    BeaconB = beaconGroups.Where(c => c.Name == "J1F").First(),
+                    SourceWaypoint = beaconGroups.Where(c => c.Name == "K1F").First(),
+                    TargetWaypoint = beaconGroups.Where(c => c.Name == "J1F").First(),
                     Target = "樓梯"
                 },
                 new LocationConnectModel
                 {
-                    BeaconA = beaconGroups.Where(c => c.Name == "J1F").First(),
-                    BeaconB = beaconGroups.Where(c => c.Name == "I1F").First(),
+                    SourceWaypoint = beaconGroups.Where(c => c.Name == "J1F").First(),
+                    TargetWaypoint = beaconGroups.Where(c => c.Name == "I1F").First(),
                     Target = "走廊"
                 },
                 new LocationConnectModel
                 {
-                    BeaconA = beaconGroups.Where(c => c.Name == "I1F").First(),
-                    BeaconB = beaconGroups.Where(c => c.Name == "H1F").First(),
+                    SourceWaypoint = beaconGroups.Where(c => c.Name == "I1F").First(),
+                    TargetWaypoint = beaconGroups.Where(c => c.Name == "H1F").First(),
                     Target = "辦公室"
                 },
                 new LocationConnectModel
                 {
-                    BeaconA = beaconGroups.Where(c => c.Name == "H1F").First(),
-                    BeaconB = beaconGroups.Where(c => c.Name == "G1F").First(),
+                    SourceWaypoint = beaconGroups.Where(c => c.Name == "H1F").First(),
+                    TargetWaypoint = beaconGroups.Where(c => c.Name == "G1F").First(),
                     Target = "7-11"
                 },
                 new LocationConnectModel
                 {
-                    BeaconA = beaconGroups.Where(c => c.Name == "G1F").First(),
-                    BeaconB = beaconGroups.Where(c => c.Name == "D1F").First(),
+                    SourceWaypoint = beaconGroups.Where(c => c.Name == "G1F").First(),
+                    TargetWaypoint = beaconGroups.Where(c => c.Name == "D1F").First(),
                     Target = "交流道"
                 },
                 new LocationConnectModel
                 {
-                    BeaconA = beaconGroups.Where(c => c.Name == "A1F").First(),
-                    BeaconB = beaconGroups.Where(c => c.Name == "M").First(),
+                    SourceWaypoint = beaconGroups.Where(c => c.Name == "A1F").First(),
+                    TargetWaypoint = beaconGroups.Where(c => c.Name == "M").First(),
                     Target = "肯德基"
                 },
                 new LocationConnectModel
                 {
-                    BeaconA = beaconGroups.Where(c => c.Name == "A2F").First(),
-                    BeaconB = beaconGroups.Where(c => c.Name == "M").First(),
+                    SourceWaypoint = beaconGroups.Where(c => c.Name == "A2F").First(),
+                    TargetWaypoint = beaconGroups.Where(c => c.Name == "M").First(),
                     Target = "原價屋"
                 },
                 new LocationConnectModel
                 {
-                    BeaconA = beaconGroups.Where(c => c.Name == "H1F").First(),
-                    BeaconB = beaconGroups.Where(c => c.Name == "N").First(),
+                    SourceWaypoint = beaconGroups.Where(c => c.Name == "H1F").First(),
+                    TargetWaypoint = beaconGroups.Where(c => c.Name == "N").First(),
                     Target = string.Empty
                 },
                 new LocationConnectModel
                 {
-                    BeaconA = beaconGroups.Where(c => c.Name == "H2F").First(),
-                    BeaconB = beaconGroups.Where(c => c.Name == "N").First(),
+                    SourceWaypoint = beaconGroups.Where(c => c.Name == "H2F").First(),
+                    TargetWaypoint = beaconGroups.Where(c => c.Name == "N").First(),
                     Target = string.Empty
                 },
                 new LocationConnectModel
                 {
-                    BeaconA = beaconGroups.Where(c => c.Name == "F1F").First(),
-                    BeaconB = beaconGroups.Where(c => c.Name == "O").First(),
+                    SourceWaypoint = beaconGroups.Where(c => c.Name == "F1F").First(),
+                    TargetWaypoint = beaconGroups.Where(c => c.Name == "O").First(),
                     Target = string.Empty
                 },
                 new LocationConnectModel
                 {
-                    BeaconA = beaconGroups.Where(c => c.Name == "F2F").First(),
-                    BeaconB = beaconGroups.Where(c => c.Name == "O").First(),
+                    SourceWaypoint = beaconGroups.Where(c => c.Name == "F2F").First(),
+                    TargetWaypoint = beaconGroups.Where(c => c.Name == "O").First(),
                     Target = "學校"
                 },
                 new LocationConnectModel
                 {
-                    BeaconA = beaconGroups.Where(c => c.Name == "A2F").First(),
-                    BeaconB = beaconGroups.Where(c => c.Name == "B2F").First(),
+                    SourceWaypoint = beaconGroups.Where(c => c.Name == "A2F").First(),
+                    TargetWaypoint = beaconGroups.Where(c => c.Name == "B2F").First(),
                     Target = "中研院"
                 },
                 new LocationConnectModel
                 {
-                    BeaconA = beaconGroups.Where(c => c.Name == "B2F").First(),
-                    BeaconB = beaconGroups.Where(c => c.Name == "C2F").First(),
+                    SourceWaypoint = beaconGroups.Where(c => c.Name == "B2F").First(),
+                    TargetWaypoint = beaconGroups.Where(c => c.Name == "C2F").First(),
                     Target = "派出所"
                 },
                 new LocationConnectModel
                 {
-                    BeaconA = beaconGroups.Where(c => c.Name == "C2F").First(),
-                    BeaconB = beaconGroups.Where(c => c.Name == "D2F").First(),
+                    SourceWaypoint = beaconGroups.Where(c => c.Name == "C2F").First(),
+                    TargetWaypoint = beaconGroups.Where(c => c.Name == "D2F").First(),
                     Target = "Google"
                 },
                 new LocationConnectModel
                 {
-                    BeaconA = beaconGroups.Where(c => c.Name == "D2F").First(),
-                    BeaconB = beaconGroups.Where(c => c.Name == "E2F").First(),
+                    SourceWaypoint = beaconGroups.Where(c => c.Name == "D2F").First(),
+                    TargetWaypoint = beaconGroups.Where(c => c.Name == "E2F").First(),
                     Target = string.Empty
                 },
                 new LocationConnectModel
                 {
-                    BeaconA = beaconGroups.Where(c => c.Name == "E2F").First(),
-                    BeaconB = beaconGroups.Where(c => c.Name == "F2F").First(),
+                    SourceWaypoint = beaconGroups.Where(c => c.Name == "E2F").First(),
+                    TargetWaypoint = beaconGroups.Where(c => c.Name == "F2F").First(),
                     Target = "Yahoo"
                 },
                 new LocationConnectModel
                 {
-                    BeaconA = beaconGroups.Where(c => c.Name == "F2F").First(),
-                    BeaconB = beaconGroups.Where(c => c.Name == "L2F").First(),
+                    SourceWaypoint = beaconGroups.Where(c => c.Name == "F2F").First(),
+                    TargetWaypoint = beaconGroups.Where(c => c.Name == "L2F").First(),
                     Target = "Apple"
                 },
                 new LocationConnectModel
                 {
-                    BeaconA = beaconGroups.Where(c => c.Name == "L2F").First(),
-                    BeaconB = beaconGroups.Where(c => c.Name == "K2F").First(),
+                    SourceWaypoint = beaconGroups.Where(c => c.Name == "L2F").First(),
+                    TargetWaypoint = beaconGroups.Where(c => c.Name == "K2F").First(),
                     Target = string.Empty
                 },
                 new LocationConnectModel
                 {
-                    BeaconA = beaconGroups.Where(c => c.Name == "K2F").First(),
-                    BeaconB = beaconGroups.Where(c => c.Name == "J2F").First(),
+                    SourceWaypoint = beaconGroups.Where(c => c.Name == "K2F").First(),
+                    TargetWaypoint = beaconGroups.Where(c => c.Name == "J2F").First(),
                     Target = string.Empty
                 },
                 new LocationConnectModel
                 {
-                    BeaconA = beaconGroups.Where(c => c.Name == "J2F").First(),
-                    BeaconB = beaconGroups.Where(c => c.Name == "I2F").First(),
+                    SourceWaypoint = beaconGroups.Where(c => c.Name == "J2F").First(),
+                    TargetWaypoint = beaconGroups.Where(c => c.Name == "I2F").First(),
                     Target = "公車站"
                 },
                 new LocationConnectModel
                 {
-                    BeaconA = beaconGroups.Where(c => c.Name == "I2F").First(),
-                    BeaconB = beaconGroups.Where(c => c.Name == "H2F").First(),
+                    SourceWaypoint = beaconGroups.Where(c => c.Name == "I2F").First(),
+                    TargetWaypoint = beaconGroups.Where(c => c.Name == "H2F").First(),
                     Target = "捷運站"
                 },
                 new LocationConnectModel
                 {
-                    BeaconA = beaconGroups.Where(c => c.Name == "H2F").First(),
-                    BeaconB = beaconGroups.Where(c => c.Name == "G2F").First(),
+                    SourceWaypoint = beaconGroups.Where(c => c.Name == "H2F").First(),
+                    TargetWaypoint = beaconGroups.Where(c => c.Name == "G2F").First(),
                     Target = "總統府"
                 },
                 new LocationConnectModel
                 {
-                    BeaconA = beaconGroups.Where(c => c.Name == "G2F").First(),
-                    BeaconB = beaconGroups.Where(c => c.Name == "D2F").First(),
+                    SourceWaypoint = beaconGroups.Where(c => c.Name == "G2F").First(),
+                    TargetWaypoint = beaconGroups.Where(c => c.Name == "D2F").First(),
                     Target = "101"
                 }
             };

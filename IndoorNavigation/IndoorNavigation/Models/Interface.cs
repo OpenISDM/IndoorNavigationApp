@@ -76,6 +76,10 @@ namespace IndoorNavigation.Models
         /// The center coordinate of the group
         /// </summary>
         GeoCoordinates Coordinates { get; }
+        /// <summary>
+        /// The floor of the group
+        /// </summary>
+        float Floor { get; }
     }
 
     /// <summary>
@@ -98,11 +102,11 @@ namespace IndoorNavigation.Models
         /// <summary>
         /// Location A
         /// </summary>
-        WaypointModel BeaconA { get; set; }
+        WaypointModel SourceWaypoint { get; set; }
         /// <summary>
         /// Location B
         /// </summary>
-        WaypointModel BeaconB { get; set; }
+        WaypointModel TargetWaypoint { get; set; }
     }
 
     /// <summary>

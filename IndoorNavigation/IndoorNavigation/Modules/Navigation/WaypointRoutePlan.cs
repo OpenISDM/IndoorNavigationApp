@@ -66,15 +66,15 @@ namespace IndoorNavigation.Modules.Navigation
             {
                 // Get the distance of two locations which in centimeter
                 int distance = System.Convert.ToInt32(
-                    locationConnect.BeaconA.Coordinates
-                    .GetDistanceTo(locationConnect.BeaconB.Coordinates)*100);
+                    locationConnect.SourceWaypoint.Coordinates
+                    .GetDistanceTo(locationConnect.TargetWaypoint.Coordinates)*100);
 
                 // Get two connected location's key vaule
                 uint beaconAKey = navigraph.Where(BeaconGroup =>
-                        BeaconGroup.Item == locationConnect.BeaconA)
+                        BeaconGroup.Item == locationConnect.SourceWaypoint)
                         .Select(BeaconGroup => BeaconGroup.Key).First();
                 uint beaconBKey = navigraph.Where(BeaconGroup =>
-                        BeaconGroup.Item == locationConnect.BeaconB)
+                        BeaconGroup.Item == locationConnect.TargetWaypoint)
                         .Select(BeaconGroup => BeaconGroup.Key).First();
 
                 // Connect the waypoint
@@ -195,10 +195,10 @@ namespace IndoorNavigation.Modules.Navigation
             // previous location. If the user skips more than two location,
             // the previous location is useless.
             if (this.locationConnects.Where(c =>
-            (c.BeaconA == navigraph[startPoingKey].Item && 
-            c.BeaconB == PreviousWaypoint) ||
-            (c.BeaconA == PreviousWaypoint && 
-            c.BeaconB == navigraph[startPoingKey].Item))
+            (c.SourceWaypoint == navigraph[startPoingKey].Item && 
+            c.TargetWaypoint == PreviousWaypoint) ||
+            (c.SourceWaypoint == PreviousWaypoint && 
+            c.TargetWaypoint == navigraph[startPoingKey].Item))
             .Count() == 0)
                 throw new ArgumentException(
                     "The current point is independent of the previous point."

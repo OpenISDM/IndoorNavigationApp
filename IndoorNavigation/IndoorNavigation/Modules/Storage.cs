@@ -81,26 +81,31 @@ namespace IndoorNavigation.Modules
             try
             {
                 // Convert corresponding data of LBeacon
-                JObject data =
-                    JsonConvert.DeserializeObject<JObject>(LoadFile(Place));
+                List<NaviGraph> naviGraphs = JsonConvert
+                    .DeserializeObject<List<NaviGraph>>(LoadFile(Place));
 
-                // Convert the JSON to element 
-                string beaconJson = data["Beacon"].ToString();
-                Utility.BeaconsDict =
-                    beaconJson.ToBeacons().ToDictionary(beacon =>beacon.UUID);
-                Utility.Waypoints = JsonConvert.DeserializeObject
-                    <List<BeaconGroupModelForNavigraphFile>>
-                    (data["BeaconGroup"].ToString())
-                    .ToBeaconGroup(Utility.BeaconsDict);
-                Utility.LocationConnects = JsonConvert.DeserializeObject
-                    <List<LocationConnectModelForNavigraphFile>>
-                    (data["LocationConnect"].ToString())
-                    .ToLocationConnect(Utility.Waypoints);
+                List<Region> regions = naviGraphs
+                    .SelectMany(naviGraph => naviGraph.Regions)
+                    .ToList();
 
-                // Initialize path planning and the data for setting navigraph
-                Utility.WaypointRoute = new Navigation.WaypointRoutePlan(
-                    Utility.Waypoints,
-                    Utility.LocationConnects);
+                Utility.BeaconsDict = 
+                    regions.SelectMany(region => region.LBeacons)
+                        .Select(Lbeacon => Lbeacon as Beacon)
+                        .ToDictionary(beacon => beacon.UUID);
+
+                Utility.Waypoints = 
+                    regions.SelectMany(region => region.Waypoints)
+                        .Select(waypoint => new WaypointModel
+                        {
+                            Id = waypoint.Id,
+                            Name = waypoint.Name,
+                            Beacons = Utility.BeaconsDict.Values
+                                .Where(beacon => waypoint.Beacons
+                                                    .Contains(beacon.UUID))
+                                .Select(Lbeacon => Lbeacon as Beacon).ToList()
+                        }).ToList();
+
+                Utility.LocationConnects = regions.SelectMany(region => region.Waypoints).SelectMany(waypointNavigraphFile => waypointNavigraphFile.Neighbors.Select(neighbor => new LocationConnectModel { Target = neighbor.Target, SourceWaypoint = Utility.Waypoints.First(waypoint => waypoint.Id == waypointNavigraphFile.Id), TargetWaypoint = Utility.Waypoints.First(waypoint => waypoint.Id == neighbor.TargetWaypointId) })).ToList();
 
                 return true;
             }

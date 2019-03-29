@@ -88,13 +88,7 @@ namespace IndoorNavigationTest
         {
             Debug.WriteLine("MapStorageAccessAndMapDataConvertTest start.");
 
-            var MapJson = JsonConvert.SerializeObject(
-                new
-                {
-                    Beacon = Utility.BeaconsDict.Values.ToList().ToJsonObject(),
-                    BeaconGroup = Utility.Waypoints.ToJsonArray(),
-                    LocationConnect = Utility.LocationConnects.ToJsonArray()
-                },Formatting.None);
+            string MapJson = INConvert.NavigraphJson(Utility.BeaconsDict.Values.Select(c => c as LBeaconModel).ToList(), Utility.Waypoints, Utility.LocationConnects);
 
             NavigraphStorage.SaveNavigraphInformation("Map1", MapJson);
             string[] Maps = NavigraphStorage.GetAllPlace();
@@ -122,7 +116,7 @@ namespace IndoorNavigationTest
             Assert.AreEqual(2, position2.Beacons.Count());
             Assert.AreEqual(1, position2.Beacons.Count(c => c == B1));
             Assert.AreEqual(1, position2.Beacons.Count(c => c == B1));
-            Assert.AreEqual(1, Utility.LocationConnects.Count(c => c.BeaconA == position1 && c.BeaconB == position2));
+            Assert.AreEqual(1, Utility.LocationConnects.Count(c => c.SourceWaypoint == position1 && c.TargetWaypoint == position2));
 
             TestClose();
             Debug.WriteLine("MapStorageAccessAndMapDataConvertTest done.");

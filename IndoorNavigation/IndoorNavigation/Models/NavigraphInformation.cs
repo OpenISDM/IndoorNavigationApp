@@ -132,7 +132,7 @@ namespace IndoorNavigation.Models
         public List<Beacon> Beacons { get; set; }
 
         /// <summary>
-        /// Group coordinates
+        /// Waypoint coordinates
         /// The coordinate pf a Beacon group is the centroid
         /// of the beacon group.
         /// </summary>
@@ -159,19 +159,45 @@ namespace IndoorNavigation.Models
                     TotalLongitude / _Coordinates.Count());
             }
         }
+
+        /// <summary>
+        /// The floor where the waypoint is located
+        /// </summary>
+        public float Floor
+        {
+            get
+            {
+                if (Beacons.Count != 0)
+                    return Beacons.First().Floor;
+
+                return float.NaN;
+            }
+        }
     }
 
     /// <summary>
     /// A group of LBeacons that are used to mark a waypoint. This element is 
     /// used to store the offline navigation graph data on the phone.
     /// </summary>
-    public class BeaconGroupModelForNavigraphFile : BeaconGroup,
+    public class WaypointModelForNavigraphFile : BeaconGroup,
         IBeaconGroupModelForNavigraphFile
     {
         /// <summary>
         /// Beacon's union
         /// </summary>
         public List<Guid> Beacons { get; set; }
+        public List<Neighbor> Neighbors { get; set; }
+    }
+
+    /// <summary>
+    /// 在導航圖資的航點上，用來記錄鄰居的物件
+    /// </summary>
+    public class Neighbor : LocationConnect
+    {
+        /// <summary>
+        /// 鄰居航點的Id
+        /// </summary>
+        public Guid TargetWaypointId { get; set; }
     }
 
     /// <summary>
@@ -183,11 +209,30 @@ namespace IndoorNavigation.Models
         /// <summary>
         /// Location A
         /// </summary>
-        public WaypointModel BeaconA { get; set; }
+        public WaypointModel SourceWaypoint { get; set; }
         /// <summary>
         /// Location B
         /// </summary>
-        public WaypointModel BeaconB { get; set; }
+        public WaypointModel TargetWaypoint { get; set; }
+    }
+
+    /// <summary>
+    /// 圖資的區域
+    /// </summary>
+    public class Region
+    {
+        public string Name { get; set; }
+        public List<WaypointModelForNavigraphFile> Waypoints { get; set; }
+        public List<LBeaconModel> LBeacons { get; set; }
+    }
+
+    /// <summary>
+    /// 圖資的...最外面那層
+    /// </summary>
+    public class NaviGraph
+    {
+        public string Name { get; set; }
+        public List<Region> Regions { get; set; }
     }
 
     /// <summary>

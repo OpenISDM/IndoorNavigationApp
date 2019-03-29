@@ -187,11 +187,11 @@ namespace IndoorNavigation.Modules.Navigation
                 // previous waypoint in the navigation graph.
                 // If connected, it doesn't need to calibrate the direction.
                 if (Utility.LocationConnects
-                    .Any(c => c.BeaconA == CurrentWaypoint &&
-                    c.BeaconB == previousWaypoint) ||
+                    .Any(c => c.SourceWaypoint == CurrentWaypoint &&
+                    c.TargetWaypoint == previousWaypoint) ||
                     Utility.LocationConnects
-                    .Any(c => c.BeaconA == previousWaypoint &&
-                    c.BeaconB == CurrentWaypoint))
+                    .Any(c => c.SourceWaypoint == previousWaypoint &&
+                    c.TargetWaypoint == CurrentWaypoint))
                 {
                     // Re-plan the path, and keep navigating
                     pathQueue = Utility.WaypointRoute.RegainPath(
