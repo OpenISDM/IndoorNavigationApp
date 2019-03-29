@@ -178,9 +178,9 @@ namespace IndoorNavigation
             return LocationConnects.Select(LocationConnect =>
             new LocationConnectModel
             {
-                BeaconA = BeaconGroups.First(BeaconGroup =>
+                SourceWaypoint = BeaconGroups.First(BeaconGroup =>
                     BeaconGroup.Id == LocationConnect.BeaconA),
-                BeaconB = BeaconGroups.First(BeaconGroup =>
+                TargetWaypoint = BeaconGroups.First(BeaconGroup =>
                     BeaconGroup.Id == LocationConnect.BeaconB),
                 Target = LocationConnect.Target
             }).ToList();
