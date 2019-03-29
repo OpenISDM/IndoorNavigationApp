@@ -119,7 +119,7 @@ namespace IndoorNavigation
 
             try
             {
-                JObject json = 
+                JObject json =
                     JsonConvert.DeserializeObject<JObject>(JsonString);
 
                 // Aquire information of LBeacon
@@ -178,10 +178,10 @@ namespace IndoorNavigation
             return LocationConnects.Select(LocationConnect =>
             new LocationConnectModel
             {
-                SourceWaypoint = BeaconGroups.Where(BeaconGroup =>
-                    BeaconGroup.Id == LocationConnect.BeaconA).First(),
-                TargetWaypoint = BeaconGroups.Where(BeaconGroup =>
-                    BeaconGroup.Id == LocationConnect.BeaconB).First(),
+                BeaconA = BeaconGroups.First(BeaconGroup =>
+                    BeaconGroup.Id == LocationConnect.BeaconA),
+                BeaconB = BeaconGroups.First(BeaconGroup =>
+                    BeaconGroup.Id == LocationConnect.BeaconB),
                 Target = LocationConnect.Target
             }).ToList();
         }
