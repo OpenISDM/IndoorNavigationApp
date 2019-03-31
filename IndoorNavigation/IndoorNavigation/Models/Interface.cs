@@ -109,22 +109,6 @@ namespace IndoorNavigation.Models
         WaypointModel TargetWaypoint { get; set; }
     }
 
-    /// <summary>
-    /// A path connects two nodes. It is used to store the navigation graph
-    /// data in the phone.
-    /// </summary>
-    public interface ILocationConnectModelForNavigraphFile
-    {
-        /// <summary>
-        /// Location A
-        /// </summary>
-        Guid BeaconA { get; set; }
-        /// <summary>
-        /// Location B
-        /// </summary>
-        Guid BeaconB { get; set; }
-    }
-
     #endregion
 
     #region Interface for connecting iOS project and Android project

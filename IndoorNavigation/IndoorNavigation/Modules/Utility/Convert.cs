@@ -163,28 +163,5 @@ namespace IndoorNavigation
             }).ToList();
         }
 
-        /// <summary>
-        /// Expanded function 
-        /// Convert LocationConnectModelForNavigraphFiles to 
-        /// LocationConnectModels.
-        /// </summary>
-        /// <param name="LocationConnects"></param>
-        /// <param name="BeaconGroups"></param>
-        /// <returns></returns>
-        public static List<LocationConnectModel> ToLocationConnect(
-            this List<LocationConnectModelForNavigraphFile> LocationConnects,
-            List<WaypointModel> BeaconGroups)
-        {
-            return LocationConnects.Select(LocationConnect =>
-            new LocationConnectModel
-            {
-                SourceWaypoint = BeaconGroups.First(BeaconGroup =>
-                    BeaconGroup.Id == LocationConnect.BeaconA),
-                TargetWaypoint = BeaconGroups.First(BeaconGroup =>
-                    BeaconGroup.Id == LocationConnect.BeaconB),
-                Target = LocationConnect.Target
-            }).ToList();
-        }
-
     }
 }

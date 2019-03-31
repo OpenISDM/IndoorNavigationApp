@@ -235,21 +235,4 @@ namespace IndoorNavigation.Models
         public List<Region> Regions { get; set; }
     }
 
-    /// <summary>
-    /// A path connects two waypoints. The file is used to store
-    /// the navigation graph data in the phone.
-    /// Consider one way or two ways
-    /// </summary>
-    public class LocationConnectModelForNavigraphFile : LocationConnect,
-        ILocationConnectModelForNavigraphFile
-    {
-        /// <summary>
-        /// Location A
-        /// </summary>
-        public Guid BeaconA { get; set; }
-        /// <summary>
-        /// Location B
-        /// </summary>
-        public Guid BeaconB { get; set; }
-    }
 }

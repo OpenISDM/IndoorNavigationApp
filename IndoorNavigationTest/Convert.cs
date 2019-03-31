@@ -22,18 +22,6 @@ namespace IndoorNavigationTest
                 });
         }
 
-        public static JArray ToJsonArray(this List<WaypointModel> BeaconGroups)
-        {
-            List<WaypointModelForNavigraphFile> BeaconGroupModels = BeaconGroups.Select(BeaconGroup => new WaypointModelForNavigraphFile { Id = BeaconGroup.Id, Name = BeaconGroup.Name, Beacons = BeaconGroup.Beacons.Select(Beacon => Beacon.UUID).ToList() }).ToList();
-            return JArray.FromObject(BeaconGroupModels);
-        }
-
-        public static JArray ToJsonArray(this List<LocationConnectModel> LocationConnects)
-        {
-            List<LocationConnectModelForNavigraphFile> LocationConnectModelForMapFiles = LocationConnects.Select(LocationConnect => new LocationConnectModelForNavigraphFile { BeaconA = LocationConnect.SourceWaypoint.Id, BeaconB = LocationConnect.TargetWaypoint.Id, Target = LocationConnect.Target }).ToList();
-            return JArray.FromObject(LocationConnectModelForMapFiles);
-        }
-
         public static string NavigraphJson(List<LBeaconModel> Beacons, List<WaypointModel> BeaconGroups, List<LocationConnectModel> LocationConnects)
         {
             NaviGraph naviGraph = new NaviGraph();
