@@ -191,11 +191,13 @@ namespace IndoorNavigation.Models
 
     /// <summary>
     /// 在導航圖資的航點上，用來記錄鄰居的物件
+    /// It is represent the adjacent connected waypoints in navigation graph
     /// </summary>
     public class Neighbor : LocationConnect
     {
         /// <summary>
         /// 鄰居航點的Id
+        /// 
         /// </summary>
         public Guid TargetWaypointId { get; set; }
     }
@@ -218,6 +220,7 @@ namespace IndoorNavigation.Models
 
     /// <summary>
     /// 圖資的區域
+    /// The region class of navigation graph
     /// </summary>
     public class Region
     {
@@ -228,6 +231,7 @@ namespace IndoorNavigation.Models
 
     /// <summary>
     /// 圖資的...最外面那層
+    /// The top of the navigation graph within two-level hierarchy
     /// </summary>
     public class NaviGraph
     {
