@@ -21,7 +21,8 @@
  *
  * Abstract:
  *
- *      
+ *      The mobile application of indoor navigation, it was built using 
+ *      Xamarin.Forms.
  *
  * Authors:
  *
@@ -94,8 +95,8 @@ namespace IndoorNavigation.Models
     }
 
     /// <summary>
-    /// The attribute of LBeacon, including it threshold, floor of installation
-    /// and it location and Major, Minor
+    /// The attribute of LBeacon, including it threshold, floor of 
+    /// installation and it location and Major, Minor
     /// </summary>
     public class IBeaconModel : Beacon, IIBeacon
     {
@@ -106,8 +107,8 @@ namespace IndoorNavigation.Models
     }
 
     /// <summary>
-    /// The monitor of LBeacon, including the rssi threshold, floor of installation
-    /// and direction of installation.
+    /// The monitor of LBeacon, including the rssi threshold, floor of 
+    /// installation and direction of installation.
     /// </summary>
     public class LBeaconModel : Beacon, ILBeacon
     {
@@ -190,14 +191,13 @@ namespace IndoorNavigation.Models
     }
 
     /// <summary>
-    /// 在導航圖資的航點上，用來記錄鄰居的物件
-    /// It is represent the adjacent connected waypoints in navigation graph
+    /// Represents the connected neighbor waypoints in a navigation graph
     /// </summary>
     public class Neighbor : LocationConnect
     {
         /// <summary>
         /// 鄰居航點的Id
-        /// 
+        /// ID of neighbor waypoint
         /// </summary>
         public Guid TargetWaypointId { get; set; }
     }
@@ -219,8 +219,7 @@ namespace IndoorNavigation.Models
     }
 
     /// <summary>
-    /// 圖資的區域
-    /// The region class of navigation graph
+    /// The second level of the navigation graph within two-level hierarchy
     /// </summary>
     public class Region
     {
@@ -230,8 +229,7 @@ namespace IndoorNavigation.Models
     }
 
     /// <summary>
-    /// 圖資的...最外面那層
-    /// The top of the navigation graph within two-level hierarchy
+    /// The top level of the navigation graph within two-level hierarchy
     /// </summary>
     public class NaviGraph
     {
