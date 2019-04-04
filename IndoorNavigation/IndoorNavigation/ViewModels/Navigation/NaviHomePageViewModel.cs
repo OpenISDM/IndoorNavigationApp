@@ -38,10 +38,8 @@ namespace IndoorNavigation.ViewModels.Navigation
             }
             else
             {
-                foreach (WaypointModel waypoint in Utility.Waypoints)
-                {
-                    waypoints.Add(waypoint);
-                }
+                Utility.BeaconScan.StartScan(Utility.BeaconsDict.Keys.ToList());
+                waypoints.AddRange(Utility.Waypoints);
                 returnedWaypoints = waypoints;
             }
         }

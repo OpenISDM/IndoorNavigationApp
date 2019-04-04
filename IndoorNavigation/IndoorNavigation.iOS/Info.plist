@@ -34,5 +34,7 @@
 	<string>Assets.xcassets/LaunchImage.launchimage</string>
 	<key>NSCameraUsageDescription</key>
 	<string>This app needs to access a camera to scan the barcode.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Indoor navigation requires location permission</string>
 </dict>
 </plist>

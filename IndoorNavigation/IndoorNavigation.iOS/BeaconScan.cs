@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using CoreLocation;
 using Foundation;
@@ -12,7 +13,7 @@ namespace IndoorNavigation.iOS
 {
     class BeaconScan : IBeaconScan
     {
-        private static CLLocationManager locationManager;
+        protected static CLLocationManager locationManager;
         private static List<CLBeaconRegion> beaconsRegion;
         public BeaconScanEvent Event { get; private set; }
 
@@ -46,26 +47,30 @@ namespace IndoorNavigation.iOS
         public void StopScan()
         {
             // 停止監聽所有beacon廣播
-            foreach (CLBeaconRegion beaconRegion in beaconsRegion)
-                locationManager.StopRangingBeacons(beaconRegion);
+            if (beaconsRegion != null)
+                foreach (CLBeaconRegion beaconRegion in beaconsRegion)
+                    locationManager.StopRangingBeacons(beaconRegion);
         }
 
         private void HandleDidRangeBeacons(object sender, 
             CLRegionBeaconsRangedEventArgs e)
         {
-            // 發送Beacon訊號強度和其它資訊到訊號分析模組
-            List<BeaconSignalModel> signals = e.Beacons.Select(c => 
-                new BeaconSignalModel {
-                    UUID = Guid.Parse(c.ProximityUuid.AsString()),
-                    Major = c.Major.Int32Value,
-                    Minor = c.Minor.Int32Value,
-                    RSSI = (int)c.Rssi,
-                }).ToList();
-
-            Event.OnEventCall(new BeaconScanEventArgs
+            if (e.Beacons.Length != 0)
             {
-                Signals = signals
-            });
+                // 發送Beacon訊號強度和其它資訊到訊號分析模組
+                List<BeaconSignalModel> signals = e.Beacons.Select(c => 
+                    new BeaconSignalModel {
+                        UUID = Guid.Parse(c.ProximityUuid.AsString()),
+                        Major = c.Major.Int32Value,
+                        Minor = c.Minor.Int32Value,
+                        RSSI = (int)c.Rssi,
+                    }).ToList();
+
+                Event.OnEventCall(new BeaconScanEventArgs
+                {
+                    Signals = signals
+                });
+            }
         }
 
         public void Close()

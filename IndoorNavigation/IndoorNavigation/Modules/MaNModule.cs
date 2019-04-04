@@ -103,6 +103,7 @@ namespace IndoorNavigation.Modules
         public void StopNavigation()
         {
             navigationAlgorithm.StopNavigation();
+            Utility.BeaconScan.StopScan();
         }
 
         #region IDisposable Support
