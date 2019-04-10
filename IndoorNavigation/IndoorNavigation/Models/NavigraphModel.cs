@@ -12,12 +12,12 @@
  *
  * File Description:
  *
- *      The elements of the navigation graph include beacon element, 
+ *      The Model of the navigation graph include beacon element, 
  *      beacon group element and the element for connecting two waypoints
  *
  * File Name:
  *
- *      NavigraphInformation.cs
+ *      NavigraphModel.cs
  *
  * Abstract:
  *
@@ -68,40 +68,13 @@ namespace IndoorNavigation.Models
     }
 
     /// <summary>
-    /// Beacon group containing multiple beacons that mark a single waypoint
-    /// </summary>
-    public abstract class BeaconGroup
-    {
-        /// <summary>
-        /// Group id
-        /// </summary>
-        public Guid Id { get; set; }
-
-        /// <summary>
-        /// Name of the waypoint
-        /// </summary>
-        public string Name { get; set; }
-    }
-
-    /// <summary>
-    /// Location connect
-    /// </summary>
-    public abstract class LocationConnect
-    {
-        /// <summary>
-        /// Indicates the name of the target which is facing
-        /// </summary>
-        public string Target { get; set; }
-    }
-
-    /// <summary>
-    /// The attribute of LBeacon, including it threshold, floor of 
-    /// installation and it location and Major, Minor
+    /// The attribute of iBeacon, including it threshold, floor of 
+    /// installation and it location and Major, Minor. 
     /// </summary>
     public class IBeaconModel : Beacon, IIBeacon
     {
         /// <summary>
-        /// LBeacon coordinates
+        /// iBeacon coordinates
         /// </summary>
         public GeoCoordinates IBeaconCoordinates { get; set; }
     }
@@ -120,6 +93,22 @@ namespace IndoorNavigation.Models
         public GeoCoordinates MarkCoordinates { get; set; }
 
         public override float Floor { get { return this.GetFloor(); } }
+    }
+
+    /// <summary>
+    /// Beacon group containing multiple beacons that mark a single waypoint
+    /// </summary>
+    public abstract class BeaconGroup
+    {
+        /// <summary>
+        /// Group id
+        /// </summary>
+        public Guid Id { get; set; }
+
+        /// <summary>
+        /// Name of the waypoint
+        /// </summary>
+        public string Name { get; set; }
     }
 
     /// <summary>
@@ -188,6 +177,17 @@ namespace IndoorNavigation.Models
         /// </summary>
         public List<Guid> Beacons { get; set; }
         public List<Neighbor> Neighbors { get; set; }
+    }
+
+    /// <summary>
+    /// Location connect
+    /// </summary>
+    public abstract class LocationConnect
+    {
+        /// <summary>
+        /// Indicates the name of the target which is facing
+        /// </summary>
+        public string Target { get; set; }
     }
 
     /// <summary>

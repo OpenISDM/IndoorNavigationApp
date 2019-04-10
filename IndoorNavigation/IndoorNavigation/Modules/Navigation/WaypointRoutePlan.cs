@@ -317,15 +317,15 @@ namespace IndoorNavigation.Modules.Navigation
                                                               List<NextStepModel> navigationPath, int indexOfPath)
         {
             var returnedList = (from locationConnect in Utility.LocationConnects
-                                where locationConnect.BeaconA.Beacons.Intersect(previousConnectedBeacon).Any() &&
-                                      !locationConnect.BeaconB.Beacons.Intersect(navigationPath[indexOfPath].NextWaypoint.Beacons).Any() &&
-                                      !locationConnect.BeaconB.Beacons.Intersect(navigationPath[indexOfPath + 1].NextWaypoint.Beacons).Any()
-                                select locationConnect.BeaconB.Beacons).
+                                where locationConnect.SourceWaypoint.Beacons.Intersect(previousConnectedBeacon).Any() &&
+                                      !locationConnect.TargetWaypoint.Beacons.Intersect(navigationPath[indexOfPath].NextWaypoint.Beacons).Any() &&
+                                      !locationConnect.TargetWaypoint.Beacons.Intersect(navigationPath[indexOfPath + 1].NextWaypoint.Beacons).Any()
+                                select locationConnect.TargetWaypoint.Beacons).
                                Concat(from locationConnect in Utility.LocationConnects
-                                      where locationConnect.BeaconB.Beacons.Intersect(previousConnectedBeacon).Any() &&
-                                            !locationConnect.BeaconA.Beacons.Intersect(navigationPath[indexOfPath].NextWaypoint.Beacons).Any() &&
-                                            !locationConnect.BeaconA.Beacons.Intersect(navigationPath[indexOfPath + 1].NextWaypoint.Beacons).Any()
-                                      select locationConnect.BeaconA.Beacons);
+                                      where locationConnect.TargetWaypoint.Beacons.Intersect(previousConnectedBeacon).Any() &&
+                                            !locationConnect.SourceWaypoint.Beacons.Intersect(navigationPath[indexOfPath].NextWaypoint.Beacons).Any() &&
+                                            !locationConnect.SourceWaypoint.Beacons.Intersect(navigationPath[indexOfPath + 1].NextWaypoint.Beacons).Any()
+                                      select locationConnect.SourceWaypoint.Beacons);
 
             //filter the beacon which is from previous step
             if (indexOfPath != 0)

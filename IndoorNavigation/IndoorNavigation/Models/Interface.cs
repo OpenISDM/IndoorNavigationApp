@@ -41,6 +41,8 @@ namespace IndoorNavigation.Models
 
     /// <summary>
     /// The interface reserved for IBeacon data
+    /// This method returns its coordinate because ibeacon not
+    /// have the coordinate information in UUID.
     /// </summary>
     public interface IIBeacon
     {
