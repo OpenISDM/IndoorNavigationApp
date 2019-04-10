@@ -27,6 +27,7 @@
  * Authors:
  *
  *      Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
+ *      Paul Chang, paulchang@iis.sinica.edu.tw
  *
  */
 
@@ -65,9 +66,14 @@ namespace IndoorNavigation.Models
     public class NextStepModel
     {
         /// <summary>
-        /// Next location
+        /// The next waypoint within navigation path
         /// </summary>
         public WaypointModel NextWaypoint { get; set; }
+        /// <summary>
+        /// The "wrong way" waypoint of the next location
+        /// </summary>
+        public WaypointModel WrongWaypoint { get; set; }
+
         /// <summary>
         /// The angle to turn to the next waypoint
         /// </summary>

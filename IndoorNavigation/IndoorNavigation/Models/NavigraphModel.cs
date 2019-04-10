@@ -80,7 +80,7 @@ namespace IndoorNavigation.Models
     }
 
     /// <summary>
-    /// The monitor of LBeacon, including the rssi threshold, floor of 
+    /// The attribute of LBeacon, including the rssi threshold, floor of 
     /// installation and direction of installation.
     /// </summary>
     public class LBeaconModel : Beacon, ILBeacon
@@ -196,15 +196,13 @@ namespace IndoorNavigation.Models
     public class Neighbor : LocationConnect
     {
         /// <summary>
-        /// 鄰居航點的Id
         /// ID of neighbor waypoint
         /// </summary>
         public Guid TargetWaypointId { get; set; }
     }
 
     /// <summary>
-    /// Path connecting two waypoints.
-    /// Consider one way or two ways.
+    /// Path connecting two waypoints
     /// </summary>
     public class LocationConnectModel : LocationConnect, ILocationConnectModel
     {

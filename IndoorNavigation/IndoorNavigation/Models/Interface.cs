@@ -40,20 +40,19 @@ namespace IndoorNavigation.Models
     #region Interface of navigation graph attribute
 
     /// <summary>
-    /// The interface reserved for IBeacon data
-    /// This method returns its coordinate because ibeacon not
-    /// have the coordinate information in UUID.
+    /// The interface reserved for iBeacon data
     /// </summary>
     public interface IIBeacon
     {
         /// <summary>
-        /// IBeacon coordinate
+        /// This method returns its coordinate because ibeacon not
+        /// have the coordinate information in UUID.
         /// </summary>
         GeoCoordinates IBeaconCoordinates { get; set; }
     }
 
     /// <summary>
-    /// LBeacon資訊
+    /// The interface of LBeacon
     /// </summary>
     public interface ILBeacon
     {
