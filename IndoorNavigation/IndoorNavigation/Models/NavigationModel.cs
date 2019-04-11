@@ -32,6 +32,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 
 namespace IndoorNavigation.Models
 {
@@ -70,9 +71,9 @@ namespace IndoorNavigation.Models
         /// </summary>
         public WaypointModel NextWaypoint { get; set; }
         /// <summary>
-        /// The "wrong way" waypoint of the next location
+        /// The List of "wrong way" waypoint of the next location
         /// </summary>
-        public WaypointModel WrongWaypoint { get; set; }
+        public List<WaypointModel> WrongwayWaypointList { get; set; }
 
         /// <summary>
         /// The angle to turn to the next waypoint
