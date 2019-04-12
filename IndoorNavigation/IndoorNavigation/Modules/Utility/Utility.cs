@@ -24,8 +24,7 @@
 
     Abstract:
 
-        The mobile application of indoor navigation, it was built using 
-        Xamarin.Forms.
+        
 
     Authors:
  
