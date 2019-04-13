@@ -97,7 +97,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
         /// <summary>
         /// The coordinates of a waypoint
         /// </summary>
-        public GeoCoordinates Coordinates { get; set; }
+        public GeoCoordinate Coordinates { get; set; }
 
         /// <summary>
         /// The floor where the waypoint is located
@@ -166,7 +166,11 @@ namespace IndoorNavigation.Models.NavigaionLayer
         /// <summary>
         /// Gets or sets the distance
         /// </summary>
-        public float Distance { get; set; }
+        public double Distance
+        {
+            get => SourceWaypoint.Coordinates
+                        .GetDistanceTo(TargetWaypoint.Coordinates);
+        }
 
         /// <summary>
         /// Other informations regarding the edge, e.g. wheelchair support

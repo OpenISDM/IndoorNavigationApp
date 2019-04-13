@@ -108,8 +108,8 @@ namespace IndoorNavigation.Modules
         /// <param name="Previous">last location</param>
         /// <param name="Next">next location</param>
         /// <returns></returns>
-        public static int GetRotateAngle(GeoCoordinates Current,
-            GeoCoordinates Previous, GeoCoordinates Next)
+        public static int GetRotateAngle(GeoCoordinate Current,
+            GeoCoordinate Previous, GeoCoordinate Next)
         {
             double cosineAngle =
                 CalculatingCosineAngle(Current, Previous, Next);
@@ -129,8 +129,8 @@ namespace IndoorNavigation.Modules
         /// <param name="Previous">last location </param>
         /// <param name="Next">next location </param>
         /// <returns></returns>
-        private static double CalculatingCosineAngle(GeoCoordinates Current,
-            GeoCoordinates Previous, GeoCoordinates Next)
+        private static double CalculatingCosineAngle(GeoCoordinate Current,
+            GeoCoordinate Previous, GeoCoordinate Next)
         {
             double centerToNext = Current.GetDistanceTo(Next);
             double centerToPrevious = Current.GetDistanceTo(Previous);
@@ -151,7 +151,7 @@ namespace IndoorNavigation.Modules
         /// <param name="Next">next location</param>
         /// <returns></returns>
         private static double CalculatingOuterProductAngle(
-           GeoCoordinates Current,GeoCoordinates Previous,GeoCoordinates Next)
+           GeoCoordinate Current,GeoCoordinate Previous,GeoCoordinate Next)
         {
             double Xa, Xb, Ya, Yb;
             double angle;

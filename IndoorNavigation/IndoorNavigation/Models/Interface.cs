@@ -47,7 +47,7 @@ namespace IndoorNavigation.Models
         /// This method returns its coordinate because ibeacon not
         /// have the coordinate information in UUID.
         /// </summary>
-        GeoCoordinates IBeaconCoordinates { get; set; }
+        GeoCoordinate IBeaconCoordinates { get; set; }
     }
 
     /// <summary>
@@ -60,7 +60,7 @@ namespace IndoorNavigation.Models
         /// The reffered coordinate for the arrow on the Beacon
         /// Not used in this version
         /// </summary>
-        GeoCoordinates MarkCoordinates { get; set; }
+        GeoCoordinate MarkCoordinates { get; set; }
     }
 
     /// <summary>
@@ -76,7 +76,7 @@ namespace IndoorNavigation.Models
         /// <summary>
         /// The center coordinate of the group
         /// </summary>
-        GeoCoordinates Coordinates { get; }
+        GeoCoordinate Coordinates { get; }
         /// <summary>
         /// The floor of the group
         /// </summary>

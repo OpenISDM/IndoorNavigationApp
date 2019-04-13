@@ -75,7 +75,7 @@ namespace IndoorNavigation.Models
         /// <summary>
         /// iBeacon coordinates
         /// </summary>
-        public GeoCoordinates IBeaconCoordinates { get; set; }
+        public GeoCoordinate IBeaconCoordinates { get; set; }
     }
 
     /// <summary>
@@ -89,7 +89,7 @@ namespace IndoorNavigation.Models
         /// Beacon's reffered coordinates where the arrow points to
         /// Not be used in this version
         /// </summary>
-        public GeoCoordinates MarkCoordinates { get; set; }
+        public GeoCoordinate MarkCoordinates { get; set; }
 
         public override float Floor { get { return this.GetFloor(); } }
     }
@@ -125,25 +125,25 @@ namespace IndoorNavigation.Models
         /// The coordinate pf a Beacon group is the centroid
         /// of the beacon group.
         /// </summary>
-        public GeoCoordinates Coordinates
+        public GeoCoordinate Coordinates
         {
             get
             {
                 // Get all the LBeacon's coordinates in the group
-                List<GeoCoordinates> _Coordinates =
+                List<GeoCoordinate> _Coordinates =
                     Beacons.Select(c => c.GetCoordinates()).ToList();
 
                 // Compute the average of the coordinates of all the LBeaocns 
                 // in order to get the central coordinates.
                 double TotalLatitude = 0; double TotalLongitude = 0;
 
-                foreach (GeoCoordinates coordinate in _Coordinates)
+                foreach (GeoCoordinate coordinate in _Coordinates)
                 {
                     TotalLatitude += coordinate.Latitude;
                     TotalLongitude += coordinate.Longitude;
                 }
 
-                return new GeoCoordinates(
+                return new GeoCoordinate(
                     TotalLatitude / _Coordinates.Count(),
                     TotalLongitude / _Coordinates.Count());
             }

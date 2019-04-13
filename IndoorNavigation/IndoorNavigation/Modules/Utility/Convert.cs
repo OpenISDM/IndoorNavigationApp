@@ -49,7 +49,7 @@ namespace IndoorNavigation
         /// </summary>
         /// <param name="beacon"></param>
         /// <returns></returns>
-        public static GeoCoordinates GetCoordinates(this
+        public static GeoCoordinate GetCoordinates(this
             Beacon beacon)
         {
             if (beacon.GetType() == typeof(LBeaconModel))
@@ -64,7 +64,7 @@ namespace IndoorNavigation
                 float longitude = HexToFloat(lonHexStr);
                 float latitude = HexToFloat(latHexStr);
 
-                return new GeoCoordinates(latitude, longitude);
+                return new GeoCoordinate(latitude, longitude);
             }
             else if (beacon.GetType() == typeof(IBeaconModel))
             {
