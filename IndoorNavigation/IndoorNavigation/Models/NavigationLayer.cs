@@ -36,7 +36,7 @@ using GeoCoordinatePortable;
 
 namespace IndoorNavigation.Models.NavigaionLayer
 {
-    public class NavigationModel
+    public class Navigation
     {
         /// <summary>
         /// The next waypoint within navigation path
@@ -62,7 +62,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
     {
         public string Name { get; set; }
         public List<Region> Regions { get; set; }
-        public LocationConnectModel LocationConnect { get; set; }
+        public Edge LocationConnect { get; set; }
     }
 
     /// <summary>
@@ -118,7 +118,12 @@ namespace IndoorNavigation.Models.NavigaionLayer
         /// <summary>
         /// Indicates the name of the target which is facing
         /// </summary>
-        public string Target { get; set; }
+        public string TargetName { get; set; }
+
+        /// <summary>
+        /// Reference direction for the host waypoint
+        /// </summary>
+        public ReferenceDirection Direction { get; set; }
     }
 
     /// <summary>
@@ -129,12 +134,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
         /// <summary>
         /// ID of the neighbor waypoint
         /// </summary>
-        public Guid TargetWaypointUUID { get; set; }
-
-        /// <summary>
-        /// Reference direction for the host waypoint
-        /// </summary>
-        public ReferenceDirection Direction { get; set; }
+        public Guid TargetWaypointUUID { get; set; }        
     }
 
     public enum ReferenceDirection
@@ -152,7 +152,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
     /// <summary>
     /// The edge between the two waypoints
     /// </summary>
-    public class LocationConnectModel : LocationConnect
+    public class Edge : LocationConnect
     {
         /// <summary>
         /// Location A
