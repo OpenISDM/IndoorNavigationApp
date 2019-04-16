@@ -72,7 +72,6 @@ namespace IndoorNavigation.Modules.Navigation
         {
             // Waiting for the destination set
             navigationTaskWaitEvent.WaitOne();
-            int wrongWayTimes = 0;
             while (!IsReachingDestination)
             {
                 // Find the current position from the current Beacon
@@ -126,20 +125,16 @@ namespace IndoorNavigation.Modules.Navigation
                         }
                         else
                         {
-                            if (++wrongWayTimes == 2)
-                            {
-                                wrongWayTimes = 0;
-                                // Alter the wrong path, and tell the next step
-                                Utility.MaN.Event.OnEventCall(
-                                    new WaypointEventArgs
-                                    {
-                                        Status = NavigationStatus.AdjustRoute
-                                    });
+                            // Alter the wrong path, and tell the next step
+                            Utility.MaN.Event.OnEventCall(
+                                new WaypointEventArgs
+                                {
+                                    Status = NavigationStatus.AdjustRoute
+                                });
 
-                                Utility.MaN.Event.OnEventCall(
-                                    NavigationRouteCorrection(currentWaypoint,
-                                    endWaypoint));
-                            }                            
+                            Utility.MaN.Event.OnEventCall(
+                                NavigationRouteCorrection(currentWaypoint,
+                                endWaypoint));
                         }
                     }
                 }

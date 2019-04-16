@@ -32,29 +32,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Dijkstra.NET.Model;
 using GeoCoordinatePortable;
+using Dijkstra.NET.Extensions;
 
 namespace IndoorNavigation.Models.NavigaionLayer
 {
-    public class Navigation
-    {
-        /// <summary>
-        /// The next waypoint within navigation path
-        /// </summary>
-        public Waypoint NextWaypoint { get; set; }
-        /// <summary>
-        /// The List of "wrong way" waypoint of the next location
-        /// </summary>
-        public List<Waypoint> WrongwayWaypointList { get; set; }
-
-        /// <summary>
-        /// The angle to turn to the next waypoint
-        /// </summary>
-        public int Angle { get; set; }
-    }
-
-    #region Navigraph
-
     /// <summary>
     /// The top level of the navigation graph within two-level hierarchy
     /// </summary>
@@ -62,8 +45,50 @@ namespace IndoorNavigation.Models.NavigaionLayer
     {
         public string Name { get; set; }
         public List<Region> Regions { get; set; }
-        public Edge LocationConnect { get; set; }
+        public List<Edge> Edges { get; set; }
+
+        /// <summary>
+        /// Gets the distance from source waypoint to target waypoint
+        /// </summary>
+        public double GetDistance(Graph<Waypoint, string> graph, 
+                                  Waypoint sourceWaypoint, Waypoint targetWaypoint)
+        {
+            //Find where is the source/target waypoint and find its key value
+            uint sourceKey = graph
+                            .Where(WaypointList => WaypointList.Item.UUID
+                            .Equals(sourceWaypoint.UUID)).Select(c => c.Key).First();
+            uint targetKey = graph
+                            .Where(WaypointList => WaypointList.Item.UUID
+                            .Equals(targetWaypoint.UUID)).Select(c => c.Key).First();
+
+            //Returns the distance of the path
+            return graph.Dijkstra(sourceKey, targetKey).Distance;
+        }
+
+        /// <summary>
+        /// Gets the turning direction using three waypoints
+        /// </summary>
+        public TurnDirection GetTurnDirection(Waypoint previousWaypoint,
+                                              Waypoint currentWaypoint,
+                                              Waypoint nextWaypoint)
+        {
+            //Find the cardinal direction to the next waypoint
+            CardinalDirection currentDirection = previousWaypoint.Neighbors
+                                            .Where(neighbors => neighbors.TargetWaypointUUID.Equals(currentWaypoint.UUID))
+                                            .Select(c => c.Direction).First();
+            CardinalDirection nextDirection = currentWaypoint.Neighbors
+                                            .Where(neighbors => neighbors.TargetWaypointUUID.Equals(nextWaypoint.UUID))
+                                            .Select(c => c.Direction).First();
+
+            //Calculate the turning direction by cardinal direction
+            int nextTurnDirection = (int)nextDirection - (int)currentDirection;
+            nextTurnDirection = nextTurnDirection < 0 ? nextTurnDirection + 8 : nextTurnDirection;
+
+            return (TurnDirection)nextTurnDirection;
+        }
     }
+
+    #region Navigraph parameters
 
     /// <summary>
     /// The second level of the navigation graph within two-level hierarchy
@@ -121,9 +146,9 @@ namespace IndoorNavigation.Models.NavigaionLayer
         public string TargetName { get; set; }
 
         /// <summary>
-        /// Reference direction for the host waypoint
+        /// Cardinal direction for the host waypoint
         /// </summary>
-        public ReferenceDirection Direction { get; set; }
+        public CardinalDirection Direction { get; set; }
     }
 
     /// <summary>
@@ -137,7 +162,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
         public Guid TargetWaypointUUID { get; set; }        
     }
 
-    public enum ReferenceDirection
+    public enum CardinalDirection
     {
         North = 0,
         Northeast,
@@ -179,4 +204,36 @@ namespace IndoorNavigation.Models.NavigaionLayer
     }
 
     #endregion
+
+    /// <summary>
+    /// Instruction of next location to be delivered at the next waypoint
+    /// </summary>
+    public class NavigationInstruction
+    {
+        /// <summary>
+        /// The next waypoint within navigation path
+        /// </summary>
+        public Waypoint NextWaypoint { get; set; }
+        /// <summary>
+        /// The List of "wrong way" waypoint of the next location
+        /// </summary>
+        public List<Waypoint> WrongwayWaypointList { get; set; }
+
+        /// <summary>
+        /// The direction to turn to the next waypoint
+        /// </summary>
+        public TurnDirection Direction { get; set; }
+    }
+
+    public enum TurnDirection
+    {
+        Forward = 0,
+        Forward_Right,
+        Right,
+        Backward_Right,
+        Backward,
+        Backward_Left,
+        Left,
+        Forward_Left
+    }
 }
