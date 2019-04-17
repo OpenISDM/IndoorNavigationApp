@@ -12,8 +12,9 @@
  *
  * File Description:
  * 
- *      This file contains models which have Beacon's attribute and data of
- *      route planning. These models are used for waypoint-based navigation.
+ *      This file contains definitions of attributes for computing routes,
+ *      including waypoint objects, turn directions between waypoints,
+ *      with their distances.
  * 
  * File Name:
  *
@@ -21,7 +22,10 @@
  *
  * Abstract:
  *
- *      TODO: Add the new abstract
+ *      Waypoint-based navigate is a mobile indoor navigation application that 
+ *      runs on smart phones. It relies on BeDIS (Building/environment Data and Information System) 
+ *      for indoor positioning. This version makes use of Xamarin.Forms, 
+ *      which is a complete cross-platform UI tookit that runs on both iOS and Android.
  *
  * Authors:
  *
