@@ -61,7 +61,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
     public enum TurnDirection
     {
-        FirstDirection = -1, // used in first step within navigation
+        FirstDirection = -1, // Exception: used only in the first step
         Forward = 0,
         Forward_Right,
         Right,
@@ -81,8 +81,8 @@ namespace IndoorNavigation.Models.NavigaionLayer
         public List<Region> Regions { get; private set; }
         public List<Edge> Edges { get; private set; }
 
-        private const double thresholdOfDistance = 10;
-        private Graph<Waypoint, string> navigraph = 
+        private const double thresholdOfDistance = 10; // 10 meters
+        private Graph<Waypoint, string> navigraph =
             new Graph<Waypoint, string>();
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
             Edges = edges;
 
             // Add all the waypoints into navigraph
-            IEnumerable<Waypoint> listOfAllWaypoints = 
+            IEnumerable<Waypoint> listOfAllWaypoints =
                     regions.SelectMany(region => region.Waypoints);
             foreach (Waypoint waypoint in listOfAllWaypoints)
             {
@@ -121,9 +121,10 @@ namespace IndoorNavigation.Models.NavigaionLayer
             }
         }
 
-        public Queue<NavigationInstruction> GetPath(Waypoint startWaypoint, Waypoint destinationWaypoint)
+        public Queue<NavigationInstruction> GetPath(Waypoint startWaypoint,
+                                                Waypoint destinationWaypoint)
         {
-            Queue<NavigationInstruction> returnedPathQueue = 
+            Queue<NavigationInstruction> returnedPathQueue =
                     new Queue<NavigationInstruction>();
 
             // Find where is the start/destination waypoint and find its key
@@ -132,12 +133,13 @@ namespace IndoorNavigation.Models.NavigaionLayer
                     .Equals(startWaypoint.UUID)).Select(c => c.Key).First();
             uint destinationKey = navigraph
                     .Where(WaypointList => WaypointList.Item.UUID
-                    .Equals(destinationWaypoint.UUID)).Select(c => c.Key).First();
+                    .Equals(destinationWaypoint.UUID))
+                    .Select(c => c.Key).First();
 
             var path = navigraph.Dijkstra(startKey, destinationKey).GetPath();
             for (int i = 0; i < path.Count() - 1; i++)
             {
-                // Get both current waypoint and next waypoint which within path
+                // Get both current waypoint and next waypoint within the path
                 Waypoint _currentWaypoint = navigraph[path.ToList()[i]].Item;
                 Waypoint _nextWaypoint = navigraph[path.ToList()[i]].Item;
 
@@ -146,7 +148,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                     returnedPathQueue.Enqueue(new NavigationInstruction
                     {
                         NextWaypoint = _nextWaypoint,
-                        WrongwayWaypointList = GetWrongwayWaypoints(null, 
+                        WrongwayWaypointList = GetWrongwayWaypoints(null,
                                                         _currentWaypoint,
                                                         _nextWaypoint,
                                                         thresholdOfDistance),
@@ -155,14 +157,15 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 }
                 else
                 {
-                    Waypoint _previousWaypoint = navigraph[path.ToList()[i - 1]].Item;
+                    Waypoint _previousWaypoint = navigraph[path.ToList()[i - 1]]
+                                                 .Item;
 
                     returnedPathQueue.Enqueue(new NavigationInstruction
                     {
                         NextWaypoint = _nextWaypoint,
                         WrongwayWaypointList = GetWrongwayWaypoints(
-                                                     _previousWaypoint, 
-                                                     _currentWaypoint, 
+                                                     _previousWaypoint,
+                                                     _currentWaypoint,
                                                      _nextWaypoint,
                                                      thresholdOfDistance),
                         Direction = GetTurnDirection(_previousWaypoint,
@@ -178,15 +181,18 @@ namespace IndoorNavigation.Models.NavigaionLayer
         /// <summary>
         /// Gets the distance from source waypoint to target waypoint
         /// </summary>
-        public double GetDistance(Waypoint sourceWaypoint, Waypoint targetWaypoint)
+        public double GetDistance(Waypoint sourceWaypoint,
+                                  Waypoint targetWaypoint)
         {
             // Find where is the source/target waypoint and find its key
             uint sourceKey = navigraph
                             .Where(WaypointList => WaypointList.Item.UUID
-                            .Equals(sourceWaypoint.UUID)).Select(c => c.Key).First();
+                            .Equals(sourceWaypoint.UUID)).Select(c => c.Key)
+                            .First();
             uint targetKey = navigraph
                             .Where(WaypointList => WaypointList.Item.UUID
-                            .Equals(targetWaypoint.UUID)).Select(c => c.Key).First();
+                            .Equals(targetWaypoint.UUID)).Select(c => c.Key)
+                            .First();
 
             // Returns the distance of the path
             return navigraph.Dijkstra(sourceKey, targetKey).Distance;
@@ -201,15 +207,20 @@ namespace IndoorNavigation.Models.NavigaionLayer
         {
             // Find the cardinal direction to the next waypoint
             CardinalDirection currentDirection = previousWaypoint.Neighbors
-                                            .Where(neighbors => neighbors.TargetWaypointUUID.Equals(currentWaypoint.UUID))
+                                            .Where(neighbors =>
+                                                neighbors.TargetWaypointUUID
+                                                .Equals(currentWaypoint.UUID))
                                             .Select(c => c.Direction).First();
             CardinalDirection nextDirection = currentWaypoint.Neighbors
-                                            .Where(neighbors => neighbors.TargetWaypointUUID.Equals(nextWaypoint.UUID))
+                                            .Where(neighbors =>
+                                                neighbors.TargetWaypointUUID
+                                                .Equals(nextWaypoint.UUID))
                                             .Select(c => c.Direction).First();
 
             // Calculate the turning direction by cardinal direction
             int nextTurnDirection = (int)nextDirection - (int)currentDirection;
-            nextTurnDirection = nextTurnDirection < 0 ? nextTurnDirection + 8 : nextTurnDirection;
+            nextTurnDirection = nextTurnDirection < 0 ?
+                                nextTurnDirection + 8 : nextTurnDirection;
 
             return (TurnDirection)nextTurnDirection;
         }
@@ -224,35 +235,38 @@ namespace IndoorNavigation.Models.NavigaionLayer
         {
             List<Waypoint> wrongwayWaypointList = new List<Waypoint>();
 
-            // Find the branch that is both connect with current waypoint
-            // but not connect with next waypoint
+            // Find the branch that is connect with current waypoint
+            // but not connect with the next target waypoint (within the step)
             IEnumerable<Waypoint> adjacentWaypoints = (
                                 from edge in Edges
-                                where edge.SourceWaypoint.Equals(currentWaypoint.UUID) &&
-                                      !edge.TargetWaypoint.UUID.Equals(nextWaypoint.UUID)
-                                select edge.TargetWaypoint).
-                                Concat(from edge in Edges
-                                       where edge.TargetWaypoint.Equals(currentWaypoint.UUID) &&
-                                             !edge.SourceWaypoint.UUID.Equals(nextWaypoint.UUID)
-                                       select edge.SourceWaypoint);
+                                where edge.SourceWaypoint
+                                          .Equals(currentWaypoint.UUID) &&
+                                      !edge.TargetWaypoint.UUID
+                                           .Equals(nextWaypoint.UUID)
+                                select edge.TargetWaypoint);
 
             if (previousWaypoint != null)
             {
-                // Filter the waypoint which is the previous waypoint and add it
-                // into wrongwayWaypointList
-                adjacentWaypoints = adjacentWaypoints.Where(waypoint => !waypoint.UUID.Equals(previousWaypoint.UUID));
+                // Filters the previous waypoint within the instruction steps 
+                // and add it into wrongwayWaypointList
+                adjacentWaypoints = adjacentWaypoints.Where(waypoint =>
+                                !waypoint.UUID.Equals(previousWaypoint.UUID));
+
                 wrongwayWaypointList.Add(previousWaypoint);
             }
 
             for (int i = 0; i < adjacentWaypoints.Count(); i++)
             {
-                if (currentWaypoint.Coordinates.GetDistanceTo(adjacentWaypoints.ElementAt(i).Coordinates) >= thresholdDistance)
+                if (currentWaypoint.Coordinates.GetDistanceTo(
+                    adjacentWaypoints.ElementAt(i).Coordinates) >=
+                    thresholdDistance)
                 {
                     wrongwayWaypointList.Add(adjacentWaypoints.ElementAt(i));
                     continue;
                 }
 
-                IEnumerable<Waypoint> connectedWaypoints = GetConnectedWaypoints(
+                IEnumerable<Waypoint> connectedWaypoints =
+                                        GetConnectedWaypoints(
                                             adjacentWaypoints.ElementAt(i),
                                             previousWaypoint,
                                             currentWaypoint,
@@ -260,20 +274,25 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
                 if (connectedWaypoints.Any())
                 {
-                    // Remove the connected waypoints that included in 
-                    // the adjacentWaypoints list
+                    // Remove the duplicated waypoints that are already 
+                    // included in the adjacentWaypoints list
                     adjacentWaypoints = adjacentWaypoints.Concat(
                                         from waypoint in connectedWaypoints
-                                        where !adjacentWaypoints.Any(adjWaypoint => adjWaypoint.UUID.Equals(waypoint.UUID))
+                                        where !adjacentWaypoints
+                                            .Any(adjWaypoint =>
+                                                 adjWaypoint.UUID
+                                                 .Equals(waypoint.UUID))
                                         select waypoint);
                 }
             }
 
+            // returns a list after removing duplicated elements in the list
             return wrongwayWaypointList.Distinct().ToList();
         }
 
         /// <summary>
-        /// Get the waypoints which are connect with
+        /// Get the neighbor waypoints which are connect with the first-layer
+        /// waypoints, which are the source waypoint's neighbors.
         /// </summary>
         private IEnumerable<Waypoint> GetConnectedWaypoints(
                                                    Waypoint adjacentWaypoint,
@@ -282,20 +301,21 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                                    Waypoint nextWaypoint)
         {
             IEnumerable<Waypoint> connectedList = (from edge in Edges
-                                where edge.SourceWaypoint.Equals(adjacentWaypoint.UUID) &&
-                                      !edge.TargetWaypoint.UUID.Equals(currentWaypoint.UUID) &&
-                                      !edge.TargetWaypoint.UUID.Equals(nextWaypoint.UUID)
-                                select edge.TargetWaypoint).
-                                Concat(from edge in Edges
-                                       where edge.TargetWaypoint.Equals(adjacentWaypoint.UUID) &&
-                                             !edge.SourceWaypoint.UUID.Equals(currentWaypoint.UUID) &&
-                                             !edge.SourceWaypoint.UUID.Equals(nextWaypoint.UUID)
-                                       select edge.SourceWaypoint);
+                                                   where edge.SourceWaypoint
+                                                             .Equals(adjacentWaypoint.UUID) &&
+
+                                                         !edge.TargetWaypoint.UUID
+                                                              .Equals(currentWaypoint.UUID) &&
+
+                                                         !edge.TargetWaypoint.UUID
+                                                              .Equals(nextWaypoint.UUID)
+                                                   select edge.TargetWaypoint);
 
             if (previousWaypoint != null)
             {
-                //filter the waypoint which is the previous waypoint
-                connectedList = connectedList.Where(waypoint => !waypoint.UUID.Equals(previousWaypoint.UUID));
+                // Filters the previous waypoint within the instruction steps
+                connectedList = connectedList.Where(waypoint =>
+                                !waypoint.UUID.Equals(previousWaypoint.UUID));
             }
 
             return connectedList;
@@ -324,7 +344,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
         public string Name { get; set; }
 
         /// <summary>
-        /// Information for navigation layer. Whether it has a landmark or null
+        /// Information for navigationlayer. Whether it has a landmark or null
         /// </summary>
         public string Landmark { get; set; }
 
@@ -373,7 +393,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
         /// <summary>
         /// ID of the neighbor waypoint
         /// </summary>
-        public Guid TargetWaypointUUID { get; set; }        
+        public Guid TargetWaypointUUID { get; set; }
     }
 
     /// <summary>
