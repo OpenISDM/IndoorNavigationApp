@@ -72,13 +72,37 @@ namespace IndoorNavigation.Models.NavigaionLayer
         Forward_Left,
     }
 
+    public enum IPSType
+    {
+        LBeacon = 0,
+        iBeacon,
+        GPS
+    }
+
+    public enum ConnectionType
+    {
+        NormalHallway = 0,
+        Stair,
+        Elevator,
+        Escalator
+    }
+
     /// <summary>
     /// The top level of the navigation graph within two-level hierarchy
     /// </summary>
     public class Navigraph
     {
         public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets the regions of entire Navigraph
+        /// </summary>
         public List<Region> Regions { get; private set; }
+
+        /// <summary>
+        /// Gets the edges that connection between regions,
+        /// e.g. stair, elevator...etc
+        /// </summary>
         public List<Edge> Edges { get; private set; }
 
         private const double thresholdOfDistance = 10; // 10 meters
@@ -94,6 +118,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
             Regions = regions;
             Edges = edges;
 
+            /*
             // Add all the waypoints into navigraph
             IEnumerable<Waypoint> listOfAllWaypoints =
                     regions.SelectMany(region => region.Waypoints);
@@ -119,6 +144,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 navigraph.Connect(beaconAKey, beaconBKey,
                         distance, string.Empty);
             }
+            */
         }
 
         public Queue<NavigationInstruction> GetPath(Waypoint startWaypoint,
@@ -127,6 +153,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
             Queue<NavigationInstruction> returnedPathQueue =
                     new Queue<NavigationInstruction>();
 
+            /*
             // Find where is the start/destination waypoint and find its key
             uint startKey = navigraph
                     .Where(WaypointList => WaypointList.Item.UUID
@@ -176,6 +203,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
             }
 
             return returnedPathQueue;
+            */
         }
 
         /// <summary>
@@ -184,6 +212,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
         public double GetDistance(Waypoint sourceWaypoint,
                                   Waypoint targetWaypoint)
         {
+            /*
             // Find where is the source/target waypoint and find its key
             uint sourceKey = navigraph
                             .Where(WaypointList => WaypointList.Item.UUID
@@ -196,6 +225,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
             // Returns the distance of the path
             return navigraph.Dijkstra(sourceKey, targetKey).Distance;
+            */
         }
 
         /// <summary>
@@ -233,22 +263,23 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                                    Waypoint nextWaypoint,
                                                    double thresholdDistance)
         {
+            /*
             List<Waypoint> wrongwayWaypointList = new List<Waypoint>();
 
             // Find the branch that is connect with current waypoint
-            // but not connect with the next target waypoint (within the step)
-            IEnumerable<Waypoint> adjacentWaypoints = (
+            // but not connect with the next target waypoint (within the step).
+            IEnumerable<Waypoint> adjacentWaypoints = 
                                 from edge in Edges
                                 where edge.SourceWaypoint
                                           .Equals(currentWaypoint.UUID) &&
                                       !edge.TargetWaypoint.UUID
                                            .Equals(nextWaypoint.UUID)
-                                select edge.TargetWaypoint);
+                                select edge.TargetWaypoint;
 
             if (previousWaypoint != null)
             {
                 // Filters the previous waypoint within the instruction steps 
-                // and add it into wrongwayWaypointList
+                // and add it into wrongwayWaypointList.
                 adjacentWaypoints = adjacentWaypoints.Where(waypoint =>
                                 !waypoint.UUID.Equals(previousWaypoint.UUID));
 
@@ -288,6 +319,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
             // returns a list after removing duplicated elements in the list
             return wrongwayWaypointList.Distinct().ToList();
+            */           
         }
 
         /// <summary>
@@ -300,6 +332,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                                    Waypoint currentWaypoint,
                                                    Waypoint nextWaypoint)
         {
+            /*
             IEnumerable<Waypoint> connectedList = (from edge in Edges
                                                    where edge.SourceWaypoint
                                                              .Equals(adjacentWaypoint.UUID) &&
@@ -319,6 +352,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
             }
 
             return connectedList;
+            */           
         }
     }
 
@@ -330,11 +364,61 @@ namespace IndoorNavigation.Models.NavigaionLayer
     public class Region
     {
         public string Name { get; set; }
+
+        /// <summary>
+        /// The list of waypoint objects (nodes)
+        /// </summary>
         public List<Waypoint> Waypoints { get; set; }
+
+        /// <summary>
+        /// Connection between waypoints (edges)
+        /// </summary>
+        public List<Edge> Edges { get; set; }
+
+        /// <summary>
+        /// The navigation subgraph
+        /// </summary>
+        public Graph<Waypoint, string> NavigationSubgraph = 
+                new Graph<Waypoint, string>();
+
+        /// <summary>
+        /// Initializes a new instance of the Region class
+        /// </summary>
+        public Region(string name, List<Waypoint> waypoints, List<Edge> edges)
+        {
+            Name = name;
+            Waypoints = waypoints;
+            Edges = edges;
+
+            // Add all the waypoints of each region into region graph
+            foreach (Waypoint waypoint in waypoints)
+            {
+                NavigationSubgraph.AddNode(waypoint);
+            }
+
+            // Set each path into region graph
+            foreach (Edge edge in edges)
+            {
+                // Get the distance of two locations which in centimeter
+                int distance = System.Convert.ToInt32(edge.Distance);
+
+                // Get two connected waypoints's key value
+                uint sourceWaypointKey = NavigationSubgraph.Where(waypoint =>
+                        waypoint.Item.UUID.Equals(edge.SourceWaypoint.UUID))
+                        .Select(waypoint => waypoint.Key).First();
+                uint targetWaypointKey = NavigationSubgraph.Where(waypoint =>
+                        waypoint.Item.UUID.Equals(edge.TargetWaypoint.UUID))
+                        .Select(waypoint => waypoint.Key).First();
+
+                // Connect the waypoints
+                NavigationSubgraph.Connect(sourceWaypointKey, targetWaypointKey,
+                        distance, string.Empty);
+            }
+        }
     }
 
     /// <summary>
-    /// The model of waypoint.
+    /// The model of waypoint
     /// </summary>
     public class Waypoint
     {
@@ -342,6 +426,11 @@ namespace IndoorNavigation.Models.NavigaionLayer
         /// Friendly name of waypoint
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Use is it to identify whether to switch the corressponding IPSClient
+        /// </summary>
+        public IPSType IPSClientType { get; set; }
 
         /// <summary>
         /// Information for navigationlayer. Whether it has a landmark or null
@@ -413,11 +502,13 @@ namespace IndoorNavigation.Models.NavigaionLayer
         /// <summary>
         /// Gets or sets the distance
         /// </summary>
-        public double Distance
-        {
-            get => SourceWaypoint.Coordinates
-                        .GetDistanceTo(TargetWaypoint.Coordinates);
-        }
+        public double Distance { get; set; }
+
+        /// <summary>
+        /// The connection type, 
+        /// e.g. normal hallway, stair, elevator...etc
+        /// </summary>
+        public ConnectionType Connection { get; set; }
 
         /// <summary>
         /// Other informations regarding the edge, e.g. wheelchair support
