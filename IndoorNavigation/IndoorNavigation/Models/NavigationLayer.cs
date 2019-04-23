@@ -394,10 +394,10 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 new Graph<Waypoint, string>();
 
         /// <summary>
-        /// Initializes a new instance of the Region, combine all the
+        /// Initializes a navigation subgraph of the Region and combine all the
         /// waypoints and edges to NavigationSubgraph
         /// </summary>
-        public Region()
+        public void SetNavigationSubgraph()
         {
             // Add all the waypoints of each region into region graph
             foreach (Waypoint waypoint in Waypoints)
