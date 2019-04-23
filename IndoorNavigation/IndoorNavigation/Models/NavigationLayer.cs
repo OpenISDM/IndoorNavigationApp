@@ -18,7 +18,7 @@
  * 
  * File Name:
  *
- *      NavigationlayerModel.cs
+ *      NavigationLayer.cs
  *
  * Abstract:
  *
@@ -34,7 +34,7 @@
  *
  * Authors:
  *
- *      
+ *      Paul Chang, paulchang@iis.sinica.edu.tw
  *
  */
 
@@ -92,18 +92,22 @@ namespace IndoorNavigation.Models.NavigaionLayer
     /// </summary>
     public class Navigraph
     {
-        public string Name { get; private set; }
-
         /// <summary>
-        /// Gets the regions of entire Navigraph
+        /// Gets or sets the name
+        /// e.g. Taipei City Hall, NTHU...etc
         /// </summary>
-        public List<Region> Regions { get; private set; }
+        public string Name { get; set; }
 
         /// <summary>
-        /// Gets the edges that connection between regions,
+        /// Gets or sets the regions of entire Navigraph
+        /// </summary>
+        public List<Region> Regions { get; set; }
+
+        /// <summary>
+        /// Gets or sets the edges that connection between regions,
         /// e.g. stair, elevator...etc
         /// </summary>
-        public List<Edge> Edges { get; private set; }
+        public List<Edge> Edges { get; set; }
 
         private const double thresholdOfDistance = 10; // 10 meters
         private Graph<Waypoint, string> navigraph =
@@ -230,6 +234,10 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
         /// <summary>
         /// Gets the turning direction using three waypoints
+        /// e.g. my previous design was to convert the direction to 
+        /// a human-readable instruction. When the user is walking down 
+        /// the hallway facing east, which his/her next waypoint is in south,
+        /// the function converts the instruction to "Turn right on ...".
         /// </summary>
         public TurnDirection GetTurnDirection(Waypoint previousWaypoint,
                                               Waypoint currentWaypoint,
@@ -363,6 +371,10 @@ namespace IndoorNavigation.Models.NavigaionLayer
     /// </summary>
     public class Region
     {
+        /// <summary>
+        /// Gets or sets the name of Region.
+        /// e.g. 1F of NTUH
+        /// </summary>
         public string Name { get; set; }
 
         /// <summary>
@@ -382,22 +394,19 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 new Graph<Waypoint, string>();
 
         /// <summary>
-        /// Initializes a new instance of the Region class
+        /// Initializes a new instance of the Region, combine all the
+        /// waypoints and edges to NavigationSubgraph
         /// </summary>
-        public Region(string name, List<Waypoint> waypoints, List<Edge> edges)
+        public Region()
         {
-            Name = name;
-            Waypoints = waypoints;
-            Edges = edges;
-
             // Add all the waypoints of each region into region graph
-            foreach (Waypoint waypoint in waypoints)
+            foreach (Waypoint waypoint in Waypoints)
             {
                 NavigationSubgraph.AddNode(waypoint);
             }
 
             // Set each path into region graph
-            foreach (Edge edge in edges)
+            foreach (Edge edge in Edges)
             {
                 // Get the distance of two locations which in centimeter
                 int distance = System.Convert.ToInt32(edge.Distance);
@@ -423,12 +432,18 @@ namespace IndoorNavigation.Models.NavigaionLayer
     public class Waypoint
     {
         /// <summary>
+        /// Universal Unique Identifier of waypoint
+        /// </summary>
+        public Guid UUID { get; set; }
+
+        /// <summary>
         /// Friendly name of waypoint
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// Use is it to identify whether to switch the corressponding IPSClient
+        /// Use is it to identify whether to switch the corressponding
+        /// IPSClient using the enum type
         /// </summary>
         public IPSType IPSClientType { get; set; }
 
@@ -436,11 +451,6 @@ namespace IndoorNavigation.Models.NavigaionLayer
         /// Information for navigationlayer. Whether it has a landmark or null
         /// </summary>
         public string Landmark { get; set; }
-
-        /// <summary>
-        /// Universal Unique Identifier of waypoint
-        /// </summary>
-        public Guid UUID { get; set; }
 
         /// <summary>
         /// The coordinates of a waypoint
@@ -459,36 +469,30 @@ namespace IndoorNavigation.Models.NavigaionLayer
     }
 
     /// <summary>
-    /// Location connect
+    /// Represents the connected neighbor waypoints in a navigation graph
     /// </summary>
-    public abstract class LocationConnect
+    public class Neighbor
     {
+        /// <summary>
+        /// UUID of the neighbor waypoint
+        /// </summary>
+        public Guid TargetWaypointUUID { get; set; }
+
         /// <summary>
         /// Indicates the name of the target which is facing
         /// </summary>
         public string TargetName { get; set; }
 
         /// <summary>
-        /// Cardinal direction for the host waypoint
+        /// Cardinal direction for the host waypoint using the enum type
         /// </summary>
         public CardinalDirection Direction { get; set; }
     }
 
     /// <summary>
-    /// Represents the connected neighbor waypoints in a navigation graph
-    /// </summary>
-    public class Neighbor : LocationConnect
-    {
-        /// <summary>
-        /// ID of the neighbor waypoint
-        /// </summary>
-        public Guid TargetWaypointUUID { get; set; }
-    }
-
-    /// <summary>
     /// The edge between the two waypoints
     /// </summary>
-    public class Edge : LocationConnect
+    public class Edge
     {
         /// <summary>
         /// Location A
@@ -505,13 +509,19 @@ namespace IndoorNavigation.Models.NavigaionLayer
         public double Distance { get; set; }
 
         /// <summary>
-        /// The connection type, 
+        /// Cardinal direction for the host waypoint using the enum type
+        /// </summary>
+        public CardinalDirection Direction { get; set; }
+
+        /// <summary>
+        /// The connection type using the enum type
         /// e.g. normal hallway, stair, elevator...etc
         /// </summary>
         public ConnectionType Connection { get; set; }
 
         /// <summary>
-        /// Other informations regarding the edge, e.g. wheelchair support
+        /// Other informations regarding the edge
+        /// e.g. wheelchair support
         /// </summary>
         public string OtherInformations { get; set; }
     }
@@ -533,7 +543,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
         public List<Waypoint> WrongwayWaypointList { get; set; }
 
         /// <summary>
-        /// The direction to turn to the next waypoint
+        /// The direction to turn to the next waypoint using the enum type
         /// </summary>
         public TurnDirection Direction { get; set; }
     }
