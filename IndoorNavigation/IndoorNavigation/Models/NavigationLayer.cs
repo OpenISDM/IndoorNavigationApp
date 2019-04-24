@@ -118,139 +118,60 @@ namespace IndoorNavigation.Models.NavigaionLayer
         [XmlArrayItem("Edge", typeof(Edge))]
         public List<Edge> Edges { get; set; }
 
-        private const double thresholdOfDistance = 10; // 10 meters
-        private Graph<Waypoint, string> navigraph =
-            new Graph<Waypoint, string>();
+
+        #region Public methods
 
         /// <summary>
-        /// Initializes a new instance of the Navigraph class
+        /// Get the instance of Connection Graphs
         /// </summary>
-        public Navigraph(string name, List<Region> regions, List<Edge> edges)
+        public List<Graph<Waypoint, string>> GetConnectionGraphs()
         {
-            Name = name;
-            Regions = regions;
-            Edges = edges;
+            // The list of connection graph 
+            List<Graph<Waypoint, string>> ConnectionGraphs =
+                    new List<Graph<Waypoint, string>>();
 
-            /*
-            // Add all the waypoints into navigraph
-            IEnumerable<Waypoint> listOfAllWaypoints =
-                    regions.SelectMany(region => region.Waypoints);
-            foreach (Waypoint waypoint in listOfAllWaypoints)
+            // Add each navigation subgraph into Connection graphs
+            foreach (Region region in Regions)
             {
-                navigraph.AddNode(waypoint);
+                ConnectionGraphs.Add(region.NavigationSubgraph);
             }
 
-            // Set the navigraph which used by Dijkstra algorithm
-            foreach (Edge edge in edges)
-            {
-                int distance = System.Convert.ToInt32(edge.Distance);
-
-                // Get two connected location's key value
-                uint beaconAKey = navigraph.Where(waypoint =>
-                        waypoint.Item.UUID == edge.SourceWaypoint.UUID)
-                        .Select(waypoint => waypoint.Key).First();
-                uint beaconBKey = navigraph.Where(waypoint =>
-                        waypoint.Item.UUID == edge.TargetWaypoint.UUID)
-                        .Select(waypoint => waypoint.Key).First();
-
-                // Connect to the each waypoint
-                navigraph.Connect(beaconAKey, beaconBKey,
-                        distance, string.Empty);
-            }
-            */
-        }
-
-        public Queue<NavigationInstruction> GetPath(Waypoint startWaypoint,
-                                                Waypoint destinationWaypoint)
-        {
-            Queue<NavigationInstruction> returnedPathQueue =
-                    new Queue<NavigationInstruction>();
-
-            /*
-            // Find where is the start/destination waypoint and find its key
-            uint startKey = navigraph
-                    .Where(WaypointList => WaypointList.Item.UUID
-                    .Equals(startWaypoint.UUID)).Select(c => c.Key).First();
-            uint destinationKey = navigraph
-                    .Where(WaypointList => WaypointList.Item.UUID
-                    .Equals(destinationWaypoint.UUID))
-                    .Select(c => c.Key).First();
-
-            var path = navigraph.Dijkstra(startKey, destinationKey).GetPath();
-            for (int i = 0; i < path.Count() - 1; i++)
-            {
-                // Get both current waypoint and next waypoint within the path
-                Waypoint _currentWaypoint = navigraph[path.ToList()[i]].Item;
-                Waypoint _nextWaypoint = navigraph[path.ToList()[i]].Item;
-
-                if (i == 0)
-                {
-                    returnedPathQueue.Enqueue(new NavigationInstruction
-                    {
-                        NextWaypoint = _nextWaypoint,
-                        WrongwayWaypointList = GetWrongwayWaypoints(null,
-                                                        _currentWaypoint,
-                                                        _nextWaypoint,
-                                                        thresholdOfDistance),
-                        Direction = TurnDirection.FirstDirection
-                    });
-                }
-                else
-                {
-                    Waypoint _previousWaypoint = navigraph[path.ToList()[i - 1]]
-                                                 .Item;
-
-                    returnedPathQueue.Enqueue(new NavigationInstruction
-                    {
-                        NextWaypoint = _nextWaypoint,
-                        WrongwayWaypointList = GetWrongwayWaypoints(
-                                                     _previousWaypoint,
-                                                     _currentWaypoint,
-                                                     _nextWaypoint,
-                                                     thresholdOfDistance),
-                        Direction = GetTurnDirection(_previousWaypoint,
-                                                     _currentWaypoint,
-                                                     _nextWaypoint)
-                    });
-                }
-            }
-
-            return returnedPathQueue;
-            */
+            return ConnectionGraphs;
         }
 
         /// <summary>
         /// Gets the distance from source waypoint to target waypoint
         /// </summary>
-        public double GetDistance(Waypoint sourceWaypoint,
-                                  Waypoint targetWaypoint)
+        public static double GetDistance(
+                                    Graph<Waypoint, string> connectionGraph,
+                                    Waypoint sourceWaypoint,
+                                    Waypoint targetWaypoint)
         {
-            /*
             // Find where is the source/target waypoint and find its key
-            uint sourceKey = navigraph
+            uint sourceKey = connectionGraph
                             .Where(WaypointList => WaypointList.Item.UUID
                             .Equals(sourceWaypoint.UUID)).Select(c => c.Key)
                             .First();
-            uint targetKey = navigraph
+            uint targetKey = connectionGraph
                             .Where(WaypointList => WaypointList.Item.UUID
                             .Equals(targetWaypoint.UUID)).Select(c => c.Key)
                             .First();
 
             // Returns the distance of the path
-            return navigraph.Dijkstra(sourceKey, targetKey).Distance;
-            */
+            return connectionGraph.Dijkstra(sourceKey, targetKey).Distance;
         }
 
         /// <summary>
         /// Gets the turning direction using three waypoints
-        /// e.g. my previous design was to convert the direction to 
+        /// e.g. This method was to convert the direction to 
         /// a human-readable instruction. When the user is walking down 
         /// the hallway facing east, which his/her next waypoint is in south,
         /// the function converts the instruction to "Turn right on ...".
         /// </summary>
-        public TurnDirection GetTurnDirection(Waypoint previousWaypoint,
-                                              Waypoint currentWaypoint,
-                                              Waypoint nextWaypoint)
+        public static TurnDirection GetTurnDirection(
+                                                Waypoint previousWaypoint,
+                                                Waypoint currentWaypoint,
+                                                Waypoint nextWaypoint)
         {
             // Find the cardinal direction to the next waypoint
             CardinalDirection currentDirection = previousWaypoint.Neighbors
@@ -272,105 +193,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
             return (TurnDirection)nextTurnDirection;
         }
 
-        /// <summary>
-        /// Get the wrongway waypoint for each waypoint within path
-        /// </summary>
-        public List<Waypoint> GetWrongwayWaypoints(Waypoint previousWaypoint,
-                                                   Waypoint currentWaypoint,
-                                                   Waypoint nextWaypoint,
-                                                   double thresholdDistance)
-        {
-            /*
-            List<Waypoint> wrongwayWaypointList = new List<Waypoint>();
-
-            // Find the branch that is connect with current waypoint
-            // but not connect with the next target waypoint (within the step).
-            IEnumerable<Waypoint> adjacentWaypoints = 
-                                from edge in Edges
-                                where edge.SourceWaypoint
-                                          .Equals(currentWaypoint.UUID) &&
-                                      !edge.TargetWaypoint.UUID
-                                           .Equals(nextWaypoint.UUID)
-                                select edge.TargetWaypoint;
-
-            if (previousWaypoint != null)
-            {
-                // Filters the previous waypoint within the instruction steps 
-                // and add it into wrongwayWaypointList.
-                adjacentWaypoints = adjacentWaypoints.Where(waypoint =>
-                                !waypoint.UUID.Equals(previousWaypoint.UUID));
-
-                wrongwayWaypointList.Add(previousWaypoint);
-            }
-
-            for (int i = 0; i < adjacentWaypoints.Count(); i++)
-            {
-                if (currentWaypoint.Coordinates.GetDistanceTo(
-                    adjacentWaypoints.ElementAt(i).Coordinates) >=
-                    thresholdDistance)
-                {
-                    wrongwayWaypointList.Add(adjacentWaypoints.ElementAt(i));
-                    continue;
-                }
-
-                IEnumerable<Waypoint> connectedWaypoints =
-                                        GetConnectedWaypoints(
-                                            adjacentWaypoints.ElementAt(i),
-                                            previousWaypoint,
-                                            currentWaypoint,
-                                            nextWaypoint);
-
-                if (connectedWaypoints.Any())
-                {
-                    // Remove the duplicated waypoints that are already 
-                    // included in the adjacentWaypoints list
-                    adjacentWaypoints = adjacentWaypoints.Concat(
-                                        from waypoint in connectedWaypoints
-                                        where !adjacentWaypoints
-                                            .Any(adjWaypoint =>
-                                                 adjWaypoint.UUID
-                                                 .Equals(waypoint.UUID))
-                                        select waypoint);
-                }
-            }
-
-            // returns a list after removing duplicated elements in the list
-            return wrongwayWaypointList.Distinct().ToList();
-            */           
-        }
-
-        /// <summary>
-        /// Get the neighbor waypoints which are connect with the first-layer
-        /// waypoints, which are the source waypoint's neighbors.
-        /// </summary>
-        private IEnumerable<Waypoint> GetConnectedWaypoints(
-                                                   Waypoint adjacentWaypoint,
-                                                   Waypoint previousWaypoint,
-                                                   Waypoint currentWaypoint,
-                                                   Waypoint nextWaypoint)
-        {
-            /*
-            IEnumerable<Waypoint> connectedList = (from edge in Edges
-                                                   where edge.SourceWaypoint
-                                                             .Equals(adjacentWaypoint.UUID) &&
-
-                                                         !edge.TargetWaypoint.UUID
-                                                              .Equals(currentWaypoint.UUID) &&
-
-                                                         !edge.TargetWaypoint.UUID
-                                                              .Equals(nextWaypoint.UUID)
-                                                   select edge.TargetWaypoint);
-
-            if (previousWaypoint != null)
-            {
-                // Filters the previous waypoint within the instruction steps
-                connectedList = connectedList.Where(waypoint =>
-                                !waypoint.UUID.Equals(previousWaypoint.UUID));
-            }
-
-            return connectedList;
-            */           
-        }
+        #endregion
     }
 
     #region Navigraph parameters
