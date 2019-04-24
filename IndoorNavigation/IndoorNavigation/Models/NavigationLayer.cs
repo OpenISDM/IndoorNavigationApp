@@ -46,6 +46,7 @@ using System.Linq;
 using Dijkstra.NET.Model;
 using GeoCoordinatePortable;
 using Dijkstra.NET.Extensions;
+using System.Xml.Serialization;
 
 namespace IndoorNavigation.Models.NavigaionLayer
 {
@@ -92,23 +93,29 @@ namespace IndoorNavigation.Models.NavigaionLayer
     /// <summary>
     /// The top level of the navigation graph within two-level hierarchy
     /// </summary>
+    [XmlRoot("Navigraph")]
     public class Navigraph
     {
         /// <summary>
         /// Gets or sets the name
         /// e.g. Taipei City Hall, NTHU...etc
         /// </summary>
+        [XmlElement("Name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the regions of entire Navigraph
         /// </summary>
+        [XmlArray("Regions")]
+        [XmlArrayItem("Region", typeof(Region))]
         public List<Region> Regions { get; set; }
 
         /// <summary>
         /// Gets or sets the edges that connection between regions,
         /// e.g. stair, elevator...etc
         /// </summary>
+        [XmlArray("Edges")]
+        [XmlArrayItem("Edge", typeof(Edge))]
         public List<Edge> Edges { get; set; }
 
         private const double thresholdOfDistance = 10; // 10 meters
@@ -377,21 +384,27 @@ namespace IndoorNavigation.Models.NavigaionLayer
         /// Gets or sets the name of Region.
         /// e.g. 1F of NTUH
         /// </summary>
+        [XmlElement("Name")]
         public string Name { get; set; }
 
         /// <summary>
         /// The list of waypoint objects (nodes)
         /// </summary>
+        [XmlArray("Waypoints")]
+        [XmlArrayItem("Waypoint", typeof(Waypoint))]
         public List<Waypoint> Waypoints { get; set; }
 
         /// <summary>
         /// Connection between waypoints (edges)
         /// </summary>
+        [XmlArray("Edges")]
+        [XmlArrayItem("Edge", typeof(Edge))]
         public List<Edge> Edges { get; set; }
 
         /// <summary>
         /// The navigation subgraph
         /// </summary>
+        [XmlIgnore]
         public Graph<Waypoint, string> NavigationSubgraph = 
                 new Graph<Waypoint, string>();
 
@@ -436,37 +449,79 @@ namespace IndoorNavigation.Models.NavigaionLayer
         /// <summary>
         /// Universal Unique Identifier of waypoint
         /// </summary>
+        [XmlElement("UUID")]
         public Guid UUID { get; set; }
 
         /// <summary>
         /// Friendly name of waypoint
         /// </summary>
+        [XmlElement("Name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Use is it to identify whether to switch the corressponding
         /// IPSClient using the enum type
         /// </summary>
+        [XmlIgnore]
         public IPSType IPSClientType { get; set; }
+        [XmlElement("IPStype")]
+        public string IPStype
+        {
+            get { return IPSClientType.ToString(); }
+            set
+            {
+                if (string.IsNullOrEmpty(value) || !Enum.GetNames(typeof(IPSType)).Contains(value))
+                {
+                    //IPSClientType = IPSType.NoIPSType;
+                }
+                else
+                {
+                    IPSClientType = (IPSType)Enum.Parse(typeof(IPSType), value);
+                }
+            }
+        }
 
         /// <summary>
         /// Information for navigationlayer. Whether it has a landmark or null
         /// </summary>
+        [XmlElement("Landmark")]
         public string Landmark { get; set; }
 
         /// <summary>
         /// The coordinates of a waypoint
         /// </summary>
+        [XmlIgnore]
         public GeoCoordinate Coordinates { get; set; }
+        [XmlElement("Lat")]
+        public double Lat
+        {
+            get { return Coordinates.Latitude; }
+            set
+            {
+                Coordinates.Latitude = value;
+            }
+        }
+        [XmlElement("Lon")]
+        public double Lon
+        {
+            get { return Coordinates.Longitude; }
+            set
+            {
+                Coordinates.Longitude = value;
+            }
+        }
 
         /// <summary>
         /// The floor where the waypoint is located
         /// </summary>
+        [XmlElement("Floor")]
         public int Floor { get; set; }
 
         /// <summary>
         /// Neighbors of the waypoint
         /// </summary>
+        [XmlArray("Neighbors")]
+        [XmlArrayItem("Neighbor", typeof(Neighbor))]
         public List<Neighbor> Neighbors { get; set; }
     }
 
@@ -478,53 +533,113 @@ namespace IndoorNavigation.Models.NavigaionLayer
         /// <summary>
         /// UUID of the neighbor waypoint
         /// </summary>
+        [XmlElement("TargetWaypointUUID")]
         public Guid TargetWaypointUUID { get; set; }
 
         /// <summary>
         /// Indicates the name of the target which is facing
         /// </summary>
+        [XmlElement("TargetName")]
         public string TargetName { get; set; }
 
         /// <summary>
         /// Cardinal direction for the host waypoint using the enum type
         /// </summary>
+        [XmlElement("Direction")]
         public CardinalDirection Direction { get; set; }
     }
 
     /// <summary>
-    /// The edge between the two waypoints
+    /// The edge between the two waypoints(Location A -> Location B)
     /// </summary>
     public class Edge
     {
         /// <summary>
         /// Location A
         /// </summary>
+        [XmlIgnore]
         public Waypoint SourceWaypoint { get; set; }
+        [XmlElement("SourceWaypointUUID")]
+        public Guid SourceWaypointUUID
+        {
+            get { return SourceWaypoint.UUID; }
+            set
+            {
+                SourceWaypoint.UUID = value;
+            }
+        }
+
         /// <summary>
         /// Location B
         /// </summary>
+        [XmlIgnore]
         public Waypoint TargetWaypoint { get; set; }
+        [XmlElement("TargetWaypointUUID")]
+        public Guid TargetWaypointUUID
+        {
+            get { return TargetWaypoint.UUID; }
+            set
+            {
+                TargetWaypoint.UUID = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the distance
         /// </summary>
+        [XmlElement("Distance")]
         public double Distance { get; set; }
 
         /// <summary>
         /// Cardinal direction for the host waypoint using the enum type
         /// </summary>
+        [XmlIgnore]
         public CardinalDirection Direction { get; set; }
+        [XmlElement("ReferenceDirection")]
+        public string ReferenceDirection
+        {
+            get { return Direction.ToString(); }
+            set
+            {
+                if (string.IsNullOrEmpty(value) || !Enum.GetNames(typeof(CardinalDirection)).Contains(value))
+                {
+                    //Direction = CardinalDirection.NoDirection;
+                }
+                else
+                {
+                    Direction = (CardinalDirection)Enum.Parse(typeof(CardinalDirection), value);
+                }
+            }
+        }
 
         /// <summary>
         /// The connection type using the enum type
         /// e.g. normal hallway, stair, elevator...etc
         /// </summary>
+        [XmlIgnore]
         public ConnectionType Connection { get; set; }
+        [XmlElement("Connectiontype")]
+        public string Connectiontype
+        {
+            get { return Connection.ToString(); }
+            set
+            {
+                if (string.IsNullOrEmpty(value) || !Enum.GetNames(typeof(ConnectionType)).Contains(value))
+                {
+                    //Connection = ConnectionType.NoConnectionType;
+                }
+                else
+                {
+                    Connection = (ConnectionType)Enum.Parse(typeof(ConnectionType), value);
+                }
+            }
+        }
 
         /// <summary>
         /// Other informations regarding the edge
         /// e.g. wheelchair support
         /// </summary>
+        [XmlElement("OtherInformations")]
         public string OtherInformations { get; set; }
     }
 
