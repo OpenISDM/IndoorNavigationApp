@@ -47,6 +47,7 @@ using Dijkstra.NET.Model;
 using GeoCoordinatePortable;
 using Dijkstra.NET.Extensions;
 using System.Xml.Serialization;
+using System.Xml;
 
 namespace IndoorNavigation.Models.NavigaionLayer
 {
@@ -315,23 +316,18 @@ namespace IndoorNavigation.Models.NavigaionLayer
         /// </summary>
         [XmlIgnore]
         public GeoCoordinate Coordinates { get; set; }
+        private double lat;
         [XmlElement("Lat")]
-        public double Lat
+        public string Lat
         {
-            get { return Coordinates.Latitude; }
-            set
-            {
-                Coordinates.Latitude = value;
-            }
+            get => lat.ToString();
+            set => lat = double.Parse(value);
         }
         [XmlElement("Lon")]
-        public double Lon
+        public string Lon
         {
-            get { return Coordinates.Longitude; }
-            set
-            {
-                Coordinates.Longitude = value;
-            }
+            get => Coordinates.Longitude.ToString();
+            set => Coordinates = new GeoCoordinate(lat, double.Parse(value));
         }
 
         /// <summary>
@@ -383,14 +379,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
         [XmlIgnore]
         public Waypoint SourceWaypoint { get; set; }
         [XmlElement("SourceWaypointUUID")]
-        public Guid SourceWaypointUUID
-        {
-            get { return SourceWaypoint.UUID; }
-            set
-            {
-                SourceWaypoint.UUID = value;
-            }
-        }
+        public Guid SourceWaypointUUID { get; set; }
 
         /// <summary>
         /// Location B
@@ -398,14 +387,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
         [XmlIgnore]
         public Waypoint TargetWaypoint { get; set; }
         [XmlElement("TargetWaypointUUID")]
-        public Guid TargetWaypointUUID
-        {
-            get { return TargetWaypoint.UUID; }
-            set
-            {
-                TargetWaypoint.UUID = value;
-            }
-        }
+        public Guid TargetWaypointUUID { get; set; }
 
         /// <summary>
         /// Gets or sets the distance
