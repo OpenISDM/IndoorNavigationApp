@@ -269,3 +269,4 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+IndoorNavigation/IndoorNavigation.iOS/.DS_Store
