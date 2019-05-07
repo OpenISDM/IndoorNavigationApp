@@ -144,7 +144,7 @@ namespace IndoorNavigation.Models
         void Work();
         void StopNavigation();
         ISignalProcessingAlgorithm CreateSignalProcessingAlgorithm();
-        bool IsReachingDestination { get; }
+        bool IsDestinationReached { get; }
     }
     #endregion
 

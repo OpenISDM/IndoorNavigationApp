@@ -12,7 +12,8 @@
  
     File Description:
  
-        The algorithm for waypoint navigation used
+        This file contains code that implement the algorithm for 
+        waypoint navigation.
 
     File Name:
 
@@ -59,7 +60,7 @@ namespace IndoorNavigation.Modules.Navigation
         /// </summary>
         public WaypointAlgorithm()
         {
-            IsReachingDestination = false;
+            IsDestinationReached = false;
             HSignalProcess = new EventHandler(HandleSignalProcess);
             Utility.SignalProcess.Event.SignalProcessEventHandler +=
                 HSignalProcess;
@@ -72,7 +73,7 @@ namespace IndoorNavigation.Modules.Navigation
         {
             // Waiting for the destination set
             navigationTaskWaitEvent.WaitOne();
-            while (!IsReachingDestination)
+            while (!IsDestinationReached)
             {
                 // Find the current position from the current Beacon
                 WaypointModel currentWaypoint;
@@ -106,7 +107,7 @@ namespace IndoorNavigation.Modules.Navigation
                     }
                     else
                     {
-                        // Check if the user reaches the next waypoint
+                        // Check if the user has reached the next waypoint
                         if (currentWaypoint == nextInstruction.NextWaypoint)
                         {
                             nextInstruction = pathQueue.Dequeue();
@@ -245,7 +246,7 @@ namespace IndoorNavigation.Modules.Navigation
         /// <summary>
         /// The boolean of whether reach the destination
         /// </summary>
-        public bool IsReachingDestination { get; private set; }
+        public bool IsDestinationReached { get; private set; }
 
         /// <summary>
         /// Set the destination and raise the event to run the algorithm
@@ -300,7 +301,7 @@ namespace IndoorNavigation.Modules.Navigation
         {
             if (!disposedValue)
             {
-                IsReachingDestination = true;
+                IsDestinationReached = true;
                 lock (resourceLock)
                     currentBeacon = null;
                 nextBeaconWaitEvent.Set();
