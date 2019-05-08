@@ -123,21 +123,41 @@ namespace IndoorNavigation.Models.NavigaionLayer
         #region Public methods
 
         /// <summary>
-        /// Get the instance of Connection Graphs
+        /// Get the instance of region graph, nodes in it are regions and edges
+        /// are pathways linking the regions.
         /// </summary>
-        public List<Graph<Waypoint, string>> GetConnectionGraphs()
+        public Graph<Region, string> GetRegiongraph()
         {
-            // The list of connection graph 
-            List<Graph<Waypoint, string>> ConnectionGraphs =
-                    new List<Graph<Waypoint, string>>();
+            Graph<Region, string> regionGraph =
+                    new Graph<Region, string>();
 
-            // Add each navigation subgraph into Connection graphs
             foreach (Region region in Regions)
             {
-                ConnectionGraphs.Add(region.NavigationSubgraph);
+                regionGraph.AddNode(region);
             }
 
-            return ConnectionGraphs;
+            foreach (Edge edge in Edges)
+            {
+                Region sourceRegion = Regions.First(region =>
+                        region.Waypoints.Contains(edge.SourceWaypoint));
+                Region targetRegion = Regions.First(region =>
+                        region.Waypoints.Contains(edge.TargetWaypoint));
+
+                uint sourceKey = regionGraph
+                        .Where(region => region.Item.Waypoints
+                        .Equals(sourceRegion.Waypoints))
+                        .Select(c => c.Key).First();
+                uint targetKey = regionGraph
+                        .Where(region => region.Item.Waypoints
+                        .Equals(targetRegion.Waypoints))
+                        .Select(c => c.Key).First();
+
+                regionGraph.Connect(sourceKey, targetKey,
+                        (int)edge.Distance, string.Empty);
+            }
+
+
+            return regionGraph;
         }
 
         /// <summary>
@@ -150,12 +170,12 @@ namespace IndoorNavigation.Models.NavigaionLayer
         {
             // Find where is the source/target waypoint and find its key
             uint sourceKey = connectionGraph
-                            .Where(WaypointList => WaypointList.Item.UUID
-                            .Equals(sourceWaypoint.UUID)).Select(c => c.Key)
+                            .Where(WaypointList => WaypointList.Item.ID
+                            .Equals(sourceWaypoint.ID)).Select(c => c.Key)
                             .First();
             uint targetKey = connectionGraph
-                            .Where(WaypointList => WaypointList.Item.UUID
-                            .Equals(targetWaypoint.UUID)).Select(c => c.Key)
+                            .Where(WaypointList => WaypointList.Item.ID
+                            .Equals(targetWaypoint.ID)).Select(c => c.Key)
                             .First();
 
             // Returns the distance of the path
@@ -178,12 +198,12 @@ namespace IndoorNavigation.Models.NavigaionLayer
             CardinalDirection currentDirection = previousWaypoint.Neighbors
                                             .Where(neighbors =>
                                                 neighbors.TargetWaypointUUID
-                                                .Equals(currentWaypoint.UUID))
+                                                .Equals(currentWaypoint.ID))
                                             .Select(c => c.Direction).First();
             CardinalDirection nextDirection = currentWaypoint.Neighbors
                                             .Where(neighbors =>
                                                 neighbors.TargetWaypointUUID
-                                                .Equals(nextWaypoint.UUID))
+                                                .Equals(nextWaypoint.ID))
                                             .Select(c => c.Direction).First();
 
             // Calculate the turning direction by cardinal direction
@@ -252,10 +272,10 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
                 // Get two connected waypoints's key value
                 uint sourceWaypointKey = NavigationSubgraph.Where(waypoint =>
-                        waypoint.Item.UUID.Equals(edge.SourceWaypoint.UUID))
+                        waypoint.Item.ID.Equals(edge.SourceWaypoint.ID))
                         .Select(waypoint => waypoint.Key).First();
                 uint targetWaypointKey = NavigationSubgraph.Where(waypoint =>
-                        waypoint.Item.UUID.Equals(edge.TargetWaypoint.UUID))
+                        waypoint.Item.ID.Equals(edge.TargetWaypoint.ID))
                         .Select(waypoint => waypoint.Key).First();
 
                 // Connect the waypoints
@@ -274,7 +294,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
         /// Universal Unique Identifier of waypoint
         /// </summary>
         [XmlElement("UUID")]
-        public Guid UUID { get; set; }
+        public Guid ID { get; set; }
 
         /// <summary>
         /// Friendly name of waypoint
@@ -284,7 +304,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
         /// <summary>
         /// Use is it to identify whether to switch the corressponding
-        /// IPSClient using the enum type
+        /// IPSClient using the enum type.
         /// </summary>
         [XmlIgnore]
         public IPSType IPSClientType { get; set; }
@@ -306,10 +326,11 @@ namespace IndoorNavigation.Models.NavigaionLayer
         }
 
         /// <summary>
-        /// Information for navigationlayer. Whether it has a landmark or null
+        /// Message used to instruct the user to face a direction known to the
+        /// naivgator.
         /// </summary>
         [XmlElement("Landmark")]
-        public string Landmark { get; set; }
+        public string OrientationInstruction { get; set; }
 
         /// <summary>
         /// The coordinates of a waypoint
@@ -347,7 +368,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
     /// <summary>
     /// Represents the connected neighbor waypoints in a navigation graph
     /// </summary>
-    public class Neighbor
+    public struct Neighbor
     {
         /// <summary>
         /// UUID of the neighbor waypoint
@@ -369,7 +390,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
     }
 
     /// <summary>
-    /// The edge between the two waypoints(Location A -> Location B)
+    /// The edge/connection between the two waypoints(Location A -> Location B)
     /// </summary>
     public class Edge
     {
@@ -422,11 +443,11 @@ namespace IndoorNavigation.Models.NavigaionLayer
         /// e.g. normal hallway, stair, elevator...etc
         /// </summary>
         [XmlIgnore]
-        public ConnectionType Connection { get; set; }
+        public ConnectionType ConnectionType { get; set; }
         [XmlElement("Connectiontype")]
         public string Connectiontype
         {
-            get { return Connection.ToString(); }
+            get { return ConnectionType.ToString(); }
             set
             {
                 if (string.IsNullOrEmpty(value) || !Enum.GetNames(typeof(ConnectionType)).Contains(value))
@@ -435,7 +456,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 }
                 else
                 {
-                    Connection = (ConnectionType)Enum.Parse(typeof(ConnectionType), value);
+                    ConnectionType = (ConnectionType)Enum.Parse(typeof(ConnectionType), value);
                 }
             }
         }
@@ -449,25 +470,4 @@ namespace IndoorNavigation.Models.NavigaionLayer
     }
 
     #endregion
-
-    /// <summary>
-    /// Instruction of next location to be delivered at the next waypoint
-    /// </summary>
-    public class NavigationInstruction
-    {
-        /// <summary>
-        /// The next waypoint within navigation path
-        /// </summary>
-        public Waypoint NextWaypoint { get; set; }
-        /// <summary>
-        /// The List of "wrong way" waypoint of the next location
-        /// </summary>
-        public List<Waypoint> WrongwayWaypointList { get; set; }
-
-        /// <summary>
-        /// The direction to turn to the next waypoint using the enum type
-        /// </summary>
-        public TurnDirection Direction { get; set; }
-    }
-
 }
