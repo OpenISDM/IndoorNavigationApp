@@ -36,5 +36,9 @@
 	<string>This app needs to access a camera to scan the barcode.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Indoor navigation requires location permission</string>
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleLightContent</string>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
 </dict>
 </plist>

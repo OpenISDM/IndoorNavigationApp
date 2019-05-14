@@ -189,9 +189,12 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="3.6.0.293080" />
+    <PackageReference Include="Xamarin.Forms" Version="3.6.0.344457" />
     <PackageReference Include="Xamarin.CustomControls.ProgressBarView">
       <Version>1.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Forms.Visual.Material">
+      <Version>3.6.0.344457</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
@@ -226,6 +229,16 @@
     <BundleResource Include="Resources\Warning.png" />
     <BundleResource Include="Resources\Waiting.png" />
     <BundleResource Include="Resources\Arrived.png" />
+    <BundleResource Include="Resources\NTUH_logo.png" />
+    <BundleResource Include="Resources\Clinics.png" />
+    <BundleResource Include="Resources\Cashier.png" />
+    <BundleResource Include="Resources\Exit.png" />
+    <BundleResource Include="Resources\ExaminationRoom.png" />
+    <BundleResource Include="Resources\Pharmacy.png" />
+    <BundleResource Include="Resources\ConvenienceStore.png" />
+    <BundleResource Include="Resources\Others.png" />
+    <BundleResource Include="Resources\Bathroom.png" />
+    <BundleResource Include="Resources\BloodCollectionCounter.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\close_circle_button.png" />

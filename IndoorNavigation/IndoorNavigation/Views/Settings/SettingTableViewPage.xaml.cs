@@ -33,7 +33,7 @@ namespace IndoorNavigation.Views.Settings
 
             BindingContext = this;
 
-            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#009FCC");
+            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#3F51B5");
             ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
 
             ReloadNaviGraphItems();
