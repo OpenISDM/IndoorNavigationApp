@@ -38,6 +38,13 @@
 	<string>Indoor navigation requires location permission</string>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleLightContent</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>zh_TW</string>
+	</array>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en_US</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 </dict>

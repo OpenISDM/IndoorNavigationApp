@@ -11,6 +11,9 @@ using IndoorNavigation.Modules;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Prism.Commands;
+using Plugin.Multilingual;
+using IndoorNavigation.Resources;
+using System.Globalization;
 
 namespace IndoorNavigation.Views.Settings
 {
@@ -22,8 +25,10 @@ namespace IndoorNavigation.Views.Settings
         // sample of TextPickerCell(選擇圖資, ref: https://github.com/muak/AiForms.SettingsView#textpickercell)
         public IList SelectNaviGraphItems { get; } = new ObservableCollection<string>();
         public IList CleanNaviGraphItems { get; } = new ObservableCollection<string>();
+        public IList LanguageItems { get; } = new ObservableCollection<string>();
         public ICommand SelectedMapCommand => new DelegateCommand(HandleSelectedMap);
         public ICommand CleanMapCommand => new DelegateCommand(async () => { await HandleCLeanMapAsync(); });
+        public ICommand ChangeLanguageCommand => new DelegateCommand(HandleChangeLanguage);
 
         public SettingTableViewPage()
         {
@@ -38,6 +43,13 @@ namespace IndoorNavigation.Views.Settings
 
             ReloadNaviGraphItems();
 
+            LanguageItems.Add("Chinese");
+            LanguageItems.Add("English");
+
+            if (Application.Current.Properties.ContainsKey("LanguagePicker"))
+            {
+                LanguagePicker.SelectedItem = Application.Current.Properties["LanguagePicker"];
+            }
         }
 
         async void LicenseBtn_Tapped(object sender, EventArgs e)
@@ -160,11 +172,45 @@ namespace IndoorNavigation.Views.Settings
             }
         }
 
+        private async void HandleChangeLanguage()
+        {
+            switch (LanguagePicker.SelectedItem.ToString())
+            {
+                case "English":
+                    CrossMultilingual.Current.CurrentCultureInfo = new CultureInfo("en");
+                    break;
+                case "Chinese":
+                    CrossMultilingual.Current.CurrentCultureInfo = new CultureInfo("zh");
+                    break;
+
+                default:
+                    break;
+            }
+
+            AppResources.Culture = CrossMultilingual.Current.CurrentCultureInfo;
+            await Navigation.PushAsync(new MainPage());
+        }
+
+        protected override void OnDisappearing()
+        {
+            if (LanguagePicker.SelectedItem != null)
+            {
+                Device.BeginInvokeOnMainThread(async () =>
+                {
+                    Application.Current.Properties["LanguagePicker"] = LanguagePicker.SelectedItem;
+
+                    await Application.Current.SavePropertiesAsync();
+                });
+            }
+
+            base.OnDisappearing();
+        }
+
         private async Task HandleCLeanMapAsync()
         {
             try
             {
-                if (CleanMapPicke.SelectedItem.ToString() == "--全部--")
+                if (CleanMapPicker.SelectedItem.ToString() == "--全部--")
                 {
                     if (await DisplayAlert("警告", "確定要刪除所有地圖嗎？", "Yes", "No"))
                     {
@@ -175,10 +221,10 @@ namespace IndoorNavigation.Views.Settings
                 }
                 else
                 {
-                    if (await DisplayAlert("警告", string.Format("確定要刪除 地圖:{0} 嗎？",CleanMapPicke.SelectedItem), "Yes", "No"))
+                    if (await DisplayAlert("警告", string.Format("確定要刪除 地圖:{0} 嗎？",CleanMapPicker.SelectedItem), "Yes", "No"))
                     {
                         // 刪除選擇的地圖資料
-                        NavigraphStorage.DeleteNavigraph(CleanMapPicke.SelectedItem.ToString());
+                        NavigraphStorage.DeleteNavigraph(CleanMapPicker.SelectedItem.ToString());
                         await DisplayAlert("訊息", "刪除成功", "OK");
                     }
                 }
@@ -189,7 +235,7 @@ namespace IndoorNavigation.Views.Settings
                 await DisplayAlert("錯誤", "刪除地圖時發生不明錯誤", "確定");
             }
 
-            CleanMapPicke.SelectedItem = "";
+            CleanMapPicker.SelectedItem = "";
             ReloadNaviGraphItems();
         }
     }

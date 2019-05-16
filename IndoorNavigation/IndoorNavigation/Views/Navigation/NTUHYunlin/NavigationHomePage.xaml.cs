@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using IndoorNavigation.Views.Settings;
 using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 
-namespace IndoorNavigation.Views.Navigation.NTUH.Yunlin
+namespace IndoorNavigation.Views.Navigation.NTUHYunlin
 {
+    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class NavigationHomePage : ContentPage
     {
         public NavigationHomePage()

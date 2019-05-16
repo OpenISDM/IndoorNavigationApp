@@ -2,82 +2,30 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:IndoorNavigation"
-             x:Class="IndoorNavigation.MainPage">
-
-    <!--StackLayout>
-    	<Label Text="Welcome to Xamarin.Forms!!" 
-           HorizontalOptions="Center"
-           VerticalOptions="CenterAndExpand" />
-    </StackLayout-->
+             x:Class="IndoorNavigation.MainPage"
+             xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
+             Title="地點">
     
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness">
             <OnPlatform.Platforms>
-                <On Platform="iOS" Value="0, 25, 0, 0" />
+                <On Platform="iOS" Value="4, 5, 4, 25" />
                 <On Platform="Android" Value="0, 0, 0, 0" />
                 <On Platform="UWP" Value="0, 0, 0, 0" />
             </OnPlatform.Platforms>
         </OnPlatform>
     </ContentPage.Padding>
     
-    <AbsoluteLayout>
-        
-        <ImageButton
-            Source="settings_gears_imagebutton.png"
-            BackgroundColor="Transparent"
-            AbsoluteLayout.LayoutBounds="0.95, 0.01, 0.06, 0.06"
-            AbsoluteLayout.LayoutFlags="All"
-            Scale="1.5"
-            Clicked="SettingImageButton_Clicked"
-        />
-        
-        <Label
-            AbsoluteLayout.LayoutBounds="0.5, 0.27, 0.6, 0.5"
-            AbsoluteLayout.LayoutFlags="All">
+    <ContentPage.ToolbarItems>
+        <!-- Android should be custom-->
+        <ToolbarItem Text="{i18n:Translate Edit}" Priority="-1" Order="Primary"/>
+        <ToolbarItem Text="{i18n:Translate Setting}" Priority="1" Order="Primary" Clicked="SettingBtn_Clicked"/>
+    </ContentPage.ToolbarItems>
+    
+    <ContentPage.Content>
+        <Grid>
             
-            <!-- &#10; is breakline -->
-            <Label.FormattedText>
-                <FormattedString>
-                    <Span x:Name="WelcomeLabel" Text="Welcome to&#10;" FontSize="40"
-                          FontAttributes="Bold"/>
-                    <Span x:Name="BeDISLabel" Text="BeDIS&#10;" FontSize="43" TextColor="#009FCC"
-                          FontAttributes="Bold" FontFamily=""/>
-                    <Span x:Name="SloganLabel" Text="&#10;You won't get lost from now&#10;" 
-                          FontSize="Medium" FontAttributes="Italic"/>
-                </FormattedString>
-            </Label.FormattedText>
-        </Label>
-        
-        <Button
-            x:Name="NavigatorButton"
-            Clicked="NavigatorButton_Clicked"
-            Text="Navigator"
-            FontSize="Large"
-            CornerRadius="30"
-            BorderColor="#49516F"
-            TextColor="#ffffff"
-            BackgroundColor="#009FCC"
-            Image="navigation_button.png"
-            ContentLayout="Left, 26"
-            AbsoluteLayout.LayoutBounds="0.5, 0.47, 0.7, 0.1"
-            AbsoluteLayout.LayoutFlags="All"
-        />
-        
-        <Button
-            x:Name="TrackingButton"
-            Text="Tracking"
-            FontSize="Large"
-            CornerRadius="30"
-            TextColor="#ffffff"
-            BorderColor="#49516F"
-            BackgroundColor="#009FCC"
-            Image="tracking_button.png"
-            ContentLayout="Left, 26"
-            AbsoluteLayout.LayoutBounds="0.5, 0.7, 0.7, 0.1"
-            AbsoluteLayout.LayoutFlags="All"
-        />
-        
-        
-    </AbsoluteLayout>
+        </Grid>
+    </ContentPage.Content>
 
 </ContentPage>
