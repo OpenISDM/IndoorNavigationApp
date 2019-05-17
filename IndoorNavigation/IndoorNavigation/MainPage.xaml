@@ -9,7 +9,7 @@
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness">
             <OnPlatform.Platforms>
-                <On Platform="iOS" Value="4, 5, 4, 25" />
+                <On Platform="iOS" Value="0, 0, 0, 25" />
                 <On Platform="Android" Value="0, 0, 0, 0" />
                 <On Platform="UWP" Value="0, 0, 0, 0" />
             </OnPlatform.Platforms>
@@ -24,6 +24,62 @@
     
     <ContentPage.Content>
         <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="8*"/>
+            </Grid.RowDefinitions>
+            
+        <SearchBar x:Name="NaviSearchBar" Grid.Row="0" 
+                   Placeholder="Pick your goal within locations"
+                   CancelButtonColor="#007BFF"
+                   Text="{Binding SearchedText, Mode=TwoWay}"
+                   BackgroundColor="#f0f0f0"
+                   VerticalOptions="StartAndExpand"/>
+        
+        <ListView x:Name="LocationListView" Grid.Row="1" Grid.RowSpan="2"
+                  Margin="10, -8, 10,10" HasUnevenRows="true"
+                  ItemTapped="Handle_ItemTapped"
+                  SelectedItem="LocationListView_ItemSelected"
+                  IsPullToRefreshEnabled="true"
+                  Refreshing="LocationListView_Refreshing"
+                  IsGroupingEnabled="true"
+                  GroupDisplayBinding="{Binding Key}">
+            
+            <ListView.GroupHeaderTemplate>
+                <DataTemplate>
+                    <ViewCell Height="35">
+                        <StackLayout VerticalOptions="CenterAndExpand"
+                                     Padding="15, 1, 1, 1">
+                            <Label Text="{Binding Key}"
+                                   TextColor="#009FCC"
+                                   FontAttributes="Bold"/>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.GroupHeaderTemplate>
+            
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell Height="70">
+                        <StackLayout Orientation="Horizontal"
+                                     Padding="20, 20, 20, 1">
+                            
+                            <!--<Label Text="ICON"/>-->
+                            <Image Source="location_icon.png"
+                                   Margin="1, 1, 1, 15"
+                                   VerticalOptions="Start"/>
+                            
+                            <Label Text="{Binding Name}" 
+                                   HorizontalOptions="Start" 
+                                   VerticalOptions="Start"
+                                   TextColor="#009FCC" Margin="60, 10, 1, 1" />
+                            
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            
+        </ListView>
             
         </Grid>
     </ContentPage.Content>

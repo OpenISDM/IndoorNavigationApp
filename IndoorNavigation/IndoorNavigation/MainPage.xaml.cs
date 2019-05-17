@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Linq;
+using System.Collections.Generic;
 using Xamarin.Forms;
-using IndoorNavigation.Views.Navigation;
-using IndoorNavigation.Views.Settings;
 using Xamarin.Forms.Xaml;
-using Plugin.Multilingual;
-using System.Globalization;
-using IndoorNavigation.Resources;
+using IndoorNavigation.Views.Settings;
+using IndoorNavigation.Views.Navigation.NTUHYunlin;
+using MvvmHelpers;
 
 namespace IndoorNavigation
 {
@@ -17,10 +17,19 @@ namespace IndoorNavigation
         {
             InitializeComponent();
 
-            // removes Navigation Bar
-            //NavigationPage.SetHasNavigationBar(this, false);
-
             NavigationPage.SetBackButtonTitle(this, "首頁");
+
+            switch (Device.RuntimePlatform)
+            {
+                case Device.Android:
+                    NaviSearchBar.BackgroundColor = Color.White;
+                    break;
+
+                default:
+                    break;
+            }
+
+            LocationListView.ItemsSource = GetLocationList();
         }
 
         protected override void OnAppearing()
@@ -53,9 +62,64 @@ namespace IndoorNavigation
             }
         }
 
-        async void SettingBtn_Clicked(object sender, System.EventArgs e)
+        async void SettingBtn_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new SettingTableViewPage());
         }
+
+        async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            if (e.Item is Location location && location.Name == "雲林台大醫院")
+            {
+                var answser = await DisplayAlert("Turn to next page?", location.Name, "OK", "Cancel");
+
+                if (answser)
+                    await Navigation.PushAsync(new NavigationHomePage());
+            }
+
+            //await Navigation.PushAsync(new NavigationHomePage());
+        }
+
+        void LocationListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            // disable it
+            LocationListView.SelectedItem = null;
+        }
+
+        void LocationListView_Refreshing(object sender, EventArgs e)
+        {
+            LocationListView.EndRefresh();
+        }
+
+        private IEnumerable<Grouping<string, Location>> GetLocationList(string name = null)
+        {
+            List<Location> locations = new List<Location>
+            {
+                new Location{ Name="台北市政府", City="台北" },
+                new Location{ Name="宜蘭高鐵站", City="宜蘭"},
+                new Location{ Name="台中市政府", City="台中"},
+                new Location{ Name="雲林市政府", City="雲林"},
+                new Location{ Name="台北高鐵站", City="台北"},
+                new Location{ Name="雲林台大醫院", City="雲林"},
+                new Location{ Name="宜蘭市政府", City="宜蘭"},
+                new Location{ Name="台南市政府", City="台南"},
+                new Location{ Name="高雄市政府", City="高雄"},
+                new Location{ Name="高雄高鐵站", City="高雄"},
+                new Location{ Name="台南高鐵站", City="台南"}
+            };
+
+            var source = string.IsNullOrEmpty(name) ? locations : locations
+                         .Where(c => c.Name.Contains(name));
+
+            return from location in source
+                   group location by location.City into locationGroup
+                   select new Grouping<string, Location>(locationGroup.Key, locationGroup);
+        }
+    }
+
+    class Location
+    {
+        public string Name { get; set; }
+        public string City { get; set; }
     }
 }
