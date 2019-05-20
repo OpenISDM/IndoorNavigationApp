@@ -123,6 +123,39 @@ namespace IndoorNavigation.Models.NavigaionLayer
         #region Public methods
 
         /// <summary>
+        /// Setup the Navigation graph object that links each UUID to waypoint
+        /// within the edges.
+        /// </summary>
+        public void Setup()
+        {
+            List<Waypoint> waypointsOfRegions = new List<Waypoint>();
+
+            // Setup each waypoint in the edge within regions
+            foreach (Region region in Regions)
+            {
+                foreach (Edge edge in region.Edges)
+                {
+                    edge.SourceWaypoint = region.Waypoints.First(waypoint =>
+                            waypoint.ID.Equals(edge.SourceWaypointUUID));
+                    edge.TargetWaypoint = region.Waypoints.First(waypoint =>
+                            waypoint.ID.Equals(edge.TargetWaypointUUID));
+                }
+
+                waypointsOfRegions.AddRange(
+                        region.Waypoints.Select(waypoint => waypoint));
+            }
+
+            // Setup each waypoint in the edge which between regions
+            foreach (Edge edge in Edges)
+            {
+                edge.SourceWaypoint = waypointsOfRegions.First(waypoint =>
+                        waypoint.ID.Equals(edge.SourceWaypointUUID));
+                edge.TargetWaypoint = waypointsOfRegions.First(waypoint =>
+                        waypoint.ID.Equals(edge.TargetWaypointUUID));
+            }
+        }
+
+        /// <summary>
         /// Get the instance of region graph, nodes in it are regions and edges
         /// are pathways linking the regions.
         /// </summary>
