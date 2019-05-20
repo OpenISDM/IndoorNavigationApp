@@ -139,9 +139,11 @@ namespace IndoorNavigation.Models.NavigaionLayer
             foreach (Edge edge in Edges)
             {
                 Region sourceRegion = Regions.First(region =>
-                        region.Waypoints.Contains(edge.SourceWaypoint));
+                        region.Waypoints.Any(waypoint => 
+                        waypoint.ID.Equals(edge.SourceWaypointUUID)));
                 Region targetRegion = Regions.First(region =>
-                        region.Waypoints.Contains(edge.TargetWaypoint));
+                        region.Waypoints.Any(waypoint =>
+                        waypoint.ID.Equals(edge.TargetWaypointUUID)));
 
                 uint sourceKey = regionGraph
                         .Where(region => region.Item.Waypoints
