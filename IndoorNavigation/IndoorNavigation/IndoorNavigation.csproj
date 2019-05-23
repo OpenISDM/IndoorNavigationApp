@@ -45,6 +45,7 @@
     <Folder Include="Modules\Navigation\Dijkstra.NET\" />
     <Folder Include="Views\Navigation\NTUHYunlin\" />
     <Folder Include="Resources\" />
+    <Folder Include="ViewModels\Navigation\NTUHYunlin\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Views\Navigator\MyPage.xaml.cs" />

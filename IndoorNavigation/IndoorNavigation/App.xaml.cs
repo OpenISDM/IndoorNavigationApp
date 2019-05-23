@@ -23,14 +23,15 @@ namespace IndoorNavigation
         {
             InitializeComponent();
 
+            // Get the current device language setting
             AppResources.Culture = CrossMultilingual.Current.DeviceCultureInfo;
             if (AppResources.Culture.ToString().Contains("zh"))
             {
-                Application.Current.Properties["LanguagePicker"] = "Chinese";
+                Current.Properties["LanguagePicker"] = "Chinese";
             }
             else if (AppResources.Culture.ToString().Contains("en"))
             {
-                Application.Current.Properties["LanguagePicker"] = "English";
+                Current.Properties["LanguagePicker"] = "English";
             }
 
             MainPage = new NavigationPage(new MainPage());

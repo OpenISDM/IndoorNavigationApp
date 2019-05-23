@@ -51,7 +51,7 @@
                         <StackLayout VerticalOptions="CenterAndExpand"
                                      Padding="15, 1, 1, 1">
                             <Label Text="{Binding Key}"
-                                   TextColor="#009FCC"
+                                   TextColor="#3F51B5"
                                    FontAttributes="Bold"/>
                         </StackLayout>
                     </ViewCell>
@@ -72,7 +72,7 @@
                             <Label Text="{Binding Name}" 
                                    HorizontalOptions="Start" 
                                    VerticalOptions="Start"
-                                   TextColor="#009FCC" Margin="60, 10, 1, 1" />
+                                   TextColor="#3F51B5" Margin="60, 10, 1, 1" />
                             
                         </StackLayout>
                     </ViewCell>
