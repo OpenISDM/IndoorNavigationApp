@@ -13,6 +13,12 @@
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
     
+    <data name="Location" xml:space="preserve">
+        <value>Locations</value>
+    </data>
+    <data name="PickLocation" xml:space="preserve">
+        <value>Pick your goal within locations</value>
+    </data>
     <data name="Edit" xml:space="preserve">
         <value>Edit</value>
     </data>

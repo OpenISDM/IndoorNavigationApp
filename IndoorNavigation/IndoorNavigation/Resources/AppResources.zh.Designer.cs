@@ -47,6 +47,18 @@ namespace IndoorNavigation.Resources {
             }
         }
         
+        internal static string Location {
+            get {
+                return ResourceManager.GetString("Location", resourceCulture);
+            }
+        }
+        
+        internal static string PickLocation {
+            get {
+                return ResourceManager.GetString("PickLocation", resourceCulture);
+            }
+        }
+        
         internal static string Edit {
             get {
                 return ResourceManager.GetString("Edit", resourceCulture);

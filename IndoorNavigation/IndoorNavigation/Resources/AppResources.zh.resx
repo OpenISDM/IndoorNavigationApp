@@ -13,6 +13,12 @@
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
     
+    <data name="Location" xml:space="preserve">
+        <value>地點</value>
+    </data>
+    <data name="PickLocation" xml:space="preserve">
+        <value>請選擇您要導航的地點</value>
+    </data>
     <data name="Edit" xml:space="preserve">
         <value>編輯</value>
     </data>

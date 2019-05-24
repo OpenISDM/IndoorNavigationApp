@@ -6,13 +6,15 @@ using Xamarin.Forms.Xaml;
 using IndoorNavigation.Views.Settings;
 using IndoorNavigation.Views.Navigation.NTUHYunlin;
 using MvvmHelpers;
+using System.ComponentModel;
+using IndoorNavigation.ViewModels;
 
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainPage : ContentPage
     {
-
+        private List<Location> locations;
         public MainPage()
         {
             InitializeComponent();
@@ -28,6 +30,17 @@ namespace IndoorNavigation
                 default:
                     break;
             }
+
+            locations = new List<Location>
+            {
+                new Location{ Name="台北市政府", City="台北"},
+                new Location{ Name="員林榮民之家", City="彰化"},
+                new Location{ Name="雲林市政府", City="雲林"},
+                new Location{ Name="雲林台大醫院", City="雲林"},
+                new Location{ Name="台南市政府", City="台南"},
+                new Location{ Name="高雄市政府", City="高雄"},
+                new Location{ Name="高雄高鐵站", City="高雄"},
+            };
 
             LocationListView.ItemsSource = GetLocationList();
         }
@@ -91,23 +104,19 @@ namespace IndoorNavigation
             LocationListView.EndRefresh();
         }
 
+        void Item_Delete(object sender, System.EventArgs e)
+        {
+            Location item = (Location)((MenuItem)sender).CommandParameter;
+
+            if (item != null)
+            {
+                locations.Remove(item);
+                LocationListView.ItemsSource = GetLocationList();
+            }
+        }
+
         private IEnumerable<Grouping<string, Location>> GetLocationList(string name = null)
         {
-            List<Location> locations = new List<Location>
-            {
-                new Location{ Name="台北市政府", City="台北" },
-                new Location{ Name="宜蘭高鐵站", City="宜蘭"},
-                new Location{ Name="台中市政府", City="台中"},
-                new Location{ Name="雲林市政府", City="雲林"},
-                new Location{ Name="台北高鐵站", City="台北"},
-                new Location{ Name="雲林台大醫院", City="雲林"},
-                new Location{ Name="宜蘭市政府", City="宜蘭"},
-                new Location{ Name="台南市政府", City="台南"},
-                new Location{ Name="高雄市政府", City="高雄"},
-                new Location{ Name="高雄高鐵站", City="高雄"},
-                new Location{ Name="台南高鐵站", City="台南"}
-            };
-
             var source = string.IsNullOrEmpty(name) ? locations : locations
                          .Where(c => c.Name.Contains(name));
 

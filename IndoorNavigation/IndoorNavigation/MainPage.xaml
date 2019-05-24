@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:IndoorNavigation"
              x:Class="IndoorNavigation.MainPage"
              xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
-             Title="地點">
+             Title="{i18n:Translate Location}">
     
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness">
@@ -17,9 +17,8 @@
     </ContentPage.Padding>
     
     <ContentPage.ToolbarItems>
-        <!-- Android should be custom-->
-        <ToolbarItem Text="{i18n:Translate Edit}" Priority="-1" Order="Primary"/>
-        <ToolbarItem Text="{i18n:Translate Setting}" Priority="1" Order="Primary" Clicked="SettingBtn_Clicked"/>
+        <ToolbarItem Text="{i18n:Translate Setting}" Priority="1" Order="Primary" 
+                     Clicked="SettingBtn_Clicked"/>
     </ContentPage.ToolbarItems>
     
     <ContentPage.Content>
@@ -29,57 +28,62 @@
                 <RowDefinition Height="8*"/>
             </Grid.RowDefinitions>
             
-        <SearchBar x:Name="NaviSearchBar" Grid.Row="0" 
-                   Placeholder="Pick your goal within locations"
-                   CancelButtonColor="#007BFF"
-                   Text="{Binding SearchedText, Mode=TwoWay}"
-                   BackgroundColor="#f0f0f0"
-                   VerticalOptions="StartAndExpand"/>
-        
-        <ListView x:Name="LocationListView" Grid.Row="1" Grid.RowSpan="2"
-                  Margin="10, -8, 10,10" HasUnevenRows="true"
-                  ItemTapped="Handle_ItemTapped"
-                  SelectedItem="LocationListView_ItemSelected"
-                  IsPullToRefreshEnabled="true"
-                  Refreshing="LocationListView_Refreshing"
-                  IsGroupingEnabled="true"
-                  GroupDisplayBinding="{Binding Key}">
+            <SearchBar x:Name="NaviSearchBar" Grid.Row="0" 
+                       Placeholder="{i18n:Translate PickLocation}"
+                       CancelButtonColor="#007BFF"
+                       Text="{Binding SearchedText, Mode=TwoWay}"
+                       BackgroundColor="#f0f0f0"
+                       VerticalOptions="StartAndExpand"/>
             
-            <ListView.GroupHeaderTemplate>
-                <DataTemplate>
-                    <ViewCell Height="35">
-                        <StackLayout VerticalOptions="CenterAndExpand"
-                                     Padding="15, 1, 1, 1">
-                            <Label Text="{Binding Key}"
-                                   TextColor="#3F51B5"
-                                   FontAttributes="Bold"/>
-                        </StackLayout>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.GroupHeaderTemplate>
-            
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell Height="70">
-                        <StackLayout Orientation="Horizontal"
-                                     Padding="20, 20, 20, 1">
+            <ListView x:Name="LocationListView" Grid.Row="1" Grid.RowSpan="2"
+                      Margin="10, -8, 10,10" HasUnevenRows="true"
+                      ItemTapped="Handle_ItemTapped"
+                      SelectedItem="LocationListView_ItemSelected"
+                      IsPullToRefreshEnabled="true"
+                      Refreshing="LocationListView_Refreshing"
+                      IsGroupingEnabled="true"
+                      GroupDisplayBinding="{Binding Key}">
+                
+                <ListView.GroupHeaderTemplate>
+                    <DataTemplate>
+                        <ViewCell Height="35">
+                            <StackLayout VerticalOptions="CenterAndExpand"
+                                         Padding="15, 1, 1, 1">
+                                <Label Text="{Binding Key}"
+                                       TextColor="#3F51B5"
+                                       FontAttributes="Bold"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.GroupHeaderTemplate>
+                
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell Height="70">
+                            <ViewCell.ContextActions>
+                                <MenuItem Clicked="Item_Delete" CommandParameter="{Binding .}"
+                                   Text="Delete" IsDestructive="True" />
+                             </ViewCell.ContextActions>
                             
-                            <!--<Label Text="ICON"/>-->
-                            <Image Source="location_icon.png"
-                                   Margin="1, 1, 1, 15"
-                                   VerticalOptions="Start"/>
-                            
-                            <Label Text="{Binding Name}" 
-                                   HorizontalOptions="Start" 
-                                   VerticalOptions="Start"
-                                   TextColor="#3F51B5" Margin="60, 10, 1, 1" />
-                            
-                        </StackLayout>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-            
-        </ListView>
+                            <StackLayout Orientation="Horizontal"
+                                         Padding="20, 20, 20, 1">
+                                
+                                <!--<Label Text="ICON"/>-->
+                                <Image Source="location_icon.png"
+                                       Margin="1, 1, 1, 15"
+                                       VerticalOptions="Start"/>
+                                
+                                <Label Text="{Binding Name}" 
+                                       HorizontalOptions="Start" 
+                                       VerticalOptions="Center"
+                                       TextColor="#3F51B5" Margin="60, 0, 1, 10" />
+                                
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                
+            </ListView>
             
         </Grid>
     </ContentPage.Content>

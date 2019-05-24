@@ -6,7 +6,7 @@ using MvvmHelpers;
 using IndoorNavigation.Models.NavigaionLayer;
 using NavigationEventArgs = IndoorNavigation.Modules.Navigation.NavigationEventArgs;
 
-namespace IndoorNavigation.ViewModels.Navigation.NTUHYunlin
+namespace IndoorNavigation.ViewModels.Navigation
 {
     public class NavigatorPageViewModel : BaseViewModel, IDisposable
     {

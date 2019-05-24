@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 using Xamarin.Forms;
-using IndoorNavigation.ViewModels.Navigation.NTUHYunlin;
+using IndoorNavigation.ViewModels.Navigation;
 
 namespace IndoorNavigation.Views.Navigation.NTUHYunlin
 {
