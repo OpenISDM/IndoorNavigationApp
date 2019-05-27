@@ -8,6 +8,8 @@ using IndoorNavigation.Views.Navigation.NTUHYunlin;
 using MvvmHelpers;
 using System.ComponentModel;
 using IndoorNavigation.ViewModels;
+using IndoorNavigation.Resources;
+using Plugin.Multilingual;
 
 namespace IndoorNavigation
 {
@@ -20,6 +22,7 @@ namespace IndoorNavigation
             InitializeComponent();
 
             NavigationPage.SetBackButtonTitle(this, "首頁");
+            NavigationPage.SetHasBackButton(this, false);
 
             switch (Device.RuntimePlatform)
             {
@@ -51,6 +54,12 @@ namespace IndoorNavigation
 
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#3F51B5");
             ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
+
+            // This will remove all the pages in the navigation stack excluding the Main Page and another one page
+            for (int PageIndex = Navigation.NavigationStack.Count - 2; PageIndex > 0; PageIndex--)
+            {
+                Navigation.RemovePage(Navigation.NavigationStack[PageIndex]);
+            }
 
             switch (Device.RuntimePlatform)
             {
