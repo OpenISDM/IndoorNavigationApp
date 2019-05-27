@@ -11,13 +11,6 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         
-        <!--<SearchBar x:Name="NaviSearchBar" Grid.Row="0" 
-                   Placeholder="Search your destination"
-                   CancelButtonColor="White"
-                   TextChanged="NaviSearchBar_TextChanged"
-                   BackgroundColor="#009FCC"
-                   VerticalOptions="StartAndExpand"/>-->
-        
         <SearchBar x:Name="NaviSearchBar" Grid.Row="0" 
                    Placeholder="Search your destination"
                    CancelButtonColor="White"

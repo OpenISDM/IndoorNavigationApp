@@ -31,7 +31,7 @@
                     </Image>
                     <Label HorizontalOptions="Center" x:Name="mapNameLabel" Style="{StaticResource EntryStyle}" Text="請輸入地圖名稱"/>
                     <Entry Margin="10, 5" HorizontalOptions="Fill" x:Name="FileNameEntry" Style="{StaticResource EntryStyle}" Placeholder="地圖名稱"/>
-                    <Button Margin="10, 5" BackgroundColor="#7dbbe6" HorizontalOptions="Fill" Clicked="OnSave" x:Name="SaveButton" Text="Save">
+                    <Button Margin="10, 5" BackgroundColor="#7dbbe6" HorizontalOptions="Fill" Clicked="OnSave" x:Name="SaveButton" Text="Save" TextColor="Navy">
                         <Button.HeightRequest>
                             <OnPlatform x:TypeArguments="x:Double" Android="50" iOS="30"/>
                         </Button.HeightRequest>

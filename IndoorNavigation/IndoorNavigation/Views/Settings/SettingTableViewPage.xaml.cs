@@ -26,7 +26,7 @@ namespace IndoorNavigation.Views.Settings
         public IList SelectNaviGraphItems { get; } = new ObservableCollection<string>();
         public IList CleanNaviGraphItems { get; } = new ObservableCollection<string>();
         public IList LanguageItems { get; } = new ObservableCollection<string>();
-        public ICommand SelectedMapCommand => new DelegateCommand(HandleSelectedMap);
+        //public ICommand SelectedMapCommand => new DelegateCommand(HandleSelectedMap);
         public ICommand CleanMapCommand => new DelegateCommand(async () => { await HandleCLeanMapAsync(); });
         public ICommand ChangeLanguageCommand => new DelegateCommand(HandleChangeLanguage);
 
@@ -117,9 +117,9 @@ namespace IndoorNavigation.Views.Settings
             CleanNaviGraphItems.Add("--全部--");
 
             if (Utility.Waypoints == null)
-                MapPicker.SelectedItem = "--請選擇圖資--";
+                //MapPicker.SelectedItem = "--請選擇圖資--";
 
-            foreach (var naviGraphName in NavigraphStorage.GetAllPlace())
+            foreach (var naviGraphName in NavigraphStorage.GetAllNavigraphs())
             {
                 SelectNaviGraphItems.Add(naviGraphName);
                 CleanNaviGraphItems.Add(naviGraphName);
@@ -155,22 +155,22 @@ namespace IndoorNavigation.Views.Settings
             ReloadNaviGraphItems();
         }
 
-        private void HandleSelectedMap()
-        {
-            if (MapPicker.SelectedItem.ToString() == "--請選擇圖資--")
-            {
-                // 移除已經載入的地圖資訊
-                Utility.Waypoints = null;
-                Utility.WaypointRoute = null;
-                Utility.BeaconsDict = null;
-                Utility.LocationConnects = null;
-            }
-            else
-            {
-                if (!NavigraphStorage.LoadNavigraph(MapPicker.SelectedItem.ToString()))
-                    MapPicker.SelectedItem = "--請選擇圖資--";
-            }
-        }
+        //private void HandleSelectedMap()
+        //{
+        //    if (MapPicker.SelectedItem.ToString() == "--請選擇圖資--")
+        //    {
+        //        // 移除已經載入的地圖資訊
+        //        Utility.Waypoints = null;
+        //        Utility.WaypointRoute = null;
+        //        Utility.BeaconsDict = null;
+        //        Utility.LocationConnects = null;
+        //    }
+        //    else
+        //    {
+        //        if (!NavigraphStorage.LoadNavigraph(MapPicker.SelectedItem.ToString()))
+        //            MapPicker.SelectedItem = "--請選擇圖資--";
+        //    }
+        //}
 
         private async void HandleChangeLanguage()
         {

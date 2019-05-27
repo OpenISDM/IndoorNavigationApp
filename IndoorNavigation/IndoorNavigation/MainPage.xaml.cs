@@ -10,18 +10,28 @@ using System.ComponentModel;
 using IndoorNavigation.ViewModels;
 using IndoorNavigation.Resources;
 using Plugin.Multilingual;
+using System.Diagnostics;
+using System.Resources;
+using IndoorNavigation.Resources.Helpers;
+using System.Reflection;
+using IndoorNavigation.Modules;
 
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainPage : ContentPage
     {
-        private List<Location> locations;
+        MainPageViewModel viewModel;
+
+        const string ResourceId = "IndoorNavigation.Resources.AppResources";
+        ResourceManager resmgr = new ResourceManager(ResourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+
         public MainPage()
         {
             InitializeComponent();
 
-            NavigationPage.SetBackButtonTitle(this, "首頁");
+            var ci = CrossMultilingual.Current.CurrentCultureInfo;
+            NavigationPage.SetBackButtonTitle(this, resmgr.GetString("Home", ci));
             NavigationPage.SetHasBackButton(this, false);
 
             switch (Device.RuntimePlatform)
@@ -33,19 +43,6 @@ namespace IndoorNavigation
                 default:
                     break;
             }
-
-            locations = new List<Location>
-            {
-                new Location{ Name="台北市政府", City="台北"},
-                new Location{ Name="員林榮民之家", City="彰化"},
-                new Location{ Name="雲林市政府", City="雲林"},
-                new Location{ Name="雲林台大醫院", City="雲林"},
-                new Location{ Name="台南市政府", City="台南"},
-                new Location{ Name="高雄市政府", City="高雄"},
-                new Location{ Name="高雄高鐵站", City="高雄"},
-            };
-
-            LocationListView.ItemsSource = GetLocationList();
         }
 
         protected override void OnAppearing()
@@ -54,6 +51,9 @@ namespace IndoorNavigation
 
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#3F51B5");
             ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
+
+            viewModel = new MainPageViewModel();
+            BindingContext = viewModel;
 
             // This will remove all the pages in the navigation stack excluding the Main Page and another one page
             for (int PageIndex = Navigation.NavigationStack.Count - 2; PageIndex > 0; PageIndex--)
@@ -98,8 +98,6 @@ namespace IndoorNavigation
                 if (answser)
                     await Navigation.PushAsync(new NavigationHomePage());
             }
-
-            //await Navigation.PushAsync(new NavigationHomePage());
         }
 
         void LocationListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -113,31 +111,15 @@ namespace IndoorNavigation
             LocationListView.EndRefresh();
         }
 
-        void Item_Delete(object sender, System.EventArgs e)
+        void Item_Delete(object sender, EventArgs e)
         {
-            Location item = (Location)((MenuItem)sender).CommandParameter;
+            var item = (Location)((MenuItem)sender).CommandParameter;
 
             if (item != null)
             {
-                locations.Remove(item);
-                LocationListView.ItemsSource = GetLocationList();
+                NavigraphStorage.DeleteNavigraph(item.Name);
+                viewModel.LoadNavigationGraph();
             }
         }
-
-        private IEnumerable<Grouping<string, Location>> GetLocationList(string name = null)
-        {
-            var source = string.IsNullOrEmpty(name) ? locations : locations
-                         .Where(c => c.Name.Contains(name));
-
-            return from location in source
-                   group location by location.City into locationGroup
-                   select new Grouping<string, Location>(locationGroup.Key, locationGroup);
-        }
-    }
-
-    class Location
-    {
-        public string Name { get; set; }
-        public string City { get; set; }
     }
 }

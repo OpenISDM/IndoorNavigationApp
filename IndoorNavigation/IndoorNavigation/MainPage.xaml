@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:IndoorNavigation"
              x:Class="IndoorNavigation.MainPage"
              xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
+             
              Title="{i18n:Translate Location}">
     
     <ContentPage.Padding>
@@ -36,15 +37,14 @@
                        VerticalOptions="StartAndExpand"/>
             
             <ListView x:Name="LocationListView" Grid.Row="1" Grid.RowSpan="2"
+                      ItemsSource="{Binding NavigationGraphFiles}"
                       Margin="10, -8, 10,10" HasUnevenRows="true"
                       ItemTapped="Handle_ItemTapped"
                       SelectedItem="LocationListView_ItemSelected"
                       IsPullToRefreshEnabled="true"
-                      Refreshing="LocationListView_Refreshing"
-                      IsGroupingEnabled="true"
-                      GroupDisplayBinding="{Binding Key}">
+                      Refreshing="LocationListView_Refreshing">
                 
-                <ListView.GroupHeaderTemplate>
+                <!--<ListView.GroupHeaderTemplate>
                     <DataTemplate>
                         <ViewCell Height="35">
                             <StackLayout VerticalOptions="CenterAndExpand"
@@ -55,7 +55,7 @@
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
-                </ListView.GroupHeaderTemplate>
+                </ListView.GroupHeaderTemplate>-->
                 
                 <ListView.ItemTemplate>
                     <DataTemplate>

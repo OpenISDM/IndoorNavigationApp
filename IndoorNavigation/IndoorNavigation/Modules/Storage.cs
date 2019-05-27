@@ -36,7 +36,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Xml;
+using System.Xml.Serialization;
 using IndoorNavigation.Models;
+using IndoorNavigation.Models.NavigaionLayer;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -59,7 +62,7 @@ namespace IndoorNavigation.Modules
         /// This method returns the name of all the locations.
         /// </summary>
         /// <returns></returns>
-        public static string[] GetAllPlace()
+        public static string[] GetAllNavigraphs()
         {
             // Check the folder of navigation graph if it is exist
             if (!Directory.Exists(navigraphFolder))
@@ -170,10 +173,10 @@ namespace IndoorNavigation.Modules
         /// <summary>
         /// Delete specific navigation graph information
         /// </summary>
-        /// <param name="Place"></param>
-        public static void DeleteNavigraph(string Place)
+        /// <param name="GraphName"></param>
+        public static void DeleteNavigraph(string GraphName)
         {
-            string filePath = Path.Combine(navigraphFolder, Place);
+            string filePath = Path.Combine(navigraphFolder, GraphName);
 
             // Check the folder of navigraph if it is exist
             if (!Directory.Exists(navigraphFolder))
@@ -188,7 +191,7 @@ namespace IndoorNavigation.Modules
         /// </summary>
         public static void DeleteAllNavigraph()
         {
-            foreach (string place in GetAllPlace())
+            foreach (string place in GetAllNavigraphs())
                 DeleteNavigraph(place);
         }
     }
