@@ -154,4 +154,13 @@ namespace IndoorNavigation.Models
         void SignalProcessing();
     }
     #endregion
+
+    #region Interface for IPS Client
+    public interface IIPSClient
+    {
+        Beacon SignalProcessing();
+        void setBeaconList(List<Beacon> BeaconList);
+        void Stop();
+    }
+    #endregion
 }
