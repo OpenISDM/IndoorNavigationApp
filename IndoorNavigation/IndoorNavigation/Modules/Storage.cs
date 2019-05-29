@@ -42,6 +42,7 @@ using IndoorNavigation.Models;
 using IndoorNavigation.Models.NavigaionLayer;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Diagnostics;
 
 namespace IndoorNavigation.Modules
 {
@@ -74,6 +75,7 @@ namespace IndoorNavigation.Modules
         }
 
         /// <summary>
+        /// TODO: DEPRECATED
         /// This method loads the navigation graph
         /// </summary>
         /// <param name="Place"></param>
@@ -86,7 +88,7 @@ namespace IndoorNavigation.Modules
                 List<NaviGraph> naviGraphs = JsonConvert
                     .DeserializeObject<List<NaviGraph>>(LoadFile(Place));
 
-                List<Region> regions = naviGraphs
+                List<Models.Region> regions = naviGraphs
                     .SelectMany(naviGraph => naviGraph.Regions)
                     .ToList();
 
@@ -118,6 +120,49 @@ namespace IndoorNavigation.Modules
         }
 
         /// <summary>
+        /// Loads the navigraph XML from the specified file name.
+        /// </summary>
+        /// <returns>The navigraph object.</returns>
+        /// <param name="FileName">File name.</param>
+        public static Navigraph LoadNavigraphXML(string FileName)
+        {
+            string filePath = Path.Combine(navigraphFolder, FileName);
+
+            if (!File.Exists(filePath))
+                throw new FileNotFoundException();
+
+            var xmlString = File.ReadAllText(filePath);
+            StringReader stringReader = new StringReader(xmlString);
+
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(Navigraph));
+            XmlTextReader xmlReader = new XmlTextReader(stringReader);
+
+            Navigraph navigraph;
+            try
+            {
+                navigraph = (Navigraph)xmlSerializer.Deserialize(xmlReader);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                throw new Exception();
+            }
+            finally
+            {
+                if (xmlReader != null)
+                {
+                    xmlReader.Close();
+                }
+                if (stringReader != null)
+                {
+                    stringReader.Close();
+                }
+            }
+
+            return navigraph;
+        }
+
+        /// <summary>
         /// Return specific information of the navigation graph
         /// </summary>
         /// <param name="FileName"></param>
@@ -145,13 +190,13 @@ namespace IndoorNavigation.Modules
         /// Store the navigation graph information of a location
         /// e.g., First floor of a building
         /// </summary>
-        /// <param name="Place"></param>
+        /// <param name="FileName"></param>
         /// <param name="NavigraphDatas"></param>
         /// <returns></returns>
         public static bool SaveNavigraphInformation(
-            string Place, string NavigraphDatas)
+            string FileName, string NavigraphDatas)
         {
-            string filePath = Path.Combine(navigraphFolder, Place);
+            string filePath = Path.Combine(navigraphFolder, FileName);
             try
             {
                 // Check the folder of navigraph if it is exist

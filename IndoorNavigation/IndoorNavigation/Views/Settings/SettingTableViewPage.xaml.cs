@@ -105,7 +105,7 @@ namespace IndoorNavigation.Views.Settings
 
         void SpeechTestBtn_Tapped(object sender, EventArgs e)
         {
-            Utility.TextToSpeech.Speak("Welcome to the hospital!", "zh-TW");
+            Utility.TextToSpeech.Speak("歡迎使用畢迪斯室內導航", "zh-TW");
         }
 
         private void ReloadNaviGraphItems()

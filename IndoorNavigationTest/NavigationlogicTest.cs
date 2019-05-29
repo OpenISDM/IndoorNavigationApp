@@ -1,6 +1,5 @@
 using IndoorNavigation.Modules;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
 using System;
 using System.Linq;
 using IndoorNavigation;
@@ -10,8 +9,6 @@ using System.Threading;
 using IndoorNavigation.Modules.Navigation;
 using IndoorNavigation.Modules.SignalProcessingAlgorithms;
 using System.Diagnostics;
-using Newtonsoft.Json.Linq;
-using System.IO;
 
 namespace IndoorNavigationTest
 {
@@ -60,24 +57,24 @@ namespace IndoorNavigationTest
             NavigraphStorage.DeleteAllNavigraph();
             NavigraphStorage.SaveNavigraphInformation("test1", "");
             NavigraphStorage.SaveNavigraphInformation("test1", "");
-            string[] Maps = NavigraphStorage.GetAllPlace();
+            string[] Maps = NavigraphStorage.GetAllNavigraphs();
             Assert.AreEqual(1, Maps.Length);
 
             NavigraphStorage.SaveNavigraphInformation("test2", "");
             NavigraphStorage.SaveNavigraphInformation("test3", "");
-            Maps = NavigraphStorage.GetAllPlace();
+            Maps = NavigraphStorage.GetAllNavigraphs();
             Assert.AreEqual(3, Maps.Length);
 
             NavigraphStorage.DeleteNavigraph("test4");
-            Maps = NavigraphStorage.GetAllPlace();
+            Maps = NavigraphStorage.GetAllNavigraphs();
             Assert.AreEqual(3, Maps.Length);
 
             NavigraphStorage.DeleteNavigraph("test3");
-            Maps = NavigraphStorage.GetAllPlace();
+            Maps = NavigraphStorage.GetAllNavigraphs();
             Assert.AreEqual(2, Maps.Length);
 
             NavigraphStorage.DeleteAllNavigraph();
-            Maps = NavigraphStorage.GetAllPlace();
+            Maps = NavigraphStorage.GetAllNavigraphs();
             Assert.AreEqual(0, Maps.Length);
             TestClose();
             Debug.WriteLine("StorageTest done.");
@@ -91,7 +88,7 @@ namespace IndoorNavigationTest
             string MapJson = INConvert.NavigraphJson(Utility.BeaconsDict.Values.Select(c => c as LBeaconModel).ToList(), Utility.Waypoints, Utility.LocationConnects);
 
             NavigraphStorage.SaveNavigraphInformation("Map1", MapJson);
-            string[] Maps = NavigraphStorage.GetAllPlace();
+            string[] Maps = NavigraphStorage.GetAllNavigraphs();
             Assert.AreEqual(1, Maps.Length);
             Utility.BeaconsDict = null;
             Utility.Waypoints = null;
