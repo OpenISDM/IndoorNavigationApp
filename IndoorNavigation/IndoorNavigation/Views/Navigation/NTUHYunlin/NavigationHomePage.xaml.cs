@@ -9,9 +9,13 @@ namespace IndoorNavigation.Views.Navigation.NTUHYunlin
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class NavigationHomePage : ContentPage
     {
-        public NavigationHomePage()
+        private string navigraphName;
+
+        public NavigationHomePage(string navigraphName)
         {
             InitializeComponent();
+
+            this.navigraphName = navigraphName;
 
             NavigationPage.SetBackButtonTitle(this, "返回");
 
@@ -55,7 +59,7 @@ namespace IndoorNavigation.Views.Navigation.NTUHYunlin
         {
             // TODO: This destination name can be any location which you want to test.
             // After the navigation graph is done, it will be replaced by the completed function.
-            await Navigation.PushAsync(new NavigatorPage("某個名字很長的終點"));
+            await Navigation.PushAsync(new NavigatorPage(navigraphName, "某個名字很長的終點"));
         }
 
         void ExitList_Clicked(object sender, EventArgs e)

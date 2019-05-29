@@ -5,25 +5,25 @@ using System.Collections.Generic;
 using MvvmHelpers;
 using IndoorNavigation.Models.NavigaionLayer;
 using NavigationEventArgs = IndoorNavigation.Modules.Navigation.NavigationEventArgs;
+using IndoorNavigation.Modules;
 
 namespace IndoorNavigation.ViewModels.Navigation
 {
     public class NavigatorPageViewModel : BaseViewModel, IDisposable
     {
         private string Destination;
-        //private NavigationModule navigationModule;
+        private NavigationModule navigationModule;
 
-        public NavigatorPageViewModel(string desination)
+        public NavigatorPageViewModel(string navigraphName, string destination)
         {
-            Destination = desination;
-            DestinationWaypointName = desination;
+            Destination = destination;
+            DestinationWaypointName = destination;
 
             CurrentWaypointName = "NULL";
             EnterNextWaypointCommand = new Command(() => CurrentWaypointName = NextWaypointName);
 
-            // TODO
-            //navigationModule = new NavigationModule(desination);
-            //navigationModule.Event.EventHandler += GetNavigationStatusEvent;
+            navigationModule = new NavigationModule(navigraphName, destination);
+            navigationModule.NavigationEvent.ResultEventHandler += GetNavigationResultEvent;
         }
 
         /// <summary>
@@ -63,6 +63,7 @@ namespace IndoorNavigation.ViewModels.Navigation
 
         private void SetInstruction(NavigationInstruction instruction, out string stepLabel, out string stepImage)
         {
+            // TODO: Add go up/down stairs
             switch (instruction.Direction)
             {
                 case TurnDirection.FirstDirection:
@@ -121,7 +122,7 @@ namespace IndoorNavigation.ViewModels.Navigation
         /// <summary>
         /// Gets the navigation status event.
         /// </summary>
-        private void GetNavigationStatusEvent(object sender, EventArgs args)
+        private void GetNavigationResultEvent(object sender, EventArgs args)
         {
             DisplayInstructions(args);
         }

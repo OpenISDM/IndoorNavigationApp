@@ -57,6 +57,7 @@ namespace IndoorNavigation.Views.Settings
             await Navigation.PushAsync(new LicenseMainPage());
         }
 
+        //TODO: Check user whether to allow permission of camera
         async void DownloadMapBtn_Tapped(object sender, EventArgs e)
         {
 

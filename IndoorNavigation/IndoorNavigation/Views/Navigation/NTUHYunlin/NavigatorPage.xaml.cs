@@ -10,11 +10,11 @@ namespace IndoorNavigation.Views.Navigation.NTUHYunlin
     {
         private NavigatorPageViewModel viewModel;
 
-        public NavigatorPage(string desination)
+        public NavigatorPage(string navigraphName, string desination)
         {
             InitializeComponent();
 
-            viewModel = new NavigatorPageViewModel(desination);
+            viewModel = new NavigatorPageViewModel(navigraphName, desination);
             BindingContext = viewModel;
         }
 

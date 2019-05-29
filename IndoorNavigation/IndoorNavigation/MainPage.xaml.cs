@@ -96,7 +96,7 @@ namespace IndoorNavigation
                 var answser = await DisplayAlert("Turn to next page?", location.Name, "OK", "Cancel");
 
                 if (answser)
-                    await Navigation.PushAsync(new NavigationHomePage());
+                    await Navigation.PushAsync(new NavigationHomePage(location.Name));
             }
         }
 
