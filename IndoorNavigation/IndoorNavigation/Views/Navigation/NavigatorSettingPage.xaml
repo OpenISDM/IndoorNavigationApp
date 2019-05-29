@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              xmlns:sv="clr-namespace:AiForms.Renderers;assembly=SettingsView"
              xmlns:ef="clr-namespace:AiForms.Effects;assembly=AiForms.Effects"
-             x:Class="IndoorNavigation.Views.Navigation.TabbedPageSetting">
+             x:Class="IndoorNavigation.Views.Navigation.NavigatorSettingPage">
     
     <ContentPage.Resources>
         <!-- SettingsView properties settings -->
@@ -11,7 +11,7 @@
             <Color x:Key="AppBackground">#ffffff</Color>
             <Color x:Key="AccentColor">#009FCC</Color>
             <Color x:Key="DisabledColor">#E6DAB9</Color>
-            <Color x:Key="TitleTextColor">#009FCC</Color>
+            <Color x:Key="TitleTextColor">#3F51B5</Color>
             <!--Color x:Key="PaleBackColorPrimary"></Color-->
             <Color x:Key="PaleBackColorSecondary">#F2EDDA</Color>
             <Color x:Key="DeepTextColor">#000</Color>
@@ -46,39 +46,19 @@
     
     <ContentPage.Content>
         
-        <sv:SettingsView x:Name="NavigationSettingsView" HasUnevenRows="true" 
-                         HeaderHeight="36" 
-                         HeaderPadding="14,0,0,6" 
-                         HeaderTextVerticalAlign="End">
+        <sv:SettingsView x:Name="NavigationSettingsView" 
+                         HasUnevenRows="true" >
     
             <sv:Section Title="語音設定" >
-                <!--<ViewCell>
-                    <StackLayout Padding="16,8,8,8" Orientation="Horizontal">
-                        <Label Text="語音音量" VerticalOptions="Center"
-                               FontSize="{StaticResource BaseFontSize}"
-                               TextColor="{StaticResource DeepTextColor}"/>
-                        <Slider Minimum="0" Maximum="100" Value="50" 
-                                HorizontalOptions="FillAndExpand"
-                                ThumbColor="{StaticResource AccentColor}"
-                                ef:AlterColor.On="true"
-                                ef:AlterColor.Accent="{StaticResource AccentColor}" />
-                    </StackLayout>
-                </ViewCell>-->
                 <sv:TextPickerCell Title="語音選擇" SelectedItem="中文" 
                                    Items="{Binding VoiceSearchItems}" />
                 <sv:CommandCell x:Name="TestVoiceButton" Title="播放測試語音"/>
-                <!--<sv:SwitchCell Title="透過藍芽播放語音" On="false"/>-->
             </sv:Section>
 
-            <!--<sv:Section Title="路線選項">
-                <sv:SwitchCell Title="避開樓梯" On="false"/>
-                <sv:SwitchCell Title="避開電梯" On="false"/>
-                <sv:SwitchCell Title="避開手扶梯" On="false"/>
-            </sv:Section>-->
-            
-            <sv:Section>
-                <sv:CommandCell x:Name="StopNavigation" Title="停止並結束導航" 
-                                TitleColor="Red"/>
+            <sv:Section Title="路線選項">
+                <sv:SwitchCell x:Name="AvoidStair" Title="避開樓梯" On="false" PropertyChanged="Handle_OptionPropertyChanged"/>
+                <sv:SwitchCell x:Name="AvoidElevator" Title="避開電梯" On="false" PropertyChanged="Handle_OptionPropertyChanged"/>
+                <sv:SwitchCell x:Name="AvoidEscalator" Title="避開手扶梯" On="false" PropertyChanged="Handle_OptionPropertyChanged"/>
             </sv:Section>
         
         </sv:SettingsView>

@@ -10,7 +10,7 @@ namespace IndoorNavigation.Droid
         TextToSpeech speaker;
         string toSpeak;
 
-        public void Speak(string text)
+        public void Speak(string text, string language)
         {
             toSpeak = text;
             if (speaker == null)

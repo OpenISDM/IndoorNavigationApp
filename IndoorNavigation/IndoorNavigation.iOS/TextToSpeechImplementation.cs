@@ -9,14 +9,14 @@ namespace IndoorNavigation.iOS
     {
         public TextToSpeechImplementation() { }
 
-        public void Speak(string text)
+        public void Speak(string text, string language)
         {
             var speechSynthesizer = new AVSpeechSynthesizer();
             var speechUtterance = new AVSpeechUtterance(text)
             {
-                Rate = AVSpeechUtterance.MaximumSpeechRate / 3,
-                Voice = AVSpeechSynthesisVoice.FromLanguage("zh-TW"),
-                Volume = 0.5f,
+                Rate = AVSpeechUtterance.MaximumSpeechRate / 2,
+                Voice = AVSpeechSynthesisVoice.FromLanguage(language),
+                Volume = 1f,
                 PitchMultiplier = 1.0f
             };
 

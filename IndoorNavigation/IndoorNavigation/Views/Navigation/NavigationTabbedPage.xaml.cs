@@ -71,7 +71,7 @@ namespace IndoorNavigation.Views.Navigation
 
         void SettingTab_Tapped(object sender, EventArgs e)
         {
-            var page = new TabbedPageSetting();
+            var page = new NavigatorSettingPage();
             TabbedContentView.Content = page.Content;
             //BindingContext = page;
             Title = "Setting";

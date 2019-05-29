@@ -43,12 +43,12 @@ namespace IndoorNavigation.Views.Navigation.NTUHYunlin
 
         async void InfoButton_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new SettingTableViewPage());
+            await Navigation.PushAsync(new NavigatorSettingPage());
         }
 
         void ClinicList_Clicked(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+
         }
 
         async void Cashier_Clicked(object sender, EventArgs e)
@@ -60,37 +60,37 @@ namespace IndoorNavigation.Views.Navigation.NTUHYunlin
 
         void ExitList_Clicked(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+
         }
 
         void ExaminationRoomList_Clicked(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+
         }
 
         void Pharmacy_Clicked(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+
         }
 
         void ConvenienceStore_Clicked(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+
         }
 
         void OthersList_Clicked(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+
         }
 
         void BathroomList_Clicked(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+
         }
 
         void BloodCollectionCounter_Clicked(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+
         }
     }
 }
