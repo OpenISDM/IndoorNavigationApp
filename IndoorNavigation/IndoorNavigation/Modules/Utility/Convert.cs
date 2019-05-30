@@ -41,7 +41,7 @@
  *      
  */
 
-// TODO: Move to IndoorNavigation/Utilities/
+///TODO: Move to IndoorNavigation/Utilities/
 
 using System;
 using System.Collections.Generic;

@@ -48,7 +48,7 @@ using System.Text;
 
 namespace IndoorNavigation.Modules
 {
-    interface Session
-    {
-    }
+//    public class Session
+//    {
+//    }
 }

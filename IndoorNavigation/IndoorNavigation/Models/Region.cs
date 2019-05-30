@@ -12,7 +12,7 @@
  *
  * File Description:
  * 
- *      This class has the mapping between the waypoints and resources of the
+ *      This class has the mapping between waypoints and resources of the
  *      underlying IPS.
  *      
  * Version:

@@ -12,8 +12,9 @@
  *
  * File Description:
  *
- *      This file contain the definition of the interface required to connect 
- *      Android/iOS project and navigation graph information.
+ *      This file contains all the interfaces required by the application, such
+ *      as the interface for connecting the iOS project and the Android project
+ *      , and the interface of IPSClient.
  *
  * File Name:
  *

@@ -12,7 +12,9 @@
  *
  * File Description:
  * 
- *      Classes in this file provides the methods for storage on the phone
+ *      This static class contains all the static functions that provide 
+ *      methods for loading and saving data on the phone, such as loading a 
+ *      waypoint-based navigation graph.
  *      
  * Version:
  *
@@ -20,7 +22,7 @@
  * 
  * File Name:
  *
- *      NavigationModule.cs
+ *      Storage.cs
  *
  * Abstract:
  *
@@ -40,6 +42,9 @@
  *      kenneth@gm.nssh.ntpc.edu.tw
  *      
  */
+
+///TODO: Move to IndoorNavigation/Utilities
+
 using System;
 using System.Collections.Generic;
 using System.IO;

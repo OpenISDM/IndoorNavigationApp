@@ -12,7 +12,8 @@
  *
  * File Description:
  * 
- *      The global variables and functions
+ *      This class contains all static functions that are not part of 
+ *      Convert.cs and Storage.cs.
  *      
  * Version:
  *
@@ -41,7 +42,7 @@
  *      
  */
 
-// TODO: Move to IndoorNavigation/Utilities/
+///TODO: DUPLICATE
 
 using System;
 using System.Collections.Generic;

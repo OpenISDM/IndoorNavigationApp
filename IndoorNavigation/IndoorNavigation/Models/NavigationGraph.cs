@@ -12,13 +12,13 @@
  *
  * File Description:
  * 
- *      This file contains definitions of attributes for computing routes,
- *      including waypoint objects, turn directions between waypoints,
- *      with their distances.
+ *      This model contains two nest classes: Navigraph class and RegionGraph 
+ *      class. Navigraph class in a nest class that defines the structure of 
+ *      navigation sub-graphs of a region. Every region has a Navigraph object.
  * 
  * File Name:
  *
- *      NavigationLayer.cs
+ *      NavigationGraph.cs
  *
  * Abstract:
  *

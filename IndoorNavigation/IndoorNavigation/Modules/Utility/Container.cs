@@ -40,7 +40,7 @@
  *      
  */
 
-// TODO: Move to IndoorNavigation/Utilities/
+///TODO: DUPLICATE
 
 using System;
 using System.Collections.Generic;
