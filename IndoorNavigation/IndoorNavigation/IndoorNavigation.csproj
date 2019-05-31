@@ -51,6 +51,8 @@
   <ItemGroup>
     <Compile Remove="Views\Navigator\MyPage.xaml.cs" />
     <Compile Remove="Views\Navigation\NTUH.Yunlin\NavigationHomePage.xaml.cs" />
+    <Compile Remove="Modules\Session.cs" />
+    <Compile Remove="Modules\Session.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Views\PopUpPage\DownloadPopUpPage.xaml">

@@ -4,7 +4,6 @@ using System.Windows.Input;
 using System.Collections.Generic;
 using MvvmHelpers;
 using IndoorNavigation.Models.NavigaionLayer;
-using NavigationEventArgs = IndoorNavigation.Modules.Navigation.NavigationEventArgs;
 using IndoorNavigation.Modules;
 
 namespace IndoorNavigation.ViewModels.Navigation

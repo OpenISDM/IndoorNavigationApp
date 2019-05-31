@@ -59,7 +59,9 @@ namespace IndoorNavigation.Models.NavigaionLayer
         South,
         Southwest,
         West,
-        Northwest
+        Northwest,
+        Up,
+        Down
     }
 
     public enum TurnDirection
@@ -73,6 +75,8 @@ namespace IndoorNavigation.Models.NavigaionLayer
         Backward_Left,
         Left,
         Forward_Left,
+        Up,
+        Down
     }
 
     public enum IPSType
@@ -167,16 +171,14 @@ namespace IndoorNavigation.Models.NavigaionLayer
             {
                 regionGraph.AddNode(region);
             }
-
             foreach (Edge edge in Edges)
             {
                 Region sourceRegion = Regions.First(region =>
-                        region.Waypoints.Any(waypoint => 
-                        waypoint.ID.Equals(edge.SourceWaypointUUID)));
+                         region.Waypoints.Any(waypoint =>
+                         waypoint.ID.Equals(edge.SourceWaypointUUID)));
                 Region targetRegion = Regions.First(region =>
                         region.Waypoints.Any(waypoint =>
                         waypoint.ID.Equals(edge.TargetWaypointUUID)));
-
                 uint sourceKey = regionGraph
                         .Where(region => region.Item.Waypoints
                         .Equals(sourceRegion.Waypoints))
@@ -185,12 +187,9 @@ namespace IndoorNavigation.Models.NavigaionLayer
                         .Where(region => region.Item.Waypoints
                         .Equals(targetRegion.Waypoints))
                         .Select(c => c.Key).First();
-
                 regionGraph.Connect(sourceKey, targetKey,
                         (int)edge.Distance, string.Empty);
             }
-
-
             return regionGraph;
         }
 
@@ -283,15 +282,16 @@ namespace IndoorNavigation.Models.NavigaionLayer
         /// The navigation subgraph
         /// </summary>
         [XmlIgnore]
-        public Graph<Waypoint, string> NavigationSubgraph = 
+        public Graph<Waypoint, string> NavigationSubgraph =
                 new Graph<Waypoint, string>();
 
         /// <summary>
         /// Initializes a navigation subgraph of the Region and combine all the
         /// waypoints and edges to NavigationSubgraph
         /// </summary>
-        public void SetNavigationSubgraph()
+        public Graph<Waypoint, string> SetNavigationSubgraph(List<int> avoid)
         {
+
             // Add all the waypoints of each region into region graph
             foreach (Waypoint waypoint in Waypoints)
             {
@@ -301,21 +301,27 @@ namespace IndoorNavigation.Models.NavigaionLayer
             // Set each path into region graph
             foreach (Edge edge in Edges)
             {
-                // Get the distance of two locations which in centimeter
                 int distance = System.Convert.ToInt32(edge.Distance);
+                //in connectiontye: 0 is hall, 1 is stair, 2 is elevator, 3 is escalator
+                int type = (int)edge.ConnectionType;
 
+                //find the method the user do not like and add its cost
+                if (type != 0 && type == avoid[0] || type == avoid[1])
+                {
+                    distance = distance + 100;
+                }
                 // Get two connected waypoints's key value
                 uint sourceWaypointKey = NavigationSubgraph.Where(waypoint =>
-                        waypoint.Item.ID.Equals(edge.SourceWaypoint.ID))
+                        waypoint.Item.ID.Equals(edge.SourceWaypointUUID))
                         .Select(waypoint => waypoint.Key).First();
                 uint targetWaypointKey = NavigationSubgraph.Where(waypoint =>
-                        waypoint.Item.ID.Equals(edge.TargetWaypoint.ID))
+                        waypoint.Item.ID.Equals(edge.TargetWaypointUUID))
                         .Select(waypoint => waypoint.Key).First();
-
                 // Connect the waypoints
                 NavigationSubgraph.Connect(sourceWaypointKey, targetWaypointKey,
                         distance, string.Empty);
             }
+            return NavigationSubgraph;
         }
     }
 
@@ -407,7 +413,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
         /// <summary>
         /// UUID of the neighbor waypoint
         /// </summary>
-        [XmlElement("TargetWaypointUUID")]
+        [XmlElement("UUID")]
         public Guid TargetWaypointUUID { get; set; }
 
         /// <summary>
@@ -419,7 +425,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
         /// <summary>
         /// Cardinal direction for the host waypoint using the enum type
         /// </summary>
-        [XmlElement("Direction")]
+        [XmlElement("ReferenceDirection")]
         public CardinalDirection Direction { get; set; }
     }
 
@@ -467,6 +473,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 }
                 else
                 {
+
                     Direction = (CardinalDirection)Enum.Parse(typeof(CardinalDirection), value);
                 }
             }
@@ -478,7 +485,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
         /// </summary>
         [XmlIgnore]
         public ConnectionType ConnectionType { get; set; }
-        [XmlElement("Connectiontype")]
+        [XmlElement("ConnectionType")]
         public string Connectiontype
         {
             get { return ConnectionType.ToString(); }

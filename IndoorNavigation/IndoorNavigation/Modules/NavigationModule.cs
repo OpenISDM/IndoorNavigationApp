@@ -65,7 +65,7 @@ namespace IndoorNavigation.Modules
             //IPSModule.Event.WaypointHandler += CurrentWaypointHandler;
 
             this.destination = destination;
-            session = new Session(NavigraphStorage.LoadNavigraphXML(navigraphName));
+            //session = new Session(NavigraphStorage.LoadNavigraphXML(navigraphName));
             NavigationResultHandler = new EventHandler(HandleNavigationResult);
             //session.Event.SessionResultHandler += NavigationResultHandler;
         }

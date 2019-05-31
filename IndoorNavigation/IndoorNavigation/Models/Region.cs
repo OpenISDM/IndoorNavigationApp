@@ -47,7 +47,7 @@ using System.Text;
 
 namespace IndoorNavigation.Models
 {
-    class Region
-    {
-    }
+    //class Region
+    //{
+    //}
 }
