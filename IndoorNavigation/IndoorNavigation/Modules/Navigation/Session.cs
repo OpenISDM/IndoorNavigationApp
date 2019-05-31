@@ -54,36 +54,42 @@ namespace IndoorNavigation.Modules
 {
     public class Session
     {
-        List<Waypoint> AllCorrectWaypoint = new List<Waypoint>();
-        private Graph<Region, string> regionGraph = new Graph<Region, string>();
-        private Graph<Waypoint, string> subgraph = new Graph<Waypoint, string>();
+        private List<Waypoint> _allCorrectWaypoint = new List<Waypoint>();
+
+        private Graph<Region, string> _regionGraph = new Graph<Region, string>();
+        private Graph<Waypoint, string> _subgraph = new Graph<Waypoint, string>();
+
         public List<Waypoint> AllCorrectWaypointGet = new List<Waypoint>();
         public List<Guid> AllNoneWrongWaypoint = new List<Guid>();
+
         public Waypoint finalwaypointInPath = new Waypoint();
-        public Session(Navigraph map, Waypoint startwaypoint, Waypoint finalwaypoint, List<int> avoid)
+
+        public Session(Navigraph graph, Waypoint startWaypoint, Waypoint finalWaypoint, List<int> avoid)
         {
-            Console.WriteLine("Start Way point is" + startwaypoint.Name + "\n");
-            Console.WriteLine("Final Way point is" + finalwaypoint.Name + "\n");
+            Console.WriteLine("Start Way point is" + startWaypoint.Name + "\n");
+            Console.WriteLine("Final Way point is" + finalWaypoint.Name + "\n");
             //read the xml file to get regions and edges information
-            regionGraph = map.GetRegiongraph();
+            _regionGraph = graph.GetRegiongraph();
             //we only consider to one region situation,
             //therefore, we add different floors' waypoints in same regions
-            subgraph = map.Regions[0].SetNavigationSubgraph(avoid);
+            _subgraph = graph.Regions[0].SetNavigationSubgraph(avoid);
             //get the best route through dijkstra
-            AllCorrectWaypointGet = GetPath(startwaypoint, finalwaypoint, subgraph);
-            finalwaypointInPath = finalwaypoint;
+            AllCorrectWaypointGet = GetPath(startWaypoint, finalWaypoint, _subgraph);
+            finalwaypointInPath = finalWaypoint;
         }
+
         List<Waypoint> GetPath(
-           Waypoint startwaypointInPath, Waypoint finalwaypointInPath, Graph<Waypoint, string> subgraph)
+           Waypoint startWaypoint, Waypoint finalWaypoint, Graph<Waypoint, string> subgraph)
         {
             //get the keys of the start way point and destination waypoint and throw the two keys into dijkstra
             // to get the best route
             var startPoingKey = subgraph
                 .Where(waypoint => waypoint.Item.ID
-                .Equals(startwaypointInPath.ID)).Select(c => c.Key).First();
+                .Equals(startWaypoint.ID)).Select(c => c.Key).First();
             var endPointKey = subgraph
                 .Where(waypoint => waypoint.Item.ID
-                .Equals(finalwaypointInPath.ID)).Select(c => c.Key).First();
+                .Equals(finalWaypoint.ID)).Select(c => c.Key).First();
+
             var path = subgraph.Dijkstra(startPoingKey,
                                            endPointKey).GetPath();
 
@@ -95,23 +101,23 @@ namespace IndoorNavigation.Modules
             //put the correct waypoint into List all_correct_waaypoint
             for (int i = 0; i < path.Count(); i++)
             {
-                AllCorrectWaypoint.Add(subgraph[path.ToList()[i]].Item);
+                _allCorrectWaypoint.Add(subgraph[path.ToList()[i]].Item);
             }
 
             //put all correct waypoints and their neighbors in list AllNoneWrongWaypoint
-             for (int i = 0; i < AllCorrectWaypoint.Count; i++)
+             for (int i = 0; i < _allCorrectWaypoint.Count; i++)
             {
-                AllNoneWrongWaypoint.Add(AllCorrectWaypoint[i].ID);
-                for (int j = 0; j < AllCorrectWaypoint[i].Neighbors.Count; j++)
+                AllNoneWrongWaypoint.Add(_allCorrectWaypoint[i].ID);
+                for (int j = 0; j < _allCorrectWaypoint[i].Neighbors.Count; j++)
                 {
-                    AllNoneWrongWaypoint.Add(AllCorrectWaypoint[i].Neighbors[j].TargetWaypointUUID);
+                    AllNoneWrongWaypoint.Add(_allCorrectWaypoint[i].Neighbors[j].TargetWaypointUUID);
                 }
 
             }
 
-            for (int i = 0; i < AllCorrectWaypoint.Count; i++)
+            for (int i = 0; i < _allCorrectWaypoint.Count; i++)
             {
-                Console.WriteLine("All correct Waypoint : " + AllCorrectWaypoint[i].Name + "\n");
+                Console.WriteLine("All correct Waypoint : " + _allCorrectWaypoint[i].Name + "\n");
             }
             //remove the elements that are repeated
             for (int i = 0; i < AllNoneWrongWaypoint.Count; i++)
@@ -130,10 +136,11 @@ namespace IndoorNavigation.Modules
             {
                 Console.WriteLine("All Accept Guid : " + AllNoneWrongWaypoint[i] + "\n");
             }
-            return AllCorrectWaypoint;
+
+            return _allCorrectWaypoint;
         }
 
-       public NavigationInstruction DetectRoute(Waypoint currentwaypoint)
+        public NavigationInstruction DetectRoute(Waypoint currentwaypoint)
         {
             //returnInformation is a structure that contains five elements that need to be passed to the main and UI
             NavigationInstruction navigationInstruction = new NavigationInstruction();
@@ -142,138 +149,146 @@ namespace IndoorNavigation.Modules
 
             Console.WriteLine("current Way Point ; " + currentwaypoint.Name);
 
-            if (AllCorrectWaypoint.Contains(currentwaypoint))
+            if (_allCorrectWaypoint.Contains(currentwaypoint))
             {
                 //ReturnInformation.Status status = new ReturnInformation.Status();
-                navigationInstruction.Status = NavigationResult.Correct;
+                navigationInstruction.Result = NavigationResult.Run;
                 //check where the current point is in the AllcorrectWaypoint, we need this information
                 //to get the direction, the progress and the next way point
-                for (int i = 0; i < AllCorrectWaypoint.Count; i++)
+                for (int i = 0; i < _allCorrectWaypoint.Count; i++)
                 {
-                    if (AllCorrectWaypoint[i].ID == currentwaypoint.ID)
+                    if (_allCorrectWaypoint[i].ID == currentwaypoint.ID)
                     {
                         getWaypoint = i;
                         break;
                     }
                 }
                 //get nextwaypoint
-                navigationInstruction.nextwaypoint = AllCorrectWaypoint[getWaypoint + 1];
+                navigationInstruction.NextWaypoint = _allCorrectWaypoint[getWaypoint + 1];
                 //if the floor information is different, it means that the users need to change the floor
                 //therefore, we can detemine the users need to go up or down by compare which floor is bigger
-                if (currentwaypoint.Floor != AllCorrectWaypoint[getWaypoint + 1].Floor)
+                if (currentwaypoint.Floor != _allCorrectWaypoint[getWaypoint + 1].Floor)
                 {
-                    if (currentwaypoint.Floor > AllCorrectWaypoint[getWaypoint + 1].Floor)
+                    if (currentwaypoint.Floor > _allCorrectWaypoint[getWaypoint + 1].Floor)
                     {
-                        navigationInstruction.direction = TurnDirection.Down;
+                        navigationInstruction.Direction = TurnDirection.Down;
                     }
                     else
                     {
-                        navigationInstruction.direction = TurnDirection.Up;
+                        navigationInstruction.Direction = TurnDirection.Up;
                     }
-                    navigationInstruction.distance = 0;
+                    navigationInstruction.Distance = 0;
                 }
                 //if the fllor information between current way point and next way point are same,
                 //we need to tell the use go straight or turn direction, therefore, we need to 
                 //have three informations, previous, current and next waypoints
                 else
                 {
-                    Console.WriteLine("Nextwaypoint : " + navigationInstruction.nextwaypoint.Name);
-                    uint sourceKey = subgraph
+                    Console.WriteLine("Nextwaypoint : " + navigationInstruction.NextWaypoint.Name);
+                    uint sourceKey = _subgraph
                                     .Where(WaypointList => WaypointList.Item.ID
-                                    .Equals(AllCorrectWaypoint[getWaypoint].ID)).Select(c => c.Key)
+                                    .Equals(_allCorrectWaypoint[getWaypoint].ID)).Select(c => c.Key)
                                      .First();
-                    uint targetKey = subgraph
+                    uint targetKey = _subgraph
                                     .Where(WaypointList => WaypointList.Item.ID
-                                    .Equals(AllCorrectWaypoint[getWaypoint + 1].ID)).Select(c => c.Key)
+                                    .Equals(_allCorrectWaypoint[getWaypoint + 1].ID)).Select(c => c.Key)
                                     .First();
-                    navigationInstruction.distance = subgraph.Dijkstra(sourceKey, targetKey).Distance;
-                    Console.WriteLine("Distance : " + navigationInstruction.distance);
+                    navigationInstruction.Distance = _subgraph.Dijkstra(sourceKey, targetKey).Distance;
+                    Console.WriteLine("Distance : " + navigationInstruction.Distance);
                     Console.WriteLine("Get way Point : " + getWaypoint);
-                    Console.WriteLine("all correct way point count : " + AllCorrectWaypoint.Count);
+                    Console.WriteLine("all correct way point count : " + _allCorrectWaypoint.Count);
                     //getwaypoint=0 means that we are now in the starting point, we do not have the previous waypoint 
                     //information, we give the previous waypoint 0
                     if (getWaypoint == 0)
                     {
                         CardinalDirection currentDirection = 0;
-                        CardinalDirection nextDirection = AllCorrectWaypoint[getWaypoint].Neighbors
+                        CardinalDirection nextDirection = _allCorrectWaypoint[getWaypoint].Neighbors
                                                         .Where(neighbors =>
                                                             neighbors.TargetWaypointUUID
-                                                            .Equals(AllCorrectWaypoint[getWaypoint + 1].ID))
+                                                            .Equals(_allCorrectWaypoint[getWaypoint + 1].ID))
                                                         .Select(c => c.Direction).First();
 
                         // Calculate the turning direction by cardinal direction
                         int nextTurnDirection = (int)nextDirection - (int)currentDirection;
                         nextTurnDirection = nextTurnDirection < 0 ?
                                             nextTurnDirection + 8 : nextTurnDirection;
-                        navigationInstruction.direction = (TurnDirection)nextTurnDirection;
+                        navigationInstruction.Direction = (TurnDirection)nextTurnDirection;
                     }
                     else
                     {
-                        CardinalDirection currentDirection = AllCorrectWaypoint[getWaypoint - 1].Neighbors
+                        CardinalDirection currentDirection = _allCorrectWaypoint[getWaypoint - 1].Neighbors
                                                 .Where(neighbors =>
                                                     neighbors.TargetWaypointUUID
-                                                    .Equals(AllCorrectWaypoint[getWaypoint].ID))
+                                                    .Equals(_allCorrectWaypoint[getWaypoint].ID))
                                                 .Select(c => c.Direction).First();
-                        CardinalDirection nextDirection = AllCorrectWaypoint[getWaypoint].Neighbors
+                        CardinalDirection nextDirection = _allCorrectWaypoint[getWaypoint].Neighbors
                                                         .Where(neighbors =>
                                                             neighbors.TargetWaypointUUID
-                                                            .Equals(AllCorrectWaypoint[getWaypoint + 1].ID))
+                                                            .Equals(_allCorrectWaypoint[getWaypoint + 1].ID))
                                                         .Select(c => c.Direction).First();
+
                         int nextTurnDirection = (int)nextDirection - (int)currentDirection;
                         nextTurnDirection = nextTurnDirection < 0 ?
                                             nextTurnDirection + 8 : nextTurnDirection;
-                        navigationInstruction.direction = (TurnDirection)nextTurnDirection;
+                        navigationInstruction.Direction = (TurnDirection)nextTurnDirection;
                         Console.WriteLine("Direction : " + nextTurnDirection + nextDirection + currentDirection);
                     }
                 }
-                navigationInstruction.progress = (double)Math.Round((decimal)getWaypoint / AllCorrectWaypoint.Count, 3);
+                navigationInstruction.Progress = (double)Math.Round((decimal)getWaypoint / _allCorrectWaypoint.Count, 3);
             }
             else if (AllNoneWrongWaypoint.Contains(currentwaypoint.ID) == false)
             {
                 //if the waypoint is wrong, we initial the correct waypoint and its neighbors
                 //and rerun the GetPath function and reget the navigationInstruction
-                AllCorrectWaypoint = new List<Waypoint>();
+                _allCorrectWaypoint = new List<Waypoint>();
                 AllNoneWrongWaypoint = new List<Guid>();
-                AllCorrectWaypoint = GetPath(currentwaypoint, finalwaypointInPath, subgraph);
-                for (int i = 0; i < AllCorrectWaypoint.Count; i++)
+                _allCorrectWaypoint = GetPath(currentwaypoint, finalwaypointInPath, _subgraph);
+                for (int i = 0; i < _allCorrectWaypoint.Count; i++)
                 {
-                    Console.WriteLine("Renew Route : " + AllCorrectWaypoint[i].Name);
+                    Console.WriteLine("Renew Route : " + _allCorrectWaypoint[i].Name);
                 }
                 Console.WriteLine("out of this loop");
                 navigationInstruction = DetectRoute(currentwaypoint);
-                navigationInstruction.Status = NavigationResult.Wrong;
+                navigationInstruction.Result = NavigationResult.AdjustRoute;
                 Console.WriteLine("check");
             }
 
             return navigationInstruction;
         }
+
         public enum NavigationResult
         {
-            Correct = 0,
-            Wrong,
+            Run = 0,
+            AdjustRoute,
             Contonue,
         }
-        public enum TurnDirection
+
+        public class NavigationInstruction : EventArgs
         {
-            FirstDirection = -1, // Exception: used only in the first step
-            Forward = 0,
-            Forward_Right,
-            Right,
-            Backward_Right,
-            Backward,
-            Backward_Left,
-            Left,
-            Forward_Left,
-            Up,
-            Down
-        }
-        public class NavigationInstruction
-        {
-            public Waypoint nextwaypoint;
-            public double distance;
-            public double progress;
-            public NavigationResult Status;
-            public TurnDirection direction;
+            /// <summary>
+            /// The next waypoint within navigation path
+            /// </summary>
+            public Waypoint NextWaypoint;
+
+            /// <summary>
+            /// The distance from current waypoint to NextWaypoint
+            /// </summary>
+            public double Distance;
+
+            /// <summary>
+            /// Progress of navigation.
+            /// </summary>
+            public double Progress;
+
+            /// <summary>
+            /// Result of navigation
+            /// </summary>
+            public NavigationResult Result;
+
+            /// <summary>
+            /// The direction to turn to the next waypoint using the enum type
+            /// </summary>
+            public TurnDirection Direction;
         }
     }
 }
