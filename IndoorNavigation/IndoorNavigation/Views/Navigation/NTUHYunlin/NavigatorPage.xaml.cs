@@ -14,7 +14,8 @@ namespace IndoorNavigation.Views.Navigation.NTUHYunlin
         {
             InitializeComponent();
 
-            viewModel = new NavigatorPageViewModel(navigraphName, desination);
+            // TODO: Temporarily test
+            viewModel = new NavigatorPageViewModel(navigraphName, desination, new Guid("00000000-0000-0000-0000-000000000001"));
             BindingContext = viewModel;
         }
 

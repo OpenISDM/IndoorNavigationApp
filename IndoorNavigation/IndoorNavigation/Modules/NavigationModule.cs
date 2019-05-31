@@ -40,44 +40,70 @@
  *
  */
 using System;
+using IndoorNavigation.Models.NavigaionLayer;
 using IndoorNavigation.Modules.Navigation;
+using static IndoorNavigation.Modules.Session;
 
 namespace IndoorNavigation.Modules
 {
     public class NavigationModule : IDisposable
     {
-        private IPSModule IPSmodule;
-        private Session session;
-        private string destination;
+        private bool _isFirstTimeGetWaypoint;
 
-        private EventHandler CurrentWaypointHandler;
-        private EventHandler NavigationResultHandler;
+        private IPSModule _IPSmodule;
+        private Session _session;
+
+        private string _navigraphName;
+        private Guid _destinationID;
+
+        private EventHandler _currentWaypointHandler;
+        private EventHandler _navigationResultHandler;
 
         public WaypointEvent WaypointEvent { get; private set; }
         public NavigationEvent NavigationEvent { get; private set; }
 
-        public NavigationModule(string navigraphName, string destination)
+        public NavigationModule(string navigraphName, Guid destinationID)
         {
+            _isFirstTimeGetWaypoint = true;
+
+            WaypointEvent = new WaypointEvent();
             NavigationEvent = new NavigationEvent();
 
-            IPSmodule = new IPSModule();
-            CurrentWaypointHandler = new EventHandler(HandleCurrentWaypoint);
+            _IPSmodule = new IPSModule();
+            _currentWaypointHandler = new EventHandler(HandleCurrentWaypoint);
             //IPSModule.Event.WaypointHandler += CurrentWaypointHandler;
 
-            this.destination = destination;
-            //session = new Session(NavigraphStorage.LoadNavigraphXML(navigraphName));
-            NavigationResultHandler = new EventHandler(HandleNavigationResult);
-            //session.Event.SessionResultHandler += NavigationResultHandler;
+            _navigraphName = navigraphName;
+            _destinationID = destinationID;
         }
 
-        private void HandleCurrentWaypoint(object sender, EventArgs args)
+        // Get current waypoint and raise event to notify the session
+        public void HandleCurrentWaypoint(object sender, EventArgs args)
         {
-            // get current waypoint and raise event to notify the session
+            if (_isFirstTimeGetWaypoint)
+            {
+                _session = new Session(
+                        NavigraphStorage.LoadNavigraphXML(_navigraphName),
+                        (args as WaypointScanEventArgs).WaypointID, 
+                        _destinationID, 
+                        new int[] { 1, 3 });
+
+                _navigationResultHandler = new EventHandler(HandleNavigationResult);
+                _session.Event.SessionResultHandler += _navigationResultHandler;
+
+                WaypointEvent.CurrentWaypointEventHandler += _session.DetectRoute;
+
+                _isFirstTimeGetWaypoint = false;
+            }
+
+            WaypointEvent.OnEventCall(args);
         }
+
 
         private void HandleNavigationResult(object sender, EventArgs args)
         {
             // get the navigation result from the session and raise event to notify the NavigatorPageViewModel
+            NavigationEvent.OnEventCall(args);
         }
 
         public void CloseNavigationModule()
@@ -96,7 +122,7 @@ namespace IndoorNavigation.Modules
                 {
                     // TODO: dispose managed state (managed objects).
                     //IPSModule.Event.WaypointHandler -= CurrentWaypointHandler;
-                    //session.Event.SessionResultHandler -= NavigationResultHandler;
+                    _session.Event.SessionResultHandler -= _navigationResultHandler;
                 }
                 // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
                 // TODO: set large fields to null.

@@ -5,24 +5,47 @@ using System.Collections.Generic;
 using MvvmHelpers;
 using IndoorNavigation.Models.NavigaionLayer;
 using IndoorNavigation.Modules;
+using static IndoorNavigation.Modules.Session;
+using NavigationEventArgs = IndoorNavigation.Modules.Session.NavigationEventArgs;
 
 namespace IndoorNavigation.ViewModels.Navigation
 {
     public class NavigatorPageViewModel : BaseViewModel, IDisposable
     {
-        private string Destination;
-        private NavigationModule navigationModule;
+        private Guid _destinationID;
+        private NavigationModule _navigationModule;
 
-        public NavigatorPageViewModel(string navigraphName, string destination)
+        public TestEvent testEvent;
+
+        public NavigatorPageViewModel(string navigraphName, string destinationName, Guid destinationID)
         {
-            Destination = destination;
-            DestinationWaypointName = destination;
+            testEvent = new TestEvent();
+
+            _destinationID = destinationID;
+            DestinationWaypointName = destinationName;
 
             CurrentWaypointName = "NULL";
-            EnterNextWaypointCommand = new Command(() => CurrentWaypointName = NextWaypointName);
 
-            navigationModule = new NavigationModule(navigraphName, destination);
-            navigationModule.NavigationEvent.ResultEventHandler += GetNavigationResultEvent;
+            _navigationModule = new NavigationModule(navigraphName, destinationID);
+            _navigationModule.NavigationEvent.ResultEventHandler += GetNavigationResultEvent;
+
+            //Test function button
+            testEvent.TestEventHandler += _navigationModule.HandleCurrentWaypoint;
+            EnterNextWaypointCommand = new Command(TestEnterNextWaypointCommand);
+        }
+
+        public void TestEnterNextWaypointCommand()
+        {
+            Guid guidOutput;
+            guidOutput = Guid.TryParse(NextWaypointName, out guidOutput) ? guidOutput : Guid.Empty;
+
+            if (guidOutput != Guid.Empty)
+            {
+                testEvent.OnEventCall(new WaypointScanEventArgs
+                {
+                    WaypointID = guidOutput
+                });
+            }
         }
 
         /// <summary>
@@ -32,9 +55,6 @@ namespace IndoorNavigation.ViewModels.Navigation
         private void DisplayInstructions(EventArgs args)
         {
             NavigationInstruction instruction = (args as NavigationEventArgs).NextInstruction;
-            CurrentWaypointName = instruction.NextWaypoint.Name;
-
-            NavigationProgress = (args as NavigationEventArgs).Progress;
 
             string currentStepImage;
             string currentStepLabel;
@@ -45,6 +65,8 @@ namespace IndoorNavigation.ViewModels.Navigation
                     SetInstruction(instruction, out currentStepLabel, out currentStepImage);
                     CurrentStepLabel = currentStepLabel;
                     CurrentStepImage = currentStepImage;
+                    CurrentWaypointName = instruction.NextWaypoint.Name;
+                    NavigationProgress = instruction.Progress;
                     break;
 
                 case NavigationResult.AdjustRoute:
@@ -53,8 +75,10 @@ namespace IndoorNavigation.ViewModels.Navigation
                     break;
 
                 case NavigationResult.Arrival:
-                    CurrentStepLabel = "Arrived";
-                    CurrentStepImage = "恭喜你！已到達終點囉";
+                    CurrentWaypointName = DestinationWaypointName;
+                    CurrentStepLabel = "恭喜你！已到達終點囉";
+                    CurrentStepImage = "Arrived";
+                    NavigationProgress = 100;
                     //Dispose();  // release resources
                     break;
             }
@@ -66,13 +90,13 @@ namespace IndoorNavigation.ViewModels.Navigation
             switch (instruction.Direction)
             {
                 case TurnDirection.FirstDirection:
-                    stepLabel = string.Format("請向&#10;{0}&#10;直走", instruction.NextWaypoint.Name);
-                    stepImage = "Arrow_front";
+                    stepLabel = string.Format("請向\n{0}\n直走", instruction.NextWaypoint.Name);
+                    stepImage = "Arrow_up";
                     break;
 
                 case TurnDirection.Forward:
                     stepLabel = string.Format("請向前方的&#10;{0}&#10;直走", instruction.NextWaypoint.Name);
-                    stepImage = "Arrow_front";
+                    stepImage = "Arrow_up";
                     break;
 
                 case TurnDirection.Forward_Right:
@@ -221,58 +245,6 @@ namespace IndoorNavigation.ViewModels.Navigation
 
         #endregion
 
-        // TODO: The following enum and class will move to the Session.cs
-        #region Needed enum and class include EventArgs from Session
-
-        public enum NavigationResult
-        {
-            Run = 0,
-            AdjustRoute,
-            Arrival
-        }
-
-        public class NavigationEventArgs : EventArgs
-        {
-            /// <summary>
-            /// Status of navigation
-            /// </summary>
-            public NavigationResult Result { get; set; }
-
-            /// <summary>
-            /// Gets or sets the next instruction. It will send to the ViewModel to
-            /// update the UI instruction.
-            /// </summary>
-            public NavigationInstruction NextInstruction { get; set; }
-
-            /// <summary>
-            /// Progress of navigation.
-            /// </summary>
-            public double Progress { get; set; }
-        }
-
-        /// <summary>
-        /// Instruction of next location to be delivered at the next waypoint
-        /// </summary>
-        public class NavigationInstruction
-        {
-            /// <summary>
-            /// The next waypoint within navigation path
-            /// </summary>
-            public Waypoint NextWaypoint { get; set; }
-
-            /// <summary>
-            /// The List of "wrong way" waypoint of the next location
-            /// </summary>
-            public List<Waypoint> WrongwayWaypointList { get; set; }
-
-            /// <summary>
-            /// The direction to turn to the next waypoint using the enum type
-            /// </summary>
-            public TurnDirection Direction { get; set; }
-        }
-
-        #endregion
-
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
 
@@ -310,5 +282,15 @@ namespace IndoorNavigation.ViewModels.Navigation
         }
         #endregion
 
+    }
+
+    public class TestEvent
+    {
+        public event EventHandler TestEventHandler;
+
+        public void OnEventCall(EventArgs args)
+        {
+            TestEventHandler?.Invoke(this, args);
+        }
     }
 }

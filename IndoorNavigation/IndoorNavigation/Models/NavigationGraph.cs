@@ -289,7 +289,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
         /// Initializes a navigation subgraph of the Region and combine all the
         /// waypoints and edges to NavigationSubgraph
         /// </summary>
-        public Graph<Waypoint, string> SetNavigationSubgraph(List<int> avoid)
+        public Graph<Waypoint, string> SetNavigationSubgraph(int[] avoid)
         {
 
             // Add all the waypoints of each region into region graph
@@ -302,13 +302,13 @@ namespace IndoorNavigation.Models.NavigaionLayer
             foreach (Edge edge in Edges)
             {
                 int distance = System.Convert.ToInt32(edge.Distance);
-                //in connectiontye: 0 is hall, 1 is stair, 2 is elevator, 3 is escalator
-                int type = (int)edge.ConnectionType;
 
-                //find the method the user do not like and add its cost
-                if (type != 0 && type == avoid[0] || type == avoid[1])
+                // In connectiontye: 0 is hall, 1 is stair, 2 is elevator, 3 is escalator
+                int type = (int)edge.ConnectionType;
+                // Find the method the user do not like and add its cost
+                if (type != 0 && (type == avoid[0] || type == avoid[1]))
                 {
-                    distance = distance + 100;
+                    distance += 100;
                 }
                 // Get two connected waypoints's key value
                 uint sourceWaypointKey = NavigationSubgraph.Where(waypoint =>
@@ -317,10 +317,12 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 uint targetWaypointKey = NavigationSubgraph.Where(waypoint =>
                         waypoint.Item.ID.Equals(edge.TargetWaypointUUID))
                         .Select(waypoint => waypoint.Key).First();
+
                 // Connect the waypoints
                 NavigationSubgraph.Connect(sourceWaypointKey, targetWaypointKey,
                         distance, string.Empty);
             }
+
             return NavigationSubgraph;
         }
     }

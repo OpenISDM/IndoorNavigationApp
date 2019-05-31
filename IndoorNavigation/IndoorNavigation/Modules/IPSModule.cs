@@ -50,6 +50,7 @@ using System.Diagnostics;
 using System.Threading;
 using IndoorNavigation.Models;
 using IndoorNavigation.Modules.Navigation;
+using IndoorNavigation.Models.NavigaionLayer;
 
 namespace IndoorNavigation.Modules
 {
@@ -171,5 +172,10 @@ namespace IndoorNavigation.Modules
         #endregion
 
 
+    }
+
+    class WaypointScanEventArgs : EventArgs
+    {
+        public Guid WaypointID { get; set; }
     }
 }

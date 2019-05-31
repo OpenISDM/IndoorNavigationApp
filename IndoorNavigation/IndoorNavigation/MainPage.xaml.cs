@@ -91,12 +91,21 @@ namespace IndoorNavigation
 
         async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            if (e.Item is Location location && location.Name == "雲林台大醫院")
+            if (e.Item is Location location)
             {
-                var answser = await DisplayAlert("Turn to next page?", location.Name, "OK", "Cancel");
+                switch (location.Name)
+                {
+                    case "雲林台大醫院":
+                        var answser = await DisplayAlert("Turn to navigation homepage", location.Name, "OK", "Cancel");
 
-                if (answser)
-                    await Navigation.PushAsync(new NavigationHomePage(location.Name));
+                        if (answser)
+                            await Navigation.PushAsync(new NavigationHomePage(location.Name));
+                        break;
+
+                    default:
+                        break;
+                }
+
             }
         }
 
