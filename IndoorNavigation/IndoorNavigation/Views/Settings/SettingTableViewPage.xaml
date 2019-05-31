@@ -54,7 +54,7 @@
                                 Title="BeDIS Xamarin" Description="openISDM@sinica.com"/>
                 <!--<sv:LabelCell Title="圖資名稱" ValueText="OpenHouse" />-->
                 <!--<sv:TextPickerCell x:Name="MapPicker" Title="選擇圖資" Items="{Binding SelectNaviGraphItems}" SelectedCommand="{Binding SelectedMapCommand}"/>-->
-                <sv:CommandCell x:Name="DownloadMapButton" Title="下載圖資" Tapped="DownloadMapBtn_Tapped"/>
+                <sv:CommandCell x:Name="DownloadMapButton" Title="下載圖資" Tapped="DownloadGraphBtn_Tapped"/>
                 <sv:TextPickerCell x:Name="CleanMapPicker" Title="清除圖資" Items="{Binding CleanNaviGraphItems}" SelectedCommand="{Binding CleanMapCommand}"/>
                 <sv:CommandCell x:Name="SpeechTestButton" Title="語音測試" Tapped="SpeechTestBtn_Tapped"/>
                 <sv:TextPickerCell x:Name="LanguagePicker" Title="更改語言" Items="{Binding LanguageItems}" SelectedCommand="{Binding ChangeLanguageCommand}"/>

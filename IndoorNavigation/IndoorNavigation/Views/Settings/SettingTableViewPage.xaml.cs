@@ -14,6 +14,9 @@ using Prism.Commands;
 using Plugin.Multilingual;
 using IndoorNavigation.Resources;
 using System.Globalization;
+using Plugin.Permissions.Abstractions;
+using Plugin.Permissions;
+using System.Diagnostics;
 
 namespace IndoorNavigation.Views.Settings
 {
@@ -57,8 +60,7 @@ namespace IndoorNavigation.Views.Settings
             await Navigation.PushAsync(new LicenseMainPage());
         }
 
-        //TODO: Check user whether to allow permission of camera
-        async void DownloadMapBtn_Tapped(object sender, EventArgs e)
+        async void DownloadGraphBtn_Tapped(object sender, EventArgs e)
         {
 
 #if DEBUG
@@ -74,6 +76,13 @@ namespace IndoorNavigation.Views.Settings
             // 開啟鏡頭掃描Barcode
             IQrCodeDecoder qrCodeDecoder = DependencyService.Get<IQrCodeDecoder>();
             string qrCodeValue = await qrCodeDecoder.ScanAsync();
+
+            // In iOS, if the User has denied the permission, you might not be able to request for permissions again.
+            var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Camera);
+            if (status != PermissionStatus.Granted)
+            {
+                //await DisplayAlert("Oops...", "Sorry for that you denied the permission of camera so you can't scan the QR code.", "OK");
+            }
 #endif
 
             if (!string.IsNullOrEmpty(qrCodeValue))
