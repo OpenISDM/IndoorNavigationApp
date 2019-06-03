@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using IndoorNavigation.Views.Settings;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using IndoorNavigation.Models.NavigaionLayer;
 
 namespace IndoorNavigation.Views.Navigation.NTUHYunlin
 {
@@ -50,51 +51,58 @@ namespace IndoorNavigation.Views.Navigation.NTUHYunlin
             await Navigation.PushAsync(new NavigatorSettingPage());
         }
 
-        void ClinicList_Clicked(object sender, EventArgs e)
+        async void ClinicList_Clicked(object sender, EventArgs e)
         {
-
+            await Navigation.PushAsync(new DestinationPickPage(navigraphName, 
+                    CategoryType.Clinics));
         }
 
         async void Cashier_Clicked(object sender, EventArgs e)
         {
-            // TODO: This destination name can be any location which you want to test.
-            // After the navigation graph is done, it will be replaced by the completed function.
-            await Navigation.PushAsync(new NavigatorPage(navigraphName, "某個名字很長的終點"));
+            await Navigation.PushAsync(new DestinationPickPage(navigraphName, 
+                    CategoryType.Cashier));
         }
 
-        void ExitList_Clicked(object sender, EventArgs e)
+        async void ExitList_Clicked(object sender, EventArgs e)
         {
-
+            await Navigation.PushAsync(new DestinationPickPage(navigraphName, 
+                    CategoryType.Exit));
         }
 
-        void ExaminationRoomList_Clicked(object sender, EventArgs e)
+        async void ExaminationRoomList_Clicked(object sender, EventArgs e)
         {
-
+            await Navigation.PushAsync(new DestinationPickPage(navigraphName, 
+                    CategoryType.ExaminationRoom));
         }
 
-        void Pharmacy_Clicked(object sender, EventArgs e)
+        async void Pharmacy_Clicked(object sender, EventArgs e)
         {
-
+            await Navigation.PushAsync(new DestinationPickPage(navigraphName, 
+                    CategoryType.Pharmacy));
         }
 
-        void ConvenienceStore_Clicked(object sender, EventArgs e)
+        async void ConvenienceStore_Clicked(object sender, EventArgs e)
         {
-
+            await Navigation.PushAsync(new DestinationPickPage(navigraphName, 
+                    CategoryType.ConvenienceStore));
         }
 
-        void OthersList_Clicked(object sender, EventArgs e)
+        async void OthersList_Clicked(object sender, EventArgs e)
         {
-
+            await Navigation.PushAsync(new DestinationPickPage(navigraphName, 
+                    CategoryType.Others));
         }
 
-        void BathroomList_Clicked(object sender, EventArgs e)
+        async void BathroomList_Clicked(object sender, EventArgs e)
         {
-
+            await Navigation.PushAsync(new DestinationPickPage(navigraphName, 
+                    CategoryType.Bathroom));
         }
 
-        void BloodCollectionCounter_Clicked(object sender, EventArgs e)
+        async void BloodCollectionCounter_Clicked(object sender, EventArgs e)
         {
-
+            await Navigation.PushAsync(new DestinationPickPage(navigraphName, 
+                    CategoryType.BloodCollectionCounter));
         }
     }
 }

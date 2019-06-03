@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 
 using Xamarin.Forms;
 using IndoorNavigation.ViewModels.Navigation;
 
-namespace IndoorNavigation.Views.Navigation.NTUHYunlin
+namespace IndoorNavigation.Views.Navigation
 {
     public partial class NavigatorPage : ContentPage
     {
