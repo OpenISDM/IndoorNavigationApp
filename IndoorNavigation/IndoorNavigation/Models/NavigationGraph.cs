@@ -94,6 +94,19 @@ namespace IndoorNavigation.Models.NavigaionLayer
         Escalator
     }
 
+    public enum CategoryType
+    {
+        Others = 0,
+        Clinics,
+        Cashier,
+        Exit,
+        ExaminationRoom,
+        Pharmacy,
+        ConvenienceStore,
+        Bathroom,
+        BloodCollectionCounter
+    }
+
     /// <summary>
     /// The top level of the navigation graph within two-level hierarchy
     /// </summary>
@@ -398,6 +411,29 @@ namespace IndoorNavigation.Models.NavigaionLayer
         /// </summary>
         [XmlElement("Floor")]
         public int Floor { get; set; }
+
+        /// <summary>
+        /// The Category of the Waypoint
+        /// </summary>>
+        [XmlIgnore]
+        public CategoryType Category { get; set; }
+        [XmlElement("Category")]
+        public string CategoryType
+        {
+            get { return Category.ToString(); }
+            set
+            {
+                if (string.IsNullOrEmpty(value) || !Enum.GetNames(typeof(CategoryType)).Contains(value))
+                {
+                    //Direction = CardinalDirection.NoDirection;
+                }
+                else
+                {
+
+                    Category = (CategoryType)Enum.Parse(typeof(CategoryType), value);
+                }
+            }
+        }
 
         /// <summary>
         /// Neighbors of the waypoint
