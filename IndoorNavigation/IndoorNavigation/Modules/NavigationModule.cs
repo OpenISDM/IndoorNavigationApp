@@ -42,7 +42,9 @@
 using System;
 using IndoorNavigation.Models.NavigaionLayer;
 using IndoorNavigation.Modules.Navigation;
-using static IndoorNavigation.Modules.Session;
+using System.Collections.Generic;
+using Xamarin.Forms;
+using System.Linq;
 
 namespace IndoorNavigation.Modules
 {
@@ -77,28 +79,43 @@ namespace IndoorNavigation.Modules
             _destinationID = destinationID;
         }
 
+        private void FirstTimeGetWaypoint(EventArgs args)
+        {
+            List<int> avoidList = new List<int>();
+
+            if (Application.Current.Properties.ContainsKey("AvoidStair"))
+            {
+                avoidList.Add((bool)Application.Current.Properties["AvoidStair"] ? (int)ConnectionType.Stair : -100);
+                avoidList.Add((bool)Application.Current.Properties["AvoidElevator"] ? (int)ConnectionType.Elevator : -100);
+                avoidList.Add((bool)Application.Current.Properties["AvoidEscalator"] ? (int)ConnectionType.Escalator : -100);
+
+                avoidList = avoidList.Distinct().ToList();
+                avoidList.Remove(-1000);
+            }
+
+            _session = new Session(
+                    NavigraphStorage.LoadNavigraphXML(_navigraphName),
+                    (args as WaypointScanEventArgs).WaypointID,
+                    _destinationID,
+                    avoidList.ToArray());
+
+            _navigationResultHandler = new EventHandler(HandleNavigationResult);
+            _session.Event.SessionResultHandler += _navigationResultHandler;
+
+            WaypointEvent.CurrentWaypointEventHandler += _session.DetectRoute;
+        }
+
         // Get current waypoint and raise event to notify the session
         public void HandleCurrentWaypoint(object sender, EventArgs args)
         {
             if (_isFirstTimeGetWaypoint)
             {
-                _session = new Session(
-                        NavigraphStorage.LoadNavigraphXML(_navigraphName),
-                        (args as WaypointScanEventArgs).WaypointID, 
-                        _destinationID, 
-                        new int[] { 1, 3 });
-
-                _navigationResultHandler = new EventHandler(HandleNavigationResult);
-                _session.Event.SessionResultHandler += _navigationResultHandler;
-
-                WaypointEvent.CurrentWaypointEventHandler += _session.DetectRoute;
-
+                FirstTimeGetWaypoint(args);
                 _isFirstTimeGetWaypoint = false;
             }
 
             WaypointEvent.OnEventCall(args);
         }
-
 
         private void HandleNavigationResult(object sender, EventArgs args)
         {
