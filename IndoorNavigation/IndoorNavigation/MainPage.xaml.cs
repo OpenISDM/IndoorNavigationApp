@@ -93,13 +93,14 @@ namespace IndoorNavigation
         {
             if (e.Item is Location location)
             {
-                switch (location.Name)
+                switch (NavigraphStorage.LoadNavigraphXML(location.UserNaming).Name)
                 {
-                    case "雲林台大醫院":
-                        var answser = await DisplayAlert("Turn to navigation homepage", location.Name, "OK", "Cancel");
-
+                    case "NTUH_YunLin":
+                        var answser = await DisplayAlert("Go to navigation homepage", location.UserNaming, "OK", "Cancel");
                         if (answser)
-                            await Navigation.PushAsync(new NavigationHomePage(location.Name));
+                        {
+                            await Navigation.PushAsync(new NavigationHomePage(location.UserNaming));
+                        }
                         break;
 
                     default:
@@ -126,7 +127,7 @@ namespace IndoorNavigation
 
             if (item != null)
             {
-                NavigraphStorage.DeleteNavigraph(item.Name);
+                NavigraphStorage.DeleteNavigraph(item.UserNaming);
                 viewModel.LoadNavigationGraph();
             }
         }

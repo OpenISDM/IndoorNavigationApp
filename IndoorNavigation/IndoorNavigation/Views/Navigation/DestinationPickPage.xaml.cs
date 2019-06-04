@@ -33,7 +33,6 @@ namespace IndoorNavigation.Views.Navigation
 
             foreach (Waypoint waypoint in waypoints)
             {
-                Debug.WriteLine("In Destination pickpage, waypoint Name is " + waypoint.Name);
                 DestinationItems.Add(new DestinationItem
                 {
                     ID = waypoint.ID,

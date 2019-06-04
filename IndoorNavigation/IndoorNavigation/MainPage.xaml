@@ -73,7 +73,7 @@
                                        Margin="1, 1, 1, 15"
                                        VerticalOptions="Start"/>
                                 
-                                <Label Text="{Binding Name}" 
+                                <Label Text="{Binding UserNaming}" 
                                        HorizontalOptions="Start" 
                                        VerticalOptions="Center"
                                        TextColor="#3F51B5" Margin="60, 0, 1, 10" />

@@ -26,7 +26,7 @@ namespace IndoorNavigation.ViewModels
 
             foreach (string naviGraphName in NavigraphStorage.GetAllNavigraphs())
             {
-                locations.Add(new Location { Name = naviGraphName });
+                locations.Add(new Location { UserNaming = naviGraphName });
             }
 
             if (locations.Any())
@@ -46,7 +46,7 @@ namespace IndoorNavigation.ViewModels
             get
             {
                 return (from location in returnedLocations
-                        orderby location.Name[0]
+                        orderby location.UserNaming[0]
                         select location).ToList();
             }
 
@@ -90,7 +90,7 @@ namespace IndoorNavigation.ViewModels
                 //search waypoints
                 var searchedWaypoints = string.IsNullOrEmpty(value) ?
                                         locations : locations
-                                        .Where(c => c.Name.Contains(value));
+                                        .Where(c => c.UserNaming.Contains(value));
                 NavigationGraphFiles = searchedWaypoints.ToList();
             }
         }
@@ -98,6 +98,6 @@ namespace IndoorNavigation.ViewModels
 
     public class Location
     {
-        public string Name { get; set; }
+        public string UserNaming { get; set; }
     }
 }
