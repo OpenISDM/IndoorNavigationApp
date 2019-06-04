@@ -54,7 +54,6 @@ using IndoorNavigation.Models.NavigaionLayer;
 
 namespace IndoorNavigation.Modules
 {
-    //TODO: Add dynamic algorithm changing
     public class IPSModule : IDisposable
     {
         private Thread IPSThread;

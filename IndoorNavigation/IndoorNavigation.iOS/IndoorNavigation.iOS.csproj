@@ -244,6 +244,8 @@
     <BundleResource Include="Resources\Others.png" />
     <BundleResource Include="Resources\Bathroom.png" />
     <BundleResource Include="Resources\BloodCollectionCounter.png" />
+    <BundleResource Include="Resources\Stairs_down.png" />
+    <BundleResource Include="Resources\Stairs_up.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\close_circle_button.png" />

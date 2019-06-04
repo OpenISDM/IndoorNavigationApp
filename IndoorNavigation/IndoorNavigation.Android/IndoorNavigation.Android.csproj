@@ -116,6 +116,8 @@
     <AndroidResource Include="Resources\drawable\Arrived.png" />
     <AndroidResource Include="Resources\drawable\Waiting.png" />
     <AndroidResource Include="Resources\drawable\Warning.png" />
+    <AndroidResource Include="Resources\drawable\Stairs_down.png" />
+    <AndroidResource Include="Resources\drawable\Stairs_up.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable-hdpi\" />

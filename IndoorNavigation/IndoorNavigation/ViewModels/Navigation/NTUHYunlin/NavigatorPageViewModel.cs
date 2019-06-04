@@ -86,7 +86,6 @@ namespace IndoorNavigation.ViewModels.Navigation
 
         private void SetInstruction(NavigationInstruction instruction, out string stepLabel, out string stepImage)
         {
-            // TODO: Add go up/down stairs
             switch (instruction.Direction)
             {
                 case TurnDirection.FirstDirection:
@@ -124,7 +123,6 @@ namespace IndoorNavigation.ViewModels.Navigation
                     stepImage = "Arrow_rearleft";
                     break;
 
-
                 case TurnDirection.Left:
                     stepLabel = string.Format("請向左轉 並朝{0}直走", instruction.NextWaypoint.Name);
                     stepImage = "Arrow_left";
@@ -133,6 +131,16 @@ namespace IndoorNavigation.ViewModels.Navigation
                 case TurnDirection.Forward_Left:
                     stepLabel = string.Format("請向左前方的{0}直走", instruction.NextWaypoint.Name);
                     stepImage = "Arrow_frontleft";
+                    break;
+
+                case TurnDirection.Up:
+                    stepLabel = string.Format("請上樓\n並朝 {0}直走", instruction.NextWaypoint.Name);
+                    stepImage = "Stairs_up";
+                    break;
+
+                case TurnDirection.Down:
+                    stepLabel = string.Format("請下樓\n並朝 {0}直走", instruction.NextWaypoint.Name);
+                    stepImage = "Stairs_down";
                     break;
 
                 default:

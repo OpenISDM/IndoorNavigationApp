@@ -187,7 +187,7 @@ namespace IndoorNavigation.Modules
                     }
                 }
                 navigationInstruction.Progress = (double)Math.Round((decimal)getWaypoint / _allCorrectWaypoint.Count, 3);
-                // TODO: Notify UI/main thread the result
+                // Raise event to notify the UI/main thread with the result
                 Event.OnEventCall(new NavigationEventArgs
                 {
                     Result = NavigationResult.Run,

@@ -354,6 +354,40 @@
                                   FontSize="14"
                                   FontAttributes="Bold"/>
                             
+                            <!-- Stairs up Icon -->
+                            <Span Text="&#10;Stairs up Icon made by " 
+                                  FontSize="14"
+                                  FontAttributes="Bold"/>
+                            <Span Text="Freepik"
+                                  TextColor="Blue"
+                                  FontSize="14"
+                                  FontAttributes="Bold">
+                                <Span.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding HyperlinkClickCommand}"
+                                                          CommandParameter="https://www.flaticon.com/authors/freepik/"/>
+                                </Span.GestureRecognizers>
+                            </Span>
+                            <Span Text=" from www.flaticon.com&#10;" 
+                                  FontSize="14"
+                                  FontAttributes="Bold"/>
+                            
+                            <!-- Stairs down Icon -->
+                            <Span Text="&#10;Stairs down Icon made by " 
+                                  FontSize="14"
+                                  FontAttributes="Bold"/>
+                            <Span Text="Freepik"
+                                  TextColor="Blue"
+                                  FontSize="14"
+                                  FontAttributes="Bold">
+                                <Span.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding HyperlinkClickCommand}"
+                                                          CommandParameter="https://www.flaticon.com/authors/freepik/"/>
+                                </Span.GestureRecognizers>
+                            </Span>
+                            <Span Text=" from www.flaticon.com&#10;" 
+                                  FontSize="14"
+                                  FontAttributes="Bold"/>
+                            
                         </FormattedString>
                     </Label.FormattedText>
                 </Label>

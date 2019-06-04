@@ -30,7 +30,7 @@
  *
  */
 
-///TODO: DUPLICATE
+
 
 using System;
 using System.Collections.Generic;
@@ -63,6 +63,7 @@ namespace IndoorNavigation.Models
     }
 
     /// <summary>
+    /// TODO: DUPLICATE
     /// Instruction of next location to be delivered at the next waypoint
     /// </summary>
     public class NextStepModel
