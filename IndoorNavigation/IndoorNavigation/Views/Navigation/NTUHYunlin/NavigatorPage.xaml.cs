@@ -9,12 +9,11 @@ namespace IndoorNavigation.Views.Navigation
     {
         private NavigatorPageViewModel viewModel;
 
-        public NavigatorPage(string navigraphName, string desination)
+        public NavigatorPage(string navigraphName, string desinationName, Guid destinationID)
         {
             InitializeComponent();
 
-            // TODO: Temporarily test
-            viewModel = new NavigatorPageViewModel(navigraphName, desination, new Guid("00000000-0000-0000-0000-000000000001"));
+            viewModel = new NavigatorPageViewModel(navigraphName, desinationName, destinationID);
             BindingContext = viewModel;
         }
 

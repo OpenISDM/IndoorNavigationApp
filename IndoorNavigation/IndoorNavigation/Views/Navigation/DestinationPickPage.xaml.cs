@@ -13,7 +13,7 @@ namespace IndoorNavigation.Views.Navigation
 {
     public partial class DestinationPickPage : ContentPage
     {
-        private Navigraph navigraph;
+        private string _navigraphName;
 
         public ObservableCollection<string> Items { get; set; }
         public ObservableCollection<DestinationItem> DestinationItems { get; set; }
@@ -24,9 +24,9 @@ namespace IndoorNavigation.Views.Navigation
 
             DestinationItems = new ObservableCollection<DestinationItem>();
 
-            navigraph = NavigraphStorage.LoadNavigraphXML(navigraphName);
+            _navigraphName = navigraphName;
 
-            IEnumerable<Waypoint> waypoints = from region in navigraph.Regions
+            IEnumerable<Waypoint> waypoints = from region in NavigraphStorage.LoadNavigraphXML(navigraphName).Regions
                                               from waypoint in region.Waypoints
                                               where waypoint.Category.Equals(category)
                                               select waypoint;
@@ -51,14 +51,12 @@ namespace IndoorNavigation.Views.Navigation
         {
             if (e.Item is DestinationItem destination)
             {
-                await DisplayAlert("Item Tapped", destination.ID.ToString(), "OK");
+                await Navigation.PushAsync(new NavigatorPage(_navigraphName, destination.WaypointName, destination.ID));
             }
 
             //Deselect Item
             ((ListView)sender).SelectedItem = null;
         }
-
-        //IEnumerable<Grouping<string, DestinationItem>> GetDestinationList(string name = null) { }
 
     }
 
