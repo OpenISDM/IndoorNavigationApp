@@ -54,6 +54,7 @@ namespace IndoorNavigation.Modules
 {
     public class Session
     {
+        //_allCorrectWaypoint used to store all correct Waypoints
         private List<Waypoint> _allCorrectWaypoint = new List<Waypoint>();
 
         private Graph<Region, string> _regionGraph = new Graph<Region, string>();
@@ -98,13 +99,8 @@ namespace IndoorNavigation.Modules
             var path = subgraph.Dijkstra(startPoingKey,
                                            endPointKey).GetPath();
 
-            for (int i = 0; i < path.Count(); i++)
-            {
-                Console.WriteLine("Path " + i + ", " + subgraph[path.ToList()[i]].Item.Name);
-            }
-
             //Put the correct waypoint into List all_correct_waaypoint
-            ////Put all correct waypoints and their neighbors in list AllNoneWrongWaypoint
+            //Put all correct waypoints and their neighbors in list AllNoneWrongWaypoint
             for (int i = 0; i < path.Count(); i++)
             {
                 _allCorrectWaypoint.Add(subgraph[path.ToList()[i]].Item);
@@ -115,12 +111,7 @@ namespace IndoorNavigation.Modules
                 }
             }
 
-            for (int i = 0; i < _allCorrectWaypoint.Count; i++)
-            {
-                Console.WriteLine("All correct Waypoint : " + _allCorrectWaypoint[i].Name + "\n");
-            }
-
-            //Remove the elements that are repeated
+            //Remove the elements that are repeated in _allNoneWrongWaypoint
             for (int i = 0; i < _allNoneWrongWaypoint.Count; i++)
             {
                 for (int j = _allNoneWrongWaypoint.Count - 1; j > i; j--)
@@ -130,11 +121,6 @@ namespace IndoorNavigation.Modules
                         _allNoneWrongWaypoint.RemoveAt(j);
                     }
                 }
-            }
-
-            for (int i = 0; i < _allNoneWrongWaypoint.Count; i++)
-            {
-                Console.WriteLine("All Accept Guid : " + _allNoneWrongWaypoint[i] + "\n");
             }
 
             return _allCorrectWaypoint;
@@ -171,7 +157,7 @@ namespace IndoorNavigation.Modules
                 //Get nextwaypoint
                 navigationInstruction.NextWaypoint = _allCorrectWaypoint[getWaypoint + 1];
                 //If the floor information between the current waypoint and next is different, it means that the users need to change the floor
-                //therefore, we can detemine the users need to go up or down by compare which floor is bigger
+                //therefore, we can determine the users need to go up or down by compare which floor is higher
                 if (currentwaypoint.Floor != _allCorrectWaypoint[getWaypoint + 1].Floor)
                 {
                     if (currentwaypoint.Floor > _allCorrectWaypoint[getWaypoint + 1].Floor)
@@ -184,8 +170,8 @@ namespace IndoorNavigation.Modules
                     }
                     navigationInstruction.Distance = 0;
                 }
-                //If the fllor information between current way point and next way point are same,
-                //we need to tell the use go straight or turn direction, therefore, we need to 
+                //If the fllor information between current way point and next way point are the same,
+                //we need to tell the user go straight or turn direction, therefore, we need to 
                 //have three informations, previous, current and next waypoints
                 else
                 {

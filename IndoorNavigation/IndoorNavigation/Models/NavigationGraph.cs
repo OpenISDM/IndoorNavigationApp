@@ -318,11 +318,17 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
                 // In connectiontye: 0 is hall, 1 is stair, 2 is elevator, 3 is escalator
                 int type = (int)edge.ConnectionType;
-                // Find the method the user do not like and add its cost
-                if (type != 0 && (type == avoid[0] || type == avoid[1]))
+         
+                for (int i = 0; i < avoid.Count(); i++)
                 {
-                    distance += 100;
+                    //find the method the user do not like and add its cost
+                    if (type != 0 && type == avoid[i])
+                    {
+                        distance = distance + 100;
+                        break;
+                    }
                 }
+                
                 // Get two connected waypoints's key value
                 uint sourceWaypointKey = NavigationSubgraph.Where(waypoint =>
                         waypoint.Item.ID.Equals(edge.SourceWaypointUUID))
