@@ -64,8 +64,8 @@ namespace IndoorNavigation.Modules
 
         //_allNoneWrongWaypoint used to store all correct Waypoints and their neighbors
         public List<Guid> _allNoneWrongWaypoint = new List<Guid>();
-
-        public Waypoint finalwaypointInPath = new Waypoint();
+        //Destination
+        public Waypoint _finalWaypoint = new Waypoint();
 
         public Session(Navigraph graph, Guid startWaypointID, Guid finalWaypointID, int[] avoid)
         {
@@ -77,11 +77,12 @@ namespace IndoorNavigation.Modules
             //therefore, we add different floors' waypoints in same regions
             _subgraph = graph.Regions[0].SetNavigationSubgraph(avoid);
 
+            //Use the ID we get to search where the waypoints are
             Waypoint startWaypoint = _subgraph.Where(node => node.Item.ID.Equals(startWaypointID)).Select(w => w.Item).First();
-            Waypoint finalWaypoint = _subgraph.Where(node => node.Item.ID.Equals(finalWaypointID)).Select(w => w.Item).First();
+            _finalWaypoint = _subgraph.Where(node => node.Item.ID.Equals(finalWaypointID)).Select(w => w.Item).First();
             //Get the best route through dijkstra
-            _allCorrectWaypoint = GetPath(startWaypoint, finalWaypoint, _subgraph);
-            finalwaypointInPath = finalWaypoint;
+            _allCorrectWaypoint = GetPath(startWaypoint, _finalWaypoint, _subgraph);
+            //finalwaypointInPath = finalWaypoint;
         }
 
         private List<Waypoint> GetPath(
@@ -126,29 +127,32 @@ namespace IndoorNavigation.Modules
             return _allCorrectWaypoint;
         }
 
+        //In this function we get the currentwaypoint and determine whether the users are in the right path or not.
+        //And we return a structure called navigationInstruction that contains four elements that Navigation main and UI need.
+        //Moreover, if the users are not on the right path, we reroute and tell users the new path.
         public void DetectRoute(object sender, EventArgs args)
         {
-            Waypoint currentwaypoint = _subgraph.Where(node => node.Item.ID.Equals((args as WaypointScanEventArgs).WaypointID)).Select(w => w.Item).First();
+            Waypoint currentWaypoint = _subgraph.Where(node => node.Item.ID.Equals((args as WaypointScanEventArgs).WaypointID)).Select(w => w.Item).First();
 
             //NavigationInstruction is a structure that contains five elements that need to be passed to the main and UI
             NavigationInstruction navigationInstruction = new NavigationInstruction();
             //getWaypoint is used to check where the current way point is in which place of the Allcorrectwaypoint
             int getWaypoint = 0;
 
-            if (currentwaypoint == finalwaypointInPath)
+            if (currentWaypoint == _finalWaypoint)
             {
                 Event.OnEventCall(new NavigationEventArgs
                 {
                     Result = NavigationResult.Arrival
                 });
             }
-            else if (_allCorrectWaypoint.Contains(currentwaypoint))
+            else if (_allCorrectWaypoint.Contains(currentWaypoint))
             {
                 //Check where the current point is in the AllcorrectWaypoint, we need this information
                 //to get the direction, the progress and the next way point
                 for (int i = 0; i < _allCorrectWaypoint.Count; i++)
                 {
-                    if (_allCorrectWaypoint[i].ID == currentwaypoint.ID)
+                    if (_allCorrectWaypoint[i].ID == currentWaypoint.ID)
                     {
                         getWaypoint = i;
                         break;
@@ -156,11 +160,12 @@ namespace IndoorNavigation.Modules
                 }
                 //Get nextwaypoint
                 navigationInstruction.NextWaypoint = _allCorrectWaypoint[getWaypoint + 1];
-                //If the floor information between the current waypoint and next is different, it means that the users need to change the floor
+
+                //If the floor information between the current waypoint and next are different, it means that the users need to change the floor
                 //therefore, we can determine the users need to go up or down by compare which floor is higher
-                if (currentwaypoint.Floor != _allCorrectWaypoint[getWaypoint + 1].Floor)
+                if (currentWaypoint.Floor != _allCorrectWaypoint[getWaypoint + 1].Floor)
                 {
-                    if (currentwaypoint.Floor > _allCorrectWaypoint[getWaypoint + 1].Floor)
+                    if (currentWaypoint.Floor > _allCorrectWaypoint[getWaypoint + 1].Floor)
                     {
                         navigationInstruction.Direction = TurnDirection.Down;
                     }
@@ -175,18 +180,22 @@ namespace IndoorNavigation.Modules
                 //have three informations, previous, current and next waypoints
                 else
                 {
-                    navigationInstruction.Distance = Navigraph.GetDistance(_subgraph, currentwaypoint, _allCorrectWaypoint[getWaypoint + 1]);
+                    navigationInstruction.Distance = Navigraph.GetDistance(_subgraph, currentWaypoint, _allCorrectWaypoint[getWaypoint + 1]);
                     //getwaypoint=0 means that we are now in the starting point, we do not have the previous waypoint 
+                    //therefore, we give the first point a direction called FirstDirection
                     if (getWaypoint == 0)
                     {
                         navigationInstruction.Direction = TurnDirection.FirstDirection;
                     }
                     else
                     {
-                        navigationInstruction.Direction = Navigraph.GetTurnDirection(_allCorrectWaypoint[getWaypoint - 1], currentwaypoint, _allCorrectWaypoint[getWaypoint + 1]);
+                        navigationInstruction.Direction = Navigraph.GetTurnDirection(_allCorrectWaypoint[getWaypoint - 1], currentWaypoint, _allCorrectWaypoint[getWaypoint + 1]);
                     }
                 }
+
+                //Get the progress
                 navigationInstruction.Progress = (double)Math.Round((decimal)getWaypoint / _allCorrectWaypoint.Count, 3);
+
                 // Raise event to notify the UI/main thread with the result
                 Event.OnEventCall(new NavigationEventArgs
                 {
@@ -194,18 +203,18 @@ namespace IndoorNavigation.Modules
                     NextInstruction = navigationInstruction
                 });
             }
-            else if (_allNoneWrongWaypoint.Contains(currentwaypoint.ID) == false)
+            else if (_allNoneWrongWaypoint.Contains(currentWaypoint.ID) == false)
             {
                 Event.OnEventCall(new NavigationEventArgs
                 {
                     Result = NavigationResult.AdjustRoute
                 });
 
-                //if the waypoint is wrong, we initial the correct waypoint and its neighbors
+                //If the waypoint is wrong, we initial the correct waypoint and its neighbors
                 //and rerun the GetPath function and reget the navigationInstruction
                 _allCorrectWaypoint = new List<Waypoint>();
                 _allNoneWrongWaypoint = new List<Guid>();
-                _allCorrectWaypoint = GetPath(currentwaypoint, finalwaypointInPath, _subgraph);
+                _allCorrectWaypoint = GetPath(currentWaypoint, _finalWaypoint, _subgraph);
 
                 Event.OnEventCall(new NavigationEventArgs
                 {
@@ -213,7 +222,7 @@ namespace IndoorNavigation.Modules
                     NextInstruction = new NavigationInstruction
                     {
                         NextWaypoint = _allCorrectWaypoint[1],
-                        Distance = Navigraph.GetDistance(_subgraph, currentwaypoint, _allCorrectWaypoint[1]),
+                        Distance = Navigraph.GetDistance(_subgraph, currentWaypoint, _allCorrectWaypoint[1]),
                         Progress = 0,
                         Direction = TurnDirection.FirstDirection
                     }
