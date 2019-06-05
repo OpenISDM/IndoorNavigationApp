@@ -12,10 +12,10 @@
  *
  * File Description:
  * 
- *      This class is used to select the route specified by the starting point,
- *      destination, and user preferences. When in navigation, the class will 
- *      give the next waypoint, and when the user is in the wrong way, the 
- *      class will re-route.
+ *      This class is used to select the route specified by the starting
+ *      point, destination, and user preferences. When in navigation,
+ *      the class will give the next waypoint, and when the user is in
+ *      the wrong way, the class will re-route.
  *      
  * Version:
  *
@@ -30,9 +30,9 @@
  *      Waypoint-based navigator is a mobile Bluetooth navigation application
  *      that runs on smart phones. It is structed to support anywhere 
  *      navigation. Indoors in areas covered by different indoor positioning 
- *      system (IPS) and outdoors covered by GPS. In particilar, it can rely on 
- *      BeDIS (Building/environment Data and Information System) for indoor 
- *      positioning. Using this IPS, the navigator does not need to 
+ *      system (IPS) and outdoors covered by GPS. In particilar, it can rely
+ *      on BeDIS (Building/environment Data and Information System) for
+ *      indoor positioning. Using this IPS, the navigator does not need to 
  *      continuously monitor its own position, since the IPS broadcast to the 
  *      navigator the location of each waypoint. 
  *      This version makes use of Xamarin.Forms, which is a complete 
@@ -59,8 +59,10 @@ namespace IndoorNavigation.Modules
         //_allCorrectWaypoint used to store all correct Waypoints
         private List<Waypoint> _allCorrectWaypoint = new List<Waypoint>();
 
-        private Graph<Region, string> _regionGraph=new Graph<Region, string>();
-        private Graph<Waypoint,string> _subgraph=new Graph<Waypoint, string>();
+        private Graph<Region, string> _regionGraph = 
+                                        new Graph<Region, string>();
+        private Graph<Waypoint, string> _subgraph = 
+                                        new Graph<Waypoint, string>();
 
         public Event Event { get; private set; }
 
@@ -118,7 +120,7 @@ namespace IndoorNavigation.Modules
             {
                 _allCorrectWaypoint.Add(subgraph[path.ToList()[i]].Item);
                 _allNoneWrongWaypoint.Add(_allCorrectWaypoint[i].ID);
-                for (int j = 0; j < _allCorrectWaypoint[i].Neighbors.Count;j++)
+                for (int j = 0;j<_allCorrectWaypoint[i].Neighbors.Count;j++)
                 {
                     _allNoneWrongWaypoint.Add(
                     _allCorrectWaypoint[i].Neighbors[j].TargetWaypointUUID);
@@ -156,7 +158,7 @@ namespace IndoorNavigation.Modules
             NavigationInstruction navigationInstruction =
                                             new NavigationInstruction();
             //getWaypoint is used to check where the current way point is in
-            // which place of the Allcorrectwaypoint
+            //which place of the Allcorrectwaypoint
             int getWaypoint = 0;
 
             if (currentWaypoint == _finalWaypoint)
@@ -169,7 +171,7 @@ namespace IndoorNavigation.Modules
             else if (_allCorrectWaypoint.Contains(currentWaypoint))
             {
                 //Check where the current point is in the AllcorrectWaypoint,
-                // we need this informationto get the direction, the progress
+                //we need this informationto get the direction, the progress
                 //and the next way point
                 for (int i = 0; i < _allCorrectWaypoint.Count; i++)
                 {
@@ -202,9 +204,9 @@ namespace IndoorNavigation.Modules
                     navigationInstruction.Distance = 0;
                 }
                 //If the fllor information between current way point and next
-                // way point are the same, we need to tell the user go straight
-                //or turn direction, therefore, we need to have three
-                //informations, previous, current and next waypoints
+                // way point are the same, we need to tell the user go
+                //straight or turn direction, therefore, we need to have
+                //three informations, previous, current and next waypoints
                 else
                 {
                     navigationInstruction.Distance =
@@ -218,7 +220,7 @@ namespace IndoorNavigation.Modules
                     if (getWaypoint == 0)
                     {
                         navigationInstruction.Direction =
-                                                  TurnDirection.FirstDirection;
+                                                TurnDirection.FirstDirection;
                     }
                     else
                     {
@@ -265,10 +267,11 @@ namespace IndoorNavigation.Modules
                     NextInstruction = new NavigationInstruction
                     {
                         NextWaypoint = _allCorrectWaypoint[1],
-                        Distance = Navigraph.GetDistance(_subgraph,
-                                                         currentWaypoint,
-                                                       _allCorrectWaypoint[1]),
-                                                         Progress = 0,
+                        Distance = Navigraph.
+                        GetDistance(_subgraph,
+                                    currentWaypoint,
+                                    _allCorrectWaypoint[1]),
+                        Progress = 0,
                         Direction = TurnDirection.FirstDirection
                     }
                 });
