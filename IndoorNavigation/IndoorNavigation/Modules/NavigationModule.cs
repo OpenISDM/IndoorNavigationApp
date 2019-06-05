@@ -81,16 +81,17 @@ namespace IndoorNavigation.Modules
 
         private void FirstTimeGetWaypoint(EventArgs args)
         {
+            const int falseInt = -100;
             List<int> avoidList = new List<int>();
 
             if (Application.Current.Properties.ContainsKey("AvoidStair"))
             {
-                avoidList.Add((bool)Application.Current.Properties["AvoidStair"] ? (int)ConnectionType.Stair : -100);
-                avoidList.Add((bool)Application.Current.Properties["AvoidElevator"] ? (int)ConnectionType.Elevator : -100);
-                avoidList.Add((bool)Application.Current.Properties["AvoidEscalator"] ? (int)ConnectionType.Escalator : -100);
+                avoidList.Add((bool)Application.Current.Properties["AvoidStair"] ? (int)ConnectionType.Stair : falseInt);
+                avoidList.Add((bool)Application.Current.Properties["AvoidElevator"] ? (int)ConnectionType.Elevator : falseInt);
+                avoidList.Add((bool)Application.Current.Properties["AvoidEscalator"] ? (int)ConnectionType.Escalator : falseInt);
 
                 avoidList = avoidList.Distinct().ToList();
-                avoidList.Remove(-1000);
+                avoidList.Remove(falseInt);
             }
 
             _session = new Session(
