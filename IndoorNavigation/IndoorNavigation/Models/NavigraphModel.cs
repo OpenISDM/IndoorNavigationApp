@@ -29,7 +29,7 @@
  *
  */
 
-///TODO: DUPLICATE
+ // TODO: The following class of Beacon should be combined into NavigationGraph
 
 using System;
 using System.Collections.Generic;
@@ -218,9 +218,10 @@ namespace IndoorNavigation.Models
     }
 
     /// <summary>
+    /// TODO: DEPRECATED
     /// The second level of the navigation graph within two-level hierarchy
     /// </summary>
-    public class Region
+    public class Region_DEPRECATED
     {
         public string Name { get; set; }
         public List<WaypointModelForNavigraphFile> Waypoints { get; set; }
@@ -233,7 +234,7 @@ namespace IndoorNavigation.Models
     public class NaviGraph
     {
         public string Name { get; set; }
-        public List<Region> Regions { get; set; }
+        public List<Region_DEPRECATED> Regions { get; set; }
     }
 
 }

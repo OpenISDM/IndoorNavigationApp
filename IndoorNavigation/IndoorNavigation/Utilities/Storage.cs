@@ -39,25 +39,20 @@
  *
  * Authors:
  *
- *      kenneth@gm.nssh.ntpc.edu.tw
+ *      Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
+ *      Paul Chang, paulchang@iis.sinica.edu.tw
  *      
  */
 
-///TODO: Move to IndoorNavigation/Utilities
-
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml;
 using System.Xml.Serialization;
-using IndoorNavigation.Models;
 using IndoorNavigation.Models.NavigaionLayer;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 
-namespace IndoorNavigation.Modules
+namespace IndoorNavigation.Modules.Utilities
 {
     /// <summary>
     /// This class provides the fast method to load and save data in local 
@@ -93,44 +88,44 @@ namespace IndoorNavigation.Modules
         /// </summary>
         /// <param name="Place"></param>
         /// <returns></returns>
-        public static bool LoadNavigraph(string Place)
-        {
-            try
-            {
-                // Convert corresponding data of LBeacon
-                List<NaviGraph> naviGraphs = JsonConvert
-                    .DeserializeObject<List<NaviGraph>>(LoadFile(Place));
+        //public static bool LoadNavigraph(string Place)
+        //{
+        //    try
+        //    {
+        //        // Convert corresponding data of LBeacon
+        //        List<NaviGraph> naviGraphs = JsonConvert
+        //            .DeserializeObject<List<NaviGraph>>(LoadFile(Place));
 
-                List<Models.Region> regions = naviGraphs
-                    .SelectMany(naviGraph => naviGraph.Regions)
-                    .ToList();
+        //        List<Region> regions = naviGraphs
+        //            .SelectMany(naviGraph => naviGraph.Regions)
+        //            .ToList();
 
-                Utility.BeaconsDict = 
-                    regions.SelectMany(region => region.LBeacons)
-                        .Select(Lbeacon => Lbeacon as Beacon)
-                        .ToDictionary(beacon => beacon.UUID);
+        //        Utility.BeaconsDict = 
+        //            regions.SelectMany(region => region.LBeacons)
+        //                .Select(Lbeacon => Lbeacon as Beacon)
+        //                .ToDictionary(beacon => beacon.UUID);
 
-                Utility.Waypoints = 
-                    regions.SelectMany(region => region.Waypoints)
-                        .Select(waypoint => new WaypointModel
-                        {
-                            Id = waypoint.Id,
-                            Name = waypoint.Name,
-                            Beacons = Utility.BeaconsDict.Values
-                                .Where(beacon => waypoint.Beacons
-                                                    .Contains(beacon.UUID))
-                                .Select(Lbeacon => Lbeacon as Beacon).ToList()
-                        }).ToList();
+        //        Utility.Waypoints = 
+        //            regions.SelectMany(region => region.Waypoints)
+        //                .Select(waypoint => new WaypointModel
+        //                {
+        //                    Id = waypoint.Id,
+        //                    Name = waypoint.Name,
+        //                    Beacons = Utility.BeaconsDict.Values
+        //                        .Where(beacon => waypoint.Beacons
+        //                                            .Contains(beacon.UUID))
+        //                        .Select(Lbeacon => Lbeacon as Beacon).ToList()
+        //                }).ToList();
 
-                Utility.LocationConnects = regions.SelectMany(region => region.Waypoints).SelectMany(waypointNavigraphFile => waypointNavigraphFile.Neighbors.Select(neighbor => new LocationConnectModel { Target = neighbor.Target, SourceWaypoint = Utility.Waypoints.First(waypoint => waypoint.Id == waypointNavigraphFile.Id), TargetWaypoint = Utility.Waypoints.First(waypoint => waypoint.Id == neighbor.TargetWaypointId) })).ToList();
+        //        Utility.LocationConnects = regions.SelectMany(region => region.Waypoints).SelectMany(waypointNavigraphFile => waypointNavigraphFile.Neighbors.Select(neighbor => new LocationConnectModel { Target = neighbor.Target, SourceWaypoint = Utility.Waypoints.First(waypoint => waypoint.Id == waypointNavigraphFile.Id), TargetWaypoint = Utility.Waypoints.First(waypoint => waypoint.Id == neighbor.TargetWaypointId) })).ToList();
 
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
+        //        return true;
+        //    }
+        //    catch
+        //    {
+        //        return false;
+        //    }
+        //}
 
         /// <summary>
         /// Loads the navigraph XML from the specified file name.

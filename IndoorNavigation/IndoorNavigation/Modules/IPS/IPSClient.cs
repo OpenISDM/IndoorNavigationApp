@@ -46,7 +46,7 @@ using IndoorNavigation.Models;
 
 namespace IndoorNavigation.Modules.IPS
 {
-    class IPSClient:IIPSClient
+    class IPSClient : IIPSClient
     {
         //this List is used to save the beacons we want
         private List<Beacon> BeaconList;
@@ -54,6 +54,7 @@ namespace IndoorNavigation.Modules.IPS
         public List<BeaconSignalModel> beaconSignalBuffer = new List<BeaconSignalModel>();
         private readonly EventHandler HBeaconScan;
         private object bufferLock = new object();
+
         public IPSClient()
         {
             HBeaconScan = new EventHandler(HandleBeaconScan);
@@ -61,7 +62,7 @@ namespace IndoorNavigation.Modules.IPS
         }
 
         //set the list of beacons we want
-        public void setBeaconList(List<Beacon> BeaconList)
+        public void SetBeaconList(List<Beacon> BeaconList)
         {
             if (BeaconList != null)
                 this.BeaconList = BeaconList;
@@ -161,6 +162,7 @@ namespace IndoorNavigation.Modules.IPS
             else
                 return null;
         }
+
         private void HandleBeaconScan(object sender, EventArgs e)
         {
             // Beacon signal filter, keeps the Beacon's signal recorded in

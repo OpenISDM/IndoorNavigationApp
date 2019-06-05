@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using IndoorNavigation.Modules;
+using IndoorNavigation.Modules.Utilities;
 using IndoorNavigation.Views.Settings;
 using MvvmHelpers;
 using Xamarin.Forms;
@@ -36,7 +35,8 @@ namespace IndoorNavigation.ViewModels
             else
             {
                 Page mainPage = Application.Current.MainPage;
-                await mainPage.DisplayAlert("Let's go to download the graph", "You should download the navigation graph first", "OK");
+                await mainPage.DisplayAlert("Let's go to download the graph", 
+                    "You should download the navigation graph first", "OK");
                 await mainPage.Navigation.PushAsync(new SettingTableViewPage());
             }
         }
@@ -49,7 +49,6 @@ namespace IndoorNavigation.ViewModels
                         orderby location.UserNaming[0]
                         select location).ToList();
             }
-
             set
             {
                 SetProperty(ref returnedLocations, value);

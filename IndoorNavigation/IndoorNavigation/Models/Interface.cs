@@ -36,6 +36,8 @@
  * Authors:
  *
  *      Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
+ *      Paul Chang, paulchang@iis.sinica.edu.tw
+ *      m10717004@yuntech.edu.tw
  *
  */
 using GeoCoordinatePortable;
@@ -121,7 +123,7 @@ namespace IndoorNavigation.Models
 
     #endregion
 
-    #region Interface for connecting iOS project and Android project
+    #region Interface for connecting both iOS project and Android project
 
     /// <summary>
     /// The interface with beacon scan module
@@ -168,7 +170,7 @@ namespace IndoorNavigation.Models
     public interface IIPSClient
     {
         Beacon SignalProcessing();
-        void setBeaconList(List<Beacon> BeaconList);
+        void SetBeaconList(List<Beacon> BeaconList);
         void Stop();
     }
     #endregion

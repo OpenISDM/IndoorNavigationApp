@@ -6,8 +6,8 @@ using MvvmHelpers;
 using IndoorNavigation.Modules;
 using IndoorNavigation.Models.NavigaionLayer;
 using System.Linq;
-using Region = IndoorNavigation.Models.NavigaionLayer.Region;
 using System.Diagnostics;
+using IndoorNavigation.Modules.Utilities;
 
 namespace IndoorNavigation.Views.Navigation
 {

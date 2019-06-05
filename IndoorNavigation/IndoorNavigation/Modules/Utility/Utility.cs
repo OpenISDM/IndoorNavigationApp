@@ -42,8 +42,6 @@
  *      
  */
 
-///TODO: DUPLICATE
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -54,6 +52,7 @@ using System.Security.Cryptography.X509Certificates;
 using GeoCoordinatePortable;
 using IndoorNavigation.Models;
 using IndoorNavigation.Modules.Navigation;
+using IndoorNavigation.Modules.Utilities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 

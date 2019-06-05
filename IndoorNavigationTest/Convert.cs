@@ -27,11 +27,11 @@ namespace IndoorNavigationTest
             NaviGraph naviGraph = new NaviGraph();
             naviGraph.Name = "中研院";
 
-            List<Region> regions = new List<Region>();
+            List<Region_DEPRECATED> regions = new List<Region_DEPRECATED>();
             foreach (float floor in BeaconGroups.Select(c => c.Floor).Distinct())
             {
                 
-                Region region = new Region()
+                Region_DEPRECATED region = new Region_DEPRECATED()
                 {
                     Name = string.Format("{0}F", Convert.ToInt32(floor)),
                     LBeacons = Beacons.Where(c => c.Floor == floor).ToList(),

@@ -37,6 +37,8 @@
  *      cross-platform UI tookit that runs on both iOS and Android.
  *
  * Authors:
+ * 
+ *      Paul Chang, paulchang@iis.sinica.edu.tw
  *
  */
 using System;
@@ -45,16 +47,16 @@ using IndoorNavigation.Modules.Navigation;
 using System.Collections.Generic;
 using Xamarin.Forms;
 using System.Linq;
+using IndoorNavigation.Modules.Utilities;
 
 namespace IndoorNavigation.Modules
 {
     public class NavigationModule : IDisposable
     {
-        private bool _isFirstTimeGetWaypoint;
-
         private IPSModule _IPSmodule;
         private Session _session;
 
+        private bool _isFirstTimeGetWaypoint;
         private string _navigraphName;
         private Guid _destinationID;
 
@@ -79,21 +81,32 @@ namespace IndoorNavigation.Modules
             _destinationID = destinationID;
         }
 
-        private void FirstTimeGetWaypoint(EventArgs args)
+        /// <summary>
+        /// If it is the first time to get waypoint then get the value of 
+        /// route options and start the corresponding session.
+        /// </summary>
+        private void StartSession(EventArgs args)
         {
             const int falseInt = -100;
             List<int> avoidList = new List<int>();
 
             if (Application.Current.Properties.ContainsKey("AvoidStair"))
             {
-                avoidList.Add((bool)Application.Current.Properties["AvoidStair"] ? (int)ConnectionType.Stair : falseInt);
-                avoidList.Add((bool)Application.Current.Properties["AvoidElevator"] ? (int)ConnectionType.Elevator : falseInt);
-                avoidList.Add((bool)Application.Current.Properties["AvoidEscalator"] ? (int)ConnectionType.Escalator : falseInt);
+                avoidList.Add(
+                        (bool)Application.Current.Properties["AvoidStair"] ?
+                        (int)ConnectionType.Stair : falseInt);
+                avoidList.Add(
+                        (bool)Application.Current.Properties["AvoidElevator"] ?
+                        (int)ConnectionType.Elevator : falseInt);
+                avoidList.Add(
+                        (bool)Application.Current.Properties["AvoidEscalator"] ?
+                        (int)ConnectionType.Escalator : falseInt);
 
                 avoidList = avoidList.Distinct().ToList();
                 avoidList.Remove(falseInt);
             }
 
+            // Start the session
             _session = new Session(
                     NavigraphStorage.LoadNavigraphXML(_navigraphName),
                     (args as WaypointScanEventArgs).WaypointID,
@@ -102,29 +115,33 @@ namespace IndoorNavigation.Modules
 
             _navigationResultHandler = new EventHandler(HandleNavigationResult);
             _session.Event.SessionResultHandler += _navigationResultHandler;
-
             WaypointEvent.CurrentWaypointEventHandler += _session.DetectRoute;
         }
 
-        // Get current waypoint and raise event to notify the session
+        /// <summary>
+        /// Get the current waypoint and raise event to notify the session
+        /// </summary>
         public void HandleCurrentWaypoint(object sender, EventArgs args)
         {
             if (_isFirstTimeGetWaypoint)
             {
-                FirstTimeGetWaypoint(args);
+                StartSession(args);
                 _isFirstTimeGetWaypoint = false;
             }
 
             WaypointEvent.OnEventCall(args);
         }
 
+        /// <summary>
+        /// Get the navigation result from the session and 
+        /// raise event to notify the NavigatorPageViewModel.
+        /// </summary>
         private void HandleNavigationResult(object sender, EventArgs args)
         {
-            // get the navigation result from the session and raise event to notify the NavigatorPageViewModel
             NavigationEvent.OnEventCall(args);
         }
 
-        public void CloseNavigationModule()
+        public void CloseModule()
         {
             Dispose();
         }
@@ -138,31 +155,23 @@ namespace IndoorNavigation.Modules
             {
                 if (disposing)
                 {
-                    // TODO: dispose managed state (managed objects).
-                    //IPSModule.Event.WaypointHandler -= CurrentWaypointHandler;
-                    _session.Event.SessionResultHandler -= _navigationResultHandler;
+                    // Dispose managed state (managed objects).
                 }
-                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
-                // TODO: set large fields to null.
+                // Free unmanaged resources (unmanaged objects) and override a finalizer below.
+                // Set large fields to null.
+                //IPSModule.Event.WaypointHandler -= CurrentWaypointHandler;
+                _session.Event.SessionResultHandler -= _navigationResultHandler;
+                WaypointEvent.CurrentWaypointEventHandler -= _session.DetectRoute;
 
                 disposedValue = true;
             }
         }
 
-        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
-        // ~NavigationModule()
-        // {
-        //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-        //   Dispose(false);
-        // }
-
         // This code added to correctly implement the disposable pattern.
         public void Dispose()
         {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
             Dispose(true);
-            // TODO: uncomment the following line if the finalizer is overridden above.
-            // GC.SuppressFinalize(this);
+            GC.SuppressFinalize(this);
         }
         #endregion
     }

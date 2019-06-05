@@ -94,7 +94,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                     break;
 
                 case TurnDirection.Forward:
-                    stepLabel = string.Format("請向前方的&#10;{0}&#10;直走", instruction.NextWaypoint.Name);
+                    stepLabel = string.Format("請向前方的\n{0}\n直走", instruction.NextWaypoint.Name);
                     stepImage = "Arrow_up";
                     break;
 

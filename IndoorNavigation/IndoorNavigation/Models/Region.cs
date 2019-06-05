@@ -38,16 +38,103 @@
  *      cross-platform UI tookit that runs on both iOS and Android.
  *
  * Authors:
- *
+ * 
+ *      Paul Chang, paulchang@iis.sinica.edu.tw
+ *      Eric Lee, ericlee@iis.sinica.edu.tw
  *
  */
+
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Xml.Serialization;
+using Dijkstra.NET.Model;
+using IndoorNavigation.Models.NavigaionLayer;
 
 namespace IndoorNavigation.Models
 {
-    //class Region
-    //{
-    //}
+    /// <summary>
+    /// The second level of the navigation graph within two-level hierarchy
+    /// </summary>
+    public class Region
+    {
+        /// <summary>
+        /// Gets or sets the name of Region.
+        /// e.g. 1F of NTUH
+        /// </summary>
+        [XmlElement("Name")]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// The list of waypoint objects (nodes)
+        /// </summary>
+        [XmlArray("Waypoints")]
+        [XmlArrayItem("Waypoint", typeof(Waypoint))]
+        public List<Waypoint> Waypoints { get; set; }
+
+        /// <summary>
+        /// Connection between waypoints (edges)
+        /// </summary>
+        [XmlArray("Edges")]
+        [XmlArrayItem("Edge", typeof(Edge))]
+        public List<Edge> Edges { get; set; }
+
+        /// <summary>
+        /// The navigation subgraph
+        /// </summary>
+        [XmlIgnore]
+        public Graph<Waypoint, string> NavigationSubgraph =
+                new Graph<Waypoint, string>();
+
+        /// <summary>
+        /// Initializes a navigation subgraph of the Region and combine all the
+        /// waypoints and edges to NavigationSubgraph
+        /// </summary>
+        public Graph<Waypoint, string> GetNavigationSubgraph(int[] avoid)
+        {
+
+            // Add all the waypoints of each region into region graph
+            foreach (Waypoint waypoint in Waypoints)
+            {
+                NavigationSubgraph.AddNode(waypoint);
+            }
+
+            // Set each path into region graph
+            foreach (Edge edge in Edges)
+            {
+                int distance = System.Convert.ToInt32(edge.Distance);
+
+                // In connectiontye: 
+                // 0 is hall, 1 is stair, 2 is elevator, 3 is escalator
+                int type = (int)edge.ConnectionType;
+
+                for (int i = 0; i < avoid.Count(); i++)
+                {
+                    //find the method the user do not like and add its cost
+                    if (type != (int)ConnectionType.NormalHallway && 
+                        type == avoid[i])
+                    {
+                        distance += 100;
+                        break;
+                    }
+                }
+
+                // Get two connected waypoints's key value
+                uint sourceWaypointKey = NavigationSubgraph.Where(waypoint =>
+                        waypoint.Item.ID.Equals(edge.SourceWaypointUUID))
+                        .Select(waypoint => waypoint.Key).First();
+                uint targetWaypointKey = NavigationSubgraph.Where(waypoint =>
+                        waypoint.Item.ID.Equals(edge.TargetWaypointUUID))
+                        .Select(waypoint => waypoint.Key).First();
+
+                // Connect the waypoints
+                NavigationSubgraph.Connect(sourceWaypointKey, targetWaypointKey,
+                        distance, string.Empty);
+            }
+
+            return NavigationSubgraph;
+        }
+    }
+
 }

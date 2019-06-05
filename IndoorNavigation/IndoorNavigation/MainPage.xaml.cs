@@ -15,6 +15,7 @@ using System.Resources;
 using IndoorNavigation.Resources.Helpers;
 using System.Reflection;
 using IndoorNavigation.Modules;
+using IndoorNavigation.Modules.Utilities;
 
 namespace IndoorNavigation
 {

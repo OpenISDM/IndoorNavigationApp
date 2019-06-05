@@ -17,6 +17,7 @@ using System.Globalization;
 using Plugin.Permissions.Abstractions;
 using Plugin.Permissions;
 using System.Diagnostics;
+using IndoorNavigation.Modules.Utilities;
 
 namespace IndoorNavigation.Views.Settings
 {

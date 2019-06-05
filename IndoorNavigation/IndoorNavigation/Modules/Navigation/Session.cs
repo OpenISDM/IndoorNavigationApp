@@ -40,15 +40,17 @@
  *
  * Authors:
  *
+ *      Eric Lee, ericlee@iis.sinica.edu.tw
  *
  */
+
 using System;
 using System.Linq;
 using System.Collections.Generic;
 using Dijkstra.NET.Model;
 using Dijkstra.NET.Extensions;
 using IndoorNavigation.Models.NavigaionLayer;
-using Region = IndoorNavigation.Models.NavigaionLayer.Region;
+using IndoorNavigation.Models;
 
 namespace IndoorNavigation.Modules
 {
@@ -75,7 +77,7 @@ namespace IndoorNavigation.Modules
             _regionGraph = graph.GetRegiongraph();
             //We only consider to one region situation,
             //therefore, we add different floors' waypoints in same regions
-            _subgraph = graph.Regions[0].SetNavigationSubgraph(avoid);
+            _subgraph = graph.Regions[0].GetNavigationSubgraph(avoid);
 
             //Use the ID we get to search where the waypoints are
             Waypoint startWaypoint = _subgraph.Where(node => node.Item.ID.Equals(startWaypointID)).Select(w => w.Item).First();
