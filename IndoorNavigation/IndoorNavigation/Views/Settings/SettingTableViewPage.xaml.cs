@@ -63,6 +63,9 @@ using Plugin.Permissions.Abstractions;
 using Plugin.Permissions;
 using System.Diagnostics;
 using IndoorNavigation.Modules.Utilities;
+using System.Resources;
+using IndoorNavigation.Resources.Helpers;
+using System.Reflection;
 
 namespace IndoorNavigation.Views.Settings
 {
@@ -79,6 +82,9 @@ namespace IndoorNavigation.Views.Settings
         public ICommand CleanMapCommand => new DelegateCommand(async () => { await HandleCLeanMapAsync(); });
         public ICommand ChangeLanguageCommand => new DelegateCommand(HandleChangeLanguage);
 
+        const string ResourceId = "IndoorNavigation.Resources.AppResources";
+        ResourceManager resmgr = new ResourceManager(ResourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+
         public SettingTableViewPage()
         {
             InitializeComponent();
@@ -92,12 +98,13 @@ namespace IndoorNavigation.Views.Settings
 
             ReloadNaviGraphItems();
 
-            LanguageItems.Add("Chinese");
-            LanguageItems.Add("English");
+            var ci = CrossMultilingual.Current.CurrentCultureInfo;
+            LanguageItems.Add(resmgr.GetString("Chinese", ci));
+            LanguageItems.Add(resmgr.GetString("English", ci));
 
             if (Application.Current.Properties.ContainsKey("LanguagePicker"))
             {
-                LanguagePicker.SelectedItem = Application.Current.Properties["LanguagePicker"];
+                LanguagePicker.SelectedItem = Application.Current.Properties["LanguagePicker"].ToString();
             }
         }
 
@@ -172,9 +179,6 @@ namespace IndoorNavigation.Views.Settings
             CleanNaviGraphItems.Clear();
             CleanNaviGraphItems.Add("--全部--");
 
-            if (Utility.Waypoints == null)
-                //MapPicker.SelectedItem = "--請選擇圖資--";
-
             foreach (var naviGraphName in NavigraphStorage.GetAllNavigraphs())
             {
                 SelectNaviGraphItems.Add(naviGraphName);
@@ -211,30 +215,15 @@ namespace IndoorNavigation.Views.Settings
             ReloadNaviGraphItems();
         }
 
-        //private void HandleSelectedMap()
-        //{
-        //    if (MapPicker.SelectedItem.ToString() == "--請選擇圖資--")
-        //    {
-        //        // 移除已經載入的地圖資訊
-        //        Utility.Waypoints = null;
-        //        Utility.WaypointRoute = null;
-        //        Utility.BeaconsDict = null;
-        //        Utility.LocationConnects = null;
-        //    }
-        //    else
-        //    {
-        //        if (!NavigraphStorage.LoadNavigraph(MapPicker.SelectedItem.ToString()))
-        //            MapPicker.SelectedItem = "--請選擇圖資--";
-        //    }
-        //}
-
         private async void HandleChangeLanguage()
         {
             switch (LanguagePicker.SelectedItem.ToString())
             {
+                case "英文":
                 case "English":
                     CrossMultilingual.Current.CurrentCultureInfo = new CultureInfo("en");
                     break;
+                case "中文":
                 case "Chinese":
                     CrossMultilingual.Current.CurrentCultureInfo = new CultureInfo("zh");
                     break;
@@ -253,7 +242,22 @@ namespace IndoorNavigation.Views.Settings
             {
                 Device.BeginInvokeOnMainThread(async () =>
                 {
-                    Application.Current.Properties["LanguagePicker"] = LanguagePicker.SelectedItem;
+                    var ci = CrossMultilingual.Current.CurrentCultureInfo;
+                    var languageSelected = "";
+
+                    switch (LanguagePicker.SelectedItem.ToString())
+                    {
+                        case "英文":
+                        case "English":
+                            languageSelected = resmgr.GetString("English", ci);
+                            break;
+                        case "中文":
+                        case "Chinese":
+                            languageSelected = resmgr.GetString("Chinese", ci);
+                            break;
+                    }
+
+                    Application.Current.Properties["LanguagePicker"] = languageSelected;
 
                     await Application.Current.SavePropertiesAsync();
                 });

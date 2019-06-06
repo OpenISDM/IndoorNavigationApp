@@ -51,6 +51,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using IndoorNavigation.Models.NavigaionLayer;
 using System.Diagnostics;
+using System.Net;
 
 namespace IndoorNavigation.Modules.Utilities
 {
@@ -66,6 +67,26 @@ namespace IndoorNavigation.Modules.Utilities
                     "Navigraph");
 
         private static object fileLock = new object();
+
+        public static bool DownloadNavigraph(string URL, string navigraphName)
+        {
+            string filePath = Path.Combine(navigraphFolder, navigraphName);
+
+            try
+            {
+                if (!Directory.Exists(navigraphFolder))
+                    Directory.CreateDirectory(navigraphFolder);
+
+                using (WebClient webClient = new WebClient())
+                    webClient.DownloadFileAsync(new Uri(URL), filePath);
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
 
         /// <summary>
         /// This method returns the name of all the locations.

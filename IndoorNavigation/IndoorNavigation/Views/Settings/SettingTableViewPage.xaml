@@ -13,7 +13,6 @@
             <Color x:Key="AccentColor">#3F51B5</Color>
             <Color x:Key="DisabledColor">#E6DAB9</Color>
             <Color x:Key="TitleTextColor">#3F51B5</Color>
-            <!--Color x:Key="PaleBackColorPrimary"></Color-->
             <Color x:Key="PaleBackColorSecondary">#F2EDDA</Color>
             <Color x:Key="DeepTextColor">#000</Color>
             <Color x:Key="NormalTextColor">#666666</Color>
@@ -26,8 +25,6 @@
 
             <Style TargetType="sv:SettingsView">
                 <Setter Property="SeparatorColor" Value="{StaticResource DisabledColor}" />
-                <!--Setter Property="BackgroundColor" Value="{StaticResource PaleBackColorPrimary}" /-->
-                <!--Setter Property="HeaderBackgroundColor" Value="{StaticResource PaleBackColorPrimary}" /-->
                 <Setter Property="CellBackgroundColor" Value="{StaticResource AppBackground}" />
                 <Setter Property="CellTitleColor" Value="{StaticResource DeepTextColor}" />
                 <Setter Property="CellValueTextColor" Value="{StaticResource NormalTextColor}" />
@@ -49,25 +46,27 @@
         
         <sv:SettingsView HasUnevenRows="true">
     
-            <sv:Section Title="Setting">
+            <sv:Section Title="{i18n:Translate Setting}">
                 <sv:CommandCell IconSource="icon.png" IconSize="60,60"
-                                Title="BeDIS Xamarin" Description="openISDM@sinica.com"/>
-                <!--<sv:LabelCell Title="圖資名稱" ValueText="OpenHouse" />-->
-                <!--<sv:TextPickerCell x:Name="MapPicker" Title="選擇圖資" Items="{Binding SelectNaviGraphItems}" SelectedCommand="{Binding SelectedMapCommand}"/>-->
-                <sv:CommandCell x:Name="DownloadMapButton" Title="下載圖資" Tapped="DownloadGraphBtn_Tapped"/>
-                <sv:TextPickerCell x:Name="CleanMapPicker" Title="清除圖資" Items="{Binding CleanNaviGraphItems}" SelectedCommand="{Binding CleanMapCommand}"/>
-                <sv:CommandCell x:Name="SpeechTestButton" Title="語音測試" Tapped="SpeechTestBtn_Tapped"/>
-                <sv:TextPickerCell x:Name="LanguagePicker" Title="更改語言" Items="{Binding LanguageItems}" SelectedCommand="{Binding ChangeLanguageCommand}"/>
+                                Title="BeDI" Description="openISDM@sinica.com"/>
+                <sv:CommandCell x:Name="DownloadMapButton" Title="{i18n:Translate DownloadNavigraph}" 
+                                Tapped="DownloadGraphBtn_Tapped"/>
+                <sv:TextPickerCell x:Name="CleanMapPicker" Title="{i18n:Translate DeleteNavigraph}" 
+                                   Items="{Binding CleanNaviGraphItems}" SelectedCommand="{Binding CleanMapCommand}"/>
+                <sv:CommandCell x:Name="SpeechTestButton" Title="{i18n:Translate VoiceTest}" 
+                                Tapped="SpeechTestBtn_Tapped"/>
+                <sv:TextPickerCell x:Name="LanguagePicker" Title="{i18n:Translate ChangeLanguage}" 
+                                   Items="{Binding LanguageItems}" SelectedCommand="{Binding ChangeLanguageCommand}"/>
             </sv:Section>
 
-            <sv:Section Title="License">
-                    <sv:CommandCell x:Name="LicenseButton" Title="版權聲明" Tapped="LicenseBtn_Tapped"/>
-                    <sv:CommandCell Title="隱私權保護政策"/>
+            <sv:Section Title="{i18n:Translate LicenseAndPrivacy}">
+                    <sv:CommandCell x:Name="LicenseButton" Title="{i18n:Translate License}" Tapped="LicenseBtn_Tapped"/>
+                    <sv:CommandCell Title="{i18n:Translate Privacy}"/>
             </sv:Section>
                 
-            <sv:Section Title="Other">
-                    <sv:CommandCell Title="意見回饋與功能許願池"/>
-                    <sv:CommandCell Title="關於 BeDIS"/>
+            <sv:Section Title="{i18n:Translate Others}">
+                    <sv:CommandCell Title="{i18n:Translate Feedback}"/>
+                    <sv:CommandCell Title="{i18n:Translate AboutBeDI}"/>
             </sv:Section>
         
         </sv:SettingsView>

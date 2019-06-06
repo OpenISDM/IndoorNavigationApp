@@ -101,8 +101,6 @@ namespace IndoorNavigation
             Utility.BeaconScan = DependencyService.Get<IBeaconScan>();
             Utility.TextToSpeech = DependencyService.Get<ITextToSpeech>();
             //Utility.SignalProcess = new SignalProcessModule();
-            //Utility.MaN = new MaNModule();
-            //Utility.IPS = new IPSModule();
         }
 
         protected override void OnSleep()

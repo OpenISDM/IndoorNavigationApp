@@ -60,8 +60,6 @@ namespace IndoorNavigation.Views.Navigation
         {
             InitializeComponent();
 
-            VoiceSearchItems.Add("日文");
-
             switch (Device.RuntimePlatform)
             {
                 case Device.Android:

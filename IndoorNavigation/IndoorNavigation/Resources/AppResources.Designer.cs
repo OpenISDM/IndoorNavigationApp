@@ -77,6 +77,24 @@ namespace IndoorNavigation.Resources {
             }
         }
         
+        internal static string DownloadNavigraph {
+            get {
+                return ResourceManager.GetString("DownloadNavigraph", resourceCulture);
+            }
+        }
+        
+        internal static string DeleteNavigraph {
+            get {
+                return ResourceManager.GetString("DeleteNavigraph", resourceCulture);
+            }
+        }
+        
+        internal static string VoiceTest {
+            get {
+                return ResourceManager.GetString("VoiceTest", resourceCulture);
+            }
+        }
+        
         internal static string ChangeLanguage {
             get {
                 return ResourceManager.GetString("ChangeLanguage", resourceCulture);
@@ -101,9 +119,45 @@ namespace IndoorNavigation.Resources {
             }
         }
         
-        internal static string Save {
+        internal static string LicenseAndPrivacy {
             get {
-                return ResourceManager.GetString("Save", resourceCulture);
+                return ResourceManager.GetString("LicenseAndPrivacy", resourceCulture);
+            }
+        }
+        
+        internal static string License {
+            get {
+                return ResourceManager.GetString("License", resourceCulture);
+            }
+        }
+        
+        internal static string Privacy {
+            get {
+                return ResourceManager.GetString("Privacy", resourceCulture);
+            }
+        }
+        
+        internal static string Others {
+            get {
+                return ResourceManager.GetString("Others", resourceCulture);
+            }
+        }
+        
+        internal static string Feedback {
+            get {
+                return ResourceManager.GetString("Feedback", resourceCulture);
+            }
+        }
+        
+        internal static string AboutBeDI {
+            get {
+                return ResourceManager.GetString("AboutBeDI", resourceCulture);
+            }
+        }
+        
+        internal static string More {
+            get {
+                return ResourceManager.GetString("More", resourceCulture);
             }
         }
     }

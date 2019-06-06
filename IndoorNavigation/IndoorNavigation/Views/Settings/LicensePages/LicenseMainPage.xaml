@@ -51,8 +51,6 @@
             <sv:Section>
                 <sv:CommandCell Title="BeDIS"/>
                 <sv:CommandCell Title="Icons" Tapped="IconsLicenseBtn_Tapped"/>
-                <sv:CommandCell Title="Charts"/>
-                <sv:CommandCell Title="Firebase"/>
                 <sv:CommandCell Title="..."/>
             </sv:Section>
         
