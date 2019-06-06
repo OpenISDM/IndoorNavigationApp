@@ -12,9 +12,16 @@
  *
  * File Description:
  * 
- *      This model contains two nest classes: Navigraph class and RegionGraph 
- *      class. Navigraph class in a nest class that defines the structure of 
- *      navigation sub-graphs of a region. Every region has a Navigraph object.
+ *      This model contains nest class: Navigraph class and also contains
+ *      classes of Waypoint, Neighbor and Edge/Connection which as 
+ *      the XML element.
+ *      Navigraph class in a nest class that defines the structure of
+ *      navigation sub-graphs of a region, and this class also has the method
+ *      to get RegionGraph.
+ *      
+ * Version:
+ *
+ *      1.0.0, 20190605
  * 
  * File Name:
  *
@@ -37,6 +44,7 @@
  * Authors:
  *
  *      Paul Chang, paulchang@iis.sinica.edu.tw
+ *      Eric Lee, ericlee@iis.sinica.edu.tw
  *
  */
 using System;

@@ -1,4 +1,49 @@
-﻿using System.Collections.Generic;
+﻿/*
+ * Copyright (c) 2018 Academia Sinica, Institude of Information Science
+ *
+ * License:
+ *      GPL 3.0 : The content of this file is subject to the terms and
+ *      conditions defined in file 'COPYING.txt', which is part of this source
+ *      code package.
+ *
+ * Project Name:
+ *
+ *      IndoorNavigation
+ *
+ * File Description:
+ * 
+ *      This view model implements properties and commands for MainPage
+ *      can bind the data.
+ *      It will display the list of locations according to the Navigation 
+ *      graph in phone's storage which user has downloaded.
+ *      
+ * Version:
+ *
+ *      1.0.0, 20190605
+ * 
+ * File Name:
+ *
+ *      MainPageViewModel.cs
+ *
+ * Abstract:
+ *
+ *      Waypoint-based navigator is a mobile Bluetooth navigation application
+ *      that runs on smart phones. It is structed to support anywhere 
+ *      navigation. Indoors in areas covered by different indoor positioning 
+ *      system (IPS) and outdoors covered by GPS.In particilar, it can rely on
+ *      BeDIS (Building/environment Data and Information System) for indoor 
+ *      positioning. Using this IPS, the navigator does not need to 
+ *      continuously monitor its own position, since the IPS broadcast to the
+ *      navigator the location of each waypoint. 
+ *      This version makes use of Xamarin.Forms, which is a complete 
+ *      cross-platform UI tookit that runs on both iOS and Android.
+ *
+ * Authors:
+ *
+ *      Paul Chang, paulchang@iis.sinica.edu.tw
+ *      
+ */
+using System.Collections.Generic;
 using System.Linq;
 using IndoorNavigation.Modules.Utilities;
 using IndoorNavigation.Views.Settings;
@@ -10,7 +55,7 @@ namespace IndoorNavigation.ViewModels
     public class MainPageViewModel : BaseViewModel
     {
         private ObservableRangeCollection<Location> locations;
-        //Locations used by search method
+        // IEnumerable of Locations which used by search method
         private IEnumerable<Location> returnedLocations;
 
         public MainPageViewModel()
@@ -35,7 +80,7 @@ namespace IndoorNavigation.ViewModels
             else
             {
                 Page mainPage = Application.Current.MainPage;
-                await mainPage.DisplayAlert("Let's go to download the graph", 
+                await mainPage.DisplayAlert("Go to the Setting page",
                     "You should download the navigation graph first", "OK");
                 await mainPage.Navigation.PushAsync(new SettingTableViewPage());
             }
@@ -86,7 +131,7 @@ namespace IndoorNavigation.ViewModels
                 searchedText = value;
                 OnPropertyChanged("SearchedText");
 
-                //search waypoints
+                // Search waypoints
                 var searchedWaypoints = string.IsNullOrEmpty(value) ?
                                         locations : locations
                                         .Where(c => c.UserNaming.Contains(value));

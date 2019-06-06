@@ -135,6 +135,9 @@ namespace IndoorNavigation.Models
 
             return NavigationSubgraph;
         }
+
+        // TODO: Add methods for accessing data on IPS resources and 
+        // other data on the region.
     }
 
 }
