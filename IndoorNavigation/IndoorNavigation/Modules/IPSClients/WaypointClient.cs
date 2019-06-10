@@ -16,7 +16,7 @@
  *      
  * Version:
  *
- *      1.0.0-beta.1, 20190530
+ *      1.0.0, 201906
  * 
  * File Name:
  *
@@ -37,44 +37,51 @@
  *
  * Authors:
  *
+ *      Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
+ *      Paul Chang, paulchang@iis.sinica.edu.tw
+ *      m10717004@yuntech.edu.tw
+ *
  */
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Collections.Generic;
 using IndoorNavigation.Models;
 
-namespace IndoorNavigation.Modules.IPS
+namespace IndoorNavigation.Modules.IPSClients
 {
-    class IPSClient : IIPSClient
+    class WaypointClient : IIPSClient
     {
         //this List is used to save the beacons we want
-        private List<Beacon> BeaconList;
-
-        public List<BeaconSignalModel> beaconSignalBuffer = new List<BeaconSignalModel>();
-        private readonly EventHandler HBeaconScan;
+        private List<Beacon> _beaconList;
         private object bufferLock = new object();
+        private readonly EventHandler HBeaconScan;
 
-        public IPSClient()
+        public Event Event { get; private set; }
+        public List<BeaconSignalModel> beaconSignalBuffer = new List<BeaconSignalModel>();
+
+        public WaypointClient()
         {
+            Event = new Event();
+
             HBeaconScan = new EventHandler(HandleBeaconScan);
-            BeaconList = null;
+            Utility.BeaconScan.Event.BeaconScanEventHandler += HBeaconScan;
+            _beaconList = null;
         }
 
-        //set the list of beacons we want
+        // Set the list of beacons we want
         public void SetBeaconList(List<Beacon> BeaconList)
         {
             if (BeaconList != null)
-                this.BeaconList = BeaconList;
+                this._beaconList = BeaconList;
             else
-                throw new System.ArgumentException("Parameter cannot be null", "BeaconList");
+                throw new ArgumentException("Parameter cannot be null", "BeaconList");
         }
 
         public Beacon SignalProcessing()
         {
-            // this List used to save the mean value of signals
+            // This List used to save the mean value of signals
             List<BeaconSignal> signalAverageList = new List<BeaconSignal>();
-            // remove the obsolete data from buffer
+            // Remove the obsolete data from buffer
             List<BeaconSignalModel> removeSignalBuffer =
                 new List<BeaconSignalModel>();
 
@@ -93,10 +100,10 @@ namespace IndoorNavigation.Modules.IPS
                 foreach (var (UUID, Major, Minor) in beacons)
                 {
                     //confirmation the BeaconList has been set
-                    if (BeaconList != null)
+                    if (_beaconList != null)
                     {
                         //Confirm the beacon signal is on the list we want
-                        if (BeaconList.Exists(x => x.UUID == (UUID, Major, Minor).UUID))
+                        if (_beaconList.Exists(x => x.UUID == (UUID, Major, Minor).UUID))
                         {
                             signalAverageList.Add
                                 (
@@ -156,11 +163,11 @@ namespace IndoorNavigation.Modules.IPS
 
                     return bestNearbyBeacon;
                 }
-                else
-                    return null;
-            }
-            else
+
                 return null;
+            }
+
+            return null;
         }
 
         private void HandleBeaconScan(object sender, EventArgs e)
@@ -180,18 +187,26 @@ namespace IndoorNavigation.Modules.IPS
 
         public void Stop()
         {
-            BeaconList = null;
+            _beaconList = null;
             Utility.BeaconScan.Event.BeaconScanEventHandler -= HBeaconScan;
             beaconSignalBuffer = null;
             bufferLock = null;
         }
 
-        ~IPSClient()
+    }
+
+    public class Event
+    {
+        public EventHandler EventHandler;
+
+        public void OnEventCall(EventArgs e)
         {
-            BeaconList = null;
-            Utility.BeaconScan.Event.BeaconScanEventHandler -= HBeaconScan;
-            beaconSignalBuffer = null;
-            bufferLock = null;
+            EventHandler?.Invoke(this, e);
         }
+    }
+
+    public class WayPointSignalEventArgs : EventArgs
+    {
+        public Beacon CurrentBeacon { get; set; }
     }
 }
