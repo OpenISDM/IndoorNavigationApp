@@ -43,7 +43,6 @@
  */
 using System;
 using IndoorNavigation.Models.NavigaionLayer;
-using IndoorNavigation.Modules.Navigation;
 using System.Collections.Generic;
 using Xamarin.Forms;
 using System.Linq;

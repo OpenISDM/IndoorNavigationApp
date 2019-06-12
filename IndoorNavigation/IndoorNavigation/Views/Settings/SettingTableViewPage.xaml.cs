@@ -119,7 +119,7 @@ namespace IndoorNavigation.Views.Settings
 #if DEBUG
             string qrCodeValue = string.Empty;
             if (DeviceInfo.DeviceType == DeviceType.Virtual)
-                qrCodeValue = "https://drive.google.com/a/gm.nssh.ntpc.edu.tw/uc?authuser=0&id=1t0aTpm5rC-Z6h66DXsv0UXrDBmHWK4Ja&export=download@OpenISDM";
+                qrCodeValue = "https://drive.google.com/uc?authuser=0&id=1TakJcYBgZ07s4WrF1-n6p5mgqttjX5UL&export=download@OpenISDM";
             else
             {
                 IQrCodeDecoder qrCodeDecoder = DependencyService.Get<IQrCodeDecoder>();
@@ -168,7 +168,7 @@ namespace IndoorNavigation.Views.Settings
 
         void SpeechTestBtn_Tapped(object sender, EventArgs e)
         {
-            Utility.TextToSpeech.Speak("歡迎使用畢迪斯室內導航", "zh-TW");
+            Utility.TextToSpeech.Speak("歡迎使用畢迪科技室內導航", "zh-TW");
         }
 
         private void ReloadNaviGraphItems()

@@ -39,7 +39,6 @@
   <ItemGroup>
     <Folder Include="Utilities\" />
     <Folder Include="ViewModels\" />
-    <Folder Include="Modules\SignalProcessingAlgorithms\" />
     <Folder Include="Views\Navigation\" />
     <Folder Include="Views\Settings\" />
     <Folder Include="Views\Settings\LicensePages\" />
@@ -47,13 +46,28 @@
     <Folder Include="Modules\Navigation\Dijkstra.NET\" />
     <Folder Include="Views\Navigation\NTUHYunlin\" />
     <Folder Include="Resources\" />
-    <Folder Include="ViewModels\Navigation\NTUHYunlin\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Views\Navigator\MyPage.xaml.cs" />
     <Compile Remove="Views\Navigation\NTUH.Yunlin\NavigationHomePage.xaml.cs" />
     <Compile Remove="Modules\Session.cs" />
     <Compile Remove="Modules\Session.cs" />
+    <Compile Remove="Views\Navigation\TabbedPageRoutes.xaml.cs" />
+    <Compile Remove="Views\Navigation\NavigationTabbedPage.xaml.cs" />
+    <Compile Remove="ViewModels\Navigation\NaviHomePageViewModel.cs" />
+    <Compile Remove="Views\Navigation\NavigationHomePage.xaml.cs" />
+    <Compile Remove="Views\Navigation\TabbedPageNavigation.xaml.cs" />
+    <Compile Remove="ViewModels\Navigation\TabbedNaviViewModel.cs" />
+    <Compile Remove="Modules\MaNModule.cs" />
+    <Compile Remove="Modules\SignalProcessingAlgorithms\WaypointSignalProcessing.cs" />
+    <Compile Remove="Modules\Navigation\Algorithms\WayPointAlgorithm.cs" />
+    <Compile Remove="Modules\Navigation\WaypointRoutePlan.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Remove="Views\Navigation\TabbedPageRoutes.xaml" />
+    <EmbeddedResource Remove="Views\Navigation\NavigationTabbedPage.xaml" />
+    <EmbeddedResource Remove="Views\Navigation\NavigationHomePage.xaml" />
+    <EmbeddedResource Remove="Views\Navigation\TabbedPageNavigation.xaml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Views\PopUpPage\DownloadPopUpPage.xaml">

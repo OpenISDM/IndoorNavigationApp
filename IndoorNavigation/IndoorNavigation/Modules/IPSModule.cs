@@ -49,82 +49,34 @@ using System;
 using System.Diagnostics;
 using System.Threading;
 using IndoorNavigation.Models;
-using IndoorNavigation.Modules.Navigation;
 using IndoorNavigation.Models.NavigaionLayer;
 
+// TODO: After adding beacon information into NavigationGraph, it will be finished.
 namespace IndoorNavigation.Modules
 {
     public class IPSModule : IDisposable
     {
         private Thread IPSThread;
-        private AutoResetEvent threadWait =
-            new AutoResetEvent(false);
-        private AutoResetEvent setDestinationWait =
-            new AutoResetEvent(false);
-
-        private bool isThreadRunning = true;
-        private INavigationAlgorithm navigationAlgorithm;
-        private WaypointModel destination;
 
         /// <summary>
         /// Initializes and run the thread of the IPS module
         /// </summary>
         public IPSModule()
         {
-            IPSThread = new Thread(Work);
-            IPSThread.Start();
-            threadWait.WaitOne();
 
-            Debug.WriteLine("IPSModule initialization completed.");
         }
 
         /// <summary>
-        /// Use IPS to set the destination and raise the event to Work thread
+        /// Stops the IPS Module and the running client.
         /// </summary>
-        public void SetDestination(WaypointModel waypoint)
+        public void Close()
         {
-            destination = waypoint;
-            setDestinationWait.Set();
-            setDestinationWait.WaitOne();
-        }
 
-        /// <summary>
-        /// Stops the navigation.
-        /// </summary>
-        public void StopNavigation()
-        {
-            if (navigationAlgorithm != null)
-                navigationAlgorithm.StopNavigation();
         }
 
         private void Work()
         {
-            // IPS algorithms
-            threadWait.Set();
 
-            while(isThreadRunning)
-            {
-                setDestinationWait.WaitOne();
-
-                if (isThreadRunning)
-                {
-                    navigationAlgorithm = Utility.Service
-                        .Get<INavigationAlgorithm>("Waypoint algorithm");
-                    Utility.MaN.SetAlgorithm(navigationAlgorithm);
-                    Utility.SignalProcess.SetAlogorithm(
-                        navigationAlgorithm.CreateSignalProcessingAlgorithm());
-
-
-                    (navigationAlgorithm as WaypointAlgorithm)
-                        .SetDestination(destination);
-
-                    setDestinationWait.Set();
-                }
-
-            }
-
-            Debug.WriteLine("IPS module close");
-            threadWait.Set();
         }
 
         #region IDisposable Support
@@ -134,16 +86,12 @@ namespace IndoorNavigation.Modules
         {
             if (!disposedValue)
             {
-                isThreadRunning = false;
-                setDestinationWait.Set();
-                StopNavigation();
-                threadWait.WaitOne();
+                Close();
 
                 // dispose managed state (managed objects)
                 if (disposing)
                 {
-                    threadWait.Dispose();
-                    setDestinationWait.Dispose();
+
                 }
 
                 // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.

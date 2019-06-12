@@ -217,24 +217,4 @@ namespace IndoorNavigation.Models
         public WaypointModel TargetWaypoint { get; set; }
     }
 
-    /// <summary>
-    /// TODO: DEPRECATED
-    /// The second level of the navigation graph within two-level hierarchy
-    /// </summary>
-    public class Region_DEPRECATED
-    {
-        public string Name { get; set; }
-        public List<WaypointModelForNavigraphFile> Waypoints { get; set; }
-        public List<LBeaconModel> LBeacons { get; set; }
-    }
-
-    /// <summary>
-    /// The top level of the navigation graph within two-level hierarchy
-    /// </summary>
-    public class NaviGraph
-    {
-        public string Name { get; set; }
-        public List<Region_DEPRECATED> Regions { get; set; }
-    }
-
 }

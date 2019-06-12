@@ -15,6 +15,7 @@
     </ContentPage.Padding>
     
     <ContentPage.Content>
+        <!-- TODO: Add PAUSE button -->
         <Grid Padding="15, 15, 15, 0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>

@@ -50,8 +50,6 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using IndoorNavigation.Modules;
 using IndoorNavigation.Models;
-using IndoorNavigation.Modules.SignalProcessingAlgorithms;
-using IndoorNavigation.Modules.Navigation;
 
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;

@@ -44,28 +44,19 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using GeoCoordinatePortable;
 using IndoorNavigation.Models;
-using IndoorNavigation.Modules.Navigation;
 using IndoorNavigation.Modules.Utilities;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace IndoorNavigation.Modules
 {
     public static class Utility
     {
         public static Dictionary<Guid, Beacon> BeaconsDict;
-        public static List<WaypointModel> Waypoints;
-        public static List<LocationConnectModel> LocationConnects;
-        public static WaypointRoutePlan WaypointRoute;
-        public static SignalProcessModule SignalProcess;
-        public static MaNModule MaN;
         public static Container Service;
         public static IPSModule IPS;
         public static IBeaconScan BeaconScan;

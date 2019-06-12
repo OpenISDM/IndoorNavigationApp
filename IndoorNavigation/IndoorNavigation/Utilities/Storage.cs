@@ -104,51 +104,6 @@ namespace IndoorNavigation.Modules.Utilities
         }
 
         /// <summary>
-        /// TODO: DEPRECATED
-        /// This method loads the navigation graph
-        /// </summary>
-        /// <param name="Place"></param>
-        /// <returns></returns>
-        //public static bool LoadNavigraph(string Place)
-        //{
-        //    try
-        //    {
-        //        // Convert corresponding data of LBeacon
-        //        List<NaviGraph> naviGraphs = JsonConvert
-        //            .DeserializeObject<List<NaviGraph>>(LoadFile(Place));
-
-        //        List<Region> regions = naviGraphs
-        //            .SelectMany(naviGraph => naviGraph.Regions)
-        //            .ToList();
-
-        //        Utility.BeaconsDict = 
-        //            regions.SelectMany(region => region.LBeacons)
-        //                .Select(Lbeacon => Lbeacon as Beacon)
-        //                .ToDictionary(beacon => beacon.UUID);
-
-        //        Utility.Waypoints = 
-        //            regions.SelectMany(region => region.Waypoints)
-        //                .Select(waypoint => new WaypointModel
-        //                {
-        //                    Id = waypoint.Id,
-        //                    Name = waypoint.Name,
-        //                    Beacons = Utility.BeaconsDict.Values
-        //                        .Where(beacon => waypoint.Beacons
-        //                                            .Contains(beacon.UUID))
-        //                        .Select(Lbeacon => Lbeacon as Beacon).ToList()
-        //                }).ToList();
-
-        //        Utility.LocationConnects = regions.SelectMany(region => region.Waypoints).SelectMany(waypointNavigraphFile => waypointNavigraphFile.Neighbors.Select(neighbor => new LocationConnectModel { Target = neighbor.Target, SourceWaypoint = Utility.Waypoints.First(waypoint => waypoint.Id == waypointNavigraphFile.Id), TargetWaypoint = Utility.Waypoints.First(waypoint => waypoint.Id == neighbor.TargetWaypointId) })).ToList();
-
-        //        return true;
-        //    }
-        //    catch
-        //    {
-        //        return false;
-        //    }
-        //}
-
-        /// <summary>
         /// Loads the navigraph XML from the specified file name.
         /// </summary>
         /// <returns>The navigraph object.</returns>

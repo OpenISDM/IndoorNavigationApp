@@ -35,6 +35,7 @@
 using System;
 using System.Collections.Generic;
 
+// TODO: Should be moved
 namespace IndoorNavigation.Models
 {
     /// <summary>
@@ -60,26 +61,5 @@ namespace IndoorNavigation.Models
         {
             Timestamp = DateTime.Now;
         }
-    }
-
-    /// <summary>
-    /// TODO: DUPLICATE
-    /// Instruction of next location to be delivered at the next waypoint
-    /// </summary>
-    public class NextStepModel
-    {
-        /// <summary>
-        /// The next waypoint within navigation path
-        /// </summary>
-        public WaypointModel NextWaypoint { get; set; }
-        /// <summary>
-        /// The List of "wrong way" waypoint of the next location
-        /// </summary>
-        public List<WaypointModel> WrongwayWaypointList { get; set; }
-
-        /// <summary>
-        /// The angle to turn to the next waypoint
-        /// </summary>
-        public int Angle { get; set; }
     }
 }

@@ -18,8 +18,6 @@ namespace IndoorNavigationTest
             List<LocationConnectModel> locationConnects = GenerateLocationConnect(beaconGroups);
 
             Utility.BeaconsDict = beacons;
-            Utility.Waypoints = beaconGroups;
-            Utility.LocationConnects = locationConnects;
         }
 
         private static List<Beacon> GenerateBeacons()

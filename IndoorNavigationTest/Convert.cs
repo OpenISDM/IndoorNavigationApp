@@ -21,35 +21,5 @@ namespace IndoorNavigationTest
                     lBeacons = LBeacons
                 });
         }
-
-        public static string NavigraphJson(List<LBeaconModel> Beacons, List<WaypointModel> BeaconGroups, List<LocationConnectModel> LocationConnects)
-        {
-            NaviGraph naviGraph = new NaviGraph();
-            naviGraph.Name = "中研院";
-
-            List<Region_DEPRECATED> regions = new List<Region_DEPRECATED>();
-            foreach (float floor in BeaconGroups.Select(c => c.Floor).Distinct())
-            {
-                
-                Region_DEPRECATED region = new Region_DEPRECATED()
-                {
-                    Name = string.Format("{0}F", Convert.ToInt32(floor)),
-                    LBeacons = Beacons.Where(c => c.Floor == floor).ToList(),
-                    Waypoints = BeaconGroups.Where(c => c.Floor ==  floor).Select(c => new WaypointModelForNavigraphFile {
-                        Id = c.Id,
-                        Beacons = c.Beacons.Select(d => d.UUID).ToList(),
-                        Name = c.Name,
-                        Neighbors = LocationConnects.Where(d => d.SourceWaypoint == c).Select(d => new Neighbor { TargetWaypointId = d.TargetWaypoint.Id, Target = d.Target}).ToList()
-                    }).ToList()
-                };
-
-                regions.Add(region);
-            }
-
-            naviGraph.Regions = regions;
-
-            JArray array = JArray.FromObject(new List<NaviGraph> { naviGraph });
-            return (JsonConvert.SerializeObject(array, Formatting.Indented));
-        }
     }
 }
