@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Academia Sinica, Institude of Information Science
+ * Copyright (c) 2019 Academia Sinica, Institude of Information Science
  *
  * License:
  *      GPL 3.0 : The content of this file is subject to the terms and

@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2018 Academia Sinica, Institude of Information Science
+ * Copyright (c) 2019 Academia Sinica, Institude of Information Science
  *
  * License:
  *      GPL 3.0 : The content of this file is subject to the terms and
@@ -12,8 +12,8 @@
  *
  * File Description:
  *
- *      This page is the setting page of navigation that includes voice and
- *      route options/preferences.
+ *      This file contains the class for the setting page that includes route 
+ *      and audio instruction options/preferences.
  *      
  * Version:
  *
@@ -27,14 +27,14 @@
  *
  *      Waypoint-based navigator is a mobile Bluetooth navigation application
  *      that runs on smart phones. It is structed to support anywhere 
- *      navigation. Indoors in areas covered by different indoor positioning 
+ *      navigation indoors in areas covered by different indoor positioning 
  *      system (IPS) and outdoors covered by GPS.In particilar, it can rely on
  *      BeDIS (Building/environment Data and Information System) for indoor 
- *      positioning. Using this IPS, the navigator does not need to 
- *      continuously monitor its own position, since the IPS broadcast to the
- *      navigator the location of each waypoint. 
- *      This version makes use of Xamarin.Forms, which is a complete 
- *      cross-platform UI tookit that runs on both iOS and Android.
+ *      positioning. This IPS provides a location beacon at every waypoint. The 
+ *      beacon brocasts its own coordinates; Consequesntly, the navigator does 
+ *      not need to continuously monitor its own position.
+ *      This version makes use of Xamarin.Forms, which is a cross-platform UI 
+ *      tookit that runs on both iOS and Android.
  *
  * Authors:
  *
@@ -53,7 +53,6 @@ namespace IndoorNavigation.Views.Navigation
 {
     public partial class NavigatorSettingPage : ContentPage
     {
-        // sample of TextPickerCell(選擇語音)
         public IList VoiceSearchItems { get; } = new ObservableCollection<string>(new List<string> { "中文", "英文" });
 
         public NavigatorSettingPage()

@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2018 Academia Sinica, Institude of Information Science
+ * Copyright (c) 2019 Academia Sinica, Institude of Information Science
  *
  * License:
  *      GPL 3.0 : The content of this file is subject to the terms and
@@ -12,12 +12,12 @@
  *
  * File Description:
  *
- *      The code-behind for the App class, which is responsible for 
- *      instantiating the first page that will be displayed by the application
- *      on each platform, and for handling application lifecycle events.
- *      Both App.xaml and App.xaml.cs contribute to a class named App that 
- *      derives from Application. This is only one entry point when
- *      the app launch at first time.
+ *      The file contains the code behind for the App class. The code is 
+ *      responsible for instantiating the first page that will be displayed by
+ *      the application on each platform, and for handling application 
+ *      lifecycle events. Both App.xaml and App.xaml.cs contribute to a class 
+ *      named App that derives from Application. This is only one entry point 
+ *      when the app launch at first time.
  *      
  * Version:
  *
@@ -31,14 +31,14 @@
  *
  *      Waypoint-based navigator is a mobile Bluetooth navigation application
  *      that runs on smart phones. It is structed to support anywhere 
- *      navigation. Indoors in areas covered by different indoor positioning 
+ *      navigation indoors in areas covered by different indoor positioning 
  *      system (IPS) and outdoors covered by GPS.In particilar, it can rely on
  *      BeDIS (Building/environment Data and Information System) for indoor 
- *      positioning. Using this IPS, the navigator does not need to 
- *      continuously monitor its own position, since the IPS broadcast to the
- *      navigator the location of each waypoint. 
- *      This version makes use of Xamarin.Forms, which is a complete 
- *      cross-platform UI tookit that runs on both iOS and Android.
+ *      positioning. This IPS provides a location beacon at every waypoint. The 
+ *      beacon brocasts its own coordinates; Consequesntly, the navigator does 
+ *      not need to continuously monitor its own position.
+ *      This version makes use of Xamarin.Forms, which is a cross-platform UI 
+ *      tookit that runs on both iOS and Android.
  *
  * Authors:
  *
