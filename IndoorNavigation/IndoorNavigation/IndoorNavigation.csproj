@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -6,17 +6,94 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE;DEBUG;NETSTANDARD;NETSTANDARD2_0</DefineConstants>
     <DocumentationFile></DocumentationFile>
+    <LangVersion>Latest</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType></DebugType>
     <DocumentationFile></DocumentationFile>
+    <LangVersion>Latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dijkstra.NET" Version="1.1.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
-    <PackageReference Include="Xamarin.Essentials" Version="0.10.0-preview" />
-    <PackageReference Include="Xamarin.Forms" Version="3.2.0.839982" />
+    <PackageReference Include="GeoCoordinate.NetCore" Version="1.0.0.1" />
+    <PackageReference Include="Microsoft.AppCenter.Analytics" Version="1.14.0" />
+    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="1.14.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.1.0" />
+    <PackageReference Include="ZXing.Net.Mobile" Version="2.4.1" />
+    <PackageReference Include="ZXing.Net.Mobile.Forms" Version="2.4.1" />
+    <PackageReference Include="Rg.Plugins.Popup" Version="1.1.5.188" />
+    <PackageReference Include="Prism.Forms" Version="7.1.0.431" />
+    <PackageReference Include="Xamarin.Forms" Version="3.6.0.344457" />
+    <PackageReference Include="AiForms.SettingsView" Version="0.4.15" />
+    <PackageReference Include="Xamarin.CustomControls.ProgressBarView" Version="1.0.2" />
+    <PackageReference Include="AiForms.Effects" Version="1.5.1" />
+    <PackageReference Include="Refractored.MvvmHelpers" Version="1.3.0" />
+    <PackageReference Include="Xamarin.Forms.Visual.Material" Version="3.6.0.344457" />
+    <PackageReference Include="Plugin.Multilingual" Version="1.0.2" />
+    <PackageReference Include="Plugin.Permissions" Version="3.0.0.12" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Utilities\" />
+    <Folder Include="ViewModels\" />
+    <Folder Include="Views\Navigation\" />
+    <Folder Include="Views\Settings\" />
+    <Folder Include="Views\Settings\LicensePages\" />
+    <Folder Include="ViewModels\Navigation\" />
+    <Folder Include="Modules\Navigation\Dijkstra.NET\" />
+    <Folder Include="Views\Navigation\NTUHYunlin\" />
+    <Folder Include="Resources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Views\Navigator\MyPage.xaml.cs" />
+    <Compile Remove="Views\Navigation\NTUH.Yunlin\NavigationHomePage.xaml.cs" />
+    <Compile Remove="Modules\Session.cs" />
+    <Compile Remove="Modules\Session.cs" />
+    <Compile Remove="Views\Navigation\TabbedPageRoutes.xaml.cs" />
+    <Compile Remove="Views\Navigation\NavigationTabbedPage.xaml.cs" />
+    <Compile Remove="ViewModels\Navigation\NaviHomePageViewModel.cs" />
+    <Compile Remove="Views\Navigation\NavigationHomePage.xaml.cs" />
+    <Compile Remove="Views\Navigation\TabbedPageNavigation.xaml.cs" />
+    <Compile Remove="ViewModels\Navigation\TabbedNaviViewModel.cs" />
+    <Compile Remove="Modules\MaNModule.cs" />
+    <Compile Remove="Modules\SignalProcessingAlgorithms\WaypointSignalProcessing.cs" />
+    <Compile Remove="Modules\Navigation\Algorithms\WayPointAlgorithm.cs" />
+    <Compile Remove="Modules\Navigation\WaypointRoutePlan.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Remove="Views\Navigation\TabbedPageRoutes.xaml" />
+    <EmbeddedResource Remove="Views\Navigation\NavigationTabbedPage.xaml" />
+    <EmbeddedResource Remove="Views\Navigation\NavigationHomePage.xaml" />
+    <EmbeddedResource Remove="Views\Navigation\TabbedPageNavigation.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Views\PopUpPage\DownloadPopUpPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\AppResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\AppResources.zh.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppResources.zh.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Resources\AppResources.English" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Resources\AppResources.Designer.cs">
+      <DependentUpon>AppResources.English.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\AppResources.Designer.cs">
+      <DependentUpon>AppResources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\AppResources.zh.Designer.cs">
+      <DependentUpon>AppResources.zh.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

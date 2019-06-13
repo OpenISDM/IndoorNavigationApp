@@ -22,9 +22,18 @@ namespace IndoorNavigation.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
-            global::Xamarin.Forms.Forms.Init();
-            LoadApplication(new App());
+            Rg.Plugins.Popup.Popup.Init();
 
+            global::Xamarin.Forms.Forms.Init();
+            global::Xamarin.Forms.FormsMaterial.Init();
+
+            AiForms.Renderers.iOS.SettingsViewInit.Init();
+            AiForms.Effects.iOS.Effects.Init();
+
+            LoadApplication(new App());
+            app.StatusBarStyle = UIStatusBarStyle.LightContent;
+
+            ZXing.Net.Mobile.Forms.iOS.Platform.Init();
             return base.FinishedLaunching(app, options);
         }
     }

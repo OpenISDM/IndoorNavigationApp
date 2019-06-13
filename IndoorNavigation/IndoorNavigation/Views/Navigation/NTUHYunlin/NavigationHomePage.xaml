@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             x:Class="IndoorNavigation.Views.Navigation.NTUHYunlin.NavigationHomePage"
+             Title="台大雲林分院 室內導航">
+    
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness">
+            <OnPlatform.Platforms>
+                <On Platform="iOS" Value="4, 5, 4, 25" />
+                <On Platform="Android" Value="0, 0, 0, 0" />
+                <On Platform="UWP" Value="0, 0, 0, 0" />
+            </OnPlatform.Platforms>
+        </OnPlatform>
+    </ContentPage.Padding>
+    
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="InfoButton" Text="更多" Clicked="InfoButton_Clicked"/>
+    </ContentPage.ToolbarItems>
+    
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1.6*"/>
+                <RowDefinition Height="0.2*"/>
+                <RowDefinition Height="0.7*"/>
+                <RowDefinition Height="0.3*"/>
+                <RowDefinition Height="0.7*"/>
+                <RowDefinition Height="0.3*"/>
+                <RowDefinition Height="0.7*"/>
+                <RowDefinition Height="0.3*"/>
+            </Grid.RowDefinitions>
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="35*"/>
+                <ColumnDefinition Width="35*"/>
+                <ColumnDefinition Width="35*"/>
+            </Grid.ColumnDefinitions>
+            
+            <Image Grid.Row="0" Grid.ColumnSpan="3" Source="NTUH_logo" Scale="0.9"/>
+            <Label Grid.Row="1" Grid.ColumnSpan="3" HorizontalTextAlignment="Center"
+                   Text="【點選圖片選擇目的地】" TextColor="Gray" Margin="0, 0, 0, 8"/>
+            
+            <!-- Row 1 -->
+            <ImageButton x:Name="ClinicBtn" Grid.Row="2"  Grid.Column="0" Source="Clinics" Clicked="ClinicList_Clicked" />
+            <Label Grid.Row="3" Grid.Column="0" Text="各科門診" HorizontalTextAlignment="Center"/>
+            
+            <ImageButton x:Name="CashierBtn" Grid.Row="2"  Grid.Column="1" Source="Cashier" Clicked="Cashier_Clicked"/>
+            <Label Grid.Row="3" Grid.Column="1" Text="批價櫃臺" HorizontalTextAlignment="Center"/>
+            
+            <ImageButton x:Name="ExitBtn" Grid.Row="2"  Grid.Column="2" Source="Exit" Clicked="ExitList_Clicked"/>
+            <Label Grid.Row="3" Grid.Column="2" Text="出口" HorizontalTextAlignment="Center"/>
+            
+            <!-- Row 2 -->
+            <ImageButton x:Name="ExaminationRoomBtn" Grid.Row="4"  Grid.Column="0" Source="ExaminationRoom" Clicked="ExaminationRoomList_Clicked"/>
+            <Label Grid.Row="5" Grid.Column="0" Text="檢查室" HorizontalTextAlignment="Center"/>
+            
+            <ImageButton x:Name="PharmacyBtn" Grid.Row="4"  Grid.Column="1" Source="Pharmacy" Clicked="Pharmacy_Clicked"/>
+            <Label Grid.Row="5" Grid.Column="1" Text="領藥處" HorizontalTextAlignment="Center"/>
+            
+            <ImageButton x:Name="ConvenienceStoreBtn" Grid.Row="4"  Grid.Column="2" Source="ConvenienceStore" Clicked="ConvenienceStore_Clicked"/>
+            <Label Grid.Row="5" Grid.Column="2" Text="萊爾富" HorizontalTextAlignment="Center"/>
+            
+            <!-- Row 3 -->
+            <ImageButton x:Name="OthersBtn" Grid.Row="6"  Grid.Column="0" Source="Others" Clicked="OthersList_Clicked"/>
+            <Label Grid.Row="7" Grid.Column="0" Text="其他" HorizontalTextAlignment="Center"/>
+            
+            <ImageButton x:Name="BathroomBtn" Grid.Row="6"  Grid.Column="1" Source="Bathroom" Clicked="BathroomList_Clicked"/>
+            <Label Grid.Row="7" Grid.Column="1" Text="廁所" HorizontalTextAlignment="Center"/>
+            
+            <ImageButton x:Name="BloodCollectionCounterBtn" Grid.Row="6"  Grid.Column="2" Source="BloodCollectionCounter" Clicked="BloodCollectionCounter_Clicked"/>
+            <Label Grid.Row="7" Grid.Column="2" Text="抽血處" HorizontalTextAlignment="Center"/>
+            
+        </Grid>
+    </ContentPage.Content>
+    
+</ContentPage>

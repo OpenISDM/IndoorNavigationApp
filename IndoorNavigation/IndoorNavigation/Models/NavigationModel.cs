@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2018 Academia Sinica, Institude of Information Science
+ * Copyright (c) 2019 Academia Sinica, Institude of Information Science
  *
  * License:
  *      GPL 3.0 : The content of this file is subject to the terms and
@@ -21,16 +21,21 @@
  *
  * Abstract:
  *
- *      TODO: add abstract of this project
+ *      
  *
  * Authors:
  *
  *      Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
+ *      Paul Chang, paulchang@iis.sinica.edu.tw
  *
  */
 
-using System;
 
+
+using System;
+using System.Collections.Generic;
+
+// TODO: Should be moved
 namespace IndoorNavigation.Models
 {
     /// <summary>
@@ -56,20 +61,5 @@ namespace IndoorNavigation.Models
         {
             Timestamp = DateTime.Now;
         }
-    }
-
-    /// <summary>
-    /// Instruction of next location to be delivered at the next waypoint
-    /// </summary>
-    public class NextInstructionModel
-    {
-        /// <summary>
-        /// Next location
-        /// </summary>
-        public BeaconGroupModel NextPoint { get; set; }
-        /// <summary>
-        /// The angle to turn to the next waypoint
-        /// </summary>
-        public int Angle { get; set; }
     }
 }
