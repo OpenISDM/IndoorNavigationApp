@@ -162,14 +162,30 @@
     <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\path-guide-2%28320x480%29.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\40-1.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\60-1.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\58-1.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\87-1.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\80-1.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\120-2.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\120.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\180-1.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\40-1.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\60-1.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\58-1.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\87-1.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\80-1.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\120-2.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\120.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\180-1.png">
+      <Visible>false</Visible>
+    </ImageAsset>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
