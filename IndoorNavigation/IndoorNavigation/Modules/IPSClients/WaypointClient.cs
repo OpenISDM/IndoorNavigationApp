@@ -79,9 +79,15 @@ namespace IndoorNavigation.Modules.IPSClients
             {
                 this._beaconList = WaypointList;
                 this._waypointList = WaypointList;
-                foreach (Waypoint monitorWaypoing in WaypointList) {
-                    _beaconList.Add(new Waypoint { ID = monitorWaypoing.ID } );
+                //foreach (Waypoint monitorWaypoing in WaypointList) {
+                //    _beaconList.Add(new Waypoint { ID = monitorWaypoing.ID } );
+                //}
+
+                for(int i = 0;i<WaypointList.Count;i++)
+                {
+                    _beaconList.Add(new Waypoint { ID = WaypointList[i].ID });
                 }
+            
             }
             else
                 throw new ArgumentException("Parameter cannot be null", "WaypointList");
