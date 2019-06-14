@@ -73,24 +73,6 @@ namespace IndoorNavigation.ViewModels.Navigation
             _navigationModule = new NavigationModule(navigraphName, destinationID);
             _navigationModule.NavigationEvent.ResultEventHandler += GetNavigationResultEvent;
 
-            //Test function button
-            testEvent.TestEventHandler += _navigationModule.HandleCurrentWaypoint;
-            EnterNextWaypointCommand = new Command(TestEnterNextWaypointCommand);
-        }
-
-        public void TestEnterNextWaypointCommand()
-        {
-            Guid guidOutput;
-            guidOutput = Guid.TryParse(NextWaypointName, out guidOutput) ? guidOutput : Guid.Empty;
-
-            // TODO: Should also check this UUID whether it is in the navigation graph
-            if (guidOutput != Guid.Empty)
-            {
-                testEvent.OnEventCall(new WaypointScanEventArgs
-                {
-                    WaypointID = guidOutput
-                });
-            }
         }
 
         /// <summary>

@@ -52,39 +52,36 @@ namespace IndoorNavigation.Modules
 {
     public class NavigationModule : IDisposable
     {
-        private IPSModule _IPSmodule;
         private Session _session;
 
         private bool _isFirstTimeGetWaypoint;
         private string _navigraphName;
+        private Guid _sourceWaypointID;
         private Guid _destinationID;
 
-        private EventHandler _currentWaypointHandler;
         private EventHandler _navigationResultHandler;
 
-        public WaypointEvent WaypointEvent { get; private set; }
         public NavigationEvent NavigationEvent { get; private set; }
 
         public NavigationModule(string navigraphName, Guid destinationID)
         {
             _isFirstTimeGetWaypoint = true;
 
-            WaypointEvent = new WaypointEvent();
             NavigationEvent = new NavigationEvent();
 
-            _IPSmodule = new IPSModule();
-            _currentWaypointHandler = new EventHandler(HandleCurrentWaypoint);
-            //IPSModule.Event.WaypointHandler += CurrentWaypointHandler;
-
             _navigraphName = navigraphName;
+            // hardcode now and we need to decide how to detect the start point.
+            _sourceWaypointID = new Guid("00000018-0000-0000-6660-000000011900");
             _destinationID = destinationID;
+
+            StartSession();
         }
 
         /// <summary>
         /// If it is the first time to get waypoint then get the value of 
         /// route options and start the corresponding session.
         /// </summary>
-        private void StartSession(EventArgs args)
+        private void StartSession()
         {
             const int falseInt = -100;
             List<int> avoidList = new List<int>();
@@ -108,27 +105,14 @@ namespace IndoorNavigation.Modules
             // Start the session
             _session = new Session(
                     NavigraphStorage.LoadNavigraphXML(_navigraphName),
-                    (args as WaypointScanEventArgs).WaypointID,
+                    _sourceWaypointID,
                     _destinationID,
                     avoidList.ToArray());
 
             _navigationResultHandler = new EventHandler(HandleNavigationResult);
             _session.Event.SessionResultHandler += _navigationResultHandler;
-            WaypointEvent.CurrentWaypointEventHandler += _session.DetectRoute;
-        }
 
-        /// <summary>
-        /// Get the current waypoint and raise event to notify the session
-        /// </summary>
-        public void HandleCurrentWaypoint(object sender, EventArgs args)
-        {
-            if (_isFirstTimeGetWaypoint)
-            {
-                StartSession(args);
-                _isFirstTimeGetWaypoint = false;
-            }
-
-            WaypointEvent.OnEventCall(args);
+            _session.StartToNavigate(0);
         }
 
         /// <summary>
@@ -158,10 +142,8 @@ namespace IndoorNavigation.Modules
                 }
                 // Free unmanaged resources (unmanaged objects) and override a finalizer below.
                 // Set large fields to null.
-                //IPSModule.Event.WaypointHandler -= CurrentWaypointHandler;
                 _session.Event.SessionResultHandler -= _navigationResultHandler;
-                WaypointEvent.CurrentWaypointEventHandler -= _session.DetectRoute;
-
+               
                 disposedValue = true;
             }
         }

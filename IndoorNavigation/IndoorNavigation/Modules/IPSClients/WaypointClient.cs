@@ -46,13 +46,17 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using IndoorNavigation.Models;
+using IndoorNavigation.Models.NavigaionLayer;
+using IndoorNavigation.Modules;
 
 namespace IndoorNavigation.Modules.IPSClients
 {
     class WaypointClient : IIPSClient
     {
-        //this List is used to save the beacons we want
-        private List<Beacon> _beaconList;
+        // _beaconList must not be Waypoint List, but we uses it temporarily now.
+        private List<Waypoint> _beaconList;
+        private List<Waypoint> _waypointList;
+
         private object bufferLock = new object();
         private readonly EventHandler HBeaconScan;
 
@@ -66,21 +70,25 @@ namespace IndoorNavigation.Modules.IPSClients
             HBeaconScan = new EventHandler(HandleBeaconScan);
             Utility.BeaconScan.Event.BeaconScanEventHandler += HBeaconScan;
             _beaconList = null;
+            _waypointList = null;
         }
 
-        // Set the list of beacons we want
-        public void SetBeaconList(List<Beacon> BeaconList)
+        public void SetWaypointList(List<Waypoint> WaypointList)
         {
-            if (BeaconList != null)
-                this._beaconList = BeaconList;
+            if (WaypointList != null)
+            {
+                this._beaconList = WaypointList;
+                this._waypointList = WaypointList;
+                foreach (Waypoint monitorWaypoing in WaypointList) {
+                    _beaconList.Add(new Waypoint { ID = monitorWaypoing.ID } );
+                }
+            }
             else
-                throw new ArgumentException("Parameter cannot be null", "BeaconList");
+                throw new ArgumentException("Parameter cannot be null", "WaypointList");
         }
 
-        public Beacon SignalProcessing()
+        public void SignalProcessing()
         {
-            // This List used to save the mean value of signals
-            List<BeaconSignal> signalAverageList = new List<BeaconSignal>();
             // Remove the obsolete data from buffer
             List<BeaconSignalModel> removeSignalBuffer =
                 new List<BeaconSignalModel>();
@@ -94,80 +102,15 @@ namespace IndoorNavigation.Modules.IPSClients
                 foreach (var obsoleteBeaconSignal in removeSignalBuffer)
                     beaconSignalBuffer.Remove(obsoleteBeaconSignal);
 
-                // Average the intensity of all Beacon signals
-                var beacons = beaconSignalBuffer
-                    .Select(c => (c.UUID, c.Major, c.Minor)).Distinct();
-                foreach (var (UUID, Major, Minor) in beacons)
-                {
-                    //confirmation the BeaconList has been set
-                    if (_beaconList != null)
-                    {
-                        //Confirm the beacon signal is on the list we want
-                        if (_beaconList.Exists(x => x.UUID == (UUID, Major, Minor).UUID))
-                        {
-                            signalAverageList.Add
-                                (
-                                    new BeaconSignal
-                                    {
-                                        UUID = (UUID, Major, Minor).UUID,
-                                        Major = (UUID, Major, Minor).Major,
-                                        Minor = (UUID, Major, Minor).Minor,
-                                        RSSI = System.Convert.ToInt32(
-                                            beaconSignalBuffer.Where(c =>
-                                            c.UUID == (UUID, Major, Minor).UUID &&
-                                            c.Major == (UUID, Major, Minor).Major &&
-                                            c.Minor == (UUID, Major, Minor).Minor)
-                                            .Select(c => c.RSSI).Average())
-                                    }
-                                );
-                        }
-                    }
-                    else
-                    {
-                        signalAverageList.Add
-                                (
-                                    new BeaconSignal
-                                    {
-                                        UUID = (UUID, Major, Minor).UUID,
-                                        Major = (UUID, Major, Minor).Major,
-                                        Minor = (UUID, Major, Minor).Minor,
-                                        RSSI = System.Convert.ToInt32(
-                                            beaconSignalBuffer.Where(c =>
-                                            c.UUID == (UUID, Major, Minor).UUID &&
-                                            c.Major == (UUID, Major, Minor).Major &&
-                                            c.Minor == (UUID, Major, Minor).Minor)
-                                            .Select(c => c.RSSI).Average())
-                                    }
-                                );
+                foreach (BeaconSignalModel beacon in beaconSignalBuffer) {
+                    Waypoint tempWaypoint = new Waypoint { ID = beacon.UUID };
+                    if (_beaconList.Contains(tempWaypoint) && beacon.RSSI > -50) {
+                        Event.OnEventCall(new WayPointSignalEventArgs{
+                            CurrentWaypoint = tempWaypoint
+                        }); ;
                     }
                 }
             }
-
-            // Find the beacon which closest to me
-            if (signalAverageList.Any())
-            {
-                // Scan all the signal that satisfies the threshold
-                var nearbySignal = (from signal in signalAverageList
-                                    from beacon in Utility.BeaconsDict
-                                    where (
-                                        signal.UUID == beacon.Value.UUID &&
-                                        signal.RSSI >= beacon.Value.Threshold)
-                                    select signal);
-
-                // Find the beacon which closest to me, then return
-                if (nearbySignal.Any())
-                {
-                    var bestNearbySignal = nearbySignal.First();
-                    Beacon bestNearbyBeacon =
-                        Utility.BeaconsDict[bestNearbySignal.UUID];
-
-                    return bestNearbyBeacon;
-                }
-
-                return null;
-            }
-
-            return null;
         }
 
         private void HandleBeaconScan(object sender, EventArgs e)
@@ -207,6 +150,7 @@ namespace IndoorNavigation.Modules.IPSClients
 
     public class WayPointSignalEventArgs : EventArgs
     {
-        public Beacon CurrentBeacon { get; set; }
+        public Waypoint CurrentWaypoint { get; set; }
     }
+
 }

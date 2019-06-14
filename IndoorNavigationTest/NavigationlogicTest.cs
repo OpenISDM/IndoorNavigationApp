@@ -117,16 +117,6 @@ namespace IndoorNavigationTest
             Debug.WriteLine("SignalProcessTest done.");
         }
 
-        private void HandleSignalProcess(object sender, EventArgs e)
-        {
-            Beacon currentBeacon =
-                (e as WayPointSignalEventArgs).CurrentBeacon;
-
-            bestBeacon = currentBeacon;
-
-            SignalProcessWaitEvent.Set();
-        }
-
         private void HandleMaNModule(object sender, EventArgs e)
         {
             MaNEventArgs = e;
