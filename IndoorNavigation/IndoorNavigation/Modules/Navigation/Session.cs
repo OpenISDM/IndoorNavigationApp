@@ -99,21 +99,24 @@ namespace IndoorNavigation.Modules
 
             _IPSClient = new WaypointClient();
             _IPSClient.Event.EventHandler = new EventHandler(CheckArrivedWaypoint);
-
+            Console.WriteLine("--------Constructor-------------------");
             Console.WriteLine("source " + startWaypoint.ID);
             Console.WriteLine("destination " + _finalWaypoint.ID);
-
+            Console.WriteLine("---------------------------");
+            Console.WriteLine("Routing path:");
             foreach (Waypoint waypoint in _waypointsOnRoute)
             {
-                Console.WriteLine("path " +  waypoint.ID);
+                Console.WriteLine("waypoint " +  waypoint.ID);
             }
+            Console.WriteLine("---------------------------");
             foreach (Waypoint waypoint in _waypointsOnRoute)
             {
-                Console.WriteLine("correct waypoting "+ waypoint.ID);
+                Console.WriteLine("waypoint "+ waypoint.ID);
                 for (int i = 0; i < _waypointsOnWrongWay[waypoint.ID].Count; i++) {
-                    Console.WriteLine("wrong waypoing " +  _waypointsOnWrongWay[waypoint.ID][i].ID);
+                    Console.WriteLine("possible wrong waypoing " +  _waypointsOnWrongWay[waypoint.ID][i].ID);
                 }
             }
+            Console.WriteLine("---------Finish of contructor------------------");
         }
 
         public void StartToNavigate(int currentStep) {
@@ -151,25 +154,21 @@ namespace IndoorNavigation.Modules
             for (int i = 0; i < path.Count(); i++)
             {
                 _waypointsOnRoute.Add(subgraph[path.ToList()[i]].Item);
-                Console.WriteLine("getpath: waypoint " + subgraph[path.ToList()[i]].Item.ID);
-
+               
                 List<Waypoint> tempWrongWaypointList = new List<Waypoint>();
                 if (i - 1 >= 0)
                 {
                     for (int j = 0; j < _waypointsOnRoute[i-1].Neighbors.Count; j++)
                     {
-                        Console.WriteLine("neigobor of previous waypoint is " + _waypointsOnRoute[i - 1].Neighbors[j].TargetWaypointUUID);
-                        if(!subgraph[path.ToList()[i]].Item.Equals(_waypointsOnRoute[i-1].Neighbors[j].TargetWaypointUUID))
+                        if(!subgraph[path.ToList()[i]].Item.ID.Equals(_waypointsOnRoute[i-1].Neighbors[j].TargetWaypointUUID))
                         {
-                            Console.WriteLine("add into list");
-                            tempWrongWaypointList.Add(new Waypoint { ID = _waypointsOnRoute[i].Neighbors[j].TargetWaypointUUID });
+                            tempWrongWaypointList.Add(new Waypoint { ID = _waypointsOnRoute[i-1].Neighbors[j].TargetWaypointUUID });
                             
                         }
                     }
                 }
                 _waypointsOnWrongWay.Add(_waypointsOnRoute[i].ID, tempWrongWaypointList);
             }
-            Console.WriteLine("Finish of getpath");
         }
 
         //In this function we get the currentwaypoint and determine whether
@@ -283,7 +282,7 @@ namespace IndoorNavigation.Modules
                 //the navigationInstruction
                 _waypointsOnRoute = new List<Waypoint>();
                 _waypointsOnWrongWay = new Dictionary<Guid, List<Waypoint>>();
-                GetPath(currentWaypoint, _finalWaypoint, _subgraph);
+               // GetPath(currentWaypoint, _finalWaypoint, _subgraph);
                 _currentNavigateStep = 0;
 
                 Event.OnEventCall(new NavigationEventArgs
