@@ -53,10 +53,13 @@ namespace IndoorNavigation.Views.Navigation
 
         public NavigatorPage(string navigraphName, string desinationName, Guid destinationID)
         {
+            Console.WriteLine("-- start of NavigatorPage constructor: navigraphName: " + navigraphName + " destinationName: " + desinationName + " destinationID: " + destinationID);
             InitializeComponent();
 
             viewModel = new NavigatorPageViewModel(navigraphName, desinationName, destinationID);
             BindingContext = viewModel;
+
+            Console.WriteLine("-- end of NavigatorPage constructor");
         }
 
     }

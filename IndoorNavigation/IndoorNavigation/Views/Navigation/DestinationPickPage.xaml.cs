@@ -95,7 +95,9 @@ namespace IndoorNavigation.Views.Navigation
         {
             if (e.Item is DestinationItem destination)
             {
+                Console.WriteLine("start of Handle_ItemTapped in DestinationPickPage");
                 await Navigation.PushAsync(new NavigatorPage(_navigraphName, destination.WaypointName, destination.ID));
+                Console.WriteLine("end of Handle_ItemTapped in DestinationPickPage");
             }
 
             //Deselect Item

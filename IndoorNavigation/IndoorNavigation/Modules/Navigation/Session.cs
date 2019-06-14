@@ -113,7 +113,7 @@ namespace IndoorNavigation.Modules
             {
                 Console.WriteLine("waypoint "+ waypoint.ID);
                 for (int i = 0; i < _waypointsOnWrongWay[waypoint.ID].Count; i++) {
-                    Console.WriteLine("possible wrong waypoing " +  _waypointsOnWrongWay[waypoint.ID][i].ID);
+                    Console.WriteLine("possible wrong [" +  _waypointsOnWrongWay[waypoint.ID][i].ID + "]");
                 }
             }
             Console.WriteLine("---------Finish of contructor------------------");

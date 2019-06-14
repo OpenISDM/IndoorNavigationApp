@@ -86,6 +86,9 @@ namespace IndoorNavigation.Modules
             const int falseInt = -100;
             List<int> avoidList = new List<int>();
 
+            Console.WriteLine("-- begin StartSession --- ");
+
+            Console.WriteLine("-- setup preference --- ");
             if (Application.Current.Properties.ContainsKey("AvoidStair"))
             {
                 avoidList.Add(
@@ -101,6 +104,7 @@ namespace IndoorNavigation.Modules
                 avoidList = avoidList.Distinct().ToList();
                 avoidList.Remove(falseInt);
             }
+            Console.WriteLine("-- end of setup preference --- ");
 
             // Start the session
             _session = new Session(
@@ -112,7 +116,9 @@ namespace IndoorNavigation.Modules
             _navigationResultHandler = new EventHandler(HandleNavigationResult);
             _session.Event.SessionResultHandler += _navigationResultHandler;
 
-            _session.StartToNavigate(0);
+            //_session.StartToNavigate(0);
+
+            Console.WriteLine("-- end StartSession --- ");
         }
 
         /// <summary>
