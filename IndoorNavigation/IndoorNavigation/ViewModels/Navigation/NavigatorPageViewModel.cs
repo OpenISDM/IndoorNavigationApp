@@ -73,6 +73,8 @@ namespace IndoorNavigation.ViewModels.Navigation
             _navigationModule = new NavigationModule(navigraphName, destinationID);
             _navigationModule.NavigationEvent.ResultEventHandler += GetNavigationResultEvent;
 
+            _navigationModule.StartNavigate();
+
         }
 
         /// <summary>
@@ -82,6 +84,7 @@ namespace IndoorNavigation.ViewModels.Navigation
         /// <param name="args">Arguments.</param>
         private void DisplayInstructions(EventArgs args)
         {
+            Console.WriteLine(">> DisplayInstructions");
             NavigationInstruction instruction = (args as NavigationEventArgs).NextInstruction;
 
             string currentStepImage;
@@ -93,7 +96,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                     SetInstruction(instruction, out currentStepLabel, out currentStepImage);
                     CurrentStepLabel = currentStepLabel;
                     CurrentStepImage = currentStepImage;
-                    CurrentWaypointName = instruction.NextWaypoint.Name;
+                    CurrentWaypointName = instruction.CurrentWaypoint.Name;
                     NavigationProgress = instruction.Progress;
                     break;
 
@@ -183,6 +186,7 @@ namespace IndoorNavigation.ViewModels.Navigation
         /// </summary>
         private void GetNavigationResultEvent(object sender, EventArgs args)
         {
+            Console.WriteLine("recevied event raised from NavigationModule");
             DisplayInstructions(args);
         }
 

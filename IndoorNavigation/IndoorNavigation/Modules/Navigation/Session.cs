@@ -47,11 +47,13 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Threading;
 using Dijkstra.NET.Model;
 using Dijkstra.NET.Extensions;
 using IndoorNavigation.Models.NavigaionLayer;
 using IndoorNavigation.Models;
 using IndoorNavigation.Modules.IPSClients;
+
 
 namespace IndoorNavigation.Modules
 {
@@ -71,7 +73,10 @@ namespace IndoorNavigation.Modules
 
         public SessionEvent Event { get; private set; }
 
+        public Waypoint _startWaypoint = new Waypoint();
         public Waypoint _finalWaypoint = new Waypoint();
+
+        private Thread _navigateThread;
 
         public Session(Navigraph graph,
                        Guid startWaypointID,
@@ -87,7 +92,7 @@ namespace IndoorNavigation.Modules
             _subgraph = graph.Regions[0].GetNavigationSubgraph(avoid);
 
             //Use the ID we get to search where the waypoints are
-            Waypoint startWaypoint = _subgraph.Where(node =>
+            _startWaypoint = _subgraph.Where(node =>
             node.Item.ID.Equals(startWaypointID)).Select(w => w.Item).First();
 
             _finalWaypoint = _subgraph.Where(node => 
@@ -95,12 +100,12 @@ namespace IndoorNavigation.Modules
 
             //Get the best route through dijkstra
             _currentNavigateStep = 0;
-            GetPath(startWaypoint,_finalWaypoint, _subgraph);
+            GetPath(_startWaypoint, _finalWaypoint, _subgraph);
 
             _IPSClient = new WaypointClient();
             _IPSClient.Event.EventHandler = new EventHandler(CheckArrivedWaypoint);
             Console.WriteLine("--------Constructor-------------------");
-            Console.WriteLine("source " + startWaypoint.ID);
+            Console.WriteLine("source " + _startWaypoint.ID);
             Console.WriteLine("destination " + _finalWaypoint.ID);
             Console.WriteLine("---------------------------");
             Console.WriteLine("Routing path:");
@@ -117,27 +122,50 @@ namespace IndoorNavigation.Modules
                 }
             }
 
-            // Start to navigate
-            CheckArrivedWaypoint(this, new WayPointSignalEventArgs{CurrentWaypoint = startWaypoint}); 
+            _navigateThread = new Thread(() => invokeIPSWork(_currentNavigateStep));
+            _navigateThread.Start();
+
 
             Console.WriteLine("---------Finish of contructor------------------");
         }
 
-        public void StartToNavigate(int currentStep) {
-            
-            //_IPSClient.Stop();
+        public void StartNavigate() {
+            CheckArrivedWaypoint(this, new WayPointSignalEventArgs { CurrentWaypoint = _startWaypoint });
 
+            int currentStep = 0;
             List<Waypoint> monitorWaypointList = new List<Waypoint>();
             monitorWaypointList.Add(_waypointsOnRoute[currentStep]);
-            for(int i = 0; i < _waypointsOnWrongWay[_waypointsOnRoute[currentStep].ID].Count; i++) { 
+            for (int i = 0; i < _waypointsOnWrongWay[_waypointsOnRoute[currentStep].ID].Count; i++)
+            {
                 monitorWaypointList.Add(_waypointsOnWrongWay[_waypointsOnRoute[currentStep].ID][i]);
             }
 
-            foreach (Waypoint waypoing in monitorWaypointList) {
+            foreach (Waypoint waypoing in monitorWaypointList)
+            {
                 Console.WriteLine("waypoints for monitoring: " + waypoing.ID);
             }
-            //_IPSClient.SetWaypointList(monitorWaypointList);
-            //_IPSClient.SignalProcessing();
+            _IPSClient.SetWaypointList(monitorWaypointList);
+
+        }
+        private void invokeIPSWork(int currentStep) {
+            /*           
+                        List<Waypoint> monitorWaypointList = new List<Waypoint>();
+                        monitorWaypointList.Add(_waypointsOnRoute[currentStep]);
+                        for(int i = 0; i < _waypointsOnWrongWay[_waypointsOnRoute[currentStep].ID].Count; i++) { 
+                            monitorWaypointList.Add(_waypointsOnWrongWay[_waypointsOnRoute[currentStep].ID][i]);
+                        }
+
+                        foreach (Waypoint waypoing in monitorWaypointList) {
+                            Console.WriteLine("waypoints for monitoring: " + waypoing.ID);
+                        }
+                       _IPSClient.SetWaypointList(monitorWaypointList);
+              */
+            while (true)
+            {
+                Thread.Sleep(1000);
+                _IPSClient.SignalProcessing();
+                
+            }
         }
 
         private void GetPath(Waypoint startWaypoint, 
@@ -209,10 +237,15 @@ namespace IndoorNavigation.Modules
             }
             else if (_waypointsOnRoute[_currentNavigateStep].Equals(currentWaypoint))
             {
-                Console.WriteLine("---- [case: arrived next waypoint] .... ");
+                Console.WriteLine("---- [case: arrived waypoint] .... ");
 
+                Console.WriteLine("current waypoint: " + currentWaypoint.ID);
+                Console.WriteLine("next waypoint: " + _waypointsOnRoute[_currentNavigateStep+1].ID);
+
+                navigationInstruction.CurrentWaypoint = _waypointsOnRoute[_currentNavigateStep];
                 navigationInstruction.NextWaypoint =
                                         _waypointsOnRoute[_currentNavigateStep+1];
+
                 
                 //If the floor information between the current waypoint and
                 //next are different, it means that the users need to change
@@ -222,6 +255,7 @@ namespace IndoorNavigation.Modules
                 if (currentWaypoint.Floor !=
                                 _waypointsOnRoute[_currentNavigateStep + 1].Floor)
                 {
+                    Console.WriteLine("different floor case");
                     if (currentWaypoint.Floor >
                                 _waypointsOnRoute[_currentNavigateStep + 1].Floor)
                     {
@@ -232,6 +266,7 @@ namespace IndoorNavigation.Modules
                         navigationInstruction.Direction = TurnDirection.Up;
                     }
                     navigationInstruction.Distance = 0;
+                    Console.WriteLine("end of different floor case");
                 }
                 //If the fllor information between current way point and next
                 // way point are the same, we need to tell the user go
@@ -239,6 +274,7 @@ namespace IndoorNavigation.Modules
                 //three informations, previous, current and next waypoints
                 else
                 {
+                    Console.WriteLine("same floor case");
                     navigationInstruction.Distance =
                     Navigraph.GetDistance(_subgraph,
                                           currentWaypoint,
@@ -261,6 +297,7 @@ namespace IndoorNavigation.Modules
                                             currentWaypoint,
                                            _waypointsOnRoute[_currentNavigateStep + 1]);
                     }
+                    Console.WriteLine("end of same floor case");
                 }
                 
                 //Get the progress
@@ -274,9 +311,21 @@ namespace IndoorNavigation.Modules
                     Result = NavigationResult.Run,
                     NextInstruction = navigationInstruction
                 });
-                _currentNavigateStep++;
-                StartToNavigate(_currentNavigateStep);
+                Console.WriteLine("After raising event from Session");
 
+                int currentStep = _currentNavigateStep+1;
+                List<Waypoint> monitorWaypointList = new List<Waypoint>();
+                monitorWaypointList.Add(_waypointsOnRoute[currentStep]);
+                for (int i = 0; i < _waypointsOnWrongWay[_waypointsOnRoute[currentStep].ID].Count; i++)
+                {
+                    monitorWaypointList.Add(_waypointsOnWrongWay[_waypointsOnRoute[currentStep].ID][i]);
+                }
+
+                foreach (Waypoint waypoing in monitorWaypointList)
+                {
+                    Console.WriteLine("waypoints for monitoring: " + waypoing.ID);
+                }
+                _IPSClient.SetWaypointList(monitorWaypointList);
             }
             else if (_waypointsOnWrongWay[_waypointsOnRoute[_currentNavigateStep].ID].Contains(currentWaypoint) == false)
             {
@@ -341,6 +390,9 @@ namespace IndoorNavigation.Modules
             /// <summary>
             /// The next waypoint within navigation path
             /// </summary>
+            /// 
+            public Waypoint CurrentWaypoint;
+
             public Waypoint NextWaypoint;
 
             /// <summary>

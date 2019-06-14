@@ -74,14 +74,14 @@ namespace IndoorNavigation.Modules
             _sourceWaypointID = new Guid("00000018-0000-0000-6660-000000011900");
             _destinationID = destinationID;
 
-            StartSession();
+            ConstructSession();
         }
 
         /// <summary>
         /// If it is the first time to get waypoint then get the value of 
         /// route options and start the corresponding session.
         /// </summary>
-        private void StartSession()
+        private void ConstructSession()
         {
             const int falseInt = -100;
             List<int> avoidList = new List<int>();
@@ -119,12 +119,17 @@ namespace IndoorNavigation.Modules
             Console.WriteLine("-- end StartSession --- ");
         }
 
+        public void StartNavigate() {
+            _session.StartNavigate();
+        }
+
         /// <summary>
         /// Get the navigation result from the session and 
         /// raise event to notify the NavigatorPageViewModel.
         /// </summary>
         private void HandleNavigationResult(object sender, EventArgs args)
         {
+            Console.WriteLine("received event raised from Session class");
             NavigationEvent.OnEventCall(args);
         }
 

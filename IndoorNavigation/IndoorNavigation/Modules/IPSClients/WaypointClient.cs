@@ -54,8 +54,8 @@ namespace IndoorNavigation.Modules.IPSClients
     class WaypointClient : IIPSClient
     {
         // _beaconList must not be Waypoint List, but we uses it temporarily now.
-        private List<Waypoint> _beaconList;
-        private List<Waypoint> _waypointList;
+        private List<Waypoint> _beaconList = new List<Waypoint>();
+        private List<Waypoint> _waypointList = new List<Waypoint>();
 
         private object bufferLock = new object();
         private readonly EventHandler HBeaconScan;
@@ -69,28 +69,28 @@ namespace IndoorNavigation.Modules.IPSClients
 
             HBeaconScan = new EventHandler(HandleBeaconScan);
             Utility.BeaconScan.Event.BeaconScanEventHandler += HBeaconScan;
-            _beaconList = null;
-            _waypointList = null;
+            _beaconList = new List<Waypoint>();
+            _waypointList = new List<Waypoint>();
         }
 
         public void SetWaypointList(List<Waypoint> WaypointList)
         {
-            if (WaypointList != null)
+            this._beaconList = new List<Waypoint>(); ;
+            this._waypointList = WaypointList;
+                
+            for(int i = 0;i<WaypointList.Count;i++)
             {
-                this._beaconList = WaypointList;
-                this._waypointList = WaypointList;
-                //foreach (Waypoint monitorWaypoing in WaypointList) {
-                //    _beaconList.Add(new Waypoint { ID = monitorWaypoing.ID } );
-                //}
-
-                for(int i = 0;i<WaypointList.Count;i++)
-                {
-                    _beaconList.Add(new Waypoint { ID = WaypointList[i].ID });
-                }
-            
+                _beaconList.Add(new Waypoint { ID = WaypointList[i].ID });
             }
-            else
-                throw new ArgumentException("Parameter cannot be null", "WaypointList");
+
+            List<Guid> tempBeaconGuid = new List<Guid>();
+            for (int i = 0; i < WaypointList.Count; i++)
+            {
+                tempBeaconGuid.Add(WaypointList[i].ID);
+            }
+            Utility.BeaconScan.StopScan();
+            Utility.BeaconScan.StartScan(tempBeaconGuid);
+
         }
 
         public void SignalProcessing()
@@ -108,13 +108,31 @@ namespace IndoorNavigation.Modules.IPSClients
                 foreach (var obsoleteBeaconSignal in removeSignalBuffer)
                     beaconSignalBuffer.Remove(obsoleteBeaconSignal);
 
+                // for testing
+                /*
+                List<BeaconSignalModel> signals = new List<BeaconSignalModel>();
+                signals.Add(new BeaconSignalModel { UUID = Guid.Parse("00000018-0000-0000-3060-000000010700"), Major = 1, Minor = 0, RSSI = -30 });
+                beaconSignalBuffer = signals;
+                */
+
                 foreach (BeaconSignalModel beacon in beaconSignalBuffer) {
                     Waypoint tempWaypoint = new Waypoint { ID = beacon.UUID };
+                    // for testing
+                    /*
+                    Console.WriteLine("Detected waypoint: [" + tempWaypoint.ID + "] rssi=" + beacon.RSSI);
+                    Event.OnEventCall(new WayPointSignalEventArgs
+                    {
+                        CurrentWaypoint = tempWaypoint
+                    }); 
+                    //
+                    */
+                    Console.WriteLine("Detected waypoint: [" + tempWaypoint.ID + "] rssi=" + beacon.RSSI);
                     if (_beaconList.Contains(tempWaypoint) && beacon.RSSI > -50) {
                         Event.OnEventCall(new WayPointSignalEventArgs{
                             CurrentWaypoint = tempWaypoint
                         }); ;
                     }
+
                 }
             }
         }

@@ -248,6 +248,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                                 Waypoint currentWaypoint,
                                                 Waypoint nextWaypoint)
         {
+            /*
             // Find the cardinal direction to the next waypoint
             CardinalDirection currentDirection = previousWaypoint.Neighbors
                                             .Where(neighbors =>
@@ -266,6 +267,8 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                 nextTurnDirection + 8 : nextTurnDirection;
 
             return (TurnDirection)nextTurnDirection;
+            */
+            return (TurnDirection)0;
         }
 
         #endregion

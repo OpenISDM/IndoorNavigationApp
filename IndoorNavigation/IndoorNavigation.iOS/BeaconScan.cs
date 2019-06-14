@@ -58,6 +58,7 @@ namespace IndoorNavigation.iOS
             if (e.Beacons.Length != 0)
             {
                 // 發送Beacon訊號強度和其它資訊到訊號分析模組
+                /*
                 List<BeaconSignalModel> signals = e.Beacons.Select(c => 
                     new BeaconSignalModel {
                         UUID = Guid.Parse(c.ProximityUuid.AsString()),
@@ -65,6 +66,9 @@ namespace IndoorNavigation.iOS
                         Minor = c.Minor.Int32Value,
                         RSSI = (int)c.Rssi,
                     }).ToList();
+                    */
+                List<BeaconSignalModel> signals = new List<BeaconSignalModel>();
+                signals.Add(new BeaconSignalModel { UUID=Guid.Parse("00000018-0000-0000-3060-000000010700"), Major=1, Minor=0, RSSI=-30});
 
                 Event.OnEventCall(new BeaconScanEventArgs
                 {
