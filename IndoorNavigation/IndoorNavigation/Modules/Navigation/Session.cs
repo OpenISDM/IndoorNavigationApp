@@ -127,12 +127,10 @@ namespace IndoorNavigation.Modules
 
 
             Console.WriteLine("---------Finish of contructor------------------");
+            StartNavigate(_currentNavigateStep);
         }
 
-        public void StartNavigate() {
-            CheckArrivedWaypoint(this, new WayPointSignalEventArgs { CurrentWaypoint = _startWaypoint });
-
-            int currentStep = 0;
+        public void StartNavigate(int currentStep) {
             List<Waypoint> monitorWaypointList = new List<Waypoint>();
             monitorWaypointList.Add(_waypointsOnRoute[currentStep]);
             for (int i = 0; i < _waypointsOnWrongWay[_waypointsOnRoute[currentStep].ID].Count; i++)
@@ -142,7 +140,7 @@ namespace IndoorNavigation.Modules
 
             foreach (Waypoint waypoing in monitorWaypointList)
             {
-                Console.WriteLine("waypoints for monitoring: " + waypoing.ID);
+                Console.WriteLine("In Session's StartNavigate waypoints for monitoring: " + waypoing.ID);
             }
             _IPSClient.SetWaypointList(monitorWaypointList);
 
@@ -160,11 +158,12 @@ namespace IndoorNavigation.Modules
                         }
                        _IPSClient.SetWaypointList(monitorWaypointList);
               */
+            Console.WriteLine("---- invokeIPSWork ----");
             while (true)
             {
                 Thread.Sleep(1000);
                 _IPSClient.SignalProcessing();
-                
+                Console.WriteLine("thread for IPSClient.SignalProcessing....");   
             }
         }
 
@@ -313,19 +312,8 @@ namespace IndoorNavigation.Modules
                 });
                 Console.WriteLine("After raising event from Session");
 
-                int currentStep = _currentNavigateStep+1;
-                List<Waypoint> monitorWaypointList = new List<Waypoint>();
-                monitorWaypointList.Add(_waypointsOnRoute[currentStep]);
-                for (int i = 0; i < _waypointsOnWrongWay[_waypointsOnRoute[currentStep].ID].Count; i++)
-                {
-                    monitorWaypointList.Add(_waypointsOnWrongWay[_waypointsOnRoute[currentStep].ID][i]);
-                }
-
-                foreach (Waypoint waypoing in monitorWaypointList)
-                {
-                    Console.WriteLine("waypoints for monitoring: " + waypoing.ID);
-                }
-                _IPSClient.SetWaypointList(monitorWaypointList);
+                _currentNavigateStep++;
+                StartNavigate(_currentNavigateStep);
             }
             else if (_waypointsOnWrongWay[_waypointsOnRoute[_currentNavigateStep].ID].Contains(currentWaypoint) == false)
             {

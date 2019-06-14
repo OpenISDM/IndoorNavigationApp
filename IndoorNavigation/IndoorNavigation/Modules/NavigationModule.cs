@@ -119,10 +119,6 @@ namespace IndoorNavigation.Modules
             Console.WriteLine("-- end StartSession --- ");
         }
 
-        public void StartNavigate() {
-            _session.StartNavigate();
-        }
-
         /// <summary>
         /// Get the navigation result from the session and 
         /// raise event to notify the NavigatorPageViewModel.

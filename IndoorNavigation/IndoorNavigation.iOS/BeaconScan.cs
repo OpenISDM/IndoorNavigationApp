@@ -33,12 +33,16 @@ namespace IndoorNavigation.iOS
         public void StartScan(List<Guid> BeaconsUUID)
         {
             // 把要監聽的Beacon uuid轉換成系統API需要的物件
+            for (int i = 0; i < BeaconsUUID.Count; i++) {
+                Console.WriteLine("in BeaconScan's StartScan : " + BeaconsUUID[i]);
+            }
+
             beaconsRegion = new List<CLBeaconRegion>();
             var UUIDObjects = 
                 BeaconsUUID.Select(c => new NSUuid(c.ToString()));
             beaconsRegion.AddRange(
                 UUIDObjects.Select(c => new CLBeaconRegion(c, c.AsString())));
-
+            
             // 開始監聽beacon廣播
             foreach (CLBeaconRegion beaconRegion in beaconsRegion)
                 locationManager.StartRangingBeacons(beaconRegion);
@@ -55,10 +59,11 @@ namespace IndoorNavigation.iOS
         private void HandleDidRangeBeacons(object sender, 
             CLRegionBeaconsRangedEventArgs e)
         {
+            Console.WriteLine(">> HandleDidRangeBeacons e.Beacons.Length = " + e.Beacons.Length);
             if (e.Beacons.Length != 0)
             {
                 // 發送Beacon訊號強度和其它資訊到訊號分析模組
-                /*
+                
                 List<BeaconSignalModel> signals = e.Beacons.Select(c => 
                     new BeaconSignalModel {
                         UUID = Guid.Parse(c.ProximityUuid.AsString()),
@@ -66,14 +71,12 @@ namespace IndoorNavigation.iOS
                         Minor = c.Minor.Int32Value,
                         RSSI = (int)c.Rssi,
                     }).ToList();
-                    */
-                List<BeaconSignalModel> signals = new List<BeaconSignalModel>();
-                signals.Add(new BeaconSignalModel { UUID=Guid.Parse("00000018-0000-0000-3060-000000010700"), Major=1, Minor=0, RSSI=-30});
-
+                
                 Event.OnEventCall(new BeaconScanEventArgs
                 {
                     Signals = signals
                 });
+                Console.WriteLine("after raising event in HandleDigRangeBeacons");
             }
         }
 

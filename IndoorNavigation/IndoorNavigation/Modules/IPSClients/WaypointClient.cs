@@ -88,13 +88,15 @@ namespace IndoorNavigation.Modules.IPSClients
             {
                 tempBeaconGuid.Add(WaypointList[i].ID);
             }
-            Utility.BeaconScan.StopScan();
+          //  Utility.BeaconScan.StopScan();
             Utility.BeaconScan.StartScan(tempBeaconGuid);
 
         }
 
         public void SignalProcessing()
         {
+            Console.WriteLine(">> In SignalProcessing");
+
             // Remove the obsolete data from buffer
             List<BeaconSignalModel> removeSignalBuffer =
                 new List<BeaconSignalModel>();
@@ -141,6 +143,8 @@ namespace IndoorNavigation.Modules.IPSClients
         {
             // Beacon signal filter, keeps the Beacon's signal recorded in
             // the graph
+            Console.WriteLine(">> HandleBeaconScan");
+
             IEnumerable<BeaconSignalModel> signals =
                 (e as BeaconScanEventArgs).Signals
                 .Where(signal => Utility.BeaconsDict.Values

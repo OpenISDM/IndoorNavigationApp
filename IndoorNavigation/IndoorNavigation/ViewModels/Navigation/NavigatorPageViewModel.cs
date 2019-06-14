@@ -73,8 +73,6 @@ namespace IndoorNavigation.ViewModels.Navigation
             _navigationModule = new NavigationModule(navigraphName, destinationID);
             _navigationModule.NavigationEvent.ResultEventHandler += GetNavigationResultEvent;
 
-            _navigationModule.StartNavigate();
-
         }
 
         /// <summary>
