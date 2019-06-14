@@ -116,8 +116,6 @@ namespace IndoorNavigation.Modules
             _navigationResultHandler = new EventHandler(HandleNavigationResult);
             _session.Event.SessionResultHandler += _navigationResultHandler;
 
-            //_session.StartToNavigate(0);
-
             Console.WriteLine("-- end StartSession --- ");
         }
 
