@@ -1,4 +1,103 @@
 ﻿using System;
+using CoreBluetooth;
+using System.Diagnostics;
+using System.Threading.Tasks;
+using System.Linq;
+using Foundation;
+using IndoorNavigation.Models;
+using System.Collections.Generic;
+using IndoorNavigation.iOS;
+
+//namespace Bluetooth
+
+[assembly: Xamarin.Forms.Dependency(typeof(BeaconScan))]
+namespace IndoorNavigation.iOS
+{
+    public class BeaconScan : IBeaconScan
+    {
+        public BeaconScanEvent Event { get; private set; }
+
+        public void StartScan(List<Guid> BeaconsUUID) {
+            Console.WriteLine("Scanning started: CBCentralManager state = " + this.manager.State);
+            
+            if (CBCentralManagerState.PoweredOn == this.manager.State)
+            {
+                /*
+                var uuids = string.IsNullOrEmpty(serviceUuid)
+                    ? new CBUUID[0]
+                    : new[] { CBUUID.FromString(serviceUuid) };
+                    */
+                var uuids = new CBUUID[0];
+                this.manager.ScanForPeripherals(uuids);
+                
+
+                //await Task.Delay(scanDuration);
+                //this.StopScan();
+            }
+        }
+        public void Close() {
+        }
+
+
+        private readonly CBCentralManager manager = new CBCentralManager();
+
+        public EventHandler DiscoveredDevice;
+        public EventHandler StateChanged;
+
+        public BeaconScan()
+        {
+            Event = new BeaconScanEvent();
+            this.manager.DiscoveredPeripheral += this.DiscoveredPeripheral;
+            this.manager.UpdatedState += this.UpdatedState;
+            Console.WriteLine("In BeaconScan constructor: CBCentralManager stata =" + this.manager.State);
+        }
+
+        public void Dispose()
+        {
+            this.manager.DiscoveredPeripheral -= this.DiscoveredPeripheral;
+            this.manager.UpdatedState -= this.UpdatedState;
+        }
+
+        public void StopScan()
+        {
+            this.manager.StopScan();
+            Console.WriteLine("Scanning stopped");
+        }
+
+        private void DiscoveredPeripheral(object sender, CBDiscoveredPeripheralEventArgs args)
+        {
+            /* var device = $"{args.Peripheral.Name} - {args.Peripheral.Identifier?.Description}";
+             Debug.WriteLine($"Discovered {device}");
+             this.DiscoveredDevice?.Invoke(sender, args.Peripheral);
+             */
+            Console.WriteLine("detected " + (args as CBDiscoveredPeripheralEventArgs).Peripheral.Identifier + " rssi = " + (args as CBDiscoveredPeripheralEventArgs).RSSI);
+
+            List<BeaconSignalModel> signals = new List<BeaconSignalModel>();
+
+            signals.Add(new BeaconSignalModel
+            {
+                UUID = new Guid((args as CBDiscoveredPeripheralEventArgs).Peripheral.Identifier.AsString()),
+                RSSI = (args as CBDiscoveredPeripheralEventArgs).RSSI.Int32Value
+            }) ;
+
+            Event.OnEventCall(new BeaconScanEventArgs
+            {
+                Signals = signals
+            });
+        }
+
+        private void UpdatedState(object sender, EventArgs args)
+        {
+            /*
+            Debug.WriteLine($"State = {this.manager.State}");
+            this.StateChanged?.Invoke(sender, this.manager.State);
+            */
+        }
+    }
+}
+
+    /*
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -86,4 +185,4 @@ namespace IndoorNavigation.iOS
             locationManager.Dispose();
         }
     }
-}
+}*/

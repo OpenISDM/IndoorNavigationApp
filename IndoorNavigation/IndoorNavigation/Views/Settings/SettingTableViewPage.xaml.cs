@@ -117,8 +117,10 @@ namespace IndoorNavigation.Views.Settings
 #if DEBUG
             string qrCodeValue = string.Empty;
             if (DeviceInfo.DeviceType == DeviceType.Virtual)
+            {
                 // qrCodeValue = "https://drive.google.com/uc?authuser=0&id=1TakJcYBgZ07s4WrF1-n6p5mgqttjX5UL&export=download@OpenISDM";
                 qrCodeValue = "https://drive.google.com/uc?authuser=0&id=1VIogxEeLWRnH8lf5uNWpXKiiP6ae3Zlw&export=download@OpenISDM";
+            }
             else
             {
                 IQrCodeDecoder qrCodeDecoder = DependencyService.Get<IQrCodeDecoder>();
