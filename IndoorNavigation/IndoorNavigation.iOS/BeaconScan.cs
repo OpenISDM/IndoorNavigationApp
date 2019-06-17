@@ -16,6 +16,11 @@ namespace IndoorNavigation.iOS
 {
     public class BeaconScan : IBeaconScan
     {
+        private readonly CBCentralManager manager = new CBCentralManager();
+
+        public EventHandler DiscoveredDevice;
+        public EventHandler StateChanged;
+
         public BeaconScanEvent Event { get; private set; }
 
         public void StartScan(List<Guid> BeaconsUUID) {
@@ -29,7 +34,10 @@ namespace IndoorNavigation.iOS
                     : new[] { CBUUID.FromString(serviceUuid) };
                     */
                 var uuids = new CBUUID[0];
-                this.manager.ScanForPeripherals(uuids);
+                PeripheralScanningOptions options = new PeripheralScanningOptions();
+                options.AllowDuplicatesKey = true;
+
+                this.manager.ScanForPeripherals(uuids, options);
                 
 
                 //await Task.Delay(scanDuration);
@@ -38,12 +46,6 @@ namespace IndoorNavigation.iOS
         }
         public void Close() {
         }
-
-
-        private readonly CBCentralManager manager = new CBCentralManager();
-
-        public EventHandler DiscoveredDevice;
-        public EventHandler StateChanged;
 
         public BeaconScan()
         {
