@@ -70,20 +70,26 @@ namespace IndoorNavigation.iOS
              Debug.WriteLine($"Discovered {device}");
              this.DiscoveredDevice?.Invoke(sender, args.Peripheral);
              */
-            Console.WriteLine("detected " + (args as CBDiscoveredPeripheralEventArgs).Peripheral.Identifier + " rssi = " + (args as CBDiscoveredPeripheralEventArgs).RSSI);
+             /*
+            if ((args as CBDiscoveredPeripheralEventArgs).RSSI.Int32Value > -50)
+            {*/
+                Console.WriteLine("detected " + (args as CBDiscoveredPeripheralEventArgs).Peripheral.Identifier + " Services = " + (args as CBDiscoveredPeripheralEventArgs).Peripheral.Services + " rssi = " + (args as CBDiscoveredPeripheralEventArgs).RSSI);
 
-            List<BeaconSignalModel> signals = new List<BeaconSignalModel>();
+                List<BeaconSignalModel> signals = new List<BeaconSignalModel>();
 
-            signals.Add(new BeaconSignalModel
-            {
-                UUID = new Guid((args as CBDiscoveredPeripheralEventArgs).Peripheral.Identifier.AsString()),
-                RSSI = (args as CBDiscoveredPeripheralEventArgs).RSSI.Int32Value
-            }) ;
+                signals.Add(new BeaconSignalModel
+                {
+                    UUID = new Guid((args as CBDiscoveredPeripheralEventArgs).Peripheral.Identifier.AsString()),
+                    RSSI = (args as CBDiscoveredPeripheralEventArgs).RSSI.Int32Value
+                });
 
-            Event.OnEventCall(new BeaconScanEventArgs
-            {
-                Signals = signals
-            });
+                Event.OnEventCall(new BeaconScanEventArgs
+                {
+                    Signals = signals
+                });
+            /*
+            }
+            */
         }
 
         private void UpdatedState(object sender, EventArgs args)

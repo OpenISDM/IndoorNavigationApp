@@ -145,14 +145,24 @@ namespace IndoorNavigation.Modules.IPSClients
             // the graph
             Console.WriteLine(">> HandleBeaconScan");
 
+            /*
             IEnumerable<BeaconSignalModel> signals =
                 (e as BeaconScanEventArgs).Signals
                 .Where(signal => Utility.BeaconsDict.Values
                 .Select(beacon => (beacon.UUID, beacon.Major, beacon.Minor))
                 .Contains((signal.UUID, signal.Major, signal.Minor)));
+            */
+
+            IEnumerable<BeaconSignalModel> signals =
+                (e as BeaconScanEventArgs).Signals;
+
+            foreach (BeaconSignalModel signal in signals) {
+                Console.WriteLine("In WaypointClient, Detected LBeacon UUID : " + signal.UUID + " RSSI = " + signal.RSSI);
+            }
 
             lock (bufferLock)
                 beaconSignalBuffer.AddRange(signals);
+
 
         }
 
