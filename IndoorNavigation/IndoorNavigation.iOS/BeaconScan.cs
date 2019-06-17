@@ -73,6 +73,14 @@ namespace IndoorNavigation.iOS
              Debug.WriteLine($"Discovered {device}");
              this.DiscoveredDevice?.Invoke(sender, args.Peripheral);
              */
+
+            /*
+            Sample of AdvertisementData data:
+            2019-06-17 13:31:52.209 IndoorNavigation.iOS[904:5335527] detected 7A8B3CF6-48C9-61FB-C100-9A6AFF29053D AdvertisementData = {
+                kCBAdvDataIsConnectable = 0;
+                kCBAdvDataManufacturerData = <0f000215 00000018 00000000 24600000 00002300 00020000 ce>;
+            } rssi = -42
+            */
             if ((args as CBDiscoveredPeripheralEventArgs).RSSI.Int32Value > -50)
             {
                 string bufferUUID = " ";
