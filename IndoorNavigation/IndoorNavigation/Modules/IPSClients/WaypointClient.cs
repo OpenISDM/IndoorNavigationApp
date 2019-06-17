@@ -128,11 +128,13 @@ namespace IndoorNavigation.Modules.IPSClients
                     }); 
                     //
                     */
-                    Console.WriteLine("Detected waypoint: [" + tempWaypoint.ID + "] rssi=" + beacon.RSSI);
-                    if (_beaconList.Contains(tempWaypoint) && beacon.RSSI > -50) {
+                    Console.WriteLine("Detected waypoint: [" + tempWaypoint.ID + "]");
+                    if (_beaconList.Contains(tempWaypoint)) {
+                        Console.WriteLine("Matched waypoint");
+
                         Event.OnEventCall(new WayPointSignalEventArgs{
                             CurrentWaypoint = tempWaypoint
-                        }); ;
+                        }); 
                     }
 
                 }

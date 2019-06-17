@@ -71,39 +71,39 @@ namespace IndoorNavigation.iOS
              Debug.WriteLine($"Discovered {device}");
              this.DiscoveredDevice?.Invoke(sender, args.Peripheral);
              */
-            /*
-           if ((args as CBDiscoveredPeripheralEventArgs).RSSI.Int32Value > -50
-           {*/
+            if ((args as CBDiscoveredPeripheralEventArgs).RSSI.Int32Value > -50)
+            {
                 string bufferUUID = " ";
                 string identifierUUID = "";
-                Console.WriteLine("detected " + (args as CBDiscoveredPeripheralEventArgs).Peripheral.Identifier + " Services = " + (args as CBDiscoveredPeripheralEventArgs).Peripheral.Services + " rssi = " + (args as CBDiscoveredPeripheralEventArgs).RSSI);
-                Console.WriteLine("UUID is" + (args as CBDiscoveredPeripheralEventArgs).AdvertisementData.ValueForKey((NSString)"kCBAdvDataManufacturerData"));
+         //       Console.WriteLine("detected " + (args as CBDiscoveredPeripheralEventArgs).Peripheral.Identifier + " Services = " + (args as CBDiscoveredPeripheralEventArgs).Peripheral.Services + " rssi = " + (args as CBDiscoveredPeripheralEventArgs).RSSI);
+         //       Console.WriteLine("UUID is" + (args as CBDiscoveredPeripheralEventArgs).AdvertisementData.ValueForKey((NSString)"kCBAdvDataManufacturerData"));
                 var tempUUID = (args as CBDiscoveredPeripheralEventArgs).AdvertisementData.ValueForKey((NSString)"kCBAdvDataManufacturerData");
                 //Console.WriteLine("UUUUUUUU " + tempUUID);
-                List<BeaconSignalModel> signals = new List<BeaconSignalModel>();
-                if(tempUUID==null)
-                { }
-                else 
+                if (tempUUID != null)
                 {
                     bufferUUID = tempUUID.ToString();
-                    identifierUUID =  readfile(bufferUUID);
-                 }
+                    identifierUUID = readfile(bufferUUID);
 
-                //Console.WriteLine("WWWWWWW" + bufferUUID);
+                    //Console.WriteLine("WWWWWWW" + bufferUUID);
+                    if (identifierUUID.Length >= 36)
+                    {
+                        List<BeaconSignalModel> signals = new List<BeaconSignalModel>();
 
-                signals.Add(new BeaconSignalModel
-                {
-                    UUID = new Guid(identifierUUID),
-                    RSSI = (args as CBDiscoveredPeripheralEventArgs).RSSI.Int32Value
-                });
+                        signals.Add(new BeaconSignalModel
+                        {
+                            UUID = new Guid(identifierUUID),
+                            RSSI = (args as CBDiscoveredPeripheralEventArgs).RSSI.Int32Value
+                        });
 
-                Event.OnEventCall(new BeaconScanEventArgs
-                {
-                    Signals = signals
-                });
-            /*
-            }
-            */
+                        Event.OnEventCall(new BeaconScanEventArgs
+                        {
+                            Signals = signals
+                        });
+                    }
+                }
+
+            }   
+            
         }
 
         private void UpdatedState(object sender, EventArgs args)
@@ -121,11 +121,13 @@ namespace IndoorNavigation.iOS
 
            
             string[] parse = parseUUID.Split(" ");
+        /*
             for(int i = 0;i<parse.Count();i++)
             {
                 Console.WriteLine("parser test " + parse[i]);
             }
             Console.WriteLine("range : " + parse.Count());
+        */
             if(parse.Count()<6)
             {
                 return parseUUID;
