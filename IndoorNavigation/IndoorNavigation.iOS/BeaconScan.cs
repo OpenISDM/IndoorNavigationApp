@@ -7,6 +7,7 @@ using Foundation;
 using IndoorNavigation.Models;
 using System.Collections.Generic;
 using IndoorNavigation.iOS;
+using System.IO;
 
 //namespace Bluetooth
 
@@ -70,16 +71,29 @@ namespace IndoorNavigation.iOS
              Debug.WriteLine($"Discovered {device}");
              this.DiscoveredDevice?.Invoke(sender, args.Peripheral);
              */
-             /*
-            if ((args as CBDiscoveredPeripheralEventArgs).RSSI.Int32Value > -50)
-            {*/
+            /*
+           if ((args as CBDiscoveredPeripheralEventArgs).RSSI.Int32Value > -50
+           {*/
+                string bufferUUID = " ";
+                string identifierUUID = "";
                 Console.WriteLine("detected " + (args as CBDiscoveredPeripheralEventArgs).Peripheral.Identifier + " Services = " + (args as CBDiscoveredPeripheralEventArgs).Peripheral.Services + " rssi = " + (args as CBDiscoveredPeripheralEventArgs).RSSI);
-
+                Console.WriteLine("UUID is" + (args as CBDiscoveredPeripheralEventArgs).AdvertisementData.ValueForKey((NSString)"kCBAdvDataManufacturerData"));
+                var tempUUID = (args as CBDiscoveredPeripheralEventArgs).AdvertisementData.ValueForKey((NSString)"kCBAdvDataManufacturerData");
+                //Console.WriteLine("UUUUUUUU " + tempUUID);
                 List<BeaconSignalModel> signals = new List<BeaconSignalModel>();
+                if(tempUUID==null)
+                { }
+                else 
+                {
+                    bufferUUID = tempUUID.ToString();
+                    identifierUUID =  readfile(bufferUUID);
+                 }
+
+                //Console.WriteLine("WWWWWWW" + bufferUUID);
 
                 signals.Add(new BeaconSignalModel
                 {
-                    UUID = new Guid((args as CBDiscoveredPeripheralEventArgs).Peripheral.Identifier.AsString()),
+                    UUID = new Guid(identifierUUID),
                     RSSI = (args as CBDiscoveredPeripheralEventArgs).RSSI.Int32Value
                 });
 
@@ -98,6 +112,33 @@ namespace IndoorNavigation.iOS
             Debug.WriteLine($"State = {this.manager.State}");
             this.StateChanged?.Invoke(sender, this.manager.State);
             */
+        }
+        private string readfile(string parseUUID)
+        {
+            ////string[] stringSeparators = new string[] { "\r\n" };
+            //string[] parser = parseUUID.Split(stringSeparators, StringSplitOptions.None);
+            ///var parser = parseUUID.Split(Environment.NewLine.ToString());
+
+           
+            string[] parse = parseUUID.Split(" ");
+            for(int i = 0;i<parse.Count();i++)
+            {
+                Console.WriteLine("parser test " + parse[i]);
+            }
+            Console.WriteLine("range : " + parse.Count());
+            if(parse.Count()<6)
+            {
+                return parseUUID;
+            }
+            else
+            {
+                var parser = parse[1] + "-"+ parse[2].Substring(0,4)+"-"+parse[2].Substring(4,4)+"-"
+                     + parse[3].Substring(0,4) + "-" + parse[3].Substring(4,4) + parse[4];
+                Console.WriteLine("result" + parser);
+                return parser.ToString();
+            }
+
+
         }
     }
 }
