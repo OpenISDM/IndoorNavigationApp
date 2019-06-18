@@ -103,7 +103,9 @@ namespace IndoorNavigation.Modules
             GetPath(_startWaypoint, _finalWaypoint, _subgraph);
 
             _IPSClient = new WaypointClient();
-            _IPSClient.Event.EventHandler = new EventHandler(CheckArrivedWaypoint);
+            _IPSClient.Event.EventHandler += new EventHandler(CheckArrivedWaypoint);
+            Console.WriteLine("This waypoint hashcode is " + _IPSClient.GetHashCode());
+
             Console.WriteLine("--------Constructor-------------------");
             Console.WriteLine("source " + _startWaypoint.ID);
             Console.WriteLine("destination " + _finalWaypoint.ID);
@@ -216,8 +218,7 @@ namespace IndoorNavigation.Modules
         {
             Console.WriteLine(">> CheckArrivedWaypoint ");
             Waypoint currentWaypoint = _subgraph.Where(node =>
-            node.Item.ID.Equals((args as WayPointSignalEventArgs).CurrentWaypoint.ID)).
-            Select(w => w.Item).First();
+                node.Item.ID.Equals((args as WayPointSignalEventArgs).CurrentWaypoint.ID)).Select(w => w.Item).First();
 
             //NavigationInstruction is a structure that contains five
             //elements that need to be passed to the main and UI
@@ -298,7 +299,7 @@ namespace IndoorNavigation.Modules
                     }
                     Console.WriteLine("end of same floor case");
                 }
-                
+
                 //Get the progress
                 navigationInstruction.Progress =
                 (double)Math.Round(
@@ -307,6 +308,7 @@ namespace IndoorNavigation.Modules
                 // Raise event to notify the UI/main thread with the result
                 Event.OnEventCall(new NavigationEventArgs
                 {
+
                     Result = NavigationResult.Run,
                     NextInstruction = navigationInstruction
                 });
@@ -329,18 +331,19 @@ namespace IndoorNavigation.Modules
                 _waypointsOnRoute = new List<Waypoint>();
                 _waypointsOnWrongWay = new Dictionary<Guid, List<Waypoint>>();
                 GetPath(currentWaypoint, _finalWaypoint, _subgraph);
-                _currentNavigateStep = 0;
+                _currentNavigateStep = 0;                
 
                 Event.OnEventCall(new NavigationEventArgs
                 {
                     Result = NavigationResult.Run,
                     NextInstruction = new NavigationInstruction
                     {
-                        NextWaypoint = _waypointsOnRoute[1],
+                        CurrentWaypoint = _waypointsOnRoute[_currentNavigateStep],
+                        NextWaypoint = _waypointsOnRoute[_currentNavigateStep+1],
                         Distance = Navigraph.
                         GetDistance(_subgraph,
                                     currentWaypoint,
-                                    _waypointsOnRoute[1]),
+                                    _waypointsOnRoute[_currentNavigateStep+1]),
                         Progress = 0,
                         Direction = TurnDirection.FirstDirection
                     }
@@ -370,6 +373,8 @@ namespace IndoorNavigation.Modules
             // ViewModel to update the UI instruction.
             /// </summary>
             public NavigationInstruction NextInstruction { get; set; }
+
+            
 
         }
 

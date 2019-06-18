@@ -10,6 +10,7 @@ namespace IndoorNavigation.Models
 
         public void OnEventCall(EventArgs e)
         {
+            Console.WriteLine("Check Beacon Event") ;
             BeaconScanEventHandler?.Invoke(this, e);
         }
     }

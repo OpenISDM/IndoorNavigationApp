@@ -58,7 +58,6 @@ namespace IndoorNavigation.Models
     {
         [XmlElement("UUID")]
         public Guid UUID { get; set; }
-
         [XmlElement("MappedWaypointUUID")]
         public Guid MappedWaypointUUID { get; set; }
 
@@ -87,7 +86,7 @@ namespace IndoorNavigation.Models
         [XmlArray("Beacons")]
         [XmlArrayItem("Beacon", typeof(Beacons))]
         public List<Beacons> Beacons;
-
+       
         /// <summary>
         /// Gets or sets the name of Region.
         /// e.g. 1F of NTUH
@@ -122,7 +121,6 @@ namespace IndoorNavigation.Models
         /// </summary>
         public Graph<Waypoint, string> GetNavigationSubgraph(int[] avoid)
         {
-
             // Add all the waypoints of each region into region graph
             foreach (Waypoint waypoint in Waypoints)
             {
