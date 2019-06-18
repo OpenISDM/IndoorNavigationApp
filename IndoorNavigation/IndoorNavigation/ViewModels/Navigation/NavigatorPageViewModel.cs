@@ -60,7 +60,6 @@ namespace IndoorNavigation.ViewModels.Navigation
         private NavigationModule _navigationModule;
 
         public TestEvent testEvent;
-        public DisplayEvent displayEvent;
 
         public NavigatorPageViewModel(string navigraphName, string destinationName, Guid destinationID)
         {
@@ -74,30 +73,6 @@ namespace IndoorNavigation.ViewModels.Navigation
             _navigationModule = new NavigationModule(navigraphName, destinationID);
             _navigationModule.NavigationEvent.ResultEventHandler += GetNavigationResultEvent;
 
-           // displayEvent.DisplayEventHandler += _navigationModule.HandleCurrentWaypoint;
-
-        }
-
-
-        public void GetNextWaypoint()
-        {
-            string abc = "00000018-0000-0000-2460-000000005900";
-            Guid guidOutput = new Guid(abc);
-        }
-
-        public void GetWaypointFunction()
-        {
-            Guid guidOutput;
-            guidOutput = Guid.TryParse(NextWaypointName, out guidOutput) ? guidOutput : Guid.Empty;
-
-            // TODO: Should also check this UUID whether it is in the navigation graph
-            if (guidOutput != Guid.Empty)
-            {
-                testEvent.OnEventCall(new WaypointScanEventArgs
-                {
-                    WaypointID = guidOutput
-                });
-            }
         }
 
         /// <summary>
@@ -354,16 +329,6 @@ namespace IndoorNavigation.ViewModels.Navigation
         public void OnEventCall(EventArgs args)
         {
             TestEventHandler?.Invoke(this, args);
-        }
-    }
-
-    public class DisplayEvent
-    {
-        public event EventHandler DisplayEventHandler;
-
-        public void OnEventCall(EventArgs args)
-        {
-            DisplayEventHandler?.Invoke(this, args);
         }
     }
 }

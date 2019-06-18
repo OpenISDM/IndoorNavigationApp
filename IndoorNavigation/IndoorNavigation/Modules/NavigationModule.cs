@@ -59,36 +59,29 @@ namespace IndoorNavigation.Modules
         private Guid _sourceWaypointID;
         private Guid _destinationID;
 
-        private EventHandler _currentWaypointHandler;
         private EventHandler _navigationResultHandler;
 
-        public WaypointEvent WaypointEvent { get; private set; }
         public NavigationEvent NavigationEvent { get; private set; }
 
         public NavigationModule(string navigraphName, Guid destinationID)
         {
             _isFirstTimeGetWaypoint = true;
 
-            WaypointEvent = new WaypointEvent();
             NavigationEvent = new NavigationEvent();
-
-           // _currentWaypointHandler = new EventHandler(HandleCurrentWaypoint);
 
             _navigraphName = navigraphName;
             // hardcode now and we need to decide how to detect the start point.
             _sourceWaypointID = new Guid("00000018-0000-0000-6660-000000011900");
             _destinationID = destinationID;
 
-
-
-            StartSession();
+            ConstructSession();
         }
 
         /// <summary>
         /// If it is the first time to get waypoint then get the value of 
         /// route options and start the corresponding session.
         /// </summary>
-        private void StartSession()
+        private void ConstructSession()
         {
             const int falseInt = -100;
             List<int> avoidList = new List<int>();
@@ -120,9 +113,7 @@ namespace IndoorNavigation.Modules
                     _destinationID,
                     avoidList.ToArray());
 
-            Console.WriteLine("navi Handle");
             _navigationResultHandler = new EventHandler(HandleNavigationResult);
-            Console.WriteLine("result Handle");
             _session.Event.SessionResultHandler += _navigationResultHandler;
 
             Console.WriteLine("-- end StartSession --- ");
@@ -157,22 +148,10 @@ namespace IndoorNavigation.Modules
                 // Free unmanaged resources (unmanaged objects) and override a finalizer below.
                 // Set large fields to null.
                 _session.Event.SessionResultHandler -= _navigationResultHandler;
-                // WaypointEvent.CurrentWaypointEventHandler -= _session.CheckArrivedWaypoint;
+               
                 disposedValue = true;
             }
         }
-
-        //public void HandleCurrentWaypoint(object sender, EventArgs args)
-        //{
-        //    if (_isFirstTimeGetWaypoint)
-        //    {
-        //        ConstructSession(args);
-        //        _isFirstTimeGetWaypoint = false;
-        //    }
-
-        //    WaypointEvent.OnEventCall(args);
-        //}
-
 
         // This code added to correctly implement the disposable pattern.
         public void Dispose()
