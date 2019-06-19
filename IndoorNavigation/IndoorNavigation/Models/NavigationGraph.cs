@@ -222,6 +222,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                     Waypoint sourceWaypoint,
                                     Waypoint targetWaypoint)
         {
+            /*
             // Find where is the source/target waypoint and find its key
             uint sourceKey = connectionGraph
                             .Where(WaypointList => WaypointList.Item.ID
@@ -234,6 +235,9 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
             // Returns the distance of the path
             return connectionGraph.Dijkstra(sourceKey, targetKey).Distance;
+            */
+
+            return 10;
         }
 
         /// <summary>
@@ -248,13 +252,16 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                                 Waypoint currentWaypoint,
                                                 Waypoint nextWaypoint)
         {
-            /*
+
             // Find the cardinal direction to the next waypoint
+            Console.WriteLine("previous waypoint ID=[" + previousWaypoint.ID + "]");
             CardinalDirection currentDirection = previousWaypoint.Neighbors
                                             .Where(neighbors =>
                                                 neighbors.TargetWaypointUUID
                                                 .Equals(currentWaypoint.ID))
                                             .Select(c => c.Direction).First();
+
+            Console.WriteLine("current waypoint ID=[" + currentWaypoint.ID + "] + neighbors = " + currentWaypoint.Neighbors.Count);
             CardinalDirection nextDirection = currentWaypoint.Neighbors
                                             .Where(neighbors =>
                                                 neighbors.TargetWaypointUUID
@@ -267,8 +274,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                 nextTurnDirection + 8 : nextTurnDirection;
 
             return (TurnDirection)nextTurnDirection;
-            */
-            return (TurnDirection)0;
+            
         }
 
         #endregion
