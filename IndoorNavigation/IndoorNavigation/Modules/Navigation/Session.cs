@@ -241,7 +241,7 @@ namespace IndoorNavigation.Modules
                 Console.WriteLine("current waypoint: " + currentWaypoint.ID);
                 Console.WriteLine("next waypoint: " + _waypointsOnRoute[_currentNavigateStep+1].ID);
 
-                navigationInstruction.CurrentWaypoint = _waypointsOnRoute[_currentNavigateStep];
+                navigationInstruction.CurrentWaypoint = currentWaypoint;
                 navigationInstruction.NextWaypoint =
                                         _waypointsOnRoute[_currentNavigateStep+1];
 
