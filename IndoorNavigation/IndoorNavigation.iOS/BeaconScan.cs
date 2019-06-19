@@ -81,7 +81,8 @@ namespace IndoorNavigation.iOS
                 kCBAdvDataManufacturerData = <0f000215 00000018 00000000 24600000 00002300 00020000 ce>;
             } rssi = -42
             */
-            if ((args as CBDiscoveredPeripheralEventArgs).RSSI.Int32Value > -50)
+            if ((args as CBDiscoveredPeripheralEventArgs).RSSI.Int32Value > -50 &&
+                (args as CBDiscoveredPeripheralEventArgs).RSSI.Int32Value < 0)
             {
                 string bufferUUID = " ";
                 string identifierUUID = "";
