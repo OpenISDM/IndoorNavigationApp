@@ -59,7 +59,7 @@ namespace IndoorNavigation.Modules
 {
     public class Session
     {
-        private IIPSClient _IPSClient;
+        private WaypointClient _IPSClient;
 
         private int _currentNavigateStep;
 
@@ -298,8 +298,9 @@ namespace IndoorNavigation.Modules
                     }
                     Console.WriteLine("end of same floor case");
                 }
-                
+
                 //Get the progress
+                Console.WriteLine("calculate progress: {0}/{1}", _currentNavigateStep, _waypointsOnRoute.Count);
                 navigationInstruction.Progress =
                 (double)Math.Round(
                     (decimal)_currentNavigateStep / _waypointsOnRoute.Count, 3);
