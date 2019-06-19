@@ -60,15 +60,15 @@ namespace IndoorNavigation.Modules.IPSClients
         private object bufferLock = new object();
         private readonly EventHandler HBeaconScan;
 
-        public Event Event { get; private set; }
-        public List<BeaconSignalModel> beaconSignalBuffer = new List<BeaconSignalModel>();
+        public NavigationEvent Event { get; private set; }
+        private List<BeaconSignalModel> beaconSignalBuffer = new List<BeaconSignalModel>();
 
         public WaypointClient()
         {
-            Event = new Event();
+            Event = new NavigationEvent();
 
             HBeaconScan = new EventHandler(HandleBeaconScan);
-            Utility.BeaconScan.Event.BeaconScanEventHandler += HBeaconScan;
+            Utility.BeaconScan.Event.EventHandler += HBeaconScan;
             _beaconList = new List<Waypoint>();
             _waypointList = new List<Waypoint>();
 
@@ -166,21 +166,11 @@ namespace IndoorNavigation.Modules.IPSClients
         public void Stop()
         {
             _beaconList = null;
-            Utility.BeaconScan.Event.BeaconScanEventHandler -= HBeaconScan;
+            Utility.BeaconScan.Event.EventHandler -= HBeaconScan;
             beaconSignalBuffer = null;
             bufferLock = null;
         }
 
-    }
-
-    public class Event
-    {
-        public EventHandler EventHandler;
-
-        public void OnEventCall(EventArgs e)
-        {
-            EventHandler?.Invoke(this, e);
-        }
     }
 
     public class WayPointSignalEventArgs : EventArgs

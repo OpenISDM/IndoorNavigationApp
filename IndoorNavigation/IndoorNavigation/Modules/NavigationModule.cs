@@ -47,6 +47,7 @@ using System.Collections.Generic;
 using Xamarin.Forms;
 using System.Linq;
 using IndoorNavigation.Modules.Utilities;
+using IndoorNavigation.Models;
 
 namespace IndoorNavigation.Modules
 {
@@ -59,15 +60,15 @@ namespace IndoorNavigation.Modules
         private Guid _sourceWaypointID;
         private Guid _destinationID;
 
-        private EventHandler _navigationResultHandler;
+        private EventHandler _navigationResultEventHandler;
 
-        public NavigationEvent NavigationEvent { get; private set; }
+        public NavigationEvent Event { get; private set; }
 
         public NavigationModule(string navigraphName, Guid destinationID)
         {
             _isFirstTimeGetWaypoint = true;
 
-            NavigationEvent = new NavigationEvent();
+            Event = new NavigationEvent();
 
             _navigraphName = navigraphName;
             // hardcode now and we need to decide how to detect the start point.
@@ -113,8 +114,8 @@ namespace IndoorNavigation.Modules
                     _destinationID,
                     avoidList.ToArray());
 
-            _navigationResultHandler = new EventHandler(HandleNavigationResult);
-            _session.Event.SessionResultHandler += _navigationResultHandler;
+            _navigationResultEventHandler = new EventHandler(HandleNavigationResult);
+            _session.Event.EventHandler += _navigationResultEventHandler;
 
             Console.WriteLine("-- end StartSession --- ");
         }
@@ -126,7 +127,7 @@ namespace IndoorNavigation.Modules
         private void HandleNavigationResult(object sender, EventArgs args)
         {
             Console.WriteLine("received event raised from Session class");
-            NavigationEvent.OnEventCall(args);
+            Event.OnEventCall(args);
         }
 
         public void CloseModule()
@@ -147,7 +148,7 @@ namespace IndoorNavigation.Modules
                 }
                 // Free unmanaged resources (unmanaged objects) and override a finalizer below.
                 // Set large fields to null.
-                _session.Event.SessionResultHandler -= _navigationResultHandler;
+                _session.Event.EventHandler -= _navigationResultEventHandler;
                
                 disposedValue = true;
             }
@@ -162,23 +163,4 @@ namespace IndoorNavigation.Modules
         #endregion
     }
 
-    public class WaypointEvent
-    {
-        public event EventHandler CurrentWaypointEventHandler;
-
-        public void OnEventCall(EventArgs args)
-        {
-            CurrentWaypointEventHandler?.Invoke(this, args);
-        }
-    }
-
-    public class NavigationEvent
-    {
-        public event EventHandler ResultEventHandler;
-
-        public void OnEventCall(EventArgs args)
-        {
-            ResultEventHandler?.Invoke(this, args);
-        }
-    }
 }

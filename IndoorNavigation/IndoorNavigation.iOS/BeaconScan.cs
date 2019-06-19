@@ -21,7 +21,7 @@ namespace IndoorNavigation.iOS
         public EventHandler DiscoveredDevice;
         public EventHandler StateChanged;
 
-        public BeaconScanEvent Event { get; private set; }
+        public NavigationEvent Event { get; private set; }
 
         public void StartScan(List<Guid> BeaconsUUID) {
             Console.WriteLine("Scanning started: CBCentralManager state = " + this.manager.State);
@@ -49,7 +49,7 @@ namespace IndoorNavigation.iOS
 
         public BeaconScan()
         {
-            Event = new BeaconScanEvent();
+            Event = new NavigationEvent();
             this.manager.DiscoveredPeripheral += this.DiscoveredPeripheral;
             this.manager.UpdatedState += this.UpdatedState;
             Console.WriteLine("In BeaconScan constructor: CBCentralManager stata =" + this.manager.State);

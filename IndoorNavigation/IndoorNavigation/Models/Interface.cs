@@ -141,7 +141,7 @@ namespace IndoorNavigation.Models
         void StartScan(List<Guid> BeaconsUUID);
         void StopScan();
         void Close();
-        BeaconScanEvent Event { get; }
+        NavigationEvent Event { get; }
     }
 
     public interface IQrCodeDecoder
@@ -161,6 +161,8 @@ namespace IndoorNavigation.Models
         void SignalProcessing();
         void SetWaypointList(List<Waypoint> WaypointList);
         void Stop();
+
+        NavigationEvent Event { get; }
     }
     #endregion
 }

@@ -59,7 +59,7 @@ namespace IndoorNavigation.Modules
 {
     public class Session
     {
-        private WaypointClient _IPSClient;
+        private IIPSClient _IPSClient;
 
         private int _currentNavigateStep;
 
@@ -71,7 +71,7 @@ namespace IndoorNavigation.Modules
         private Graph<Waypoint, string> _subgraph = 
                                         new Graph<Waypoint, string>();
 
-        public SessionEvent Event { get; private set; }
+        public NavigationEvent Event { get; private set; }
 
         public Waypoint _startWaypoint = new Waypoint();
         public Waypoint _finalWaypoint = new Waypoint();
@@ -83,7 +83,7 @@ namespace IndoorNavigation.Modules
                        Guid finalWaypointID,
                        int[] avoid)
         {
-            Event = new SessionEvent();
+            Event = new NavigationEvent();
 
             //Read the xml file to get regions and edges information
             _regionGraph = graph.GetRegiongraph();
@@ -103,7 +103,7 @@ namespace IndoorNavigation.Modules
             GetPath(_startWaypoint, _finalWaypoint, _subgraph);
 
             _IPSClient = new WaypointClient();
-            _IPSClient.Event.EventHandler = new EventHandler(CheckArrivedWaypoint);
+            _IPSClient.Event.EventHandler += new EventHandler(CheckArrivedWaypoint);
             Console.WriteLine("--------Constructor-------------------");
             Console.WriteLine("source " + _startWaypoint.ID);
             Console.WriteLine("destination " + _finalWaypoint.ID);
@@ -358,23 +358,6 @@ namespace IndoorNavigation.Modules
             Arrival,
         }
 
-
-
-        public class NavigationEventArgs : EventArgs
-        {
-            /// <summary>
-            /// Status of navigation
-            /// </summary>
-            public NavigationResult Result { get; set; }
-
-            /// <summary>
-            /// Gets or sets the next instruction. It will send to the
-            // ViewModel to update the UI instruction.
-            /// </summary>
-            public NavigationInstruction NextInstruction { get; set; }
-
-        }
-
         public class NavigationInstruction
         {
             /// <summary>
@@ -400,15 +383,21 @@ namespace IndoorNavigation.Modules
             /// </summary>
             public TurnDirection Direction;
         }
-    }
 
-    public class SessionEvent
-    {
-        public event EventHandler SessionResultHandler;
-
-        public void OnEventCall(EventArgs args)
+        public class NavigationEventArgs : EventArgs
         {
-            SessionResultHandler?.Invoke(this, args);
+            /// <summary>
+            /// Status of navigation
+            /// </summary>
+            public NavigationResult Result { get; set; }
+
+            /// <summary>
+            /// Gets or sets the next instruction. It will send to the
+            // ViewModel to update the UI instruction.
+            /// </summary>
+            public NavigationInstruction NextInstruction { get; set; }
+
         }
     }
+
 }
