@@ -315,6 +315,7 @@ namespace IndoorNavigation.Modules
                 _currentNavigateStep++;
                 StartNavigate(_currentNavigateStep);
             }
+            /*
             else if (_waypointsOnWrongWay[_waypointsOnRoute[_currentNavigateStep].ID].Contains(currentWaypoint) == false)
             {
                 Console.WriteLine("---- [case: wrong waypoint] .... ");
@@ -346,6 +347,7 @@ namespace IndoorNavigation.Modules
                     }
                 });
             }
+            */
             Console.WriteLine("<< CheckArrivedWaypoint ");
         }
 
