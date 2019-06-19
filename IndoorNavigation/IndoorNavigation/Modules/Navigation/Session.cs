@@ -59,7 +59,7 @@ namespace IndoorNavigation.Modules
 {
     public class Session
     {
-        private WaypointClient _IPSClient;
+        private IIPSClient _IPSClient;
 
         private int _currentNavigateStep;
 
