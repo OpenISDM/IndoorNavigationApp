@@ -147,7 +147,6 @@ namespace IndoorNavigation.iOS
             {
                 var parser = parse[1] + "-"+ parse[2].Substring(0,4)+"-"+parse[2].Substring(4,4)+"-"
                      + parse[3].Substring(0,4) + "-" + parse[3].Substring(4,4) + parse[4];
-                Console.WriteLine("result" + parser);
                 return parser.ToString();
             }
 

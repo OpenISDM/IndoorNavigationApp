@@ -325,39 +325,53 @@ namespace IndoorNavigation.Modules
                     _currentNavigateStep++;
                     StartNavigate(_currentNavigateStep);
                 }
-                /*
-                else if (_waypointsOnWrongWay[_waypointsOnRoute[_currentNavigateStep].ID].Contains(currentWaypoint) == false)
+                else
                 {
-                    Console.WriteLine("---- [case: wrong waypoint] .... ");
-                    Event.OnEventCall(new NavigationEventArgs
-                    {
-                        Result = NavigationResult.AdjustRoute
-                    });
+                    Console.WriteLine("arrived waypoint ID:" + currentWaypoint.ID);
+                    Console.WriteLine("possible wrong waypoint:");
+                    bool isWrongWaypoint = false;
 
-                    //If the waypoint is wrong, we initial the correct waypoint
-                    // and its neighbors and rerun the GetPath function and reget
-                    //the navigationInstruction
-                    _waypointsOnRoute = new List<Waypoint>();
-                    _waypointsOnWrongWay = new Dictionary<Guid, List<Waypoint>>();
-                    GetPath(currentWaypoint, _finalWaypoint, _subgraph);
-                    _currentNavigateStep = 0;
-
-                    Event.OnEventCall(new NavigationEventArgs
-                    {
-                        Result = NavigationResult.Run,
-                        NextInstruction = new NavigationInstruction
-                        {
-                            NextWaypoint = _waypointsOnRoute[1],
-                            Distance = Navigraph.
-                            GetDistance(_subgraph,
-                                        currentWaypoint,
-                                        _waypointsOnRoute[1]),
-                            Progress = 0,
-                            Direction = TurnDirection.FirstDirection
+                    for (int i = 0; i < _waypointsOnWrongWay[_waypointsOnRoute[_currentNavigateStep].ID].Count; i++) {
+                        Console.WriteLine("waypoing ID:" + _waypointsOnWrongWay[_waypointsOnRoute[_currentNavigateStep].ID][i].ID);
+                        if (currentWaypoint.ID.Equals(_waypointsOnWrongWay[_waypointsOnRoute[_currentNavigateStep].ID][i].ID)){
+                            isWrongWaypoint = true;
+                            break;
                         }
-                    });
+                    }
+                    if (isWrongWaypoint)
+                    {
+                        Console.WriteLine("---- [case: wrong waypoint] .... ");
+                        Event.OnEventCall(new NavigationEventArgs
+                        {
+                            Result = NavigationResult.AdjustRoute
+                        });
+
+                        //If the waypoint is wrong, we initial the correct waypoint
+                        // and its neighbors and rerun the GetPath function and reget
+                        //the navigationInstruction
+                        _waypointsOnRoute = new List<Waypoint>();
+                        _waypointsOnWrongWay = new Dictionary<Guid, List<Waypoint>>();
+                        GetPath(currentWaypoint, _finalWaypoint, _subgraph);
+
+                        _currentNavigateStep = 0;
+                        Event.OnEventCall(new NavigationEventArgs
+                        {
+                            Result = NavigationResult.Run,
+                            NextInstruction = new NavigationInstruction
+                            {
+                                CurrentWaypoint = currentWaypoint,
+                                NextWaypoint = _waypointsOnRoute[_currentNavigateStep + 1],
+                                Distance = Navigraph.
+                                GetDistance(_subgraph,
+                                            currentWaypoint,
+                                            _waypointsOnRoute[_currentNavigateStep + 1]),
+                                Progress = 0,
+                                Direction = TurnDirection.FirstDirection
+                            }
+                        });
+                        StartNavigate(_currentNavigateStep);
+                    }
                 }
-                */
             }
             Console.WriteLine("<< CheckArrivedWaypoint ");
         }
