@@ -302,8 +302,7 @@ namespace IndoorNavigation.Modules
                 //Get the progress
                 Console.WriteLine("calculate progress: {0}/{1}", _currentNavigateStep, _waypointsOnRoute.Count);
                 navigationInstruction.Progress =
-                (double)Math.Round(
-                    (decimal)_currentNavigateStep / _waypointsOnRoute.Count, 3);
+                (double)Math.Round(100 * ((decimal)_currentNavigateStep / (_waypointsOnRoute.Count - 1)), 3);
 
                 // Raise event to notify the UI/main thread with the result
                 Event.OnEventCall(new NavigationEventArgs
