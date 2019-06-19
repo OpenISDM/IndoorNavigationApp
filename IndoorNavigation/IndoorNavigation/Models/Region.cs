@@ -54,39 +54,13 @@ using IndoorNavigation.Models.NavigaionLayer;
 
 namespace IndoorNavigation.Models
 {
-    public class Beacons
-    {
-        [XmlElement("UUID")]
-        public Guid UUID { get; set; }
-
-        [XmlElement("MappedWaypointUUID")]
-        public Guid MappedWaypointUUID { get; set; }
-
-        [XmlElement("Major")]
-        public int Major { get; set; }
-
-        [XmlElement("Minor")]
-        public int Minor { get; set; }
-
-        [XmlElement("RSSI")]
-        public int RSSI { get; set; }
-
-        [XmlElement("Threshold")]
-        public int Threshold { get; set; }
-
-        [XmlElement("Floor")]
-        public int Floor { get; set; }
-
-        public DateTime Timestamp { get; set; }
-    }
+   
     /// <summary>
     /// The second level of the navigation graph within two-level hierarchy
     /// </summary>
     public class Region
     {
-        [XmlArray("Beacons")]
-        [XmlArrayItem("Beacon", typeof(Beacons))]
-        public List<Beacons> Beacons;
+       
 
         /// <summary>
         /// Gets or sets the name of Region.
@@ -127,8 +101,9 @@ namespace IndoorNavigation.Models
             foreach (Waypoint waypoint in Waypoints)
             {
                 NavigationSubgraph.AddNode(waypoint);
+                //Console.WriteLine("Waypoint : " + waypoint.ID);
+               // Console.WriteLine("Waypoints Beacon : " + waypoint.Beacons[0].UUID);
             }
-
             // Set each path into region graph
             foreach (Edge edge in Edges)
             {

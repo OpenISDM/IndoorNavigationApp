@@ -177,6 +177,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 edge.TargetWaypoint = waypointsOfRegions.First(waypoint =>
                         waypoint.ID.Equals(edge.TargetWaypointUUID));
             }
+
         }
 
         /// <summary>
@@ -383,6 +384,10 @@ namespace IndoorNavigation.Models.NavigaionLayer
         [XmlArray("Neighbors")]
         [XmlArrayItem("Neighbor", typeof(Neighbor))]
         public List<Neighbor> Neighbors { get; set; }
+
+        [XmlArray("Beacons")]
+        [XmlArrayItem("Beacon", typeof(Beacon))]
+        public List<Beacon> Beacons;
     }
 
     /// <summary>
@@ -408,6 +413,34 @@ namespace IndoorNavigation.Models.NavigaionLayer
         [XmlElement("ReferenceDirection")]
         public CardinalDirection Direction { get; set; }
     }
+
+
+    public struct Beacon
+    {
+        [XmlElement("UUID")]
+        public Guid UUID { get; set; }
+
+        //[XmlElement("MappedWaypointUUID")]
+        //public Guid MappedWaypointUUID { get; set; }
+
+        //[XmlElement("Major")]
+        //public int Major { get; set; }
+
+        //[XmlElement("Minor")]
+        //public int Minor { get; set; }
+
+        //[XmlElement("RSSI")]
+        //public int RSSI { get; set; }
+
+        //[XmlElement("Threshold")]
+        //public int Threshold { get; set; }
+
+        //[XmlElement("Floor")]
+        //public int Floor { get; set; }
+
+        //public DateTime Timestamp { get; set; }
+    }
+
 
     /// <summary>
     /// The edge/connection between the two waypoints(Location A -> Location B)
