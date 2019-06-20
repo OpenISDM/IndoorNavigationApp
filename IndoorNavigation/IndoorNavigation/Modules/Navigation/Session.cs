@@ -174,34 +174,31 @@ namespace IndoorNavigation.Modules
                 _waypointsOnRoute.Add(subgraph[path.ToList()[i]].Item);
                
                 List<Waypoint> tempWrongWaypointList = new List<Waypoint>();
-
-                Console.WriteLine("construct: correct waypoint: " + _waypointsOnRoute[i].ID);
                 if (i - 1 >= 0)
                 {
                     for (int j = 0; j < _waypointsOnRoute[i-1].Neighbors.Count; j++)
                     {
                         if(!subgraph[path.ToList()[i]].Item.ID.Equals(_waypointsOnRoute[i-1].Neighbors[j].TargetWaypointUUID))
-                        { 
-                            Waypoint oneStepWrongWaypoint = subgraph.Where(waypoint => waypoint.Item.ID.Equals(_waypointsOnRoute[i - 1].Neighbors[j].TargetWaypointUUID)).Select(n => n.Item).First();
-                            Console.WriteLine("construct: one step wrong waypoint: " + oneStepWrongWaypoint.ID);
-                            for (int m = 0; m < oneStepWrongWaypoint.Neighbors.Count; m++) {
-                                Waypoint twoStepWrongWaypoint = subgraph.Where(waypoint => waypoint.Item.ID.Equals(oneStepWrongWaypoint.Neighbors[m].TargetWaypointUUID)).Select(n => n.Item).First();
-                                if (!twoStepWrongWaypoint.ID.Equals(oneStepWrongWaypoint.ID) && !twoStepWrongWaypoint.ID.Equals(_waypointsOnRoute[i-1].ID))
-                                {
-                                    Console.WriteLine("construct: two step wrong waypoint: " + twoStepWrongWaypoint.ID);
-
-                                    tempWrongWaypointList.Add(twoStepWrongWaypoint);
-                                }
-                            }
+                        {
+                            //tempWrongWaypointList.Add(new Waypoint { ID = _waypointsOnRoute[i-1].Neighbors[j].TargetWaypointUUID });
+                            tempWrongWaypointList.Add(subgraph.Where(waypoint => waypoint.Item.ID.Equals(_waypointsOnRoute[i-1].Neighbors[j].TargetWaypointUUID)).Select(n => n.Item).First());
                         }
                     }
                 }
                 _waypointsOnWrongWay.Add(_waypointsOnRoute[i].ID, tempWrongWaypointList);
             }
 
+
             foreach (Waypoint waypoint in _waypointsOnRoute)
             {
-                Console.WriteLine("correct waypoint:" + waypoint.ID);
+                Console.WriteLine("waypoint " +  waypoint.ID);
+            }
+
+            Console.WriteLine("---------------------------");
+
+            foreach (Waypoint waypoint in _waypointsOnRoute)
+            {
+                Console.WriteLine("waypoint "+ waypoint.ID);
                 for (int i = 0; i < _waypointsOnWrongWay[waypoint.ID].Count; i++) {
                     Console.WriteLine("possible wrong [" +  _waypointsOnWrongWay[waypoint.ID][i].ID + "]");
                 }
@@ -334,7 +331,6 @@ namespace IndoorNavigation.Modules
                 {
                     Console.WriteLine("arrived waypoint ID:" + currentWaypoint.ID);
                     Console.WriteLine("possible wrong waypoint:");
-
                     bool isWrongWaypoint = false;
 
                     for (int i = 0; i < _waypointsOnWrongWay[_waypointsOnRoute[_currentNavigateStep].ID].Count; i++) {
