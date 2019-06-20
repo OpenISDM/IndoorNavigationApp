@@ -67,7 +67,7 @@ namespace IndoorNavigation.Modules.IPSClients
             _event = new NavigationEvent();
 
             _beaconScanEventHandler = new EventHandler(HandleBeaconScan);
-            Utility.BeaconScan._event._eventHandler += _beaconScanEventHandler;
+            Utility._beaconScan._event._eventHandler += _beaconScanEventHandler;
             _waypointList = new List<Waypoint>();
 
         }
@@ -76,7 +76,7 @@ namespace IndoorNavigation.Modules.IPSClients
         {
             this._waypointList = WaypointList;
 
-            Utility.BeaconScan.StartScan();
+            Utility._beaconScan.StartScan();
         }
 
         public void DetectWaypoints()
@@ -117,7 +117,7 @@ namespace IndoorNavigation.Modules.IPSClients
                     }
                 }
             }
-            Console.WriteLine("<< In SignalProcessing");
+            Console.WriteLine("<< In DetectWaypoints");
         }
 
         private void HandleBeaconScan(object sender, EventArgs e)
@@ -137,7 +137,7 @@ namespace IndoorNavigation.Modules.IPSClients
 
         public void Stop()
         {
-            Utility.BeaconScan._event._eventHandler -= _beaconScanEventHandler;
+            Utility._beaconScan._event._eventHandler -= _beaconScanEventHandler;
             _beaconSignalBuffer = null;
             _bufferLock = null;
         }

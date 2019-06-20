@@ -68,15 +68,15 @@ namespace IndoorNavigation
     {
         MainPageViewModel viewModel;
 
-        const string ResourceId = "IndoorNavigation.Resources.AppResources";
-        ResourceManager resmgr = new ResourceManager(ResourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+        const string _resourceId = "IndoorNavigation.Resources.AppResources";
+        ResourceManager _resourceManager = new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
 
         public MainPage()
         {
             InitializeComponent();
 
             var ci = CrossMultilingual.Current.CurrentCultureInfo;
-            NavigationPage.SetBackButtonTitle(this, resmgr.GetString("Home", ci));
+            NavigationPage.SetBackButtonTitle(this, _resourceManager.GetString("Home", ci));
             NavigationPage.SetHasBackButton(this, false);
 
             switch (Device.RuntimePlatform)
@@ -142,7 +142,7 @@ namespace IndoorNavigation
                 switch (NavigraphStorage.LoadNavigraphXML(location.UserNaming).Name)
                 {
                     case "NTUH_YunLin":
-                        var answser = await DisplayAlert(resmgr.GetString("GotoNavigationHomePage", ci), location.UserNaming, resmgr.GetString("OK", ci), resmgr.GetString("Cancel", ci));
+                        var answser = await DisplayAlert(_resourceManager.GetString("GotoNavigationHomePage", ci), location.UserNaming, _resourceManager.GetString("OK", ci), _resourceManager.GetString("Cancel", ci));
                         if (answser)
                         {
                             await Navigation.PushAsync(new NavigationHomePage(location.UserNaming));

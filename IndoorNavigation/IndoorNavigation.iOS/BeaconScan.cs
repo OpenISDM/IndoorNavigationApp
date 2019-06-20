@@ -16,25 +16,22 @@ namespace IndoorNavigation.iOS
 {
     public class BeaconScan : IBeaconScan
     {
-        private readonly CBCentralManager manager = new CBCentralManager();
-
-        public EventHandler DiscoveredDevice;
-        public EventHandler StateChanged;
+        private readonly CBCentralManager _manager = new CBCentralManager();
 
         public NavigationEvent _event { get; private set; }
 
         public BeaconScan()
         {
             _event = new NavigationEvent();
-            this.manager.DiscoveredPeripheral += this.DiscoveredPeripheral;
-            this.manager.UpdatedState += this.UpdatedState;
-            Console.WriteLine("In BeaconScan constructor: CBCentralManager stata =" + this.manager.State);
+            this._manager.DiscoveredPeripheral += this.DiscoveredPeripheral;
+            this._manager.UpdatedState += this.UpdatedState;
+            Console.WriteLine("In BeaconScan constructor: CBCentralManager stata =" + this._manager.State);
         }
 
         public void StartScan() {
-            Console.WriteLine("Scanning started: CBCentralManager state = " + this.manager.State);
+            Console.WriteLine("Scanning started: CBCentralManager state = " + this._manager.State);
             
-            if (CBCentralManagerState.PoweredOn == this.manager.State)
+            if (CBCentralManagerState.PoweredOn == this._manager.State)
             {
                 /*
                 var uuids = string.IsNullOrEmpty(serviceUuid)
@@ -45,7 +42,7 @@ namespace IndoorNavigation.iOS
                 PeripheralScanningOptions options = new PeripheralScanningOptions();
                 options.AllowDuplicatesKey = true;
 
-                this.manager.ScanForPeripherals(uuids, options);
+                this._manager.ScanForPeripherals(uuids, options);
                 
 
                 //await Task.Delay(scanDuration);
@@ -55,7 +52,7 @@ namespace IndoorNavigation.iOS
 
         public void StopScan()
         {
-            this.manager.StopScan();
+            this._manager.StopScan();
             Console.WriteLine("Scanning stopped");
         }
 
@@ -64,8 +61,8 @@ namespace IndoorNavigation.iOS
 
         public void Dispose()
         {
-            this.manager.DiscoveredPeripheral -= this.DiscoveredPeripheral;
-            this.manager.UpdatedState -= this.UpdatedState;
+            this._manager.DiscoveredPeripheral -= this.DiscoveredPeripheral;
+            this._manager.UpdatedState -= this.UpdatedState;
         }
 
         private void DiscoveredPeripheral(object sender, CBDiscoveredPeripheralEventArgs args)
@@ -88,7 +85,7 @@ namespace IndoorNavigation.iOS
                 if (tempUUID != null)
                 {
                     bufferUUID = tempUUID.ToString();
-                    identifierUUID = extractBeaconUUID(bufferUUID);
+                    identifierUUID = ExtractBeaconUUID(bufferUUID);
 
                     if (identifierUUID.Length >= 36)
                     {
@@ -116,7 +113,7 @@ namespace IndoorNavigation.iOS
            
         }
 
-        private string extractBeaconUUID(string stringAdvertisementSpecificData)
+        private string ExtractBeaconUUID(string stringAdvertisementSpecificData)
         {
             string[] parse = stringAdvertisementSpecificData.Split(" ");
         

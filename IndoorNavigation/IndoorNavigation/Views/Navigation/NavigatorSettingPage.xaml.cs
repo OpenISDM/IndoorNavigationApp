@@ -53,7 +53,7 @@ namespace IndoorNavigation.Views.Navigation
 {
     public partial class NavigatorSettingPage : ContentPage
     {
-        public IList VoiceSearchItems { get; } = new ObservableCollection<string>(new List<string> { "中文", "英文" });
+        public IList _voiceSearchItems { get; } = new ObservableCollection<string>(new List<string> { "中文", "英文" });
 
         public NavigatorSettingPage()
         {

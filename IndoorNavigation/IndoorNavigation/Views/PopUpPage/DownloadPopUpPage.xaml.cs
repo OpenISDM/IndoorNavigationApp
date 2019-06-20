@@ -12,12 +12,12 @@ namespace IndoorNavigation.Views.PopUpPage
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class DownloadPopUpPage : PopupPage
     {
-        public DownloadPopUpPageEvent Event { get; private set; }
+        public DownloadPopUpPageEvent _event { get; private set; }
 
         public DownloadPopUpPage()
         {
             InitializeComponent();
-            Event = new DownloadPopUpPageEvent();
+            _event = new DownloadPopUpPageEvent();
         }
 
         protected override void OnAppearingAnimationBegin()
@@ -114,7 +114,7 @@ namespace IndoorNavigation.Views.PopUpPage
         {
             if (!string.IsNullOrEmpty(FileNameEntry.Text))
             {
-                Event.OnEventCall(new DownloadPopUpPageEventArgs { FileName = FileNameEntry.Text });
+                _event.OnEventCall(new DownloadPopUpPageEventArgs { FileName = FileNameEntry.Text });
                 CloseAllPopup();
             }
             else

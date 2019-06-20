@@ -57,6 +57,8 @@ namespace IndoorNavigation.ViewModels
         private ObservableRangeCollection<Location> _locations;
         // IEnumerable of Locations which used by search method
         private IEnumerable<Location> _returnedLocations;
+        private Location _selectedItem;
+        private string _searchedText;
 
         public MainPageViewModel()
         {
@@ -100,35 +102,33 @@ namespace IndoorNavigation.ViewModels
             }
         }
 
-        private Location selectedItem;
         public Location SelectedItem
         {
             get
             {
-                return selectedItem;
+                return _selectedItem;
             }
             set
             {
-                if (selectedItem != value)
+                if (_selectedItem != value)
                 {
-                    selectedItem = value;
+                    _selectedItem = value;
                     OnPropertyChanged("SelectedItem");
-                    selectedItem = null;
+                    _selectedItem = null;
                 }
             }
         }
 
-        private string searchedText;
         public string SearchedText
         {
             get
             {
-                return searchedText;
+                return _searchedText;
             }
 
             set
             {
-                searchedText = value;
+                _searchedText = value;
                 OnPropertyChanged("SearchedText");
 
                 // Search waypoints

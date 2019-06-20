@@ -60,8 +60,6 @@ namespace IndoorNavigation.Models
     /// </summary>
     public class Region
     {
-       
-
         /// <summary>
         /// Gets or sets the name of Region.
         /// e.g. 1F of NTUH

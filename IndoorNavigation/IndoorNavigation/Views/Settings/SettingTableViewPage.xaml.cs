@@ -70,24 +70,24 @@ namespace IndoorNavigation.Views.Settings
 {
     public partial class SettingTableViewPage : ContentPage
     {
-        private DownloadPopUpPage downloadPage = new DownloadPopUpPage();
-        private string downloadURL;
+        private DownloadPopUpPage _downloadPage = new DownloadPopUpPage();
+        private string _downloadURL;
 
-        public IList SelectNaviGraphItems { get; } = new ObservableCollection<string>();
-        public IList CleanNaviGraphItems { get; } = new ObservableCollection<string>();
-        public IList LanguageItems { get; } = new ObservableCollection<string>();
+        public IList _selectNaviGraphItems { get; } = new ObservableCollection<string>();
+        public IList _cleanNaviGraphItems { get; } = new ObservableCollection<string>();
+        public IList _languageItems { get; } = new ObservableCollection<string>();
         //public ICommand SelectedMapCommand => new DelegateCommand(HandleSelectedMap);
-        public ICommand CleanMapCommand => new DelegateCommand(async () => { await HandleCLeanMapAsync(); });
-        public ICommand ChangeLanguageCommand => new DelegateCommand(HandleChangeLanguage);
+        public ICommand _cleanMapCommand => new DelegateCommand(async () => { await HandleCLeanMapAsync(); });
+        public ICommand _changeLanguageCommand => new DelegateCommand(HandleChangeLanguage);
        
-        const string ResourceId = "IndoorNavigation.Resources.AppResources";
-        ResourceManager resmgr = new ResourceManager(ResourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+        const string _resourceId = "IndoorNavigation.Resources.AppResources";
+        ResourceManager _resourceManager = new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
         
         public SettingTableViewPage()
         {
             InitializeComponent();
 
-            downloadPage.Event.DownloadPopUpPageEventHandler += async delegate (object sender, EventArgs e) { await HandleDownloadPageAsync(sender, e); };
+            _downloadPage._event.DownloadPopUpPageEventHandler += async delegate (object sender, EventArgs e) { await HandleDownloadPageAsync(sender, e); };
 
             BindingContext = this;
 
@@ -97,8 +97,8 @@ namespace IndoorNavigation.Views.Settings
             ReloadNaviGraphItems();
 
             var ci = CrossMultilingual.Current.CurrentCultureInfo;
-            LanguageItems.Add(resmgr.GetString("Chinese", ci));
-            LanguageItems.Add(resmgr.GetString("English", ci));
+            _languageItems.Add(_resourceManager.GetString("Chinese", ci));
+            _languageItems.Add(_resourceManager.GetString("English", ci));
 
             if (Application.Current.Properties.ContainsKey("LanguagePicker"))
             {
@@ -150,8 +150,8 @@ namespace IndoorNavigation.Views.Settings
                     if (buffer[buffer.Length - 1] == "OpenISDM")
                     {
                         // open the page to input the data
-                        downloadURL = buffer[0];
-                        await PopupNavigation.Instance.PushAsync(downloadPage as DownloadPopUpPage);
+                        _downloadURL = buffer[0];
+                        await PopupNavigation.Instance.PushAsync(_downloadPage as DownloadPopUpPage);
                     }
                     else
                     {
@@ -171,21 +171,21 @@ namespace IndoorNavigation.Views.Settings
         void SpeechTestBtn_Tapped(object sender, EventArgs e)
         {
              var ci = CrossMultilingual.Current.CurrentCultureInfo;
-             Utility.TextToSpeech.Speak(resmgr.GetString("VoiceSpeak", ci), resmgr.GetString("CultureVersion", ci)); 
+             Utility._textToSpeech.Speak(_resourceManager.GetString("VoiceSpeak", ci), _resourceManager.GetString("CultureVersion", ci)); 
         }
 
         private void ReloadNaviGraphItems()
         {
-            SelectNaviGraphItems.Clear();
-            SelectNaviGraphItems.Add("--請選擇圖資--");
+            _selectNaviGraphItems.Clear();
+            _selectNaviGraphItems.Add("--請選擇圖資--");
 
-            CleanNaviGraphItems.Clear();
-            CleanNaviGraphItems.Add("--全部--");
+            _cleanNaviGraphItems.Clear();
+            _cleanNaviGraphItems.Add("--全部--");
 
             foreach (var naviGraphName in NavigraphStorage.GetAllNavigraphs())
             {
-                SelectNaviGraphItems.Add(naviGraphName);
-                CleanNaviGraphItems.Add(naviGraphName);
+                _selectNaviGraphItems.Add(naviGraphName);
+                _cleanNaviGraphItems.Add(naviGraphName);
             }
         }
 
@@ -198,10 +198,10 @@ namespace IndoorNavigation.Views.Settings
         private async Task HandleDownloadPageAsync(object sender, EventArgs e)
         {
             string fileName = (e as DownloadPopUpPageEventArgs).FileName;
-            if (!string.IsNullOrEmpty(downloadURL) && !string.IsNullOrEmpty(fileName))
+            if (!string.IsNullOrEmpty(_downloadURL) && !string.IsNullOrEmpty(fileName))
             {
 
-                if (Utility.DownloadNavigraph(downloadURL, fileName))
+                if (Utility.DownloadNavigraph(_downloadURL, fileName))
                 {
                     await DisplayAlert("訊息", "地圖下載完成", "OK");
                 }
@@ -252,11 +252,11 @@ namespace IndoorNavigation.Views.Settings
                     {
                         case "英文":
                         case "English":
-                            languageSelected = resmgr.GetString("English", ci);
+                            languageSelected = _resourceManager.GetString("English", ci);
                             break;
                         case "中文":
                         case "Chinese":
-                            languageSelected = resmgr.GetString("Chinese", ci);
+                            languageSelected = _resourceManager.GetString("Chinese", ci);
                             break;
                     }
 

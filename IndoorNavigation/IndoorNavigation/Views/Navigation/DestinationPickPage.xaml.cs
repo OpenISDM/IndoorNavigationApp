@@ -59,14 +59,14 @@ namespace IndoorNavigation.Views.Navigation
     {
         private string _navigraphName;
 
-        public ObservableCollection<string> Items { get; set; }
-        public ObservableCollection<DestinationItem> DestinationItems { get; set; }
+        public ObservableCollection<string> _items { get; set; }
+        public ObservableCollection<DestinationItem> _destinationItems { get; set; }
 
         public DestinationPickPage(string navigraphName, CategoryType category)
         {
             InitializeComponent();
 
-            DestinationItems = new ObservableCollection<DestinationItem>();
+            _destinationItems = new ObservableCollection<DestinationItem>();
 
             _navigraphName = navigraphName;
 
@@ -77,7 +77,7 @@ namespace IndoorNavigation.Views.Navigation
 
             foreach (Waypoint waypoint in waypoints)
             {
-                DestinationItems.Add(new DestinationItem
+                _destinationItems.Add(new DestinationItem
                 {
                     ID = waypoint.ID,
                     WaypointName = waypoint.Name,
@@ -85,7 +85,7 @@ namespace IndoorNavigation.Views.Navigation
                 });
             }
 
-            MyListView.ItemsSource = from waypoint in DestinationItems
+            MyListView.ItemsSource = from waypoint in _destinationItems
                                      group waypoint by waypoint.Floor into waypointGroup
                                      orderby waypointGroup.Key
                                      select new Grouping<int, DestinationItem>(waypointGroup.Key, waypointGroup);
