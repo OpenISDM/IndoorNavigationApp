@@ -40,6 +40,7 @@
  * Authors:
  *
  *      Paul Chang, paulchang@iis.sinica.edu.tw
+ *      Chun Yu Lai, chunyu1202@gmail.com
  *
  */
 using Xamarin.Forms;
@@ -59,12 +60,15 @@ namespace IndoorNavigation.ViewModels.Navigation
         private Guid _destinationID;
         private NavigationModule _navigationModule;
 
-        public TestEvent testEvent;
+        private string currentStepLabelName;
+        private string currentStepImageName;
+        private string currentWaypointName;
+        private string destinationWaypointName;
+        private double navigationProgress;
+        private bool disposedValue = false; // To detect redundant calls
 
         public NavigatorPageViewModel(string navigraphName, string destinationName, Guid destinationID)
         {
-            testEvent = new TestEvent();
-
             _destinationID = destinationID;
             DestinationWaypointName = destinationName;
 
@@ -72,7 +76,6 @@ namespace IndoorNavigation.ViewModels.Navigation
 
             _navigationModule = new NavigationModule(navigraphName, destinationID);
             _navigationModule._Event._EventHandler += GetNavigationResultEvent;
-
         }
 
         /// <summary>
@@ -189,7 +192,6 @@ namespace IndoorNavigation.ViewModels.Navigation
         }
 
         #region NavigatorPage Binding Args
-        private string currentStepLabelName;
         public string CurrentStepLabel
         {
             get
@@ -203,7 +205,6 @@ namespace IndoorNavigation.ViewModels.Navigation
             }
         }
 
-        private string currentStepImageName;
         public string CurrentStepImage
         {
             get
@@ -221,7 +222,6 @@ namespace IndoorNavigation.ViewModels.Navigation
             }
         }
 
-        private string currentWaypointName;
         public string CurrentWaypointName
         {
             get
@@ -235,7 +235,6 @@ namespace IndoorNavigation.ViewModels.Navigation
             }
         }
 
-        private string destinationWaypointName;
         public string DestinationWaypointName
         {
             get
@@ -249,7 +248,6 @@ namespace IndoorNavigation.ViewModels.Navigation
             }
         }
 
-        private double navigationProgress;
         public double NavigationProgress
         {
             get
@@ -262,30 +260,9 @@ namespace IndoorNavigation.ViewModels.Navigation
                 SetProperty(ref navigationProgress, value);
             }
         }
-
-        #region Test entry&button
-        private string nextWaypointName;
-        public string NextWaypointName
-        {
-            get
-            {
-                return nextWaypointName;
-            }
-
-            set
-            {
-                SetProperty(ref nextWaypointName, value);
-            }
-        }
-
-        public ICommand EnterNextWaypointCommand { private set; get; }
-        #endregion
-
         #endregion
 
         #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
-
         protected virtual void Dispose(bool disposing)
         {
             if (!disposedValue)
@@ -320,15 +297,5 @@ namespace IndoorNavigation.ViewModels.Navigation
         }
         #endregion
 
-    }
-
-    public class TestEvent
-    {
-        public event EventHandler TestEventHandler;
-
-        public void OnEventCall(EventArgs args)
-        {
-            TestEventHandler?.Invoke(this, args);
-        }
     }
 }
