@@ -80,7 +80,6 @@ namespace IndoorNavigation.Modules
         private Thread _navigateThread;
 
         public Session(Navigraph graph,
-                      // Guid startWaypointID,
                        Guid finalWaypointID,
                        int[] avoid)
         {
@@ -143,9 +142,9 @@ namespace IndoorNavigation.Modules
             }
         }
 
-        private void GetPath(Waypoint startWaypoint, 
-                             Waypoint finalWaypoint,
-                             Graph<Waypoint, string> subgraph)
+        private void GenerateRoute(Waypoint startWaypoint, 
+                                   Waypoint finalWaypoint,
+                                   Graph<Waypoint, string> subgraph)
         {
             //Get the keys of the start way point and destination waypoint
             //and throw the two keys into dijkstra to get the best route
@@ -159,6 +158,8 @@ namespace IndoorNavigation.Modules
             var path = subgraph.Dijkstra(startPoingKey,
                                            endPointKey).GetPath();
 
+            _waypointsOnRoute = new List<Waypoint>();
+            _waypointsOnWrongWay = new Dictionary<Guid, List<Waypoint>>();
             for (int i = 0; i < path.Count(); i++)
             {
                 _waypointsOnRoute.Add(subgraph[path.ToList()[i]].Item);
@@ -234,7 +235,7 @@ namespace IndoorNavigation.Modules
                 _startWaypoint = currentWaypoint;
 
                 _currentNavigateStep = 0;
-                GetPath(_startWaypoint, _finalWaypoint, _subgraph);
+                GenerateRoute(_startWaypoint, _finalWaypoint, _subgraph);
                 StartNavigation(_currentNavigateStep);
             }
             else
@@ -370,9 +371,7 @@ namespace IndoorNavigation.Modules
                         //If the waypoint is wrong, we initial the correct waypoint
                         // and its neighbors and rerun the GetPath function and reget
                         //the navigationInstruction
-                        _waypointsOnRoute = new List<Waypoint>();
-                        _waypointsOnWrongWay = new Dictionary<Guid, List<Waypoint>>();
-                        GetPath(currentWaypoint, _finalWaypoint, _subgraph);
+                        GenerateRoute(currentWaypoint, _finalWaypoint, _subgraph);
 
                         _currentNavigateStep = 0;
                         _event.OnEventCall(new NavigationEventArgs
