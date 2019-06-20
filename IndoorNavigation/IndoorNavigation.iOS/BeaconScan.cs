@@ -1,15 +1,57 @@
-﻿using System;
+﻿/*
+ * Copyright (c) 2019 Academia Sinica, Institude of Information Science
+ *
+ * License:
+ *      GPL 3.0 : The content of this file is subject to the terms and
+ *      conditions defined in file 'COPYING.txt', which is part of this source
+ *      code package.
+ *
+ * Project Name:
+ *
+ *      IndoorNavigation
+ *
+ * File Description:
+ *
+ *      This file contains all the interfaces required by the application,
+ *      such as the interface of IPSClient and the interface for 
+ *      both iOS project and the Android project to allow the Xamarin.Forms 
+ *      app to access the APIs on each platform.
+ *      
+ * Version:
+ *
+ *      1.0.0, 20190605
+ * 
+ * File Name:
+ *
+ *      BeaconScan.cs
+ *
+ * Abstract:
+ *
+ *      Waypoint-based navigator is a mobile Bluetooth navigation application
+ *      that runs on smart phones. It is structed to support anywhere 
+ *      navigation indoors in areas covered by different indoor positioning 
+ *      system (IPS) and outdoors covered by GPS.In particilar, it can rely on
+ *      BeDIS (Building/environment Data and Information System) for indoor 
+ *      positioning. This IPS provides a location beacon at every waypoint. The 
+ *      beacon brocasts its own coordinates; Consequesntly, the navigator does 
+ *      not need to continuously monitor its own position.
+ *      This version makes use of Xamarin.Forms, which is a cross-platform UI 
+ *      tookit that runs on both iOS and Android.
+ *
+ * Authors:
+ *
+ *      Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
+ *      Paul Chang, paulchang@iis.sinica.edu.tw
+ *      Chun Yu Lai, chunyu1202@gmail.com
+ *
+ */
+using System;
 using CoreBluetooth;
-using System.Diagnostics;
-using System.Threading.Tasks;
 using System.Linq;
 using Foundation;
 using IndoorNavigation.Models;
 using System.Collections.Generic;
 using IndoorNavigation.iOS;
-using System.IO;
-
-//namespace Bluetooth
 
 [assembly: Xamarin.Forms.Dependency(typeof(BeaconScan))]
 namespace IndoorNavigation.iOS
@@ -25,25 +67,21 @@ namespace IndoorNavigation.iOS
             _event = new NavigationEvent();
             this._manager.DiscoveredPeripheral += this.DiscoveredPeripheral;
             this._manager.UpdatedState += this.UpdatedState;
-            Console.WriteLine("In BeaconScan constructor: CBCentralManager stata =" + this._manager.State);
+            Console.WriteLine("In BeaconScan constructor: CBCentralManager stata =" +
+                              this._manager.State);
         }
 
         public void StartScan() {
-            Console.WriteLine("Scanning started: CBCentralManager state = " + this._manager.State);
+            Console.WriteLine("Scanning started: CBCentralManager state = " +
+                              this._manager.State);
             
             if (CBCentralManagerState.PoweredOn == this._manager.State)
             {
-                /*
-                var uuids = string.IsNullOrEmpty(serviceUuid)
-                    ? new CBUUID[0]
-                    : new[] { CBUUID.FromString(serviceUuid) };
-                    */
                 var uuids = new CBUUID[0];
                 PeripheralScanningOptions options = new PeripheralScanningOptions();
                 options.AllowDuplicatesKey = true;
 
                 this._manager.ScanForPeripherals(uuids, options);
-                
 
                 //await Task.Delay(scanDuration);
                 //this.StopScan();
@@ -67,25 +105,25 @@ namespace IndoorNavigation.iOS
 
         private void DiscoveredPeripheral(object sender, CBDiscoveredPeripheralEventArgs args)
         {
-            /*
-            Sample of AdvertisementData data:
-            2019-06-17 13:31:52.209 IndoorNavigation.iOS[904:5335527] detected 7A8B3CF6-48C9-61FB-C100-9A6AFF29053D AdvertisementData = {
-                kCBAdvDataIsConnectable = 0;
-                kCBAdvDataManufacturerData = <0f000215 00000018 00000000 24600000 00002300 00020000 ce>;
-            } rssi = -42
-            */
             int rssiThreshold = -45;
             if ((args as CBDiscoveredPeripheralEventArgs).RSSI.Int32Value > rssiThreshold &&
                 (args as CBDiscoveredPeripheralEventArgs).RSSI.Int32Value < 0)
             {
-                string bufferUUID = " ";
-                string identifierUUID = "";
+                /*
+                Sample of AdvertisementData data:
+                AdvertisementData = {
+                    kCBAdvDataIsConnectable = 0;
+                    kCBAdvDataManufacturerData =
+                        <0f000215 00000018 00000000 24600000 00002300 00020000 ce>;
+                } rssi = -42
+                */
+                var tempUUID = (args as CBDiscoveredPeripheralEventArgs).AdvertisementData
+                               .ValueForKey((NSString)"kCBAdvDataManufacturerData");
 
-                var tempUUID = (args as CBDiscoveredPeripheralEventArgs).AdvertisementData.ValueForKey((NSString)"kCBAdvDataManufacturerData");
                 if (tempUUID != null)
                 {
-                    bufferUUID = tempUUID.ToString();
-                    identifierUUID = ExtractBeaconUUID(bufferUUID);
+                    string bufferUUID = tempUUID.ToString();
+                    string identifierUUID = ExtractBeaconUUID(bufferUUID);
 
                     if (identifierUUID.Length >= 36)
                     {

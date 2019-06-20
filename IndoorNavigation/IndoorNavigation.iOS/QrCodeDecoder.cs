@@ -60,7 +60,8 @@ namespace IndoorNavigation.iOS
     public class QrCodeDecoder : IQrCodeDecoder
     {
         private const string _resourceId = "IndoorNavigation.Resources.AppResources";
-        private ResourceManager _resourceManager = new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+        private ResourceManager _resourceManager =
+            new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
         
         public async Task<string> ScanAsync()
         {
