@@ -60,7 +60,7 @@ namespace IndoorNavigation.Modules
 {
     public class Session
     {
-        private IIPSClient _IPSClient;
+        private IIPSClient _ipsClient;
 
         private int _currentNavigateStep;
 
@@ -72,7 +72,7 @@ namespace IndoorNavigation.Modules
         private Graph<Waypoint, string> _subgraph = 
                                         new Graph<Waypoint, string>();
 
-        public NavigationEvent _Event { get; private set; }
+        public NavigationEvent _event { get; private set; }
 
         private Waypoint _startWaypoint = new Waypoint();
         private Waypoint _finalWaypoint = new Waypoint();
@@ -84,7 +84,7 @@ namespace IndoorNavigation.Modules
                        Guid finalWaypointID,
                        int[] avoid)
         {
-            _Event = new NavigationEvent();
+            _event = new NavigationEvent();
 
             //Read the xml file to get regions and edges information
             _regionGraph = graph.GetRegiongraph();
@@ -96,17 +96,17 @@ namespace IndoorNavigation.Modules
             _finalWaypoint = _subgraph.Where(node => 
             node.Item.ID.Equals(finalWaypointID)).Select(w => w.Item).First();
 
-            _IPSClient = new WaypointClient();
-            _IPSClient._Event._EventHandler += new EventHandler(CheckArrivedWaypoint);
+            _ipsClient = new WaypointClient();
+            _ipsClient._event._eventHandler += new EventHandler(CheckArrivedWaypoint);
 
-            _navigateThread = new Thread(() => invokeIPSWork());
+            _navigateThread = new Thread(() => InvokeIPSWork());
             _navigateThread.Start();
 
             _currentNavigateStep = -1;
-            StartNavigate(_currentNavigateStep);
+            StartNavigation(_currentNavigateStep);
         }
 
-        public void StartNavigate(int currentStep) {
+        public void StartNavigation(int currentStep) {
             List<Waypoint> monitorWaypointList = new List<Waypoint>();
 
             if (currentStep == -1)
@@ -131,15 +131,15 @@ namespace IndoorNavigation.Modules
                 }
             }
            
-            _IPSClient.SetWaypointList(monitorWaypointList);
+            _ipsClient.SetWaypointList(monitorWaypointList);
         }
 
-        private void invokeIPSWork() {
+        private void InvokeIPSWork() {
             Console.WriteLine("---- invokeIPSWork ----");
             while (true)
             {
                 Thread.Sleep(1000);
-                _IPSClient.SignalProcessing();
+                _ipsClient.DetectWaypoints();
             }
         }
 
@@ -235,7 +235,7 @@ namespace IndoorNavigation.Modules
 
                 _currentNavigateStep = 0;
                 GetPath(_startWaypoint, _finalWaypoint, _subgraph);
-                StartNavigate(_currentNavigateStep);
+                StartNavigation(_currentNavigateStep);
             }
             else
             {
@@ -250,7 +250,7 @@ namespace IndoorNavigation.Modules
                 if (currentWaypoint == _finalWaypoint)
                 {
                     Console.WriteLine("---- [case: arrived destination] .... ");
-                    _Event.OnEventCall(new NavigationEventArgs
+                    _event.OnEventCall(new NavigationEventArgs
                     {
                         Result = NavigationResult.Arrival
                     });
@@ -326,7 +326,7 @@ namespace IndoorNavigation.Modules
                                            (_waypointsOnRoute.Count - 1)), 3);
 
                     // Raise event to notify the UI/main thread with the result
-                    _Event.OnEventCall(new NavigationEventArgs
+                    _event.OnEventCall(new NavigationEventArgs
                     {
                         Result = NavigationResult.Run,
                         NextInstruction = navigationInstruction
@@ -334,7 +334,7 @@ namespace IndoorNavigation.Modules
                     Console.WriteLine("After raising event from Session");
 
                     _currentNavigateStep++;
-                    StartNavigate(_currentNavigateStep);
+                    StartNavigation(_currentNavigateStep);
                 }
                 else
                 {
@@ -361,7 +361,7 @@ namespace IndoorNavigation.Modules
                     if (isWrongWaypoint)
                     {
                         Console.WriteLine("---- [case: wrong waypoint] .... ");
-                        _Event.OnEventCall(new NavigationEventArgs
+                        _event.OnEventCall(new NavigationEventArgs
                         {
                             Result = NavigationResult.AdjustRoute
                         });
@@ -374,7 +374,7 @@ namespace IndoorNavigation.Modules
                         GetPath(currentWaypoint, _finalWaypoint, _subgraph);
 
                         _currentNavigateStep = 0;
-                        _Event.OnEventCall(new NavigationEventArgs
+                        _event.OnEventCall(new NavigationEventArgs
                         {
                             Result = NavigationResult.Run,
                             NextInstruction = new NavigationInstruction
@@ -389,7 +389,7 @@ namespace IndoorNavigation.Modules
                                 Direction = TurnDirection.FirstDirection
                             }
                         });
-                        StartNavigate(_currentNavigateStep);
+                        StartNavigation(_currentNavigateStep);
                     }
                 }
             }

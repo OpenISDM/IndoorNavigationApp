@@ -60,12 +60,12 @@ namespace IndoorNavigation.ViewModels.Navigation
         private Guid _destinationID;
         private NavigationModule _navigationModule;
 
-        private string currentStepLabelName;
-        private string currentStepImageName;
-        private string currentWaypointName;
-        private string destinationWaypointName;
-        private double navigationProgress;
-        private bool disposedValue = false; // To detect redundant calls
+        private string _currentStepLabelName;
+        private string _currentStepImageName;
+        private string _currentWaypointName;
+        private string _destinationWaypointName;
+        private double _navigationProgress;
+        private bool _disposedValue = false; // To detect redundant calls
 
         public NavigatorPageViewModel(string navigraphName, string destinationName, Guid destinationID)
         {
@@ -75,7 +75,7 @@ namespace IndoorNavigation.ViewModels.Navigation
             CurrentWaypointName = "NULL";
 
             _navigationModule = new NavigationModule(navigraphName, destinationID);
-            _navigationModule._Event._EventHandler += GetNavigationResultEvent;
+            _navigationModule._event._eventHandler += GetNavigationResultEvent;
         }
 
         /// <summary>
@@ -116,7 +116,9 @@ namespace IndoorNavigation.ViewModels.Navigation
             }
         }
 
-        private void SetInstruction(NavigationInstruction instruction, out string stepLabel, out string stepImage)
+        private void SetInstruction(NavigationInstruction instruction,
+                                    out string stepLabel,
+                                    out string stepImage)
         {
             switch (instruction.Direction)
             {
@@ -196,12 +198,12 @@ namespace IndoorNavigation.ViewModels.Navigation
         {
             get
             {
-                return currentStepLabelName;
+                return _currentStepLabelName;
             }
 
             set
             {
-                SetProperty(ref currentStepLabelName, value);
+                SetProperty(ref _currentStepLabelName, value);
             }
         }
 
@@ -209,14 +211,14 @@ namespace IndoorNavigation.ViewModels.Navigation
         {
             get
             {
-                return string.Format("{0}.png", currentStepImageName);
+                return string.Format("{0}.png", _currentStepImageName);
             }
 
             set
             {
-                if (currentStepImageName != value)
+                if (_currentStepImageName != value)
                 {
-                    currentStepImageName = value;
+                    _currentStepImageName = value;
                     OnPropertyChanged("CurrentStepImage");
                 }
             }
@@ -226,12 +228,12 @@ namespace IndoorNavigation.ViewModels.Navigation
         {
             get
             {
-                return currentWaypointName;
+                return _currentWaypointName;
             }
 
             set
             {
-                SetProperty(ref currentWaypointName, value);
+                SetProperty(ref _currentWaypointName, value);
             }
         }
 
@@ -239,12 +241,12 @@ namespace IndoorNavigation.ViewModels.Navigation
         {
             get
             {
-                return destinationWaypointName;
+                return _destinationWaypointName;
             }
 
             set
             {
-                SetProperty(ref destinationWaypointName, value);
+                SetProperty(ref _destinationWaypointName, value);
             }
         }
 
@@ -252,12 +254,12 @@ namespace IndoorNavigation.ViewModels.Navigation
         {
             get
             {
-                return navigationProgress;
+                return _navigationProgress;
             }
 
             set
             {
-                SetProperty(ref navigationProgress, value);
+                SetProperty(ref _navigationProgress, value);
             }
         }
         #endregion
@@ -265,7 +267,7 @@ namespace IndoorNavigation.ViewModels.Navigation
         #region IDisposable Support
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposedValue)
+            if (!_disposedValue)
             {
                 if (disposing)
                 {
@@ -276,11 +278,12 @@ namespace IndoorNavigation.ViewModels.Navigation
                 // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
                 // TODO: set large fields to null.
 
-                disposedValue = true;
+                _disposedValue = true;
             }
         }
 
-        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
+        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged
+        // resources.
         // ~NavigatorPageViewModel()
         // {
         //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.

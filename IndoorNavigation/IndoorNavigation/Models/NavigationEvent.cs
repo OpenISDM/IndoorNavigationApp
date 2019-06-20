@@ -52,11 +52,11 @@ namespace IndoorNavigation.Models
 {
     public class NavigationEvent
     {
-        public event EventHandler _EventHandler;
+        public event EventHandler _eventHandler;
 
         public void OnEventCall(EventArgs e)
         {
-            _EventHandler?.Invoke(this, e);
+            _eventHandler?.Invoke(this, e);
         }
     }
 

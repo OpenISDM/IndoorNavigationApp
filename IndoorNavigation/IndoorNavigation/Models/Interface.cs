@@ -142,7 +142,7 @@ namespace IndoorNavigation.Models
         void StartScan();
         void StopScan();
         void Close();
-        NavigationEvent _Event { get; }
+        NavigationEvent _event { get; }
     }
 
     public interface IQrCodeDecoder
@@ -159,11 +159,11 @@ namespace IndoorNavigation.Models
     #region Interface for IPS Client
     public interface IIPSClient
     {
-        void SignalProcessing();
+        void DetectWaypoints();
         void SetWaypointList(List<Waypoint> WaypointList);
         void Stop();
 
-        NavigationEvent _Event { get; }
+        NavigationEvent _event { get; }
     }
     #endregion
 }

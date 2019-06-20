@@ -57,17 +57,17 @@ namespace IndoorNavigation.Modules.IPSClients
         private List<Waypoint> _waypointList = new List<Waypoint>();
 
         private object _bufferLock = new object();
-        private readonly EventHandler _HBeaconScan;
+        private readonly EventHandler _beaconScanEventHandler;
 
-        public NavigationEvent _Event { get; private set; }
+        public NavigationEvent _event { get; private set; }
         private List<BeaconSignalModel> _beaconSignalBuffer = new List<BeaconSignalModel>();
 
         public WaypointClient()
         {
-            _Event = new NavigationEvent();
+            _event = new NavigationEvent();
 
-            _HBeaconScan = new EventHandler(HandleBeaconScan);
-            Utility.BeaconScan._Event._EventHandler += _HBeaconScan;
+            _beaconScanEventHandler = new EventHandler(HandleBeaconScan);
+            Utility.BeaconScan._event._eventHandler += _beaconScanEventHandler;
             _waypointList = new List<Waypoint>();
 
         }
@@ -79,9 +79,9 @@ namespace IndoorNavigation.Modules.IPSClients
             Utility.BeaconScan.StartScan();
         }
 
-        public void SignalProcessing()
+        public void DetectWaypoints()
         {
-            Console.WriteLine(">> In SignalProcessing");
+            Console.WriteLine(">> In DetectWaypoints");
 
             // Remove the obsolete data from buffer
             List<BeaconSignalModel> removeSignalBuffer =
@@ -107,7 +107,7 @@ namespace IndoorNavigation.Modules.IPSClients
                                                   " by detected Beacon:" +
                                                   beacon.UUID);
 
-                                _Event.OnEventCall(new WayPointSignalEventArgs
+                                _event.OnEventCall(new WayPointSignalEventArgs
                                 {
                                     CurrentWaypoint = _waypointList[i]
                                 }) ;
@@ -137,7 +137,7 @@ namespace IndoorNavigation.Modules.IPSClients
 
         public void Stop()
         {
-            Utility.BeaconScan._Event._EventHandler -= _HBeaconScan;
+            Utility.BeaconScan._event._eventHandler -= _beaconScanEventHandler;
             _beaconSignalBuffer = null;
             _bufferLock = null;
         }

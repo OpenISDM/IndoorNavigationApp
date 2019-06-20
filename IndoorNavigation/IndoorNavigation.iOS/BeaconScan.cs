@@ -21,11 +21,11 @@ namespace IndoorNavigation.iOS
         public EventHandler DiscoveredDevice;
         public EventHandler StateChanged;
 
-        public NavigationEvent _Event { get; private set; }
+        public NavigationEvent _event { get; private set; }
 
         public BeaconScan()
         {
-            _Event = new NavigationEvent();
+            _event = new NavigationEvent();
             this.manager.DiscoveredPeripheral += this.DiscoveredPeripheral;
             this.manager.UpdatedState += this.UpdatedState;
             Console.WriteLine("In BeaconScan constructor: CBCentralManager stata =" + this.manager.State);
@@ -100,7 +100,7 @@ namespace IndoorNavigation.iOS
                             RSSI = (args as CBDiscoveredPeripheralEventArgs).RSSI.Int32Value
                         });
 
-                        _Event.OnEventCall(new BeaconScanEventArgs
+                        _event.OnEventCall(new BeaconScanEventArgs
                         {
                             _signals = signals
                         });
