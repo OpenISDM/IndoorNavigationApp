@@ -23,7 +23,7 @@
  * 
  * File Name:
  *
- *      QrCodeDecoder.cs
+ *      TextToSpeech.cs
  *
  * Abstract:
  *
@@ -44,48 +44,29 @@
  *      Paul Chang, paulchang@iis.sinica.edu.tw
  *      
  */
-using System.Collections.Generic;
-using System.Reflection;
-using System.Resources;
-using System.Threading.Tasks;
+using AVFoundation;
 using IndoorNavigation.iOS;
 using IndoorNavigation.Models;
-using IndoorNavigation.Resources.Helpers;
-using Plugin.Multilingual;
-using ZXing.Mobile;
 
-[assembly: Xamarin.Forms.Dependency(typeof(QrCodeDecoder))]
+[assembly: Xamarin.Forms.Dependency(typeof(TextToSpeech))]
 namespace IndoorNavigation.iOS
 {
-    public class QrCodeDecoder : IQrCodeDecoder
+    public class TextToSpeech : ITextToSpeech
     {
-        private const string _resourceId = "IndoorNavigation.Resources.AppResources";
-        private ResourceManager _resourceManager = new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
-        
-        public async Task<string> ScanAsync()
+        public TextToSpeech() { }
+
+        public void Speak(string text, string language)
         {
-            MobileBarcodeScanner scanner = new MobileBarcodeScanner();
+            var speechSynthesizer = new AVSpeechSynthesizer();
+            var speechUtterance = new AVSpeechUtterance(text)
+            {
+                Rate = AVSpeechUtterance.MaximumSpeechRate / 2,
+                Voice = AVSpeechSynthesisVoice.FromLanguage(language),
+                Volume = 1f,
+                PitchMultiplier = 1.0f
+            };
 
-            MobileBarcodeScanningOptions scanOptions = 
-                new MobileBarcodeScanningOptions
-                {
-                    PossibleFormats = new List<ZXing.BarcodeFormat>()
-                    {
-                        ZXing.BarcodeFormat.QR_CODE, 
-                        ZXing.BarcodeFormat.CODE_39
-                    }
-                };
-
-            var ci = CrossMultilingual.Current.CurrentCultureInfo;
-           
-            scanner.CancelButtonText = _resourceManager.GetString("Cancel", ci);
-            scanner.FlashButtonText = _resourceManager.GetString("Flash", ci);
-            ZXing.Result scanResults = await scanner.Scan(scanOptions);
-
-            if (scanResults != null)
-                return scanResults.Text;
-            else
-                return string.Empty;
+            speechSynthesizer.SpeakUtterance(speechUtterance);
         }
     }
 }
