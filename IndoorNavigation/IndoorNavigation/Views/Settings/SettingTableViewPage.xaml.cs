@@ -58,9 +58,6 @@ using Prism.Commands;
 using Plugin.Multilingual;
 using IndoorNavigation.Resources;
 using System.Globalization;
-using Plugin.Permissions.Abstractions;
-using Plugin.Permissions;
-using System.Diagnostics;
 using IndoorNavigation.Modules.Utilities;
 using System.Resources;
 using IndoorNavigation.Resources.Helpers;
@@ -77,17 +74,21 @@ namespace IndoorNavigation.Views.Settings
         public IList _cleanNaviGraphItems { get; } = new ObservableCollection<string>();
         public IList _languageItems { get; } = new ObservableCollection<string>();
         //public ICommand SelectedMapCommand => new DelegateCommand(HandleSelectedMap);
-        public ICommand _cleanMapCommand => new DelegateCommand(async () => { await HandleCLeanMapAsync(); });
+        public ICommand _cleanMapCommand => new DelegateCommand(async () =>
+            { await HandleCLeanMapAsync(); });
+
         public ICommand _changeLanguageCommand => new DelegateCommand(HandleChangeLanguage);
        
         const string _resourceId = "IndoorNavigation.Resources.AppResources";
-        ResourceManager _resourceManager = new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+        ResourceManager _resourceManager =
+            new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
         
         public SettingTableViewPage()
         {
             InitializeComponent();
 
-            _downloadPage._event.DownloadPopUpPageEventHandler += async delegate (object sender, EventArgs e) { await HandleDownloadPageAsync(sender, e); };
+            _downloadPage._event.DownloadPopUpPageEventHandler +=
+                async delegate (object sender, EventArgs e) { await HandleDownloadPageAsync(sender, e); };
 
             BindingContext = this;
 
@@ -130,18 +131,21 @@ namespace IndoorNavigation.Views.Settings
             IQrCodeDecoder qrCodeDecoder = DependencyService.Get<IQrCodeDecoder>();
             string qrCodeValue = await qrCodeDecoder.ScanAsync();
 
-            // In iOS, if the User has denied the permission, you might not be able to request for permissions again.
+            // In iOS, if the User has denied the permission, you might not be able to request for
+            // permissions again.
             var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Camera);
             if (status != PermissionStatus.Granted)
             {
-                //await DisplayAlert("Oops...", "Sorry for that you denied the permission of camera so you can't scan the QR code.", "OK");
+            // await DisplayAlert("Oops...", "Sorry for that you denied the permission of camera
+            // so you can't scan the QR code.", "OK");
             }
 #endif
 
             if (!string.IsNullOrEmpty(qrCodeValue))
             {
                 // Determine it is URL or string
-                if ((qrCodeValue.Substring(0, 7) == "http://") || (qrCodeValue.Substring(0, 8) == "https://"))
+                if ((qrCodeValue.Substring(0, 7) == "http://") ||
+                    (qrCodeValue.Substring(0, 8) == "https://"))
                 {
                     // Determine it is map data or website
                     string[] buffer = qrCodeValue.Split('@');
@@ -169,7 +173,8 @@ namespace IndoorNavigation.Views.Settings
         void SpeechTestBtn_Tapped(object sender, EventArgs e)
         {
              var ci = CrossMultilingual.Current.CurrentCultureInfo;
-             Utility._textToSpeech.Speak(_resourceManager.GetString("VoiceSpeak", ci), _resourceManager.GetString("CultureVersion", ci)); 
+             Utility._textToSpeech.Speak(_resourceManager.GetString("VoiceSpeak", ci),
+                 _resourceManager.GetString("CultureVersion", ci)); 
         }
 
         private void ReloadNaviGraphItems()
@@ -282,7 +287,8 @@ namespace IndoorNavigation.Views.Settings
                 }
                 else
                 {
-                    if (await DisplayAlert("警告", string.Format("確定要刪除 地圖:{0} 嗎？",CleanMapPicker.SelectedItem), "Yes", "No"))
+                    if (await DisplayAlert("警告", string.Format("確定要刪除 地圖:{0} 嗎？",
+                                           CleanMapPicker.SelectedItem), "Yes", "No"))
                     {
                         // 刪除選擇的地圖資料
                         NavigraphStorage.DeleteNavigraph(CleanMapPicker.SelectedItem.ToString());

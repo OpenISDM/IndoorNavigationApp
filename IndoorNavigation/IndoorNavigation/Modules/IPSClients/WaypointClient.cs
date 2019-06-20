@@ -48,7 +48,6 @@ using System.Linq;
 using System.Collections.Generic;
 using IndoorNavigation.Models;
 using IndoorNavigation.Models.NavigaionLayer;
-using IndoorNavigation.Modules;
 
 namespace IndoorNavigation.Modules.IPSClients
 {

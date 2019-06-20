@@ -47,10 +47,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Xamarin.Forms;
 using MvvmHelpers;
-using IndoorNavigation.Modules;
 using IndoorNavigation.Models.NavigaionLayer;
 using System.Linq;
-using System.Diagnostics;
 using IndoorNavigation.Modules.Utilities;
 
 namespace IndoorNavigation.Views.Navigation
@@ -70,7 +68,8 @@ namespace IndoorNavigation.Views.Navigation
 
             _navigraphName = navigraphName;
 
-            IEnumerable<Waypoint> waypoints = from region in NavigraphStorage.LoadNavigraphXML(navigraphName).Regions
+            IEnumerable<Waypoint> waypoints = from region in NavigraphStorage.
+                                              LoadNavigraphXML(navigraphName).Regions
                                               from waypoint in region.Waypoints
                                               where waypoint.Category.Equals(category)
                                               select waypoint;
@@ -88,7 +87,8 @@ namespace IndoorNavigation.Views.Navigation
             MyListView.ItemsSource = from waypoint in _destinationItems
                                      group waypoint by waypoint.Floor into waypointGroup
                                      orderby waypointGroup.Key
-                                     select new Grouping<int, DestinationItem>(waypointGroup.Key, waypointGroup);
+                                     select new Grouping<int, DestinationItem>(waypointGroup.Key,
+                                                                               waypointGroup);
         }
 
         async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
@@ -96,7 +96,9 @@ namespace IndoorNavigation.Views.Navigation
             if (e.Item is DestinationItem destination)
             {
                 Console.WriteLine("start of Handle_ItemTapped in DestinationPickPage");
-                await Navigation.PushAsync(new NavigatorPage(_navigraphName, destination.WaypointName, destination.ID));
+                await Navigation.PushAsync(new NavigatorPage(_navigraphName,
+                                                             destination.WaypointName,
+                                                             destination.ID));
                 Console.WriteLine("end of Handle_ItemTapped in DestinationPickPage");
             }
 

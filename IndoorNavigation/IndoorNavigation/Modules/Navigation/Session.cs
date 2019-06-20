@@ -55,7 +55,6 @@ using IndoorNavigation.Models.NavigaionLayer;
 using IndoorNavigation.Models;
 using IndoorNavigation.Modules.IPSClients;
 
-
 namespace IndoorNavigation.Modules
 {
     public class Session
@@ -65,7 +64,8 @@ namespace IndoorNavigation.Modules
         private int _currentNavigateStep;
 
         private List<Waypoint> _waypointsOnRoute = new List<Waypoint>();
-        private Dictionary<Guid, List<Waypoint>> _waypointsOnWrongWay = new Dictionary<Guid, List<Waypoint>>();
+        private Dictionary<Guid, List<Waypoint>> _waypointsOnWrongWay =
+            new Dictionary<Guid, List<Waypoint>>();
 
         private Graph<Region, string> _regionGraph = 
                                         new Graph<Region, string>();
@@ -348,7 +348,8 @@ namespace IndoorNavigation.Modules
                          i++) {
 
                         Console.WriteLine("waypoing ID:" +
-                                          _waypointsOnWrongWay[_waypointsOnRoute[_currentNavigateStep].ID][i].ID);
+                                          _waypointsOnWrongWay[_waypointsOnRoute[_currentNavigateStep]
+                                          .ID][i].ID);
 
                         if (currentWaypoint.ID.
                             Equals(_waypointsOnWrongWay[_waypointsOnRoute[_currentNavigateStep].ID][i].ID)){

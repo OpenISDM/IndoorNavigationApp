@@ -481,7 +481,8 @@ namespace IndoorNavigation.Models.NavigaionLayer
             get { return Direction.ToString(); }
             set
             {
-                if (string.IsNullOrEmpty(value) || !Enum.GetNames(typeof(CardinalDirection)).Contains(value))
+                if (string.IsNullOrEmpty(value) ||
+                    !Enum.GetNames(typeof(CardinalDirection)).Contains(value))
                 {
                     //Direction = CardinalDirection.NoDirection;
                 }
@@ -505,7 +506,8 @@ namespace IndoorNavigation.Models.NavigaionLayer
             get { return ConnectionType.ToString(); }
             set
             {
-                if (string.IsNullOrEmpty(value) || !Enum.GetNames(typeof(ConnectionType)).Contains(value))
+                if (string.IsNullOrEmpty(value) ||
+                    !Enum.GetNames(typeof(ConnectionType)).Contains(value))
                 {
                     //Connection = ConnectionType.NoConnectionType;
                 }
