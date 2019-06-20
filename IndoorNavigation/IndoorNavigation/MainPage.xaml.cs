@@ -136,12 +136,13 @@ namespace IndoorNavigation
 
         async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
         {
+             var ci = CrossMultilingual.Current.CurrentCultureInfo;
             if (e.Item is Location location)
             {
                 switch (NavigraphStorage.LoadNavigraphXML(location.UserNaming).Name)
                 {
                     case "NTUH_YunLin":
-                        var answser = await DisplayAlert("Go to navigation homepage", location.UserNaming, "OK", "Cancel");
+                        var answser = await DisplayAlert(resmgr.GetString("GotoNavigationHomePage", ci), location.UserNaming, resmgr.GetString("OK", ci), resmgr.GetString("Cancel", ci));
                         if (answser)
                         {
                             await Navigation.PushAsync(new NavigationHomePage(location.UserNaming));

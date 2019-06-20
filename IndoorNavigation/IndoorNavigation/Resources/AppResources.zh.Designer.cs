@@ -172,5 +172,29 @@ namespace IndoorNavigation.Resources {
                 return ResourceManager.GetString("CultureVersion", resourceCulture);
             }
         }
+        
+        internal static string OK {
+            get {
+                return ResourceManager.GetString("OK", resourceCulture);
+            }
+        }
+        
+        internal static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        internal static string GotoNavigationHomePage {
+            get {
+                return ResourceManager.GetString("GotoNavigationHomePage", resourceCulture);
+            }
+        }
+        
+        internal static string Flash {
+            get {
+                return ResourceManager.GetString("Flash", resourceCulture);
+            }
+        }
     }
 }

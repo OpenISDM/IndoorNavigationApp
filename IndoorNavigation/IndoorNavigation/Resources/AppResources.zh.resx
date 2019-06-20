@@ -101,4 +101,21 @@
       <data name="CultureVersion" xml:space="preserve">
         <value>zh-TW</value>
     </data>
+    
+    <data name="OK" xml:space="preserve">
+        <value>確定</value>
+    </data>
+    
+    <data name="Cancel" xml:space="preserve">
+        <value>取消</value>
+    </data>
+    
+    <data name="GotoNavigationHomePage" xml:space="preserve">
+        <value>前往導航頁面</value>
+    </data>
+    
+    <data name="Flash" xml:space="preserve">
+        <value>打光</value>
+    </data>
+    
 </root>

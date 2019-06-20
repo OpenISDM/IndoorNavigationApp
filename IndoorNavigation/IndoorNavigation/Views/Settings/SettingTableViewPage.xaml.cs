@@ -79,7 +79,7 @@ namespace IndoorNavigation.Views.Settings
         //public ICommand SelectedMapCommand => new DelegateCommand(HandleSelectedMap);
         public ICommand CleanMapCommand => new DelegateCommand(async () => { await HandleCLeanMapAsync(); });
         public ICommand ChangeLanguageCommand => new DelegateCommand(HandleChangeLanguage);
-
+       
         const string ResourceId = "IndoorNavigation.Resources.AppResources";
         ResourceManager resmgr = new ResourceManager(ResourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
         
@@ -170,7 +170,8 @@ namespace IndoorNavigation.Views.Settings
 
         void SpeechTestBtn_Tapped(object sender, EventArgs e)
         {
-                Utility.TextToSpeech.Speak(AppResources.VoiceSpeak.ToString(), AppResources.CultureVersion.ToString()); 
+             var ci = CrossMultilingual.Current.CurrentCultureInfo;
+             Utility.TextToSpeech.Speak(resmgr.GetString("VoiceSpeak", ci), resmgr.GetString("CultureVersion", ci)); 
         }
 
         private void ReloadNaviGraphItems()
