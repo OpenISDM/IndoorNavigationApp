@@ -39,7 +39,7 @@
  *
  *      Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
  *      Paul Chang, paulchang@iis.sinica.edu.tw
- *      m10717004@yuntech.edu.tw
+ *      Bo Chen Huang, m10717004@yuntech.edu.tw
  *      Chun Yu Lai, chunyu1202@gmail.com
  *
  */
