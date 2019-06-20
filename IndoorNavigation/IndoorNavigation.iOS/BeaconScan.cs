@@ -23,7 +23,7 @@ namespace IndoorNavigation.iOS
 
         public NavigationEvent Event { get; private set; }
 
-        public void StartScan(List<Guid> BeaconsUUID) {
+        public void StartScan() {
             Console.WriteLine("Scanning started: CBCentralManager state = " + this.manager.State);
             
             if (CBCentralManagerState.PoweredOn == this.manager.State)

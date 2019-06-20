@@ -75,9 +75,7 @@ namespace IndoorNavigation.Modules.IPSClients
         {
             this._waypointList = WaypointList;
 
-            List<Guid> tempBeaconGuid = new List<Guid>();
-
-            Utility.BeaconScan.StartScan(tempBeaconGuid);
+            Utility.BeaconScan.StartScan();
         }
 
         public void SignalProcessing()

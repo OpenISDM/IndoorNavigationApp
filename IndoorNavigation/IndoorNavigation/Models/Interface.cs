@@ -138,7 +138,7 @@ namespace IndoorNavigation.Models
     /// </summary>
     public interface IBeaconScan
     {
-        void StartScan(List<Guid> BeaconsUUID);
+        void StartScan();
         void StopScan();
         void Close();
         NavigationEvent Event { get; }
