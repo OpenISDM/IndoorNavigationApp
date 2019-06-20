@@ -33,7 +33,6 @@
 
 
 using System;
-using System.Collections.Generic;
 
 // TODO: Should be moved
 namespace IndoorNavigation.Models
