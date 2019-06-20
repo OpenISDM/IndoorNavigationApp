@@ -13,6 +13,8 @@
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
     
+  
+    
     <!-- Main page -->
     <data name="Home" xml:space="preserve">
         <value>首頁</value>
@@ -92,4 +94,11 @@
         <value>更多</value>
     </data>
     
+     <data name="VoiceSpeak" xml:space="preserve">
+        <value>歡迎使用Bedi科技室內導航</value>
+    </data>
+    
+      <data name="CultureVersion" xml:space="preserve">
+        <value>zh-TW</value>
+    </data>
 </root>

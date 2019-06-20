@@ -82,7 +82,7 @@ namespace IndoorNavigation.Views.Settings
 
         const string ResourceId = "IndoorNavigation.Resources.AppResources";
         ResourceManager resmgr = new ResourceManager(ResourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
-
+        
         public SettingTableViewPage()
         {
             InitializeComponent();
@@ -119,7 +119,8 @@ namespace IndoorNavigation.Views.Settings
             if (DeviceInfo.DeviceType == DeviceType.Virtual)
             {
                 // qrCodeValue = "https://drive.google.com/uc?authuser=0&id=1TakJcYBgZ07s4WrF1-n6p5mgqttjX5UL&export=download@OpenISDM";
-                qrCodeValue = "https://drive.google.com/uc?authuser=0&id=1VIogxEeLWRnH8lf5uNWpXKiiP6ae3Zlw&export=download@OpenISDM";
+                //qrCodeValue = "https://drive.google.com/uc?authuser=0&id=1VIogxEeLWRnH8lf5uNWpXKiiP6ae3Zlw&export=download@OpenISDM";
+                qrCodeValue = "https://drive.google.com/uc?authuser=0&id=1C-JgyOHEikxuqgVi9S7Ww9g05u2Jb3-q&export=download@OpenISDM";
             }
             else
             {
@@ -127,7 +128,7 @@ namespace IndoorNavigation.Views.Settings
                 qrCodeValue = await qrCodeDecoder.ScanAsync();
             }
 #else
-            // 開啟鏡頭掃描Barcode
+            // Open the camera to scan Barcode
             IQrCodeDecoder qrCodeDecoder = DependencyService.Get<IQrCodeDecoder>();
             string qrCodeValue = await qrCodeDecoder.ScanAsync();
 
@@ -141,20 +142,20 @@ namespace IndoorNavigation.Views.Settings
 
             if (!string.IsNullOrEmpty(qrCodeValue))
             {
-                // 判斷是URL還是一般字串
+                // Determine it is URL or string
                 if ((qrCodeValue.Substring(0, 7) == "http://") || (qrCodeValue.Substring(0, 8) == "https://"))
                 {
-                    // 判斷是圖資或者網頁
+                    // Determine it is map data or website
                     string[] buffer = qrCodeValue.Split('@');
                     if (buffer[buffer.Length - 1] == "OpenISDM")
                     {
-                        // 開啟輸入圖資名稱對話頁
+                        // open the page to input the data
                         downloadURL = buffer[0];
                         await PopupNavigation.Instance.PushAsync(downloadPage as DownloadPopUpPage);
                     }
                     else
                     {
-                        // 使用瀏覽器開啟網頁
+                        // Use the browser to open data
                         bool answer = await DisplayAlert("通知", "是否開啟網頁", "Yes", "No");
                         if (answer)
                             await Browser.OpenAsync(qrCodeValue, BrowserLaunchMode.SystemPreferred);
@@ -169,7 +170,7 @@ namespace IndoorNavigation.Views.Settings
 
         void SpeechTestBtn_Tapped(object sender, EventArgs e)
         {
-            Utility.TextToSpeech.Speak("歡迎使用畢迪科技室內導航", "zh-TW");
+                Utility.TextToSpeech.Speak(AppResources.VoiceSpeak.ToString(), AppResources.CultureVersion.ToString()); 
         }
 
         private void ReloadNaviGraphItems()

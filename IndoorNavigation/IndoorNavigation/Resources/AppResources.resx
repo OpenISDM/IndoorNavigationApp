@@ -13,6 +13,8 @@
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
     
+   
+    
     <!-- Main page -->
     <data name="Home" xml:space="preserve">
         <value>Home</value>
@@ -90,6 +92,14 @@
     <!-- Navigation Homepage with NTUHYunlin -->
     <data name="More" xml:space="preserve">
         <value>MORE</value>
+    </data>
+    
+     <data name="VoiceSpeak" xml:space="preserve">
+        <value>Welcome to use the Indoor Navigation of Bedi Tech</value>
+    </data>
+    
+     <data name="CultureVersion" xml:space="preserve">
+        <value>en-US</value>
     </data>
     
 </root>
