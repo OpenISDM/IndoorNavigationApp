@@ -56,16 +56,16 @@ namespace IndoorNavigation.Modules
         private Session _session;
 
         private string _navigraphName;
-     //   private Guid _sourceWaypointID;
+
         private Guid _destinationID;
 
         private EventHandler _navigationResultEventHandler;
 
-        public NavigationEvent Event { get; private set; }
+        public NavigationEvent _Event { get; private set; }
 
         public NavigationModule(string navigraphName, Guid destinationID)
         {
-            Event = new NavigationEvent();
+            _Event = new NavigationEvent();
 
             _navigraphName = navigraphName;
             _destinationID = destinationID;
@@ -109,7 +109,7 @@ namespace IndoorNavigation.Modules
                     avoidList.ToArray());
 
             _navigationResultEventHandler = new EventHandler(HandleNavigationResult);
-            _session.Event.EventHandler += _navigationResultEventHandler;
+            _session._Event.EventHandler += _navigationResultEventHandler;
 
             Console.WriteLine("-- end StartSession --- ");
         }
@@ -121,7 +121,7 @@ namespace IndoorNavigation.Modules
         private void HandleNavigationResult(object sender, EventArgs args)
         {
             Console.WriteLine("received event raised from Session class");
-            Event.OnEventCall(args);
+            _Event.OnEventCall(args);
         }
 
         public void CloseModule()
@@ -142,7 +142,7 @@ namespace IndoorNavigation.Modules
                 }
                 // Free unmanaged resources (unmanaged objects) and override a finalizer below.
                 // Set large fields to null.
-                _session.Event.EventHandler -= _navigationResultEventHandler;
+                _session._Event.EventHandler -= _navigationResultEventHandler;
                
                 disposedValue = true;
             }

@@ -58,15 +58,15 @@ namespace IndoorNavigation.Modules.IPSClients
         private object bufferLock = new object();
         private readonly EventHandler HBeaconScan;
 
-        public NavigationEvent Event { get; private set; }
+        public NavigationEvent _Event { get; private set; }
         private List<BeaconSignalModel> beaconSignalBuffer = new List<BeaconSignalModel>();
 
         public WaypointClient()
         {
-            Event = new NavigationEvent();
+            _Event = new NavigationEvent();
 
             HBeaconScan = new EventHandler(HandleBeaconScan);
-            Utility.BeaconScan.Event.EventHandler += HBeaconScan;
+            Utility.BeaconScan._Event.EventHandler += HBeaconScan;
             _waypointList = new List<Waypoint>();
 
         }
@@ -103,7 +103,7 @@ namespace IndoorNavigation.Modules.IPSClients
                             if (beacon.UUID.Equals(_waypointList[i].Beacons[j].UUID)) {
                                 Console.WriteLine("Matched waypoint:" + _waypointList[i].ID + " by detected Beacon:" + beacon.UUID);
 
-                                Event.OnEventCall(new WayPointSignalEventArgs
+                                _Event.OnEventCall(new WayPointSignalEventArgs
                                 {
                                     CurrentWaypoint = _waypointList[i]
                                 }) ;
@@ -128,11 +128,12 @@ namespace IndoorNavigation.Modules.IPSClients
 
             lock (bufferLock)
                 beaconSignalBuffer.AddRange(signals);
+
         }
 
         public void Stop()
         {
-            Utility.BeaconScan.Event.EventHandler -= HBeaconScan;
+            Utility.BeaconScan._Event.EventHandler -= HBeaconScan;
             beaconSignalBuffer = null;
             bufferLock = null;
         }

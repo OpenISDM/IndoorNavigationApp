@@ -71,7 +71,7 @@ namespace IndoorNavigation.ViewModels.Navigation
             CurrentWaypointName = "NULL";
 
             _navigationModule = new NavigationModule(navigraphName, destinationID);
-            _navigationModule.Event.EventHandler += GetNavigationResultEvent;
+            _navigationModule._Event.EventHandler += GetNavigationResultEvent;
 
         }
 

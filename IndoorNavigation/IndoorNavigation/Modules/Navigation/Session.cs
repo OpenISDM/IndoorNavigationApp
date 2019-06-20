@@ -71,10 +71,10 @@ namespace IndoorNavigation.Modules
         private Graph<Waypoint, string> _subgraph = 
                                         new Graph<Waypoint, string>();
 
-        public NavigationEvent Event { get; private set; }
+        public NavigationEvent _Event { get; private set; }
 
-        public Waypoint _startWaypoint = new Waypoint();
-        public Waypoint _finalWaypoint = new Waypoint();
+        private Waypoint _startWaypoint = new Waypoint();
+        private Waypoint _finalWaypoint = new Waypoint();
 
         private Thread _navigateThread;
 
@@ -83,7 +83,7 @@ namespace IndoorNavigation.Modules
                        Guid finalWaypointID,
                        int[] avoid)
         {
-            Event = new NavigationEvent();
+            _Event = new NavigationEvent();
 
             //Read the xml file to get regions and edges information
             _regionGraph = graph.GetRegiongraph();
@@ -96,7 +96,7 @@ namespace IndoorNavigation.Modules
             node.Item.ID.Equals(finalWaypointID)).Select(w => w.Item).First();
 
             _IPSClient = new WaypointClient();
-            _IPSClient.Event.EventHandler += new EventHandler(CheckArrivedWaypoint);
+            _IPSClient._Event.EventHandler += new EventHandler(CheckArrivedWaypoint);
 
             _navigateThread = new Thread(() => invokeIPSWork());
             _navigateThread.Start();
@@ -134,6 +134,7 @@ namespace IndoorNavigation.Modules
            
             _IPSClient.SetWaypointList(monitorWaypointList);
         }
+
         private void invokeIPSWork() {
             Console.WriteLine("---- invokeIPSWork ----");
             while (true)
@@ -236,7 +237,7 @@ namespace IndoorNavigation.Modules
                 if (currentWaypoint == _finalWaypoint)
                 {
                     Console.WriteLine("---- [case: arrived destination] .... ");
-                    Event.OnEventCall(new NavigationEventArgs
+                    _Event.OnEventCall(new NavigationEventArgs
                     {
                         Result = NavigationResult.Arrival
                     });
@@ -308,7 +309,7 @@ namespace IndoorNavigation.Modules
                     (double)Math.Round(100 * ((decimal)_currentNavigateStep / (_waypointsOnRoute.Count - 1)), 3);
 
                     // Raise event to notify the UI/main thread with the result
-                    Event.OnEventCall(new NavigationEventArgs
+                    _Event.OnEventCall(new NavigationEventArgs
                     {
                         Result = NavigationResult.Run,
                         NextInstruction = navigationInstruction
@@ -335,7 +336,7 @@ namespace IndoorNavigation.Modules
                     if (isWrongWaypoint)
                     {
                         Console.WriteLine("---- [case: wrong waypoint] .... ");
-                        Event.OnEventCall(new NavigationEventArgs
+                        _Event.OnEventCall(new NavigationEventArgs
                         {
                             Result = NavigationResult.AdjustRoute
                         });
@@ -348,7 +349,7 @@ namespace IndoorNavigation.Modules
                         GetPath(currentWaypoint, _finalWaypoint, _subgraph);
 
                         _currentNavigateStep = 0;
-                        Event.OnEventCall(new NavigationEventArgs
+                        _Event.OnEventCall(new NavigationEventArgs
                         {
                             Result = NavigationResult.Run,
                             NextInstruction = new NavigationInstruction

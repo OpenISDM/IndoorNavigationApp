@@ -21,7 +21,15 @@ namespace IndoorNavigation.iOS
         public EventHandler DiscoveredDevice;
         public EventHandler StateChanged;
 
-        public NavigationEvent Event { get; private set; }
+        public NavigationEvent _Event { get; private set; }
+
+        public BeaconScan()
+        {
+            _Event = new NavigationEvent();
+            this.manager.DiscoveredPeripheral += this.DiscoveredPeripheral;
+            this.manager.UpdatedState += this.UpdatedState;
+            Console.WriteLine("In BeaconScan constructor: CBCentralManager stata =" + this.manager.State);
+        }
 
         public void StartScan() {
             Console.WriteLine("Scanning started: CBCentralManager state = " + this.manager.State);
@@ -44,15 +52,14 @@ namespace IndoorNavigation.iOS
                 //this.StopScan();
             }
         }
-        public void Close() {
+
+        public void StopScan()
+        {
+            this.manager.StopScan();
+            Console.WriteLine("Scanning stopped");
         }
 
-        public BeaconScan()
-        {
-            Event = new NavigationEvent();
-            this.manager.DiscoveredPeripheral += this.DiscoveredPeripheral;
-            this.manager.UpdatedState += this.UpdatedState;
-            Console.WriteLine("In BeaconScan constructor: CBCentralManager stata =" + this.manager.State);
+        public void Close() {
         }
 
         public void Dispose()
@@ -61,19 +68,8 @@ namespace IndoorNavigation.iOS
             this.manager.UpdatedState -= this.UpdatedState;
         }
 
-        public void StopScan()
-        {
-            this.manager.StopScan();
-            Console.WriteLine("Scanning stopped");
-        }
-
         private void DiscoveredPeripheral(object sender, CBDiscoveredPeripheralEventArgs args)
         {
-            /* var device = $"{args.Peripheral.Name} - {args.Peripheral.Identifier?.Description}";
-             Debug.WriteLine($"Discovered {device}");
-             this.DiscoveredDevice?.Invoke(sender, args.Peripheral);
-             */
-
             /*
             Sample of AdvertisementData data:
             2019-06-17 13:31:52.209 IndoorNavigation.iOS[904:5335527] detected 7A8B3CF6-48C9-61FB-C100-9A6AFF29053D AdvertisementData = {
@@ -81,21 +77,19 @@ namespace IndoorNavigation.iOS
                 kCBAdvDataManufacturerData = <0f000215 00000018 00000000 24600000 00002300 00020000 ce>;
             } rssi = -42
             */
-            if ((args as CBDiscoveredPeripheralEventArgs).RSSI.Int32Value > -45 &&
+            int rssiThreshold = -45;
+            if ((args as CBDiscoveredPeripheralEventArgs).RSSI.Int32Value > rssiThreshold &&
                 (args as CBDiscoveredPeripheralEventArgs).RSSI.Int32Value < 0)
             {
                 string bufferUUID = " ";
                 string identifierUUID = "";
-         //       Console.WriteLine("detected " + (args as CBDiscoveredPeripheralEventArgs).Peripheral.Identifier + " Services = " + (args as CBDiscoveredPeripheralEventArgs).Peripheral.Services + " rssi = " + (args as CBDiscoveredPeripheralEventArgs).RSSI);
-         //       Console.WriteLine("UUID is" + (args as CBDiscoveredPeripheralEventArgs).AdvertisementData.ValueForKey((NSString)"kCBAdvDataManufacturerData"));
+
                 var tempUUID = (args as CBDiscoveredPeripheralEventArgs).AdvertisementData.ValueForKey((NSString)"kCBAdvDataManufacturerData");
-                //Console.WriteLine("UUUUUUUU " + tempUUID);
                 if (tempUUID != null)
                 {
                     bufferUUID = tempUUID.ToString();
-                    identifierUUID = readfile(bufferUUID);
+                    identifierUUID = extractBeaconUUID(bufferUUID);
 
-                    //Console.WriteLine("WWWWWWW" + bufferUUID);
                     if (identifierUUID.Length >= 36)
                     {
                         List<BeaconSignalModel> signals = new List<BeaconSignalModel>();
@@ -106,7 +100,7 @@ namespace IndoorNavigation.iOS
                             RSSI = (args as CBDiscoveredPeripheralEventArgs).RSSI.Int32Value
                         });
 
-                        Event.OnEventCall(new BeaconScanEventArgs
+                        _Event.OnEventCall(new BeaconScanEventArgs
                         {
                             Signals = signals
                         });
@@ -119,38 +113,26 @@ namespace IndoorNavigation.iOS
 
         private void UpdatedState(object sender, EventArgs args)
         {
-            /*
-            Debug.WriteLine($"State = {this.manager.State}");
-            this.StateChanged?.Invoke(sender, this.manager.State);
-            */
-        }
-        private string readfile(string parseUUID)
-        {
-            ////string[] stringSeparators = new string[] { "\r\n" };
-            //string[] parser = parseUUID.Split(stringSeparators, StringSplitOptions.None);
-            ///var parser = parseUUID.Split(Environment.NewLine.ToString());
-
            
-            string[] parse = parseUUID.Split(" ");
-        /*
-            for(int i = 0;i<parse.Count();i++)
-            {
-                Console.WriteLine("parser test " + parse[i]);
-            }
-            Console.WriteLine("range : " + parse.Count());
-        */
+        }
+
+        private string extractBeaconUUID(string stringAdvertisementSpecificData)
+        {
+            string[] parse = stringAdvertisementSpecificData.Split(" ");
+        
             if(parse.Count()<6)
             {
-                return parseUUID;
+                return stringAdvertisementSpecificData;
             }
             else
             {
-                var parser = parse[1] + "-"+ parse[2].Substring(0,4)+"-"+parse[2].Substring(4,4)+"-"
-                     + parse[3].Substring(0,4) + "-" + parse[3].Substring(4,4) + parse[4];
+                var parser = parse[1] + "-" +
+                             parse[2].Substring(0,4) + "-" +
+                             parse[2].Substring(4,4) + "-" +
+                             parse[3].Substring(0,4) + "-" +
+                             parse[3].Substring(4,4) + parse[4];
                 return parser.ToString();
             }
-
-
         }
     }
 }

@@ -141,7 +141,7 @@ namespace IndoorNavigation.Models
         void StartScan();
         void StopScan();
         void Close();
-        NavigationEvent Event { get; }
+        NavigationEvent _Event { get; }
     }
 
     public interface IQrCodeDecoder
@@ -162,7 +162,7 @@ namespace IndoorNavigation.Models
         void SetWaypointList(List<Waypoint> WaypointList);
         void Stop();
 
-        NavigationEvent Event { get; }
+        NavigationEvent _Event { get; }
     }
     #endregion
 }
