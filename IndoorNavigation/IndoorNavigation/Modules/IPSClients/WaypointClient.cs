@@ -20,7 +20,7 @@
  * 
  * File Name:
  *
- *      IPSClient.cs
+ *      WaypointClient.cs
  *
  * Abstract:
  *
@@ -40,6 +40,7 @@
  *      Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
  *      Paul Chang, paulchang@iis.sinica.edu.tw
  *      m10717004@yuntech.edu.tw
+ *      Chun Yu Lai, chunyu1202@gmail.com
  *
  */
 using System;
@@ -55,18 +56,18 @@ namespace IndoorNavigation.Modules.IPSClients
     {
         private List<Waypoint> _waypointList = new List<Waypoint>();
 
-        private object bufferLock = new object();
-        private readonly EventHandler HBeaconScan;
+        private object _bufferLock = new object();
+        private readonly EventHandler _HBeaconScan;
 
         public NavigationEvent _Event { get; private set; }
-        private List<BeaconSignalModel> beaconSignalBuffer = new List<BeaconSignalModel>();
+        private List<BeaconSignalModel> _beaconSignalBuffer = new List<BeaconSignalModel>();
 
         public WaypointClient()
         {
             _Event = new NavigationEvent();
 
-            HBeaconScan = new EventHandler(HandleBeaconScan);
-            Utility.BeaconScan._Event.EventHandler += HBeaconScan;
+            _HBeaconScan = new EventHandler(HandleBeaconScan);
+            Utility.BeaconScan._Event._EventHandler += _HBeaconScan;
             _waypointList = new List<Waypoint>();
 
         }
@@ -86,22 +87,25 @@ namespace IndoorNavigation.Modules.IPSClients
             List<BeaconSignalModel> removeSignalBuffer =
                 new List<BeaconSignalModel>();
 
-            lock (bufferLock)
+            lock (_bufferLock)
             {
                 removeSignalBuffer.AddRange(
-                    beaconSignalBuffer.Where(c =>
+                    _beaconSignalBuffer.Where(c =>
                     c.Timestamp < DateTime.Now.AddMilliseconds(-1000)));
 
                 foreach (var obsoleteBeaconSignal in removeSignalBuffer)
-                    beaconSignalBuffer.Remove(obsoleteBeaconSignal);
+                    _beaconSignalBuffer.Remove(obsoleteBeaconSignal);
 
-                foreach (BeaconSignalModel beacon in beaconSignalBuffer)
+                foreach (BeaconSignalModel beacon in _beaconSignalBuffer)
                 {
                     for (int i = 0; i < _waypointList.Count; i++) {
 
                         for (int j = 0; j < _waypointList[i].Beacons.Count; j++) {
                             if (beacon.UUID.Equals(_waypointList[i].Beacons[j].UUID)) {
-                                Console.WriteLine("Matched waypoint:" + _waypointList[i].ID + " by detected Beacon:" + beacon.UUID);
+                                Console.WriteLine("Matched waypoint:" +
+                                                  _waypointList[i].ID +
+                                                  " by detected Beacon:" +
+                                                  beacon.UUID);
 
                                 _Event.OnEventCall(new WayPointSignalEventArgs
                                 {
@@ -119,23 +123,23 @@ namespace IndoorNavigation.Modules.IPSClients
         private void HandleBeaconScan(object sender, EventArgs e)
         {
             IEnumerable<BeaconSignalModel> signals =
-                (e as BeaconScanEventArgs).Signals;
+                (e as BeaconScanEventArgs)._signals;
 
             foreach (BeaconSignalModel signal in signals)
             {
                 Console.WriteLine("Detected Beacon UUID : " + signal.UUID + " RSSI = " + signal.RSSI);
             }
 
-            lock (bufferLock)
-                beaconSignalBuffer.AddRange(signals);
+            lock (_bufferLock)
+                _beaconSignalBuffer.AddRange(signals);
 
         }
 
         public void Stop()
         {
-            Utility.BeaconScan._Event.EventHandler -= HBeaconScan;
-            beaconSignalBuffer = null;
-            bufferLock = null;
+            Utility.BeaconScan._Event._EventHandler -= _HBeaconScan;
+            _beaconSignalBuffer = null;
+            _bufferLock = null;
         }
 
     }

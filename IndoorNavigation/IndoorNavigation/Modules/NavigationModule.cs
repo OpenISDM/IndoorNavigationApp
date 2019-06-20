@@ -39,6 +39,7 @@
  * Authors:
  * 
  *      Paul Chang, paulchang@iis.sinica.edu.tw
+ *      Chun Yu Lai, chunyu1202@gmail.com
  *
  */
 using System;
@@ -109,9 +110,8 @@ namespace IndoorNavigation.Modules
                     avoidList.ToArray());
 
             _navigationResultEventHandler = new EventHandler(HandleNavigationResult);
-            _session._Event.EventHandler += _navigationResultEventHandler;
+            _session._Event._EventHandler += _navigationResultEventHandler;
 
-            Console.WriteLine("-- end StartSession --- ");
         }
 
         /// <summary>
@@ -142,7 +142,7 @@ namespace IndoorNavigation.Modules
                 }
                 // Free unmanaged resources (unmanaged objects) and override a finalizer below.
                 // Set large fields to null.
-                _session._Event.EventHandler -= _navigationResultEventHandler;
+                _session._Event._EventHandler -= _navigationResultEventHandler;
                
                 disposedValue = true;
             }

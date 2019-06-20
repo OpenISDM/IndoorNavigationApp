@@ -41,6 +41,7 @@
  * Authors:
  *
  *      Eric Lee, ericlee@iis.sinica.edu.tw
+ *      Chun Yu Lai, chunyu1202@gmail.com
  *
  */
 
@@ -96,12 +97,10 @@ namespace IndoorNavigation.Modules
             node.Item.ID.Equals(finalWaypointID)).Select(w => w.Item).First();
 
             _IPSClient = new WaypointClient();
-            _IPSClient._Event.EventHandler += new EventHandler(CheckArrivedWaypoint);
+            _IPSClient._Event._EventHandler += new EventHandler(CheckArrivedWaypoint);
 
             _navigateThread = new Thread(() => invokeIPSWork());
             _navigateThread.Start();
-
-            Console.WriteLine("---------Finish of contructor------------------");
 
             _currentNavigateStep = -1;
             StartNavigate(_currentNavigateStep);
@@ -141,7 +140,6 @@ namespace IndoorNavigation.Modules
             {
                 Thread.Sleep(1000);
                 _IPSClient.SignalProcessing();
-                Console.WriteLine("thread for IPSClient.SignalProcessing....");   
             }
         }
 
@@ -173,15 +171,29 @@ namespace IndoorNavigation.Modules
                 {
                     for (int j = 0; j < _waypointsOnRoute[i-1].Neighbors.Count; j++)
                     {
-                        if(!subgraph[path.ToList()[i]].Item.ID.Equals(_waypointsOnRoute[i-1].Neighbors[j].TargetWaypointUUID))
+                        if(!subgraph[path.ToList()[i]].Item.ID.
+                            Equals(_waypointsOnRoute[i-1].Neighbors[j].TargetWaypointUUID))
                         { 
-                            Waypoint oneStepWrongWaypoint = subgraph.Where(waypoint => waypoint.Item.ID.Equals(_waypointsOnRoute[i - 1].Neighbors[j].TargetWaypointUUID)).Select(n => n.Item).First();
-                            Console.WriteLine("construct: one step wrong waypoint: " + oneStepWrongWaypoint.ID);
+                            Waypoint oneStepWrongWaypoint =
+                                subgraph.Where(waypoint => waypoint.Item.ID.
+                                Equals(_waypointsOnRoute[i - 1].Neighbors[j].TargetWaypointUUID)).
+                                Select(n => n.Item).First();
+
+                            Console.WriteLine("construct: one step wrong waypoint: " +
+                                              oneStepWrongWaypoint.ID);
+
                             for (int m = 0; m < oneStepWrongWaypoint.Neighbors.Count; m++) {
-                                Waypoint twoStepWrongWaypoint = subgraph.Where(waypoint => waypoint.Item.ID.Equals(oneStepWrongWaypoint.Neighbors[m].TargetWaypointUUID)).Select(n => n.Item).First();
-                                if (!twoStepWrongWaypoint.ID.Equals(oneStepWrongWaypoint.ID) && !twoStepWrongWaypoint.ID.Equals(_waypointsOnRoute[i-1].ID))
+                                Waypoint twoStepWrongWaypoint =
+                                    subgraph.Where(waypoint => waypoint.Item.ID.
+                                    Equals(oneStepWrongWaypoint.Neighbors[m].TargetWaypointUUID)).
+                                    Select(n => n.Item).
+                                    First();
+
+                                if (!twoStepWrongWaypoint.ID.Equals(oneStepWrongWaypoint.ID) &&
+                                    !twoStepWrongWaypoint.ID.Equals(_waypointsOnRoute[i-1].ID))
                                 {
-                                    Console.WriteLine("construct: two step wrong waypoint: " + twoStepWrongWaypoint.ID);
+                                    Console.WriteLine("construct: two step wrong waypoint: " +
+                                                      twoStepWrongWaypoint.ID);
 
                                     tempWrongWaypointList.Add(twoStepWrongWaypoint);
                                 }
@@ -196,7 +208,8 @@ namespace IndoorNavigation.Modules
             {
                 Console.WriteLine("correct waypoint:" + waypoint.ID);
                 for (int i = 0; i < _waypointsOnWrongWay[waypoint.ID].Count; i++) {
-                    Console.WriteLine("possible wrong [" +  _waypointsOnWrongWay[waypoint.ID][i].ID + "]");
+                    Console.WriteLine("possible wrong-way waypoint: {0}",
+                                      _waypointsOnWrongWay[waypoint.ID][i].ID);
                 }
             }
         }
@@ -304,9 +317,13 @@ namespace IndoorNavigation.Modules
                     }
 
                     //Get the progress
-                    Console.WriteLine("calculate progress: {0}/{1}", _currentNavigateStep, _waypointsOnRoute.Count);
+                    Console.WriteLine("calculate progress: {0}/{1}",
+                                      _currentNavigateStep,
+                                      _waypointsOnRoute.Count);
+
                     navigationInstruction.Progress =
-                    (double)Math.Round(100 * ((decimal)_currentNavigateStep / (_waypointsOnRoute.Count - 1)), 3);
+                        (double)Math.Round(100 * ((decimal)_currentNavigateStep /
+                                           (_waypointsOnRoute.Count - 1)), 3);
 
                     // Raise event to notify the UI/main thread with the result
                     _Event.OnEventCall(new NavigationEventArgs
@@ -326,11 +343,19 @@ namespace IndoorNavigation.Modules
 
                     bool isWrongWaypoint = false;
 
-                    for (int i = 0; i < _waypointsOnWrongWay[_waypointsOnRoute[_currentNavigateStep].ID].Count; i++) {
-                        Console.WriteLine("waypoing ID:" + _waypointsOnWrongWay[_waypointsOnRoute[_currentNavigateStep].ID][i].ID);
-                        if (currentWaypoint.ID.Equals(_waypointsOnWrongWay[_waypointsOnRoute[_currentNavigateStep].ID][i].ID)){
+                    for (int i = 0;
+                         i < _waypointsOnWrongWay[_waypointsOnRoute[_currentNavigateStep].ID].Count;
+                         i++) {
+
+                        Console.WriteLine("waypoing ID:" +
+                                          _waypointsOnWrongWay[_waypointsOnRoute[_currentNavigateStep].ID][i].ID);
+
+                        if (currentWaypoint.ID.
+                            Equals(_waypointsOnWrongWay[_waypointsOnRoute[_currentNavigateStep].ID][i].ID)){
+
                             isWrongWaypoint = true;
                             break;
+
                         }
                     }
                     if (isWrongWaypoint)

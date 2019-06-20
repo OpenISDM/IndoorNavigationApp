@@ -262,7 +262,8 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                                 .Equals(currentWaypoint.ID))
                                             .Select(c => c.Direction).First();
 
-            Console.WriteLine("current waypoint ID=[" + currentWaypoint.ID + "] + neighbors = " + currentWaypoint.Neighbors.Count);
+            Console.WriteLine("current waypoint ID=[" + currentWaypoint.ID + "] + neighbors = " +
+                              currentWaypoint.Neighbors.Count);
             CardinalDirection nextDirection = currentWaypoint.Neighbors
                                             .Where(neighbors =>
                                                 neighbors.TargetWaypointUUID

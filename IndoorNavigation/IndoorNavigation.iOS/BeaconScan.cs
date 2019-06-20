@@ -102,7 +102,7 @@ namespace IndoorNavigation.iOS
 
                         _Event.OnEventCall(new BeaconScanEventArgs
                         {
-                            Signals = signals
+                            _signals = signals
                         });
                     }
                 }

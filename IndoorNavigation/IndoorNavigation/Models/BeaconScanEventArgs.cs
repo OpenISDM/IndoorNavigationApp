@@ -23,7 +23,7 @@
  * 
  * File Name:
  *
- *      NavigationEvent.cs
+ *      BeaconScanEventArgs.cs
  *
  * Abstract:
  *
@@ -40,6 +40,8 @@
  *
  * Authors:
  *
+ *      Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
+ *      Paul Chang, paulchang@iis.sinica.edu.tw
  *      Chun Yu Lai, chunyu1202@gmail.com
  *
  */
@@ -50,14 +52,8 @@ using System.Text;
 
 namespace IndoorNavigation.Models
 {
-    public class NavigationEvent
+    public class BeaconScanEventArgs : EventArgs
     {
-        public event EventHandler _EventHandler;
-
-        public void OnEventCall(EventArgs e)
-        {
-            _EventHandler?.Invoke(this, e);
-        }
+        public List<BeaconSignalModel> _signals { get; set; }
     }
-
 }
