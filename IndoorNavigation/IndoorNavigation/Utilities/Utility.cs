@@ -56,9 +56,6 @@ namespace IndoorNavigation.Modules
 {
     public static class Utility
     {
-        public static Dictionary<Guid, Beacon> BeaconsDict;
-        public static Container Service;
-        public static IPSModule IPS;
         public static IBeaconScan BeaconScan;
         public static ITextToSpeech TextToSpeech;
 

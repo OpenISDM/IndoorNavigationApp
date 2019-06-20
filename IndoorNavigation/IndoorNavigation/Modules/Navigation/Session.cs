@@ -92,12 +92,6 @@ namespace IndoorNavigation.Modules
             _subgraph = graph.Regions[0].GetNavigationSubgraph(avoid);
 
             //Use the ID we get to search where the waypoints are
-
-            /*
-            _startWaypoint = _subgraph.Where(node =>
-            node.Item.ID.Equals(startWaypointID)).Select(w => w.Item).First();
-            */
-
             _finalWaypoint = _subgraph.Where(node => 
             node.Item.ID.Equals(finalWaypointID)).Select(w => w.Item).First();
 
@@ -166,15 +160,13 @@ namespace IndoorNavigation.Modules
             var path = subgraph.Dijkstra(startPoingKey,
                                            endPointKey).GetPath();
 
-            //Put the correct waypoint into List all_correct_waaypoint
-            //Put all correct waypoints and their neighbors in list
-            //AllNoneWrongWaypoint
             for (int i = 0; i < path.Count(); i++)
             {
                 _waypointsOnRoute.Add(subgraph[path.ToList()[i]].Item);
                
                 List<Waypoint> tempWrongWaypointList = new List<Waypoint>();
 
+                // Construct the two-step possible wrong-way waypoints
                 Console.WriteLine("construct: correct waypoint: " + _waypointsOnRoute[i].ID);
                 if (i - 1 >= 0)
                 {
@@ -293,11 +285,7 @@ namespace IndoorNavigation.Modules
                         Navigraph.GetDistance(_subgraph,
                                               currentWaypoint,
                                               _waypointsOnRoute[_currentNavigateStep + 1]);
-                        //getwaypoint=0 means that we are now in the starting
-                        // point, we do not have the previous waypoint 
-                        //therefore, we give the first point a direction called
-                        // FirstDirection
-
+                 
                         if (_currentNavigateStep == 0)
                         {
                             navigationInstruction.Direction =

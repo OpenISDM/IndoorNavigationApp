@@ -62,6 +62,7 @@
     <Compile Remove="Modules\SignalProcessingAlgorithms\WaypointSignalProcessing.cs" />
     <Compile Remove="Modules\Navigation\Algorithms\WayPointAlgorithm.cs" />
     <Compile Remove="Modules\Navigation\WaypointRoutePlan.cs" />
+    <Compile Remove="Modules\IPSModule.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Remove="Views\Navigation\TabbedPageRoutes.xaml" />

@@ -68,8 +68,6 @@ namespace IndoorNavigation.Modules
             Event = new NavigationEvent();
 
             _navigraphName = navigraphName;
-            // hardcode now and we need to decide how to detect the start point.
-       //     _sourceWaypointID = new Guid("00000018-0000-0000-6660-000000011900");
             _destinationID = destinationID;
 
             ConstructSession();
@@ -107,7 +105,6 @@ namespace IndoorNavigation.Modules
             // Start the session
             _session = new Session(
                     NavigraphStorage.LoadNavigraphXML(_navigraphName),
-                 //   _sourceWaypointID,
                     _destinationID,
                     avoidList.ToArray());
 
