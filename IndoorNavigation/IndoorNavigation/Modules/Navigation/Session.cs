@@ -118,11 +118,12 @@ namespace IndoorNavigation.Modules
 
             if (currentStep == -1)
             {
+                // Detection of starting waypoing:
+                // Use all Waypoints of the NavigationGraph to detect the starting waypoint
                 monitorWaypointList = _subgraph.Select(waypoint => waypoint.Item).ToList();
                 foreach (Waypoint waypoint in monitorWaypointList) {
                     Console.WriteLine("all waypoints: " + waypoint.ID);
                 }
-
             }
             else {
                 monitorWaypointList.Add(_waypointsOnRoute[currentStep]);
@@ -179,8 +180,8 @@ namespace IndoorNavigation.Modules
                     {
                         if(!subgraph[path.ToList()[i]].Item.ID.Equals(_waypointsOnRoute[i-1].Neighbors[j].TargetWaypointUUID))
                         {
-                            tempWrongWaypointList.Add(new Waypoint { ID = _waypointsOnRoute[i-1].Neighbors[j].TargetWaypointUUID });
-                            
+                            //tempWrongWaypointList.Add(new Waypoint { ID = _waypointsOnRoute[i-1].Neighbors[j].TargetWaypointUUID });
+                            tempWrongWaypointList.Add(subgraph.Where(waypoint => waypoint.Item.ID.Equals(_waypointsOnRoute[i-1].Neighbors[j].TargetWaypointUUID)).Select(n => n.Item).First());
                         }
                     }
                 }
@@ -219,11 +220,12 @@ namespace IndoorNavigation.Modules
 
             if (_currentNavigateStep == -1)
             {
+                // Detection of starting waypoing:
+                // Detected the waypoint most closed to user.
                 _startWaypoint = currentWaypoint;
+
                 _currentNavigateStep = 0;
-
                 GetPath(_startWaypoint, _finalWaypoint, _subgraph);
-
                 StartNavigate(_currentNavigateStep);
             }
             else
