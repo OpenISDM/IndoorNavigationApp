@@ -44,7 +44,6 @@
     <Folder Include="Views\Settings\LicensePages\" />
     <Folder Include="ViewModels\Navigation\" />
     <Folder Include="Modules\Navigation\Dijkstra.NET\" />
-    <Folder Include="Views\Navigation\NTUHYunlin\" />
     <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
@@ -55,7 +54,6 @@
     <Compile Remove="Views\Navigation\TabbedPageRoutes.xaml.cs" />
     <Compile Remove="Views\Navigation\NavigationTabbedPage.xaml.cs" />
     <Compile Remove="ViewModels\Navigation\NaviHomePageViewModel.cs" />
-    <Compile Remove="Views\Navigation\NavigationHomePage.xaml.cs" />
     <Compile Remove="Views\Navigation\TabbedPageNavigation.xaml.cs" />
     <Compile Remove="ViewModels\Navigation\TabbedNaviViewModel.cs" />
     <Compile Remove="Modules\MaNModule.cs" />
@@ -67,7 +65,6 @@
   <ItemGroup>
     <EmbeddedResource Remove="Views\Navigation\TabbedPageRoutes.xaml" />
     <EmbeddedResource Remove="Views\Navigation\NavigationTabbedPage.xaml" />
-    <EmbeddedResource Remove="Views\Navigation\NavigationHomePage.xaml" />
     <EmbeddedResource Remove="Views\Navigation\TabbedPageNavigation.xaml" />
   </ItemGroup>
   <ItemGroup>

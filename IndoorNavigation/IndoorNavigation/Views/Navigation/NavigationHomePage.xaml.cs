@@ -50,7 +50,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using IndoorNavigation.Models.NavigaionLayer;
 
-namespace IndoorNavigation.Views.Navigation.NTUHYunlin
+namespace IndoorNavigation.Views.Navigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class NavigationHomePage : ContentPage

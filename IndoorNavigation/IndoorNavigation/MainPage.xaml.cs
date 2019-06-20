@@ -48,7 +48,7 @@ using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using IndoorNavigation.Views.Settings;
-using IndoorNavigation.Views.Navigation.NTUHYunlin;
+using IndoorNavigation.Views.Navigation;
 using MvvmHelpers;
 using System.ComponentModel;
 using IndoorNavigation.ViewModels;
