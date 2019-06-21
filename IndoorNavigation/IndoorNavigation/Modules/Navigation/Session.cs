@@ -79,6 +79,7 @@ namespace IndoorNavigation.Modules
         private Thread _waypointDetectionThread;
         private Thread _navigationControllerThread;
 
+        private bool isArrviedDestination;
         private Waypoint _currentWaypoint = new Waypoint();
         private ManualResetEventSlim _nextWaypointEvent = new ManualResetEventSlim(false);
 
@@ -99,6 +100,7 @@ namespace IndoorNavigation.Modules
             node.Item.ID.Equals(finalWaypointID)).Select(w => w.Item).First();
 
             _nextWaypointStep = -1;
+            isArrviedDestination = false;
 
             _IPSClient = new WaypointClient();
             _IPSClient._event._eventHandler += new EventHandler(CheckArrivedWaypoint);
@@ -124,6 +126,11 @@ namespace IndoorNavigation.Modules
 
                 if (_currentWaypoint.ID.Equals(_finalWaypoint.ID)) {
                     Console.WriteLine("Arrived destination!");
+
+                    isArrviedDestination = true;
+                    _waypointDetectionThread.Join();
+                    _IPSClient._event._eventHandler -= new EventHandler(CheckArrivedWaypoint);
+                    _IPSClient.Stop();
                     break;
                 }
 
@@ -213,7 +220,7 @@ namespace IndoorNavigation.Modules
 
         private void InvokeIPSWork() {
             Console.WriteLine("---- InvokeIPSWork ----");
-            while (true)
+            while (false == isArrviedDestination)
             {
                 Thread.Sleep(1000);
                 _IPSClient.DetectWaypoints();
@@ -307,6 +314,16 @@ namespace IndoorNavigation.Modules
             {
                 _currentWaypoint = currentWaypoint;
                 _nextWaypointEvent.Set();
+
+                if (currentWaypoint == _finalWaypoint)
+                {
+                    Console.WriteLine("---- [case: arrived destination] .... ");
+
+                    _event.OnEventCall(new NavigationEventArgs
+                    {
+                        Result = NavigationResult.Arrival
+                    });
+                }
             }
             else
             {
@@ -429,6 +446,15 @@ namespace IndoorNavigation.Modules
             }
 
             Console.WriteLine("<< CheckArrivedWaypoint ");
+        }
+
+        public void CloseSession()
+        {
+            isArrviedDestination = true;
+            _navigationControllerThread.Join();
+            _waypointDetectionThread.Join();
+            _IPSClient._event._eventHandler -= new EventHandler(CheckArrivedWaypoint);
+            _IPSClient.Stop();
         }
 
         public enum NavigationResult

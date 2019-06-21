@@ -136,6 +136,7 @@ namespace IndoorNavigation.Modules.IPSClients
 
         public void Stop()
         {
+            Utility._beaconScan.StopScan();
             Utility._beaconScan._event._eventHandler -= _beaconScanEventHandler;
             _beaconSignalBuffer = null;
             _bufferLock = null;

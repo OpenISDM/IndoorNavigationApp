@@ -272,7 +272,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                 if (disposing)
                 {
                     // TODO: dispose managed state (managed objects).
-                    //navigationModule.Event.EventHandler -= GetNavigationStatusEvent
+                    _navigationModule._event._eventHandler -= GetNavigationResultEvent;
                 }
 
                 // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
