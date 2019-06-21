@@ -61,21 +61,21 @@ namespace IndoorNavigation.Modules.Utilities
     /// </summary>
     public static class NavigraphStorage
     {
-        internal static readonly string _navigraphFolder =
+        internal static readonly string navigraphFolder =
             Path.Combine(Environment.GetFolderPath(
                     Environment.SpecialFolder.LocalApplicationData),
                     "Navigraph");
 
-        private static object _fileLock = new object();
+        private static object fileLock = new object();
 
         public static bool DownloadNavigraph(string URL, string navigraphName)
         {
-            string filePath = Path.Combine(_navigraphFolder, navigraphName);
+            string filePath = Path.Combine(navigraphFolder, navigraphName);
 
             try
             {
-                if (!Directory.Exists(_navigraphFolder))
-                    Directory.CreateDirectory(_navigraphFolder);
+                if (!Directory.Exists(navigraphFolder))
+                    Directory.CreateDirectory(navigraphFolder);
 
                 using (WebClient webClient = new WebClient())
                     webClient.DownloadFileAsync(new Uri(URL), filePath);
@@ -95,10 +95,10 @@ namespace IndoorNavigation.Modules.Utilities
         public static string[] GetAllNavigraphs()
         {
             // Check the folder of navigation graph if it is exist
-            if (!Directory.Exists(_navigraphFolder))
-                Directory.CreateDirectory(_navigraphFolder);
+            if (!Directory.Exists(navigraphFolder))
+                Directory.CreateDirectory(navigraphFolder);
 
-            return Directory.GetFiles(_navigraphFolder)
+            return Directory.GetFiles(navigraphFolder)
                 .Select(path => Path.GetFileName(path))
                 .OrderBy(file => file).ToArray();
         }
@@ -110,7 +110,7 @@ namespace IndoorNavigation.Modules.Utilities
         /// <param name="FileName">File name.</param>
         public static Navigraph LoadNavigraphXML(string FileName)
         {
-            string filePath = Path.Combine(_navigraphFolder, FileName);
+            string filePath = Path.Combine(navigraphFolder, FileName);
 
             if (!File.Exists(filePath))
                 throw new FileNotFoundException();
@@ -153,12 +153,12 @@ namespace IndoorNavigation.Modules.Utilities
         /// <returns></returns>
         private static string LoadFile(string FileName)
         {
-            string filePath = Path.Combine(_navigraphFolder, FileName);
+            string filePath = Path.Combine(navigraphFolder, FileName);
 
             // Check the folder of navigraph if it is exist
-            if (!Directory.Exists(_navigraphFolder))
+            if (!Directory.Exists(navigraphFolder))
             {
-                Directory.CreateDirectory(_navigraphFolder);
+                Directory.CreateDirectory(navigraphFolder);
                 return string.Empty;
             }
 
@@ -166,7 +166,7 @@ namespace IndoorNavigation.Modules.Utilities
             if (!File.Exists(filePath))
                 return string.Empty;
 
-            lock(_fileLock)
+            lock(fileLock)
                 return File.ReadAllText(filePath);
         }
 
@@ -180,15 +180,15 @@ namespace IndoorNavigation.Modules.Utilities
         public static bool SaveNavigraphInformation(
             string FileName, string NavigraphDatas)
         {
-            string filePath = Path.Combine(_navigraphFolder, FileName);
+            string filePath = Path.Combine(navigraphFolder, FileName);
             try
             {
                 // Check the folder of navigraph if it is exist
-                if (!Directory.Exists(_navigraphFolder))
-                    Directory.CreateDirectory(_navigraphFolder);
+                if (!Directory.Exists(navigraphFolder))
+                    Directory.CreateDirectory(navigraphFolder);
 
                 // Write navigraph information
-                lock (_fileLock)
+                lock (fileLock)
                     File.WriteAllText(filePath, NavigraphDatas);
 
                 return true;
@@ -205,13 +205,13 @@ namespace IndoorNavigation.Modules.Utilities
         /// <param name="GraphName"></param>
         public static void DeleteNavigraph(string GraphName)
         {
-            string filePath = Path.Combine(_navigraphFolder, GraphName);
+            string filePath = Path.Combine(navigraphFolder, GraphName);
 
             // Check the folder of navigraph if it is exist
-            if (!Directory.Exists(_navigraphFolder))
-                Directory.CreateDirectory(_navigraphFolder);
+            if (!Directory.Exists(navigraphFolder))
+                Directory.CreateDirectory(navigraphFolder);
 
-            lock (_fileLock)
+            lock (fileLock)
                 File.Delete(filePath);
         }
 

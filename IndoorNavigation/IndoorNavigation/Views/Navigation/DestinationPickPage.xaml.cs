@@ -47,8 +47,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Xamarin.Forms;
 using MvvmHelpers;
+using IndoorNavigation.Modules;
 using IndoorNavigation.Models.NavigaionLayer;
 using System.Linq;
+using System.Diagnostics;
 using IndoorNavigation.Modules.Utilities;
 
 namespace IndoorNavigation.Views.Navigation
@@ -57,26 +59,25 @@ namespace IndoorNavigation.Views.Navigation
     {
         private string _navigraphName;
 
-        public ObservableCollection<string> _items { get; set; }
-        public ObservableCollection<DestinationItem> _destinationItems { get; set; }
+        public ObservableCollection<string> Items { get; set; }
+        public ObservableCollection<DestinationItem> DestinationItems { get; set; }
 
         public DestinationPickPage(string navigraphName, CategoryType category)
         {
             InitializeComponent();
 
-            _destinationItems = new ObservableCollection<DestinationItem>();
+            DestinationItems = new ObservableCollection<DestinationItem>();
 
             _navigraphName = navigraphName;
 
-            IEnumerable<Waypoint> waypoints = from region in NavigraphStorage.
-                                              LoadNavigraphXML(navigraphName).Regions
+            IEnumerable<Waypoint> waypoints = from region in NavigraphStorage.LoadNavigraphXML(navigraphName).Regions
                                               from waypoint in region.Waypoints
                                               where waypoint.Category.Equals(category)
                                               select waypoint;
 
             foreach (Waypoint waypoint in waypoints)
             {
-                _destinationItems.Add(new DestinationItem
+                DestinationItems.Add(new DestinationItem
                 {
                     ID = waypoint.ID,
                     WaypointName = waypoint.Name,
@@ -84,22 +85,17 @@ namespace IndoorNavigation.Views.Navigation
                 });
             }
 
-            MyListView.ItemsSource = from waypoint in _destinationItems
+            MyListView.ItemsSource = from waypoint in DestinationItems
                                      group waypoint by waypoint.Floor into waypointGroup
                                      orderby waypointGroup.Key
-                                     select new Grouping<int, DestinationItem>(waypointGroup.Key,
-                                                                               waypointGroup);
+                                     select new Grouping<int, DestinationItem>(waypointGroup.Key, waypointGroup);
         }
 
         async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             if (e.Item is DestinationItem destination)
             {
-                Console.WriteLine("start of Handle_ItemTapped in DestinationPickPage");
-                await Navigation.PushAsync(new NavigatorPage(_navigraphName,
-                                                             destination.WaypointName,
-                                                             destination.ID));
-                Console.WriteLine("end of Handle_ItemTapped in DestinationPickPage");
+                await Navigation.PushAsync(new NavigatorPage(_navigraphName, destination.WaypointName, destination.ID));
             }
 
             //Deselect Item

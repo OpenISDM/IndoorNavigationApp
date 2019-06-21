@@ -48,7 +48,7 @@ namespace IndoorNavigation.Modules
 {
     public class Container
     {
-        private Dictionary<string, List<Type>> _containerDictionary 
+        private Dictionary<string, List<Type>> containerDictionary 
             = new Dictionary<string, List<Type>>();
 
         public Container BuildContainerProvider()
@@ -58,14 +58,14 @@ namespace IndoorNavigation.Modules
 
         public void Add(string Key, Type type)
         {
-            if (_containerDictionary.ContainsKey(Key))
+            if (containerDictionary.ContainsKey(Key))
             {
-                if (_containerDictionary[Key].FirstOrDefault(container => 
+                if (containerDictionary[Key].FirstOrDefault(container => 
                 type.IsAssignableFrom(container)) == null)
-                    _containerDictionary[Key].Add(type);
+                    containerDictionary[Key].Add(type);
             }
             else
-                _containerDictionary.Add(Key, new List<Type>() { type });
+                containerDictionary.Add(Key, new List<Type>() { type });
         }
 
         public void Add<T>(string Key)
@@ -75,9 +75,9 @@ namespace IndoorNavigation.Modules
 
         public T Get<T>(string Key) where T : class
         {
-            if (_containerDictionary.ContainsKey(Key))
+            if (containerDictionary.ContainsKey(Key))
             {
-                var type = _containerDictionary[Key]
+                var type = containerDictionary[Key]
                     .FirstOrDefault(container => 
                     typeof(T).IsAssignableFrom(container));
                 if (type != null)
@@ -89,9 +89,9 @@ namespace IndoorNavigation.Modules
 
         public object Get(string Key)
         {
-            if (_containerDictionary.ContainsKey(Key))
+            if (containerDictionary.ContainsKey(Key))
             {
-                var type = _containerDictionary[Key].FirstOrDefault();
+                var type = containerDictionary[Key].FirstOrDefault();
                 if (type != null)
                     return Activator.CreateInstance(type);
             }
@@ -101,9 +101,9 @@ namespace IndoorNavigation.Modules
 
         public IEnumerable<T> Gets<T>(string Key) where T : class
         {
-            if (_containerDictionary.ContainsKey(Key))
+            if (containerDictionary.ContainsKey(Key))
             {
-                var container = _containerDictionary[Key]
+                var container = containerDictionary[Key]
                     .Where(c => typeof(T)
                     .IsAssignableFrom(c));
                 if (container.Count() != 0)
@@ -114,9 +114,9 @@ namespace IndoorNavigation.Modules
 
         public IEnumerable<object> Gets(string Key)
         {
-            if (_containerDictionary.ContainsKey(Key))
+            if (containerDictionary.ContainsKey(Key))
             {
-                var container = _containerDictionary[Key];
+                var container = containerDictionary[Key];
                 if (container.Count() != 0)
                     foreach (var type in container)
                         yield return Activator.CreateInstance(type);
@@ -125,14 +125,14 @@ namespace IndoorNavigation.Modules
 
         public void Remove<T>(string Key)
         {
-            if (_containerDictionary.ContainsKey(Key))
-                _containerDictionary[Key].Remove(typeof(T));
+            if (containerDictionary.ContainsKey(Key))
+                containerDictionary[Key].Remove(typeof(T));
         }
 
         public void Remove(string Key)
         {
-            if (_containerDictionary.ContainsKey(Key))
-                _containerDictionary.Remove(Key);
+            if (containerDictionary.ContainsKey(Key))
+                containerDictionary.Remove(Key);
         }
     }
 }

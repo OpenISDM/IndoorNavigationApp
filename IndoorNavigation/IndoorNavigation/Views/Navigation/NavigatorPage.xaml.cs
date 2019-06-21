@@ -49,21 +49,14 @@ namespace IndoorNavigation.Views.Navigation
 {
     public partial class NavigatorPage : ContentPage
     {
-        private NavigatorPageViewModel _viewModel;
+        private NavigatorPageViewModel viewModel;
 
         public NavigatorPage(string navigraphName, string desinationName, Guid destinationID)
         {
-            Console.WriteLine("-- start of NavigatorPage constructor: navigraphName: " +
-                              navigraphName + " destinationName: " +
-                              desinationName + " destinationID: " +
-                              destinationID);
-
             InitializeComponent();
 
-            _viewModel = new NavigatorPageViewModel(navigraphName, desinationName, destinationID);
-            BindingContext = _viewModel;
-
-            Console.WriteLine("-- end of NavigatorPage constructor");
+            viewModel = new NavigatorPageViewModel(navigraphName, desinationName, destinationID);
+            BindingContext = viewModel;
         }
 
     }

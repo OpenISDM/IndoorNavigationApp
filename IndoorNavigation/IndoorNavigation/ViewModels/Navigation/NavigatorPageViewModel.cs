@@ -40,7 +40,6 @@
  * Authors:
  *
  *      Paul Chang, paulchang@iis.sinica.edu.tw
- *      Chun Yu Lai, chunyu1202@gmail.com
  *
  */
 using Xamarin.Forms;
@@ -60,22 +59,38 @@ namespace IndoorNavigation.ViewModels.Navigation
         private Guid _destinationID;
         private NavigationModule _navigationModule;
 
-        private string _currentStepLabelName;
-        private string _currentStepImageName;
-        private string _currentWaypointName;
-        private string _destinationWaypointName;
-        private double _navigationProgress;
-        private bool _disposedValue = false; // To detect redundant calls
+        public TestEvent testEvent;
 
         public NavigatorPageViewModel(string navigraphName, string destinationName, Guid destinationID)
         {
+            testEvent = new TestEvent();
+
             _destinationID = destinationID;
             DestinationWaypointName = destinationName;
 
             CurrentWaypointName = "NULL";
 
             _navigationModule = new NavigationModule(navigraphName, destinationID);
-            _navigationModule._event._eventHandler += GetNavigationResultEvent;
+            _navigationModule.NavigationEvent.ResultEventHandler += GetNavigationResultEvent;
+
+            //Test function button
+            testEvent.TestEventHandler += _navigationModule.HandleCurrentWaypoint;
+            EnterNextWaypointCommand = new Command(TestEnterNextWaypointCommand);
+        }
+
+        public void TestEnterNextWaypointCommand()
+        {
+            Guid guidOutput;
+            guidOutput = Guid.TryParse(NextWaypointName, out guidOutput) ? guidOutput : Guid.Empty;
+
+            // TODO: Should also check this UUID whether it is in the navigation graph
+            if (guidOutput != Guid.Empty)
+            {
+                testEvent.OnEventCall(new WaypointScanEventArgs
+                {
+                    WaypointID = guidOutput
+                });
+            }
         }
 
         /// <summary>
@@ -85,7 +100,6 @@ namespace IndoorNavigation.ViewModels.Navigation
         /// <param name="args">Arguments.</param>
         private void DisplayInstructions(EventArgs args)
         {
-            Console.WriteLine(">> DisplayInstructions");
             NavigationInstruction instruction = (args as NavigationEventArgs).NextInstruction;
 
             string currentStepImage;
@@ -97,7 +111,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                     SetInstruction(instruction, out currentStepLabel, out currentStepImage);
                     CurrentStepLabel = currentStepLabel;
                     CurrentStepImage = currentStepImage;
-                    CurrentWaypointName = instruction.CurrentWaypoint.Name;
+                    CurrentWaypointName = instruction.NextWaypoint.Name;
                     NavigationProgress = instruction.Progress;
                     break;
 
@@ -116,9 +130,7 @@ namespace IndoorNavigation.ViewModels.Navigation
             }
         }
 
-        private void SetInstruction(NavigationInstruction instruction,
-                                    out string stepLabel,
-                                    out string stepImage)
+        private void SetInstruction(NavigationInstruction instruction, out string stepLabel, out string stepImage)
         {
             switch (instruction.Direction)
             {
@@ -189,85 +201,110 @@ namespace IndoorNavigation.ViewModels.Navigation
         /// </summary>
         private void GetNavigationResultEvent(object sender, EventArgs args)
         {
-            Console.WriteLine("recevied event raised from NavigationModule");
             DisplayInstructions(args);
         }
 
         #region NavigatorPage Binding Args
+        private string currentStepLabelName;
         public string CurrentStepLabel
         {
             get
             {
-                return _currentStepLabelName;
+                return currentStepLabelName;
             }
 
             set
             {
-                SetProperty(ref _currentStepLabelName, value);
+                SetProperty(ref currentStepLabelName, value);
             }
         }
 
+        private string currentStepImageName;
         public string CurrentStepImage
         {
             get
             {
-                return string.Format("{0}.png", _currentStepImageName);
+                return string.Format("{0}.png", currentStepImageName);
             }
 
             set
             {
-                if (_currentStepImageName != value)
+                if (currentStepImageName != value)
                 {
-                    _currentStepImageName = value;
+                    currentStepImageName = value;
                     OnPropertyChanged("CurrentStepImage");
                 }
             }
         }
 
+        private string currentWaypointName;
         public string CurrentWaypointName
         {
             get
             {
-                return _currentWaypointName;
+                return currentWaypointName;
             }
 
             set
             {
-                SetProperty(ref _currentWaypointName, value);
+                SetProperty(ref currentWaypointName, value);
             }
         }
 
+        private string destinationWaypointName;
         public string DestinationWaypointName
         {
             get
             {
-                return _destinationWaypointName;
+                return destinationWaypointName;
             }
 
             set
             {
-                SetProperty(ref _destinationWaypointName, value);
+                SetProperty(ref destinationWaypointName, value);
             }
         }
 
+        private double navigationProgress;
         public double NavigationProgress
         {
             get
             {
-                return _navigationProgress;
+                return navigationProgress;
             }
 
             set
             {
-                SetProperty(ref _navigationProgress, value);
+                SetProperty(ref navigationProgress, value);
             }
         }
+
+        #region Test entry&button
+        private string nextWaypointName;
+        public string NextWaypointName
+        {
+            get
+            {
+                return nextWaypointName;
+            }
+
+            set
+            {
+                SetProperty(ref nextWaypointName, value);
+            }
+        }
+
+        public ICommand EnterNextWaypointCommand { private set; get; }
+        #endregion
+
         #endregion
 
         #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
         protected virtual void Dispose(bool disposing)
         {
-            if (!_disposedValue)
+            if (!disposedValue)
             {
                 if (disposing)
                 {
@@ -278,12 +315,11 @@ namespace IndoorNavigation.ViewModels.Navigation
                 // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
                 // TODO: set large fields to null.
 
-                _disposedValue = true;
+                disposedValue = true;
             }
         }
 
-        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged
-        // resources.
+        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
         // ~NavigatorPageViewModel()
         // {
         //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
@@ -300,5 +336,15 @@ namespace IndoorNavigation.ViewModels.Navigation
         }
         #endregion
 
+    }
+
+    public class TestEvent
+    {
+        public event EventHandler TestEventHandler;
+
+        public void OnEventCall(EventArgs args)
+        {
+            TestEventHandler?.Invoke(this, args);
+        }
     }
 }

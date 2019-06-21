@@ -54,30 +54,28 @@ namespace IndoorNavigation.ViewModels
 {
     public class MainPageViewModel : BaseViewModel
     {
-        private ObservableRangeCollection<Location> _locations;
+        private ObservableRangeCollection<Location> locations;
         // IEnumerable of Locations which used by search method
-        private IEnumerable<Location> _returnedLocations;
-        private Location _selectedItem;
-        private string _searchedText;
+        private IEnumerable<Location> returnedLocations;
 
         public MainPageViewModel()
         {
-            _returnedLocations = new ObservableRangeCollection<Location>();
+            returnedLocations = new ObservableRangeCollection<Location>();
             LoadNavigationGraph();
         }
 
         public async void LoadNavigationGraph()
         {
-            _locations = new ObservableRangeCollection<Location>();
+            locations = new ObservableRangeCollection<Location>();
 
             foreach (string naviGraphName in NavigraphStorage.GetAllNavigraphs())
             {
-                _locations.Add(new Location { UserNaming = naviGraphName });
+                locations.Add(new Location { UserNaming = naviGraphName });
             }
 
-            if (_locations.Any())
+            if (locations.Any())
             {
-                NavigationGraphFiles = _locations;
+                NavigationGraphFiles = locations;
             }
             else
             {
@@ -92,48 +90,50 @@ namespace IndoorNavigation.ViewModels
         {
             get
             {
-                return (from location in _returnedLocations
+                return (from location in returnedLocations
                         orderby location.UserNaming[0]
                         select location).ToList();
             }
             set
             {
-                SetProperty(ref _returnedLocations, value);
+                SetProperty(ref returnedLocations, value);
             }
         }
 
+        private Location selectedItem;
         public Location SelectedItem
         {
             get
             {
-                return _selectedItem;
+                return selectedItem;
             }
             set
             {
-                if (_selectedItem != value)
+                if (selectedItem != value)
                 {
-                    _selectedItem = value;
+                    selectedItem = value;
                     OnPropertyChanged("SelectedItem");
-                    _selectedItem = null;
+                    selectedItem = null;
                 }
             }
         }
 
+        private string searchedText;
         public string SearchedText
         {
             get
             {
-                return _searchedText;
+                return searchedText;
             }
 
             set
             {
-                _searchedText = value;
+                searchedText = value;
                 OnPropertyChanged("SearchedText");
 
                 // Search waypoints
                 var searchedWaypoints = string.IsNullOrEmpty(value) ?
-                                        _locations : _locations
+                                        locations : locations
                                         .Where(c => c.UserNaming.Contains(value));
                 NavigationGraphFiles = searchedWaypoints.ToList();
             }

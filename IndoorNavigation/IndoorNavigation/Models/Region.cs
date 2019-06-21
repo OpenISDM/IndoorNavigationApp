@@ -44,15 +44,16 @@
  *
  */
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Xml.Serialization;
 using Dijkstra.NET.Model;
 using IndoorNavigation.Models.NavigaionLayer;
 
 namespace IndoorNavigation.Models
 {
-   
     /// <summary>
     /// The second level of the navigation graph within two-level hierarchy
     /// </summary>
@@ -97,9 +98,8 @@ namespace IndoorNavigation.Models
             foreach (Waypoint waypoint in Waypoints)
             {
                 NavigationSubgraph.AddNode(waypoint);
-                //Console.WriteLine("Waypoint : " + waypoint.ID);
-               // Console.WriteLine("Waypoints Beacon : " + waypoint.Beacons[0].UUID);
             }
+
             // Set each path into region graph
             foreach (Edge edge in Edges)
             {

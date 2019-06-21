@@ -52,6 +52,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Dijkstra.NET.Model;
 using GeoCoordinatePortable;
+using Dijkstra.NET.Extensions;
 using System.Xml.Serialization;
 using System.Xml;
 
@@ -176,7 +177,6 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 edge.TargetWaypoint = waypointsOfRegions.First(waypoint =>
                         waypoint.ID.Equals(edge.TargetWaypointUUID));
             }
-
         }
 
         /// <summary>
@@ -222,7 +222,6 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                     Waypoint sourceWaypoint,
                                     Waypoint targetWaypoint)
         {
-            /*
             // Find where is the source/target waypoint and find its key
             uint sourceKey = connectionGraph
                             .Where(WaypointList => WaypointList.Item.ID
@@ -235,9 +234,6 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
             // Returns the distance of the path
             return connectionGraph.Dijkstra(sourceKey, targetKey).Distance;
-            */
-
-            return 10;
         }
 
         /// <summary>
@@ -252,17 +248,12 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                                 Waypoint currentWaypoint,
                                                 Waypoint nextWaypoint)
         {
-
             // Find the cardinal direction to the next waypoint
-            Console.WriteLine("previous waypoint ID=[" + previousWaypoint.ID + "]");
             CardinalDirection currentDirection = previousWaypoint.Neighbors
                                             .Where(neighbors =>
                                                 neighbors.TargetWaypointUUID
                                                 .Equals(currentWaypoint.ID))
                                             .Select(c => c.Direction).First();
-
-            Console.WriteLine("current waypoint ID=[" + currentWaypoint.ID + "] + neighbors = " +
-                              currentWaypoint.Neighbors.Count);
             CardinalDirection nextDirection = currentWaypoint.Neighbors
                                             .Where(neighbors =>
                                                 neighbors.TargetWaypointUUID
@@ -275,7 +266,6 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                 nextTurnDirection + 8 : nextTurnDirection;
 
             return (TurnDirection)nextTurnDirection;
-            
         }
 
         #endregion
@@ -384,10 +374,6 @@ namespace IndoorNavigation.Models.NavigaionLayer
         [XmlArray("Neighbors")]
         [XmlArrayItem("Neighbor", typeof(Neighbor))]
         public List<Neighbor> Neighbors { get; set; }
-
-        [XmlArray("Beacons")]
-        [XmlArrayItem("Beacon", typeof(Beacon))]
-        public List<Beacon> Beacons;
     }
 
     /// <summary>
@@ -413,34 +399,6 @@ namespace IndoorNavigation.Models.NavigaionLayer
         [XmlElement("ReferenceDirection")]
         public CardinalDirection Direction { get; set; }
     }
-
-
-    public struct Beacon
-    {
-        [XmlElement("UUID")]
-        public Guid UUID { get; set; }
-
-        //[XmlElement("MappedWaypointUUID")]
-        //public Guid MappedWaypointUUID { get; set; }
-
-        //[XmlElement("Major")]
-        //public int Major { get; set; }
-
-        //[XmlElement("Minor")]
-        //public int Minor { get; set; }
-
-        //[XmlElement("RSSI")]
-        //public int RSSI { get; set; }
-
-        //[XmlElement("Threshold")]
-        //public int Threshold { get; set; }
-
-        //[XmlElement("Floor")]
-        //public int Floor { get; set; }
-
-        //public DateTime Timestamp { get; set; }
-    }
-
 
     /// <summary>
     /// The edge/connection between the two waypoints(Location A -> Location B)
@@ -480,8 +438,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
             get { return Direction.ToString(); }
             set
             {
-                if (string.IsNullOrEmpty(value) ||
-                    !Enum.GetNames(typeof(CardinalDirection)).Contains(value))
+                if (string.IsNullOrEmpty(value) || !Enum.GetNames(typeof(CardinalDirection)).Contains(value))
                 {
                     //Direction = CardinalDirection.NoDirection;
                 }
@@ -505,8 +462,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
             get { return ConnectionType.ToString(); }
             set
             {
-                if (string.IsNullOrEmpty(value) ||
-                    !Enum.GetNames(typeof(ConnectionType)).Contains(value))
+                if (string.IsNullOrEmpty(value) || !Enum.GetNames(typeof(ConnectionType)).Contains(value))
                 {
                     //Connection = ConnectionType.NoConnectionType;
                 }

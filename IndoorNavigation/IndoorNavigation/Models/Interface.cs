@@ -42,15 +42,13 @@
  *
  *      Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
  *      Paul Chang, paulchang@iis.sinica.edu.tw
- *      Bo Chen Huang, m10717004@yuntech.edu.tw
- *      Chun Yu Lai, chunyu1202@gmail.com
+ *      m10717004@yuntech.edu.tw
  *
  */
 using GeoCoordinatePortable;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using IndoorNavigation.Models.NavigaionLayer;
 
 namespace IndoorNavigation.Models
 {
@@ -139,10 +137,10 @@ namespace IndoorNavigation.Models
     /// </summary>
     public interface IBeaconScan
     {
-        void StartScan();
+        void StartScan(List<Guid> BeaconsUUID);
         void StopScan();
         void Close();
-        NavigationEvent _event { get; }
+        BeaconScanEvent Event { get; }
     }
 
     public interface IQrCodeDecoder
@@ -159,11 +157,9 @@ namespace IndoorNavigation.Models
     #region Interface for IPS Client
     public interface IIPSClient
     {
-        void DetectWaypoints();
-        void SetWaypointList(List<Waypoint> WaypointList);
+        Beacon SignalProcessing();
+        void SetBeaconList(List<Beacon> BeaconList);
         void Stop();
-
-        NavigationEvent _event { get; }
     }
     #endregion
 }

@@ -7,11 +7,11 @@ namespace IndoorNavigationTest
 {
     public class BeaconScan : IBeaconScan
     {
-        public NavigationEvent Event { get; private set; }
+        public BeaconScanEvent Event { get; private set; }
 
         public BeaconScan()
         {
-            Event = new NavigationEvent();
+            Event = new BeaconScanEvent();
         }
 
         public void Close()

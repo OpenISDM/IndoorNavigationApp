@@ -39,7 +39,6 @@
  * Authors:
  * 
  *      Paul Chang, paulchang@iis.sinica.edu.tw
- *      Chun Yu Lai, chunyu1202@gmail.com
  *
  */
 using System;
@@ -48,44 +47,48 @@ using System.Collections.Generic;
 using Xamarin.Forms;
 using System.Linq;
 using IndoorNavigation.Modules.Utilities;
-using IndoorNavigation.Models;
 
 namespace IndoorNavigation.Modules
 {
     public class NavigationModule : IDisposable
     {
+        private IPSModule _IPSmodule;
         private Session _session;
 
+        private bool _isFirstTimeGetWaypoint;
         private string _navigraphName;
-
         private Guid _destinationID;
 
-        private EventHandler _navigationResultEventHandler;
+        private EventHandler _currentWaypointHandler;
+        private EventHandler _navigationResultHandler;
 
-        public NavigationEvent _event { get; private set; }
+        public WaypointEvent WaypointEvent { get; private set; }
+        public NavigationEvent NavigationEvent { get; private set; }
 
         public NavigationModule(string navigraphName, Guid destinationID)
         {
-            _event = new NavigationEvent();
+            _isFirstTimeGetWaypoint = true;
+
+            WaypointEvent = new WaypointEvent();
+            NavigationEvent = new NavigationEvent();
+
+            _IPSmodule = new IPSModule();
+            _currentWaypointHandler = new EventHandler(HandleCurrentWaypoint);
+            //IPSModule.Event.WaypointHandler += CurrentWaypointHandler;
 
             _navigraphName = navigraphName;
             _destinationID = destinationID;
-
-            ConstructSession();
         }
 
         /// <summary>
         /// If it is the first time to get waypoint then get the value of 
         /// route options and start the corresponding session.
         /// </summary>
-        private void ConstructSession()
+        private void StartSession(EventArgs args)
         {
             const int falseInt = -100;
             List<int> avoidList = new List<int>();
 
-            Console.WriteLine("-- begin StartSession --- ");
-
-            Console.WriteLine("-- setup preference --- ");
             if (Application.Current.Properties.ContainsKey("AvoidStair"))
             {
                 avoidList.Add(
@@ -101,17 +104,31 @@ namespace IndoorNavigation.Modules
                 avoidList = avoidList.Distinct().ToList();
                 avoidList.Remove(falseInt);
             }
-            Console.WriteLine("-- end of setup preference --- ");
 
             // Start the session
             _session = new Session(
                     NavigraphStorage.LoadNavigraphXML(_navigraphName),
+                    (args as WaypointScanEventArgs).WaypointID,
                     _destinationID,
                     avoidList.ToArray());
 
-            _navigationResultEventHandler = new EventHandler(HandleNavigationResult);
-            _session._event._eventHandler += _navigationResultEventHandler;
+            _navigationResultHandler = new EventHandler(HandleNavigationResult);
+            _session.Event.SessionResultHandler += _navigationResultHandler;
+            WaypointEvent.CurrentWaypointEventHandler += _session.DetectRoute;
+        }
 
+        /// <summary>
+        /// Get the current waypoint and raise event to notify the session
+        /// </summary>
+        public void HandleCurrentWaypoint(object sender, EventArgs args)
+        {
+            if (_isFirstTimeGetWaypoint)
+            {
+                StartSession(args);
+                _isFirstTimeGetWaypoint = false;
+            }
+
+            WaypointEvent.OnEventCall(args);
         }
 
         /// <summary>
@@ -120,8 +137,7 @@ namespace IndoorNavigation.Modules
         /// </summary>
         private void HandleNavigationResult(object sender, EventArgs args)
         {
-            Console.WriteLine("received event raised from Session class");
-            _event.OnEventCall(args);
+            NavigationEvent.OnEventCall(args);
         }
 
         public void CloseModule()
@@ -142,8 +158,10 @@ namespace IndoorNavigation.Modules
                 }
                 // Free unmanaged resources (unmanaged objects) and override a finalizer below.
                 // Set large fields to null.
-                _session._event._eventHandler -= _navigationResultEventHandler;
-               
+                //IPSModule.Event.WaypointHandler -= CurrentWaypointHandler;
+                _session.Event.SessionResultHandler -= _navigationResultHandler;
+                WaypointEvent.CurrentWaypointEventHandler -= _session.DetectRoute;
+
                 disposedValue = true;
             }
         }
@@ -157,4 +175,23 @@ namespace IndoorNavigation.Modules
         #endregion
     }
 
+    public class WaypointEvent
+    {
+        public event EventHandler CurrentWaypointEventHandler;
+
+        public void OnEventCall(EventArgs args)
+        {
+            CurrentWaypointEventHandler?.Invoke(this, args);
+        }
+    }
+
+    public class NavigationEvent
+    {
+        public event EventHandler ResultEventHandler;
+
+        public void OnEventCall(EventArgs args)
+        {
+            ResultEventHandler?.Invoke(this, args);
+        }
+    }
 }

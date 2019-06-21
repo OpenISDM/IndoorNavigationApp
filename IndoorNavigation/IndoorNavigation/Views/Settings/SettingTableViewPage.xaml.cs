@@ -58,6 +58,9 @@ using Prism.Commands;
 using Plugin.Multilingual;
 using IndoorNavigation.Resources;
 using System.Globalization;
+using Plugin.Permissions.Abstractions;
+using Plugin.Permissions;
+using System.Diagnostics;
 using IndoorNavigation.Modules.Utilities;
 using System.Resources;
 using IndoorNavigation.Resources.Helpers;
@@ -67,28 +70,24 @@ namespace IndoorNavigation.Views.Settings
 {
     public partial class SettingTableViewPage : ContentPage
     {
-        private DownloadPopUpPage _downloadPage = new DownloadPopUpPage();
-        private string _downloadURL;
+        private DownloadPopUpPage downloadPage = new DownloadPopUpPage();
+        private string downloadURL;
 
-        public IList _selectNaviGraphItems { get; } = new ObservableCollection<string>();
-        public IList _cleanNaviGraphItems { get; } = new ObservableCollection<string>();
-        public IList _languageItems { get; } = new ObservableCollection<string>();
+        public IList SelectNaviGraphItems { get; } = new ObservableCollection<string>();
+        public IList CleanNaviGraphItems { get; } = new ObservableCollection<string>();
+        public IList LanguageItems { get; } = new ObservableCollection<string>();
         //public ICommand SelectedMapCommand => new DelegateCommand(HandleSelectedMap);
-        public ICommand _cleanMapCommand => new DelegateCommand(async () =>
-            { await HandleCLeanMapAsync(); });
+        public ICommand CleanMapCommand => new DelegateCommand(async () => { await HandleCLeanMapAsync(); });
+        public ICommand ChangeLanguageCommand => new DelegateCommand(HandleChangeLanguage);
 
-        public ICommand _changeLanguageCommand => new DelegateCommand(HandleChangeLanguage);
-       
-        const string _resourceId = "IndoorNavigation.Resources.AppResources";
-        ResourceManager _resourceManager =
-            new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
-        
+        const string ResourceId = "IndoorNavigation.Resources.AppResources";
+        ResourceManager resmgr = new ResourceManager(ResourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+
         public SettingTableViewPage()
         {
             InitializeComponent();
 
-            _downloadPage._event.DownloadPopUpPageEventHandler +=
-                async delegate (object sender, EventArgs e) { await HandleDownloadPageAsync(sender, e); };
+            downloadPage.Event.DownloadPopUpPageEventHandler += async delegate (object sender, EventArgs e) { await HandleDownloadPageAsync(sender, e); };
 
             BindingContext = this;
 
@@ -98,8 +97,8 @@ namespace IndoorNavigation.Views.Settings
             ReloadNaviGraphItems();
 
             var ci = CrossMultilingual.Current.CurrentCultureInfo;
-            _languageItems.Add(_resourceManager.GetString("Chinese", ci));
-            _languageItems.Add(_resourceManager.GetString("English", ci));
+            LanguageItems.Add(resmgr.GetString("Chinese", ci));
+            LanguageItems.Add(resmgr.GetString("English", ci));
 
             if (Application.Current.Properties.ContainsKey("LanguagePicker"))
             {
@@ -118,46 +117,41 @@ namespace IndoorNavigation.Views.Settings
 #if DEBUG
             string qrCodeValue = string.Empty;
             if (DeviceInfo.DeviceType == DeviceType.Virtual)
-            {
-                qrCodeValue = "https://drive.google.com/uc?authuser=0&id=1C-JgyOHEikxuqgVi9S7Ww9g05u2Jb3-q&export=download@OpenISDM";
-            }
+                qrCodeValue = "https://drive.google.com/uc?authuser=0&id=1TakJcYBgZ07s4WrF1-n6p5mgqttjX5UL&export=download@OpenISDM";
             else
             {
                 IQrCodeDecoder qrCodeDecoder = DependencyService.Get<IQrCodeDecoder>();
                 qrCodeValue = await qrCodeDecoder.ScanAsync();
             }
 #else
-            // Open the camera to scan Barcode
+            // 開啟鏡頭掃描Barcode
             IQrCodeDecoder qrCodeDecoder = DependencyService.Get<IQrCodeDecoder>();
             string qrCodeValue = await qrCodeDecoder.ScanAsync();
 
-            // In iOS, if the User has denied the permission, you might not be able to request for
-            // permissions again.
+            // In iOS, if the User has denied the permission, you might not be able to request for permissions again.
             var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Camera);
             if (status != PermissionStatus.Granted)
             {
-            // await DisplayAlert("Oops...", "Sorry for that you denied the permission of camera
-            // so you can't scan the QR code.", "OK");
+                //await DisplayAlert("Oops...", "Sorry for that you denied the permission of camera so you can't scan the QR code.", "OK");
             }
 #endif
 
             if (!string.IsNullOrEmpty(qrCodeValue))
             {
-                // Determine it is URL or string
-                if ((qrCodeValue.Substring(0, 7) == "http://") ||
-                    (qrCodeValue.Substring(0, 8) == "https://"))
+                // 判斷是URL還是一般字串
+                if ((qrCodeValue.Substring(0, 7) == "http://") || (qrCodeValue.Substring(0, 8) == "https://"))
                 {
-                    // Determine it is map data or website
+                    // 判斷是圖資或者網頁
                     string[] buffer = qrCodeValue.Split('@');
                     if (buffer[buffer.Length - 1] == "OpenISDM")
                     {
-                        // open the page to input the data
-                        _downloadURL = buffer[0];
-                        await PopupNavigation.Instance.PushAsync(_downloadPage as DownloadPopUpPage);
+                        // 開啟輸入圖資名稱對話頁
+                        downloadURL = buffer[0];
+                        await PopupNavigation.Instance.PushAsync(downloadPage as DownloadPopUpPage);
                     }
                     else
                     {
-                        // Use the browser to open data
+                        // 使用瀏覽器開啟網頁
                         bool answer = await DisplayAlert("通知", "是否開啟網頁", "Yes", "No");
                         if (answer)
                             await Browser.OpenAsync(qrCodeValue, BrowserLaunchMode.SystemPreferred);
@@ -172,23 +166,21 @@ namespace IndoorNavigation.Views.Settings
 
         void SpeechTestBtn_Tapped(object sender, EventArgs e)
         {
-             var ci = CrossMultilingual.Current.CurrentCultureInfo;
-             Utility._textToSpeech.Speak(_resourceManager.GetString("VoiceSpeak", ci),
-                 _resourceManager.GetString("CultureVersion", ci)); 
+            Utility.TextToSpeech.Speak("歡迎使用畢迪科技室內導航", "zh-TW");
         }
 
         private void ReloadNaviGraphItems()
         {
-            _selectNaviGraphItems.Clear();
-            _selectNaviGraphItems.Add("--請選擇圖資--");
+            SelectNaviGraphItems.Clear();
+            SelectNaviGraphItems.Add("--請選擇圖資--");
 
-            _cleanNaviGraphItems.Clear();
-            _cleanNaviGraphItems.Add("--全部--");
+            CleanNaviGraphItems.Clear();
+            CleanNaviGraphItems.Add("--全部--");
 
             foreach (var naviGraphName in NavigraphStorage.GetAllNavigraphs())
             {
-                _selectNaviGraphItems.Add(naviGraphName);
-                _cleanNaviGraphItems.Add(naviGraphName);
+                SelectNaviGraphItems.Add(naviGraphName);
+                CleanNaviGraphItems.Add(naviGraphName);
             }
         }
 
@@ -201,10 +193,10 @@ namespace IndoorNavigation.Views.Settings
         private async Task HandleDownloadPageAsync(object sender, EventArgs e)
         {
             string fileName = (e as DownloadPopUpPageEventArgs).FileName;
-            if (!string.IsNullOrEmpty(_downloadURL) && !string.IsNullOrEmpty(fileName))
+            if (!string.IsNullOrEmpty(downloadURL) && !string.IsNullOrEmpty(fileName))
             {
 
-                if (Utility.DownloadNavigraph(_downloadURL, fileName))
+                if (Utility.DownloadNavigraph(downloadURL, fileName))
                 {
                     await DisplayAlert("訊息", "地圖下載完成", "OK");
                 }
@@ -255,11 +247,11 @@ namespace IndoorNavigation.Views.Settings
                     {
                         case "英文":
                         case "English":
-                            languageSelected = _resourceManager.GetString("English", ci);
+                            languageSelected = resmgr.GetString("English", ci);
                             break;
                         case "中文":
                         case "Chinese":
-                            languageSelected = _resourceManager.GetString("Chinese", ci);
+                            languageSelected = resmgr.GetString("Chinese", ci);
                             break;
                     }
 
@@ -287,8 +279,7 @@ namespace IndoorNavigation.Views.Settings
                 }
                 else
                 {
-                    if (await DisplayAlert("警告", string.Format("確定要刪除 地圖:{0} 嗎？",
-                                           CleanMapPicker.SelectedItem), "Yes", "No"))
+                    if (await DisplayAlert("警告", string.Format("確定要刪除 地圖:{0} 嗎？",CleanMapPicker.SelectedItem), "Yes", "No"))
                     {
                         // 刪除選擇的地圖資料
                         NavigraphStorage.DeleteNavigraph(CleanMapPicker.SelectedItem.ToString());

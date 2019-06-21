@@ -20,7 +20,7 @@
  * 
  * File Name:
  *
- *      WaypointClient.cs
+ *      IPSClient.cs
  *
  * Abstract:
  *
@@ -39,113 +39,174 @@
  *
  *      Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
  *      Paul Chang, paulchang@iis.sinica.edu.tw
- *      Bo Chen Huang, m10717004@yuntech.edu.tw
- *      Chun Yu Lai, chunyu1202@gmail.com
+ *      m10717004@yuntech.edu.tw
  *
  */
 using System;
 using System.Linq;
 using System.Collections.Generic;
 using IndoorNavigation.Models;
-using IndoorNavigation.Models.NavigaionLayer;
 
 namespace IndoorNavigation.Modules.IPSClients
 {
     class WaypointClient : IIPSClient
     {
-        private List<Waypoint> _waypointList = new List<Waypoint>();
+        //this List is used to save the beacons we want
+        private List<Beacon> _beaconList;
+        private object bufferLock = new object();
+        private readonly EventHandler HBeaconScan;
 
-        private object _bufferLock = new object();
-        private readonly EventHandler _beaconScanEventHandler;
-
-        public NavigationEvent _event { get; private set; }
-        private List<BeaconSignalModel> _beaconSignalBuffer = new List<BeaconSignalModel>();
+        public Event Event { get; private set; }
+        public List<BeaconSignalModel> beaconSignalBuffer = new List<BeaconSignalModel>();
 
         public WaypointClient()
         {
-            _event = new NavigationEvent();
+            Event = new Event();
 
-            _beaconScanEventHandler = new EventHandler(HandleBeaconScan);
-            Utility._beaconScan._event._eventHandler += _beaconScanEventHandler;
-            _waypointList = new List<Waypoint>();
-
+            HBeaconScan = new EventHandler(HandleBeaconScan);
+            Utility.BeaconScan.Event.BeaconScanEventHandler += HBeaconScan;
+            _beaconList = null;
         }
 
-        public void SetWaypointList(List<Waypoint> WaypointList)
+        // Set the list of beacons we want
+        public void SetBeaconList(List<Beacon> BeaconList)
         {
-            this._waypointList = WaypointList;
-
-            Utility._beaconScan.StartScan();
+            if (BeaconList != null)
+                this._beaconList = BeaconList;
+            else
+                throw new ArgumentException("Parameter cannot be null", "BeaconList");
         }
 
-        public void DetectWaypoints()
+        public Beacon SignalProcessing()
         {
-            Console.WriteLine(">> In DetectWaypoints");
-
+            // This List used to save the mean value of signals
+            List<BeaconSignal> signalAverageList = new List<BeaconSignal>();
             // Remove the obsolete data from buffer
             List<BeaconSignalModel> removeSignalBuffer =
                 new List<BeaconSignalModel>();
 
-            lock (_bufferLock)
+            lock (bufferLock)
             {
                 removeSignalBuffer.AddRange(
-                    _beaconSignalBuffer.Where(c =>
+                    beaconSignalBuffer.Where(c =>
                     c.Timestamp < DateTime.Now.AddMilliseconds(-1000)));
 
                 foreach (var obsoleteBeaconSignal in removeSignalBuffer)
-                    _beaconSignalBuffer.Remove(obsoleteBeaconSignal);
+                    beaconSignalBuffer.Remove(obsoleteBeaconSignal);
 
-                foreach (BeaconSignalModel beacon in _beaconSignalBuffer)
+                // Average the intensity of all Beacon signals
+                var beacons = beaconSignalBuffer
+                    .Select(c => (c.UUID, c.Major, c.Minor)).Distinct();
+                foreach (var (UUID, Major, Minor) in beacons)
                 {
-                    for (int i = 0; i < _waypointList.Count; i++) {
-
-                        for (int j = 0; j < _waypointList[i].Beacons.Count; j++) {
-                            if (beacon.UUID.Equals(_waypointList[i].Beacons[j].UUID)) {
-                                Console.WriteLine("Matched waypoint:" +
-                                                  _waypointList[i].ID +
-                                                  " by detected Beacon:" +
-                                                  beacon.UUID);
-
-                                _event.OnEventCall(new WayPointSignalEventArgs
-                                {
-                                    CurrentWaypoint = _waypointList[i]
-                                }) ;
-                                return;
-                            }
+                    //confirmation the BeaconList has been set
+                    if (_beaconList != null)
+                    {
+                        //Confirm the beacon signal is on the list we want
+                        if (_beaconList.Exists(x => x.UUID == (UUID, Major, Minor).UUID))
+                        {
+                            signalAverageList.Add
+                                (
+                                    new BeaconSignal
+                                    {
+                                        UUID = (UUID, Major, Minor).UUID,
+                                        Major = (UUID, Major, Minor).Major,
+                                        Minor = (UUID, Major, Minor).Minor,
+                                        RSSI = System.Convert.ToInt32(
+                                            beaconSignalBuffer.Where(c =>
+                                            c.UUID == (UUID, Major, Minor).UUID &&
+                                            c.Major == (UUID, Major, Minor).Major &&
+                                            c.Minor == (UUID, Major, Minor).Minor)
+                                            .Select(c => c.RSSI).Average())
+                                    }
+                                );
                         }
+                    }
+                    else
+                    {
+                        signalAverageList.Add
+                                (
+                                    new BeaconSignal
+                                    {
+                                        UUID = (UUID, Major, Minor).UUID,
+                                        Major = (UUID, Major, Minor).Major,
+                                        Minor = (UUID, Major, Minor).Minor,
+                                        RSSI = System.Convert.ToInt32(
+                                            beaconSignalBuffer.Where(c =>
+                                            c.UUID == (UUID, Major, Minor).UUID &&
+                                            c.Major == (UUID, Major, Minor).Major &&
+                                            c.Minor == (UUID, Major, Minor).Minor)
+                                            .Select(c => c.RSSI).Average())
+                                    }
+                                );
                     }
                 }
             }
-            Console.WriteLine("<< In DetectWaypoints");
+
+            // Find the beacon which closest to me
+            if (signalAverageList.Any())
+            {
+                // Scan all the signal that satisfies the threshold
+                var nearbySignal = (from signal in signalAverageList
+                                    from beacon in Utility.BeaconsDict
+                                    where (
+                                        signal.UUID == beacon.Value.UUID &&
+                                        signal.RSSI >= beacon.Value.Threshold)
+                                    select signal);
+
+                // Find the beacon which closest to me, then return
+                if (nearbySignal.Any())
+                {
+                    var bestNearbySignal = nearbySignal.First();
+                    Beacon bestNearbyBeacon =
+                        Utility.BeaconsDict[bestNearbySignal.UUID];
+
+                    return bestNearbyBeacon;
+                }
+
+                return null;
+            }
+
+            return null;
         }
 
         private void HandleBeaconScan(object sender, EventArgs e)
         {
+            // Beacon signal filter, keeps the Beacon's signal recorded in
+            // the graph
             IEnumerable<BeaconSignalModel> signals =
-                (e as BeaconScanEventArgs)._signals;
+                (e as BeaconScanEventArgs).Signals
+                .Where(signal => Utility.BeaconsDict.Values
+                .Select(beacon => (beacon.UUID, beacon.Major, beacon.Minor))
+                .Contains((signal.UUID, signal.Major, signal.Minor)));
 
-            foreach (BeaconSignalModel signal in signals)
-            {
-                Console.WriteLine("Detected Beacon UUID : " + signal.UUID + " RSSI = " + signal.RSSI);
-            }
-
-            lock (_bufferLock)
-                _beaconSignalBuffer.AddRange(signals);
+            lock (bufferLock)
+                beaconSignalBuffer.AddRange(signals);
 
         }
 
         public void Stop()
         {
-            Utility._beaconScan._event._eventHandler -= _beaconScanEventHandler;
-            _beaconSignalBuffer = null;
-            _bufferLock = null;
+            _beaconList = null;
+            Utility.BeaconScan.Event.BeaconScanEventHandler -= HBeaconScan;
+            beaconSignalBuffer = null;
+            bufferLock = null;
         }
 
     }
 
-    public class WayPointSignalEventArgs : EventArgs
+    public class Event
     {
-        public Waypoint CurrentWaypoint { get; set; }
+        public EventHandler EventHandler;
+
+        public void OnEventCall(EventArgs e)
+        {
+            EventHandler?.Invoke(this, e);
+        }
     }
 
+    public class WayPointSignalEventArgs : EventArgs
+    {
+        public Beacon CurrentBeacon { get; set; }
+    }
 }
