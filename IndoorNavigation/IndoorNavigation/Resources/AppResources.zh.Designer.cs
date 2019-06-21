@@ -95,6 +95,24 @@ namespace IndoorNavigation.Resources {
             }
         }
         
+        internal static string PLAY_VOICE_TEST_STRING {
+            get {
+                return ResourceManager.GetString("PLAY_VOICE_TEST_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string VOICE_SELECT_STRING {
+            get {
+                return ResourceManager.GetString("VOICE_SELECT_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string VOICE_SETTING_STRING {
+            get {
+                return ResourceManager.GetString("VOICE_SETTING_STRING", resourceCulture);
+            }
+        }
+        
         internal static string ChangeLanguage {
             get {
                 return ResourceManager.GetString("ChangeLanguage", resourceCulture);
@@ -194,6 +212,252 @@ namespace IndoorNavigation.Resources {
         internal static string Flash {
             get {
                 return ResourceManager.GetString("Flash", resourceCulture);
+            }
+        }
+        
+        internal static string CHOOSE_MAP_STRING {
+            get {
+                return ResourceManager.GetString("CHOOSE_MAP_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string ALL_STRING {
+            get {
+                return ResourceManager.GetString("ALL_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string WARN_STRING {
+            get {
+                return ResourceManager.GetString("WARN_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string ASK_IF_CANCEL_ALL_MAP_STRING {
+            get {
+                return ResourceManager.GetString("ASK_IF_CANCEL_ALL_MAP_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string ASK_IF_CANCEL_MAP_STRING {
+            get {
+                return ResourceManager.GetString("ASK_IF_CANCEL_MAP_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string MESSAGE_STRING {
+            get {
+                return ResourceManager.GetString("MESSAGE_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string SUCCESSFULLY_DELETE_STRING {
+            get {
+                return ResourceManager.GetString("SUCCESSFULLY_DELETE_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string MAP_STRING {
+            get {
+                return ResourceManager.GetString("MAP_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string ERROR_STRING {
+            get {
+                return ResourceManager.GetString("ERROR_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string ERROR_TO_DELETE_STRING {
+            get {
+                return ResourceManager.GetString("ERROR_TO_DELETE_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string SUCCESSFULLY_DOWNLOAD_MAP_STRING {
+            get {
+                return ResourceManager.GetString("SUCCESSFULLY_DOWNLOAD_MAP_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string FAILED_DOWNLOAD_MAP_STRING {
+            get {
+                return ResourceManager.GetString("FAILED_DOWNLOAD_MAP_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string NOTIFY_STRING {
+            get {
+                return ResourceManager.GetString("NOTIFY_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string SURE_TO_OPEN_WEBSITE_STRING {
+            get {
+                return ResourceManager.GetString("SURE_TO_OPEN_WEBSITE_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string QRCODE_CONTENT_STRING {
+            get {
+                return ResourceManager.GetString("QRCODE_CONTENT_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string INPUT_MAP_NAME_STRING {
+            get {
+                return ResourceManager.GetString("INPUT_MAP_NAME_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string MAP_NAME_STRING {
+            get {
+                return ResourceManager.GetString("MAP_NAME_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string BACK_STRING {
+            get {
+                return ResourceManager.GetString("BACK_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string NTUH_YUNLIN_NAME_STRING {
+            get {
+                return ResourceManager.GetString("NTUH_YUNLIN_NAME_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string PICK_LOCATION_STRING {
+            get {
+                return ResourceManager.GetString("PICK_LOCATION_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string ROUTE_OPTION_STRING {
+            get {
+                return ResourceManager.GetString("ROUTE_OPTION_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string AVOID_STAIR_STRING {
+            get {
+                return ResourceManager.GetString("AVOID_STAIR_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string AVOID_ELEVATOR_STRING {
+            get {
+                return ResourceManager.GetString("AVOID_ELEVATOR_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string AVOID_ESCALATOR_STRING {
+            get {
+                return ResourceManager.GetString("AVOID_ESCALATOR_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string DESTINATION_STRING {
+            get {
+                return ResourceManager.GetString("DESTINATION_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string CURRENT_LOCATION_STRING {
+            get {
+                return ResourceManager.GetString("CURRENT_LOCATION_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string DIRECTION_STRAIGHT_STRING {
+            get {
+                return ResourceManager.GetString("DIRECTION_STRAIGHT_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string DIRECTION_RIGHT_FRONT_STRING {
+            get {
+                return ResourceManager.GetString("DIRECTION_RIGHT_FRONT_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string DIRECTION_RIGHT_STRING {
+            get {
+                return ResourceManager.GetString("DIRECTION_RIGHT_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string DIRECTION_RIGHT_REAR_STRING {
+            get {
+                return ResourceManager.GetString("DIRECTION_RIGHT_REAR_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string DIRECTION_REAR_STRING {
+            get {
+                return ResourceManager.GetString("DIRECTION_REAR_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string DIRECTION_LEFT_REAR_STRING {
+            get {
+                return ResourceManager.GetString("DIRECTION_LEFT_REAR_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string DIRECTION_LEFT_STRING {
+            get {
+                return ResourceManager.GetString("DIRECTION_LEFT_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string DIRECTION_LEFT_FRONT_STRING {
+            get {
+                return ResourceManager.GetString("DIRECTION_LEFT_FRONT_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string DIRECTION_UP_STRING {
+            get {
+                return ResourceManager.GetString("DIRECTION_UP_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string DIRECTION_DOWN_STRING {
+            get {
+                return ResourceManager.GetString("DIRECTION_DOWN_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string DIRECTION_WRONG_WAY_STRING {
+            get {
+                return ResourceManager.GetString("DIRECTION_WRONG_WAY_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string DIRECTION_ARRIVED_STRING {
+            get {
+                return ResourceManager.GetString("DIRECTION_ARRIVED_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string NULL_STRING {
+            get {
+                return ResourceManager.GetString("NULL_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string PICK_DESTINATION_STRING {
+            get {
+                return ResourceManager.GetString("PICK_DESTINATION_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string FLOOR_STRING {
+            get {
+                return ResourceManager.GetString("FLOOR_STRING", resourceCulture);
             }
         }
     }

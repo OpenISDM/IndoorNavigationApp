@@ -98,6 +98,18 @@
         <value>Welcome to use the Indoor Navigation of Beedi Tech</value>
     </data>
     
+    <data name="VOICE_SELECT_STRING" xml:space="preserve">
+        <value>Voice Select</value>
+    </data>
+    
+    <data name="VOICE_SETTING_STRING" xml:space="preserve">
+        <value>Voice Setting</value>
+    </data>
+    
+    <data name="PLAY_VOICE_TEST_STRING" xml:space="preserve">
+        <value>Play voice test</value>
+    </data>
+    
      <data name="CultureVersion" xml:space="preserve">
         <value>en-US</value>
     </data>
@@ -117,5 +129,170 @@
      <data name="Flash" xml:space="preserve">
         <value>flash</value>
     </data>
+    
+    <data name="CHOOSE_MAP_STRING" xml:space="preserve">
+        <value>--Please Choose Map--</value>
+    </data>
+    
+    <data name="ALL_STRING" xml:space="preserve">
+        <value>--All--</value>
+    </data>
+    
+    <data name="WARN_STRING" xml:space="preserve">
+        <value>Warning</value>
+    </data>
+    
+    <data name="ASK_IF_CANCEL_ALL_MAP_STRING" xml:space="preserve">
+        <value>Are you sure you want to delete all maps?</value>
+    </data>
+    
+     <data name="ASK_IF_CANCEL_MAP_STRING" xml:space="preserve">
+        <value>Are you sure you want to delete </value>
+    </data>
+    
+    <data name="MESSAGE_STRING" xml:space="preserve">
+        <value>Message</value>
+    </data>
+    
+    <data name="SUCCESSFULLY_DELETE_STRING" xml:space="preserve">
+        <value>Successfully Delete</value>
+    </data>
+      
+    <data name="MAP_STRING" xml:space="preserve">
+        <value>MAP</value>
+    </data>
+    
+     <data name="ERROR_STRING" xml:space="preserve">
+        <value>Error</value>
+    </data>
+    
+    <data name="ERROR_TO_DELETE_STRING" xml:space="preserve">
+        <value>Fail to delete the map</value>
+    </data>
+    
+    <data name="SUCCESSFULLY_DOWNLOAD_MAP_STRING" xml:space="preserve">
+        <value>Successfully download the map</value>
+    </data>
+    
+     <data name="FAILED_DOWNLOAD_MAP_STRING" xml:space="preserve">
+        <value>Failed to download the map</value>
+    </data>
+    
+    <data name="NOTIFY_STRING" xml:space="preserve">
+        <value>Notify</value>
+    </data>
+    
+    <data name="SURE_TO_OPEN_WEBSITE_STRING" xml:space="preserve">
+        <value>Are you sure to open the website?</value>
+    </data>
+    
+    <data name="QRCODE_CONTENT_STRING" xml:space="preserve">
+        <value>Qrcode Content</value>
+    </data>
+    
+     <data name="INPUT_MAP_NAME_STRING" xml:space="preserve">
+        <value>Please enter the map name</value>
+    </data>
+    
+    <data name="MAP_NAME_STRING" xml:space="preserve">
+        <value>Map Name</value>
+    </data>
+    
+    <data name="BACK_STRING" xml:space="preserve">
+        <value>Back</value>
+    </data>
+    
+    <data name="NTUH_YUNLIN_NAME_STRING" xml:space="preserve">
+        <value>NTUH Yun-Lin Indoor Navigation System</value>
+    </data>
+    
+    <data name="PICK_LOCATION_STRING" xml:space="preserve">
+        <value>【Click picture to select the location】</value>
+    </data>
+    
+    <data name="ROUTE_OPTION_STRING" xml:space="preserve">
+        <value>Route Option</value>
+    </data>
+    
+    <data name="AVOID_STAIR_STRING" xml:space="preserve">
+        <value>Avoid Stair</value>
+    </data>
+    
+     <data name="AVOID_ELEVATOR_STRING" xml:space="preserve">
+        <value>Avoid Elevator</value>
+    </data>
+    
+    <data name="AVOID_ESCALATOR_STRING" xml:space="preserve">
+        <value>Avoid Escalator</value>
+    </data>
+    
+    <data name="DESTINATION_STRING" xml:space="preserve">
+        <value>Destination : </value>
+    </data>
+    
+    <data name="CURRENT_LOCATION_STRING" xml:space="preserve">
+        <value>Current Location : </value>
+    </data>
+    
+    <data name="DIRECTION_STRAIGHT_STRING" xml:space="preserve">
+        <value>Please go straight to </value>
+    </data>
+    
+     <data name="DIRECTION_RIGHT_FRONT_STRING" xml:space="preserve">
+        <value>Please go right front to </value>
+    </data>
+    
+    <data name="DIRECTION_RIGHT_STRING" xml:space="preserve">
+        <value>Please go right to </value>
+    </data>
+    
+    <data name="DIRECTION_RIGHT_REAR_STRING" xml:space="preserve">
+        <value>Please go right rear to </value>
+    </data>
+    
+    <data name="DIRECTION_REAR_STRING" xml:space="preserve">
+        <value>Please go rear to </value>
+    </data>
+    
+    <data name="DIRECTION_LEFT_REAR_STRING" xml:space="preserve">
+        <value>Please go left rear to </value>
+    </data>
+    
+    <data name="DIRECTION_LEFT_STRING" xml:space="preserve">
+        <value>Please go left to </value>
+    </data>
+    
+     <data name="DIRECTION_LEFT_FRONT_STRING" xml:space="preserve">
+        <value>Please go left front to </value>
+    </data>
+    
+    <data name="DIRECTION_UP_STRING" xml:space="preserve">
+        <value>Please go upstairs to </value>
+    </data>
+    
+    <data name="DIRECTION_DOWN_STRING" xml:space="preserve">
+        <value>Please go downstairs to </value>
+    </data>
+    
+    <data name="DIRECTION_WRONG_WAY_STRING" xml:space="preserve">
+        <value>You have the wrong way! Rerouting </value>
+    </data>
+    
+    <data name="DIRECTION_ARRIVED_STRING" xml:space="preserve">
+        <value>Congratulations! Arrived </value>
+    </data>
+    
+    <data name="NULL_STRING" xml:space="preserve">
+        <value>Null </value>
+    </data>
+    
+     <data name="PICK_DESTINATION_STRING" xml:space="preserve">
+        <value>Pick Destination </value>
+    </data>
+    
+     <data name="FLOOR_STRING" xml:space="preserve">
+        <value>Floor </value>
+    </data>
+    
     
 </root>

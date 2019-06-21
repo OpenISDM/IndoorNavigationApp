@@ -49,6 +49,18 @@
         <value>語音測試</value>
     </data>
     
+    <data name="PLAY_VOICE_TEST_STRING" xml:space="preserve">
+        <value>播放語音測試</value>
+    </data>
+    
+    <data name="VOICE_SELECT_STRING" xml:space="preserve">
+        <value>語音選擇</value>
+    </data>
+    
+    <data name="VOICE_SETTING_STRING" xml:space="preserve">
+        <value>語音設定</value>
+    </data>
+    
     <data name="ChangeLanguage" xml:space="preserve">
         <value>更改語言</value>
     </data>
@@ -116,6 +128,170 @@
     
     <data name="Flash" xml:space="preserve">
         <value>打光</value>
+    </data>
+    
+    <data name="CHOOSE_MAP_STRING" xml:space="preserve">
+        <value>--請選擇圖資--</value>
+    </data>
+    
+     <data name="ALL_STRING" xml:space="preserve">
+        <value>--全部--</value>
+    </data>
+    
+    <data name="WARN_STRING" xml:space="preserve">
+        <value>警告</value>
+    </data>
+    
+    <data name="ASK_IF_CANCEL_ALL_MAP_STRING" xml:space="preserve">
+        <value>確定要刪除所有地圖嗎</value>
+    </data>
+    
+    <data name="ASK_IF_CANCEL_MAP_STRING" xml:space="preserve">
+        <value>確定要刪除</value>
+    </data>
+    
+    <data name="MESSAGE_STRING" xml:space="preserve">
+        <value>訊息</value>
+    </data>
+    
+    <data name="SUCCESSFULLY_DELETE_STRING" xml:space="preserve">
+        <value>刪除成功</value>
+    </data>
+    
+    <data name="MAP_STRING" xml:space="preserve">
+        <value>地圖</value>
+    </data>
+    
+     <data name="ERROR_STRING" xml:space="preserve">
+        <value>錯誤</value>
+    </data>
+    
+    <data name="ERROR_TO_DELETE_STRING" xml:space="preserve">
+        <value>刪除地圖時發生錯誤</value>
+    </data>
+    
+     <data name="SUCCESSFULLY_DOWNLOAD_MAP_STRING" xml:space="preserve">
+        <value>地圖下載完成</value>
+    </data>
+    
+    <data name="FAILED_DOWNLOAD_MAP_STRING" xml:space="preserve">
+        <value>地圖下載失敗</value>
+    </data>
+    
+    <data name="NOTIFY_STRING" xml:space="preserve">
+        <value>通知</value>
+    </data>
+    
+    <data name="SURE_TO_OPEN_WEBSITE_STRING" xml:space="preserve">
+        <value>確定要開啟網頁嗎</value>
+    </data>
+    
+    <data name="QRCODE_CONTENT_STRING" xml:space="preserve">
+        <value>Qrcode內容</value>
+    </data>
+    
+    <data name="INPUT_MAP_NAME_STRING" xml:space="preserve">
+        <value>請輸入地圖名稱</value>
+    </data>
+    
+    <data name="MAP_NAME_STRING" xml:space="preserve">
+        <value>地圖名稱</value>
+    </data>
+    
+    <data name="BACK_STRING" xml:space="preserve">
+        <value>返回</value>
+    </data>
+    
+    <data name="NTUH_YUNLIN_NAME_STRING" xml:space="preserve">
+        <value>台大雲林醫院室內導航系統</value>
+    </data>
+    
+    <data name="PICK_LOCATION_STRING" xml:space="preserve">
+        <value>【點選要去的地點】</value>
+    </data>
+    
+     <data name="ROUTE_OPTION_STRING" xml:space="preserve">
+        <value>路線選項</value>
+    </data>
+    
+    <data name="AVOID_STAIR_STRING" xml:space="preserve">
+        <value>避開樓梯</value>
+    </data>
+    
+    <data name="AVOID_ELEVATOR_STRING" xml:space="preserve">
+        <value>避開電梯</value>
+    </data>
+    
+    <data name="AVOID_ESCALATOR_STRING" xml:space="preserve">
+        <value>避開手扶梯</value>
+    </data>
+    
+    <data name="DESTINATION_STRING" xml:space="preserve">
+        <value>目的地 : </value>
+    </data>
+    
+     <data name="CURRENT_LOCATION_STRING" xml:space="preserve">
+        <value>目前位置 : </value>
+    </data>
+    
+    <data name="DIRECTION_STRAIGHT_STRING" xml:space="preserve">
+        <value>請前進前往 </value>
+    </data>
+    
+    <data name="DIRECTION_RIGHT_FRONT_STRING" xml:space="preserve">
+        <value>請向右前方前往 </value>
+    </data>
+    
+    <data name="DIRECTION_RIGHT_STRING" xml:space="preserve">
+        <value>請向右前往 </value>
+    </data>
+    
+    <data name="DIRECTION_RIGHT_REAR_STRING" xml:space="preserve">
+        <value>請向右後方前往 </value>
+    </data>
+    
+    <data name="DIRECTION_REAR_STRING" xml:space="preserve">
+        <value>請向後轉前往 </value>
+    </data>
+    
+    <data name="DIRECTION_LEFT_REAR_STRING" xml:space="preserve">
+        <value>請向左後方前往 </value>
+    </data>
+    
+     <data name="DIRECTION_LEFT_STRING" xml:space="preserve">
+        <value>請向左前往 </value>
+    </data>
+    
+    <data name="DIRECTION_LEFT_FRONT_STRING" xml:space="preserve">
+        <value>請向左前方前往 </value>
+    </data>
+    
+    <data name="DIRECTION_UP_STRING" xml:space="preserve">
+        <value>請上樓前往 </value>
+    </data>
+    
+    <data name="DIRECTION_DOWN_STRING" xml:space="preserve">
+        <value>請下樓前往 </value>
+    </data>
+    
+     <data name="DIRECTION_WRONG_WAY_STRING" xml:space="preserve">
+        <value>走錯路囉, 正在重新規劃路線 </value>
+    </data>
+    
+    <data name="DIRECTION_ARRIVED_STRING" xml:space="preserve">
+        <value>恭喜你！已到達終點囉 </value>
+    </data>
+    
+   <data name="NULL_STRING" xml:space="preserve">
+        <value>無 </value>
+    </data>
+    
+     <data name="PICK_DESTINATION_STRING" xml:space="preserve">
+        <value>挑選目的地 </value>
+    </data>
+    
+    <data name="FLOOR_STRING" xml:space="preserve">
+        <value>樓 </value>
     </data>
     
 </root>

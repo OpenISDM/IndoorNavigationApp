@@ -52,253 +52,262 @@ using IndoorNavigation.Models.NavigaionLayer;
 using IndoorNavigation.Modules;
 using static IndoorNavigation.Modules.Session;
 using NavigationEventArgs = IndoorNavigation.Modules.Session.NavigationEventArgs;
+using Plugin.Multilingual;
+using IndoorNavigation.Resources;
+using System.Resources;
+using IndoorNavigation.Resources.Helpers;
+using System.Reflection;
 
 namespace IndoorNavigation.ViewModels.Navigation
 {
-    public class NavigatorPageViewModel : BaseViewModel, IDisposable
-    {
-        private Guid _destinationID;
-        private NavigationModule _navigationModule;
+	public class NavigatorPageViewModel : BaseViewModel, IDisposable
+	{
+		private Guid _destinationID;
+		private NavigationModule _navigationModule;
 
-        private string _currentStepLabelName;
-        private string _currentStepImageName;
-        private string _currentWaypointName;
-        private string _destinationWaypointName;
-        private double _navigationProgress;
-        private bool _disposedValue = false; // To detect redundant calls
+		private string _currentStepLabelName;
+		private string _currentStepImageName;
+		private string _currentWaypointName;
+		private string _destinationWaypointName;
+		private double _navigationProgress;
+		private bool _disposedValue = false; // To detect redundant calls
+		public ResourceManager _resourceManager;
 
-        public NavigatorPageViewModel(string navigraphName, string destinationName, Guid destinationID)
-        {
-            _destinationID = destinationID;
-            DestinationWaypointName = destinationName;
+		public NavigatorPageViewModel(string navigraphName, string destinationName, Guid destinationID)
+		{
+			_destinationID = destinationID;
+			DestinationWaypointName = destinationName;
 
-            CurrentWaypointName = "NULL";
+			_navigationModule = new NavigationModule(navigraphName, destinationID);
+			_navigationModule._event._eventHandler += GetNavigationResultEvent;
 
-            _navigationModule = new NavigationModule(navigraphName, destinationID);
-            _navigationModule._event._eventHandler += GetNavigationResultEvent;
-        }
+			const string _resourceId = "IndoorNavigation.Resources.AppResources";
+			_resourceManager = new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+			CurrentWaypointName = _resourceManager.GetString("NULL_STRING", CrossMultilingual.Current.CurrentCultureInfo);
+		}
 
-        /// <summary>
-        /// TODO: Add voice instructions and vibration
-        /// According to each navigation status displays the text and image instructions in UI.
-        /// </summary>
-        /// <param name="args">Arguments.</param>
-        private void DisplayInstructions(EventArgs args)
-        {
-            Console.WriteLine(">> DisplayInstructions");
-            NavigationInstruction instruction = (args as NavigationEventArgs).NextInstruction;
+		/// <summary>
+		/// TODO: Add voice instructions and vibration
+		/// According to each navigation status displays the text and image instructions in UI.
+		/// </summary>
+		/// <param name="args">Arguments.</param>
+		private void DisplayInstructions(EventArgs args)
+		{
+			Console.WriteLine(">> DisplayInstructions");
+			NavigationInstruction instruction = (args as NavigationEventArgs).NextInstruction;
+			var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+			string currentStepImage;
+			string currentStepLabel;
 
-            string currentStepImage;
-            string currentStepLabel;
+			switch ((args as NavigationEventArgs).Result)
+			{
+				case NavigationResult.Run:
+					SetInstruction(instruction, out currentStepLabel, out currentStepImage);
+					CurrentStepLabel = currentStepLabel;
+					CurrentStepImage = currentStepImage;
+					CurrentWaypointName = instruction.CurrentWaypoint.Name;
+					NavigationProgress = instruction.Progress;
+					break;
 
-            switch ((args as NavigationEventArgs).Result)
-            {
-                case NavigationResult.Run:
-                    SetInstruction(instruction, out currentStepLabel, out currentStepImage);
-                    CurrentStepLabel = currentStepLabel;
-                    CurrentStepImage = currentStepImage;
-                    CurrentWaypointName = instruction.CurrentWaypoint.Name;
-                    NavigationProgress = instruction.Progress;
-                    break;
+				case NavigationResult.AdjustRoute:
+					CurrentStepLabel = _resourceManager.GetString("DIRECTION_WRONG_WAY_STRING", currentLanguage);
+					CurrentStepImage = "Waiting";
+					break;
 
-                case NavigationResult.AdjustRoute:
-                    CurrentStepLabel = "走錯路囉, 正在重新規劃路線";
-                    CurrentStepImage = "Waiting";
-                    break;
+				case NavigationResult.Arrival:
+					CurrentWaypointName = DestinationWaypointName;
+					CurrentStepLabel = _resourceManager.GetString("DIRECTION_ARRIVED_STRING", currentLanguage);
+					CurrentStepImage = "Arrived";
+					NavigationProgress = 100;
+					//Dispose();  // release resources
+					break;
+			}
+		}
 
-                case NavigationResult.Arrival:
-                    CurrentWaypointName = DestinationWaypointName;
-                    CurrentStepLabel = "恭喜你！已到達終點囉";
-                    CurrentStepImage = "Arrived";
-                    NavigationProgress = 100;
-                    //Dispose();  // release resources
-                    break;
-            }
-        }
+		private void SetInstruction(NavigationInstruction instruction,
+									out string stepLabel,
+									out string stepImage)
+		{
+			var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+			switch (instruction.Direction)
+			{
+				case TurnDirection.FirstDirection:
+					stepLabel = string.Format(_resourceManager.GetString("DIRECTION_STRAIGHT_STRING", currentLanguage) + "\n{0}", instruction.NextWaypoint.Name);
+					stepImage = "Arrow_up";
+					break;
 
-        private void SetInstruction(NavigationInstruction instruction,
-                                    out string stepLabel,
-                                    out string stepImage)
-        {
-            switch (instruction.Direction)
-            {
-                case TurnDirection.FirstDirection:
-                    stepLabel = string.Format("請向\n{0}\n直走", instruction.NextWaypoint.Name);
-                    stepImage = "Arrow_up";
-                    break;
+				case TurnDirection.Forward:
+					stepLabel = string.Format(_resourceManager.GetString("DIRECTION_STRAIGHT_STRING", currentLanguage) + "\n{0}", instruction.NextWaypoint.Name);
+					stepImage = "Arrow_up";
+					break;
 
-                case TurnDirection.Forward:
-                    stepLabel = string.Format("請向前方的\n{0}\n直走", instruction.NextWaypoint.Name);
-                    stepImage = "Arrow_up";
-                    break;
+				case TurnDirection.Forward_Right:
+					stepLabel = string.Format(_resourceManager.GetString("DIRECTION_RIGHT_FRONT_STRING", currentLanguage) + "\n{0}", instruction.NextWaypoint.Name);
+					stepImage = "Arrow_frontright";
+					break;
 
-                case TurnDirection.Forward_Right:
-                    stepLabel = string.Format("請向右前方的{0}直走", instruction.NextWaypoint.Name);
-                    stepImage = "Arrow_frontright";
-                    break;
+				case TurnDirection.Right:
+					stepLabel = string.Format(_resourceManager.GetString("DIRECTION_RIGHT_STRING", currentLanguage) + "\n{0}", instruction.NextWaypoint.Name);
+					stepImage = "Arrow_right";
+					break;
 
-                case TurnDirection.Right:
-                    stepLabel = string.Format("請向右轉 並朝{0}直走", instruction.NextWaypoint.Name);
-                    stepImage = "Arrow_right";
-                    break;
+				case TurnDirection.Backward_Right:
+					stepLabel = string.Format(_resourceManager.GetString("DIRECTION_RIGHT_REAR_STRING", currentLanguage) + "\n{0}", instruction.NextWaypoint.Name);
+					stepImage = "Arrow_rearright";
+					break;
 
-                case TurnDirection.Backward_Right:
-                    stepLabel = string.Format("請向右後方的{0}直走", instruction.NextWaypoint.Name);
-                    stepImage = "Arrow_rearright";
-                    break;
+				case TurnDirection.Backward:
+					stepLabel = string.Format(_resourceManager.GetString("DIRECTION_REAR_STRING", currentLanguage) + "\n{0}", instruction.NextWaypoint.Name);
+					stepImage = "Arrow_rear";
+					break;
 
-                case TurnDirection.Backward:
-                    stepLabel = string.Format("請向後轉 並朝{0}直走", instruction.NextWaypoint.Name);
-                    stepImage = "Arrow_rear";
-                    break;
+				case TurnDirection.Backward_Left:
+					stepLabel = string.Format(_resourceManager.GetString("DIRECTION_LEFT_REAR_STRING", currentLanguage) + "\n{0}", instruction.NextWaypoint.Name);
+					stepImage = "Arrow_rearleft";
+					break;
 
-                case TurnDirection.Backward_Left:
-                    stepLabel = string.Format("請向左後方的{0}直走", instruction.NextWaypoint.Name);
-                    stepImage = "Arrow_rearleft";
-                    break;
+				case TurnDirection.Left:
+					stepLabel = string.Format(_resourceManager.GetString("DIRECTION_LEFT_STRING", currentLanguage) + "\n{0}", instruction.NextWaypoint.Name);
+					stepImage = "Arrow_left";
+					break;
 
-                case TurnDirection.Left:
-                    stepLabel = string.Format("請向左轉 並朝{0}直走", instruction.NextWaypoint.Name);
-                    stepImage = "Arrow_left";
-                    break;
+				case TurnDirection.Forward_Left:
+					stepLabel = string.Format(_resourceManager.GetString("DIRECTION_LEFT_FRONT_STRING", currentLanguage) + "\n{0}", instruction.NextWaypoint.Name);
+					stepImage = "Arrow_frontleft";
+					break;
 
-                case TurnDirection.Forward_Left:
-                    stepLabel = string.Format("請向左前方的{0}直走", instruction.NextWaypoint.Name);
-                    stepImage = "Arrow_frontleft";
-                    break;
+				case TurnDirection.Up:
+					stepLabel = string.Format(_resourceManager.GetString("DIRECTION_UP_STRING", currentLanguage) + "\n{0}", instruction.NextWaypoint.Name);
+					stepImage = "Stairs_up";
+					break;
 
-                case TurnDirection.Up:
-                    stepLabel = string.Format("請上樓\n並朝 {0}直走", instruction.NextWaypoint.Name);
-                    stepImage = "Stairs_up";
-                    break;
+				case TurnDirection.Down:
+					stepLabel = string.Format(_resourceManager.GetString("DIRECTION_DOWN_STRING", currentLanguage) + "\n{0}", instruction.NextWaypoint.Name);
+					stepImage = "Stairs_down";
+					break;
 
-                case TurnDirection.Down:
-                    stepLabel = string.Format("請下樓\n並朝 {0}直走", instruction.NextWaypoint.Name);
-                    stepImage = "Stairs_down";
-                    break;
+				default:
+					stepLabel = "You're get ERROR status";
+					stepImage = "Warning";
+					break;
+			}
+		}
 
-                default:
-                    stepLabel = "You're get ERROR status"; 
-                    stepImage = "Warning";
-                    break;
-            }
-        }
+		/// <summary>
+		/// Gets the navigation status event.
+		/// </summary>
+		private void GetNavigationResultEvent(object sender, EventArgs args)
+		{
+			Console.WriteLine("recevied event raised from NavigationModule");
+			DisplayInstructions(args);
+		}
 
-        /// <summary>
-        /// Gets the navigation status event.
-        /// </summary>
-        private void GetNavigationResultEvent(object sender, EventArgs args)
-        {
-            Console.WriteLine("recevied event raised from NavigationModule");
-            DisplayInstructions(args);
-        }
+		#region NavigatorPage Binding Args
+		public string CurrentStepLabel
+		{
+			get
+			{
+				return _currentStepLabelName;
+			}
 
-        #region NavigatorPage Binding Args
-        public string CurrentStepLabel
-        {
-            get
-            {
-                return _currentStepLabelName;
-            }
+			set
+			{
+				SetProperty(ref _currentStepLabelName, value);
+			}
+		}
 
-            set
-            {
-                SetProperty(ref _currentStepLabelName, value);
-            }
-        }
+		public string CurrentStepImage
+		{
+			get
+			{
+				return string.Format("{0}.png", _currentStepImageName);
+			}
 
-        public string CurrentStepImage
-        {
-            get
-            {
-                return string.Format("{0}.png", _currentStepImageName);
-            }
+			set
+			{
+				if (_currentStepImageName != value)
+				{
+					_currentStepImageName = value;
+					OnPropertyChanged("CurrentStepImage");
+				}
+			}
+		}
 
-            set
-            {
-                if (_currentStepImageName != value)
-                {
-                    _currentStepImageName = value;
-                    OnPropertyChanged("CurrentStepImage");
-                }
-            }
-        }
+		public string CurrentWaypointName
+		{
+			get
+			{
+				return _currentWaypointName;
+			}
 
-        public string CurrentWaypointName
-        {
-            get
-            {
-                return _currentWaypointName;
-            }
+			set
+			{
+				SetProperty(ref _currentWaypointName, value);
+			}
+		}
 
-            set
-            {
-                SetProperty(ref _currentWaypointName, value);
-            }
-        }
+		public string DestinationWaypointName
+		{
+			get
+			{
+				return _destinationWaypointName;
+			}
 
-        public string DestinationWaypointName
-        {
-            get
-            {
-                return _destinationWaypointName;
-            }
+			set
+			{
+				SetProperty(ref _destinationWaypointName, value);
+			}
+		}
 
-            set
-            {
-                SetProperty(ref _destinationWaypointName, value);
-            }
-        }
+		public double NavigationProgress
+		{
+			get
+			{
+				return _navigationProgress;
+			}
 
-        public double NavigationProgress
-        {
-            get
-            {
-                return _navigationProgress;
-            }
+			set
+			{
+				SetProperty(ref _navigationProgress, value);
+			}
+		}
+		#endregion
 
-            set
-            {
-                SetProperty(ref _navigationProgress, value);
-            }
-        }
-        #endregion
+		#region IDisposable Support
+		protected virtual void Dispose(bool disposing)
+		{
+			if (!_disposedValue)
+			{
+				if (disposing)
+				{
+					// TODO: dispose managed state (managed objects).
+					_navigationModule._event._eventHandler -= GetNavigationResultEvent;
+				}
 
-        #region IDisposable Support
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!_disposedValue)
-            {
-                if (disposing)
-                {
-                    // TODO: dispose managed state (managed objects).
-                    _navigationModule._event._eventHandler -= GetNavigationResultEvent;
-                }
+				// TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
+				// TODO: set large fields to null.
 
-                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
-                // TODO: set large fields to null.
+				_disposedValue = true;
+			}
+		}
 
-                _disposedValue = true;
-            }
-        }
+		// TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged
+		// resources.
+		// ~NavigatorPageViewModel()
+		// {
+		//   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+		//   Dispose(false);
+		// }
 
-        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged
-        // resources.
-        // ~NavigatorPageViewModel()
-        // {
-        //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-        //   Dispose(false);
-        // }
+		// This code added to correctly implement the disposable pattern.
+		public void Dispose()
+		{
+			// Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+			Dispose(true);
+			// TODO: uncomment the following line if the finalizer is overridden above.
+			// GC.SuppressFinalize(this);
+		}
+		#endregion
 
-        // This code added to correctly implement the disposable pattern.
-        public void Dispose()
-        {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            Dispose(true);
-            // TODO: uncomment the following line if the finalizer is overridden above.
-            // GC.SuppressFinalize(this);
-        }
-        #endregion
-
-    }
+	}
 }
