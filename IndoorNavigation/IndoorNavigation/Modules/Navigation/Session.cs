@@ -59,9 +59,9 @@ namespace IndoorNavigation.Modules
 {
     public class Session
     {
-        private IIPSClient _ipsClient;
+        private IIPSClient _IPSClient;
 
-        private int _currentNavigateStep;
+        private int _nextWaypointStep;
 
         private List<Waypoint> _waypointsOnRoute = new List<Waypoint>();
         private Dictionary<Guid, List<Waypoint>> _waypointsOnWrongWay =
@@ -74,10 +74,13 @@ namespace IndoorNavigation.Modules
 
         public NavigationEvent _event { get; private set; }
 
-        private Waypoint _startWaypoint = new Waypoint();
         private Waypoint _finalWaypoint = new Waypoint();
 
-        private Thread _navigateThread;
+        private Thread _waypointDetectionThread;
+        private Thread _navigationControllerThread;
+
+        private Waypoint _currentWaypoint = new Waypoint();
+        private ManualResetEventSlim _nextWaypointEvent = new ManualResetEventSlim(false);
 
         public Session(Navigraph graph,
                        Guid finalWaypointID,
@@ -95,20 +98,94 @@ namespace IndoorNavigation.Modules
             _finalWaypoint = _subgraph.Where(node => 
             node.Item.ID.Equals(finalWaypointID)).Select(w => w.Item).First();
 
-            _ipsClient = new WaypointClient();
-            _ipsClient._event._eventHandler += new EventHandler(CheckArrivedWaypoint);
+            _nextWaypointStep = -1;
 
-            _navigateThread = new Thread(() => InvokeIPSWork());
-            _navigateThread.Start();
+            _IPSClient = new WaypointClient();
+            _IPSClient._event._eventHandler += new EventHandler(CheckArrivedWaypoint);
 
-            _currentNavigateStep = -1;
-            StartNavigation(_currentNavigateStep);
+            _waypointDetectionThread = new Thread(() => InvokeIPSWork());
+            _waypointDetectionThread.Start();
+
+            _navigationControllerThread = new Thread(() => NavigatorProgram());
+            _navigationControllerThread.Start();
         }
 
-        public void StartNavigation(int currentStep) {
+        private void NavigatorProgram(){
+
+            Waypoint startWaypoint = new Waypoint();
+
+            NavigateToNextWaypoint(_nextWaypointStep);
+
+            while (!_currentWaypoint.ID.Equals(_finalWaypoint.ID)) {
+                Console.WriteLine("Continue to navigate to next step, _currentWaypoint ID: {0}, _finalWaypoint ID: {1}",
+                                  _currentWaypoint.ID, _finalWaypoint.ID);
+
+                _nextWaypointEvent.Wait();
+
+                if (_currentWaypoint.ID.Equals(_finalWaypoint.ID)) {
+                    Console.WriteLine("Arrived destination!");
+                    break;
+                }
+
+                if (_nextWaypointStep == -1)
+                {
+                    Console.WriteLine("Detected start waypoint: " + _currentWaypoint.ID);
+                    // Detection of starting waypoing:
+                    // Detected the waypoint most closed to user.
+                    startWaypoint = _currentWaypoint;
+
+                    GenerateRoute(startWaypoint, _finalWaypoint, _subgraph);
+                    _nextWaypointStep++;
+                    NavigateToNextWaypoint(_nextWaypointStep);
+                }
+                else if (_currentWaypoint.Equals(_waypointsOnRoute[_nextWaypointStep]))
+                {
+                    Console.WriteLine("Arrived waypoint: " + _currentWaypoint.ID);
+                    _nextWaypointStep++;
+                    NavigateToNextWaypoint(_nextWaypointStep);
+                }
+                else {
+                    for (int i = 0; 
+                         i < _waypointsOnWrongWay[_waypointsOnRoute[_nextWaypointStep].ID].Count; 
+                         i++) {
+
+
+                            Console.WriteLine("At wrong waypoint: " + _currentWaypoint.ID);
+                            startWaypoint = _currentWaypoint;
+                            GenerateRoute(startWaypoint, _finalWaypoint, _subgraph);
+
+                            _event.OnEventCall(new NavigationEventArgs
+                            {
+                                Result = NavigationResult.Run,
+                                NextInstruction = new NavigationInstruction
+                                {
+                                    CurrentWaypoint = startWaypoint,
+                                    NextWaypoint = _waypointsOnRoute[1],
+                                    Distance =
+                                        Navigraph.GetDistance(_subgraph,
+                                                              startWaypoint,
+                                                              _waypointsOnRoute[1]),
+                                    Progress = 0,
+                                    Direction = TurnDirection.FirstDirection
+                                }
+                            });
+
+                            _nextWaypointStep = 0;
+                            NavigateToNextWaypoint(_nextWaypointStep);
+
+                            break;
+                        }
+                    }
+                }
+
+                _nextWaypointEvent.Reset();
+            }
+        }
+
+        private void NavigateToNextWaypoint(int nextStep) {
             List<Waypoint> monitorWaypointList = new List<Waypoint>();
 
-            if (currentStep == -1)
+            if (nextStep == -1)
             {
                 // Detection of starting waypoing:
                 // Use all Waypoints of the NavigationGraph to detect the starting waypoint
@@ -118,10 +195,10 @@ namespace IndoorNavigation.Modules
                 }
             }
             else {
-                monitorWaypointList.Add(_waypointsOnRoute[currentStep]);
-                for (int i = 0; i < _waypointsOnWrongWay[_waypointsOnRoute[currentStep].ID].Count; i++)
+                monitorWaypointList.Add(_waypointsOnRoute[nextStep]);
+                for (int i = 0; i < _waypointsOnWrongWay[_waypointsOnRoute[nextStep].ID].Count; i++)
                 {
-                    monitorWaypointList.Add(_waypointsOnWrongWay[_waypointsOnRoute[currentStep].ID][i]);
+                    monitorWaypointList.Add(_waypointsOnWrongWay[_waypointsOnRoute[nextStep].ID][i]);
                 }
 
                 foreach (Waypoint waypoing in monitorWaypointList)
@@ -129,16 +206,16 @@ namespace IndoorNavigation.Modules
                     Console.WriteLine("Monitoring waypoints: " + waypoing.ID);
                 }
             }
-           
-            _ipsClient.SetWaypointList(monitorWaypointList);
+
+            _IPSClient.SetWaypointList(monitorWaypointList);
         }
 
         private void InvokeIPSWork() {
-            Console.WriteLine("---- invokeIPSWork ----");
+            Console.WriteLine("---- InvokeIPSWork ----");
             while (true)
             {
                 Thread.Sleep(1000);
-                _ipsClient.DetectWaypoints();
+                _IPSClient.DetectWaypoints();
             }
         }
 
@@ -167,7 +244,7 @@ namespace IndoorNavigation.Modules
                 List<Waypoint> tempWrongWaypointList = new List<Waypoint>();
 
                 // Construct the two-step possible wrong-way waypoints
-                Console.WriteLine("construct: correct waypoint: " + _waypointsOnRoute[i].ID);
+                Console.WriteLine("GenerateRoute: correct waypoint: " + _waypointsOnRoute[i].ID);
                 if (i - 1 >= 0)
                 {
                     for (int j = 0; j < _waypointsOnRoute[i-1].Neighbors.Count; j++)
@@ -180,7 +257,7 @@ namespace IndoorNavigation.Modules
                                 Equals(_waypointsOnRoute[i - 1].Neighbors[j].TargetWaypointUUID)).
                                 Select(n => n.Item).First();
 
-                            Console.WriteLine("construct: one step wrong waypoint: " +
+                            Console.WriteLine("GenerateRoute: one step wrong waypoint: " +
                                               oneStepWrongWaypoint.ID);
 
                             for (int m = 0; m < oneStepWrongWaypoint.Neighbors.Count; m++) {
@@ -193,7 +270,7 @@ namespace IndoorNavigation.Modules
                                 if (!twoStepWrongWaypoint.ID.Equals(oneStepWrongWaypoint.ID) &&
                                     !twoStepWrongWaypoint.ID.Equals(_waypointsOnRoute[i-1].ID))
                                 {
-                                    Console.WriteLine("construct: two step wrong waypoint: " +
+                                    Console.WriteLine("GenerateRoute: two step wrong waypoint: " +
                                                       twoStepWrongWaypoint.ID);
 
                                     tempWrongWaypointList.Add(twoStepWrongWaypoint);
@@ -205,14 +282,6 @@ namespace IndoorNavigation.Modules
                 _waypointsOnWrongWay.Add(_waypointsOnRoute[i].ID, tempWrongWaypointList);
             }
 
-            foreach (Waypoint waypoint in _waypointsOnRoute)
-            {
-                Console.WriteLine("correct waypoint:" + waypoint.ID);
-                for (int i = 0; i < _waypointsOnWrongWay[waypoint.ID].Count; i++) {
-                    Console.WriteLine("possible wrong-way waypoint: {0}",
-                                      _waypointsOnWrongWay[waypoint.ID][i].ID);
-                }
-            }
         }
 
         //In this function we get the currentwaypoint and determine whether
@@ -228,45 +297,37 @@ namespace IndoorNavigation.Modules
             node.Item.ID.Equals((args as WayPointSignalEventArgs).CurrentWaypoint.ID)).
             Select(w => w.Item).First();
 
-            if (_currentNavigateStep == -1)
-            {
-                // Detection of starting waypoing:
-                // Detected the waypoint most closed to user.
-                _startWaypoint = currentWaypoint;
+            //NavigationInstruction is a structure that contains five
+            //elements that need to be passed to the main and UI
+            NavigationInstruction navigationInstruction = 
+                new NavigationInstruction();
 
-                _currentNavigateStep = 0;
-                GenerateRoute(_startWaypoint, _finalWaypoint, _subgraph);
-                StartNavigation(_currentNavigateStep);
+            if (_nextWaypointStep == -1)
+            {
+                _currentWaypoint = currentWaypoint;
+                _nextWaypointEvent.Set();
             }
             else
             {
-
-                //NavigationInstruction is a structure that contains five
-                //elements that need to be passed to the main and UI
-                NavigationInstruction navigationInstruction =
-                                                new NavigationInstruction();
-                //getWaypoint is used to check where the current way point is in
-                //which place of the Allcorrectwaypoint
-
                 if (currentWaypoint == _finalWaypoint)
                 {
                     Console.WriteLine("---- [case: arrived destination] .... ");
+
                     _event.OnEventCall(new NavigationEventArgs
                     {
                         Result = NavigationResult.Arrival
                     });
                 }
-                else if (_waypointsOnRoute[_currentNavigateStep].Equals(currentWaypoint))
+                else if (_waypointsOnRoute[_nextWaypointStep].Equals(currentWaypoint))
                 {
                     Console.WriteLine("---- [case: arrived waypoint] .... ");
 
                     Console.WriteLine("current waypoint: " + currentWaypoint.ID);
-                    Console.WriteLine("next waypoint: " + _waypointsOnRoute[_currentNavigateStep + 1].ID);
+                    Console.WriteLine("next waypoint: " + _waypointsOnRoute[_nextWaypointStep + 1].ID);
 
                     navigationInstruction.CurrentWaypoint = currentWaypoint;
                     navigationInstruction.NextWaypoint =
-                                            _waypointsOnRoute[_currentNavigateStep + 1];
-
+                        _waypointsOnRoute[_nextWaypointStep + 1];
 
                     //If the floor information between the current waypoint and
                     //next are different, it means that the users need to change
@@ -274,11 +335,11 @@ namespace IndoorNavigation.Modules
                     //go up or down by compare which floor is higher
 
                     if (currentWaypoint.Floor !=
-                                    _waypointsOnRoute[_currentNavigateStep + 1].Floor)
+                        _waypointsOnRoute[_nextWaypointStep + 1].Floor)
                     {
-                        Console.WriteLine("different floor case");
+
                         if (currentWaypoint.Floor >
-                                    _waypointsOnRoute[_currentNavigateStep + 1].Floor)
+                            _waypointsOnRoute[_nextWaypointStep + 1].Floor)
                         {
                             navigationInstruction.Direction = TurnDirection.Down;
                         }
@@ -287,7 +348,7 @@ namespace IndoorNavigation.Modules
                             navigationInstruction.Direction = TurnDirection.Up;
                         }
                         navigationInstruction.Distance = 0;
-                        Console.WriteLine("end of different floor case");
+
                     }
                     //If the fllor information between current way point and next
                     // way point are the same, we need to tell the user go
@@ -295,35 +356,35 @@ namespace IndoorNavigation.Modules
                     //three informations, previous, current and next waypoints
                     else
                     {
-                        Console.WriteLine("same floor case");
+
                         navigationInstruction.Distance =
                         Navigraph.GetDistance(_subgraph,
                                               currentWaypoint,
-                                              _waypointsOnRoute[_currentNavigateStep + 1]);
-                 
-                        if (_currentNavigateStep == 0)
+                                              _waypointsOnRoute[_nextWaypointStep + 1]);
+
+                        if (_nextWaypointStep == 0)
                         {
                             navigationInstruction.Direction =
-                                                    TurnDirection.FirstDirection;
+                                TurnDirection.FirstDirection;
                         }
                         else
                         {
                             navigationInstruction.Direction =
                                 Navigraph.GetTurnDirection(
-                                               _waypointsOnRoute[_currentNavigateStep - 1],
-                                                currentWaypoint,
-                                               _waypointsOnRoute[_currentNavigateStep + 1]);
+                                    _waypointsOnRoute[_nextWaypointStep - 1],
+                                    currentWaypoint,
+                                    _waypointsOnRoute[_nextWaypointStep + 1]);
                         }
-                        Console.WriteLine("end of same floor case");
+
                     }
 
                     //Get the progress
                     Console.WriteLine("calculate progress: {0}/{1}",
-                                      _currentNavigateStep,
+                                      _nextWaypointStep,
                                       _waypointsOnRoute.Count);
 
                     navigationInstruction.Progress =
-                        (double)Math.Round(100 * ((decimal)_currentNavigateStep /
+                        (double)Math.Round(100 * ((decimal)_nextWaypointStep /
                                            (_waypointsOnRoute.Count - 1)), 3);
 
                     // Raise event to notify the UI/main thread with the result
@@ -332,67 +393,40 @@ namespace IndoorNavigation.Modules
                         Result = NavigationResult.Run,
                         NextInstruction = navigationInstruction
                     });
-                    Console.WriteLine("After raising event from Session");
-
-                    _currentNavigateStep++;
-                    StartNavigation(_currentNavigateStep);
                 }
                 else
                 {
                     Console.WriteLine("arrived waypoint ID:" + currentWaypoint.ID);
                     Console.WriteLine("possible wrong waypoint:");
 
-                    bool isWrongWaypoint = false;
-
                     for (int i = 0;
-                         i < _waypointsOnWrongWay[_waypointsOnRoute[_currentNavigateStep].ID].Count;
-                         i++) {
+                         i < _waypointsOnWrongWay[_waypointsOnRoute[_nextWaypointStep].ID].Count;
+                         i++)
+                    {
 
                         Console.WriteLine("waypoing ID:" +
-                                          _waypointsOnWrongWay[_waypointsOnRoute[_currentNavigateStep]
+                                          _waypointsOnWrongWay[_waypointsOnRoute[_nextWaypointStep]
                                           .ID][i].ID);
 
                         if (currentWaypoint.ID.
-                            Equals(_waypointsOnWrongWay[_waypointsOnRoute[_currentNavigateStep].ID][i].ID)){
+                            Equals(_waypointsOnWrongWay[_waypointsOnRoute[_nextWaypointStep].ID][i].ID))
+                        {
 
-                            isWrongWaypoint = true;
+                            Console.WriteLine("---- [case: wrong waypoint] .... ");
+                            _event.OnEventCall(new NavigationEventArgs
+                            {
+                                Result = NavigationResult.AdjustRoute
+                            });
+
                             break;
-
                         }
                     }
-                    if (isWrongWaypoint)
-                    {
-                        Console.WriteLine("---- [case: wrong waypoint] .... ");
-                        _event.OnEventCall(new NavigationEventArgs
-                        {
-                            Result = NavigationResult.AdjustRoute
-                        });
-
-                        //If the waypoint is wrong, we initial the correct waypoint
-                        // and its neighbors and rerun the GetPath function and reget
-                        //the navigationInstruction
-                        GenerateRoute(currentWaypoint, _finalWaypoint, _subgraph);
-
-                        _currentNavigateStep = 0;
-                        _event.OnEventCall(new NavigationEventArgs
-                        {
-                            Result = NavigationResult.Run,
-                            NextInstruction = new NavigationInstruction
-                            {
-                                CurrentWaypoint = currentWaypoint,
-                                NextWaypoint = _waypointsOnRoute[_currentNavigateStep + 1],
-                                Distance = Navigraph.
-                                GetDistance(_subgraph,
-                                            currentWaypoint,
-                                            _waypointsOnRoute[_currentNavigateStep + 1]),
-                                Progress = 0,
-                                Direction = TurnDirection.FirstDirection
-                            }
-                        });
-                        StartNavigation(_currentNavigateStep);
-                    }
                 }
+
+                _currentWaypoint = currentWaypoint;
+                _nextWaypointEvent.Set();
             }
+
             Console.WriteLine("<< CheckArrivedWaypoint ");
         }
 
