@@ -39,12 +39,20 @@ namespace IndoorNavigation.Modules
 {
     public class Utility
     {
+<<<<<<< HEAD:IndoorNavigation/IndoorNavigation/Modules/Utility/Utility.cs
         public static Dictionary<Guid,Beacon> Beacons;
         public static List<BeaconGroupModel> BeaconGroups;
         public static List<LocationConnectModel> LocationConnects;
         public static RoutePlan Route;
         public static SignalProcessModule SignalProcess;
         public static MaNModule MaN;
+=======
+        public static Dictionary<Guid, Beacon> BeaconsDict;
+        public static Container Service;
+        public static IPSModule IPS;
+        public static IBeaconScan BeaconScan;
+        public static ITextToSpeech TextToSpeech;
+>>>>>>> parent of 2749c0a... Merge pull request #7 from OpenISDM/develop:IndoorNavigation/IndoorNavigation/Utilities/Utility.cs
 
         // Skip SSL checking
         private static bool ValidateServerCertificate(Object sender,
@@ -62,6 +70,7 @@ namespace IndoorNavigation.Modules
         /// <returns></returns>
         public static string DownloadNavigraph(string URL)
         {
+<<<<<<< HEAD:IndoorNavigation/IndoorNavigation/Modules/Utility/Utility.cs
             try
             {
                 // Skip SSL checking
@@ -94,6 +103,21 @@ namespace IndoorNavigation.Modules
                 }
 
                 throw new ArgumentException("Download faild");
+=======
+            string filePath = Path.Combine(NavigraphStorage.navigraphFolder, 
+                                            navigraphName);
+ 
+            try
+            {
+                if (!Directory.Exists(NavigraphStorage.navigraphFolder))
+                    Directory.CreateDirectory(
+                        NavigraphStorage.navigraphFolder);
+
+                using (WebClient webClient = new WebClient())
+                    webClient.DownloadFileAsync(new Uri(URL), filePath);
+
+                return true;
+>>>>>>> parent of 2749c0a... Merge pull request #7 from OpenISDM/develop:IndoorNavigation/IndoorNavigation/Utilities/Utility.cs
             }
             catch(Exception ex)
             {

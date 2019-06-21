@@ -28,6 +28,11 @@
     <MtouchLink>None</MtouchLink>
     <MtouchDebug>true</MtouchDebug>
     <LangVersion>7.1</LangVersion>
+<<<<<<< HEAD
+=======
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignProvision>iOS Team Provisioning Profile: *</CodesignProvision>
+>>>>>>> parent of 2749c0a... Merge pull request #7 from OpenISDM/develop
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -50,9 +55,16 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <MtouchArch>ARM64</MtouchArch>
+<<<<<<< HEAD
     <CodesignKey>iPhone Developer</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+=======
+    <CodesignKey>iPhone Developer: kenneth@nssh.ntpc.edu.tw (K2XWDDK85C)</CodesignKey>
+    <MtouchDebug>true</MtouchDebug>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <CodesignProvision>iOS Team Provisioning Profile: com.OpenISDM.IndoorNavigation</CodesignProvision>
+>>>>>>> parent of 2749c0a... Merge pull request #7 from OpenISDM/develop
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>none</DebugType>
@@ -103,6 +115,13 @@
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+<<<<<<< HEAD
+=======
+    <Compile Include="QrCodeDecoder.cs" />
+    <Compile Include="TextToSpeechImplementation.cs" />
+    <Compile Include="Renderers\CustomContentPageRenderer.cs" />
+    <None Include="Helpers\TranslateExtension.txt" />
+>>>>>>> parent of 2749c0a... Merge pull request #7 from OpenISDM/develop
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
@@ -124,6 +143,7 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon120.png">
       <Visible>false</Visible>
     </ImageAsset>
+<<<<<<< HEAD
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon87.png">
       <Visible>false</Visible>
     </ImageAsset>
@@ -148,6 +168,16 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon20.png">
       <Visible>false</Visible>
     </ImageAsset>
+=======
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\40-1.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\60-1.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\58-1.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\87-1.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\80-1.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\120-2.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\120.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\180-1.png" />
+>>>>>>> parent of 2749c0a... Merge pull request #7 from OpenISDM/develop
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -165,4 +195,55 @@
       <Name>IndoorNavigation</Name>
     </ProjectReference>
   </ItemGroup>
+<<<<<<< HEAD
+=======
+  <ItemGroup>
+    <BundleResource Include="Resources\navigation_button.png" />
+    <BundleResource Include="Resources\tracking_button.png" />
+    <BundleResource Include="Resources\position_FAB.png" />
+    <BundleResource Include="Resources\location_icon.png" />
+    <BundleResource Include="Resources\position_FAB_white.png" />
+    <BundleResource Include="Resources\icon.png" />
+    <BundleResource Include="Resources\tabitem1_navigator.png" />
+    <BundleResource Include="Resources\tabitem2_routes.png" />
+    <BundleResource Include="Resources\tabitem3_setting.png" />
+    <BundleResource Include="Resources\tabitem3_setting_tabbed.png" />
+    <BundleResource Include="Resources\tabitem2_routes_tabbed.png" />
+    <BundleResource Include="Resources\tabitem1_navigator_tabbed.png" />
+    <BundleResource Include="Resources\Arrow_up.png" />
+    <BundleResource Include="Resources\Arrow_left.png" />
+    <BundleResource Include="Resources\Arrow_right.png" />
+    <BundleResource Include="Resources\Arrow_frontright.png" />
+    <BundleResource Include="Resources\Arrow_frontleft.png" />
+    <BundleResource Include="Resources\Arrow_down.png" />
+    <BundleResource Include="Resources\Arrow_rearright.png" />
+    <BundleResource Include="Resources\Arrow_rearleft.png" />
+    <BundleResource Include="Resources\settings_gears_imagebutton.png" />
+    <BundleResource Include="Resources\Warning.png" />
+    <BundleResource Include="Resources\Waiting.png" />
+    <BundleResource Include="Resources\Arrived.png" />
+    <BundleResource Include="Resources\NTUH_logo.png" />
+    <BundleResource Include="Resources\Clinics.png" />
+    <BundleResource Include="Resources\Cashier.png" />
+    <BundleResource Include="Resources\Exit.png" />
+    <BundleResource Include="Resources\ExaminationRoom.png" />
+    <BundleResource Include="Resources\Pharmacy.png" />
+    <BundleResource Include="Resources\ConvenienceStore.png" />
+    <BundleResource Include="Resources\Others.png" />
+    <BundleResource Include="Resources\Bathroom.png" />
+    <BundleResource Include="Resources\BloodCollectionCounter.png" />
+    <BundleResource Include="Resources\Stairs_down.png" />
+    <BundleResource Include="Resources\Stairs_up.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\close_circle_button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\cloud_computing.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Renderers\" />
+    <Folder Include="Helpers\" />
+  </ItemGroup>
+>>>>>>> parent of 2749c0a... Merge pull request #7 from OpenISDM/develop
 </Project>

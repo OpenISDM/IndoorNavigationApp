@@ -49,7 +49,11 @@ namespace IndoorNavigation
         /// </summary>
         /// <param name="beacon"></param>
         /// <returns></returns>
+<<<<<<< HEAD:IndoorNavigation/IndoorNavigation/Modules/Utility/Convert.cs
         public static GeoCoordinates GetCoordinates(this
+=======
+        public static GeoCoordinate GetCoordinates(this
+>>>>>>> parent of 2749c0a... Merge pull request #7 from OpenISDM/develop:IndoorNavigation/IndoorNavigation/Utilities/Convert.cs
             Beacon beacon)
         {
             if (beacon.GetType() == typeof(LBeaconModel))

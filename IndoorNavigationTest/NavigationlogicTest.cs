@@ -339,6 +339,16 @@ namespace IndoorNavigationTest
             WaitEvent.Reset();
         }
 
+        private void HandleSignalProcess(object sender, EventArgs e)
+        {
+            Beacon currentBeacon =
+                (e as WayPointSignalEventArgs).CurrentBeacon;
+
+            bestBeacon = currentBeacon;
+
+            SignalProcessWaitEvent.Set();
+        }
+
         private void HandleMaNModule(object sender, EventArgs e)
         {
             maNEventArgs = e as MaNEventArgs;

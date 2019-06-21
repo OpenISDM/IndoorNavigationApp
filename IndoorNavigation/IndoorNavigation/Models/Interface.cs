@@ -23,12 +23,21 @@
  * Authors:
  *
  *      Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
+<<<<<<< HEAD
+=======
+ *      Paul Chang, paulchang@iis.sinica.edu.tw
+ *      m10717004@yuntech.edu.tw
+>>>>>>> parent of 2749c0a... Merge pull request #7 from OpenISDM/develop
  *
  */
 
 using GeoCoordinatePortable;
 using System;
 using System.Collections.Generic;
+<<<<<<< HEAD
+=======
+using System.Threading.Tasks;
+>>>>>>> parent of 2749c0a... Merge pull request #7 from OpenISDM/develop
 
 namespace IndoorNavigation.Models
 {
@@ -128,11 +137,38 @@ namespace IndoorNavigation.Models
     /// </summary>
     public interface IBeaconScan
     {
+<<<<<<< HEAD
         void Init(Action<List<BeaconSignalModel>> SendSignalFunction);
         void StartScan(List<Guid> BeaconsUUID);
         void StopScan();
         void Close();
     }
 
+=======
+        void StartScan(List<Guid> BeaconsUUID);
+        void StopScan();
+        void Close();
+        BeaconScanEvent Event { get; }
+    }
+
+    public interface IQrCodeDecoder
+    {
+        Task<string> ScanAsync();
+    }
+
+    public interface ITextToSpeech
+    {
+        void Speak(string text, string language);
+    }
+    #endregion
+
+    #region Interface for IPS Client
+    public interface IIPSClient
+    {
+        Beacon SignalProcessing();
+        void SetBeaconList(List<Beacon> BeaconList);
+        void Stop();
+    }
+>>>>>>> parent of 2749c0a... Merge pull request #7 from OpenISDM/develop
     #endregion
 }
