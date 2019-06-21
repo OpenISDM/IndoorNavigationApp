@@ -12,6 +12,7 @@
     <RootNamespace>IndoorNavigation.iOS</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
     <AssemblyName>IndoorNavigation.iOS</AssemblyName>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
@@ -28,6 +29,8 @@
     <MtouchLink>None</MtouchLink>
     <MtouchDebug>true</MtouchDebug>
     <LangVersion>7.1</LangVersion>
+    <CodesignKey>iPhone Developer: Chun Yu Lai (262MR7SY5M)</CodesignKey>
+    <CodesignProvision>VS: WildCard Development</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -39,6 +42,8 @@
     <MtouchArch>x86_64</MtouchArch>
     <ConsolePause>false</ConsolePause>
     <LangVersion>7.1</LangVersion>
+    <CodesignProvision>VS: WildCard Development</CodesignProvision>
+    <CodesignKey>iPhone Developer: Chun Yu Lai (262MR7SY5M)</CodesignKey>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
     <DebugSymbols>true</DebugSymbols>
@@ -50,9 +55,10 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <MtouchArch>ARM64</MtouchArch>
-    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignKey>iPhone Developer: Chun Yu Lai (262MR7SY5M)</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <CodesignProvision>VS: WildCard Development</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>none</DebugType>
@@ -62,8 +68,9 @@
     <WarningLevel>4</WarningLevel>
     <MtouchArch>ARM64</MtouchArch>
     <ConsolePause>false</ConsolePause>
-    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignKey>iPhone Developer: Chun Yu Lai (262MR7SY5M)</CodesignKey>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <CodesignProvision>VS: WildCard Development</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Ad-Hoc|iPhone' ">
     <DebugType>none</DebugType>
@@ -74,8 +81,8 @@
     <ConsolePause>False</ConsolePause>
     <MtouchArch>ARM64</MtouchArch>
     <BuildIpa>True</BuildIpa>
-    <CodesignProvision>Automatic:AdHoc</CodesignProvision>
-    <CodesignKey>iPhone Distribution</CodesignKey>
+    <CodesignProvision>VS: WildCard Development</CodesignProvision>
+    <CodesignKey>iPhone Developer: Chun Yu Lai (262MR7SY5M)</CodesignKey>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'AppStore|iPhone' ">
@@ -86,15 +93,19 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>False</ConsolePause>
     <MtouchArch>ARM64</MtouchArch>
-    <CodesignProvision>Automatic:AppStore</CodesignProvision>
-    <CodesignKey>iPhone Distribution</CodesignKey>
+    <CodesignProvision>VS: WildCard Development</CodesignProvision>
+    <CodesignKey>iPhone Developer: Chun Yu Lai (262MR7SY5M)</CodesignKey>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Ad-Hoc|iPhoneSimulator'">
     <LangVersion>7.1</LangVersion>
+    <CodesignProvision>VS: WildCard Development</CodesignProvision>
+    <CodesignKey>iPhone Developer: Chun Yu Lai (262MR7SY5M)</CodesignKey>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'AppStore|iPhoneSimulator'">
     <LangVersion>7.1</LangVersion>
+    <CodesignProvision>VS: WildCard Development</CodesignProvision>
+    <CodesignKey>iPhone Developer: Chun Yu Lai (262MR7SY5M)</CodesignKey>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BeaconScan.cs" />
@@ -103,6 +114,10 @@
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QrCodeDecoder.cs" />
+    <Compile Include="Renderers\CustomContentPageRenderer.cs" />
+    <None Include="Helpers\TranslateExtension.txt" />
+    <Compile Include="TextToSpeech.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
@@ -112,40 +127,70 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon1024.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon180.png">
-      <Visible>false</Visible>
-    </ImageAsset>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon167.png">
       <Visible>false</Visible>
     </ImageAsset>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon152.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon120.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon87.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon80.png">
-      <Visible>false</Visible>
-    </ImageAsset>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon76.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon60.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon58.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon40.png">
       <Visible>false</Visible>
     </ImageAsset>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon29.png">
       <Visible>false</Visible>
     </ImageAsset>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon20.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\path-guide-2%281242x2688%29.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\path-guide-2%28828x1792%29.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\path-guide-2%281125x2436%29.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\path-guide-2%281242x2208%29.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\path-guide-2%28750x1334%29.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\path-guide-2%28640x960%29.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\path-guide-2%28640x1136%29.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\path-guide-2%28320x480%29.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\40-1.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\60-1.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\58-1.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\87-1.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\80-1.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\120-2.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\120.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\180-1.png">
       <Visible>false</Visible>
     </ImageAsset>
   </ItemGroup>
@@ -156,7 +201,16 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="3.2.0.839982" />
+    <PackageReference Include="Xamarin.Forms" Version="3.6.0.344457" />
+    <PackageReference Include="Xamarin.CustomControls.ProgressBarView">
+      <Version>1.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Forms.Visual.Material">
+      <Version>3.6.0.344457</Version>
+    </PackageReference>
+    <PackageReference Include="Plugin.Multilingual">
+      <Version>1.0.2</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
@@ -165,4 +219,49 @@
       <Name>IndoorNavigation</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\navigation_button.png" />
+    <BundleResource Include="Resources\tracking_button.png" />
+    <BundleResource Include="Resources\position_FAB.png" />
+    <BundleResource Include="Resources\location_icon.png" />
+    <BundleResource Include="Resources\position_FAB_white.png" />
+    <BundleResource Include="Resources\icon.png" />
+    <BundleResource Include="Resources\tabitem1_navigator.png" />
+    <BundleResource Include="Resources\tabitem2_routes.png" />
+    <BundleResource Include="Resources\tabitem3_setting.png" />
+    <BundleResource Include="Resources\tabitem3_setting_tabbed.png" />
+    <BundleResource Include="Resources\tabitem2_routes_tabbed.png" />
+    <BundleResource Include="Resources\tabitem1_navigator_tabbed.png" />
+    <BundleResource Include="Resources\Arrow_up.png" />
+    <BundleResource Include="Resources\Arrow_left.png" />
+    <BundleResource Include="Resources\Arrow_right.png" />
+    <BundleResource Include="Resources\Arrow_frontright.png" />
+    <BundleResource Include="Resources\Arrow_frontleft.png" />
+    <BundleResource Include="Resources\Arrow_down.png" />
+    <BundleResource Include="Resources\Arrow_rearright.png" />
+    <BundleResource Include="Resources\Arrow_rearleft.png" />
+    <BundleResource Include="Resources\settings_gears_imagebutton.png" />
+    <BundleResource Include="Resources\Warning.png" />
+    <BundleResource Include="Resources\Waiting.png" />
+    <BundleResource Include="Resources\Arrived.png" />
+    <BundleResource Include="Resources\NTUH_logo.png" />
+    <BundleResource Include="Resources\Clinics.png" />
+    <BundleResource Include="Resources\Cashier.png" />
+    <BundleResource Include="Resources\Exit.png" />
+    <BundleResource Include="Resources\ExaminationRoom.png" />
+    <BundleResource Include="Resources\Pharmacy.png" />
+    <BundleResource Include="Resources\ConvenienceStore.png" />
+    <BundleResource Include="Resources\Others.png" />
+    <BundleResource Include="Resources\Bathroom.png" />
+    <BundleResource Include="Resources\BloodCollectionCounter.png" />
+    <BundleResource Include="Resources\Stairs_down.png" />
+    <BundleResource Include="Resources\Stairs_up.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\close_circle_button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\cloud_computing.png" />
+  </ItemGroup>
+  <ItemGroup />
 </Project>
