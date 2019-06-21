@@ -62,8 +62,7 @@ namespace IndoorNavigation
         /// </summary>
         /// <param name="beacon"></param>
         /// <returns></returns>
-        public static GeoCoordinate GetCoordinates(this
-            Beacon beacon)
+        public static GeoCoordinate GetCoordinates(this Beacon beacon)
         {
             if (beacon.GetType() == typeof(LBeaconModel))
             {

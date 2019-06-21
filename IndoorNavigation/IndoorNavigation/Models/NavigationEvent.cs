@@ -12,12 +12,10 @@
  *
  * File Description:
  *
- *      The file contains the code behind for the App class. The code is 
- *      responsible for instantiating the first page that will be displayed by
- *      the application on each platform, and for handling application 
- *      lifecycle events. Both App.xaml and App.xaml.cs contribute to a class 
- *      named App that derives from Application. This is only one entry point 
- *      when the app launch at first time.
+ *      This file contains all the interfaces required by the application,
+ *      such as the interface of IPSClient and the interface for 
+ *      both iOS project and the Android project to allow the Xamarin.Forms 
+ *      app to access the APIs on each platform.
  *      
  * Version:
  *
@@ -25,7 +23,7 @@
  * 
  * File Name:
  *
- *      LicenseMainPage.xaml.cs
+ *      NavigationEvent.cs
  *
  * Abstract:
  *
@@ -42,25 +40,22 @@
  *
  * Authors:
  *
- *      Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
- *      Paul Chang, paulchang@iis.sinica.edu.tw
+ *      Chun Yu Lai, chunyu1202@gmail.com
  *
  */
-using Xamarin.Forms;
 
-namespace IndoorNavigation.Views.Settings.LicensePages
+using System;
+
+namespace IndoorNavigation.Models
 {
-    public partial class LicenseMainPage : ContentPage
+    public class NavigationEvent
     {
-        public LicenseMainPage()
-        {
-            InitializeComponent();
-            NavigationPage.SetBackButtonTitle(this, "授權");
-        }
+        public event EventHandler _eventHandler;
 
-        async void IconsLicenseBtn_Tapped(object sender, System.EventArgs e)
+        public void OnEventCall(EventArgs e)
         {
-            await Navigation.PushAsync(new IconsLicensePage());
+            _eventHandler?.Invoke(this, e);
         }
     }
+
 }

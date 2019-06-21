@@ -46,14 +46,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Xamarin.Forms;
-using System.Diagnostics;
-using IndoorNavigation.Modules;
 
 namespace IndoorNavigation.Views.Navigation
 {
     public partial class NavigatorSettingPage : ContentPage
     {
-        public IList VoiceSearchItems { get; } = new ObservableCollection<string>(new List<string> { "中文", "英文" });
+        public IList _voiceSearchItems { get; } =
+            new ObservableCollection<string>(new List<string> { "中文", "英文" });
 
         public NavigatorSettingPage()
         {
@@ -92,7 +91,8 @@ namespace IndoorNavigation.Views.Navigation
             base.OnDisappearing();
         }
 
-        async void Handle_OptionPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        async void Handle_OptionPropertyChanged(object sender,
+                                                System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName == AiForms.Renderers.SwitchCell.OnProperty.PropertyName)
             {

@@ -12,12 +12,10 @@
  *
  * File Description:
  *
- *      The file contains the code behind for the App class. The code is 
- *      responsible for instantiating the first page that will be displayed by
- *      the application on each platform, and for handling application 
- *      lifecycle events. Both App.xaml and App.xaml.cs contribute to a class 
- *      named App that derives from Application. This is only one entry point 
- *      when the app launch at first time.
+ *      This file contains all the interfaces required by the application,
+ *      such as the interface of IPSClient and the interface for 
+ *      both iOS project and the Android project to allow the Xamarin.Forms 
+ *      app to access the APIs on each platform.
  *      
  * Version:
  *
@@ -25,7 +23,7 @@
  * 
  * File Name:
  *
- *      LicenseMainPage.xaml.cs
+ *      TextToSpeech.cs
  *
  * Abstract:
  *
@@ -44,23 +42,31 @@
  *
  *      Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
  *      Paul Chang, paulchang@iis.sinica.edu.tw
- *
+ *      
  */
-using Xamarin.Forms;
+using AVFoundation;
+using IndoorNavigation.iOS;
+using IndoorNavigation.Models;
 
-namespace IndoorNavigation.Views.Settings.LicensePages
+[assembly: Xamarin.Forms.Dependency(typeof(TextToSpeech))]
+namespace IndoorNavigation.iOS
 {
-    public partial class LicenseMainPage : ContentPage
+    public class TextToSpeech : ITextToSpeech
     {
-        public LicenseMainPage()
-        {
-            InitializeComponent();
-            NavigationPage.SetBackButtonTitle(this, "授權");
-        }
+        public TextToSpeech() { }
 
-        async void IconsLicenseBtn_Tapped(object sender, System.EventArgs e)
+        public void Speak(string text, string language)
         {
-            await Navigation.PushAsync(new IconsLicensePage());
+            var speechSynthesizer = new AVSpeechSynthesizer();
+            var speechUtterance = new AVSpeechUtterance(text)
+            {
+                Rate = AVSpeechUtterance.MaximumSpeechRate / 2,
+                Voice = AVSpeechSynthesisVoice.FromLanguage(language),
+                Volume = 1f,
+                PitchMultiplier = 1.0f
+            };
+
+            speechSynthesizer.SpeakUtterance(speechUtterance);
         }
     }
 }
