@@ -10,15 +10,6 @@
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
-# ignore Xamarin.Android Resource.Designer.cs files
-**/*.Droid/**/[Rr]esource.[Dd]esigner.cs
-**/*.Android/**/[Rr]esource.[Dd]esigner.cs
-**/Android/**/[Rr]esource.[Dd]esigner.cs
-**/Droid/**/[Rr]esource.[Dd]esigner.cs
-
-# Xamarin Components
-Components/
-
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
@@ -269,4 +260,3 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
-IndoorNavigation/IndoorNavigation.iOS/.DS_Store

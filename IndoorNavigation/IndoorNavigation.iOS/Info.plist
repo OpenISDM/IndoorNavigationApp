@@ -10,6 +10,8 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
@@ -19,33 +21,18 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>MinimumOSVersion</key>
-	<string>9.0</string>
+	<string>8.0</string>
 	<key>CFBundleDisplayName</key>
 	<string>IndoorNavigation</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.OpenISDM.IndoorNavigation</string>
+	<string>com.companyname.IndoorNavigation</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
 	<key>CFBundleName</key>
 	<string>IndoorNavigation</string>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcon.appiconset</string>
-	<key>XSLaunchImageAssets</key>
-	<string>Assets.xcassets/LaunchImage.launchimage</string>
-	<key>NSCameraUsageDescription</key>
-	<string>This app needs to access a camera to scan the barcode.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Indoor navigation requires location permission</string>
-	<key>UIStatusBarStyle</key>
-	<string>UIStatusBarStyleLightContent</string>
-	<key>CFBundleLocalizations</key>
-	<array>
-		<string>en</string>
-		<string>zh_TW</string>
-	</array>
-	<key>CFBundleDevelopmentRegion</key>
-	<string>en_US</string>
-	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
 </dict>
 </plist>

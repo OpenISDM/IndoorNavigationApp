@@ -1,78 +1,14 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:IndoorNavigation"
-             x:Class="IndoorNavigation.MainPage"
-             xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
-             
-             Title="{i18n:Translate Location}">
-    
-    <ContentPage.Padding>
-        <OnPlatform x:TypeArguments="Thickness">
-            <OnPlatform.Platforms>
-                <On Platform="iOS" Value="0, 0, 0, 25" />
-                <On Platform="Android" Value="0, 0, 0, 0" />
-                <On Platform="UWP" Value="0, 0, 0, 0" />
-            </OnPlatform.Platforms>
-        </OnPlatform>
-    </ContentPage.Padding>
-    
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="{i18n:Translate Setting}" Priority="1" Order="Primary" 
-                     Clicked="SettingBtn_Clicked"/>
-    </ContentPage.ToolbarItems>
-    
-    <ContentPage.Content>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="8*"/>
-            </Grid.RowDefinitions>
-            
-            <SearchBar x:Name="NaviSearchBar" Grid.Row="0" 
-                       Placeholder="{i18n:Translate PickLocation}"
-                       CancelButtonColor="#007BFF"
-                       Text="{Binding SearchedText, Mode=TwoWay}"
-                       BackgroundColor="#f0f0f0"
-                       VerticalOptions="StartAndExpand"/>
-            
-            <ListView x:Name="LocationListView" Grid.Row="1" Grid.RowSpan="2"
-                      ItemsSource="{Binding NavigationGraphFiles}"
-                      Margin="10, -8, 10,10" HasUnevenRows="true"
-                      ItemTapped="Handle_ItemTapped"
-                      SelectedItem="LocationListView_ItemSelected"
-                      IsPullToRefreshEnabled="true"
-                      Refreshing="LocationListView_Refreshing">
-                
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell Height="70">
-                            <ViewCell.ContextActions>
-                                <MenuItem Clicked="Item_Delete" CommandParameter="{Binding .}"
-                                   Text="Delete" IsDestructive="True" />
-                             </ViewCell.ContextActions>
-                            
-                            <StackLayout Orientation="Horizontal"
-                                         Padding="20, 20, 20, 1">
-                                
-                                <!--<Label Text="ICON"/>-->
-                                <Image Source="location_icon.png"
-                                       Margin="1, 1, 1, 15"
-                                       VerticalOptions="Start"/>
-                                
-                                <Label Text="{Binding UserNaming}" 
-                                       HorizontalOptions="Start" 
-                                       VerticalOptions="Center"
-                                       TextColor="#3F51B5" Margin="60, 0, 1, 10" />
-                                
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-                
-            </ListView>
-            
-        </Grid>
-    </ContentPage.Content>
+             x:Class="IndoorNavigation.MainPage">
+
+    <StackLayout>
+        <!-- Place new controls here -->
+    	<Label Text="Welcome to Xamarin.Forms!" 
+           HorizontalOptions="Center"
+           VerticalOptions="CenterAndExpand" />
+    </StackLayout>
 
 </ContentPage>

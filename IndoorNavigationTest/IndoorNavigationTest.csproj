@@ -16,7 +16,4 @@
     <ProjectReference Include="..\IndoorNavigation\IndoorNavigation\IndoorNavigation.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Remove="EmptyClass.cs" />
-  </ItemGroup>
 </Project>

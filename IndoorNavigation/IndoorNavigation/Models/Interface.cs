@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2019 Academia Sinica, Institude of Information Science
+ * Copyright (c) 2018 Academia Sinica, Institude of Information Science
  *
  * License:
  *      GPL 3.0 : The content of this file is subject to the terms and
@@ -11,65 +11,42 @@
  *      IndoorNavigation
  *
  * File Description:
- *
- *      This file contains all the interfaces required by the application,
- *      such as the interface of IPSClient and the interface for 
- *      both iOS project and the Android project to allow the Xamarin.Forms 
- *      app to access the APIs on each platform.
- *      
- * Version:
- *
- *      1.0.0, 20190605
- * 
  * File Name:
  *
  *      Interface.cs
  *
  * Abstract:
  *
- *      Waypoint-based navigator is a mobile Bluetooth navigation application
- *      that runs on smart phones. It is structed to support anywhere 
- *      navigation indoors in areas covered by different indoor positioning 
- *      system (IPS) and outdoors covered by GPS.In particilar, it can rely on
- *      BeDIS (Building/environment Data and Information System) for indoor 
- *      positioning. This IPS provides a location beacon at every waypoint. The 
- *      beacon brocasts its own coordinates; Consequesntly, the navigator does 
- *      not need to continuously monitor its own position.
- *      This version makes use of Xamarin.Forms, which is a cross-platform UI 
- *      tookit that runs on both iOS and Android.
+ *      This file contain the definition of the interface required to connect 
+ *      IOS projects and Android project and navigation graph information.
  *
  * Authors:
  *
  *      Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
- *      Paul Chang, paulchang@iis.sinica.edu.tw
- *      Bo Chen Huang, m10717004@yuntech.edu.tw
- *      Chun Yu Lai, chunyu1202@gmail.com
  *
  */
+
 using GeoCoordinatePortable;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using IndoorNavigation.Models.NavigaionLayer;
 
 namespace IndoorNavigation.Models
 {
     #region Interface of navigation graph attribute
 
     /// <summary>
-    /// The interface reserved for iBeacon data
+    /// The interface reserved for IBeacon data
     /// </summary>
     public interface IIBeacon
     {
         /// <summary>
-        /// This method returns its coordinate because ibeacon not
-        /// have the coordinate information in UUID.
+        /// IBeacon coordinate
         /// </summary>
-        GeoCoordinate IBeaconCoordinates { get; set; }
+        GeoCoordinates IBeaconCoordinates { get; set; }
     }
 
     /// <summary>
-    /// The interface of LBeacon
+    /// LBeacon資訊
     /// </summary>
     public interface ILBeacon
     {
@@ -78,7 +55,7 @@ namespace IndoorNavigation.Models
         /// The reffered coordinate for the arrow on the Beacon
         /// Not used in this version
         /// </summary>
-        GeoCoordinate MarkCoordinates { get; set; }
+        GeoCoordinates MarkCoordinates { get; set; }
     }
 
     /// <summary>
@@ -94,11 +71,7 @@ namespace IndoorNavigation.Models
         /// <summary>
         /// The center coordinate of the group
         /// </summary>
-        GeoCoordinate Coordinates { get; }
-        /// <summary>
-        /// The floor of the group
-        /// </summary>
-        float Floor { get; }
+        GeoCoordinates Coordinates { get; }
     }
 
     /// <summary>
@@ -121,16 +94,32 @@ namespace IndoorNavigation.Models
         /// <summary>
         /// Location A
         /// </summary>
-        WaypointModel SourceWaypoint { get; set; }
+        BeaconGroupModel BeaconA { get; set; }
         /// <summary>
         /// Location B
         /// </summary>
-        WaypointModel TargetWaypoint { get; set; }
+        BeaconGroupModel BeaconB { get; set; }
+    }
+
+    /// <summary>
+    /// A path connects two nodes. It is used to store the navigation graph
+    /// data in the phone.
+    /// </summary>
+    public interface ILocationConnectModelForNavigraphFile
+    {
+        /// <summary>
+        /// Location A
+        /// </summary>
+        Guid BeaconA { get; set; }
+        /// <summary>
+        /// Location B
+        /// </summary>
+        Guid BeaconB { get; set; }
     }
 
     #endregion
 
-    #region Interface for connecting both iOS project and Android project
+    #region Interface for connecting IOS projects and Android projects
 
     /// <summary>
     /// The interface with beacon scan module
@@ -139,31 +128,11 @@ namespace IndoorNavigation.Models
     /// </summary>
     public interface IBeaconScan
     {
-        void StartScan();
+        void Init(Action<List<BeaconSignalModel>> SendSignalFunction);
+        void StartScan(List<Guid> BeaconsUUID);
         void StopScan();
         void Close();
-        NavigationEvent _event { get; }
     }
 
-    public interface IQrCodeDecoder
-    {
-        Task<string> ScanAsync();
-    }
-
-    public interface ITextToSpeech
-    {
-        void Speak(string text, string language);
-    }
-    #endregion
-
-    #region Interface for IPS Client
-    public interface IIPSClient
-    {
-        void DetectWaypoints();
-        void SetWaypointList(List<Waypoint> WaypointList);
-        void Stop();
-
-        NavigationEvent _event { get; }
-    }
     #endregion
 }
