@@ -149,6 +149,7 @@ namespace IndoorNavigation.Modules
                          i < _waypointsOnWrongWay[_waypointsOnRoute[_nextWaypointStep].ID].Count; 
                          i++) {
 
+                        if (_currentWaypoint.ID.Equals(_waypointsOnWrongWay[_waypointsOnRoute[_nextWaypointStep].ID][i].ID)){
 
                             Console.WriteLine("At wrong waypoint: " + _currentWaypoint.ID);
                             startWaypoint = _currentWaypoint;
