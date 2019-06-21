@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-﻿using System;
-=======
 ﻿/*
  * Copyright (c) 2019 Academia Sinica, Institude of Information Science
  *
@@ -44,84 +41,49 @@
  * Authors:
  *
  *      Eric Lee, ericlee@iis.sinica.edu.tw
+ *      Chun Yu Lai, chunyu1202@gmail.com
  *
  */
 
 using System;
->>>>>>> parent of 2749c0a... Merge pull request #7 from OpenISDM/develop
 using System.Linq;
-using System.Threading.Tasks;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 using System.Collections.Generic;
-<<<<<<< HEAD
-using System.Diagnostics;
-=======
->>>>>>> parent of 2749c0a... Merge pull request #7 from OpenISDM/develop
+using System.Threading;
 using Dijkstra.NET.Model;
 using Dijkstra.NET.Extensions;
 using IndoorNavigation.Models.NavigaionLayer;
-using IndoorNavigation.Modules.Navigation;
-using IndoorNavigation.Modules;
-using IndoorNavigation.Modules.SignalProcessingAlgorithms;
 using IndoorNavigation.Models;
-<<<<<<< HEAD
-using System.IO;
-using System.Xml.Serialization;
-using System.Xml;
-using Region = IndoorNavigation.Models.NavigaionLayer.Region;
-=======
->>>>>>> parent of 2749c0a... Merge pull request #7 from OpenISDM/develop
+using IndoorNavigation.Modules.IPSClients;
 
 namespace IndoorNavigation.Modules
 {
     public class Session
     {
-<<<<<<< HEAD
-        List<Waypoint> AllCorrectWaypoint = new List<Waypoint>();
-        private Graph<Region, string> regionGraph = new Graph<Region, string>();
-        private Graph<Waypoint, string> subgraph = new Graph<Waypoint, string>();
-        public List<Waypoint> AllCorrectWaypointGet = new List<Waypoint>();
-        public List<Guid> AllNoneWrongWaypoint = new List<Guid>();
-        public Waypoint finalwaypointInPath = new Waypoint();
-        public Session(Navigraph map, Waypoint startwaypoint, Waypoint finalwaypoint, List<int> avoid)
-        {
-            Console.WriteLine("Start Way point is" + startwaypoint.Name + "\n");
-            Console.WriteLine("Final Way point is" + finalwaypoint.Name + "\n");
-            //read the xml file to get regions and edges information
-            regionGraph = map.GetRegiongraph();
-            //we only consider to one region situation,
-            //therefore, we add different floors' waypoints in same regions
-            subgraph = map.Regions[0].SetNavigationSubgraph(avoid);
-            //get the best route through dijkstra
-            AllCorrectWaypointGet = GetPath(startwaypoint, finalwaypoint, subgraph);
-            finalwaypointInPath = finalwaypoint;
-        }
-        List<Waypoint> GetPath(
-           Waypoint startwaypointInPath, Waypoint finalwaypointInPath, Graph<Waypoint, string> subgraph)
-=======
-        //_allCorrectWaypoint used to store all correct Waypoints
-        private List<Waypoint> _allCorrectWaypoint = new List<Waypoint>();
+        private IIPSClient _ipsClient;
+
+        private int _currentNavigateStep;
+
+        private List<Waypoint> _waypointsOnRoute = new List<Waypoint>();
+        private Dictionary<Guid, List<Waypoint>> _waypointsOnWrongWay =
+            new Dictionary<Guid, List<Waypoint>>();
 
         private Graph<Region, string> _regionGraph = 
                                         new Graph<Region, string>();
         private Graph<Waypoint, string> _subgraph = 
                                         new Graph<Waypoint, string>();
 
-        public Event Event { get; private set; }
+        public NavigationEvent _event { get; private set; }
 
-        //_allNoneWrongWaypoint used to store all correct Waypoints and their
-        //neighbors
-        public List<Guid> _allNoneWrongWaypoint = new List<Guid>();
-        //Destination
-        public Waypoint _finalWaypoint = new Waypoint();
+        private Waypoint _startWaypoint = new Waypoint();
+        private Waypoint _finalWaypoint = new Waypoint();
+
+        private Thread _navigateThread;
 
         public Session(Navigraph graph,
-                       Guid startWaypointID,
                        Guid finalWaypointID,
                        int[] avoid)
         {
-            Event = new Event();
+            _event = new NavigationEvent();
 
             //Read the xml file to get regions and edges information
             _regionGraph = graph.GetRegiongraph();
@@ -130,125 +92,127 @@ namespace IndoorNavigation.Modules
             _subgraph = graph.Regions[0].GetNavigationSubgraph(avoid);
 
             //Use the ID we get to search where the waypoints are
-            Waypoint startWaypoint = _subgraph.Where(node =>
-            node.Item.ID.Equals(startWaypointID)).Select(w => w.Item).First();
-
             _finalWaypoint = _subgraph.Where(node => 
             node.Item.ID.Equals(finalWaypointID)).Select(w => w.Item).First();
 
-            //Get the best route through dijkstra
-            _allCorrectWaypoint = GetPath(startWaypoint,
-                                        _finalWaypoint, _subgraph);
+            _ipsClient = new WaypointClient();
+            _ipsClient._event._eventHandler += new EventHandler(CheckArrivedWaypoint);
+
+            _navigateThread = new Thread(() => InvokeIPSWork());
+            _navigateThread.Start();
+
+            _currentNavigateStep = -1;
+            StartNavigation(_currentNavigateStep);
         }
 
-        private List<Waypoint> GetPath(
-           Waypoint startWaypoint, Waypoint finalWaypoint,
-                                    Graph<Waypoint, string> subgraph)
->>>>>>> parent of 2749c0a... Merge pull request #7 from OpenISDM/develop
+        public void StartNavigation(int currentStep) {
+            List<Waypoint> monitorWaypointList = new List<Waypoint>();
+
+            if (currentStep == -1)
+            {
+                // Detection of starting waypoing:
+                // Use all Waypoints of the NavigationGraph to detect the starting waypoint
+                monitorWaypointList = _subgraph.Select(waypoint => waypoint.Item).ToList();
+                foreach (Waypoint waypoint in monitorWaypointList) {
+                    Console.WriteLine("all waypoints: " + waypoint.ID);
+                }
+            }
+            else {
+                monitorWaypointList.Add(_waypointsOnRoute[currentStep]);
+                for (int i = 0; i < _waypointsOnWrongWay[_waypointsOnRoute[currentStep].ID].Count; i++)
+                {
+                    monitorWaypointList.Add(_waypointsOnWrongWay[_waypointsOnRoute[currentStep].ID][i]);
+                }
+
+                foreach (Waypoint waypoing in monitorWaypointList)
+                {
+                    Console.WriteLine("Monitoring waypoints: " + waypoing.ID);
+                }
+            }
+           
+            _ipsClient.SetWaypointList(monitorWaypointList);
+        }
+
+        private void InvokeIPSWork() {
+            Console.WriteLine("---- invokeIPSWork ----");
+            while (true)
+            {
+                Thread.Sleep(1000);
+                _ipsClient.DetectWaypoints();
+            }
+        }
+
+        private void GenerateRoute(Waypoint startWaypoint, 
+                                   Waypoint finalWaypoint,
+                                   Graph<Waypoint, string> subgraph)
         {
-            //get the keys of the start way point and destination waypoint and throw the two keys into dijkstra
-            // to get the best route
+            //Get the keys of the start way point and destination waypoint
+            //and throw the two keys into dijkstra to get the best route
             var startPoingKey = subgraph
                 .Where(waypoint => waypoint.Item.ID
-                .Equals(startwaypointInPath.ID)).Select(c => c.Key).First();
+                .Equals(startWaypoint.ID)).Select(c => c.Key).First();
             var endPointKey = subgraph
                 .Where(waypoint => waypoint.Item.ID
-                .Equals(finalwaypointInPath.ID)).Select(c => c.Key).First();
+                .Equals(finalWaypoint.ID)).Select(c => c.Key).First();
+
             var path = subgraph.Dijkstra(startPoingKey,
                                            endPointKey).GetPath();
 
-<<<<<<< HEAD
+            _waypointsOnRoute = new List<Waypoint>();
+            _waypointsOnWrongWay = new Dictionary<Guid, List<Waypoint>>();
             for (int i = 0; i < path.Count(); i++)
             {
-                Console.WriteLine("Path " + i + ", " + subgraph[path.ToList()[i]].Item.Name);
-            }
-            //List<Waypoint> AllNeighborWaypoint = new List<Waypoint>();
-            //put the correct waypoint into List all_correct_waaypoint
-            for (int i = 0; i < path.Count(); i++)
-            {
-                AllCorrectWaypoint.Add(subgraph[path.ToList()[i]].Item);
-            }
+                _waypointsOnRoute.Add(subgraph[path.ToList()[i]].Item);
+               
+                List<Waypoint> tempWrongWaypointList = new List<Waypoint>();
 
-            //put all correct waypoints and their neighbors in list AllNoneWrongWaypoint
-             for (int i = 0; i < AllCorrectWaypoint.Count; i++)
-            {
-                AllNoneWrongWaypoint.Add(AllCorrectWaypoint[i].ID);
-                for (int j = 0; j < AllCorrectWaypoint[i].Neighbors.Count; j++)
+                // Construct the two-step possible wrong-way waypoints
+                Console.WriteLine("construct: correct waypoint: " + _waypointsOnRoute[i].ID);
+                if (i - 1 >= 0)
                 {
-                    AllNoneWrongWaypoint.Add(AllCorrectWaypoint[i].Neighbors[j].TargetWaypointUUID);
-                }
-
-            }
-
-            for (int i = 0; i < AllCorrectWaypoint.Count; i++)
-            {
-                Console.WriteLine("All correct Waypoint : " + AllCorrectWaypoint[i].Name + "\n");
-            }
-            //remove the elements that are repeated
-            for (int i = 0; i < AllNoneWrongWaypoint.Count; i++)
-            {
-                for (int j = AllNoneWrongWaypoint.Count - 1; j > i; j--)
-                {
-
-                    if (AllNoneWrongWaypoint[i] == AllNoneWrongWaypoint[j])
+                    for (int j = 0; j < _waypointsOnRoute[i-1].Neighbors.Count; j++)
                     {
-                        AllNoneWrongWaypoint.RemoveAt(j);
-                    }
+                        if(!subgraph[path.ToList()[i]].Item.ID.
+                            Equals(_waypointsOnRoute[i-1].Neighbors[j].TargetWaypointUUID))
+                        { 
+                            Waypoint oneStepWrongWaypoint =
+                                subgraph.Where(waypoint => waypoint.Item.ID.
+                                Equals(_waypointsOnRoute[i - 1].Neighbors[j].TargetWaypointUUID)).
+                                Select(n => n.Item).First();
 
-                }
-            }
-            for (int i = 0; i < AllNoneWrongWaypoint.Count; i++)
-            {
-                Console.WriteLine("All Accept Guid : " + AllNoneWrongWaypoint[i] + "\n");
-            }
-            return AllCorrectWaypoint;
-        }
+                            Console.WriteLine("construct: one step wrong waypoint: " +
+                                              oneStepWrongWaypoint.ID);
 
-       public NavigationInstruction DetectRoute(Waypoint currentwaypoint)
-        {
-            //returnInformation is a structure that contains five elements that need to be passed to the main and UI
-            NavigationInstruction navigationInstruction = new NavigationInstruction();
-            //getWaypoint is used to check where the current way point is in the Allcorrectwaypoint
-            int getWaypoint = 0;
+                            for (int m = 0; m < oneStepWrongWaypoint.Neighbors.Count; m++) {
+                                Waypoint twoStepWrongWaypoint =
+                                    subgraph.Where(waypoint => waypoint.Item.ID.
+                                    Equals(oneStepWrongWaypoint.Neighbors[m].TargetWaypointUUID)).
+                                    Select(n => n.Item).
+                                    First();
 
-            Console.WriteLine("current Way Point ; " + currentwaypoint.Name);
+                                if (!twoStepWrongWaypoint.ID.Equals(oneStepWrongWaypoint.ID) &&
+                                    !twoStepWrongWaypoint.ID.Equals(_waypointsOnRoute[i-1].ID))
+                                {
+                                    Console.WriteLine("construct: two step wrong waypoint: " +
+                                                      twoStepWrongWaypoint.ID);
 
-            if (AllCorrectWaypoint.Contains(currentwaypoint))
-            {
-                //ReturnInformation.Status status = new ReturnInformation.Status();
-                navigationInstruction.Status = NavigationResult.Correct;
-                //check where the current point is in the AllcorrectWaypoint, we need this information
-                //to get the direction, the progress and the next way point
-                for (int i = 0; i < AllCorrectWaypoint.Count; i++)
-                {
-                    if (AllCorrectWaypoint[i].ID == currentwaypoint.ID)
-=======
-            //Put the correct waypoint into List all_correct_waaypoint
-            //Put all correct waypoints and their neighbors in list
-            //AllNoneWrongWaypoint
-            for (int i = 0; i < path.Count(); i++)
-            {
-                _allCorrectWaypoint.Add(subgraph[path.ToList()[i]].Item);
-                _allNoneWrongWaypoint.Add(_allCorrectWaypoint[i].ID);
-                for (int j = 0;j<_allCorrectWaypoint[i].Neighbors.Count;j++)
-                {
-                    _allNoneWrongWaypoint.Add(
-                    _allCorrectWaypoint[i].Neighbors[j].TargetWaypointUUID);
-                }
-            }
-
-            //Remove the elements that are repeated in _allNoneWrongWaypoint
-            for (int i = 0; i < _allNoneWrongWaypoint.Count; i++)
-            {
-                for (int j = _allNoneWrongWaypoint.Count - 1; j > i; j--)
-                {
-                    if (_allNoneWrongWaypoint[i] == _allNoneWrongWaypoint[j])
-                    {
-                        _allNoneWrongWaypoint.RemoveAt(j);
+                                    tempWrongWaypointList.Add(twoStepWrongWaypoint);
+                                }
+                            }
+                        }
                     }
                 }
+                _waypointsOnWrongWay.Add(_waypointsOnRoute[i].ID, tempWrongWaypointList);
             }
-            return _allCorrectWaypoint;
+
+            foreach (Waypoint waypoint in _waypointsOnRoute)
+            {
+                Console.WriteLine("correct waypoint:" + waypoint.ID);
+                for (int i = 0; i < _waypointsOnWrongWay[waypoint.ID].Count; i++) {
+                    Console.WriteLine("possible wrong-way waypoint: {0}",
+                                      _waypointsOnWrongWay[waypoint.ID][i].ID);
+                }
+            }
         }
 
         //In this function we get the currentwaypoint and determine whether
@@ -257,274 +221,186 @@ namespace IndoorNavigation.Modules
         //contains four elements that Navigation main and UI need.
         //Moreover, if the users are not on the right path, we reroute and 
         //tell users the new path.
-        public void DetectRoute(object sender, EventArgs args)
+        public void CheckArrivedWaypoint(object sender, EventArgs args)
         {
+            Console.WriteLine(">> CheckArrivedWaypoint ");
             Waypoint currentWaypoint = _subgraph.Where(node =>
-            node.Item.ID.Equals((args as WaypointScanEventArgs).WaypointID)).
+            node.Item.ID.Equals((args as WayPointSignalEventArgs).CurrentWaypoint.ID)).
             Select(w => w.Item).First();
 
-            //NavigationInstruction is a structure that contains five
-            //elements that need to be passed to the main and UI
-            NavigationInstruction navigationInstruction =
-                                            new NavigationInstruction();
-            //getWaypoint is used to check where the current way point is in
-            //which place of the Allcorrectwaypoint
-            int getWaypoint = 0;
+            if (_currentNavigateStep == -1)
+            {
+                // Detection of starting waypoing:
+                // Detected the waypoint most closed to user.
+                _startWaypoint = currentWaypoint;
 
-            if (currentWaypoint == _finalWaypoint)
-            {
-                Event.OnEventCall(new NavigationEventArgs
-                {
-                    Result = NavigationResult.Arrival
-                });
+                _currentNavigateStep = 0;
+                GenerateRoute(_startWaypoint, _finalWaypoint, _subgraph);
+                StartNavigation(_currentNavigateStep);
             }
-            else if (_allCorrectWaypoint.Contains(currentWaypoint))
+            else
             {
-                //Check where the current point is in the AllcorrectWaypoint,
-                //we need this informationto get the direction, the progress
-                //and the next way point
-                for (int i = 0; i < _allCorrectWaypoint.Count; i++)
+
+                //NavigationInstruction is a structure that contains five
+                //elements that need to be passed to the main and UI
+                NavigationInstruction navigationInstruction =
+                                                new NavigationInstruction();
+                //getWaypoint is used to check where the current way point is in
+                //which place of the Allcorrectwaypoint
+
+                if (currentWaypoint == _finalWaypoint)
                 {
-                    if (_allCorrectWaypoint[i].ID == currentWaypoint.ID)
->>>>>>> parent of 2749c0a... Merge pull request #7 from OpenISDM/develop
+                    Console.WriteLine("---- [case: arrived destination] .... ");
+                    _event.OnEventCall(new NavigationEventArgs
                     {
-                        getWaypoint = i;
-                        break;
-                    }
+                        Result = NavigationResult.Arrival
+                    });
                 }
-<<<<<<< HEAD
-                //get nextwaypoint
-                navigationInstruction.nextwaypoint = AllCorrectWaypoint[getWaypoint + 1];
-                //if the floor information is different, it means that the users need to change the floor
-                //therefore, we can detemine the users need to go up or down by compare which floor is bigger
-                if (currentwaypoint.Floor != AllCorrectWaypoint[getWaypoint + 1].Floor)
+                else if (_waypointsOnRoute[_currentNavigateStep].Equals(currentWaypoint))
                 {
-                    if (currentwaypoint.Floor > AllCorrectWaypoint[getWaypoint + 1].Floor)
+                    Console.WriteLine("---- [case: arrived waypoint] .... ");
+
+                    Console.WriteLine("current waypoint: " + currentWaypoint.ID);
+                    Console.WriteLine("next waypoint: " + _waypointsOnRoute[_currentNavigateStep + 1].ID);
+
+                    navigationInstruction.CurrentWaypoint = currentWaypoint;
+                    navigationInstruction.NextWaypoint =
+                                            _waypointsOnRoute[_currentNavigateStep + 1];
+
+
+                    //If the floor information between the current waypoint and
+                    //next are different, it means that the users need to change
+                    //the floor, therefore, we can determine the users need to 
+                    //go up or down by compare which floor is higher
+
+                    if (currentWaypoint.Floor !=
+                                    _waypointsOnRoute[_currentNavigateStep + 1].Floor)
                     {
-                        navigationInstruction.direction = TurnDirection.Down;
+                        Console.WriteLine("different floor case");
+                        if (currentWaypoint.Floor >
+                                    _waypointsOnRoute[_currentNavigateStep + 1].Floor)
+                        {
+                            navigationInstruction.Direction = TurnDirection.Down;
+                        }
+                        else
+                        {
+                            navigationInstruction.Direction = TurnDirection.Up;
+                        }
+                        navigationInstruction.Distance = 0;
+                        Console.WriteLine("end of different floor case");
                     }
+                    //If the fllor information between current way point and next
+                    // way point are the same, we need to tell the user go
+                    //straight or turn direction, therefore, we need to have
+                    //three informations, previous, current and next waypoints
                     else
                     {
-                        navigationInstruction.direction = TurnDirection.Up;
+                        Console.WriteLine("same floor case");
+                        navigationInstruction.Distance =
+                        Navigraph.GetDistance(_subgraph,
+                                              currentWaypoint,
+                                              _waypointsOnRoute[_currentNavigateStep + 1]);
+                 
+                        if (_currentNavigateStep == 0)
+                        {
+                            navigationInstruction.Direction =
+                                                    TurnDirection.FirstDirection;
+                        }
+                        else
+                        {
+                            navigationInstruction.Direction =
+                                Navigraph.GetTurnDirection(
+                                               _waypointsOnRoute[_currentNavigateStep - 1],
+                                                currentWaypoint,
+                                               _waypointsOnRoute[_currentNavigateStep + 1]);
+                        }
+                        Console.WriteLine("end of same floor case");
                     }
-                    navigationInstruction.distance = 0;
+
+                    //Get the progress
+                    Console.WriteLine("calculate progress: {0}/{1}",
+                                      _currentNavigateStep,
+                                      _waypointsOnRoute.Count);
+
+                    navigationInstruction.Progress =
+                        (double)Math.Round(100 * ((decimal)_currentNavigateStep /
+                                           (_waypointsOnRoute.Count - 1)), 3);
+
+                    // Raise event to notify the UI/main thread with the result
+                    _event.OnEventCall(new NavigationEventArgs
+                    {
+                        Result = NavigationResult.Run,
+                        NextInstruction = navigationInstruction
+                    });
+                    Console.WriteLine("After raising event from Session");
+
+                    _currentNavigateStep++;
+                    StartNavigation(_currentNavigateStep);
                 }
-                //if the fllor information between current way point and next way point are same,
-                //we need to tell the use go straight or turn direction, therefore, we need to 
-                //have three informations, previous, current and next waypoints
                 else
                 {
-                    Console.WriteLine("Nextwaypoint : " + navigationInstruction.nextwaypoint.Name);
-                    uint sourceKey = subgraph
-                                    .Where(WaypointList => WaypointList.Item.ID
-                                    .Equals(AllCorrectWaypoint[getWaypoint].ID)).Select(c => c.Key)
-                                     .First();
-                    uint targetKey = subgraph
-                                    .Where(WaypointList => WaypointList.Item.ID
-                                    .Equals(AllCorrectWaypoint[getWaypoint + 1].ID)).Select(c => c.Key)
-                                    .First();
-                    navigationInstruction.distance = subgraph.Dijkstra(sourceKey, targetKey).Distance;
-                    Console.WriteLine("Distance : " + navigationInstruction.distance);
-                    Console.WriteLine("Get way Point : " + getWaypoint);
-                    Console.WriteLine("all correct way point count : " + AllCorrectWaypoint.Count);
-                    //getwaypoint=0 means that we are now in the starting point, we do not have the previous waypoint 
-                    //information, we give the previous waypoint 0
-                    if (getWaypoint == 0)
-                    {
-                        CardinalDirection currentDirection = 0;
-                        CardinalDirection nextDirection = AllCorrectWaypoint[getWaypoint].Neighbors
-                                                        .Where(neighbors =>
-                                                            neighbors.TargetWaypointUUID
-                                                            .Equals(AllCorrectWaypoint[getWaypoint + 1].ID))
-                                                        .Select(c => c.Direction).First();
+                    Console.WriteLine("arrived waypoint ID:" + currentWaypoint.ID);
+                    Console.WriteLine("possible wrong waypoint:");
 
-                        // Calculate the turning direction by cardinal direction
-                        int nextTurnDirection = (int)nextDirection - (int)currentDirection;
-                        nextTurnDirection = nextTurnDirection < 0 ?
-                                            nextTurnDirection + 8 : nextTurnDirection;
-                        navigationInstruction.direction = (TurnDirection)nextTurnDirection;
-                    }
-                    else
-                    {
-                        CardinalDirection currentDirection = AllCorrectWaypoint[getWaypoint - 1].Neighbors
-                                                .Where(neighbors =>
-                                                    neighbors.TargetWaypointUUID
-                                                    .Equals(AllCorrectWaypoint[getWaypoint].ID))
-                                                .Select(c => c.Direction).First();
-                        CardinalDirection nextDirection = AllCorrectWaypoint[getWaypoint].Neighbors
-                                                        .Where(neighbors =>
-                                                            neighbors.TargetWaypointUUID
-                                                            .Equals(AllCorrectWaypoint[getWaypoint + 1].ID))
-                                                        .Select(c => c.Direction).First();
-                        int nextTurnDirection = (int)nextDirection - (int)currentDirection;
-                        nextTurnDirection = nextTurnDirection < 0 ?
-                                            nextTurnDirection + 8 : nextTurnDirection;
-                        navigationInstruction.direction = (TurnDirection)nextTurnDirection;
-                        Console.WriteLine("Direction : " + nextTurnDirection + nextDirection + currentDirection);
-                    }
-                }
-                navigationInstruction.progress = (double)Math.Round((decimal)getWaypoint / AllCorrectWaypoint.Count, 3);
-            }
-            else if (AllNoneWrongWaypoint.Contains(currentwaypoint.ID) == false)
-            {
-                //if the waypoint is wrong, we initial the correct waypoint and its neighbors
-                //and rerun the GetPath function and reget the navigationInstruction
-                AllCorrectWaypoint = new List<Waypoint>();
-                AllNoneWrongWaypoint = new List<Guid>();
-                AllCorrectWaypoint = GetPath(currentwaypoint, finalwaypointInPath, subgraph);
-                for (int i = 0; i < AllCorrectWaypoint.Count; i++)
-                {
-                    Console.WriteLine("Renew Route : " + AllCorrectWaypoint[i].Name);
-                }
-                Console.WriteLine("out of this loop");
-                navigationInstruction = DetectRoute(currentwaypoint);
-                navigationInstruction.Status = NavigationResult.Wrong;
-                Console.WriteLine("check");
-            }
-=======
-                //Get nextwaypoint
-                navigationInstruction.NextWaypoint =
-                                        _allCorrectWaypoint[getWaypoint + 1];
+                    bool isWrongWaypoint = false;
 
-                //If the floor information between the current waypoint and
-                //next are different, it means that the users need to change
-                //the floor, therefore, we can determine the users need to 
-                //go up or down by compare which floor is higher
-                if (currentWaypoint.Floor !=
-                                _allCorrectWaypoint[getWaypoint + 1].Floor)
-                {
-                    if (currentWaypoint.Floor >
-                                _allCorrectWaypoint[getWaypoint + 1].Floor)
-                    {
-                        navigationInstruction.Direction = TurnDirection.Down;
+                    for (int i = 0;
+                         i < _waypointsOnWrongWay[_waypointsOnRoute[_currentNavigateStep].ID].Count;
+                         i++) {
+
+                        Console.WriteLine("waypoing ID:" +
+                                          _waypointsOnWrongWay[_waypointsOnRoute[_currentNavigateStep]
+                                          .ID][i].ID);
+
+                        if (currentWaypoint.ID.
+                            Equals(_waypointsOnWrongWay[_waypointsOnRoute[_currentNavigateStep].ID][i].ID)){
+
+                            isWrongWaypoint = true;
+                            break;
+
+                        }
                     }
-                    else
+                    if (isWrongWaypoint)
                     {
-                        navigationInstruction.Direction = TurnDirection.Up;
-                    }
-                    navigationInstruction.Distance = 0;
-                }
-                //If the fllor information between current way point and next
-                // way point are the same, we need to tell the user go
-                //straight or turn direction, therefore, we need to have
-                //three informations, previous, current and next waypoints
-                else
-                {
-                    navigationInstruction.Distance =
-                    Navigraph.GetDistance(_subgraph,
-                                          currentWaypoint,
-                                        _allCorrectWaypoint[getWaypoint + 1]);
-                    //getwaypoint=0 means that we are now in the starting
-                    // point, we do not have the previous waypoint 
-                    //therefore, we give the first point a direction called
-                    // FirstDirection
-                    if (getWaypoint == 0)
-                    {
-                        navigationInstruction.Direction =
-                                                TurnDirection.FirstDirection;
-                    }
-                    else
-                    {
-                        navigationInstruction.Direction =
-                            Navigraph.GetTurnDirection(
-                                           _allCorrectWaypoint[getWaypoint-1],
+                        Console.WriteLine("---- [case: wrong waypoint] .... ");
+                        _event.OnEventCall(new NavigationEventArgs
+                        {
+                            Result = NavigationResult.AdjustRoute
+                        });
+
+                        //If the waypoint is wrong, we initial the correct waypoint
+                        // and its neighbors and rerun the GetPath function and reget
+                        //the navigationInstruction
+                        GenerateRoute(currentWaypoint, _finalWaypoint, _subgraph);
+
+                        _currentNavigateStep = 0;
+                        _event.OnEventCall(new NavigationEventArgs
+                        {
+                            Result = NavigationResult.Run,
+                            NextInstruction = new NavigationInstruction
+                            {
+                                CurrentWaypoint = currentWaypoint,
+                                NextWaypoint = _waypointsOnRoute[_currentNavigateStep + 1],
+                                Distance = Navigraph.
+                                GetDistance(_subgraph,
                                             currentWaypoint,
-                                          _allCorrectWaypoint[getWaypoint+1]);
+                                            _waypointsOnRoute[_currentNavigateStep + 1]),
+                                Progress = 0,
+                                Direction = TurnDirection.FirstDirection
+                            }
+                        });
+                        StartNavigation(_currentNavigateStep);
                     }
                 }
-
-                //Get the progress
-                navigationInstruction.Progress =
-                (double)Math.Round(
-                    (decimal)getWaypoint / _allCorrectWaypoint.Count, 3);
-
-                // Raise event to notify the UI/main thread with the result
-                Event.OnEventCall(new NavigationEventArgs
-                {
-                    Result = NavigationResult.Run,
-                    NextInstruction = navigationInstruction
-                });
             }
-            else if (_allNoneWrongWaypoint
-                    .Contains(currentWaypoint.ID) == false)
-            {
-                Event.OnEventCall(new NavigationEventArgs
-                {
-                    Result = NavigationResult.AdjustRoute
-                });
-
-                //If the waypoint is wrong, we initial the correct waypoint
-                // and its neighbors and rerun the GetPath function and reget
-                //the navigationInstruction
-                _allCorrectWaypoint = new List<Waypoint>();
-                _allNoneWrongWaypoint = new List<Guid>();
-                _allCorrectWaypoint = GetPath(currentWaypoint,
-                                              _finalWaypoint,
-                                              _subgraph);
-
-                Event.OnEventCall(new NavigationEventArgs
-                {
-                    Result = NavigationResult.Run,
-                    NextInstruction = new NavigationInstruction
-                    {
-                        NextWaypoint = _allCorrectWaypoint[1],
-                        Distance = Navigraph.
-                        GetDistance(_subgraph,
-                                    currentWaypoint,
-                                    _allCorrectWaypoint[1]),
-                        Progress = 0,
-                        Direction = TurnDirection.FirstDirection
-                    }
-                });
-            }
+            Console.WriteLine("<< CheckArrivedWaypoint ");
         }
->>>>>>> parent of 2749c0a... Merge pull request #7 from OpenISDM/develop
 
-            return navigationInstruction;
-        }
         public enum NavigationResult
         {
-            Correct = 0,
-            Wrong,
-            Contonue,
-        }
-<<<<<<< HEAD
-        public enum TurnDirection
-        {
-            FirstDirection = -1, // Exception: used only in the first step
-            Forward = 0,
-            Forward_Right,
-            Right,
-            Backward_Right,
-            Backward,
-            Backward_Left,
-            Left,
-            Forward_Left,
-            Up,
-            Down
-        }
-        public class NavigationInstruction
-        {
-            public Waypoint nextwaypoint;
-            public double distance;
-            public double progress;
-            public NavigationResult Status;
-            public TurnDirection direction;
-=======
-
-        public class NavigationEventArgs : EventArgs
-        {
-            /// <summary>
-            /// Status of navigation
-            /// </summary>
-            public NavigationResult Result { get; set; }
-
-            /// <summary>
-            /// Gets or sets the next instruction. It will send to the
-            // ViewModel to update the UI instruction.
-            /// </summary>
-            public NavigationInstruction NextInstruction { get; set; }
-
+            Run = 0,
+            AdjustRoute,
+            Arrival,
         }
 
         public class NavigationInstruction
@@ -532,6 +408,9 @@ namespace IndoorNavigation.Modules
             /// <summary>
             /// The next waypoint within navigation path
             /// </summary>
+            /// 
+            public Waypoint CurrentWaypoint;
+
             public Waypoint NextWaypoint;
 
             /// <summary>
@@ -549,16 +428,21 @@ namespace IndoorNavigation.Modules
             /// </summary>
             public TurnDirection Direction;
         }
-    }
 
-    public class Event
-    {
-        public event EventHandler SessionResultHandler;
-
-        public void OnEventCall(EventArgs args)
+        public class NavigationEventArgs : EventArgs
         {
-            SessionResultHandler?.Invoke(this, args);
->>>>>>> parent of 2749c0a... Merge pull request #7 from OpenISDM/develop
+            /// <summary>
+            /// Status of navigation
+            /// </summary>
+            public NavigationResult Result { get; set; }
+
+            /// <summary>
+            /// Gets or sets the next instruction. It will send to the
+            // ViewModel to update the UI instruction.
+            /// </summary>
+            public NavigationInstruction NextInstruction { get; set; }
+
         }
     }
+
 }

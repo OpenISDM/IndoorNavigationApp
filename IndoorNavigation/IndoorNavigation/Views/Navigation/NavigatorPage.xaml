@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              x:Class="IndoorNavigation.Views.Navigation.NavigatorPage"
@@ -56,22 +56,7 @@
             <pb:ProgressBarView Grid.Row="5" Grid.ColumnSpan="2"
                                 Color="#3F51B5" Progress="{Binding NavigationProgress}"
                                 LabelShowIntValuesOnly="false" LabelStringFormat="{}{0:0.0} %"
-                                LabelFontSize="15" LabelPosition="AfterBar" />
-            
-            <Entry Grid.Row="6" Grid.ColumnSpan="2"
-                   Text="{Binding NextWaypointName}"
-                   WidthRequest="210"
-                   Margin="0, 10, 10, -10"
-                   Placeholder="Type next waypoint name"
-                   HorizontalOptions="StartAndExpand"/>
-            
-            <Button Grid.Row="6" Grid.Column="1"
-                    Text="Enter"
-                    Margin="0, 10, 10, -10"
-                    WidthRequest="60"
-                    HorizontalOptions="End"
-                    Command="{Binding EnterNextWaypointCommand}"/>
-            
+                                LabelFontSize="15" LabelPosition="AfterBar" />     
         </Grid>
     </ContentPage.Content>
     

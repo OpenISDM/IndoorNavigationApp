@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -6,20 +6,18 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE;DEBUG;NETSTANDARD;NETSTANDARD2_0</DefineConstants>
     <DocumentationFile></DocumentationFile>
+    <LangVersion>Latest</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType></DebugType>
     <DocumentationFile></DocumentationFile>
+    <LangVersion>Latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
-<<<<<<< HEAD
-    <PackageReference Include="Dijkstra.NET" Version="1.1.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
-    <PackageReference Include="Xamarin.Essentials" Version="0.10.0-preview" />
-    <PackageReference Include="Xamarin.Forms" Version="3.2.0.839982" />
-=======
     <PackageReference Include="GeoCoordinate.NetCore" Version="1.0.0.1" />
     <PackageReference Include="Microsoft.AppCenter.Analytics" Version="1.14.0" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="1.14.0" />
@@ -46,7 +44,6 @@
     <Folder Include="Views\Settings\LicensePages\" />
     <Folder Include="ViewModels\Navigation\" />
     <Folder Include="Modules\Navigation\Dijkstra.NET\" />
-    <Folder Include="Views\Navigation\NTUHYunlin\" />
     <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
@@ -57,18 +54,17 @@
     <Compile Remove="Views\Navigation\TabbedPageRoutes.xaml.cs" />
     <Compile Remove="Views\Navigation\NavigationTabbedPage.xaml.cs" />
     <Compile Remove="ViewModels\Navigation\NaviHomePageViewModel.cs" />
-    <Compile Remove="Views\Navigation\NavigationHomePage.xaml.cs" />
     <Compile Remove="Views\Navigation\TabbedPageNavigation.xaml.cs" />
     <Compile Remove="ViewModels\Navigation\TabbedNaviViewModel.cs" />
     <Compile Remove="Modules\MaNModule.cs" />
     <Compile Remove="Modules\SignalProcessingAlgorithms\WaypointSignalProcessing.cs" />
     <Compile Remove="Modules\Navigation\Algorithms\WayPointAlgorithm.cs" />
     <Compile Remove="Modules\Navigation\WaypointRoutePlan.cs" />
+    <Compile Remove="Modules\IPSModule.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Remove="Views\Navigation\TabbedPageRoutes.xaml" />
     <EmbeddedResource Remove="Views\Navigation\NavigationTabbedPage.xaml" />
-    <EmbeddedResource Remove="Views\Navigation\NavigationHomePage.xaml" />
     <EmbeddedResource Remove="Views\Navigation\TabbedPageNavigation.xaml" />
   </ItemGroup>
   <ItemGroup>
@@ -97,6 +93,5 @@
     <Compile Update="Resources\AppResources.zh.Designer.cs">
       <DependentUpon>AppResources.zh.resx</DependentUpon>
     </Compile>
->>>>>>> parent of 2749c0a... Merge pull request #7 from OpenISDM/develop
   </ItemGroup>
 </Project>
