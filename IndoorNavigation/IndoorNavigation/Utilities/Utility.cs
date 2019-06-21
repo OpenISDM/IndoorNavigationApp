@@ -43,7 +43,6 @@
  */
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Security;
@@ -56,11 +55,8 @@ namespace IndoorNavigation.Modules
 {
     public static class Utility
     {
-        public static Dictionary<Guid, Beacon> BeaconsDict;
-        public static Container Service;
-        public static IPSModule IPS;
-        public static IBeaconScan BeaconScan;
-        public static ITextToSpeech TextToSpeech;
+        public static IBeaconScan _beaconScan;
+        public static ITextToSpeech _textToSpeech;
 
         // Skip SSL checking
         private static bool ValidateServerCertificate(Object sender,
@@ -79,14 +75,14 @@ namespace IndoorNavigation.Modules
         /// <returns></returns>
         public static bool DownloadNavigraph(string URL, string navigraphName)
         {
-            string filePath = Path.Combine(NavigraphStorage.navigraphFolder, 
+            string filePath = Path.Combine(NavigraphStorage._navigraphFolder, 
                                             navigraphName);
  
             try
             {
-                if (!Directory.Exists(NavigraphStorage.navigraphFolder))
+                if (!Directory.Exists(NavigraphStorage._navigraphFolder))
                     Directory.CreateDirectory(
-                        NavigraphStorage.navigraphFolder);
+                        NavigraphStorage._navigraphFolder);
 
                 using (WebClient webClient = new WebClient())
                     webClient.DownloadFileAsync(new Uri(URL), filePath);

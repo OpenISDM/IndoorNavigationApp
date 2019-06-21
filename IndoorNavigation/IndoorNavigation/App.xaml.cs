@@ -96,8 +96,8 @@ namespace IndoorNavigation
             // Beacon scan api must adjust later, it should regist after
             // navigraph is be loaded.
             // 由於android尚未實作beacon scanner的功能，如要在android上偵錯，請註解以下代碼
-            Utility.BeaconScan = DependencyService.Get<IBeaconScan>();
-            Utility.TextToSpeech = DependencyService.Get<ITextToSpeech>();
+            Utility._beaconScan = DependencyService.Get<IBeaconScan>();
+            Utility._textToSpeech = DependencyService.Get<ITextToSpeech>();
             //Utility.SignalProcess = new SignalProcessModule();
         }
 
