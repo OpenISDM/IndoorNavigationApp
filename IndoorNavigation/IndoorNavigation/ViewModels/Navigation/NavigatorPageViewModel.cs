@@ -81,8 +81,8 @@ namespace IndoorNavigation.ViewModels.Navigation
 			_navigationModule = new NavigationModule(navigraphName, destinationID);
 			_navigationModule._event._eventHandler += GetNavigationResultEvent;
 
-			const string _resourceId = "IndoorNavigation.Resources.AppResources";
-			_resourceManager = new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+			const string resourceId = "IndoorNavigation.Resources.AppResources";
+			_resourceManager = new ResourceManager(resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
 			CurrentWaypointName = _resourceManager.GetString("NULL_STRING", CrossMultilingual.Current.CurrentCultureInfo);
 		}
 
