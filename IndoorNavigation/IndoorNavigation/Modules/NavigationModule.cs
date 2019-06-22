@@ -124,11 +124,6 @@ namespace IndoorNavigation.Modules
             _event.OnEventCall(args);
         }
 
-        public void CloseModule()
-        {
-            Dispose();
-        }
-
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
 
@@ -143,6 +138,7 @@ namespace IndoorNavigation.Modules
                 // Free unmanaged resources (unmanaged objects) and override a finalizer below.
                 // Set large fields to null.
                 _session._event._eventHandler -= _navigationResultEventHandler;
+                _session.CloseSession();
                
                 disposedValue = true;
             }
