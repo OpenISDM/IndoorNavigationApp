@@ -86,6 +86,11 @@ namespace IndoorNavigation.ViewModels.Navigation
 			CurrentWaypointName = _resourceManager.GetString("NULL_STRING", CrossMultilingual.Current.CurrentCultureInfo);
 		}
 
+        public void Stop() {
+
+            _navigationModule.Stop();
+        }
+
 		/// <summary>
 		/// TODO: Add voice instructions and vibration
 		/// According to each navigation status displays the text and image instructions in UI.
@@ -282,6 +287,7 @@ namespace IndoorNavigation.ViewModels.Navigation
 				{
 					// TODO: dispose managed state (managed objects).
 					_navigationModule._event._eventHandler -= GetNavigationResultEvent;
+                    _navigationModule.Dispose();
 				}
 
 				// TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
@@ -302,7 +308,7 @@ namespace IndoorNavigation.ViewModels.Navigation
 		// This code added to correctly implement the disposable pattern.
 		public void Dispose()
 		{
-			// Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
 			Dispose(true);
 			// TODO: uncomment the following line if the finalizer is overridden above.
 			// GC.SuppressFinalize(this);

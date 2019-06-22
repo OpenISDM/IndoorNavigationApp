@@ -66,5 +66,13 @@ namespace IndoorNavigation.Views.Navigation
             Console.WriteLine("-- end of NavigatorPage constructor");
         }
 
+        protected override void OnDisappearing()
+        {
+            _viewModel.Stop();
+            _viewModel.Dispose();
+
+            base.OnDisappearing();
+        }
+
     }
 }

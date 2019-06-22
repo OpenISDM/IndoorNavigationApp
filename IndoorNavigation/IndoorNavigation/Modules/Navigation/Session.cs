@@ -79,7 +79,7 @@ namespace IndoorNavigation.Modules
         private Thread _waypointDetectionThread;
         private Thread _navigationControllerThread;
 
-        private bool isArrviedDestination;
+        private bool isKeepDetection;
         private Waypoint _currentWaypoint = new Waypoint();
         private ManualResetEventSlim _nextWaypointEvent = new ManualResetEventSlim(false);
 
@@ -100,7 +100,7 @@ namespace IndoorNavigation.Modules
             node.Item.ID.Equals(finalWaypointID)).Select(w => w.Item).First();
 
             _nextWaypointStep = -1;
-            isArrviedDestination = false;
+            isKeepDetection = true;
 
             _IPSClient = new WaypointClient();
             _IPSClient._event._eventHandler += new EventHandler(CheckArrivedWaypoint);
@@ -127,10 +127,6 @@ namespace IndoorNavigation.Modules
                 if (_currentWaypoint.ID.Equals(_finalWaypoint.ID)) {
                     Console.WriteLine("Arrived destination!");
 
-                    isArrviedDestination = true;
-                    _waypointDetectionThread.Join();
-                    _IPSClient._event._eventHandler -= new EventHandler(CheckArrivedWaypoint);
-                    _IPSClient.Stop();
                     break;
                 }
 
@@ -220,7 +216,7 @@ namespace IndoorNavigation.Modules
 
         private void InvokeIPSWork() {
             Console.WriteLine("---- InvokeIPSWork ----");
-            while (false == isArrviedDestination)
+            while (true == isKeepDetection)
             {
                 Thread.Sleep(1000);
                 _IPSClient.DetectWaypoints();
@@ -450,10 +446,8 @@ namespace IndoorNavigation.Modules
 
         public void CloseSession()
         {
-            isArrviedDestination = true;
-            _navigationControllerThread.Join();
+            isKeepDetection = false;
             _waypointDetectionThread.Join();
-            _IPSClient._event._eventHandler -= new EventHandler(CheckArrivedWaypoint);
             _IPSClient.Stop();
         }
 
