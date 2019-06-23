@@ -92,8 +92,9 @@ namespace IndoorNavigation.Models
         /// Not be used in this version
         /// </summary>
         public GeoCoordinate MarkCoordinates { get; set; }
-
+        /*
         public override float Floor { get { return this.GetFloor(); } }
+        */
     }
 
     /// <summary>
@@ -127,6 +128,8 @@ namespace IndoorNavigation.Models
         /// The coordinate pf a Beacon group is the centroid
         /// of the beacon group.
         /// </summary>
+        ///
+        /*
         public GeoCoordinate Coordinates
         {
             get
@@ -149,7 +152,7 @@ namespace IndoorNavigation.Models
                     TotalLatitude / _Coordinates.Count(),
                     TotalLongitude / _Coordinates.Count());
             }
-        }
+        }*/
 
         /// <summary>
         /// The floor where the waypoint is located

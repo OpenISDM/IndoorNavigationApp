@@ -94,7 +94,9 @@ namespace IndoorNavigation.Models
         /// <summary>
         /// The center coordinate of the group
         /// </summary>
+        /*
         GeoCoordinate Coordinates { get; }
+        */
         /// <summary>
         /// The floor of the group
         /// </summary>
