@@ -118,7 +118,8 @@ namespace IndoorNavigation.Modules
 
             NavigateToNextWaypoint(_nextWaypointStep);
 
-            while (!_currentWaypoint.ID.Equals(_finalWaypoint.ID)) {
+            while (true == isKeepDetection &&
+                   !_currentWaypoint.ID.Equals(_finalWaypoint.ID)) {
                 Console.WriteLine("Continue to navigate to next step, _currentWaypoint ID: {0}, _finalWaypoint ID: {1}",
                                   _currentWaypoint.ID, _finalWaypoint.ID);
 
@@ -181,7 +182,6 @@ namespace IndoorNavigation.Modules
                         }
                     }
                 }
-
                 _nextWaypointEvent.Reset();
             }
         }
@@ -447,8 +447,10 @@ namespace IndoorNavigation.Modules
         public void CloseSession()
         {
             isKeepDetection = false;
-            _waypointDetectionThread.Join();
             _IPSClient.Stop();
+            _nextWaypointEvent.Dispose();
+            _waypointDetectionThread.Abort();
+            _navigationControllerThread.Abort();
         }
 
         public enum NavigationResult
