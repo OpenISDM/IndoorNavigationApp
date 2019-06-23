@@ -79,7 +79,7 @@ namespace IndoorNavigation.Modules
         private Thread _waypointDetectionThread;
         private Thread _navigationControllerThread;
 
-        private bool isKeepDetection;
+        private bool _isKeepDetection;
         private Waypoint _currentWaypoint = new Waypoint();
         private ManualResetEventSlim _nextWaypointEvent = new ManualResetEventSlim(false);
 
@@ -100,7 +100,7 @@ namespace IndoorNavigation.Modules
             node.Item.ID.Equals(finalWaypointID)).Select(w => w.Item).First();
 
             _nextWaypointStep = -1;
-            isKeepDetection = true;
+            _isKeepDetection = true;
 
             _IPSClient = new WaypointClient();
             _IPSClient._event._eventHandler += new EventHandler(CheckArrivedWaypoint);
@@ -118,7 +118,7 @@ namespace IndoorNavigation.Modules
 
             NavigateToNextWaypoint(_nextWaypointStep);
 
-            while (true == isKeepDetection &&
+            while (true == _isKeepDetection &&
                    !_currentWaypoint.ID.Equals(_finalWaypoint.ID)) {
                 Console.WriteLine("Continue to navigate to next step, _currentWaypoint ID: {0}, _finalWaypoint ID: {1}",
                                   _currentWaypoint.ID, _finalWaypoint.ID);
@@ -216,7 +216,7 @@ namespace IndoorNavigation.Modules
 
         private void InvokeIPSWork() {
             Console.WriteLine("---- InvokeIPSWork ----");
-            while (true == isKeepDetection)
+            while (true == _isKeepDetection)
             {
                 Thread.Sleep(1000);
                 _IPSClient.DetectWaypoints();
@@ -446,7 +446,7 @@ namespace IndoorNavigation.Modules
 
         public void CloseSession()
         {
-            isKeepDetection = false;
+            _isKeepDetection = false;
             _IPSClient.Stop();
             _nextWaypointEvent.Dispose();
             _waypointDetectionThread.Abort();
