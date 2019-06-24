@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              x:Class="IndoorNavigation.Views.Navigation.DestinationPickPage"
-             Title="Pick Destination">
+             xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
+             Title="{i18n:Translate PICK_DESTINATION_STRING}">
     
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness">
@@ -28,7 +29,7 @@
                     <ViewCell Height="35">
                         <StackLayout VerticalOptions="CenterAndExpand"
                                      Padding="15, 1, 15, 1">
-                            <Label Text="{Binding Key, StringFormat='{0}樓'}"
+                            <Label Text="{Binding Key, StringFormat='{0}'}"
                                    TextColor="#3F51B5"
                                    FontAttributes="Bold"/>
                         </StackLayout>

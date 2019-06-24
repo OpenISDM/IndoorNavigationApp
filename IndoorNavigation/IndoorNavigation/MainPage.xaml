@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:IndoorNavigation"
              x:Class="IndoorNavigation.MainPage"
              xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
              
-             Title="{i18n:Translate Location}">
+             Title="{i18n:Translate LOCATION_STRING}">
     
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness">
@@ -18,7 +18,7 @@
     </ContentPage.Padding>
     
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="{i18n:Translate Setting}" Priority="1" Order="Primary" 
+        <ToolbarItem Text="{i18n:Translate SETTING_STRING}" Priority="1" Order="Primary" 
                      Clicked="SettingBtn_Clicked"/>
     </ContentPage.ToolbarItems>
     
@@ -30,7 +30,7 @@
             </Grid.RowDefinitions>
             
             <SearchBar x:Name="NaviSearchBar" Grid.Row="0" 
-                       Placeholder="{i18n:Translate PickLocation}"
+                       Placeholder="{i18n:Translate SELECT_LOCATION_STRING}"
                        CancelButtonColor="#007BFF"
                        Text="{Binding SearchedText, Mode=TwoWay}"
                        BackgroundColor="#f0f0f0"

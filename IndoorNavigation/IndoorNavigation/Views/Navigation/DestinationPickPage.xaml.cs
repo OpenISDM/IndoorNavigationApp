@@ -50,21 +50,29 @@ using MvvmHelpers;
 using IndoorNavigation.Models.NavigaionLayer;
 using System.Linq;
 using IndoorNavigation.Modules.Utilities;
+using Plugin.Multilingual;
+using IndoorNavigation.Resources;
+using System.Resources;
+using IndoorNavigation.Resources.Helpers;
+using System.Reflection;
 
 namespace IndoorNavigation.Views.Navigation
 {
     public partial class DestinationPickPage : ContentPage
     {
         private string _navigraphName;
-
-        public ObservableCollection<string> _items { get; set; }
+		public ResourceManager _resourceManager;
+		public ObservableCollection<string> _items { get; set; }
         public ObservableCollection<DestinationItem> _destinationItems { get; set; }
 
         public DestinationPickPage(string navigraphName, CategoryType category)
         {
             InitializeComponent();
 
-            _destinationItems = new ObservableCollection<DestinationItem>();
+			const string resourceId = "IndoorNavigation.Resources.AppResources";
+			_resourceManager = new ResourceManager(resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+
+			_destinationItems = new ObservableCollection<DestinationItem>();
 
             _navigraphName = navigraphName;
 
@@ -76,18 +84,19 @@ namespace IndoorNavigation.Views.Navigation
 
             foreach (Waypoint waypoint in waypoints)
             {
-                _destinationItems.Add(new DestinationItem
-                {
-                    ID = waypoint.ID,
-                    WaypointName = waypoint.Name,
-                    Floor = waypoint.Floor
-                });
+                string FloorName = waypoint.Floor.ToString()+" "+ _resourceManager.GetString("FLOOR_STRING", CrossMultilingual.Current.CurrentCultureInfo);
+				_destinationItems.Add(new DestinationItem
+				{
+					ID = waypoint.ID,
+					WaypointName = waypoint.Name,
+					Floor = FloorName
+				});
             }
-
+            
             MyListView.ItemsSource = from waypoint in _destinationItems
                                      group waypoint by waypoint.Floor into waypointGroup
                                      orderby waypointGroup.Key
-                                     select new Grouping<int, DestinationItem>(waypointGroup.Key,
+                                     select new Grouping<string, DestinationItem>(waypointGroup.Key,
                                                                                waypointGroup);
         }
 
@@ -112,7 +121,8 @@ namespace IndoorNavigation.Views.Navigation
     {
         public Guid ID { get; set; }
         public string WaypointName { get; set; }
-        public int Floor { get; set; }
+        //public int Floor { get; set; }
+        public string Floor { get; set; }
     }
 
 }

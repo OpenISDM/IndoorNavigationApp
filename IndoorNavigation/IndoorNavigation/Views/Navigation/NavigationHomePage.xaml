@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              x:Class="IndoorNavigation.Views.Navigation.NavigationHomePage"
-             Title="台大雲林分院 室內導航">
+             xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
+             Title="{i18n:Translate NTUH_YUNLIN_NAME_STRING}">
     
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness">
@@ -15,7 +16,7 @@
     </ContentPage.Padding>
     
     <ContentPage.ToolbarItems>
-        <ToolbarItem Name="InfoButton" Text="更多" Clicked="InfoButton_Clicked"/>
+        <ToolbarItem Name="InfoButton" Text="{i18n:Translate MORE_STRING}" Clicked="InfoButton_Clicked"/>
     </ContentPage.ToolbarItems>
     
     <ContentPage.Content>
@@ -39,7 +40,7 @@
             
             <Image Grid.Row="0" Grid.ColumnSpan="3" Source="NTUH_logo" Scale="0.9"/>
             <Label Grid.Row="1" Grid.ColumnSpan="3" HorizontalTextAlignment="Center"
-                   Text="【點選圖片選擇目的地】" TextColor="Gray" Margin="0, 0, 0, 8"/>
+                   Text="{i18n:Translate PICK_LOCATION_STRING}" TextColor="Gray" Margin="0, 0, 0, 8"/>
             
             <!-- Row 1 -->
             <ImageButton x:Name="ClinicBtn" Grid.Row="2"  Grid.Column="0" Source="Clinics" Clicked="ClinicList_Clicked" />

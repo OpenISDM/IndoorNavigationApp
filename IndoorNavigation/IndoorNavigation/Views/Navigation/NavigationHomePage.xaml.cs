@@ -47,21 +47,31 @@ using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using IndoorNavigation.Models.NavigaionLayer;
+using Plugin.Multilingual;
+using IndoorNavigation.Resources;
+using System.Resources;
+using IndoorNavigation.Resources.Helpers;
+using System.Reflection;
+
 
 namespace IndoorNavigation.Views.Navigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class NavigationHomePage : ContentPage
     {
-        private string _navigraphName;
+		const string _resourceId = "IndoorNavigation.Resources.AppResources";
+		ResourceManager _resourceManager =
+			new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+
+		private string _navigraphName;
 
         public NavigationHomePage(string navigraphName)
         {
             InitializeComponent();
+			var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+			this._navigraphName = navigraphName;
 
-            this._navigraphName = navigraphName;
-
-            NavigationPage.SetBackButtonTitle(this, "返回");
+            NavigationPage.SetBackButtonTitle(this, _resourceManager.GetString("BACK_STRING", currentLanguage));
 
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#3F51B5");
             ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;

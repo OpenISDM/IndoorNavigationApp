@@ -79,8 +79,8 @@ namespace IndoorNavigation.iOS
 
             var ci = CrossMultilingual.Current.CurrentCultureInfo;
            
-            scanner.CancelButtonText = _resourceManager.GetString("Cancel", ci);
-            scanner.FlashButtonText = _resourceManager.GetString("Flash", ci);
+            scanner.CancelButtonText = _resourceManager.GetString("CANCEL_STRING", ci);
+            scanner.FlashButtonText = _resourceManager.GetString("FLASH_STRING", ci);
             ZXing.Result scanResults = await scanner.Scan(scanOptions);
 
             if (scanResults != null)

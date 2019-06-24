@@ -46,6 +46,22 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Xamarin.Forms;
+using Plugin.Multilingual;
+using IndoorNavigation.Resources;
+using IndoorNavigation.Modules.Utilities;
+using System.Resources;
+using IndoorNavigation.Resources.Helpers;
+using System.Reflection;
+
+using IndoorNavigation.Models;
+using Xamarin.Essentials;
+using IndoorNavigation.Modules;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using Prism.Commands;
+using System.Globalization;
+
+
 
 namespace IndoorNavigation.Views.Navigation
 {
@@ -53,8 +69,11 @@ namespace IndoorNavigation.Views.Navigation
     {
         public IList _voiceSearchItems { get; } =
             new ObservableCollection<string>(new List<string> { "中文", "英文" });
+		const string _resourceId = "IndoorNavigation.Resources.AppResources";
+		ResourceManager _resourceManager =
+			new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
 
-        public NavigatorSettingPage()
+		public NavigatorSettingPage()
         {
             InitializeComponent();
 
@@ -81,7 +100,14 @@ namespace IndoorNavigation.Views.Navigation
             }
         }
 
-        protected override void OnDisappearing()
+		void SpeechTestBtn_Tapped(object sender, EventArgs e)
+		{
+			var ci = CrossMultilingual.Current.CurrentCultureInfo;
+			Utility._textToSpeech.Speak(_resourceManager.GetString("VOICE_SPEAK_STRING", ci),
+				_resourceManager.GetString("CULTURE_VERSION_STRING", ci));
+		}
+
+		protected override void OnDisappearing()
         {
             // Before page close, store the status of each route options
             Application.Current.Properties["AvoidStair"] = AvoidStair.On;

@@ -16,85 +16,85 @@
    
     
     <!-- Main page -->
-    <data name="Home" xml:space="preserve">
+    <data name="HOME_STRING" xml:space="preserve">
         <value>Home</value>
     </data>
     
-    <data name="Location" xml:space="preserve">
+    <data name="LOCATION_STRING" xml:space="preserve">
         <value>Locations</value>
     </data>
     
-    <data name="PickLocation" xml:space="preserve">
+    <data name="SELECT_LOCATION_STRING" xml:space="preserve">
         <value>Pick your goal within locations</value>
     </data>
     
-    <data name="Edit" xml:space="preserve">
+    <data name="EDIT_STRING" xml:space="preserve">
         <value>Edit</value>
     </data>
     
     <!-- Setting page -->
-    <data name="Setting" xml:space="preserve">
+    <data name="SETTING_STRING" xml:space="preserve">
         <value>Setting</value>
     </data>
     
-    <data name="DownloadNavigraph" xml:space="preserve">
-        <value>Download Navigraph</value>
+    <data name="DOWNLOAD_MAP_STRING" xml:space="preserve">
+        <value>Download Map</value>
     </data>
     
-    <data name="DeleteNavigraph" xml:space="preserve">
-        <value>Delete Navigraph</value>
+    <data name="DELETE_MAP_STRING" xml:space="preserve">
+        <value>Delete Map</value>
     </data>
     
-    <data name="VoiceTest" xml:space="preserve">
+    <data name="VOICE_TEST_STRING" xml:space="preserve">
         <value>Voice Test</value>
     </data>
     
-    <data name="ChangeLanguage" xml:space="preserve">
+    <data name="CHANGE_LANGUAGE_STRING" xml:space="preserve">
         <value>Change Language</value>
     </data>
     
-    <data name="SelectLanguage" xml:space="preserve">
+    <data name="SELECT_LANGUAGE_STRING" xml:space="preserve">
         <value>Select Language</value>
     </data>
     
-    <data name="Chinese" xml:space="preserve">
+    <data name="CHINESE_STRING" xml:space="preserve">
         <value>Chinese</value>
     </data>
     
-    <data name="English" xml:space="preserve">
+    <data name="ENGLISH_STRING" xml:space="preserve">
         <value>English</value>
     </data>
     
-    <data name="LicenseAndPrivacy" xml:space="preserve">
+    <data name="LICENSE_AND_PRIVACY_STRING" xml:space="preserve">
         <value>License and Privacy</value>
     </data>
     
-    <data name="License" xml:space="preserve">
+    <data name="LICENSE_STRING" xml:space="preserve">
         <value>License</value>
     </data>
     
-    <data name="Privacy" xml:space="preserve">
+    <data name="PRIVACY_STRING" xml:space="preserve">
         <value>Privacy</value>
     </data>
     
-    <data name="Others" xml:space="preserve">
+    <data name="OTHERS_STRING" xml:space="preserve">
         <value>Others</value>
     </data>
     
-    <data name="Feedback" xml:space="preserve">
+    <data name="FEEDBACK_STRING" xml:space="preserve">
         <value>Feedback</value>
     </data>
     
-    <data name="AboutBeDI" xml:space="preserve">
+    <data name="ABOUT_BEDI_STRING" xml:space="preserve">
         <value>About BeDITech</value>
     </data>
     
     <!-- Navigation Homepage with NTUHYunlin -->
-    <data name="More" xml:space="preserve">
+    <data name="MORE_STRING" xml:space="preserve">
         <value>MORE</value>
     </data>
     
-     <data name="VoiceSpeak" xml:space="preserve">
+     <data name="VOICE_SPEAK_STRING" xml:space="preserve">
         <value>Welcome to use the Indoor Navigation of Beedi Tech</value>
     </data>
     
@@ -110,23 +110,23 @@
         <value>Play voice test</value>
     </data>
     
-     <data name="CultureVersion" xml:space="preserve">
+     <data name="CULTURE_VERSION_STRING" xml:space="preserve">
         <value>en-US</value>
     </data>
     
-    <data name="OK" xml:space="preserve">
+    <data name="OK_STRING" xml:space="preserve">
         <value>OK</value>
     </data>
     
-    <data name="Cancel" xml:space="preserve">
+    <data name="CANCEL_STRING" xml:space="preserve">
         <value>cancel</value>
     </data>
     
-    <data name="GotoNavigationHomePage" xml:space="preserve">
+    <data name="GO_NAVIGATION_HOME_PAGE_STRING" xml:space="preserve">
         <value>Go to navigation homepage</value>
     </data>
     
-     <data name="Flash" xml:space="preserve">
+     <data name="FLASH_STRING" xml:space="preserve">
         <value>flash</value>
     </data>
     
@@ -208,6 +208,10 @@
     
     <data name="PICK_LOCATION_STRING" xml:space="preserve">
         <value>【Click picture to select the location】</value>
+    </data>
+    
+    <data name="PICK_DESTINATION_STRING" xml:space="preserve">
+        <value>Pick Destination</value>
     </data>
     
     <data name="ROUTE_OPTION_STRING" xml:space="preserve">

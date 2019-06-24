@@ -47,51 +47,51 @@ namespace IndoorNavigation.Resources {
             }
         }
         
-        internal static string Home {
+        internal static string HOME_STRING {
             get {
-                return ResourceManager.GetString("Home", resourceCulture);
+                return ResourceManager.GetString("HOME_STRING", resourceCulture);
             }
         }
         
-        internal static string Location {
+        internal static string LOCATION_STRING {
             get {
-                return ResourceManager.GetString("Location", resourceCulture);
+                return ResourceManager.GetString("LOCATION_STRING", resourceCulture);
             }
         }
         
-        internal static string PickLocation {
+        internal static string SELECT_LOCATION_STRING {
             get {
-                return ResourceManager.GetString("PickLocation", resourceCulture);
+                return ResourceManager.GetString("SELECT_LOCATION_STRING", resourceCulture);
             }
         }
         
-        internal static string Edit {
+        internal static string EDIT_STRING {
             get {
-                return ResourceManager.GetString("Edit", resourceCulture);
+                return ResourceManager.GetString("EDIT_STRING", resourceCulture);
             }
         }
         
-        internal static string Setting {
+        internal static string SETTING_STRING {
             get {
-                return ResourceManager.GetString("Setting", resourceCulture);
+                return ResourceManager.GetString("SETTING_STRING", resourceCulture);
             }
         }
         
-        internal static string DownloadNavigraph {
+        internal static string DOWNLOAD_MAP_STRING {
             get {
-                return ResourceManager.GetString("DownloadNavigraph", resourceCulture);
+                return ResourceManager.GetString("DOWNLOAD_MAP_STRING", resourceCulture);
             }
         }
         
-        internal static string DeleteNavigraph {
+        internal static string DELETE_MAP_STRING {
             get {
-                return ResourceManager.GetString("DeleteNavigraph", resourceCulture);
+                return ResourceManager.GetString("DELETE_MAP_STRING", resourceCulture);
             }
         }
         
-        internal static string VoiceTest {
+        internal static string VOICE_TEST_STRING {
             get {
-                return ResourceManager.GetString("VoiceTest", resourceCulture);
+                return ResourceManager.GetString("VOICE_TEST_STRING", resourceCulture);
             }
         }
         
@@ -113,105 +113,105 @@ namespace IndoorNavigation.Resources {
             }
         }
         
-        internal static string ChangeLanguage {
+        internal static string CHANGE_LANGUAGE_STRING {
             get {
-                return ResourceManager.GetString("ChangeLanguage", resourceCulture);
+                return ResourceManager.GetString("CHANGE_LANGUAGE_STRING", resourceCulture);
             }
         }
         
-        internal static string SelectLanguage {
+        internal static string SELECT_LANGUAGE_STRING {
             get {
-                return ResourceManager.GetString("SelectLanguage", resourceCulture);
+                return ResourceManager.GetString("SELECT_LANGUAGE_STRING", resourceCulture);
             }
         }
         
-        internal static string Chinese {
+        internal static string CHINESE_STRING {
             get {
-                return ResourceManager.GetString("Chinese", resourceCulture);
+                return ResourceManager.GetString("CHINESE_STRING", resourceCulture);
             }
         }
         
-        internal static string English {
+        internal static string ENGLISH_STRING {
             get {
-                return ResourceManager.GetString("English", resourceCulture);
+                return ResourceManager.GetString("ENGLISH_STRING", resourceCulture);
             }
         }
         
-        internal static string LicenseAndPrivacy {
+        internal static string LICENSE_AND_PRIVACY_STRING {
             get {
-                return ResourceManager.GetString("LicenseAndPrivacy", resourceCulture);
+                return ResourceManager.GetString("LICENSE_AND_PRIVACY_STRING", resourceCulture);
             }
         }
         
-        internal static string License {
+        internal static string LICENSE_STRING {
             get {
-                return ResourceManager.GetString("License", resourceCulture);
+                return ResourceManager.GetString("LICENSE_STRING", resourceCulture);
             }
         }
         
-        internal static string Privacy {
+        internal static string PRIVACY_STRING {
             get {
-                return ResourceManager.GetString("Privacy", resourceCulture);
+                return ResourceManager.GetString("PRIVACY_STRING", resourceCulture);
             }
         }
         
-        internal static string Others {
+        internal static string OTHERS_STRING {
             get {
-                return ResourceManager.GetString("Others", resourceCulture);
+                return ResourceManager.GetString("OTHERS_STRING", resourceCulture);
             }
         }
         
-        internal static string Feedback {
+        internal static string FEEDBACK_STRING {
             get {
-                return ResourceManager.GetString("Feedback", resourceCulture);
+                return ResourceManager.GetString("FEEDBACK_STRING", resourceCulture);
             }
         }
         
-        internal static string AboutBeDI {
+        internal static string ABOUT_BEDI_STRING {
             get {
-                return ResourceManager.GetString("AboutBeDI", resourceCulture);
+                return ResourceManager.GetString("ABOUT_BEDI_STRING", resourceCulture);
             }
         }
         
-        internal static string More {
+        internal static string MORE_STRING {
             get {
-                return ResourceManager.GetString("More", resourceCulture);
+                return ResourceManager.GetString("MORE_STRING", resourceCulture);
             }
         }
         
-        internal static string VoiceSpeak {
+        internal static string VOICE_SPEAK_STRING {
             get {
-                return ResourceManager.GetString("VoiceSpeak", resourceCulture);
+                return ResourceManager.GetString("VOICE_SPEAK_STRING", resourceCulture);
             }
         }
         
-        internal static string CultureVersion {
+        internal static string CULTURE_VERSION_STRING {
             get {
-                return ResourceManager.GetString("CultureVersion", resourceCulture);
+                return ResourceManager.GetString("CULTURE_VERSION_STRING", resourceCulture);
             }
         }
         
-        internal static string OK {
+        internal static string OK_STRING {
             get {
-                return ResourceManager.GetString("OK", resourceCulture);
+                return ResourceManager.GetString("OK_STRING", resourceCulture);
             }
         }
         
-        internal static string Cancel {
+        internal static string CANCEL_STRING {
             get {
-                return ResourceManager.GetString("Cancel", resourceCulture);
+                return ResourceManager.GetString("CANCEL_STRING", resourceCulture);
             }
         }
         
-        internal static string GotoNavigationHomePage {
+        internal static string GO_NAVIGATION_HOME_PAGE_STRING {
             get {
-                return ResourceManager.GetString("GotoNavigationHomePage", resourceCulture);
+                return ResourceManager.GetString("GO_NAVIGATION_HOME_PAGE_STRING", resourceCulture);
             }
         }
         
-        internal static string Flash {
+        internal static string FLASH_STRING {
             get {
-                return ResourceManager.GetString("Flash", resourceCulture);
+                return ResourceManager.GetString("FLASH_STRING", resourceCulture);
             }
         }
         
@@ -335,6 +335,12 @@ namespace IndoorNavigation.Resources {
             }
         }
         
+        internal static string PICK_DESTINATION_STRING {
+            get {
+                return ResourceManager.GetString("PICK_DESTINATION_STRING", resourceCulture);
+            }
+        }
+        
         internal static string ROUTE_OPTION_STRING {
             get {
                 return ResourceManager.GetString("ROUTE_OPTION_STRING", resourceCulture);
@@ -446,12 +452,6 @@ namespace IndoorNavigation.Resources {
         internal static string NULL_STRING {
             get {
                 return ResourceManager.GetString("NULL_STRING", resourceCulture);
-            }
-        }
-        
-        internal static string PICK_DESTINATION_STRING {
-            get {
-                return ResourceManager.GetString("PICK_DESTINATION_STRING", resourceCulture);
             }
         }
         

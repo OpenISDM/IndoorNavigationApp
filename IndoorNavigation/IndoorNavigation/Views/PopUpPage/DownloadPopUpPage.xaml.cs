@@ -52,13 +52,21 @@ using System;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using System.Resources;
+using IndoorNavigation.Resources.Helpers;
+using System.Reflection;
+using Plugin.Multilingual;
 
 namespace IndoorNavigation.Views.PopUpPage
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class DownloadPopUpPage : PopupPage
     {
-        public DownloadPopUpPageEvent _event { get; private set; }
+		const string _resourceId = "IndoorNavigation.Resources.AppResources";
+		ResourceManager _resourceManager =
+			new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+
+		public DownloadPopUpPageEvent _event { get; private set; }
 
         public DownloadPopUpPage()
         {
@@ -70,6 +78,7 @@ namespace IndoorNavigation.Views.PopUpPage
         {
             base.OnAppearingAnimationBegin();
 
+			var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
             FrameContainer.HeightRequest = -1;
 
             if (!IsAnimationEnabled)
@@ -81,7 +90,9 @@ namespace IndoorNavigation.Views.PopUpPage
                 SaveButton.Scale = 1;
                 SaveButton.Opacity = 1;
 
-                mapNameLabel.TranslationX = FileNameEntry.TranslationX = 0;
+				
+
+				mapNameLabel.TranslationX = FileNameEntry.TranslationX = 0;
                 mapNameLabel.Opacity = FileNameEntry.Opacity = 1;
 
                 return;
@@ -94,7 +105,10 @@ namespace IndoorNavigation.Views.PopUpPage
             SaveButton.Scale = 0.3;
             SaveButton.Opacity = 0;
 
-            mapNameLabel.TranslationX = FileNameEntry.TranslationX = -10;
+			mapNameLabel.Text = _resourceManager.GetString("INPUT_MAP_NAME_STRING", currentLanguage);
+			FileNameEntry.Placeholder = _resourceManager.GetString("MAP_NAME_STRING", currentLanguage);
+
+			mapNameLabel.TranslationX = FileNameEntry.TranslationX = -10;
             mapNameLabel.Opacity = FileNameEntry.Opacity = 0;
 
             this.FileNameEntry.Text = "";
@@ -102,7 +116,7 @@ namespace IndoorNavigation.Views.PopUpPage
 
         protected override async Task OnAppearingAnimationEndAsync()
         {
-            if (!IsAnimationEnabled)
+			if (!IsAnimationEnabled)
                 return;
 
             var translateLength = 400u;
@@ -130,7 +144,7 @@ namespace IndoorNavigation.Views.PopUpPage
 
         protected override async Task OnDisappearingAnimationBeginAsync()
         {
-            if (!IsAnimationEnabled)
+			if (!IsAnimationEnabled)
                 return;
 
             var taskSource = new TaskCompletionSource<bool>();
@@ -159,14 +173,17 @@ namespace IndoorNavigation.Views.PopUpPage
 
         private async void OnSave(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(FileNameEntry.Text))
+			var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+			if (!string.IsNullOrEmpty(FileNameEntry.Text))
             {
                 _event.OnEventCall(new DownloadPopUpPageEventArgs { FileName = FileNameEntry.Text });
                 CloseAllPopup();
             }
             else
             {
-                await DisplayAlert("訊息", "請輸入地圖名稱", "OK");
+				await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage),
+									_resourceManager.GetString("INPUT_MAP_NAME_STRING", currentLanguage),
+									_resourceManager.GetString("OK_STRING", currentLanguage));
             }
         }
 

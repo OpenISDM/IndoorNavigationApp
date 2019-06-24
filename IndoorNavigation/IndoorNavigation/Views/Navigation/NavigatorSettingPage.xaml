@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              xmlns:sv="clr-namespace:AiForms.Renderers;assembly=SettingsView"
              xmlns:ef="clr-namespace:AiForms.Effects;assembly=AiForms.Effects"
+             xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
              x:Class="IndoorNavigation.Views.Navigation.NavigatorSettingPage">
     
     <ContentPage.Resources>
@@ -49,16 +50,17 @@
         <sv:SettingsView x:Name="NavigationSettingsView" 
                          HasUnevenRows="true" >
     
-            <sv:Section Title="語音設定" >
-                <sv:TextPickerCell Title="語音選擇" SelectedItem="中文" 
+            <sv:Section Title="{i18n:Translate VOICE_SETTING_STRING}" >
+                <sv:TextPickerCell Title="{i18n:Translate VOICE_SELECT_STRING}" SelectedItem="中文" 
                                    Items="{Binding VoiceSearchItems}" />
-                <sv:CommandCell x:Name="TestVoiceButton" Title="播放測試語音"/>
+                <sv:CommandCell x:Name="TestVoiceButton" Title="{i18n:Translate PLAY_VOICE_TEST_STRING}"
+                                 Tapped="SpeechTestBtn_Tapped"/>
             </sv:Section>
 
-            <sv:Section Title="路線選項">
-                <sv:SwitchCell x:Name="AvoidStair" Title="避開樓梯" On="false" PropertyChanged="Handle_OptionPropertyChanged"/>
-                <sv:SwitchCell x:Name="AvoidElevator" Title="避開電梯" On="false" PropertyChanged="Handle_OptionPropertyChanged"/>
-                <sv:SwitchCell x:Name="AvoidEscalator" Title="避開手扶梯" On="false" PropertyChanged="Handle_OptionPropertyChanged"/>
+            <sv:Section Title="{i18n:Translate ROUTE_OPTION_STRING}">
+                <sv:SwitchCell x:Name="AvoidStair" Title="{i18n:Translate AVOID_STAIR_STRING}" On="false" PropertyChanged="Handle_OptionPropertyChanged"/>
+                <sv:SwitchCell x:Name="AvoidElevator" Title="{i18n:Translate AVOID_ELEVATOR_STRING}" On="false" PropertyChanged="Handle_OptionPropertyChanged"/>
+                <sv:SwitchCell x:Name="AvoidEscalator" Title="{i18n:Translate AVOID_ESCALATOR_STRING}" On="false" PropertyChanged="Handle_OptionPropertyChanged"/>
             </sv:Section>
         
         </sv:SettingsView>

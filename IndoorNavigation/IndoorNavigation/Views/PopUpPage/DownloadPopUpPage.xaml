@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <pages:PopupPage
     xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup" 
     xmlns="http://xamarin.com/schemas/2014/forms"
@@ -29,8 +29,8 @@
                             <OnPlatform x:TypeArguments="ImageSource" Android="cloud_computing.png" iOS="cloud_computing.png"/>
                         </Image.Source>
                     </Image>
-                    <Label HorizontalOptions="Center" x:Name="mapNameLabel" Style="{StaticResource EntryStyle}" Text="請輸入地圖名稱"/>
-                    <Entry Margin="10, 5" HorizontalOptions="Fill" x:Name="FileNameEntry" Style="{StaticResource EntryStyle}" Placeholder="地圖名稱"/>
+                    <Label HorizontalOptions="Center" x:Name="mapNameLabel" Style="{StaticResource EntryStyle}" Text=""/>
+                    <Entry Margin="10, 5" HorizontalOptions="Fill" x:Name="FileNameEntry" Style="{StaticResource EntryStyle}" Placeholder=""/>
                     <Button Margin="10, 5" BackgroundColor="#7dbbe6" HorizontalOptions="Fill" Clicked="OnSave" x:Name="SaveButton" Text="Save" TextColor="Navy">
                         <Button.HeightRequest>
                             <OnPlatform x:TypeArguments="x:Double" Android="50" iOS="30"/>

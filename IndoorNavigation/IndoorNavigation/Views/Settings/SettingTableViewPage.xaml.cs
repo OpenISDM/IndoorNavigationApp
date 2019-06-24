@@ -69,8 +69,7 @@ namespace IndoorNavigation.Views.Settings
     {
         private DownloadPopUpPage _downloadPage = new DownloadPopUpPage();
         private string _downloadURL;
-
-        public IList _selectNaviGraphItems { get; } = new ObservableCollection<string>();
+		public IList _selectNaviGraphItems { get; } = new ObservableCollection<string>();
         public IList _cleanNaviGraphItems { get; } = new ObservableCollection<string>();
         public IList _languageItems { get; } = new ObservableCollection<string>();
         //public ICommand SelectedMapCommand => new DelegateCommand(HandleSelectedMap);
@@ -86,8 +85,8 @@ namespace IndoorNavigation.Views.Settings
         public SettingTableViewPage()
         {
             InitializeComponent();
-
-            _downloadPage._event.DownloadPopUpPageEventHandler +=
+			
+			_downloadPage._event.DownloadPopUpPageEventHandler +=
                 async delegate (object sender, EventArgs e) { await HandleDownloadPageAsync(sender, e); };
 
             BindingContext = this;
@@ -97,9 +96,9 @@ namespace IndoorNavigation.Views.Settings
 
             ReloadNaviGraphItems();
 
-            var ci = CrossMultilingual.Current.CurrentCultureInfo;
-            _languageItems.Add(_resourceManager.GetString("Chinese", ci));
-            _languageItems.Add(_resourceManager.GetString("English", ci));
+            var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+            _languageItems.Add(_resourceManager.GetString("CHINESE_STRING", currentLanguage));
+            _languageItems.Add(_resourceManager.GetString("ENGLISH_STRING", currentLanguage));
 
             if (Application.Current.Properties.ContainsKey("LanguagePicker"))
             {
@@ -143,8 +142,9 @@ namespace IndoorNavigation.Views.Settings
 
             if (!string.IsNullOrEmpty(qrCodeValue))
             {
-                // Determine it is URL or string
-                if ((qrCodeValue.Substring(0, 7) == "http://") ||
+				var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+				// Determine it is URL or string
+				if ((qrCodeValue.Substring(0, 7) == "http://") ||
                     (qrCodeValue.Substring(0, 8) == "https://"))
                 {
                     // Determine it is map data or website
@@ -157,15 +157,20 @@ namespace IndoorNavigation.Views.Settings
                     }
                     else
                     {
-                        // Use the browser to open data
-                        bool answer = await DisplayAlert("通知", "是否開啟網頁", "Yes", "No");
+						// Use the browser to open data
+						bool answer = await DisplayAlert(_resourceManager.GetString("NOTIFY_STRING", currentLanguage),
+														 _resourceManager.GetString("SURE_TO_OPEN_WEBSITE_STRING", currentLanguage),
+														 _resourceManager.GetString("OK_STRING", currentLanguage),
+														 _resourceManager.GetString("CANCEL_STRING", currentLanguage));
                         if (answer)
                             await Browser.OpenAsync(qrCodeValue, BrowserLaunchMode.SystemPreferred);
                     }
                 }
                 else
                 {
-                    await DisplayAlert("QrCode內容", qrCodeValue, "OK");
+                    await DisplayAlert(_resourceManager.GetString("QRCODE_CONTENT_STRING", currentLanguage),
+                                       qrCodeValue,
+									   _resourceManager.GetString("OK_STRING", currentLanguage));
                 }
             }
         }
@@ -173,17 +178,18 @@ namespace IndoorNavigation.Views.Settings
         void SpeechTestBtn_Tapped(object sender, EventArgs e)
         {
              var ci = CrossMultilingual.Current.CurrentCultureInfo;
-             Utility._textToSpeech.Speak(_resourceManager.GetString("VoiceSpeak", ci),
-                 _resourceManager.GetString("CultureVersion", ci)); 
+             Utility._textToSpeech.Speak(_resourceManager.GetString("VOICE_SPEAK_STRING", ci),
+                 _resourceManager.GetString("CULTURE_VERSION_STRING", ci)); 
         }
 
         private void ReloadNaviGraphItems()
         {
-            _selectNaviGraphItems.Clear();
-            _selectNaviGraphItems.Add("--請選擇圖資--");
+			var ci = CrossMultilingual.Current.CurrentCultureInfo;
+			_selectNaviGraphItems.Clear();
+            _selectNaviGraphItems.Add(_resourceManager.GetString("CHOOSE_MAP_STRING", ci));
 
             _cleanNaviGraphItems.Clear();
-            _cleanNaviGraphItems.Add("--全部--");
+            _cleanNaviGraphItems.Add(_resourceManager.GetString("ALL_STRING", ci));
 
             foreach (var naviGraphName in NavigraphStorage.GetAllNavigraphs())
             {
@@ -200,23 +206,30 @@ namespace IndoorNavigation.Views.Settings
         /// <param name="e">E.</param>
         private async Task HandleDownloadPageAsync(object sender, EventArgs e)
         {
-            string fileName = (e as DownloadPopUpPageEventArgs).FileName;
+			var ci = CrossMultilingual.Current.CurrentCultureInfo;
+			string fileName = (e as DownloadPopUpPageEventArgs).FileName;
             if (!string.IsNullOrEmpty(_downloadURL) && !string.IsNullOrEmpty(fileName))
             {
 
                 if (Utility.DownloadNavigraph(_downloadURL, fileName))
                 {
-                    await DisplayAlert("訊息", "地圖下載完成", "OK");
+                    await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", ci),
+						               _resourceManager.GetString("SUCCESSFULLY_DOWNLOAD_MAP_STRING", ci),
+									   _resourceManager.GetString("OK_STRING", ci));
                 }
                 else
                 {
-                    await DisplayAlert("錯誤", "地圖下載失敗", "OK");
+					await DisplayAlert(_resourceManager.GetString("ERROR_STRING", ci),
+									   _resourceManager.GetString("FAILED_DOWNLOAD_MAP_STRING", ci),
+									   _resourceManager.GetString("OK_STRING", ci));
                 }
             }
             else
             {
-                await DisplayAlert("錯誤", "地圖下載失敗", "OK");
-            }
+				await DisplayAlert(_resourceManager.GetString("ERROR_STRING", ci),
+								   _resourceManager.GetString("FAILED_DOWNLOAD_MAP_STRIN", ci),
+								   _resourceManager.GetString("OK_STRING", ci));
+			}
 
             ReloadNaviGraphItems();
         }
@@ -255,11 +268,11 @@ namespace IndoorNavigation.Views.Settings
                     {
                         case "英文":
                         case "English":
-                            languageSelected = _resourceManager.GetString("English", ci);
+                            languageSelected = _resourceManager.GetString("ENGLISH_STRING", ci);
                             break;
                         case "中文":
                         case "Chinese":
-                            languageSelected = _resourceManager.GetString("Chinese", ci);
+                            languageSelected = _resourceManager.GetString("CHINESE_STRING", ci);
                             break;
                     }
 
@@ -274,32 +287,51 @@ namespace IndoorNavigation.Views.Settings
 
         private async Task HandleCLeanMapAsync()
         {
-            try
+			var ci = CrossMultilingual.Current.CurrentCultureInfo;
+			try
             {
-                if (CleanMapPicker.SelectedItem.ToString() == "--全部--")
+                if (CleanMapPicker.SelectedItem.ToString() == _resourceManager.GetString("ALL_STRING", ci))
                 {
-                    if (await DisplayAlert("警告", "確定要刪除所有地圖嗎？", "Yes", "No"))
+                    if (await DisplayAlert(_resourceManager.GetString("WARN_STRING", ci),
+						                   _resourceManager.GetString("ASK_IF_CANCEL_ALL_MAP_STRING", ci),
+										   _resourceManager.GetString("OK_STRING", ci),
+										   _resourceManager.GetString("CANCEL_STRING", ci)))
                     {
-                        // 刪除所有地圖資料
+                        // Cancel All Map
                         NavigraphStorage.DeleteAllNavigraph();
-                        await DisplayAlert("訊息", "刪除成功", "OK");
+                        await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", ci),
+										   _resourceManager.GetString("SUCCESSFULLY_DELETE_STRING", ci),
+										   _resourceManager.GetString("OK_STRING", ci));
                     }
                 }
                 else
                 {
-                    if (await DisplayAlert("警告", string.Format("確定要刪除 地圖:{0} 嗎？",
-                                           CleanMapPicker.SelectedItem), "Yes", "No"))
+                    if (await DisplayAlert(_resourceManager.GetString("WARN_STRING", ci),
+										   //                              _resourceManager.GetString("ASK_IF_CANCEL_MAP_STRING", ci),
+										   //_resourceManager.GetString("MAP_STRING", ci),
+										   //string.Format(":{0}？", CleanMapPicker.SelectedItem),
+										   string.Format(_resourceManager.GetString("ASK_IF_CANCEL_MAP_STRING", ci) + _resourceManager.GetString("MAP_STRING", ci) +":{0}？", CleanMapPicker.SelectedItem),
+										   _resourceManager.GetString("OK_STRING", ci),
+										   _resourceManager.GetString("CANCEL_STRING", ci)))
+
+						
+
+
                     {
                         // 刪除選擇的地圖資料
                         NavigraphStorage.DeleteNavigraph(CleanMapPicker.SelectedItem.ToString());
-                        await DisplayAlert("訊息", "刪除成功", "OK");
-                    }
+						await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", ci),
+										   _resourceManager.GetString("SUCCESSFULLY_DELETE_STRING", ci),
+										   _resourceManager.GetString("OK_STRING", ci));
+					}
                 }
 
             }
             catch
             {
-                await DisplayAlert("錯誤", "刪除地圖時發生不明錯誤", "確定");
+                await DisplayAlert(_resourceManager.GetString("ERROR_STRING", ci),
+								   _resourceManager.GetString("ERROR_TO_DELETE_STRING", ci),
+								   _resourceManager.GetString("OK_STRING", ci));
             }
 
             CleanMapPicker.SelectedItem = "";

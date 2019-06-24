@@ -70,8 +70,8 @@ namespace IndoorNavigation
         {
             InitializeComponent();
 
-            var ci = CrossMultilingual.Current.CurrentCultureInfo;
-            NavigationPage.SetBackButtonTitle(this, _resourceManager.GetString("Home", ci));
+            var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+            NavigationPage.SetBackButtonTitle(this, _resourceManager.GetString("HOME_STRING", currentLanguage));
             NavigationPage.SetHasBackButton(this, false);
 
             switch (Device.RuntimePlatform)
@@ -94,7 +94,7 @@ namespace IndoorNavigation
 
             _viewModel = new MainPageViewModel();
             BindingContext = _viewModel;
-
+            
             // This will remove all the pages in the navigation stack excluding the Main Page
             // and another one page
             for (int PageIndex = Navigation.NavigationStack.Count - 2; PageIndex > 0; PageIndex--)
@@ -134,16 +134,16 @@ namespace IndoorNavigation
 
         async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-             var ci = CrossMultilingual.Current.CurrentCultureInfo;
+             var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
             if (e.Item is Location location)
             {
                 switch (NavigraphStorage.LoadNavigraphXML(location.UserNaming).Name)
                 {
                     case "NTUH_YunLin":
                         var answser = await DisplayAlert(
-                            _resourceManager.GetString("GotoNavigationHomePage", ci),
-                            location.UserNaming, _resourceManager.GetString("OK", ci),
-                            _resourceManager.GetString("Cancel", ci));
+                            _resourceManager.GetString("GO_NAVIGATION_HOME_PAGE_STRING", currentLanguage),
+                            location.UserNaming, _resourceManager.GetString("OK_STRING", currentLanguage),
+                            _resourceManager.GetString("CANCEL_STRING", currentLanguage));
                         if (answser)
                         {
                             await Navigation.PushAsync(new NavigationHomePage(location.UserNaming));
