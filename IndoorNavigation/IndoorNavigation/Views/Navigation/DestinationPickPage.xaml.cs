@@ -86,20 +86,16 @@ namespace IndoorNavigation.Views.Navigation
                     + _resourceManager.GetString("FLOOR_STRING",
                                                  CrossMultilingual.Current.CurrentCultureInfo);
 
-                foreach(KeyValuePair<CategoryType, List<Waypoint>> pairCategoryList
-                    in pairRegion.Value._waypointsByCategory)
+                if (pairRegion.Value._waypointsByCategory.ContainsKey(category))
                 {
-                    if (pairCategoryList.Key.Equals(category)) {
-
-                        foreach (Waypoint waypoint in pairCategoryList.Value)
+                    foreach (Waypoint waypoint in pairRegion.Value._waypointsByCategory[category])
+                    {
+                        _destinationItems.Add(new DestinationItem
                         {
-                            _destinationItems.Add(new DestinationItem
-                            {
-                                ID = waypoint._id,
-                                WaypointName = waypoint._name,
-                                Floor = floorName
-                            });
-                        }
+                            ID = waypoint._id,
+                            WaypointName = waypoint._name,
+                            Floor = floorName
+                        });
                     }
                 }
             }
