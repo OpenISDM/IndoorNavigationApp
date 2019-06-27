@@ -48,7 +48,6 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using IndoorNavigation.Models.NavigaionLayer;
 using Plugin.Multilingual;
-using IndoorNavigation.Resources;
 using System.Resources;
 using IndoorNavigation.Resources.Helpers;
 using System.Reflection;

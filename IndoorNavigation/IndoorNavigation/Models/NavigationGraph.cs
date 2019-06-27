@@ -123,7 +123,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
         public string _buildingName { get; set; }
 
         //Guid is region's Guid
-        public Dictionary<Guid, Region> _regions { get; set; }
+        public Dictionary<Guid, OneRegion> _regions { get; set; }
 
         //Guid is Source Region's Guid
         public Dictionary<Guid, RegionEdge> _edges { get; set; }
@@ -132,7 +132,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
         public Dictionary<Guid, Navigraph> _navigraphs { get; set; }
     }
 
-    public class Region
+    public class OneRegion
     {
         public Guid _id { get; set; }
         public string _name { get; set; }

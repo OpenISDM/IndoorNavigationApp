@@ -67,8 +67,8 @@ namespace IndoorNavigation.Modules
         private Dictionary<Guid, List<Waypoint>> _waypointsOnWrongWay =
             new Dictionary<Guid, List<Waypoint>>();
 
-        private Graph<Region, string> _regionGraph = 
-                                        new Graph<Region, string>();
+        private Graph<OneRegion, string> _regionGraph = 
+                                        new Graph<OneRegion, string>();
         private Graph<Waypoint, string> _subgraph = 
                                         new Graph<Waypoint, string>();
 

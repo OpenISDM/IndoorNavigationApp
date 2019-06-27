@@ -40,6 +40,7 @@
  * Authors:
  *
  *      Paul Chang, paulchang@iis.sinica.edu.tw
+ *      Chun Yu Lai, chunyu1202@gmail.com
  *
  */
 using System;
@@ -51,7 +52,6 @@ using IndoorNavigation.Models.NavigaionLayer;
 using System.Linq;
 using IndoorNavigation.Modules.Utilities;
 using Plugin.Multilingual;
-using IndoorNavigation.Resources;
 using System.Resources;
 using IndoorNavigation.Resources.Helpers;
 using System.Reflection;
@@ -61,6 +61,7 @@ namespace IndoorNavigation.Views.Navigation
     public partial class DestinationPickPage : ContentPage
     {
         private string _navigationGraphName;
+        private NavigationGraph _navigationGraph;
 		public ResourceManager _resourceManager;
 		public ObservableCollection<string> _items { get; set; }
         public ObservableCollection<DestinationItem> _destinationItems { get; set; }
@@ -76,24 +77,31 @@ namespace IndoorNavigation.Views.Navigation
 
             _navigationGraphName = navigationGraphName;
 
-            IEnumerable<Waypoint> waypoints = new List<Waypoint>();
-            /*
-                                              from region in NavigraphStorage.
-                                              LoadNavigationGraphXML(navigraphName).Regions
-                                              from waypoint in region.Waypoints
-                                              where waypoint.Category.Equals(category)
-                                              select waypoint;
-                                              */
-            foreach (Waypoint waypoint in waypoints)
-            {/*
-                string FloorName = waypoint.Floor.ToString()+" "+ _resourceManager.GetString("FLOOR_STRING", CrossMultilingual.Current.CurrentCultureInfo);
-                _destinationItems.Add(new DestinationItem
-				{
-					ID = waypoint.ID,
-					WaypointName = waypoint.Name,
-					Floor = FloorName
-				});
-                */
+            _navigationGraph = NavigraphStorage.LoadNavigationGraphXML(navigationGraphName);
+
+
+            foreach (KeyValuePair<Guid, OneRegion> pairRegion in _navigationGraph._regions)
+            {
+                string floorName = pairRegion.Value._floor.ToString() + " "
+                    + _resourceManager.GetString("FLOOR_STRING",
+                                                 CrossMultilingual.Current.CurrentCultureInfo);
+
+                foreach(KeyValuePair<CategoryType, List<Waypoint>> pairCategoryList
+                    in pairRegion.Value._waypointsByCategory)
+                {
+                    if (pairCategoryList.Key.Equals(category)) {
+
+                        foreach (Waypoint waypoint in pairCategoryList.Value)
+                        {
+                            _destinationItems.Add(new DestinationItem
+                            {
+                                ID = waypoint._id,
+                                WaypointName = waypoint._name,
+                                Floor = floorName
+                            });
+                        }
+                    }
+                }
             }
             
             MyListView.ItemsSource = from waypoint in _destinationItems
@@ -101,6 +109,7 @@ namespace IndoorNavigation.Views.Navigation
                                      orderby waypointGroup.Key
                                      select new Grouping<string, DestinationItem>(waypointGroup.Key,
                                                                                waypointGroup);
+                                                                               
         }
 
         async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)

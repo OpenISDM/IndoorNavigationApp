@@ -27,6 +27,26 @@ namespace IndoorNavigation.Modules
             Console.WriteLine("In Parser");
 
             _navigationgraph._industryService = "hospital";
+            _navigationgraph._regions = new Dictionary<Guid, OneRegion>();
+
+            OneRegion region = new OneRegion();
+            Guid guidRegion = new Guid("00000000-0000-0000-0000-000000000001");
+            region._id = guidRegion;
+            region._name = "2F";
+            region._floor = 2;
+            region._waypointsByCategory = new Dictionary<CategoryType, List<Waypoint>>();
+
+            List<Waypoint> tempWaypointList = new List<Waypoint>();
+            Waypoint waypoint = new Waypoint();
+            waypoint._id = new Guid("00000018-0000-0000-2460-000000005900");
+            waypoint._name = "Test";
+            waypoint._category = CategoryType.Clinics;
+            tempWaypointList.Add(waypoint);
+            region._waypointsByCategory.Add(CategoryType.Clinics, tempWaypointList);
+
+            _navigationgraph._regions.Add(guidRegion, region);
+
+            Console.WriteLine("end Parser");
             /*
             XmlNode navigation_graph = xmldocument.SelectSingleNode("navigation_graph");
             XmlNode regions = xmldocument.SelectSingleNode("navigation_graph/regions");
