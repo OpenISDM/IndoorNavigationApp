@@ -118,7 +118,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
     /// The top level of the navigation graph within two-level hierarchy
     /// </summary>
     [XmlRoot("Navigraph")]
-    public class Navigraph
+    public class Subgraph
     {
         /// <summary>
         /// Gets or sets the name
@@ -232,7 +232,6 @@ namespace IndoorNavigation.Models.NavigaionLayer
                             .Where(WaypointList => WaypointList.Item.ID
                             .Equals(targetWaypoint.ID)).Select(c => c.Key)
                             .First();
-
             // Returns the distance of the path
             return connectionGraph.Dijkstra(sourceKey, targetKey).Distance;
             */
@@ -288,6 +287,11 @@ namespace IndoorNavigation.Models.NavigaionLayer
     /// </summary>
     public class Waypoint
     {
+        public Guid _id;
+        public string _name;
+        public string _type;
+        public CategoryType _category;
+        public List<WaypointNeighbors> _neighbors;
         /// <summary>
         /// Universal Unique Identifier of waypoint
         /// </summary>

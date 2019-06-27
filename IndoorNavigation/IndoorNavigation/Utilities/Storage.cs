@@ -67,6 +67,7 @@ namespace IndoorNavigation.Modules.Utilities
                     "Navigraph");
 
         private static object _fileLock = new object();
+        
 
         public static bool DownloadNavigraph(string URL, string navigraphName)
         {
@@ -108,23 +109,25 @@ namespace IndoorNavigation.Modules.Utilities
         /// </summary>
         /// <returns>The navigraph object.</returns>
         /// <param name="FileName">File name.</param>
-        public static Navigraph LoadNavigraphXML(string FileName)
+        public static Subgraph LoadNavigraphXML(string FileName)
         {
             string filePath = Path.Combine(_navigraphFolder, FileName);
-
+            XMLParser xmlParser = new XMLParser();
+            XmlDocument document = new XmlDocument();
             if (!File.Exists(filePath))
                 throw new FileNotFoundException();
 
             var xmlString = File.ReadAllText(filePath);
             StringReader stringReader = new StringReader(xmlString);
-
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(Navigraph));
+            document.Load(filePath);
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(Subgraph));
             XmlTextReader xmlReader = new XmlTextReader(stringReader);
+            //NavigationStructure navigationstructure =  xmlParser.GetString(document);
 
-            Navigraph navigraph;
+            Subgraph navigraph;
             try
             {
-                navigraph = (Navigraph)xmlSerializer.Deserialize(xmlReader);
+                navigraph = (Subgraph)xmlSerializer.Deserialize(xmlReader);
             }
             catch (Exception ex)
             {
@@ -154,7 +157,7 @@ namespace IndoorNavigation.Modules.Utilities
         private static string LoadFile(string FileName)
         {
             string filePath = Path.Combine(_navigraphFolder, FileName);
-
+           
             // Check the folder of navigraph if it is exist
             if (!Directory.Exists(_navigraphFolder))
             {
@@ -170,6 +173,7 @@ namespace IndoorNavigation.Modules.Utilities
                 return File.ReadAllText(filePath);
         }
 
+        
         /// <summary>
         /// Store the navigation graph information of a location
         /// e.g., First floor of a building

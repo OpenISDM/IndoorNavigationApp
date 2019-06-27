@@ -44,6 +44,7 @@
  *
  */
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Serialization;
@@ -52,12 +53,18 @@ using IndoorNavigation.Models.NavigaionLayer;
 
 namespace IndoorNavigation.Models
 {
-   
+
     /// <summary>
     /// The second level of the navigation graph within two-level hierarchy
     /// </summary>
     public class Region
     {
+        public string _name { get; set; }
+        public Guid _id { get; set; }
+        public int _floor { get; set; }
+        public List<RegionNeighbors> _neighbors { get; set; }
+        public Dictionary<CategoryType, List<Waypoint>> _waypointsByCategory;
+       
         /// <summary>
         /// Gets or sets the name of Region.
         /// e.g. 1F of NTUH
@@ -138,6 +145,11 @@ namespace IndoorNavigation.Models
 
         // TODO: Add methods for accessing data on IPS resources and 
         // other data on the region.
+    }
+
+    public struct RegionNeighbors
+    {
+        public Guid _id;
     }
 
 }

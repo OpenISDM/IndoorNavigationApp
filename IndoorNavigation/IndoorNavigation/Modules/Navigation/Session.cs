@@ -83,7 +83,7 @@ namespace IndoorNavigation.Modules
         private Waypoint _currentWaypoint = new Waypoint();
         private ManualResetEventSlim _nextWaypointEvent = new ManualResetEventSlim(false);
 
-        public Session(Navigraph graph,
+        public Session(Subgraph graph,
                        Guid finalWaypointID,
                        int[] avoid)
         {
@@ -167,7 +167,7 @@ namespace IndoorNavigation.Modules
                                     CurrentWaypoint = startWaypoint,
                                     NextWaypoint = _waypointsOnRoute[1],
                                     Distance =
-                                        Navigraph.GetDistance(_subgraph,
+                                        Subgraph.GetDistance(_subgraph,
                                                               startWaypoint,
                                                               _waypointsOnRoute[1]),
                                     Progress = 0,
@@ -372,7 +372,7 @@ namespace IndoorNavigation.Modules
                     {
 
                         navigationInstruction.Distance =
-                        Navigraph.GetDistance(_subgraph,
+                        Subgraph.GetDistance(_subgraph,
                                               currentWaypoint,
                                               _waypointsOnRoute[_nextWaypointStep + 1]);
 
@@ -384,7 +384,7 @@ namespace IndoorNavigation.Modules
                         else
                         {
                             navigationInstruction.Direction =
-                                Navigraph.GetTurnDirection(
+                                Subgraph.GetTurnDirection(
                                     _waypointsOnRoute[_nextWaypointStep - 1],
                                     currentWaypoint,
                                     _waypointsOnRoute[_nextWaypointStep + 1]);
