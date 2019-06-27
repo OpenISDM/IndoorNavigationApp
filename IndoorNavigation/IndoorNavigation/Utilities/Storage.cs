@@ -55,10 +55,6 @@ using System.Net;
 
 namespace IndoorNavigation.Modules.Utilities
 {
-    /// <summary>
-    /// This class provides the fast method to load and save data in local 
-    /// storage.
-    /// </summary>
     public static class NavigraphStorage
     {
         internal static readonly string _navigraphFolder =
@@ -68,32 +64,7 @@ namespace IndoorNavigation.Modules.Utilities
 
         private static object _fileLock = new object();
         
-
-        public static bool DownloadNavigraph(string URL, string navigraphName)
-        {
-            string filePath = Path.Combine(_navigraphFolder, navigraphName);
-
-            try
-            {
-                if (!Directory.Exists(_navigraphFolder))
-                    Directory.CreateDirectory(_navigraphFolder);
-
-                using (WebClient webClient = new WebClient())
-                    webClient.DownloadFileAsync(new Uri(URL), filePath);
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// This method returns the name of all the locations.
-        /// </summary>
-        /// <returns></returns>
-        public static string[] GetAllNavigraphs()
+        public static string[] GetAllNavigationGraphs()
         {
             // Check the folder of navigation graph if it is exist
             if (!Directory.Exists(_navigraphFolder))
@@ -104,110 +75,23 @@ namespace IndoorNavigation.Modules.Utilities
                 .OrderBy(file => file).ToArray();
         }
 
-        /// <summary>
-        /// Loads the navigraph XML from the specified file name.
-        /// </summary>
-        /// <returns>The navigraph object.</returns>
-        /// <param name="FileName">File name.</param>
-        public static Subgraph LoadNavigraphXML(string FileName)
+        public static NavigationGraph LoadNavigationGraphXML(string FileName)
         {
             string filePath = Path.Combine(_navigraphFolder, FileName);
-            XMLParser xmlParser = new XMLParser();
-            XmlDocument document = new XmlDocument();
             if (!File.Exists(filePath))
                 throw new FileNotFoundException();
 
             var xmlString = File.ReadAllText(filePath);
             StringReader stringReader = new StringReader(xmlString);
+            XmlDocument document = new XmlDocument();
             document.Load(filePath);
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(Subgraph));
-            XmlTextReader xmlReader = new XmlTextReader(stringReader);
-            //NavigationStructure navigationstructure =  xmlParser.GetString(document);
+            XMLParser xmlParser = new XMLParser();
+            NavigationGraph navigationGraph =  xmlParser.GetString(document);
 
-            Subgraph navigraph;
-            try
-            {
-                navigraph = (Subgraph)xmlSerializer.Deserialize(xmlReader);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-                throw new Exception();
-            }
-            finally
-            {
-                if (xmlReader != null)
-                {
-                    xmlReader.Close();
-                }
-                if (stringReader != null)
-                {
-                    stringReader.Close();
-                }
-            }
-
-            return navigraph;
+            return navigationGraph;
         }
 
-        /// <summary>
-        /// Return specific information of the navigation graph
-        /// </summary>
-        /// <param name="FileName"></param>
-        /// <returns></returns>
-        private static string LoadFile(string FileName)
-        {
-            string filePath = Path.Combine(_navigraphFolder, FileName);
-           
-            // Check the folder of navigraph if it is exist
-            if (!Directory.Exists(_navigraphFolder))
-            {
-                Directory.CreateDirectory(_navigraphFolder);
-                return string.Empty;
-            }
-
-            // Check the file of navigraph if it is exist
-            if (!File.Exists(filePath))
-                return string.Empty;
-
-            lock(_fileLock)
-                return File.ReadAllText(filePath);
-        }
-
-        
-        /// <summary>
-        /// Store the navigation graph information of a location
-        /// e.g., First floor of a building
-        /// </summary>
-        /// <param name="FileName"></param>
-        /// <param name="NavigraphDatas"></param>
-        /// <returns></returns>
-        public static bool SaveNavigraphInformation(
-            string FileName, string NavigraphDatas)
-        {
-            string filePath = Path.Combine(_navigraphFolder, FileName);
-            try
-            {
-                // Check the folder of navigraph if it is exist
-                if (!Directory.Exists(_navigraphFolder))
-                    Directory.CreateDirectory(_navigraphFolder);
-
-                // Write navigraph information
-                lock (_fileLock)
-                    File.WriteAllText(filePath, NavigraphDatas);
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Delete specific navigation graph information
-        /// </summary>
-        /// <param name="GraphName"></param>
-        public static void DeleteNavigraph(string GraphName)
+        public static void DeleteNavigationGraph(string GraphName)
         {
             string filePath = Path.Combine(_navigraphFolder, GraphName);
 
@@ -219,13 +103,10 @@ namespace IndoorNavigation.Modules.Utilities
                 File.Delete(filePath);
         }
 
-        /// <summary>
-        /// Delete all navigation graph information
-        /// </summary>
-        public static void DeleteAllNavigraph()
+        public static void DeleteAllNavigationGraph()
         {
-            foreach (string place in GetAllNavigraphs())
-                DeleteNavigraph(place);
+            foreach (string place in GetAllNavigationGraphs())
+                DeleteNavigationGraph(place);
         }
     }
 }

@@ -191,7 +191,7 @@ namespace IndoorNavigation.Views.Settings
             _cleanNaviGraphItems.Clear();
             _cleanNaviGraphItems.Add(_resourceManager.GetString("ALL_STRING", ci));
 
-            foreach (var naviGraphName in NavigraphStorage.GetAllNavigraphs())
+            foreach (var naviGraphName in NavigraphStorage.GetAllNavigationGraphs())
             {
                 _selectNaviGraphItems.Add(naviGraphName);
                 _cleanNaviGraphItems.Add(naviGraphName);
@@ -298,7 +298,7 @@ namespace IndoorNavigation.Views.Settings
 										   _resourceManager.GetString("CANCEL_STRING", ci)))
                     {
                         // Cancel All Map
-                        NavigraphStorage.DeleteAllNavigraph();
+                        NavigraphStorage.DeleteAllNavigationGraph();
                         await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", ci),
 										   _resourceManager.GetString("SUCCESSFULLY_DELETE_STRING", ci),
 										   _resourceManager.GetString("OK_STRING", ci));
@@ -319,7 +319,7 @@ namespace IndoorNavigation.Views.Settings
 
                     {
                         // 刪除選擇的地圖資料
-                        NavigraphStorage.DeleteNavigraph(CleanMapPicker.SelectedItem.ToString());
+                        NavigraphStorage.DeleteNavigationGraph(CleanMapPicker.SelectedItem.ToString());
 						await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", ci),
 										   _resourceManager.GetString("SUCCESSFULLY_DELETE_STRING", ci),
 										   _resourceManager.GetString("OK_STRING", ci));

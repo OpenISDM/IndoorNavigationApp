@@ -14,16 +14,16 @@ namespace IndoorNavigation.Modules
 {
     public class XMLParser
     {
-        public NavigationStructure _navigationgraph;
+        public NavigationGraph _navigationgraph;
         private double EARTH_RADIUS;
         public XMLParser()
         {
             Console.WriteLine("Construct Parser");
-            _navigationgraph = new NavigationStructure();
+            _navigationgraph = new NavigationGraph();
             EARTH_RADIUS = 6378137;
         }
-        public NavigationStructure GetString(XmlDocument xmldocument)
-        {
+        public NavigationGraph GetString(XmlDocument xmldocument)
+        {/*
             Console.WriteLine("In Parser");
             XmlNode navigation_graph = xmldocument.SelectSingleNode("navigation_graph");
             XmlNode regions = xmldocument.SelectSingleNode("navigation_graph/regions");
@@ -208,6 +208,7 @@ namespace IndoorNavigation.Modules
             // string navigraph_region_id = elementInnavigraphs.GetAttribute("region_id");
 
             //xmlString.
+            */
             return _navigationgraph;
         }
         public double GetDistance(double lng1, double lat1, double lng2, double lat2)

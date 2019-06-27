@@ -98,7 +98,7 @@ namespace IndoorNavigation.Modules.IPSClients
                 foreach (BeaconSignalModel beacon in _beaconSignalBuffer)
                 {
                     for (int i = 0; i < _waypointList.Count; i++) {
-
+                        /*
                         for (int j = 0; j < _waypointList[i].Beacons.Count; j++) {
                             if (beacon.UUID.Equals(_waypointList[i].Beacons[j].UUID)) {
                                 Console.WriteLine("Matched waypoint:" +
@@ -112,7 +112,7 @@ namespace IndoorNavigation.Modules.IPSClients
                                 }) ;
                                 return;
                             }
-                        }
+                        }*/
                     }
                 }
             }

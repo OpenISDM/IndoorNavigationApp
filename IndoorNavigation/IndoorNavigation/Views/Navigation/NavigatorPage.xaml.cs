@@ -51,16 +51,16 @@ namespace IndoorNavigation.Views.Navigation
     {
         private NavigatorPageViewModel _viewModel;
 
-        public NavigatorPage(string navigraphName, string desinationName, Guid destinationID)
+        public NavigatorPage(string navigationGraphName, string desinationName, Guid destinationID)
         {
             Console.WriteLine("-- start of NavigatorPage constructor: navigraphName: " +
-                              navigraphName + " destinationName: " +
+                              navigationGraphName + " destinationName: " +
                               desinationName + " destinationID: " +
                               destinationID);
 
             InitializeComponent();
 
-            _viewModel = new NavigatorPageViewModel(navigraphName, desinationName, destinationID);
+            _viewModel = new NavigatorPageViewModel(navigationGraphName, desinationName, destinationID);
             BindingContext = _viewModel;
 
             Console.WriteLine("-- end of NavigatorPage constructor");

@@ -60,12 +60,12 @@ namespace IndoorNavigation.Views.Navigation
 {
     public partial class DestinationPickPage : ContentPage
     {
-        private string _navigraphName;
+        private string _navigationGraphName;
 		public ResourceManager _resourceManager;
 		public ObservableCollection<string> _items { get; set; }
         public ObservableCollection<DestinationItem> _destinationItems { get; set; }
 
-        public DestinationPickPage(string navigraphName, CategoryType category)
+        public DestinationPickPage(string navigationGraphName, CategoryType category)
         {
             InitializeComponent();
 
@@ -74,23 +74,26 @@ namespace IndoorNavigation.Views.Navigation
 
 			_destinationItems = new ObservableCollection<DestinationItem>();
 
-            _navigraphName = navigraphName;
+            _navigationGraphName = navigationGraphName;
 
-            IEnumerable<Waypoint> waypoints = from region in NavigraphStorage.
-                                              LoadNavigraphXML(navigraphName).Regions
+            IEnumerable<Waypoint> waypoints = new List<Waypoint>();
+            /*
+                                              from region in NavigraphStorage.
+                                              LoadNavigationGraphXML(navigraphName).Regions
                                               from waypoint in region.Waypoints
                                               where waypoint.Category.Equals(category)
                                               select waypoint;
-
+                                              */
             foreach (Waypoint waypoint in waypoints)
-            {
+            {/*
                 string FloorName = waypoint.Floor.ToString()+" "+ _resourceManager.GetString("FLOOR_STRING", CrossMultilingual.Current.CurrentCultureInfo);
-				_destinationItems.Add(new DestinationItem
+                _destinationItems.Add(new DestinationItem
 				{
 					ID = waypoint.ID,
 					WaypointName = waypoint.Name,
 					Floor = FloorName
 				});
+                */
             }
             
             MyListView.ItemsSource = from waypoint in _destinationItems
@@ -105,7 +108,7 @@ namespace IndoorNavigation.Views.Navigation
             if (e.Item is DestinationItem destination)
             {
                 Console.WriteLine("start of Handle_ItemTapped in DestinationPickPage");
-                await Navigation.PushAsync(new NavigatorPage(_navigraphName,
+                await Navigation.PushAsync(new NavigatorPage(_navigationGraphName,
                                                              destination.WaypointName,
                                                              destination.ID));
                 Console.WriteLine("end of Handle_ItemTapped in DestinationPickPage");

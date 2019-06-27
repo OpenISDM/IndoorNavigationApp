@@ -56,7 +56,7 @@ namespace IndoorNavigation.Modules
     {
         private Session _session;
 
-        private string _navigraphName;
+        private string _navigationGraphName;
 
         private Guid _destinationID;
 
@@ -64,11 +64,11 @@ namespace IndoorNavigation.Modules
 
         public NavigationEvent _event { get; private set; }
 
-        public NavigationModule(string navigraphName, Guid destinationID)
+        public NavigationModule(string navigationGraphName, Guid destinationID)
         {
             _event = new NavigationEvent();
 
-            _navigraphName = navigraphName;
+            _navigationGraphName = navigationGraphName;
             _destinationID = destinationID;
 
             ConstructSession();
@@ -105,10 +105,10 @@ namespace IndoorNavigation.Modules
 
             // Start the session
             _session = new Session(
-                    NavigraphStorage.LoadNavigraphXML(_navigraphName),
+                    NavigraphStorage.LoadNavigationGraphXML(_navigationGraphName),
                     _destinationID,
                     avoidList.ToArray());
-
+                    
             _navigationResultEventHandler = new EventHandler(HandleNavigationResult);
             _session._event._eventHandler += _navigationResultEventHandler;
 

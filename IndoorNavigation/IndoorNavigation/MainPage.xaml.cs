@@ -137,7 +137,7 @@ namespace IndoorNavigation
              var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
             if (e.Item is Location location)
             {
-                switch (NavigraphStorage.LoadNavigraphXML(location.UserNaming).Name)
+                switch (NavigraphStorage.LoadNavigationGraphXML(location.UserNaming)._buildingName)
                 {
                     case "NTUH_YunLin":
                         var answser = await DisplayAlert(
@@ -153,7 +153,6 @@ namespace IndoorNavigation
                     default:
                         break;
                 }
-
             }
         }
 
@@ -174,7 +173,7 @@ namespace IndoorNavigation
 
             if (item != null)
             {
-                NavigraphStorage.DeleteNavigraph(item.UserNaming);
+                NavigraphStorage.DeleteNavigationGraph(item.UserNaming);
                 _viewModel.LoadNavigationGraph();
             }
         }

@@ -70,7 +70,7 @@ namespace IndoorNavigation.ViewModels
         {
             _locations = new ObservableRangeCollection<Location>();
 
-            foreach (string naviGraphName in NavigraphStorage.GetAllNavigraphs())
+            foreach (string naviGraphName in NavigraphStorage.GetAllNavigationGraphs())
             {
                 _locations.Add(new Location { UserNaming = naviGraphName });
             }

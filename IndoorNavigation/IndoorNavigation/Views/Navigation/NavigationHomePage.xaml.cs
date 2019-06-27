@@ -63,13 +63,13 @@ namespace IndoorNavigation.Views.Navigation
 		ResourceManager _resourceManager =
 			new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
 
-		private string _navigraphName;
+		private string _navigationGraphName;
 
-        public NavigationHomePage(string navigraphName)
+        public NavigationHomePage(string navigationGraphName)
         {
             InitializeComponent();
 			var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-			this._navigraphName = navigraphName;
+			this._navigationGraphName = navigationGraphName;
 
             NavigationPage.SetBackButtonTitle(this, _resourceManager.GetString("BACK_STRING", currentLanguage));
 
@@ -106,55 +106,55 @@ namespace IndoorNavigation.Views.Navigation
 
         async void ClinicList_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new DestinationPickPage(_navigraphName, 
+            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName, 
                                                                CategoryType.Clinics));
         }
 
         async void Cashier_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new DestinationPickPage(_navigraphName, 
+            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName, 
                                                                CategoryType.Cashier));
         }
 
         async void ExitList_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new DestinationPickPage(_navigraphName, 
+            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName, 
                                                                CategoryType.Exit));
         }
 
         async void ExaminationRoomList_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new DestinationPickPage(_navigraphName, 
+            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName, 
                                                                CategoryType.ExaminationRoom));
         }
 
         async void Pharmacy_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new DestinationPickPage(_navigraphName, 
+            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName, 
                                                                CategoryType.Pharmacy));
         }
 
         async void ConvenienceStore_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new DestinationPickPage(_navigraphName, 
+            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName, 
                                                                CategoryType.ConvenienceStore));
         }
 
         async void OthersList_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new DestinationPickPage(_navigraphName, 
+            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName, 
                                                                CategoryType.Others));
         }
 
         async void BathroomList_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new DestinationPickPage(_navigraphName, 
+            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName, 
                                                                CategoryType.Bathroom));
         }
 
         async void BloodCollectionCounter_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new DestinationPickPage(_navigraphName, 
+            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName, 
                                                                CategoryType.BloodCollectionCounter));
         }
     }

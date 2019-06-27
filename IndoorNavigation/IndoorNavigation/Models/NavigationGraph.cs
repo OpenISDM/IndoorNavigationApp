@@ -45,6 +45,7 @@
  *
  *      Paul Chang, paulchang@iis.sinica.edu.tw
  *      Eric Lee, ericlee@iis.sinica.edu.tw
+ *      Chun Yu Lai, chunyu1202@gmail.com
  *
  */
 using System;
@@ -113,421 +114,82 @@ namespace IndoorNavigation.Models.NavigaionLayer
         Bathroom,
         BloodCollectionCounter
     }
-
-    /// <summary>
-    /// The top level of the navigation graph within two-level hierarchy
-    /// </summary>
-    [XmlRoot("Navigraph")]
-    public class Subgraph
+    public class NavigationGraph
     {
-        /// <summary>
-        /// Gets or sets the name
-        /// e.g. Taipei City Hall, NTHU...etc
-        /// </summary>
-        [XmlElement("Name")]
-        public string Name { get; set; }
+        public string _country { get; set; }
+        public string _cityCounty { get; set; }
+        public string _industryService { get; set; }
+        public string _ownerOrganization { get; set; }
+        public string _buildingName { get; set; }
 
-        /// <summary>
-        /// Gets or sets the regions of entire Navigraph
-        /// </summary>
-        [XmlArray("Regions")]
-        [XmlArrayItem("Region", typeof(Region))]
-        public List<Region> Regions { get; set; }
+        //Guid is region's Guid
+        public Dictionary<Guid, Region> _regions { get; set; }
 
-        /// <summary>
-        /// Gets or sets the edges that connection between regions,
-        /// e.g. stair, elevator...etc
-        /// </summary>
-        [XmlArray("Edges")]
-        [XmlArrayItem("Edge", typeof(Edge))]
-        public List<Edge> Edges { get; set; }
+        //Guid is Source Region's Guid
+        public Dictionary<Guid, RegionEdge> _edges { get; set; }
 
-
-        #region Public methods
-
-        /// <summary>
-        /// Setup the Navigation graph object that links each UUID to waypoint
-        /// within the edges.
-        /// </summary>
-        public void Setup()
-        {
-            List<Waypoint> waypointsOfRegions = new List<Waypoint>();
-
-            // Setup each waypoint in the edge within regions
-            foreach (Region region in Regions)
-            {
-                foreach (Edge edge in region.Edges)
-                {
-                    edge.SourceWaypoint = region.Waypoints.First(waypoint =>
-                            waypoint.ID.Equals(edge.SourceWaypointUUID));
-                    edge.TargetWaypoint = region.Waypoints.First(waypoint =>
-                            waypoint.ID.Equals(edge.TargetWaypointUUID));
-                }
-
-                waypointsOfRegions.AddRange(
-                        region.Waypoints.Select(waypoint => waypoint));
-            }
-
-            // Setup each waypoint in the edge which between regions
-            foreach (Edge edge in Edges)
-            {
-                edge.SourceWaypoint = waypointsOfRegions.First(waypoint =>
-                        waypoint.ID.Equals(edge.SourceWaypointUUID));
-                edge.TargetWaypoint = waypointsOfRegions.First(waypoint =>
-                        waypoint.ID.Equals(edge.TargetWaypointUUID));
-            }
-
-        }
-
-        /// <summary>
-        /// Get the instance of region graph, nodes in it are regions and edges
-        /// are pathways linking the regions.
-        /// </summary>
-        public Graph<Region, string> GetRegiongraph()
-        {
-            Graph<Region, string> regionGraph =
-                    new Graph<Region, string>();
-
-            foreach (Region region in Regions)
-            {
-                regionGraph.AddNode(region);
-            }
-            foreach (Edge edge in Edges)
-            {
-                Region sourceRegion = Regions.First(region =>
-                         region.Waypoints.Any(waypoint =>
-                         waypoint.ID.Equals(edge.SourceWaypointUUID)));
-                Region targetRegion = Regions.First(region =>
-                        region.Waypoints.Any(waypoint =>
-                        waypoint.ID.Equals(edge.TargetWaypointUUID)));
-                uint sourceKey = regionGraph
-                        .Where(region => region.Item.Waypoints
-                        .Equals(sourceRegion.Waypoints))
-                        .Select(c => c.Key).First();
-                uint targetKey = regionGraph
-                        .Where(region => region.Item.Waypoints
-                        .Equals(targetRegion.Waypoints))
-                        .Select(c => c.Key).First();
-                regionGraph.Connect(sourceKey, targetKey,
-                        (int)edge.Distance, string.Empty);
-            }
-            return regionGraph;
-        }
-
-        /// <summary>
-        /// Gets the distance from source waypoint to target waypoint
-        /// </summary>
-        public static double GetDistance(
-                                    Graph<Waypoint, string> connectionGraph,
-                                    Waypoint sourceWaypoint,
-                                    Waypoint targetWaypoint)
-        {
-            /*
-            // Find where is the source/target waypoint and find its key
-            uint sourceKey = connectionGraph
-                            .Where(WaypointList => WaypointList.Item.ID
-                            .Equals(sourceWaypoint.ID)).Select(c => c.Key)
-                            .First();
-            uint targetKey = connectionGraph
-                            .Where(WaypointList => WaypointList.Item.ID
-                            .Equals(targetWaypoint.ID)).Select(c => c.Key)
-                            .First();
-            // Returns the distance of the path
-            return connectionGraph.Dijkstra(sourceKey, targetKey).Distance;
-            */
-
-            return 10;
-        }
-
-        /// <summary>
-        /// Gets the turning direction using three waypoints
-        /// e.g. This method was to convert the direction to 
-        /// a human-readable instruction. When the user is walking down 
-        /// the hallway facing east, which his/her next waypoint is in south,
-        /// the function converts the instruction to "Turn right on ...".
-        /// </summary>
-        public static TurnDirection GetTurnDirection(
-                                                Waypoint previousWaypoint,
-                                                Waypoint currentWaypoint,
-                                                Waypoint nextWaypoint)
-        {
-
-            // Find the cardinal direction to the next waypoint
-            Console.WriteLine("previous waypoint ID=[" + previousWaypoint.ID + "]");
-            CardinalDirection currentDirection = previousWaypoint.Neighbors
-                                            .Where(neighbors =>
-                                                neighbors.TargetWaypointUUID
-                                                .Equals(currentWaypoint.ID))
-                                            .Select(c => c.Direction).First();
-
-            Console.WriteLine("current waypoint ID=[" + currentWaypoint.ID + "] + neighbors = " +
-                              currentWaypoint.Neighbors.Count);
-            CardinalDirection nextDirection = currentWaypoint.Neighbors
-                                            .Where(neighbors =>
-                                                neighbors.TargetWaypointUUID
-                                                .Equals(nextWaypoint.ID))
-                                            .Select(c => c.Direction).First();
-
-            // Calculate the turning direction by cardinal direction
-            int nextTurnDirection = (int)nextDirection - (int)currentDirection;
-            nextTurnDirection = nextTurnDirection < 0 ?
-                                nextTurnDirection + 8 : nextTurnDirection;
-
-            return (TurnDirection)nextTurnDirection;
-            
-        }
-
-        #endregion
+        //Guid is region's Guid
+        public Dictionary<Guid, Navigraph> _navigraphs { get; set; }
     }
 
-    #region Navigraph parameters
+    public class Region
+    {
+        public Guid _id { get; set; }
+        public string _name { get; set; }
+        public int _floor { get; set; }
+        public List<RegionNeighbor> _neighbors { get; set; }
+        public Dictionary<CategoryType, List<Waypoint>> _waypointsByCategory { get; set; }
+    }
 
-    /// <summary>
-    /// The model of waypoint
-    /// </summary>
+    public class RegionNeighbor
+    {
+        public Guid _id { get; set; }
+    }
+
+    public class RegionEdge
+    {
+        public Guid _sinkRegionID { get; set; }
+        public Guid _sourceWaypointID { get; set; }
+        public Guid _sinkWaypointID { get; set; }
+        public double _distance { get; set; }
+        public CardinalDirection _direction { get; set; }
+        public ConnectionType _connectionType { get; set; }
+    }
+
+    public class Navigraph
+    {
+        public Guid _id { get; set; }
+        public IPSType _IPSType { get; set; }
+
+        //Guid is waypoint's Guid
+        public Dictionary<Guid, Waypoint> _waypoints { get; set; }
+
+        //Guid is source waypoint's Guid
+        public Dictionary<Guid, WaypointEdge> _edges { get; set; }
+
+        //Guid is waypoint's Guid
+        public Dictionary<Guid, List<Guid>> _beacons { get; set; }
+    }
+
     public class Waypoint
     {
-        public Guid _id;
-        public string _name;
-        public string _type;
-        public CategoryType _category;
-        public List<WaypointNeighbors> _neighbors;
-        /// <summary>
-        /// Universal Unique Identifier of waypoint
-        /// </summary>
-        [XmlElement("UUID")]
-        public Guid ID { get; set; }
-
-        /// <summary>
-        /// Friendly name of waypoint
-        /// </summary>
-        [XmlElement("Name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Use is it to identify whether to switch the corressponding
-        /// IPSClient using the enum type.
-        /// </summary>
-        [XmlIgnore]
-        public IPSType IPSClientType { get; set; }
-        [XmlElement("IPStype")]
-        public string IPStype
-        {
-            get { return IPSClientType.ToString(); }
-            set
-            {
-                if (string.IsNullOrEmpty(value) || !Enum.GetNames(typeof(IPSType)).Contains(value))
-                {
-                    //IPSClientType = IPSType.NoIPSType;
-                }
-                else
-                {
-                    IPSClientType = (IPSType)Enum.Parse(typeof(IPSType), value);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Message used to instruct the user to face a direction known to the
-        /// naivgator.
-        /// </summary>
-        [XmlElement("Landmark")]
-        public string OrientationInstruction { get; set; }
-
-        /// <summary>
-        /// The coordinates of a waypoint
-        /// </summary>
-        [XmlIgnore]
-        public GeoCoordinate Coordinates { get; set; }
-        private double lat;
-        [XmlElement("Lat")]
-        public string Lat
-        {
-            get => lat.ToString();
-            set => lat = double.Parse(value);
-        }
-        [XmlElement("Lon")]
-        public string Lon
-        {
-            get => Coordinates.Longitude.ToString();
-            set => Coordinates = new GeoCoordinate(lat, double.Parse(value));
-        }
-
-        /// <summary>
-        /// The floor where the waypoint is located
-        /// </summary>
-        [XmlElement("Floor")]
-        public int Floor { get; set; }
-
-        /// <summary>
-        /// The Category of the Waypoint
-        /// </summary>>
-        [XmlIgnore]
-        public CategoryType Category { get; set; }
-        [XmlElement("Category")]
-        public string CategoryType
-        {
-            get { return Category.ToString(); }
-            set
-            {
-                if (string.IsNullOrEmpty(value) || !Enum.GetNames(typeof(CategoryType)).Contains(value))
-                {
-                    //Direction = CardinalDirection.NoDirection;
-                }
-                else
-                {
-
-                    Category = (CategoryType)Enum.Parse(typeof(CategoryType), value);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Neighbors of the waypoint
-        /// </summary>
-        [XmlArray("Neighbors")]
-        [XmlArrayItem("Neighbor", typeof(Neighbor))]
-        public List<Neighbor> Neighbors { get; set; }
-
-        [XmlArray("Beacons")]
-        [XmlArrayItem("Beacon", typeof(Beacon))]
-        public List<Beacon> Beacons;
+        public Guid _id { get; set; }
+        public string _name { get; set; }
+        public string _type { get; set; }
+        public CategoryType _category { get; set; }
+        public List<WaypointNeighbor> _neighbors { get; set; }
     }
 
-    /// <summary>
-    /// Represents the connected neighbor waypoints in a navigation graph
-    /// </summary>
-    public struct Neighbor
+    public class WaypointNeighbor
     {
-        /// <summary>
-        /// UUID of the neighbor waypoint
-        /// </summary>
-        [XmlElement("UUID")]
-        public Guid TargetWaypointUUID { get; set; }
-
-        /// <summary>
-        /// Indicates the name of the target which is facing
-        /// </summary>
-        [XmlElement("TargetName")]
-        public string TargetName { get; set; }
-
-        /// <summary>
-        /// Cardinal direction for the host waypoint using the enum type
-        /// </summary>
-        [XmlElement("ReferenceDirection")]
-        public CardinalDirection Direction { get; set; }
+        public Guid _id { get; set; }
     }
 
-
-    public struct Beacon
+    public class WaypointEdge
     {
-        [XmlElement("UUID")]
-        public Guid UUID { get; set; }
-
-        //[XmlElement("MappedWaypointUUID")]
-        //public Guid MappedWaypointUUID { get; set; }
-
-        //[XmlElement("Major")]
-        //public int Major { get; set; }
-
-        //[XmlElement("Minor")]
-        //public int Minor { get; set; }
-
-        //[XmlElement("RSSI")]
-        //public int RSSI { get; set; }
-
-        //[XmlElement("Threshold")]
-        //public int Threshold { get; set; }
-
-        //[XmlElement("Floor")]
-        //public int Floor { get; set; }
-
-        //public DateTime Timestamp { get; set; }
+        public Guid _sinkWaypointID { get; set; }
+        public CardinalDirection _direction { get; set; }
+        public ConnectionType _connectionType { get; set; }
+        public double _distance { get; set; }
     }
-
-
-    /// <summary>
-    /// The edge/connection between the two waypoints(Location A -> Location B)
-    /// </summary>
-    public class Edge
-    {
-        /// <summary>
-        /// Location A
-        /// </summary>
-        [XmlIgnore]
-        public Waypoint SourceWaypoint { get; set; }
-        [XmlElement("SourceWaypointUUID")]
-        public Guid SourceWaypointUUID { get; set; }
-
-        /// <summary>
-        /// Location B
-        /// </summary>
-        [XmlIgnore]
-        public Waypoint TargetWaypoint { get; set; }
-        [XmlElement("TargetWaypointUUID")]
-        public Guid TargetWaypointUUID { get; set; }
-
-        /// <summary>
-        /// Gets or sets the distance
-        /// </summary>
-        [XmlElement("Distance")]
-        public double Distance { get; set; }
-
-        /// <summary>
-        /// Cardinal direction for the host waypoint using the enum type
-        /// </summary>
-        [XmlIgnore]
-        public CardinalDirection Direction { get; set; }
-        [XmlElement("ReferenceDirection")]
-        public string ReferenceDirection
-        {
-            get { return Direction.ToString(); }
-            set
-            {
-                if (string.IsNullOrEmpty(value) ||
-                    !Enum.GetNames(typeof(CardinalDirection)).Contains(value))
-                {
-                    //Direction = CardinalDirection.NoDirection;
-                }
-                else
-                {
-
-                    Direction = (CardinalDirection)Enum.Parse(typeof(CardinalDirection), value);
-                }
-            }
-        }
-
-        /// <summary>
-        /// The connection type using the enum type
-        /// e.g. normal hallway, stair, elevator...etc
-        /// </summary>
-        [XmlIgnore]
-        public ConnectionType ConnectionType { get; set; }
-        [XmlElement("ConnectionType")]
-        public string Connectiontype
-        {
-            get { return ConnectionType.ToString(); }
-            set
-            {
-                if (string.IsNullOrEmpty(value) ||
-                    !Enum.GetNames(typeof(ConnectionType)).Contains(value))
-                {
-                    //Connection = ConnectionType.NoConnectionType;
-                }
-                else
-                {
-                    ConnectionType = (ConnectionType)Enum.Parse(typeof(ConnectionType), value);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Other informations regarding the edge
-        /// e.g. wheelchair support
-        /// </summary>
-        [XmlElement("OtherInformations")]
-        public string OtherInformations { get; set; }
-    }
-
-    #endregion
 }

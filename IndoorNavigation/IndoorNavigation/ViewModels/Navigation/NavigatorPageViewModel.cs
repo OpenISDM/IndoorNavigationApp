@@ -73,12 +73,12 @@ namespace IndoorNavigation.ViewModels.Navigation
 		private bool _disposedValue = false; // To detect redundant calls
 		public ResourceManager _resourceManager;
 
-		public NavigatorPageViewModel(string navigraphName, string destinationName, Guid destinationID)
+		public NavigatorPageViewModel(string navigationGraphName, string destinationName, Guid destinationID)
 		{
 			_destinationID = destinationID;
 			DestinationWaypointName = destinationName;
 
-			_navigationModule = new NavigationModule(navigraphName, destinationID);
+			_navigationModule = new NavigationModule(navigationGraphName, destinationID);
 			_navigationModule._event._eventHandler += GetNavigationResultEvent;
 
 			const string resourceId = "IndoorNavigation.Resources.AppResources";
@@ -110,7 +110,7 @@ namespace IndoorNavigation.ViewModels.Navigation
 					SetInstruction(instruction, out currentStepLabel, out currentStepImage);
 					CurrentStepLabel = currentStepLabel;
 					CurrentStepImage = currentStepImage;
-					CurrentWaypointName = instruction.CurrentWaypoint.Name;
+					CurrentWaypointName = instruction.CurrentWaypoint._name;
 					NavigationProgress = instruction.Progress;
 					break;
 
@@ -136,6 +136,7 @@ namespace IndoorNavigation.ViewModels.Navigation
 			var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
 			switch (instruction.Direction)
 			{
+                /*
 				case TurnDirection.FirstDirection:
 					stepLabel = string.Format(_resourceManager.GetString("DIRECTION_STRAIGHT_STRING", currentLanguage) + "\n{0}", instruction.NextWaypoint.Name);
 					stepImage = "Arrow_up";
@@ -190,7 +191,7 @@ namespace IndoorNavigation.ViewModels.Navigation
 					stepLabel = string.Format(_resourceManager.GetString("DIRECTION_DOWN_STRING", currentLanguage) + "\n{0}", instruction.NextWaypoint.Name);
 					stepImage = "Stairs_down";
 					break;
-
+                    */
 				default:
 					stepLabel = "You're get ERROR status";
 					stepImage = "Warning";
