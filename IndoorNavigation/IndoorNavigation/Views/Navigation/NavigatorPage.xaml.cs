@@ -51,19 +51,26 @@ namespace IndoorNavigation.Views.Navigation
     {
         private NavigatorPageViewModel _viewModel;
 
-        public NavigatorPage(string navigationGraphName, string desinationName, Guid destinationID)
+        public NavigatorPage(string navigationGraphName,
+                             Guid destinationRegionID,
+                             Guid destinationWaypointID,
+                             string destinationWaypointName)
         {
-            Console.WriteLine("-- start of NavigatorPage constructor: navigraphName: " +
-                              navigationGraphName + " destinationName: " +
-                              desinationName + " destinationID: " +
-                              destinationID);
+            Console.WriteLine(">> NavigatorPage constructor: {0} {1} {2} {3}",
+                              navigationGraphName,
+                              destinationRegionID,
+                              destinationWaypointID,
+                              destinationWaypointName);
 
             InitializeComponent();
 
-            _viewModel = new NavigatorPageViewModel(navigationGraphName, desinationName, destinationID);
+            _viewModel = new NavigatorPageViewModel(navigationGraphName,
+                                                    destinationRegionID,
+                                                    destinationWaypointID,
+                                                    destinationWaypointName);
             BindingContext = _viewModel;
 
-            Console.WriteLine("-- end of NavigatorPage constructor");
+            Console.WriteLine("<<NavigatorPage constructor");
         }
 
         protected override void OnDisappearing()

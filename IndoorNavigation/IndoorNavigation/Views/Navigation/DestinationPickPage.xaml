@@ -43,7 +43,7 @@
                         <StackLayout Orientation="Horizontal"
                                      Padding="20, 20, 20, 1">
                             
-                        <Label Text="{Binding WaypointName}" />
+                        <Label Text="{Binding _waypointName}" />
                       </StackLayout>
                     </ViewCell>
                 </DataTemplate>

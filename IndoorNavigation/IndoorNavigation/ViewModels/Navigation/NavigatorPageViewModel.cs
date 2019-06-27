@@ -73,12 +73,17 @@ namespace IndoorNavigation.ViewModels.Navigation
 		private bool _disposedValue = false; // To detect redundant calls
 		public ResourceManager _resourceManager;
 
-		public NavigatorPageViewModel(string navigationGraphName, string destinationName, Guid destinationID)
+		public NavigatorPageViewModel(string navigationGraphName,
+                                      Guid destinationRegionID,
+                                      Guid destinationWaypointID,
+                                      string destinationWaypointName)
 		{
-			_destinationID = destinationID;
-			DestinationWaypointName = destinationName;
+			_destinationID = destinationWaypointID;
+			DestinationWaypointName = destinationWaypointName;
 
-			_navigationModule = new NavigationModule(navigationGraphName, destinationID);
+			_navigationModule = new NavigationModule(navigationGraphName,
+                                                     destinationRegionID,
+                                                     destinationWaypointID);
 			_navigationModule._event._eventHandler += GetNavigationResultEvent;
 
 			const string resourceId = "IndoorNavigation.Resources.AppResources";

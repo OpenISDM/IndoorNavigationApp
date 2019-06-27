@@ -92,20 +92,20 @@ namespace IndoorNavigation.Views.Navigation
                     {
                         _destinationItems.Add(new DestinationItem
                         {
-                            ID = waypoint._id,
-                            WaypointName = waypoint._name,
-                            Floor = floorName
-                        });
+                            _regionID = pairRegion.Key,
+                            _waypointID = waypoint._id,
+                            _waypointName = waypoint._name,
+                            _floor = floorName
+                        }) ;
                     }
                 }
             }
-            
+
             MyListView.ItemsSource = from waypoint in _destinationItems
-                                     group waypoint by waypoint.Floor into waypointGroup
+                                     group waypoint by waypoint._floor into waypointGroup
                                      orderby waypointGroup.Key
                                      select new Grouping<string, DestinationItem>(waypointGroup.Key,
                                                                                waypointGroup);
-                                                                               
         }
 
         async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
@@ -114,8 +114,9 @@ namespace IndoorNavigation.Views.Navigation
             {
                 Console.WriteLine("start of Handle_ItemTapped in DestinationPickPage");
                 await Navigation.PushAsync(new NavigatorPage(_navigationGraphName,
-                                                             destination.WaypointName,
-                                                             destination.ID));
+                                                             destination._regionID,
+                                                             destination._waypointID,
+                                                             destination._waypointName));
                 Console.WriteLine("end of Handle_ItemTapped in DestinationPickPage");
             }
 
@@ -127,10 +128,10 @@ namespace IndoorNavigation.Views.Navigation
 
     public class DestinationItem
     {
-        public Guid ID { get; set; }
-        public string WaypointName { get; set; }
-        //public int Floor { get; set; }
-        public string Floor { get; set; }
+        public Guid _regionID { get; set; }
+        public Guid _waypointID { get; set; }
+        public string _waypointName { get; set; }
+        public string _floor { get; set; }
     }
 
 }

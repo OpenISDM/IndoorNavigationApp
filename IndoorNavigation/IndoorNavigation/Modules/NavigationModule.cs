@@ -58,18 +58,22 @@ namespace IndoorNavigation.Modules
 
         private string _navigationGraphName;
 
-        private Guid _destinationID;
+        private Guid _destinationRegionID;
+        private Guid _destinationWaypointID;
 
         private EventHandler _navigationResultEventHandler;
 
         public NavigationEvent _event { get; private set; }
 
-        public NavigationModule(string navigationGraphName, Guid destinationID)
+        public NavigationModule(string navigationGraphName,
+                                Guid destinationRegionID,
+                                Guid destinationWaypointID)
         {
             _event = new NavigationEvent();
 
             _navigationGraphName = navigationGraphName;
-            _destinationID = destinationID;
+            _destinationRegionID = destinationRegionID;
+            _destinationWaypointID = destinationWaypointID;
 
             ConstructSession();
         }
@@ -82,8 +86,6 @@ namespace IndoorNavigation.Modules
         {
             const int falseInt = -100;
             List<int> avoidList = new List<int>();
-
-            Console.WriteLine("-- begin StartSession --- ");
 
             Console.WriteLine("-- setup preference --- ");
             if (Application.Current.Properties.ContainsKey("AvoidStair"))
@@ -106,7 +108,8 @@ namespace IndoorNavigation.Modules
             // Start the session
             _session = new Session(
                     NavigraphStorage.LoadNavigationGraphXML(_navigationGraphName),
-                    _destinationID,
+                    _destinationRegionID,
+                    _destinationWaypointID,
                     avoidList.ToArray());
                     
             _navigationResultEventHandler = new EventHandler(HandleNavigationResult);
@@ -120,7 +123,6 @@ namespace IndoorNavigation.Modules
         /// </summary>
         private void HandleNavigationResult(object sender, EventArgs args)
         {
-            Console.WriteLine("received event raised from Session class");
             _event.OnEventCall(args);
         }
 

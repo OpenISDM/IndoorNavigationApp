@@ -84,6 +84,7 @@ namespace IndoorNavigation.Modules
         private ManualResetEventSlim _nextWaypointEvent = new ManualResetEventSlim(false);
 
         public Session(NavigationGraph graph,
+                       Guid finalRegionID,
                        Guid finalWaypointID,
                        int[] avoid)
         {
