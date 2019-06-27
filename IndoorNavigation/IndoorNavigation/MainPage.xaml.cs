@@ -137,9 +137,9 @@ namespace IndoorNavigation
              var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
             if (e.Item is Location location)
             {
-                switch (NavigraphStorage.LoadNavigationGraphXML(location.UserNaming)._buildingName)
+                switch (NavigraphStorage.LoadNavigationGraphXML(location.UserNaming)._industryService)
                 {
-                    case "NTUH_YunLin":
+                    case "hospital":
                         var answser = await DisplayAlert(
                             _resourceManager.GetString("GO_NAVIGATION_HOME_PAGE_STRING", currentLanguage),
                             location.UserNaming, _resourceManager.GetString("OK_STRING", currentLanguage),
@@ -151,6 +151,7 @@ namespace IndoorNavigation
                         break;
 
                     default:
+                        Console.WriteLine("Unknown _industryService");
                         break;
                 }
             }

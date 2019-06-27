@@ -23,8 +23,11 @@ namespace IndoorNavigation.Modules
             EARTH_RADIUS = 6378137;
         }
         public NavigationGraph GetString(XmlDocument xmldocument)
-        {/*
+        {
             Console.WriteLine("In Parser");
+
+            _navigationgraph._industryService = "hospital";
+            /*
             XmlNode navigation_graph = xmldocument.SelectSingleNode("navigation_graph");
             XmlNode regions = xmldocument.SelectSingleNode("navigation_graph/regions");
             XmlNode navigraphs = xmldocument.SelectSingleNode("navigation_graph/navigraphs");
