@@ -18,8 +18,6 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>MinimumOSVersion</key>
-	<string>9.0</string>
 	<key>CFBundleDisplayName</key>
 	<string>IndoorNavigation</string>
 	<key>CFBundleIdentifier</key>
@@ -28,10 +26,6 @@
 	<string>1.0</string>
 	<key>CFBundleName</key>
 	<string>IndoorNavigation</string>
-	<key>XSAppIconAssets</key>
-	<string>Assets.xcassets/AppIcon.appiconset</string>
-	<key>XSLaunchImageAssets</key>
-	<string>Assets.xcassets/LaunchImage.launchimage</string>
 	<key>NSCameraUsageDescription</key>
 	<string>This app needs to access a camera to scan the barcode.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
@@ -47,5 +41,7 @@
 	<string>en_US</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>MinimumOSVersion</key>
+	<string>9.0</string>
 </dict>
 </plist>
