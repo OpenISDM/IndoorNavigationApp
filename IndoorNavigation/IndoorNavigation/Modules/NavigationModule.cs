@@ -39,7 +39,7 @@
  * Authors:
  * 
  *      Paul Chang, paulchang@iis.sinica.edu.tw
- *      Chun Yu Lai, chunyu1202@gmail.com
+ *      Chun-Yu Lai, chunyu1202@gmail.com
  *
  */
 using System;
@@ -58,6 +58,7 @@ namespace IndoorNavigation.Modules
 
         private string _navigationGraphName;
 
+        private Guid _sourceRegionID;
         private Guid _destinationRegionID;
         private Guid _destinationWaypointID;
 
@@ -66,12 +67,14 @@ namespace IndoorNavigation.Modules
         public NavigationEvent _event { get; private set; }
 
         public NavigationModule(string navigationGraphName,
+                                Guid sourceRegionID,
                                 Guid destinationRegionID,
                                 Guid destinationWaypointID)
         {
             _event = new NavigationEvent();
 
             _navigationGraphName = navigationGraphName;
+            _sourceRegionID = sourceRegionID;
             _destinationRegionID = destinationRegionID;
             _destinationWaypointID = destinationWaypointID;
 
@@ -108,6 +111,7 @@ namespace IndoorNavigation.Modules
             // Start the session
             _session = new Session(
                     NavigraphStorage.LoadNavigationGraphXML(_navigationGraphName),
+                    _sourceRegionID,
                     _destinationRegionID,
                     _destinationWaypointID,
                     avoidList.ToArray());

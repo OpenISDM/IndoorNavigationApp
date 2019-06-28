@@ -83,6 +83,7 @@ namespace IndoorNavigation.Modules
         private ManualResetEventSlim _nextWaypointEvent = new ManualResetEventSlim(false);
 
         public Session(NavigationGraph graph,
+                       Guid sourceRegionID,
                        Guid finalRegionID,
                        Guid finalWaypointID,
                        int[] avoid)
@@ -251,9 +252,8 @@ namespace IndoorNavigation.Modules
                 // Construct the two-step possible wrong-way waypoints
                 Console.WriteLine("GenerateRoute: correct waypoint: " + _waypointsOnRoute[i]._id);
                 if (i - 1 >= 0)
-                {
-                    /*
-                    for (int j = 0; j < _waypointsOnRoute[i-1].Neighbors.Count; j++)
+                {/*
+                    for (int j = 0; j < _waypointsOnRoute[i-1]._neighbors.Count; j++)
                     {
                         if(!subgraph[path.ToList()[i]].Item.ID.
                             Equals(_waypointsOnRoute[i-1].Neighbors[j].TargetWaypointUUID))
@@ -374,26 +374,28 @@ namespace IndoorNavigation.Modules
                     //three informations, previous, current and next waypoints
                     else
                     {
-
-                        navigationInstruction.Distance =
+                    */
+                        navigationInstruction._distance = 10;
+                    /*
                         Subgraph.GetDistance(_subgraph,
                                               currentWaypoint,
                                               _waypointsOnRoute[_nextWaypointStep + 1]);
-
+                                              */
                         if (_nextWaypointStep == 0)
                         {
-                            navigationInstruction.Direction =
+                            navigationInstruction._direction =
                                 TurnDirection.FirstDirection;
                         }
                         else
                         {
-                            navigationInstruction.Direction =
+                            navigationInstruction._direction = TurnDirection.FirstDirection;
+                            /*
                                 Subgraph.GetTurnDirection(
                                     _waypointsOnRoute[_nextWaypointStep - 1],
                                     currentWaypoint,
-                                    _waypointsOnRoute[_nextWaypointStep + 1]);
-                        }
-
+                                    _waypointsOnRoute[_nextWaypointStep + 1]);*/
+                         }
+                        /*
                     }*/
 
                     //Get the progress

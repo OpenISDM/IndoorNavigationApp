@@ -63,6 +63,7 @@ namespace IndoorNavigation.Views.Navigation
         private string _navigationGraphName;
         private NavigationGraph _navigationGraph;
 		public ResourceManager _resourceManager;
+
 		public ObservableCollection<string> _items { get; set; }
         public ObservableCollection<DestinationItem> _destinationItems { get; set; }
 
@@ -113,7 +114,10 @@ namespace IndoorNavigation.Views.Navigation
             if (e.Item is DestinationItem destination)
             {
                 Console.WriteLine("start of Handle_ItemTapped in DestinationPickPage");
+
+                Guid sourceRegionID = new Guid();
                 await Navigation.PushAsync(new NavigatorPage(_navigationGraphName,
+                                                             sourceRegionID,
                                                              destination._regionID,
                                                              destination._waypointID,
                                                              destination._waypointName));

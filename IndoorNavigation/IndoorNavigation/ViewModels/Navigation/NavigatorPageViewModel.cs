@@ -74,6 +74,7 @@ namespace IndoorNavigation.ViewModels.Navigation
 		public ResourceManager _resourceManager;
 
 		public NavigatorPageViewModel(string navigationGraphName,
+                                      Guid sourceRegionID,
                                       Guid destinationRegionID,
                                       Guid destinationWaypointID,
                                       string destinationWaypointName)
@@ -82,6 +83,7 @@ namespace IndoorNavigation.ViewModels.Navigation
 			DestinationWaypointName = destinationWaypointName;
 
 			_navigationModule = new NavigationModule(navigationGraphName,
+                                                     sourceRegionID,
                                                      destinationRegionID,
                                                      destinationWaypointID);
 			_navigationModule._event._eventHandler += GetNavigationResultEvent;
