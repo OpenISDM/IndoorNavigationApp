@@ -40,7 +40,7 @@
  * Authors:
  *
  *      Paul Chang, paulchang@iis.sinica.edu.tw
- *      Chun Yu Lai, chunyu1202@gmail.com
+ *      Chun-Yu Lai, chunyu1202@gmail.com
  *
  */
 using Xamarin.Forms;
@@ -141,62 +141,104 @@ namespace IndoorNavigation.ViewModels.Navigation
 			var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
 			switch (instruction._direction)
 			{
-                /*
 				case TurnDirection.FirstDirection:
-					stepLabel = string.Format(_resourceManager.GetString("DIRECTION_STRAIGHT_STRING", currentLanguage) + "\n{0}", instruction.NextWaypoint.Name);
+					stepLabel = string.Format(
+                        _resourceManager.GetString(
+                            "DIRECTION_STRAIGHT_STRING", 
+                            currentLanguage) + "\n{0}", 
+                            instruction._nextWaypoint._name);
 					stepImage = "Arrow_up";
 					break;
 
 				case TurnDirection.Forward:
-					stepLabel = string.Format(_resourceManager.GetString("DIRECTION_STRAIGHT_STRING", currentLanguage) + "\n{0}", instruction.NextWaypoint.Name);
+					stepLabel = string.Format(
+                        _resourceManager.GetString(
+                            "DIRECTION_STRAIGHT_STRING", 
+                            currentLanguage) + "\n{0}", 
+                            instruction._nextWaypoint._name);
 					stepImage = "Arrow_up";
 					break;
 
 				case TurnDirection.Forward_Right:
-					stepLabel = string.Format(_resourceManager.GetString("DIRECTION_RIGHT_FRONT_STRING", currentLanguage) + "\n{0}", instruction.NextWaypoint.Name);
+					stepLabel = string.Format(
+                        _resourceManager.GetString(
+                            "DIRECTION_RIGHT_FRONT_STRING", 
+                            currentLanguage) + "\n{0}", 
+                            instruction._nextWaypoint._name);
 					stepImage = "Arrow_frontright";
 					break;
 
 				case TurnDirection.Right:
-					stepLabel = string.Format(_resourceManager.GetString("DIRECTION_RIGHT_STRING", currentLanguage) + "\n{0}", instruction.NextWaypoint.Name);
+					stepLabel = string.Format(
+                        _resourceManager.GetString(
+                            "DIRECTION_RIGHT_STRING", 
+                            currentLanguage) + "\n{0}", 
+                            instruction._nextWaypoint._name);
 					stepImage = "Arrow_right";
 					break;
 
 				case TurnDirection.Backward_Right:
-					stepLabel = string.Format(_resourceManager.GetString("DIRECTION_RIGHT_REAR_STRING", currentLanguage) + "\n{0}", instruction.NextWaypoint.Name);
+					stepLabel = string.Format(
+                        _resourceManager.GetString(
+                            "DIRECTION_RIGHT_REAR_STRING", 
+                            currentLanguage) + "\n{0}", 
+                            instruction._nextWaypoint._name);
 					stepImage = "Arrow_rearright";
 					break;
 
 				case TurnDirection.Backward:
-					stepLabel = string.Format(_resourceManager.GetString("DIRECTION_REAR_STRING", currentLanguage) + "\n{0}", instruction.NextWaypoint.Name);
+					stepLabel = string.Format(
+                        _resourceManager.GetString(
+                            "DIRECTION_REAR_STRING", 
+                            currentLanguage) + "\n{0}", 
+                            instruction._nextWaypoint._name);
 					stepImage = "Arrow_rear";
 					break;
 
 				case TurnDirection.Backward_Left:
-					stepLabel = string.Format(_resourceManager.GetString("DIRECTION_LEFT_REAR_STRING", currentLanguage) + "\n{0}", instruction.NextWaypoint.Name);
+					stepLabel = string.Format(
+                        _resourceManager.GetString(
+                            "DIRECTION_LEFT_REAR_STRING", 
+                            currentLanguage) + "\n{0}", 
+                            instruction._nextWaypoint._name);
 					stepImage = "Arrow_rearleft";
 					break;
 
 				case TurnDirection.Left:
-					stepLabel = string.Format(_resourceManager.GetString("DIRECTION_LEFT_STRING", currentLanguage) + "\n{0}", instruction.NextWaypoint.Name);
+					stepLabel = string.Format(
+                        _resourceManager.GetString(
+                            "DIRECTION_LEFT_STRING", 
+                            currentLanguage) + "\n{0}", 
+                            instruction._nextWaypoint._name);
 					stepImage = "Arrow_left";
 					break;
 
 				case TurnDirection.Forward_Left:
-					stepLabel = string.Format(_resourceManager.GetString("DIRECTION_LEFT_FRONT_STRING", currentLanguage) + "\n{0}", instruction.NextWaypoint.Name);
+					stepLabel = string.Format(
+                        _resourceManager.GetString(
+                            "DIRECTION_LEFT_FRONT_STRING", 
+                            currentLanguage) + "\n{0}", 
+                            instruction._nextWaypoint._name);
 					stepImage = "Arrow_frontleft";
 					break;
 
 				case TurnDirection.Up:
-					stepLabel = string.Format(_resourceManager.GetString("DIRECTION_UP_STRING", currentLanguage) + "\n{0}", instruction.NextWaypoint.Name);
+					stepLabel = string.Format(
+                        _resourceManager.GetString(
+                            "DIRECTION_UP_STRING", 
+                            currentLanguage) + "\n{0}", 
+                            instruction._nextWaypoint._name);
 					stepImage = "Stairs_up";
 					break;
 
 				case TurnDirection.Down:
-					stepLabel = string.Format(_resourceManager.GetString("DIRECTION_DOWN_STRING", currentLanguage) + "\n{0}", instruction.NextWaypoint.Name);
+					stepLabel = string.Format(
+                        _resourceManager.GetString(
+                            "DIRECTION_DOWN_STRING", 
+                            currentLanguage) + "\n{0}", 
+                            instruction._nextWaypoint._name);
 					stepImage = "Stairs_down";
 					break;
-                    */
 				default:
 					stepLabel = "You're get ERROR status";
 					stepImage = "Warning";
