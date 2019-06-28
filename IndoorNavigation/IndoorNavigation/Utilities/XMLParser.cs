@@ -8,7 +8,7 @@ using IndoorNavigation.Models.NavigaionLayer;
 
 
 namespace IndoorNavigation.Modules
-{
+{/*
     public class XMLParser
     {
         public NavigationGraph _navigationgraph;
@@ -23,30 +23,11 @@ namespace IndoorNavigation.Modules
 
             EARTH_RADIUS = 6378137;
         }
+        /*
         public NavigationGraph GetString(XmlDocument xmlDocument)
         {
             Console.WriteLine("In Parser");
-            //XmlNode navigation_graph = xmldocument.SelectSingleNode("navigation_graph");
-            /*
-            XmlNode regions = xmldocument.SelectSingleNode("navigation_graph/regions");
-            XmlNode navigraphs = xmldocument.SelectSingleNode("navigation_graph/navigraphs");
-
-            XmlNodeList region = xmldocument.SelectNodes("navigation_graph/regions/region");
-            XmlNodeList edgeInRegions = xmldocument.SelectNodes("navigation_graph/regions/edge");
-            XmlNodeList navigraph = xmldocument.SelectNodes("navigation_graph/navigraphs/navigraph");
-            
-            // XmlNodeList edgeInNavigraph = xmldocument.SelectNodes("navigation_graph/navigraphs/navigraph/edge");
-            */
-           
             XmlElement elementInNavigationGraph = (XmlElement)xmlDocument.SelectSingleNode("navigation_graph");
-            /*
-            XmlElement elementInRegions = (XmlElement)regions;
-            XmlElement elementInnavigraphs = (XmlElement)navigraphs;
-
-            XmlElement elementInRegion = (XmlElement)region;
-            //XmlElement elementInWaypoint = (XmlElement)waypoint;
-            */
-            
             _navigationgraph._country = elementInNavigationGraph.GetAttribute("country");
             _navigationgraph._cityCounty = elementInNavigationGraph.GetAttribute("city_county");
             _navigationgraph._industryService = elementInNavigationGraph.GetAttribute("industry_service");
@@ -71,6 +52,27 @@ namespace IndoorNavigation.Modules
                 Console.WriteLine("region_floor ; " + regionGet._floor);
 
                 XmlNodeList waypoint = regionNode.SelectNodes("waypoint");
+            }
+
+                //XmlNode navigation_graph = xmldocument.SelectSingleNode("navigation_graph");
+                /*
+                XmlNode regions = xmldocument.SelectSingleNode("navigation_graph/regions");
+                XmlNode navigraphs = xmldocument.SelectSingleNode("navigation_graph/navigraphs");
+
+                XmlNodeList region = xmldocument.SelectNodes("navigation_graph/regions/region");
+                XmlNodeList edgeInRegions = xmldocument.SelectNodes("navigation_graph/regions/edge");
+                XmlNodeList navigraph = xmldocument.SelectNodes("navigation_graph/navigraphs/navigraph");
+
+                // XmlNodeList edgeInNavigraph = xmldocument.SelectNodes("navigation_graph/navigraphs/navigraph/edge");
+                */
+
+                /*
+                XmlElement elementInRegions = (XmlElement)regions;
+                XmlElement elementInnavigraphs = (XmlElement)navigraphs;
+
+                XmlElement elementInRegion = (XmlElement)region;
+                //XmlElement elementInWaypoint = (XmlElement)waypoint;
+                */
 
                 /*
 
@@ -123,7 +125,7 @@ namespace IndoorNavigation.Modules
 
                 regionNumber++;
                 */
-            }
+           /* }*/
             /*
             List<RegionNeighbor> regionNeighborList = new List<RegionNeighbor>();
 
@@ -474,9 +476,9 @@ namespace IndoorNavigation.Modules
             // string navigraph_region_id = elementInnavigraphs.GetAttribute("region_id");
 
             //xmlString.
-            */
+            *//*
             return _navigationgraph;
-        }
+        }*/
         //public double GetDistance(double lng1, double lat1, double lng2, double lat2)
         //{
         //    double radLat1 = Rad(lat1);
@@ -493,7 +495,7 @@ namespace IndoorNavigation.Modules
         //{
         //    return (double)d * Math.PI / 180d;
         //}
-
-    }
+        /*
+    }*/
 }
 

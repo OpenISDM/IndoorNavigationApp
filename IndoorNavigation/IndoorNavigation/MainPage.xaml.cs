@@ -54,6 +54,7 @@ using System.Resources;
 using IndoorNavigation.Resources.Helpers;
 using System.Reflection;
 using IndoorNavigation.Modules.Utilities;
+using IndoorNavigation.Models.NavigaionLayer;
 
 namespace IndoorNavigation
 {
@@ -137,7 +138,9 @@ namespace IndoorNavigation
              var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
             if (e.Item is Location location)
             {
-                switch (NavigraphStorage.LoadNavigationGraphXML(location.UserNaming)._industryService)
+                NavigationGraph navigationGraph = NavigraphStorage.LoadNavigationGraphXML(location.UserNaming);
+
+                switch (navigationGraph.GetIndustryServer())
                 {
                     case "hospital":
                         var answser = await DisplayAlert(

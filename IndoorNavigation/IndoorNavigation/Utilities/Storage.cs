@@ -85,8 +85,9 @@ namespace IndoorNavigation.Modules.Utilities
             StringReader stringReader = new StringReader(xmlString);
             XmlDocument document = new XmlDocument();
             document.Load(filePath);
-            XMLParser xmlParser = new XMLParser();
-            NavigationGraph navigationGraph =  xmlParser.GetString(document);
+            //XMLParser xmlParser = new XMLParser();
+            //NavigationGraph navigationGraph =  xmlParser.GetString(document);
+            NavigationGraph navigationGraph = new NavigationGraph(document);
 
             return navigationGraph;
         }

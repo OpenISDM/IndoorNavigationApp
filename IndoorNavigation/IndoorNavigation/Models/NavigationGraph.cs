@@ -104,6 +104,12 @@ namespace IndoorNavigation.Models.NavigaionLayer
         GPS
     }
 
+    public enum DirectionalConnection
+    {
+        OneWay = 1,
+        BiDirection = 2
+    }
+
     public enum ConnectionType
     {
         NormalHallway = 0,
@@ -124,68 +130,158 @@ namespace IndoorNavigation.Models.NavigaionLayer
         Bathroom,
         BloodCollectionCounter
     }
+
     public class NavigationGraph
     {
-        public string _country { get; set; }
-        public string _cityCounty { get; set; }
-        public string _industryService { get; set; }
-        public string _ownerOrganization { get; set; }
-        public string _buildingName { get; set; }
+        private string _country;
+        private string _cityCounty;
+        private string _industryService;
+        private string _ownerOrganization;
+        private string _buildingName;
 
         //Guid is region's Guid
-        public Dictionary<Guid, OneRegion> _regions { get; set; }
+        private Dictionary<Guid, Region> _regions;
 
         //public Dictionary<Guid, List<RegionEdge>> _edges { get; set; }
-        public Dictionary<Tuple<Guid,Guid>, List<RegionEdge>> _edges { get; set;}
+        private Dictionary<Tuple<Guid,Guid>, List<RegionEdge>> _edges { get; set;}
+
         //Guid is region's Guid
-        public Dictionary<Guid, Navigraph> _navigraphs { get; set; }       
-    }
+        private Dictionary<Guid, Navigraph> _navigraphs { get; set; }
 
-    public class Navigraph
-    {
-        public Guid _id { get; set; }
+        public NavigationGraph(XmlDocument xmlDocument) {
+            Console.WriteLine(">> NavigationGraph");
+
+            // Read all attributes of <navigation_graph> tag
+            XmlElement elementInNavigationGraph =
+                (XmlElement)xmlDocument.SelectSingleNode("navigation_graph");
+            _country = elementInNavigationGraph.GetAttribute("country");
+            _cityCounty = elementInNavigationGraph.GetAttribute("city_county");
+            _industryService = elementInNavigationGraph.GetAttribute("industry_service");
+            _ownerOrganization = elementInNavigationGraph.GetAttribute("owner_organization");
+            _buildingName = elementInNavigationGraph.GetAttribute("building_name");
+
+            // Read all <region> blocks within <regions>
+            XmlNodeList xmlRegion = xmlDocument.SelectNodes("navigation_graph/regions/region");
+            foreach (XmlNode regionNode in xmlRegion)
+            {
+                Region region = new Region();
+
+                // Read all attributes of each region
+                XmlElement xmlElement = (XmlElement)regionNode;
+                region._id = Guid.Parse(xmlElement.GetAttribute("id"));
+                Console.WriteLine("id : " + region._id);
+
+                region._IPSType =
+                    (IPSType)Enum.Parse(typeof(IPSType),
+                                        xmlElement.GetAttribute("ips_type"),
+                                        false);
+                Console.WriteLine("ips_type : " + region._IPSType);
+
+                region._name = xmlElement.GetAttribute("name");
+                Console.WriteLine("name : " + region._name);
+
+                region._floor = Int32.Parse(xmlElement.GetAttribute("floor"));
+                Console.WriteLine("floor : " + region._floor);
+
+                // Read all <waypoint> within <regions>
+                region._waypointsByCategory = new Dictionary<CategoryType, List<Waypoint>>();
+
+                XmlNodeList waypoint = regionNode.SelectNodes("waypoint");
+            }
             
-        //Guid is waypoint's Guid
-        public Dictionary<Guid, Waypoint> _waypoints { get; set; }
+            // Read all <edge> block within <region>
+            XmlNodeList xmlRegionEdge = xmlDocument.SelectNodes("navigation_graph/regions/edge");
+            foreach (XmlNode regionEdgeNode in xmlRegionEdge)
+            {
+                RegionEdge regionEdge = new RegionEdge();
 
-        public Dictionary<Tuple<Guid,Guid>, WaypointEdge> _edges { get; set;}
+                // Read all attributes of each edge
+                XmlElement xmlElement = (XmlElement)regionEdgeNode;
+                regionEdge._region1 = Guid.Parse(xmlElement.GetAttribute("region1"));
+                Console.WriteLine("region1 : " + regionEdge._region1);
 
-        //Guid is waypoint's Guid
-        public Dictionary<Guid, List<Guid>> _beacons { get; set; }
-     }
+                regionEdge._waypoint1 = Guid.Parse(xmlElement.GetAttribute("waypoint1"));
+                Console.WriteLine("waypoint1 : " + regionEdge._waypoint1);
 
-     public class OneRegion
-     {
-         public Guid _id { get; set; }
-         public IPSType _IPSType { get; set; }
+                regionEdge._region2 = Guid.Parse(xmlElement.GetAttribute("region2"));
+                Console.WriteLine("region2 : " + regionEdge._region1);
 
-         public string _name { get; set; }
-         public int _floor { get; set; }
-         public List<Guid> _neighbors { get; set; }
-         public Dictionary<CategoryType, List<Waypoint>> _waypointsByCategory { get; set; }
-     }
+                regionEdge._waypoint2 = Guid.Parse(xmlElement.GetAttribute("waypoint2"));
+                Console.WriteLine("waypoint2 : " + regionEdge._waypoint2);
 
-     public struct RegionEdge
-     {
-         //public Tuple<Guid, Guid> edge;
-         public Guid _region1 { get; set; }
-         public Guid _region2 { get; set; } 
-         public Guid _waypoint1 { get; set; }
-         public Guid _waypoint2 { get; set; }
-         public int _source { get; set; }
-         public double _distance { get; set; }
-         public CardinalDirection _direction { get; set; }
-         public ConnectionType _connectionType { get; set; }
-     }
+                regionEdge._biDirection = 
+                    (DirectionalConnection)Enum.Parse(typeof(DirectionalConnection),
+                                                      xmlElement.GetAttribute("bi_direction"),
+                                                      false);
+                Console.WriteLine("bi_direction : " + regionEdge._biDirection);
 
-     public struct WaypointEdge
-     {
-         public Guid _waypoint1 { get; set; }
-         public Guid _waypoint2 { get; set; }
-         public int _source { get; set; }
-         public CardinalDirection _direction { get; set; }
-         public ConnectionType _connectionType { get; set; }
-         public double _distance { get; set; }
-      }
+                regionEdge._source = 0;
+                if (!String.IsNullOrEmpty(xmlElement.GetAttribute("source")))
+                {
+                    regionEdge._source = Int32.Parse(xmlElement.GetAttribute("source"));
+                }
+                Console.WriteLine("source : " + regionEdge._source);
 
+                regionEdge._direction =
+                    (CardinalDirection)Enum.Parse(typeof(CardinalDirection),
+                                                  xmlElement.GetAttribute("direction"),
+                                                  false);
+                Console.WriteLine("direction : " + regionEdge._direction);
+
+                regionEdge._connectionType =
+                    (ConnectionType)Enum.Parse(typeof(ConnectionType),
+                                               xmlElement.GetAttribute("connection_type"),
+                                               false);
+                Console.WriteLine("connection_type : " + regionEdge._connectionType);
+
+            }
+            Console.WriteLine("<< NavigationGraph");
+        }
+
+        public string GetIndustryServer() {
+            return _industryService;
+        }
+
+        public Dictionary<Guid, Region> GetResions() {
+            return _regions;
+        }
+
+        public class Navigraph
+        {
+            public Guid _id { get; set; }
+
+            //Guid is waypoint's Guid
+            public Dictionary<Guid, Waypoint> _waypoints { get; set; }
+
+            public Dictionary<Tuple<Guid, Guid>, WaypointEdge> _edges { get; set; }
+
+            //Guid is waypoint's Guid
+            public Dictionary<Guid, List<Guid>> _beacons { get; set; }
+        }
+
+        public struct RegionEdge
+        {
+            //public Tuple<Guid, Guid> edge;
+            public Guid _region1 { get; set; }
+            public Guid _region2 { get; set; }
+            public Guid _waypoint1 { get; set; }
+            public Guid _waypoint2 { get; set; }
+            public DirectionalConnection _biDirection { get; set; }
+            public int _source { get; set; }
+            public double _distance { get; set; }
+            public CardinalDirection _direction { get; set; }
+            public ConnectionType _connectionType { get; set; }
+        }
+
+        public struct WaypointEdge
+        {
+            public Guid _waypoint1 { get; set; }
+            public Guid _waypoint2 { get; set; }
+            public DirectionalConnection _biDirection { get; set; }
+            public int _source { get; set; }
+            public CardinalDirection _direction { get; set; }
+            public ConnectionType _connectionType { get; set; }
+            public double _distance { get; set; }
+        }
+    }
 }

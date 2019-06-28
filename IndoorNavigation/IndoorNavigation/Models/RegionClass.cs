@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using IndoorNavigation.Models.NavigaionLayer;
 
 namespace IndoorNavigation.Models
-{   
-    public class Waypoint
+{
+    public class Region
     {
         public Guid _id { get; set; }
+        public IPSType _IPSType { get; set; }
         public string _name { get; set; }
-        public LocationType _type { get; set; }
-        public CategoryType _category { get; set; }
+        public int _floor { get; set; }
         public List<Guid> _neighbors { get; set; }
-     }    
+        public Dictionary<CategoryType, List<Waypoint>> _waypointsByCategory { get; set; }
+    }
 }
