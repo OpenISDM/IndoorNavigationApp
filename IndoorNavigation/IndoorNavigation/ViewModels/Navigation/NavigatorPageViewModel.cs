@@ -104,19 +104,19 @@ namespace IndoorNavigation.ViewModels.Navigation
 		private void DisplayInstructions(EventArgs args)
 		{
 			Console.WriteLine(">> DisplayInstructions");
-			NavigationInstruction instruction = (args as NavigationEventArgs).NextInstruction;
+			NavigationInstruction instruction = (args as NavigationEventArgs)._nextInstruction;
 			var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
 			string currentStepImage;
 			string currentStepLabel;
 
-			switch ((args as NavigationEventArgs).Result)
+			switch ((args as NavigationEventArgs)._result)
 			{
 				case NavigationResult.Run:
 					SetInstruction(instruction, out currentStepLabel, out currentStepImage);
 					CurrentStepLabel = currentStepLabel;
 					CurrentStepImage = currentStepImage;
-					CurrentWaypointName = instruction.CurrentWaypoint._name;
-					NavigationProgress = instruction.Progress;
+					CurrentWaypointName = instruction._currentWaypoint._name;
+					NavigationProgress = instruction._progress;
 					break;
 
 				case NavigationResult.AdjustRoute:
@@ -139,7 +139,7 @@ namespace IndoorNavigation.ViewModels.Navigation
 									out string stepImage)
 		{
 			var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-			switch (instruction.Direction)
+			switch (instruction._direction)
 			{
                 /*
 				case TurnDirection.FirstDirection:

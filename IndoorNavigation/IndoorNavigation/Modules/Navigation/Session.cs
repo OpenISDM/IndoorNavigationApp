@@ -157,19 +157,19 @@ namespace IndoorNavigation.Modules
 
                             _event.OnEventCall(new NavigationEventArgs
                             {
-                                Result = NavigationResult.Run,
-                                NextInstruction = new NavigationInstruction
+                                _result = NavigationResult.Run,
+                                _nextInstruction = new NavigationInstruction
                                 {
-                                    CurrentWaypoint = startWaypoint,
-                                    NextWaypoint = _waypointsOnRoute[1],
+                                    _currentWaypoint = startWaypoint,
+                                    _nextWaypoint = _waypointsOnRoute[1],
                                     /*
                                     Distance =
                                         Subgraph.GetDistance(_subgraph,
                                                               startWaypoint,
                                                               _waypointsOnRoute[1]),
                                                               */
-                                    Progress = 0,
-                                    Direction = TurnDirection.FirstDirection
+                                    _progress = 0,
+                                    _direction = TurnDirection.FirstDirection
                                 }
                             });
 
@@ -321,7 +321,7 @@ namespace IndoorNavigation.Modules
 
                     _event.OnEventCall(new NavigationEventArgs
                     {
-                        Result = NavigationResult.Arrival
+                        _result = NavigationResult.Arrival
                     });
                 }
             }
@@ -333,7 +333,7 @@ namespace IndoorNavigation.Modules
 
                     _event.OnEventCall(new NavigationEventArgs
                     {
-                        Result = NavigationResult.Arrival
+                        _result = NavigationResult.Arrival
                     });
                 }
                 else if (_waypointsOnRoute[_nextWaypointStep].Equals(currentWaypoint))
@@ -343,8 +343,8 @@ namespace IndoorNavigation.Modules
                     Console.WriteLine("current waypoint: " + currentWaypoint._id);
                     Console.WriteLine("next waypoint: " + _waypointsOnRoute[_nextWaypointStep + 1]._id);
 
-                    navigationInstruction.CurrentWaypoint = currentWaypoint;
-                    navigationInstruction.NextWaypoint =
+                    navigationInstruction._currentWaypoint = currentWaypoint;
+                    navigationInstruction._nextWaypoint =
                         _waypointsOnRoute[_nextWaypointStep + 1];
 
                     //If the floor information between the current waypoint and
@@ -401,15 +401,15 @@ namespace IndoorNavigation.Modules
                                       _nextWaypointStep,
                                       _waypointsOnRoute.Count);
 
-                    navigationInstruction.Progress =
+                    navigationInstruction._progress =
                         (double)Math.Round(100 * ((decimal)_nextWaypointStep /
                                            (_waypointsOnRoute.Count - 1)), 3);
 
                     // Raise event to notify the UI/main thread with the result
                     _event.OnEventCall(new NavigationEventArgs
                     {
-                        Result = NavigationResult.Run,
-                        NextInstruction = navigationInstruction
+                        _result = NavigationResult.Run,
+                        _nextInstruction = navigationInstruction
                     });
                 }
                 else
@@ -433,7 +433,7 @@ namespace IndoorNavigation.Modules
                             Console.WriteLine("---- [case: wrong waypoint] .... ");
                             _event.OnEventCall(new NavigationEventArgs
                             {
-                                Result = NavigationResult.AdjustRoute
+                                _result = NavigationResult.AdjustRoute
                             });
 
                             break;
@@ -466,42 +466,22 @@ namespace IndoorNavigation.Modules
 
         public class NavigationInstruction
         {
-            /// <summary>
-            /// The next waypoint within navigation path
-            /// </summary>
-            /// 
-            public Waypoint CurrentWaypoint;
+            public Waypoint _currentWaypoint;
 
-            public Waypoint NextWaypoint;
+            public Waypoint _nextWaypoint;
 
-            /// <summary>
-            /// The distance from current waypoint to NextWaypoint
-            /// </summary>
-            public double Distance;
+            public double _distance;
 
-            /// <summary>
-            /// Progress of navigation.
-            /// </summary>
-            public double Progress;
+            public double _progress;
 
-            /// <summary>
-            /// The direction to turn to the next waypoint using the enum type
-            /// </summary>
-            public TurnDirection Direction;
+            public TurnDirection _direction;
         }
 
         public class NavigationEventArgs : EventArgs
         {
-            /// <summary>
-            /// Status of navigation
-            /// </summary>
-            public NavigationResult Result { get; set; }
+            public NavigationResult _result { get; set; }
 
-            /// <summary>
-            /// Gets or sets the next instruction. It will send to the
-            // ViewModel to update the UI instruction.
-            /// </summary>
-            public NavigationInstruction NextInstruction { get; set; }
+            public NavigationInstruction _nextInstruction { get; set; }
 
         }
     }
