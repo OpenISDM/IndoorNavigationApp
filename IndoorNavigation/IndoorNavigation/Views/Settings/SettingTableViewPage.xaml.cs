@@ -118,7 +118,8 @@ namespace IndoorNavigation.Views.Settings
             string qrCodeValue = string.Empty;
             if (DeviceInfo.DeviceType == DeviceType.Virtual)
             {
-                qrCodeValue = "https://drive.google.com/uc?authuser=0&id=1C-JgyOHEikxuqgVi9S7Ww9g05u2Jb3-q&export=download@OpenISDM";
+               // qrCodeValue = "https://drive.google.com/uc?authuser=0&id=1C-JgyOHEikxuqgVi9S7Ww9g05u2Jb3-q&export=download@OpenISDM";
+                qrCodeValue = "https://drive.google.com/uc?authuser=0&id=1w_cc8pp483Dd5KTbM3-JaCelhMh8wTQs&export=download@OpenISDM";   
             }
             else
             {

@@ -55,6 +55,8 @@ using Plugin.Multilingual;
 using System.Resources;
 using IndoorNavigation.Resources.Helpers;
 using System.Reflection;
+using IndoorNavigation.Models;
+
 
 namespace IndoorNavigation.Views.Navigation
 {

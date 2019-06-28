@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (c) 2019 Academia Sinica, Institude of Information Science
  *
  * License:
@@ -58,6 +58,16 @@ using System.Xml;
 
 namespace IndoorNavigation.Models.NavigaionLayer
 {
+
+    public enum LocationType
+    {
+        landmark = 0,
+        junction_branch,
+        midpath,
+        terminal_destination,
+        portal
+    }
+
     public enum CardinalDirection
     {
         North = 0,
@@ -125,71 +135,57 @@ namespace IndoorNavigation.Models.NavigaionLayer
         //Guid is region's Guid
         public Dictionary<Guid, OneRegion> _regions { get; set; }
 
-        //Guid is Source Region's Guid
-        public Dictionary<Guid, RegionEdge> _edges { get; set; }
-
+        //public Dictionary<Guid, List<RegionEdge>> _edges { get; set; }
+        public Dictionary<Tuple<Guid,Guid>, List<RegionEdge>> _edges { get; set;}
         //Guid is region's Guid
-        public Dictionary<Guid, Navigraph> _navigraphs { get; set; }
-    }
-
-    public class OneRegion
-    {
-        public Guid _id { get; set; }
-        public string _name { get; set; }
-        public int _floor { get; set; }
-        public List<RegionNeighbor> _neighbors { get; set; }
-        public Dictionary<CategoryType, List<Waypoint>> _waypointsByCategory { get; set; }
-    }
-
-    public class RegionNeighbor
-    {
-        public Guid _id { get; set; }
-    }
-
-    public class RegionEdge
-    {
-        public Guid _sinkRegionID { get; set; }
-        public Guid _sourceWaypointID { get; set; }
-        public Guid _sinkWaypointID { get; set; }
-        public double _distance { get; set; }
-        public CardinalDirection _direction { get; set; }
-        public ConnectionType _connectionType { get; set; }
+        public Dictionary<Guid, Navigraph> _navigraphs { get; set; }       
     }
 
     public class Navigraph
     {
         public Guid _id { get; set; }
-        public IPSType _IPSType { get; set; }
-
+            
         //Guid is waypoint's Guid
         public Dictionary<Guid, Waypoint> _waypoints { get; set; }
 
-        //Guid is source waypoint's Guid
-        public Dictionary<Guid, WaypointEdge> _edges { get; set; }
+        public Dictionary<Tuple<Guid,Guid>, WaypointEdge> _edges { get; set;}
 
         //Guid is waypoint's Guid
         public Dictionary<Guid, List<Guid>> _beacons { get; set; }
-    }
+     }
 
-    public class Waypoint
-    {
-        public Guid _id { get; set; }
-        public string _name { get; set; }
-        public string _type { get; set; }
-        public CategoryType _category { get; set; }
-        public List<WaypointNeighbor> _neighbors { get; set; }
-    }
+     public class OneRegion
+     {
+         public Guid _id { get; set; }
+         public IPSType _IPSType { get; set; }
 
-    public class WaypointNeighbor
-    {
-        public Guid _id { get; set; }
-    }
+         public string _name { get; set; }
+         public int _floor { get; set; }
+         public List<Guid> _neighbors { get; set; }
+         public Dictionary<CategoryType, List<Waypoint>> _waypointsByCategory { get; set; }
+     }
 
-    public class WaypointEdge
-    {
-        public Guid _sinkWaypointID { get; set; }
-        public CardinalDirection _direction { get; set; }
-        public ConnectionType _connectionType { get; set; }
-        public double _distance { get; set; }
-    }
+     public struct RegionEdge
+     {
+         //public Tuple<Guid, Guid> edge;
+         public Guid _region1 { get; set; }
+         public Guid _region2 { get; set; } 
+         public Guid _waypoint1 { get; set; }
+         public Guid _waypoint2 { get; set; }
+         public int _source { get; set; }
+         public double _distance { get; set; }
+         public CardinalDirection _direction { get; set; }
+         public ConnectionType _connectionType { get; set; }
+     }
+
+     public struct WaypointEdge
+     {
+         public Guid _waypoint1 { get; set; }
+         public Guid _waypoint2 { get; set; }
+         public int _source { get; set; }
+         public CardinalDirection _direction { get; set; }
+         public ConnectionType _connectionType { get; set; }
+         public double _distance { get; set; }
+      }
+
 }

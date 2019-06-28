@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.Linq;
+using IndoorNavigation.Models;
 using IndoorNavigation.Models.NavigaionLayer;
 
 
@@ -16,9 +17,9 @@ namespace IndoorNavigation.Modules
         {
             Console.WriteLine("Construct Parser");
             _navigationgraph = new NavigationGraph();
-            _navigationgraph._regions = new Dictionary<Guid, OneRegion>();
+            //_navigationgraph._regions = new Dictionary<Guid, OneRegion>();
            // _navigationgraph._edges = new Dictionary<Guid, List<RegionEdge>>();
-            _navigationgraph._navigraphs = new Dictionary<Guid, Navigraph>();
+            //_navigationgraph._navigraphs = new Dictionary<Guid, Navigraph>();
 
             EARTH_RADIUS = 6378137;
         }
