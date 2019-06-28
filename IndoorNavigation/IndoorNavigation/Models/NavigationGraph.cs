@@ -183,13 +183,11 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 region._floor = Int32.Parse(xmlElement.GetAttribute("floor"));
                 Console.WriteLine("floor : " + region._floor);
 
-                // Read all <waypoint> within <regions>
-                region._waypointsByCategory = new Dictionary<CategoryType, List<Waypoint>>();
-
+                // Read all <waypoint> within <region>
                 XmlNodeList waypoint = regionNode.SelectNodes("waypoint");
             }
             
-            // Read all <edge> block within <region>
+            // Read all <edge> block within <regions>
             XmlNodeList xmlRegionEdge = xmlDocument.SelectNodes("navigation_graph/regions/edge");
             foreach (XmlNode regionEdgeNode in xmlRegionEdge)
             {
@@ -235,6 +233,75 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 Console.WriteLine("connection_type : " + regionEdge._connectionType);
 
             }
+
+            // Read all <navigraph> blocks within <navigraphs>
+            XmlNodeList xmlNavigraph = xmlDocument.SelectNodes("navigation_graph/navigraphs/navigraph");
+            foreach (XmlNode navigraphNode in xmlNavigraph)
+            {
+                Navigraph navigraph = new Navigraph();
+
+                // Read all attributes of each navigraph
+                XmlElement xmlElement = (XmlElement)navigraphNode;
+                navigraph._regionID = Guid.Parse(xmlElement.GetAttribute("region_id"));
+                Console.WriteLine("region_id : " + navigraph._regionID);
+
+                // Read all <waypoint> within <navigraph>
+                XmlNodeList waypoint = navigraphNode.SelectNodes("waypoint");
+
+                // Read all <edge> block within <navigraph>
+                XmlNodeList xmlWaypointEdge = navigraphNode.SelectNodes("edge");
+                foreach (XmlNode waypointEdgeNode in xmlWaypointEdge)
+                {
+                    WaypointEdge waypointEdge = new WaypointEdge();
+
+                    // Read all attributes of each edge
+                    XmlElement xmlEdgeElement = (XmlElement)waypointEdgeNode;
+                    waypointEdge._node1 = Guid.Parse(xmlEdgeElement.GetAttribute("node1"));
+                    Console.WriteLine("node1 : " + waypointEdge._node1);
+
+                    waypointEdge._node2 = Guid.Parse(xmlEdgeElement.GetAttribute("node2"));
+                    Console.WriteLine("node2 : " + waypointEdge._node1);
+
+                    waypointEdge._biDirection =
+                        (DirectionalConnection)Enum.Parse(typeof(DirectionalConnection),
+                                                          xmlEdgeElement.GetAttribute("bi_direction"),
+                                                          false);
+                    Console.WriteLine("bi_direction : " + waypointEdge._biDirection);
+
+                    waypointEdge._source = 0;
+                    if (!String.IsNullOrEmpty(xmlEdgeElement.GetAttribute("source")))
+                    {
+                        waypointEdge._source = Int32.Parse(xmlEdgeElement.GetAttribute("source"));
+                    }
+                    Console.WriteLine("source : " + waypointEdge._source);
+
+                    waypointEdge._direction =
+                        (CardinalDirection)Enum.Parse(typeof(CardinalDirection),
+                                                      xmlEdgeElement.GetAttribute("direction"),
+                                                      false);
+                    Console.WriteLine("direction : " + waypointEdge._direction);
+
+                    waypointEdge._connectionType =
+                        (ConnectionType)Enum.Parse(typeof(ConnectionType),
+                                                   xmlEdgeElement.GetAttribute("connection_type"),
+                                                   false);
+                    Console.WriteLine("connection_type : " + waypointEdge._connectionType);
+
+                }
+
+                // Read all <beacon> block within <navigraph/beacons>
+                XmlNodeList xmlBeacon = navigraphNode.SelectNodes("beacons/beacon");
+                foreach (XmlNode beaconNode in xmlBeacon)
+                {
+                    // Read all attributes of each beacon
+                    XmlElement xmlBeaconElement = (XmlElement)beaconNode;
+                    Console.WriteLine("uuid : " + Guid.Parse(xmlBeaconElement.GetAttribute("uuid")));
+
+                    Console.WriteLine("waypoint_ids : " + xmlBeaconElement.GetAttribute("waypoint_ids"));
+
+                }
+            }
+
             Console.WriteLine("<< NavigationGraph");
         }
 
@@ -248,7 +315,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
         public class Navigraph
         {
-            public Guid _id { get; set; }
+            public Guid _regionID { get; set; }
 
             //Guid is waypoint's Guid
             public Dictionary<Guid, Waypoint> _waypoints { get; set; }
@@ -275,8 +342,8 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
         public struct WaypointEdge
         {
-            public Guid _waypoint1 { get; set; }
-            public Guid _waypoint2 { get; set; }
+            public Guid _node1 { get; set; }
+            public Guid _node2 { get; set; }
             public DirectionalConnection _biDirection { get; set; }
             public int _source { get; set; }
             public CardinalDirection _direction { get; set; }
