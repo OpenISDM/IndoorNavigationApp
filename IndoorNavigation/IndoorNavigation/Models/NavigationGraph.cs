@@ -184,7 +184,32 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 Console.WriteLine("floor : " + region._floor);
 
                 // Read all <waypoint> within <region>
-                XmlNodeList waypoint = regionNode.SelectNodes("waypoint");
+                XmlNodeList xmlWaypoint = regionNode.SelectNodes("waypoint");
+                foreach (XmlNode waypointNode in xmlWaypoint)
+                {
+                    Waypoint waypoint = new Waypoint();
+
+                    //Read all attributes of each waypint
+                    XmlElement xmlWaypointElement = (XmlElement)waypointNode;
+                    waypoint._id = Guid.Parse(xmlWaypointElement.GetAttribute("id"));
+                    Console.WriteLine("id : " + waypoint._id);
+
+                    waypoint._name = xmlWaypointElement.GetAttribute("name");
+                    Console.WriteLine("name : " + waypoint._name);
+
+                    waypoint._type =
+                        (LocationType)Enum.Parse(typeof(LocationType),
+                                                 xmlWaypointElement.GetAttribute("type"),
+                                                 false);
+                    Console.WriteLine("type : " + waypoint._type);
+
+                    waypoint._category =
+                        (CategoryType)Enum.Parse(typeof(CategoryType),
+                                                 xmlWaypointElement.GetAttribute("category"),
+                                                 false);
+                    Console.WriteLine("category : " + waypoint._category);
+                }
+
             }
             
             // Read all <edge> block within <regions>
@@ -246,7 +271,31 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 Console.WriteLine("region_id : " + navigraph._regionID);
 
                 // Read all <waypoint> within <navigraph>
-                XmlNodeList waypoint = navigraphNode.SelectNodes("waypoint");
+                XmlNodeList xmlWaypoint = navigraphNode.SelectNodes("waypoint");
+                foreach (XmlNode waypointNode in xmlWaypoint)
+                {
+                    Waypoint waypoint = new Waypoint();
+
+                    //Read all attributes of each waypint
+                    XmlElement xmlWaypointElement = (XmlElement)waypointNode;
+                    waypoint._id = Guid.Parse(xmlWaypointElement.GetAttribute("id"));
+                    Console.WriteLine("id : " + waypoint._id);
+
+                    waypoint._name = xmlWaypointElement.GetAttribute("name");
+                    Console.WriteLine("name : " + waypoint._name);
+
+                    waypoint._type =
+                        (LocationType)Enum.Parse(typeof(LocationType),
+                                                 xmlWaypointElement.GetAttribute("type"),
+                                                 false);
+                    Console.WriteLine("type : " + waypoint._type);
+
+                    waypoint._category =
+                        (CategoryType)Enum.Parse(typeof(CategoryType),
+                                                 xmlWaypointElement.GetAttribute("category"),
+                                                 false);
+                    Console.WriteLine("category : " + waypoint._category);
+                }
 
                 // Read all <edge> block within <navigraph>
                 XmlNodeList xmlWaypointEdge = navigraphNode.SelectNodes("edge");
