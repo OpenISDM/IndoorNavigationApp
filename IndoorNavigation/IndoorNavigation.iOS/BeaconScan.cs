@@ -42,7 +42,7 @@
  *
  *      Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
  *      Paul Chang, paulchang@iis.sinica.edu.tw
- *      Chun Yu Lai, chunyu1202@gmail.com
+ *      Chun-Yu Lai, chunyu1202@gmail.com
  *
  */
 using System;
@@ -72,9 +72,6 @@ namespace IndoorNavigation.iOS
         }
 
         public void StartScan() {
-            Console.WriteLine("Scanning started: CBCentralManager state = " +
-                              this._manager.State);
-            
             if (CBCentralManagerState.PoweredOn == this._manager.State)
             {
                 var uuids = new CBUUID[0];
@@ -82,16 +79,12 @@ namespace IndoorNavigation.iOS
                 options.AllowDuplicatesKey = true;
 
                 this._manager.ScanForPeripherals(uuids, options);
-
-                //await Task.Delay(scanDuration);
-                //this.StopScan();
             }
         }
 
         public void StopScan()
         {
             this._manager.StopScan();
-            Console.WriteLine("Scanning stopped");
         }
 
         public void Close() {
@@ -141,9 +134,7 @@ namespace IndoorNavigation.iOS
                         });
                     }
                 }
-
-            }   
-            
+            }       
         }
 
         private void UpdatedState(object sender, EventArgs args)

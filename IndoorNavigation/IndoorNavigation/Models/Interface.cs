@@ -42,8 +42,8 @@
  *
  *      Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
  *      Paul Chang, paulchang@iis.sinica.edu.tw
- *      Bo Chen Huang, m10717004@yuntech.edu.tw
- *      Chun Yu Lai, chunyu1202@gmail.com
+ *      Bo-Chen Huang, m10717004@yuntech.edu.tw
+ *      Chun-Yu Lai, chunyu1202@gmail.com
  *
  */
 using GeoCoordinatePortable;
@@ -56,11 +56,6 @@ namespace IndoorNavigation.Models
 {
     #region Interface for connecting both iOS project and Android project
 
-    /// <summary>
-    /// The interface with beacon scan module
-    /// There is one Beacon scan module for each version, IOS and Android.
-    /// Beacon scan module has to use the original API provided by system
-    /// </summary>
     public interface IBeaconScan
     {
         void StartScan();
@@ -84,10 +79,16 @@ namespace IndoorNavigation.Models
     public interface IIPSClient
     {
         void DetectWaypoints();
-        void SetWaypointList(List<Waypoint> WaypointList);
+        void SetWaypointList(List<WaypointBeaconsMapping> WaypointList);
         void Stop();
 
         NavigationEvent _event { get; }
+    }
+
+    public class WaypointBeaconsMapping
+    {
+        public Guid _WaypointID { get; set; }
+        public List<Guid> _Beacons { get; set; }
     }
     #endregion
 }

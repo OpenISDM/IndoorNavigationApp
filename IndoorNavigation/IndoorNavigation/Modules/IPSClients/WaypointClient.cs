@@ -39,8 +39,8 @@
  *
  *      Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
  *      Paul Chang, paulchang@iis.sinica.edu.tw
- *      Bo Chen Huang, m10717004@yuntech.edu.tw
- *      Chun Yu Lai, chunyu1202@gmail.com
+ *      Bo-Chen Huang, m10717004@yuntech.edu.tw
+ *      Chun-Yu Lai, chunyu1202@gmail.com
  *
  */
 using System;
@@ -53,7 +53,7 @@ namespace IndoorNavigation.Modules.IPSClients
 {
     class WaypointClient : IIPSClient
     {
-        private List<Waypoint> _waypointList = new List<Waypoint>();
+        private List<WaypointBeaconsMapping> _waypointBeaconsList = new List<WaypointBeaconsMapping>();
 
         private object _bufferLock = new object();
         private readonly EventHandler _beaconScanEventHandler;
@@ -67,13 +67,13 @@ namespace IndoorNavigation.Modules.IPSClients
 
             _beaconScanEventHandler = new EventHandler(HandleBeaconScan);
             Utility._beaconScan._event._eventHandler += _beaconScanEventHandler;
-            _waypointList = new List<Waypoint>();
+            _waypointBeaconsList = new List<WaypointBeaconsMapping>();
 
         }
 
-        public void SetWaypointList(List<Waypoint> WaypointList)
+        public void SetWaypointList(List<WaypointBeaconsMapping> waypointBeaconsList)
         {
-            this._waypointList = WaypointList;
+            this._waypointBeaconsList = waypointBeaconsList;
 
             Utility._beaconScan.StartScan();
         }
@@ -97,22 +97,20 @@ namespace IndoorNavigation.Modules.IPSClients
 
                 foreach (BeaconSignalModel beacon in _beaconSignalBuffer)
                 {
-                    for (int i = 0; i < _waypointList.Count; i++) {
-                        /*
-                        for (int j = 0; j < _waypointList[i].Beacons.Count; j++) {
-                            if (beacon.UUID.Equals(_waypointList[i].Beacons[j].UUID)) {
-                                Console.WriteLine("Matched waypoint:" +
-                                                  _waypointList[i].ID +
-                                                  " by detected Beacon:" +
-                                                  beacon.UUID);
-
-                                _event.OnEventCall(new WayPointSignalEventArgs
-                                {
-                                    CurrentWaypoint = _waypointList[i]
+                    foreach (WaypointBeaconsMapping waypointBeaconsMapping in _waypointBeaconsList)
+                    {
+                        foreach (Guid beaconGuid in waypointBeaconsMapping._Beacons)
+                        {
+                            if (beacon.UUID.Equals(beaconGuid)) {
+                                Console.WriteLine("Matched waypoint: {0} by detected Beacon {1}",
+                                                  waypointBeaconsMapping._WaypointID,
+                                                  beaconGuid);
+                                _event.OnEventCall(new WaypointSignalEventArgs {
+                                    _detectedWaypointID = waypointBeaconsMapping._WaypointID
                                 }) ;
                                 return;
                             }
-                        }*/
+                        }
                     }
                 }
             }
@@ -138,12 +136,11 @@ namespace IndoorNavigation.Modules.IPSClients
         {
             Utility._beaconScan.StopScan();  
         }
-
     }
-
-    public class WayPointSignalEventArgs : EventArgs
+  
+    public class WaypointSignalEventArgs : EventArgs
     {
-        public Waypoint CurrentWaypoint { get; set; }
+        public Guid _detectedWaypointID { get; set; }
     }
 
 }

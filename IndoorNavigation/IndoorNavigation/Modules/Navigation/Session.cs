@@ -41,7 +41,7 @@
  * Authors:
  *
  *      Eric Lee, ericlee@iis.sinica.edu.tw
- *      Chun Yu Lai, chunyu1202@gmail.com
+ *      Chun-Yu Lai, chunyu1202@gmail.com
  *
  */
 
@@ -66,11 +66,10 @@ namespace IndoorNavigation.Modules
         private List<Waypoint> _waypointsOnRoute = new List<Waypoint>();
         private Dictionary<Guid, List<Waypoint>> _waypointsOnWrongWay =
             new Dictionary<Guid, List<Waypoint>>();
-
-        private Graph<OneRegion, string> _regionGraph = 
-                                        new Graph<OneRegion, string>();
+        /*
         private Graph<Waypoint, string> _subgraph = 
                                         new Graph<Waypoint, string>();
+                                        */
 
         public NavigationEvent _event { get; private set; }
 
@@ -90,9 +89,7 @@ namespace IndoorNavigation.Modules
         {
             _event = new NavigationEvent();
 
-          //  _regionGraph = graph.GetRegiongraph();
-
-          //  _subgraph = graph.Regions[0].GetNavigationSubgraph(avoid);
+          //_subgraph = graph.Regions[0].GetNavigationSubgraph(avoid);
 
             //Use the ID we get to search where the waypoints are
        /*     _finalWaypoint = _subgraph.Where(node => 
@@ -137,7 +134,7 @@ namespace IndoorNavigation.Modules
                     // Detected the waypoint most closed to user.
                     startWaypoint = _currentWaypoint;
 
-                    GenerateRoute(startWaypoint, _finalWaypoint, _subgraph);
+                   // GenerateRoute(startWaypoint, _finalWaypoint, _subgraph);
                     _nextWaypointStep++;
                     NavigateToNextWaypoint(_nextWaypointStep);
                 }
@@ -156,7 +153,7 @@ namespace IndoorNavigation.Modules
 
                             Console.WriteLine("At wrong waypoint: " + _currentWaypoint._id);
                             startWaypoint = _currentWaypoint;
-                            GenerateRoute(startWaypoint, _finalWaypoint, _subgraph);
+                           // GenerateRoute(startWaypoint, _finalWaypoint, _subgraph);
 
                             _event.OnEventCall(new NavigationEventArgs
                             {
@@ -188,18 +185,21 @@ namespace IndoorNavigation.Modules
         }
 
         private void NavigateToNextWaypoint(int nextStep) {
-            List<Waypoint> monitorWaypointList = new List<Waypoint>();
+            List<WaypointBeaconsMapping> monitorWaypointList = new List<WaypointBeaconsMapping>();
 
             if (nextStep == -1)
             {
                 // Detection of starting waypoing:
                 // Use all Waypoints of the NavigationGraph to detect the starting waypoint
+                /*
                 monitorWaypointList = _subgraph.Select(waypoint => waypoint.Item).ToList();
                 foreach (Waypoint waypoint in monitorWaypointList) {
                     Console.WriteLine("all waypoints: " + waypoint._id);
                 }
+                */
             }
             else {
+                /*
                 monitorWaypointList.Add(_waypointsOnRoute[nextStep]);
                 for (int i = 0; i < _waypointsOnWrongWay[_waypointsOnRoute[nextStep]._id].Count; i++)
                 {
@@ -209,7 +209,7 @@ namespace IndoorNavigation.Modules
                 foreach (Waypoint waypoing in monitorWaypointList)
                 {
                     Console.WriteLine("Monitoring waypoints: " + waypoing._id);
-                }
+                }*/
             }
 
             _IPSClient.SetWaypointList(monitorWaypointList);
@@ -300,10 +300,11 @@ namespace IndoorNavigation.Modules
         public void CheckArrivedWaypoint(object sender, EventArgs args)
         {
             Console.WriteLine(">> CheckArrivedWaypoint ");
-            Waypoint currentWaypoint = _subgraph.Where(node =>
+            Waypoint currentWaypoint = new Waypoint();
+            /*_subgraph.Where(node =>
             node.Item._id.Equals((args as WayPointSignalEventArgs).CurrentWaypoint._id)).
             Select(w => w.Item).First();
-
+            */
             //NavigationInstruction is a structure that contains five
             //elements that need to be passed to the main and UI
             NavigationInstruction navigationInstruction = 
