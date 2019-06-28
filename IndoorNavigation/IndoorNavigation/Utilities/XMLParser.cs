@@ -17,77 +17,61 @@ namespace IndoorNavigation.Modules
             Console.WriteLine("Construct Parser");
             _navigationgraph = new NavigationGraph();
             _navigationgraph._regions = new Dictionary<Guid, OneRegion>();
-            _navigationgraph._edges = new Dictionary<Guid, List<RegionEdge>>();
+           // _navigationgraph._edges = new Dictionary<Guid, List<RegionEdge>>();
             _navigationgraph._navigraphs = new Dictionary<Guid, Navigraph>();
 
             EARTH_RADIUS = 6378137;
         }
-        public NavigationGraph GetString(XmlDocument xmldocument)
+        public NavigationGraph GetString(XmlDocument xmlDocument)
         {
             Console.WriteLine("In Parser");
-            XmlNode navigation_graph = xmldocument.SelectSingleNode("navigation_graph");
+            //XmlNode navigation_graph = xmldocument.SelectSingleNode("navigation_graph");
+            /*
             XmlNode regions = xmldocument.SelectSingleNode("navigation_graph/regions");
             XmlNode navigraphs = xmldocument.SelectSingleNode("navigation_graph/navigraphs");
 
             XmlNodeList region = xmldocument.SelectNodes("navigation_graph/regions/region");
             XmlNodeList edgeInRegions = xmldocument.SelectNodes("navigation_graph/regions/edge");
             XmlNodeList navigraph = xmldocument.SelectNodes("navigation_graph/navigraphs/navigraph");
+            
             // XmlNodeList edgeInNavigraph = xmldocument.SelectNodes("navigation_graph/navigraphs/navigraph/edge");
-
-
-            XmlElement elementInNavigationGraph = (XmlElement)navigation_graph;
+            */
+           
+            XmlElement elementInNavigationGraph = (XmlElement)xmlDocument.SelectSingleNode("navigation_graph");
+            /*
             XmlElement elementInRegions = (XmlElement)regions;
             XmlElement elementInnavigraphs = (XmlElement)navigraphs;
 
-            //XmlElement elementInRegion = (XmlElement)region;
+            XmlElement elementInRegion = (XmlElement)region;
             //XmlElement elementInWaypoint = (XmlElement)waypoint;
+            */
+            
+            _navigationgraph._country = elementInNavigationGraph.GetAttribute("country");
+            _navigationgraph._cityCounty = elementInNavigationGraph.GetAttribute("city_county");
+            _navigationgraph._industryService = elementInNavigationGraph.GetAttribute("industry_service");
+            _navigationgraph._ownerOrganization = elementInNavigationGraph.GetAttribute("owner_organization");
+            _navigationgraph._buildingName = elementInNavigationGraph.GetAttribute("building_name");
 
-            int regionNumber = 0;
-            int edgeNumber = 0;
-            int navigraphNumber = 0;
-            int stringListNumber = 0;
-            string[] stringArray;
-
-
-            string country = elementInNavigationGraph.GetAttribute("country");
-            string city = elementInNavigationGraph.GetAttribute("city_country");
-            string industry_type = elementInNavigationGraph.GetAttribute("industry_service");
-            string owner_organization = elementInNavigationGraph.GetAttribute("owner_organization");
-            string name_navigation_graph = elementInNavigationGraph.GetAttribute("building_name");
-
-            _navigationgraph._country = country;
-            _navigationgraph._cityCounty = city;
-            _navigationgraph._industryService = industry_type;
-            _navigationgraph._ownerOrganization = owner_organization;
-            _navigationgraph._buildingName = name_navigation_graph;
-
-            int region_number = Int32.Parse(elementInRegions.GetAttribute("region_numbers"));
-            Console.WriteLine("region_numbers : " + region_number);
-            string edge_numbers = elementInRegions.GetAttribute("edge_numbers");
-            Console.WriteLine("edge_numbers : " + edge_numbers);
-
-
-
-            foreach (XmlNode region_node in region)
+            XmlNodeList region = xmlDocument.SelectNodes("navigation_graph/regions/region");
+            foreach (XmlNode regionNode in region)
             {
                 OneRegion regionGet = new OneRegion();
                 regionGet._waypointsByCategory = new Dictionary<CategoryType, List<Waypoint>>();
-                XmlElement elementInRegion = (XmlElement)region[regionNumber];
-                string region_id = elementInRegion.GetAttribute("id");
-                Console.WriteLine("region id : " + region_id);
-                string region_name = elementInRegion.GetAttribute("name");
-                Console.WriteLine("region name : " + region_name);
-                string region_floor = elementInRegion.GetAttribute("floor");
-                Console.WriteLine("region_floor ; " + region_floor);
+                XmlElement elementInRegion = (XmlElement)regionNode;
+                regionGet._id = Guid.Parse(elementInRegion.GetAttribute("id"));
+                Console.WriteLine("region id : " + regionGet._id);
+                //
+                regionGet._id = Guid.Parse(elementInRegion.GetAttribute("id"));
+                Console.WriteLine("ips_type : " + regionGet._id);
+                //
+                regionGet._name = elementInRegion.GetAttribute("name");
+                Console.WriteLine("region name : " + regionGet._name);
+                regionGet._floor = Int32.Parse(elementInRegion.GetAttribute("floor"));
+                Console.WriteLine("region_floor ; " + regionGet._floor);
 
-                XmlNodeList waypoint = region_node.SelectNodes("waypoint");
+                XmlNodeList waypoint = regionNode.SelectNodes("waypoint");
 
-
-                regionGet._floor = Int32.Parse(region_floor);
-                regionGet._name = region_name;
-                regionGet._id = Guid.Parse(region_id);
-
-
+                /*
 
                 int waypointNumber = 0;
 
@@ -137,8 +121,12 @@ namespace IndoorNavigation.Modules
                 _navigationgraph._regions.Add(regionGet._id, regionGet);
 
                 regionNumber++;
+                */
             }
+            /*
             List<RegionNeighbor> regionNeighborList = new List<RegionNeighbor>();
+
+             
             foreach (XmlNode edgeNode in edgeInRegions)
             {
                 RegionEdge regionEdge = new RegionEdge();
@@ -485,7 +473,7 @@ namespace IndoorNavigation.Modules
             // string navigraph_region_id = elementInnavigraphs.GetAttribute("region_id");
 
             //xmlString.
-
+            */
             return _navigationgraph;
         }
         //public double GetDistance(double lng1, double lat1, double lng2, double lat2)
