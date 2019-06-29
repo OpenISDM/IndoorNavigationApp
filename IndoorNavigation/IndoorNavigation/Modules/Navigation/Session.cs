@@ -66,10 +66,9 @@ namespace IndoorNavigation.Modules
         private List<Waypoint> _waypointsOnRoute = new List<Waypoint>();
         private Dictionary<Guid, List<Waypoint>> _waypointsOnWrongWay =
             new Dictionary<Guid, List<Waypoint>>();
-        /*
-        private Graph<Waypoint, string> _subgraph = 
-                                        new Graph<Waypoint, string>();
-                                        */
+        
+        private Graph<Guid, string> _regionGraph = new Graph<Guid, string>();
+        private Graph<Guid, string> _navigraphGraph = new Graph<Guid, string>();
 
         public NavigationEvent _event { get; private set; }
 
@@ -83,13 +82,27 @@ namespace IndoorNavigation.Modules
         private Waypoint _currentWaypoint = new Waypoint();
         private ManualResetEventSlim _nextWaypointEvent = new ManualResetEventSlim(false);
 
-        public Session(NavigationGraph graph,
+        public Session(NavigationGraph navigrationGraph,
                        Guid sourceRegionID,
-                       Guid finalRegionID,
-                       Guid finalWaypointID,
-                       int[] avoid)
+                       Guid destinationRegionID,
+                       Guid destinationWaypointID,
+                       ConnectionType[] avoid)
         {
             _event = new NavigationEvent();
+
+            _regionGraph = navigrationGraph.GenerateRegionGraph(avoid);
+
+            // test
+            uint node1Key = _regionGraph.Where(node => node.Item.Equals(sourceRegionID))
+                                        .Select(node => node.Key).First();
+            uint node2Key = _regionGraph.Where(node => node.Item.Equals(destinationRegionID))
+                                        .Select(node => node.Key).First();
+            var path = _regionGraph.Dijkstra(node1Key, node2Key).GetPath();
+
+            for (int i = 0; i < path.Count(); i++) {
+                Console.WriteLine("Step {0}: {1}", i, _regionGraph[path.ToList()[i]].Item);
+            }
+
 
           //_subgraph = graph.Regions[0].GetNavigationSubgraph(avoid);
 

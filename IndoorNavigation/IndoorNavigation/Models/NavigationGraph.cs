@@ -52,85 +52,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Dijkstra.NET.Model;
-using GeoCoordinatePortable;
 using System.Xml;
-using IndoorNavigation.Models;
+
 
 namespace IndoorNavigation.Models.NavigaionLayer
 {
-
-    public enum LocationType
-    {
-        landmark = 0,
-        junction, //junction_branch, 
-        midpath,
-        terminal, //terminal_destination,
-        portal
-    }
-
-    public enum CardinalDirection
-    {
-        North = 0,
-        Northeast,
-        East,
-        Southeast,
-        South,
-        Southwest,
-        West,
-        Northwest,
-        Up,
-        Down
-    }
-
-    public enum TurnDirection
-    {
-        FirstDirection = -1, // Exception: used only in the first step
-        Forward = 0,
-        Forward_Right,
-        Right,
-        Backward_Right,
-        Backward,
-        Backward_Left,
-        Left,
-        Forward_Left,
-        Up,
-        Down
-    }
-
-    public enum IPSType
-    {
-        LBeacon = 0,
-        iBeacon,
-        GPS
-    }
-
-    public enum DirectionalConnection
-    {
-        OneWay = 1,
-        BiDirection = 2
-    }
-
-    public enum ConnectionType
-    {
-        NormalHallway = 0,
-        Stair,
-        Elevator,
-        Escalator
-    }
-
-    public enum CategoryType
-    {
-        Others = 0,
-        Clinics,
-        Cashier,
-        Exit,
-        ExaminationRoom,
-        Pharmacy,
-        ConvenienceStore,
-        Bathroom,
-        BloodCollectionCounter
-    }
-
     public class NavigationGraph
     {
         private double EARTH_RADIUS;
@@ -524,6 +450,85 @@ namespace IndoorNavigation.Models.NavigaionLayer
             return _regions;
         }
 
+        public Graph<Guid, string> GenerateRegionGraph(ConnectionType[] avoidConnectionTypes)
+        {
+            Graph<Guid, string> graph = new Graph<Guid, string>();
+
+            foreach (KeyValuePair<Guid, Region> regionItem in _regions)
+            {
+                graph.AddNode(regionItem.Key);
+            }
+
+            foreach (KeyValuePair<Tuple<Guid, Guid>,
+                List<RegionEdge>> regionEdgeItem in _edges)
+            {
+                Guid node1 = regionEdgeItem.Key.Item1;
+                Guid node2 = regionEdgeItem.Key.Item2;
+
+                uint node1Key = graph.Where(node => node.Item.Equals(node1))
+                                .Select(node => node.Key).First();
+                uint node2Key = graph.Where(node => node.Item.Equals(node2))
+                                .Select(node => node.Key).First();
+
+                // should refine distance, bi-direction, direction, connection type later
+                int distance = Int32.MaxValue;
+                for (int i = 0; i < regionEdgeItem.Value.Count(); i++)
+                {
+                    RegionEdge edgeItem = regionEdgeItem.Value[i];
+                    if (!avoidConnectionTypes.Contains(edgeItem._connectionType) &&
+                        edgeItem._distance <= distance)
+                    {
+                        distance = System.Convert.ToInt32(edgeItem._distance);
+                        break;
+                    }
+                }
+
+                // need to check if graph.Connect is oneway or di-directional
+                graph.Connect(node1Key, node2Key, distance, String.Empty);
+                graph.Connect(node2Key, node1Key, distance, String.Empty);
+            }
+
+            return graph;
+        }
+
+        public Graph<Guid, string> GenerateNavigraph(Guid regionID,
+                                                     ConnectionType[] avoidConnectionTypes)
+        {
+            Graph<Guid, string> graph = new Graph<Guid, string>();
+
+            foreach (KeyValuePair<Guid, Waypoint> waypointItem
+                     in _navigraphs[regionID]._waypoints)
+            {
+                graph.AddNode(waypointItem.Key);
+            }
+
+            foreach (KeyValuePair<Tuple<Guid, Guid>, WaypointEdge> waypointEdgeItem
+                     in _navigraphs[regionID]._edges)
+            {
+                Guid node1 = waypointEdgeItem.Key.Item1;
+                Guid node2 = waypointEdgeItem.Key.Item2;
+                uint node1Key = graph.Where(node => node.Item.Equals(node1))
+                                  .Select(node => node.Key).First();
+                uint node2Key = graph.Where(node => node.Item.Equals(node2))
+                                  .Select(node => node.Key).First();
+
+                // should refine distance, bi-direction, direction, connection type later
+                int distance = Int32.MaxValue;
+                Tuple<Guid, Guid> edgeKey = new Tuple<Guid, Guid>(node1, node2);
+                WaypointEdge edgeItem = _navigraphs[regionID]._edges[edgeKey];
+                if (!avoidConnectionTypes.Contains(edgeItem._connectionType)) 
+                {
+                        distance = System.Convert.ToInt32(edgeItem._distance);
+                }
+
+                // need to check if graph.Connect is oneway or di-directional
+                graph.Connect(node1Key, node2Key, distance, String.Empty);
+                graph.Connect(node2Key, node1Key, distance, String.Empty);
+            }
+
+            return graph;
+        }
+
         public class Navigraph
         {
             public Guid _regionID { get; set; }
@@ -561,5 +566,77 @@ namespace IndoorNavigation.Models.NavigaionLayer
             public ConnectionType _connectionType { get; set; }
             public double _distance { get; set; }
         }
+    }
+
+    public enum LocationType
+    {
+        landmark = 0,
+        junction, //junction_branch, 
+        midpath,
+        terminal, //terminal_destination,
+        portal
+    }
+
+    public enum CardinalDirection
+    {
+        North = 0,
+        Northeast,
+        East,
+        Southeast,
+        South,
+        Southwest,
+        West,
+        Northwest,
+        Up,
+        Down
+    }
+
+    public enum TurnDirection
+    {
+        FirstDirection = -1, // Exception: used only in the first step
+        Forward = 0,
+        Forward_Right,
+        Right,
+        Backward_Right,
+        Backward,
+        Backward_Left,
+        Left,
+        Forward_Left,
+        Up,
+        Down
+    }
+
+    public enum IPSType
+    {
+        LBeacon = 0,
+        iBeacon,
+        GPS
+    }
+
+    public enum DirectionalConnection
+    {
+        OneWay = 1,
+        BiDirection = 2
+    }
+
+    public enum ConnectionType
+    {
+        NormalHallway = 0,
+        Stair,
+        Elevator,
+        Escalator
+    }
+
+    public enum CategoryType
+    {
+        Others = 0,
+        Clinics,
+        Cashier,
+        Exit,
+        ExaminationRoom,
+        Pharmacy,
+        ConvenienceStore,
+        Bathroom,
+        BloodCollectionCounter
     }
 }

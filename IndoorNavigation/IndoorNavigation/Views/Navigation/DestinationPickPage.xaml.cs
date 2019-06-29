@@ -116,7 +116,7 @@ namespace IndoorNavigation.Views.Navigation
             {
                 Console.WriteLine(">>Handle_ItemTapped in DestinationPickPage");
 
-                Guid sourceRegionID = new Guid();
+                Guid sourceRegionID = new Guid("11111111-1111-1111-1111-111111111111");
                 await Navigation.PushAsync(new NavigatorPage(_navigationGraphName,
                                                              sourceRegionID,
                                                              destination._regionID,

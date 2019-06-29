@@ -88,23 +88,23 @@ namespace IndoorNavigation.Modules
         private void ConstructSession()
         {
             const int falseInt = -100;
-            List<int> avoidList = new List<int>();
+            List<ConnectionType> avoidList = new List<ConnectionType>();
 
             Console.WriteLine("-- setup preference --- ");
             if (Application.Current.Properties.ContainsKey("AvoidStair"))
             {
                 avoidList.Add(
                         (bool)Application.Current.Properties["AvoidStair"] ?
-                        (int)ConnectionType.Stair : falseInt);
+                         ConnectionType.Stair : ConnectionType.NormalHallway);
                 avoidList.Add(
                         (bool)Application.Current.Properties["AvoidElevator"] ?
-                        (int)ConnectionType.Elevator : falseInt);
+                        ConnectionType.Elevator : ConnectionType.NormalHallway);
                 avoidList.Add(
                         (bool)Application.Current.Properties["AvoidEscalator"] ?
-                        (int)ConnectionType.Escalator : falseInt);
+                        ConnectionType.Escalator : ConnectionType.NormalHallway);
 
                 avoidList = avoidList.Distinct().ToList();
-                avoidList.Remove(falseInt);
+                avoidList.Remove(ConnectionType.NormalHallway);
             }
             Console.WriteLine("-- end of setup preference --- ");
 
