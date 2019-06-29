@@ -40,7 +40,7 @@
  * Authors:
  *
  *      Paul Chang, paulchang@iis.sinica.edu.tw
- *      Chun Yu Lai, chunyu1202@gmail.com
+ *      Chun-Yu Lai, chunyu1202@gmail.com
  *
  */
 using System;

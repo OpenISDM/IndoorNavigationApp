@@ -46,11 +46,10 @@
  *      Chun-Yu Lai, chunyu1202@gmail.com
  *
  */
-using GeoCoordinatePortable;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using IndoorNavigation.Models.NavigaionLayer;
+
 
 namespace IndoorNavigation.Models
 {

@@ -48,10 +48,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Xml;
-using System.Xml.Serialization;
 using IndoorNavigation.Models.NavigaionLayer;
-using System.Diagnostics;
-using System.Net;
 
 namespace IndoorNavigation.Modules.Utilities
 {

@@ -53,7 +53,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Dijkstra.NET.Model;
 using GeoCoordinatePortable;
-using System.Xml.Serialization;
 using System.Xml;
 using IndoorNavigation.Models;
 

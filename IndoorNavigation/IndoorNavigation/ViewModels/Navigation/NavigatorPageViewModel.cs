@@ -43,17 +43,13 @@
  *      Chun-Yu Lai, chunyu1202@gmail.com
  *
  */
-using Xamarin.Forms;
+
 using System;
-using System.Windows.Input;
-using System.Collections.Generic;
 using MvvmHelpers;
 using IndoorNavigation.Models.NavigaionLayer;
 using IndoorNavigation.Modules;
 using static IndoorNavigation.Modules.Session;
-using NavigationEventArgs = IndoorNavigation.Modules.Session.NavigationEventArgs;
 using Plugin.Multilingual;
-using IndoorNavigation.Resources;
 using System.Resources;
 using IndoorNavigation.Resources.Helpers;
 using System.Reflection;

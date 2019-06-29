@@ -47,21 +47,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Xamarin.Forms;
 using Plugin.Multilingual;
-using IndoorNavigation.Resources;
-using IndoorNavigation.Modules.Utilities;
 using System.Resources;
 using IndoorNavigation.Resources.Helpers;
 using System.Reflection;
-
-using IndoorNavigation.Models;
-using Xamarin.Essentials;
 using IndoorNavigation.Modules;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using Prism.Commands;
-using System.Globalization;
-
-
 
 namespace IndoorNavigation.Views.Navigation
 {
