@@ -223,9 +223,12 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                                  xmlWaypointElement.GetAttribute("category"),
                                                  false);
                     Console.WriteLine("category : " + waypoint._category);
+
+                    // fill data into _waypointsByCategory structure
                     if (!region._waypointsByCategory.ContainsKey(waypoint._category))
                     {
                         List<Waypoint> tempList = new List<Waypoint>();
+                        tempList.Add(waypoint);
                         region._waypointsByCategory.Add(waypoint._category, tempList);
                     }
                     else
@@ -282,6 +285,17 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                                false);
                 Console.WriteLine("connection_type : " + regionEdge._connectionType);
 
+                // fill data into _edges structure
+                Tuple<Guid, Guid> edgeKey = new Tuple<Guid, Guid>(regionEdge._region1, regionEdge._region2);
+                if (!_edges.ContainsKey(edgeKey)) {
+                    List<RegionEdge> tempRegionEdges = new List<RegionEdge>();
+                    tempRegionEdges.Add(regionEdge);
+                    _edges.Add(edgeKey, tempRegionEdges);
+                }
+                else
+                {
+                    _edges[edgeKey].Add(regionEdge);
+                }
             }
 
             // Read all <navigraph> blocks within <navigraphs>
@@ -290,6 +304,11 @@ namespace IndoorNavigation.Models.NavigaionLayer
             foreach (XmlNode navigraphNode in xmlNavigraph)
             {
                 Navigraph navigraph = new Navigraph();
+
+                // initialize structures
+                navigraph._waypoints = new Dictionary<Guid, Waypoint>();
+                navigraph._edges = new Dictionary<Tuple<Guid, Guid>, WaypointEdge>();
+                navigraph._beacons = new Dictionary<Guid, List<Guid>>();
 
                 // Read all attributes of each navigraph
                 XmlElement xmlElement = (XmlElement)navigraphNode;
@@ -302,6 +321,9 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 foreach (XmlNode waypointNode in xmlWaypoint)
                 {
                     Waypoint waypoint = new Waypoint();
+
+                    // initialize structures
+                    waypoint._neighbors = new List<Guid>();
 
                     //Read all attributes of each waypint
                     XmlElement xmlWaypointElement = (XmlElement)waypointNode;
@@ -322,6 +344,8 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                                  xmlWaypointElement.GetAttribute("category"),
                                                  false);
                     Console.WriteLine("category : " + waypoint._category);
+
+                    navigraph._waypoints.Add(waypoint._id, waypoint);
                 }
 
                 // Read all <edge> block within <navigraph>
@@ -364,6 +388,10 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                                    false);
                     Console.WriteLine("connection_type : " + waypointEdge._connectionType);
 
+
+                    // fill data into _edges structure
+                    Tuple<Guid, Guid> edgeKey = new Tuple<Guid, Guid>(waypointEdge._node1, waypointEdge._node2);
+                    navigraph._edges.Add(edgeKey, waypointEdge);
                 }
 
                 // Read all <beacon> block within <navigraph/beacons>
@@ -373,11 +401,32 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 {
                     // Read all attributes of each beacon
                     XmlElement xmlBeaconElement = (XmlElement)beaconNode;
-                    Console.WriteLine("uuid : " + Guid.Parse(xmlBeaconElement.GetAttribute("uuid")));
+                    Guid beaconGuid = Guid.Parse(xmlBeaconElement.GetAttribute("uuid"));
+                    Console.WriteLine("uuid : " + beaconGuid);
 
-                    Console.WriteLine("waypoint_ids : " + xmlBeaconElement.GetAttribute("waypoint_ids"));
+                    string waypointIDs = xmlBeaconElement.GetAttribute("waypoint_ids");
+                    Console.WriteLine("waypoint_ids : " + waypointIDs);
+
+                    // fill data into _beacons structure
+                    string[] arrayWaypointIDs = waypointIDs.Split(';');
+                    for (int i = 0; i < arrayWaypointIDs.Count(); i++)
+                    {
+                        Guid waypointID = Guid.Parse(arrayWaypointIDs[i]);
+                        if (!navigraph._beacons.ContainsKey(waypointID))
+                        {
+                            List<Guid> tempBeaconsList = new List<Guid>();
+                            tempBeaconsList.Add(beaconGuid);
+                            navigraph._beacons.Add(Guid.Parse(arrayWaypointIDs[i]), tempBeaconsList);
+                        }
+                        else
+                        {
+                            navigraph._beacons[waypointID].Add(beaconGuid);
+                        }
+                    }
 
                 }
+
+                _navigraphs.Add(navigraph._regionID, navigraph);
             }
 
             Console.WriteLine("<< NavigationGraph");
