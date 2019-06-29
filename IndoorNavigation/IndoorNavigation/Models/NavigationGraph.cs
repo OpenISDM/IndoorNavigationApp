@@ -62,9 +62,11 @@ namespace IndoorNavigation.Models.NavigaionLayer
     public enum LocationType
     {
         landmark = 0,
-        junction_branch,
+        junction,
+        //junction_branch, 
         midpath,
-        terminal_destination,
+        terminal,
+        //terminal_destination,
         portal
     }
 
@@ -142,16 +144,15 @@ namespace IndoorNavigation.Models.NavigaionLayer
         //Guid is region's Guid
         private Dictionary<Guid, Region> _regions;
 
-        //public Dictionary<Guid, List<RegionEdge>> _edges { get; set; }
         private Dictionary<Tuple<Guid,Guid>, List<RegionEdge>> _edges { get; set;}
 
-        //Guid is region's Guid
         private Dictionary<Guid, Navigraph> _navigraphs { get; set; }
 
         public NavigationGraph(XmlDocument xmlDocument) {
             Console.WriteLine(">> NavigationGraph");
 
             // Read all attributes of <navigation_graph> tag
+            Console.WriteLine("Read attributes of <navigation_graph>");
             XmlElement elementInNavigationGraph =
                 (XmlElement)xmlDocument.SelectSingleNode("navigation_graph");
             _country = elementInNavigationGraph.GetAttribute("country");
@@ -160,7 +161,13 @@ namespace IndoorNavigation.Models.NavigaionLayer
             _ownerOrganization = elementInNavigationGraph.GetAttribute("owner_organization");
             _buildingName = elementInNavigationGraph.GetAttribute("building_name");
 
+            // initialize structures
+            _regions = new Dictionary<Guid, Region>();
+            _edges = new Dictionary<Tuple<Guid, Guid>, List<RegionEdge>>();
+            _navigraphs = new Dictionary<Guid, Navigraph>();
+
             // Read all <region> blocks within <regions>
+            Console.WriteLine("Read attributes of <navigation_graph><regions>/<region>");
             XmlNodeList xmlRegion = xmlDocument.SelectNodes("navigation_graph/regions/region");
             foreach (XmlNode regionNode in xmlRegion)
             {
@@ -183,7 +190,12 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 region._floor = Int32.Parse(xmlElement.GetAttribute("floor"));
                 Console.WriteLine("floor : " + region._floor);
 
+                // initialize structures
+                region._neighbors = new List<Guid>();
+                region._waypointsByCategory = new Dictionary<CategoryType, List<Waypoint>>();
+                
                 // Read all <waypoint> within <region>
+                Console.WriteLine("Read attributes of <navigation_graph><regions>/<region>/<waypoint>");
                 XmlNodeList xmlWaypoint = regionNode.SelectNodes("waypoint");
                 foreach (XmlNode waypointNode in xmlWaypoint)
                 {
@@ -208,12 +220,25 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                                  xmlWaypointElement.GetAttribute("category"),
                                                  false);
                     Console.WriteLine("category : " + waypoint._category);
-                }
+/*
+                    waypoint._neighbors.Clear();
 
+                    if (!region._waypointsByCategory.ContainsKey(waypoint._category))
+                    {
+                        List<Waypoint> tempList = new List<Waypoint>();
+                        region._waypointsByCategory.Add(waypoint._category, tempList);
+                    }
+                    else
+                    {
+                        region._waypointsByCategory[waypoint._category].Add(waypoint);
+                    }
+ */             }
+                _regions.Add(region._id, region);
             }
-            
+
             // Read all <edge> block within <regions>
-            XmlNodeList xmlRegionEdge = xmlDocument.SelectNodes("navigation_graph/regions/edge");
+            Console.WriteLine("Read attributes of <navigation_graph><regions>/<edge>");
+                XmlNodeList xmlRegionEdge = xmlDocument.SelectNodes("navigation_graph/regions/edge");
             foreach (XmlNode regionEdgeNode in xmlRegionEdge)
             {
                 RegionEdge regionEdge = new RegionEdge();
@@ -260,6 +285,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
             }
 
             // Read all <navigraph> blocks within <navigraphs>
+            Console.WriteLine("Read attributes of <navigation_graph><navigraphs>/<navigraph>");
             XmlNodeList xmlNavigraph = xmlDocument.SelectNodes("navigation_graph/navigraphs/navigraph");
             foreach (XmlNode navigraphNode in xmlNavigraph)
             {
@@ -271,6 +297,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 Console.WriteLine("region_id : " + navigraph._regionID);
 
                 // Read all <waypoint> within <navigraph>
+                Console.WriteLine("Read attributes of <navigation_graph><navigraphs>/<navigraph>/<waypoint>");
                 XmlNodeList xmlWaypoint = navigraphNode.SelectNodes("waypoint");
                 foreach (XmlNode waypointNode in xmlWaypoint)
                 {
@@ -298,6 +325,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 }
 
                 // Read all <edge> block within <navigraph>
+                Console.WriteLine("Read attributes of <navigation_graph><navigraphs>/<navigraph>/<edge>");
                 XmlNodeList xmlWaypointEdge = navigraphNode.SelectNodes("edge");
                 foreach (XmlNode waypointEdgeNode in xmlWaypointEdge)
                 {
@@ -339,6 +367,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 }
 
                 // Read all <beacon> block within <navigraph/beacons>
+                Console.WriteLine("Read attributes of <navigation_graph><navigraphs>/<navigraph>/<beacons>/<beacon>");
                 XmlNodeList xmlBeacon = navigraphNode.SelectNodes("beacons/beacon");
                 foreach (XmlNode beaconNode in xmlBeacon)
                 {
