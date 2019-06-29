@@ -151,6 +151,11 @@ namespace IndoorNavigation.Models.NavigaionLayer
         public NavigationGraph(XmlDocument xmlDocument) {
             Console.WriteLine(">> NavigationGraph");
 
+            // initialize structures
+            _regions = new Dictionary<Guid, Region>();
+            _edges = new Dictionary<Tuple<Guid, Guid>, List<RegionEdge>>();
+            _navigraphs = new Dictionary<Guid, Navigraph>();
+
             // Read all attributes of <navigation_graph> tag
             Console.WriteLine("Read attributes of <navigation_graph>");
             XmlElement elementInNavigationGraph =
@@ -161,17 +166,16 @@ namespace IndoorNavigation.Models.NavigaionLayer
             _ownerOrganization = elementInNavigationGraph.GetAttribute("owner_organization");
             _buildingName = elementInNavigationGraph.GetAttribute("building_name");
 
-            // initialize structures
-            _regions = new Dictionary<Guid, Region>();
-            _edges = new Dictionary<Tuple<Guid, Guid>, List<RegionEdge>>();
-            _navigraphs = new Dictionary<Guid, Navigraph>();
-
             // Read all <region> blocks within <regions>
             Console.WriteLine("Read attributes of <navigation_graph><regions>/<region>");
             XmlNodeList xmlRegion = xmlDocument.SelectNodes("navigation_graph/regions/region");
             foreach (XmlNode regionNode in xmlRegion)
             {
                 Region region = new Region();
+
+                // initialize structures
+                region._neighbors = new List<Guid>();
+                region._waypointsByCategory = new Dictionary<CategoryType, List<Waypoint>>();
 
                 // Read all attributes of each region
                 XmlElement xmlElement = (XmlElement)regionNode;
@@ -190,16 +194,15 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 region._floor = Int32.Parse(xmlElement.GetAttribute("floor"));
                 Console.WriteLine("floor : " + region._floor);
 
-                // initialize structures
-                region._neighbors = new List<Guid>();
-                region._waypointsByCategory = new Dictionary<CategoryType, List<Waypoint>>();
-                
                 // Read all <waypoint> within <region>
                 Console.WriteLine("Read attributes of <navigation_graph><regions>/<region>/<waypoint>");
                 XmlNodeList xmlWaypoint = regionNode.SelectNodes("waypoint");
                 foreach (XmlNode waypointNode in xmlWaypoint)
                 {
                     Waypoint waypoint = new Waypoint();
+
+                    // initialize structures
+                    waypoint._neighbors = new List<Guid>();
 
                     //Read all attributes of each waypint
                     XmlElement xmlWaypointElement = (XmlElement)waypointNode;
@@ -220,9 +223,6 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                                  xmlWaypointElement.GetAttribute("category"),
                                                  false);
                     Console.WriteLine("category : " + waypoint._category);
-/*
-                    waypoint._neighbors.Clear();
-
                     if (!region._waypointsByCategory.ContainsKey(waypoint._category))
                     {
                         List<Waypoint> tempList = new List<Waypoint>();
@@ -232,7 +232,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                     {
                         region._waypointsByCategory[waypoint._category].Add(waypoint);
                     }
- */             }
+               }
                 _regions.Add(region._id, region);
             }
 
