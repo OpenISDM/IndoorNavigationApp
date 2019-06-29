@@ -45,7 +45,7 @@
  *
  *      Paul Chang, paulchang@iis.sinica.edu.tw
  *      Eric Lee, ericlee@iis.sinica.edu.tw
- *      Chun Yu Lai, chunyu1202@gmail.com
+ *      Chun-Yu Lai, chunyu1202@gmail.com
  *
  */
 using System;
@@ -55,6 +55,7 @@ using Dijkstra.NET.Model;
 using GeoCoordinatePortable;
 using System.Xml.Serialization;
 using System.Xml;
+using IndoorNavigation.Models;
 
 namespace IndoorNavigation.Models.NavigaionLayer
 {
@@ -62,11 +63,9 @@ namespace IndoorNavigation.Models.NavigaionLayer
     public enum LocationType
     {
         landmark = 0,
-        junction,
-        //junction_branch, 
+        junction, //junction_branch, 
         midpath,
-        terminal,
-        //terminal_destination,
+        terminal, //terminal_destination,
         portal
     }
 

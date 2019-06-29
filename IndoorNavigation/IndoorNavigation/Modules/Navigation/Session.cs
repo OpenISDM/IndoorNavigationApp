@@ -73,7 +73,8 @@ namespace IndoorNavigation.Modules
 
         public NavigationEvent _event { get; private set; }
 
-        private Waypoint _finalWaypoint = new Waypoint();
+        private Guid _destinationRegionID;
+        private Guid _destinationWaypointID;
 
         private Thread _waypointDetectionThread;
         private Thread _navigationControllerThread;
@@ -116,13 +117,13 @@ namespace IndoorNavigation.Modules
             NavigateToNextWaypoint(_nextWaypointStep);
 
             while (true == _isKeepDetection &&
-                   !_currentWaypoint._id.Equals(_finalWaypoint._id)) {
+                   !_currentWaypoint._id.Equals(_destinationWaypointID)) {
                 Console.WriteLine("Continue to navigate to next step, _currentWaypoint ID: {0}, _finalWaypoint ID: {1}",
-                                  _currentWaypoint._id, _finalWaypoint._id);
+                                  _currentWaypoint._id, _destinationWaypointID);
 
                 _nextWaypointEvent.Wait();
 
-                if (_currentWaypoint._id.Equals(_finalWaypoint._id)) {
+                if (_currentWaypoint._id.Equals(_destinationWaypointID)) {
                     Console.WriteLine("Arrived destination!");
 
                     break;
@@ -315,7 +316,7 @@ namespace IndoorNavigation.Modules
                 _currentWaypoint = currentWaypoint;
                 _nextWaypointEvent.Set();
 
-                if (currentWaypoint == _finalWaypoint)
+                if (currentWaypoint._lat.Equals(_destinationWaypointID))
                 {
                     Console.WriteLine("---- [case: arrived destination] .... ");
 
@@ -327,7 +328,7 @@ namespace IndoorNavigation.Modules
             }
             else
             {
-                if (currentWaypoint == _finalWaypoint)
+                if (currentWaypoint._id.Equals(_destinationWaypointID))
                 {
                     Console.WriteLine("---- [case: arrived destination] .... ");
 

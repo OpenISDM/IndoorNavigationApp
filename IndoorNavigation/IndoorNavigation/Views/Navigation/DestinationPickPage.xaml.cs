@@ -114,7 +114,7 @@ namespace IndoorNavigation.Views.Navigation
         {
             if (e.Item is DestinationItem destination)
             {
-                Console.WriteLine("start of Handle_ItemTapped in DestinationPickPage");
+                Console.WriteLine(">>Handle_ItemTapped in DestinationPickPage");
 
                 Guid sourceRegionID = new Guid();
                 await Navigation.PushAsync(new NavigatorPage(_navigationGraphName,
@@ -122,7 +122,7 @@ namespace IndoorNavigation.Views.Navigation
                                                              destination._regionID,
                                                              destination._waypointID,
                                                              destination._waypointName));
-                Console.WriteLine("end of Handle_ItemTapped in DestinationPickPage");
+                Console.WriteLine("<<Handle_ItemTapped in DestinationPickPage");
             }
 
             //Deselect Item

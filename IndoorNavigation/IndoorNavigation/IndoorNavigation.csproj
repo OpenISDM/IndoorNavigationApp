@@ -48,7 +48,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Models\NavigationStructure.cs" />
-    <Compile Remove="Models\Region.cs" />
     <Compile Remove="Views\Navigator\MyPage.xaml.cs" />
     <Compile Remove="Views\Navigation\NTUH.Yunlin\NavigationHomePage.xaml.cs" />
     <Compile Remove="Modules\Session.cs" />
