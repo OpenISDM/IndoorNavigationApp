@@ -135,6 +135,8 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
     public class NavigationGraph
     {
+        private double EARTH_RADIUS;
+
         private string _country;
         private string _cityCounty;
         private string _industryService;
@@ -148,8 +150,29 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
         private Dictionary<Guid, Navigraph> _navigraphs { get; set; }
 
+        private double GetDistance(double lon1, double lat1, double lon2, double lat2)
+        {
+            double radLat1 = Rad(lat1);
+            double radLng1 = Rad(lon1);
+            double radLat2 = Rad(lat2);
+            double radLng2 = Rad(lon2);
+            double a = radLat1 - radLat2;
+            double b = radLng1 - radLng2;
+            double result = 2 * Math.Asin(Math.Sqrt(Math.Pow(Math.Sin(a / 2), 2) +
+                            Math.Cos(radLat1) * Math.Cos(radLat2) * Math.Pow(Math.Sin(b / 2), 2))) *
+                            EARTH_RADIUS;
+            return result;
+        }
+
+        private static double Rad(double d)
+        {
+            return (double)d * Math.PI / 180d;
+        }
+
         public NavigationGraph(XmlDocument xmlDocument) {
             Console.WriteLine(">> NavigationGraph");
+
+            EARTH_RADIUS = 6378137;
 
             // initialize structures
             _regions = new Dictionary<Guid, Region>();
@@ -195,7 +218,8 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 Console.WriteLine("floor : " + region._floor);
 
                 // Read all <waypoint> within <region>
-                Console.WriteLine("Read attributes of <navigation_graph><regions>/<region>/<waypoint>");
+                Console.WriteLine("Read attributes of <navigation_graph><regions>/" +
+                                  "<region>/<waypoint>");
                 XmlNodeList xmlWaypoint = regionNode.SelectNodes("waypoint");
                 foreach (XmlNode waypointNode in xmlWaypoint)
                 {
@@ -241,7 +265,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
             // Read all <edge> block within <regions>
             Console.WriteLine("Read attributes of <navigation_graph><regions>/<edge>");
-                XmlNodeList xmlRegionEdge = xmlDocument.SelectNodes("navigation_graph/regions/edge");
+            XmlNodeList xmlRegionEdge = xmlDocument.SelectNodes("navigation_graph/regions/edge");
             foreach (XmlNode regionEdgeNode in xmlRegionEdge)
             {
                 RegionEdge regionEdge = new RegionEdge();
@@ -285,8 +309,14 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                                false);
                 Console.WriteLine("connection_type : " + regionEdge._connectionType);
 
+
+                // calculate the distance of this edge
+                regionEdge._distance = 0;
+
+
                 // fill data into _edges structure
-                Tuple<Guid, Guid> edgeKey = new Tuple<Guid, Guid>(regionEdge._region1, regionEdge._region2);
+                Tuple<Guid, Guid> edgeKey =
+                    new Tuple<Guid, Guid>(regionEdge._region1, regionEdge._region2);
                 if (!_edges.ContainsKey(edgeKey)) {
                     List<RegionEdge> tempRegionEdges = new List<RegionEdge>();
                     tempRegionEdges.Add(regionEdge);
@@ -296,11 +326,29 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 {
                     _edges[edgeKey].Add(regionEdge);
                 }
+
+                // construct navigation_graph._regions[]._neighbors
+                if (DirectionalConnection.BiDirection == regionEdge._biDirection)
+                {
+                    _regions[regionEdge._region1]._neighbors.Add(regionEdge._region2);
+                    _regions[regionEdge._region2]._neighbors.Add(regionEdge._region1);
+                }
+                else {
+                    if (1 == regionEdge._source)
+                    {
+                        _regions[regionEdge._region1]._neighbors.Add(regionEdge._region2);
+                    }
+                    else if(2 == regionEdge._source)
+                    {
+                        _regions[regionEdge._region2]._neighbors.Add(regionEdge._region1);
+                    }
+                }                
             }
 
             // Read all <navigraph> blocks within <navigraphs>
             Console.WriteLine("Read attributes of <navigation_graph><navigraphs>/<navigraph>");
-            XmlNodeList xmlNavigraph = xmlDocument.SelectNodes("navigation_graph/navigraphs/navigraph");
+            XmlNodeList xmlNavigraph =
+                xmlDocument.SelectNodes("navigation_graph/navigraphs/navigraph");
             foreach (XmlNode navigraphNode in xmlNavigraph)
             {
                 Navigraph navigraph = new Navigraph();
@@ -316,7 +364,8 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 Console.WriteLine("region_id : " + navigraph._regionID);
 
                 // Read all <waypoint> within <navigraph>
-                Console.WriteLine("Read attributes of <navigation_graph><navigraphs>/<navigraph>/<waypoint>");
+                Console.WriteLine("Read attributes of <navigation_graph><navigraphs>/" +
+                                  "<navigraph>/<waypoint>");
                 XmlNodeList xmlWaypoint = navigraphNode.SelectNodes("waypoint");
                 foreach (XmlNode waypointNode in xmlWaypoint)
                 {
@@ -339,6 +388,12 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                                  false);
                     Console.WriteLine("type : " + waypoint._type);
 
+                    waypoint._lon = Double.Parse(xmlWaypointElement.GetAttribute("lon"));
+                    Console.WriteLine("lon : " + waypoint._lon);
+
+                    waypoint._lat = Double.Parse(xmlWaypointElement.GetAttribute("lat"));
+                    Console.WriteLine("lat : " + waypoint._lat);
+
                     waypoint._category =
                         (CategoryType)Enum.Parse(typeof(CategoryType),
                                                  xmlWaypointElement.GetAttribute("category"),
@@ -349,7 +404,8 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 }
 
                 // Read all <edge> block within <navigraph>
-                Console.WriteLine("Read attributes of <navigation_graph><navigraphs>/<navigraph>/<edge>");
+                Console.WriteLine("Read attributes of <navigation_graph><navigraphs>/" +
+                                  "<navigraph>/<edge>");
                 XmlNodeList xmlWaypointEdge = navigraphNode.SelectNodes("edge");
                 foreach (XmlNode waypointEdgeNode in xmlWaypointEdge)
                 {
@@ -388,14 +444,44 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                                    false);
                     Console.WriteLine("connection_type : " + waypointEdge._connectionType);
 
+                    // calculate the distance of this edge
+                    waypointEdge._distance =
+                        GetDistance(navigraph._waypoints[waypointEdge._node1]._lon,
+                                    navigraph._waypoints[waypointEdge._node1]._lat,
+                                    navigraph._waypoints[waypointEdge._node2]._lon,
+                                    navigraph._waypoints[waypointEdge._node2]._lat);
+                    Console.WriteLine("distance : " + waypointEdge._distance);
 
                     // fill data into _edges structure
-                    Tuple<Guid, Guid> edgeKey = new Tuple<Guid, Guid>(waypointEdge._node1, waypointEdge._node2);
+                    Tuple<Guid, Guid> edgeKey =
+                        new Tuple<Guid, Guid>(waypointEdge._node1, waypointEdge._node2);
                     navigraph._edges.Add(edgeKey, waypointEdge);
+
+
+                    // construct navigation_graph._navigraph[]._waypoints[]._neighbors
+                    if (DirectionalConnection.BiDirection == waypointEdge._biDirection)
+                    {
+                        navigraph._waypoints[waypointEdge._node1]._neighbors.Add(waypointEdge._node2);
+                        navigraph._waypoints[waypointEdge._node2]._neighbors.Add(waypointEdge._node1);
+                    }
+                    else
+                    {
+                        if (1 == waypointEdge._source)
+                        {
+                            navigraph._waypoints[waypointEdge._node1]._neighbors
+                                .Add(waypointEdge._node2);
+                        }
+                        else if (2 == waypointEdge._source)
+                        {
+                            navigraph._waypoints[waypointEdge._node2]._neighbors
+                                .Add(waypointEdge._node1);
+                        }
+                    }
                 }
 
                 // Read all <beacon> block within <navigraph/beacons>
-                Console.WriteLine("Read attributes of <navigation_graph><navigraphs>/<navigraph>/<beacons>/<beacon>");
+                Console.WriteLine("Read attributes of <navigation_graph><navigraphs>/" + 
+                                  "<navigraph>/<beacons>/<beacon>");
                 XmlNodeList xmlBeacon = navigraphNode.SelectNodes("beacons/beacon");
                 foreach (XmlNode beaconNode in xmlBeacon)
                 {

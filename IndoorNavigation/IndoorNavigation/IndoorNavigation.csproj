@@ -64,6 +64,7 @@
     <Compile Remove="Modules\Navigation\WaypointRoutePlan.cs" />
     <Compile Remove="Modules\IPSModule.cs" />
     <Compile Remove="Models\NavigraphModel.cs" />
+    <Compile Remove="Utilities\XMLParser.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Remove="Views\Navigation\TabbedPageRoutes.xaml" />

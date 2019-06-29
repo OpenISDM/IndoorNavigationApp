@@ -11,5 +11,7 @@ namespace IndoorNavigation.Models
         public LocationType _type { get; set; }
         public CategoryType _category { get; set; }
         public List<Guid> _neighbors { get; set; }
-     }    
+        public double _lon { get; set; }
+        public double _lat { get; set; }
+    }    
 }
