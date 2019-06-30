@@ -258,8 +258,10 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 }
                 else if (ConnectionType.NormalHallway == regionEdge._connectionType)
                 {
+                    bool foundNode1 = false;
                     double node1Lon = 0;
                     double node1Lat = 0;
+                    bool foundNode2 = false;
                     double node2Lon = 0;
                     double node2Lat = 0;
                     foreach (KeyValuePair<CategoryType, List<Waypoint>> categoryItem in
@@ -269,7 +271,11 @@ namespace IndoorNavigation.Models.NavigaionLayer
                             if (waypoint._id.Equals(regionEdge._waypoint1)) {
                                 node1Lon = waypoint._lon;
                                 node1Lat = waypoint._lat;
+                                foundNode1 = true;
+                                break;
                             }
+                            if (foundNode1)
+                                break;
                         }
                     }
                     foreach(KeyValuePair < CategoryType, List < Waypoint >> categoryItem in
@@ -281,7 +287,11 @@ namespace IndoorNavigation.Models.NavigaionLayer
                             {
                                 node2Lon = waypoint._lon;
                                 node2Lat = waypoint._lat;
+                                foundNode2 = true;
+                                break;
                             }
+                            if (foundNode2)
+                                break;
                         }
                     }
 
