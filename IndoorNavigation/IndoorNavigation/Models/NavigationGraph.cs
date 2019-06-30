@@ -477,6 +477,14 @@ namespace IndoorNavigation.Models.NavigaionLayer
             return _navigraphs[regionID]._waypoints[waypointID]._type;
         }
 
+        public string GetWaypointNameInRegion(Guid regionID, Guid waypointID) {
+            return _navigraphs[regionID]._waypoints[waypointID]._name;
+        }
+
+        public IPSType GetRegionIPSType(Guid regionID) {
+            return _regions[regionID]._IPSType;
+        }
+
         public PortalWaypoints GetPortalWaypoints(Guid sourceRegionID,
                                                   Guid sinkRegionID,
                                                   ConnectionType[] avoidConnectionTypes)

@@ -85,7 +85,6 @@ namespace IndoorNavigation.Modules.IPSClients
             List<BeaconSignalModel> removeSignalBuffer =
                 new List<BeaconSignalModel>();
 
-            /*
             lock (_bufferLock)
             {
                 removeSignalBuffer.AddRange(
@@ -114,14 +113,7 @@ namespace IndoorNavigation.Modules.IPSClients
                     }
                 }
             }
-            */
-            //>>test start
-            _event.OnEventCall(new WaypointSignalEventArgs
-            {
-                _detectedWaypointID = new Guid("00000000-0000-0000-0000-000000000001")
-            }) ;
-            //<<test end 
-
+            
             Console.WriteLine("<< In DetectWaypoints");
         }
 
