@@ -113,7 +113,7 @@ namespace IndoorNavigation.ViewModels.Navigation
 					SetInstruction(instruction, out currentStepLabel, out currentStepImage);
 					CurrentStepLabel = currentStepLabel;
 					CurrentStepImage = currentStepImage;
-					CurrentWaypointName = instruction._currentWaypoint._name;
+					CurrentWaypointName = instruction._currentWaypointName;
 					NavigationProgress = instruction._progress;
 					break;
 
@@ -144,7 +144,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                         _resourceManager.GetString(
                             "DIRECTION_STRAIGHT_STRING", 
                             currentLanguage) + "\n{0}", 
-                            instruction._nextWaypoint._name);
+                            instruction._nextWaypointName);
 					stepImage = "Arrow_up";
 					break;
 
@@ -153,7 +153,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                         _resourceManager.GetString(
                             "DIRECTION_STRAIGHT_STRING", 
                             currentLanguage) + "\n{0}", 
-                            instruction._nextWaypoint._name);
+                            instruction._nextWaypointName);
 					stepImage = "Arrow_up";
 					break;
 
@@ -162,7 +162,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                         _resourceManager.GetString(
                             "DIRECTION_RIGHT_FRONT_STRING", 
                             currentLanguage) + "\n{0}", 
-                            instruction._nextWaypoint._name);
+                            instruction._nextWaypointName);
 					stepImage = "Arrow_frontright";
 					break;
 
@@ -171,7 +171,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                         _resourceManager.GetString(
                             "DIRECTION_RIGHT_STRING", 
                             currentLanguage) + "\n{0}", 
-                            instruction._nextWaypoint._name);
+                            instruction._nextWaypointName);
 					stepImage = "Arrow_right";
 					break;
 
@@ -180,7 +180,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                         _resourceManager.GetString(
                             "DIRECTION_RIGHT_REAR_STRING", 
                             currentLanguage) + "\n{0}", 
-                            instruction._nextWaypoint._name);
+                            instruction._nextWaypointName);
 					stepImage = "Arrow_rearright";
 					break;
 
@@ -189,7 +189,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                         _resourceManager.GetString(
                             "DIRECTION_REAR_STRING", 
                             currentLanguage) + "\n{0}", 
-                            instruction._nextWaypoint._name);
+                            instruction._nextWaypointName);
 					stepImage = "Arrow_rear";
 					break;
 
@@ -198,7 +198,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                         _resourceManager.GetString(
                             "DIRECTION_LEFT_REAR_STRING", 
                             currentLanguage) + "\n{0}", 
-                            instruction._nextWaypoint._name);
+                            instruction._nextWaypointName);
 					stepImage = "Arrow_rearleft";
 					break;
 
@@ -207,7 +207,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                         _resourceManager.GetString(
                             "DIRECTION_LEFT_STRING", 
                             currentLanguage) + "\n{0}", 
-                            instruction._nextWaypoint._name);
+                            instruction._nextWaypointName);
 					stepImage = "Arrow_left";
 					break;
 
@@ -216,7 +216,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                         _resourceManager.GetString(
                             "DIRECTION_LEFT_FRONT_STRING", 
                             currentLanguage) + "\n{0}", 
-                            instruction._nextWaypoint._name);
+                            instruction._nextWaypointName);
 					stepImage = "Arrow_frontleft";
 					break;
 
@@ -225,7 +225,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                         _resourceManager.GetString(
                             "DIRECTION_UP_STRING", 
                             currentLanguage) + "\n{0}", 
-                            instruction._nextWaypoint._name);
+                            instruction._nextWaypointName);
 					stepImage = "Stairs_up";
 					break;
 
@@ -234,7 +234,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                         _resourceManager.GetString(
                             "DIRECTION_DOWN_STRING", 
                             currentLanguage) + "\n{0}", 
-                            instruction._nextWaypoint._name);
+                            instruction._nextWaypointName);
 					stepImage = "Stairs_down";
 					break;
 				default:

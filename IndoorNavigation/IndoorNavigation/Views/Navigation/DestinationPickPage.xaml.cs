@@ -82,7 +82,7 @@ namespace IndoorNavigation.Views.Navigation
 
             _navigationGraph = NavigraphStorage.LoadNavigationGraphXML(navigationGraphName);
 
-            foreach (KeyValuePair<Guid, IndoorNavigation.Models.Region> pairRegion in _navigationGraph.GetResions())
+            foreach (KeyValuePair<Guid, IndoorNavigation.Models.Region> pairRegion in _navigationGraph.GetRegions())
             {
                 string floorName = pairRegion.Value._floor.ToString() + " "
                     + _resourceManager.GetString("FLOOR_STRING",

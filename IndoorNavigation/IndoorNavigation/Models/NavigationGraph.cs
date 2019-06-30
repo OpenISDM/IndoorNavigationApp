@@ -446,8 +446,30 @@ namespace IndoorNavigation.Models.NavigaionLayer
             return _industryService;
         }
 
-        public Dictionary<Guid, Region> GetResions() {
+        public Dictionary<Guid, Region> GetRegions() {
             return _regions;
+        }
+
+        public List<Guid> GetAllBeaconIDInOneWaypointOfRegion(Guid regionID,
+                                                              Guid waypointID)
+        {
+            List<Guid> beaconIDs = new List<Guid>();
+
+            beaconIDs = _navigraphs[regionID]._beacons[waypointID];
+
+            return beaconIDs;
+        }
+
+        public List<Guid> GetAllWaypointIDInOneRegion(Guid regionID)
+        {
+            List<Guid> waypointIDs = new List<Guid>();
+
+            foreach (KeyValuePair<Guid, Waypoint> waypointItem
+                     in _navigraphs[regionID]._waypoints)
+            {
+                waypointIDs.Add(waypointItem.Key);
+            }
+            return waypointIDs;
         }
 
         public Graph<Guid, string> GenerateRegionGraph(ConnectionType[] avoidConnectionTypes)
