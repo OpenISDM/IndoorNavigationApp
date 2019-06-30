@@ -166,6 +166,12 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                                  false);
                     Console.WriteLine("type : " + waypoint._type);
 
+                    waypoint._lon = Double.Parse(xmlWaypointElement.GetAttribute("lon"));
+                    Console.WriteLine("lon : " + waypoint._lon);
+
+                    waypoint._lat = Double.Parse(xmlWaypointElement.GetAttribute("lat"));
+                    Console.WriteLine("lat : " + waypoint._lat);
+
                     waypoint._category =
                         (CategoryType)Enum.Parse(typeof(CategoryType),
                                                  xmlWaypointElement.GetAttribute("category"),
@@ -233,9 +239,59 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                                false);
                 Console.WriteLine("connection_type : " + regionEdge._connectionType);
 
-
                 // calculate the distance of this edge
                 regionEdge._distance = 0;
+                int distanceElevator = 3;
+                int distanceEscalator = 5;
+                int distanceStair = 7;
+                if (ConnectionType.Elevator == regionEdge._connectionType)
+                {
+                    regionEdge._distance = distanceElevator;
+                }
+                else if (ConnectionType.Escalator == regionEdge._connectionType)
+                {
+                    regionEdge._distance = distanceEscalator;
+                }
+                else if (ConnectionType.Stair == regionEdge._connectionType)
+                {
+                    regionEdge._distance = distanceStair;
+                }
+                else if (ConnectionType.NormalHallway == regionEdge._connectionType)
+                {
+                    double node1Lon = 0;
+                    double node1Lat = 0;
+                    double node2Lon = 0;
+                    double node2Lat = 0;
+                    foreach (KeyValuePair<CategoryType, List<Waypoint>> categoryItem in
+                        _regions[regionEdge._region1]._waypointsByCategory) {
+
+                        foreach (Waypoint waypoint in categoryItem.Value) {
+                            if (waypoint._id.Equals(regionEdge._waypoint1)) {
+                                node1Lon = waypoint._lon;
+                                node1Lat = waypoint._lat;
+                            }
+                        }
+                    }
+                    foreach(KeyValuePair < CategoryType, List < Waypoint >> categoryItem in
+                        _regions[regionEdge._region2]._waypointsByCategory) {
+
+                        foreach (Waypoint waypoint in categoryItem.Value)
+                        {
+                            if (waypoint._id.Equals(regionEdge._waypoint2))
+                            {
+                                node2Lon = waypoint._lon;
+                                node2Lat = waypoint._lat;
+                            }
+                        }
+                    }
+
+                    regionEdge._distance = GetDistance(node1Lon,
+                                                       node1Lat,
+                                                       node2Lon,
+                                                       node2Lat);
+
+                }
+                Console.WriteLine("distance : " + regionEdge._distance);
 
 
                 // fill data into _edges structure
