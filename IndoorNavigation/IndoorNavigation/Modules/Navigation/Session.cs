@@ -64,7 +64,6 @@ namespace IndoorNavigation.Modules
         private int _nextWaypointStep;
 
         private List<RegionWaypointPoint> _waypointsOnRoute = new List<RegionWaypointPoint>();
-        //private List<Waypoint> _waypointsOnRoute = new List<Waypoint>();
         private Dictionary<Guid, List<Waypoint>> _waypointsOnWrongWay =
                 new Dictionary<Guid, List<Waypoint>>();
         
@@ -267,10 +266,12 @@ namespace IndoorNavigation.Modules
                                    Guid destinationWaypointID)
         {
             // generate path between regions (from sourceRegionID to destnationRegionID)
-            uint region1Key = _graphRegionGraph.Where(node => node.Item.Equals(sourceRegionID))
-                            .Select(node => node.Key).First();
-            uint region2Key = _graphRegionGraph.Where(node => node.Item.Equals(destinationRegionID))
-                            .Select(node => node.Key).First();
+            uint region1Key = _graphRegionGraph
+                              .Where(node => node.Item.Equals(sourceRegionID))
+                              .Select(node => node.Key).First();
+            uint region2Key = _graphRegionGraph
+                              .Where(node => node.Item.Equals(destinationRegionID))
+                              .Select(node => node.Key).First();
 
             var pathRegions = _graphRegionGraph.Dijkstra(region1Key, region2Key).GetPath();
 
@@ -362,63 +363,59 @@ namespace IndoorNavigation.Modules
 
             foreach (RegionWaypointPoint checkPoint in _waypointsOnRoute)
             {
-                Console.WriteLine("region/waypoint = {0}/{1}",
+                Console.WriteLine("region-graph region/waypoint = {0}/{1}",
                                   checkPoint._regionID,
                                   checkPoint._waypointID);
             }
 
 
-              /*
-                _waypointsOnRoute = new List<Waypoint>();
-                _waypointsOnWrongWay = new Dictionary<Guid, List<Waypoint>>();
-                for (int i = 0; i < path.Count(); i++)
+            // fill in all the path between waypoints in the same region / navigraph
+            for (int i = 0; i < _waypointsOnRoute.Count() - 1; i++)
+            {
+                RegionWaypointPoint currentCheckPoint = _waypointsOnRoute[i];
+                RegionWaypointPoint nextCheckPoint = _waypointsOnRoute[i + 1];
+
+                if (currentCheckPoint._regionID.Equals(nextCheckPoint._regionID))
                 {
-                    _waypointsOnRoute.Add(subgraph[path.ToList()[i]].Item);
+                    Graph<Guid, string> _graphNavigraph =
+                        _navigationGraph.GenerateNavigraph(currentCheckPoint._regionID,
+                                                           _avoidConnectionTypes);
 
-                    List<Waypoint> tempWrongWaypointList = new List<Waypoint>();
+                    // generate path between two waypoints in the same region / navigraph 
+                    uint waypoint1Key = _graphNavigraph
+                                        .Where(node => node.Item
+                                               .Equals(currentCheckPoint._waypointID))
+                                        .Select(node => node.Key).First();
+                    uint waypoint2Key = _graphNavigraph
+                                        .Where(node => node.Item
+                                               .Equals(nextCheckPoint._waypointID))
+                                        .Select(node => node.Key).First();
 
-                    // Construct the two-step possible wrong-way waypoints
-                    Console.WriteLine("GenerateRoute: correct waypoint: " + _waypointsOnRoute[i]._id);
-                    if (i - 1 >= 0)
+                    var pathWaypoints =
+                        _graphNavigraph.Dijkstra(waypoint1Key, waypoint2Key).GetPath();
+
+                    for (int j = 0; j < pathWaypoints.Count(); j++)
                     {
-                    *//*
-                        for (int j = 0; j < _waypointsOnRoute[i-1]._neighbors.Count; j++)
+                        if (j != 0 && j != pathWaypoints.Count() - 1)
                         {
-                            if(!subgraph[path.ToList()[i]].Item.ID.
-                                Equals(_waypointsOnRoute[i-1].Neighbors[j].TargetWaypointUUID))
-                            { 
-                                Waypoint oneStepWrongWaypoint =
-                                    subgraph.Where(waypoint => waypoint.Item.ID.
-                                    Equals(_waypointsOnRoute[i - 1].Neighbors[j].TargetWaypointUUID)).
-                                    Select(n => n.Item).First();
-
-                                Console.WriteLine("GenerateRoute: one step wrong waypoint: " +
-                                                  oneStepWrongWaypoint.ID);
-
-                                for (int m = 0; m < oneStepWrongWaypoint.Neighbors.Count; m++) {
-                                    Waypoint twoStepWrongWaypoint =
-                                        subgraph.Where(waypoint => waypoint.Item.ID.
-                                        Equals(oneStepWrongWaypoint.Neighbors[m].TargetWaypointUUID)).
-                                        Select(n => n.Item).
-                                        First();
-
-                                    if (!twoStepWrongWaypoint.ID.Equals(oneStepWrongWaypoint.ID) &&
-                                        !twoStepWrongWaypoint.ID.Equals(_waypointsOnRoute[i-1].ID))
-                                    {
-                                        Console.WriteLine("GenerateRoute: two step wrong waypoint: " +
-                                                          twoStepWrongWaypoint.ID);
-
-                                        tempWrongWaypointList.Add(twoStepWrongWaypoint);
-                                    }
-                                }
-                            }
+                            _waypointsOnRoute.Insert(i + 1, new RegionWaypointPoint
+                            {
+                                _regionID = currentCheckPoint._regionID,
+                                _waypointID = _graphNavigraph[pathWaypoints.ToList()[j]].Item
+                            });
                         }
-                        *//*
                     }
-                    _waypointsOnWrongWay.Add(_waypointsOnRoute[i]._id, tempWrongWaypointList);
-                }*/
-
+                }
             }
+
+            // display the resulted full path of region/waypoint between source and destination
+            foreach (RegionWaypointPoint checkPoint in _waypointsOnRoute)
+            {
+                Console.WriteLine("full-path region/waypoint = {0}/{1}",
+                                  checkPoint._regionID,
+                                  checkPoint._waypointID);
+            }
+        }
 
         //In this function we get the currentwaypoint and determine whether
         //the users are in the right path or not.
@@ -454,7 +451,8 @@ namespace IndoorNavigation.Modules
                 }
             }
             else
-            {/*
+            {
+                /*
                 if (currentWaypointID.Equals(_destinationWaypointID))
                 {
                     Console.WriteLine("---- [case: arrived destination] .... ");
@@ -541,6 +539,7 @@ namespace IndoorNavigation.Modules
                 }
                 else
                 {
+                    /*
                     Console.WriteLine("arrived waypoint ID:" + currentWaypointID);
                     Console.WriteLine("possible wrong waypoint:");
 
