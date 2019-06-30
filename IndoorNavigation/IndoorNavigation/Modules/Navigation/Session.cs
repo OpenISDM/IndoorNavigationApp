@@ -99,8 +99,16 @@ namespace IndoorNavigation.Modules
                                         .Select(node => node.Key).First();
             var path = _regionGraph.Dijkstra(node1Key, node2Key).GetPath();
 
-            for (int i = 0; i < path.Count(); i++) {
-                Console.WriteLine("Step {0}: {1}", i, _regionGraph[path.ToList()[i]].Item);
+            if (0 == path.Count())
+            {
+                Console.WriteLine("No path. Need to change avoid connection type");
+            }
+            else
+            {
+                for (int i = 0; i < path.Count(); i++)
+                {
+                    Console.WriteLine("Step {0}: {1}", i, _regionGraph[path.ToList()[i]].Item);
+                }
             }
 
 

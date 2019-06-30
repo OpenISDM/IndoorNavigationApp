@@ -470,22 +470,49 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 uint node2Key = graph.Where(node => node.Item.Equals(node2))
                                 .Select(node => node.Key).First();
 
-                // should refine distance, bi-direction, direction, connection type later
-                int distance = Int32.MaxValue;
+                int node1EdgeDistance = Int32.MaxValue;
+                int node1EdgeIndex = -1;
+                int node2EdgeDistance = Int32.MaxValue;
+                int node2EdgeIndex = -1;
                 for (int i = 0; i < regionEdgeItem.Value.Count(); i++)
                 {
                     RegionEdge edgeItem = regionEdgeItem.Value[i];
-                    if (!avoidConnectionTypes.Contains(edgeItem._connectionType) &&
-                        edgeItem._distance <= distance)
+                    if (!avoidConnectionTypes.Contains(edgeItem._connectionType))
                     {
-                        distance = System.Convert.ToInt32(edgeItem._distance);
-                        break;
-                    }
-                }
 
-                // need to check if graph.Connect is oneway or di-directional
-                graph.Connect(node1Key, node2Key, distance, String.Empty);
-                graph.Connect(node2Key, node1Key, distance, String.Empty);
+                        if (DirectionalConnection.BiDirection == edgeItem._biDirection ||
+                        (DirectionalConnection.OneWay == edgeItem._biDirection &&
+                         1 == edgeItem._source))
+                        {
+                            int edgeDistance = System.Convert.ToInt32(edgeItem._distance);
+                            if (edgeDistance < node1EdgeDistance)
+                            {
+                                node1EdgeDistance = edgeDistance;
+                                node1EdgeIndex = i;
+                            }
+                        }
+
+                        if (DirectionalConnection.BiDirection == edgeItem._biDirection ||
+                        (DirectionalConnection.OneWay == edgeItem._biDirection &&
+                         2 == edgeItem._source))
+                        {
+                            int edgeDistance = System.Convert.ToInt32(edgeItem._distance);
+                            if (edgeDistance < node2EdgeDistance)
+                            {
+                                node2EdgeDistance = edgeDistance;
+                                node2EdgeIndex = i;
+                            }
+                        }
+
+                    }
+                }       
+                if (-1 != node1EdgeIndex) {
+                    graph.Connect(node1Key, node2Key, node1EdgeDistance, String.Empty);
+                }
+                if (-1 != node2EdgeIndex)
+                {
+                    graph.Connect(node2Key, node1Key, node2EdgeDistance, String.Empty);
+                }
             }
 
             return graph;
@@ -518,12 +545,25 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 WaypointEdge edgeItem = _navigraphs[regionID]._edges[edgeKey];
                 if (!avoidConnectionTypes.Contains(edgeItem._connectionType)) 
                 {
-                        distance = System.Convert.ToInt32(edgeItem._distance);
-                }
+                    distance = System.Convert.ToInt32(edgeItem._distance);
 
-                // need to check if graph.Connect is oneway or di-directional
-                graph.Connect(node1Key, node2Key, distance, String.Empty);
-                graph.Connect(node2Key, node1Key, distance, String.Empty);
+                    if (DirectionalConnection.BiDirection == edgeItem._biDirection)
+                    {
+                        // Graph.Connect is on-way, not bi-drectional
+                        graph.Connect(node1Key, node2Key, distance, String.Empty);
+                        graph.Connect(node2Key, node1Key, distance, String.Empty);
+                    }
+                    else if (DirectionalConnection.OneWay == edgeItem._biDirection) {
+                        if (1 == edgeItem._source)
+                        {
+                            graph.Connect(node1Key, node2Key, distance, String.Empty);
+                        }
+                        else if (2 == edgeItem._source)
+                        {
+                            graph.Connect(node2Key, node1Key, distance, String.Empty);
+                        }
+                    }
+                }
             }
 
             return graph;
