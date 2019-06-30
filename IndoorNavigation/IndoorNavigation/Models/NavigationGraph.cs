@@ -472,6 +472,34 @@ namespace IndoorNavigation.Models.NavigaionLayer
             return waypointIDs;
         }
 
+        public LocationType GetWaypointTypeInRegion(Guid regionID, Guid waypointID) {
+
+            return _navigraphs[regionID]._waypoints[waypointID]._type;
+        }
+
+        public PortalWaypoints GetPortalWaypoints(Guid sourceRegionID,
+                                                  Guid sinkRegionID,
+                                                  ConnectionType[] avoidConnectionTypes)
+        {
+            PortalWaypoints portalWaypoints = new PortalWaypoints();
+
+            Tuple<Guid, Guid> edgeKey = new Tuple<Guid, Guid>(sourceRegionID, sinkRegionID);
+            foreach (RegionEdge edgeItem in _edges[edgeKey])
+            {
+                if (!avoidConnectionTypes.Contains(edgeItem._connectionType))
+                {
+                    if (DirectionalConnection.BiDirection == edgeItem._biDirection ||
+                     (DirectionalConnection.OneWay == edgeItem._biDirection &&
+                      1 == System.Convert.ToInt32(edgeItem._source)))
+                    {
+                        portalWaypoints._portalWaypoint1 = edgeItem._waypoint1;
+                        portalWaypoints._portalWaypoint2 = edgeItem._waypoint2;
+                    }
+                }
+            }
+            return portalWaypoints;
+        }
+
         public Graph<Guid, string> GenerateRegionGraph(ConnectionType[] avoidConnectionTypes)
         {
             Graph<Guid, string> graph = new Graph<Guid, string>();

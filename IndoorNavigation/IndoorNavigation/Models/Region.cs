@@ -58,4 +58,10 @@ namespace IndoorNavigation.Models
         public List<Guid> _neighbors { get; set; }
         public Dictionary<CategoryType, List<Waypoint>> _waypointsByCategory { get; set; }
     }
+
+    public class RegionWaypointPoint
+    {
+        public Guid _regionID { get; set; }
+        public Guid _waypointID { get; set; }
+    }
 }
