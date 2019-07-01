@@ -30,6 +30,10 @@
 	<string>This app needs to access a camera to scan the barcode.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Indoor navigation requires location permission</string>
+	<key>XSAppIconAssets</key>
+	<string>Assets.xcassets/AppIcon.appiconset</string>
+	<key>XSLaunchImageAssets</key>
+	<string>Assets.xcassets/LaunchImage.launchimage</string>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleLightContent</string>
 	<key>CFBundleLocalizations</key>
