@@ -536,55 +536,28 @@ namespace IndoorNavigation.Modules
                         _navigationGraph.GetWaypointNameInRegion(
                             _waypointsOnRoute[_nextWaypointStep + 1]._regionID,
                             _waypointsOnRoute[_nextWaypointStep + 1]._waypointID);
-                        
-                    //If the floor information between the current waypoint and
-                    //next are different, it means that the users need to change
-                    //the floor, therefore, we can determine the users need to 
-                    //go up or down by compare which floor is higher
-                    /*
-                    if (currentWaypoint.Floor !=
-                        _waypointsOnRoute[_nextWaypointStep + 1].Floor)
-                    {
 
-                        if (currentWaypoint.Floor >
-                            _waypointsOnRoute[_nextWaypointStep + 1].Floor)
-                        {
-                            navigationInstruction.Direction = TurnDirection.Down;
-                        }
-                        else
-                        {
-                            navigationInstruction.Direction = TurnDirection.Up;
-                        }
-                        navigationInstruction.Distance = 0;
-
+                    Guid previousRegionID = new Guid();
+                    Guid previousWaypointID = new Guid();
+                    if (_nextWaypointStep - 1 >= 0) {
+                        previousRegionID =
+                            _waypointsOnRoute[_nextWaypointStep - 1]._regionID;
+                        previousWaypointID =
+                            _waypointsOnRoute[_nextWaypointStep - 1]._waypointID;
                     }
-                    //If the fllor information between current way point and next
-                    // way point are the same, we need to tell the user go
-                    //straight or turn direction, therefore, we need to have
-                    //three informations, previous, current and next waypoints
-                    else
-                    {
-                    */
-                        navigationInstruction._distance = 10;
+
+                    navigationInstruction._information =
+                        _navigationGraph
+                        .GetInstructionInformation(
+                            _nextWaypointStep,
+                            _currentRegionID,
+                            _currentWaypointID,
+                            previousRegionID,
+                            previousWaypointID,
+                            _waypointsOnRoute[_nextWaypointStep + 1]._regionID,
+                            _waypointsOnRoute[_nextWaypointStep + 1]._waypointID,
+                            _avoidConnectionTypes);
                     
-                        if (_nextWaypointStep == 0)
-                        {
-                            navigationInstruction._direction =
-                                TurnDirection.FirstDirection;
-                        }
-                        else
-                        {
-                            navigationInstruction._direction = TurnDirection.FirstDirection;
-                        /*
-                                Subgraph.GetTurnDirection(
-                                    _waypointsOnRoute[_nextWaypointStep - 1],
-                                    currentWaypoint,
-                                    _waypointsOnRoute[_nextWaypointStep + 1]);
-                                    */
-                         }
-                      /* 
-                    }
-                    */
                     //Get the progress
                     Console.WriteLine("calculate progress: {0}/{1}",
                                       _nextWaypointStep,
@@ -661,11 +634,9 @@ namespace IndoorNavigation.Modules
 
             public string _nextWaypointName;
 
-            public double _distance;
-
             public double _progress;
 
-            public TurnDirection _direction;
+            public InstructionInformation _information { get; set; }
         }
 
         public class NavigationEventArgs : EventArgs

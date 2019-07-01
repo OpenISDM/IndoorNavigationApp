@@ -137,7 +137,7 @@ namespace IndoorNavigation.ViewModels.Navigation
 									out string stepImage)
 		{
 			var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-			switch (instruction._direction)
+			switch (instruction._information._turnDirection)
 			{
 				case TurnDirection.FirstDirection:
 					stepLabel = string.Format(
