@@ -144,7 +144,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                         instruction._information._distance + "\n" +
                         _resourceManager.GetString(
                             "DIRECTION_STRAIGHT_STRING", 
-                            currentLanguage) + "\n{0}" +  
+                            currentLanguage) + "\n{0}", 
                             instruction._nextWaypointName);
 					stepImage = "Arrow_up";
 					break;
