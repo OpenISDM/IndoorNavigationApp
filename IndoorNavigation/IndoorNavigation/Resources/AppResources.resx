@@ -294,6 +294,10 @@
         <value>Pick Destination </value>
     </data>
     
+    <data name="PICK_REGION_STRING" xml:space="preserve">
+        <value>Pick Region </value>
+    </data>
+    
      <data name="FLOOR_STRING" xml:space="preserve">
         <value>Floor </value>
     </data>

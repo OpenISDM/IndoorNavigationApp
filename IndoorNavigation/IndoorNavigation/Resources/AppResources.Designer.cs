@@ -455,6 +455,12 @@ namespace IndoorNavigation.Resources {
             }
         }
         
+        internal static string PICK_REGION_STRING {
+            get {
+                return ResourceManager.GetString("PICK_REGION_STRING", resourceCulture);
+            }
+        }
+        
         internal static string FLOOR_STRING {
             get {
                 return ResourceManager.GetString("FLOOR_STRING", resourceCulture);

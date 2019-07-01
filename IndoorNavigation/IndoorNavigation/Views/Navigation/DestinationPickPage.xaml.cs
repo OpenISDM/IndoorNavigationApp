@@ -82,6 +82,8 @@ namespace IndoorNavigation.Views.Navigation
 
             _navigationGraph = NavigraphStorage.LoadNavigationGraphXML(navigationGraphName);
 
+            NavigationPage.SetBackButtonTitle(this, _resourceManager.GetString("BACK_STRING", CrossMultilingual.Current.CurrentCultureInfo));
+
             foreach (KeyValuePair<Guid, IndoorNavigation.Models.Region> pairRegion in _navigationGraph.GetRegions())
             {
                 string floorName = pairRegion.Value._floor.ToString() + " "
@@ -89,7 +91,7 @@ namespace IndoorNavigation.Views.Navigation
                                                  CrossMultilingual.Current.CurrentCultureInfo);
 
                 if (pairRegion.Value._waypointsByCategory.ContainsKey(category))
-                {
+                {                    
                     foreach (Waypoint waypoint in pairRegion.Value._waypointsByCategory[category])
                     {
                         _destinationItems.Add(new DestinationItem

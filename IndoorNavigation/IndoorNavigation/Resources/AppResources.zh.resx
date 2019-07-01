@@ -294,6 +294,10 @@
         <value>挑選目的地 </value>
     </data>
     
+    <data name="PICK_REGION_STRING" xml:space="preserve">
+        <value>挑選所在區域 </value>
+    </data>
+    
     <data name="FLOOR_STRING" xml:space="preserve">
         <value>樓 </value>
     </data>
