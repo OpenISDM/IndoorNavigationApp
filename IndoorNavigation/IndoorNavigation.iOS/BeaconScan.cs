@@ -60,6 +60,8 @@ namespace IndoorNavigation.iOS
     {
         private readonly CBCentralManager _manager = new CBCentralManager();
 
+        private int _rssiThreshold = -50;
+
         public NavigationEvent _event { get; private set; }
 
         public BeaconScan()
@@ -98,8 +100,7 @@ namespace IndoorNavigation.iOS
 
         private void DiscoveredPeripheral(object sender, CBDiscoveredPeripheralEventArgs args)
         {
-            int rssiThreshold = -45;
-            if ((args as CBDiscoveredPeripheralEventArgs).RSSI.Int32Value > rssiThreshold &&
+            if ((args as CBDiscoveredPeripheralEventArgs).RSSI.Int32Value > _rssiThreshold &&
                 (args as CBDiscoveredPeripheralEventArgs).RSSI.Int32Value < 0)
             {
                 /*

@@ -141,15 +141,17 @@ namespace IndoorNavigation.ViewModels.Navigation
 			{
 				case TurnDirection.FirstDirection:
 					stepLabel = string.Format(
+                        instruction._information._distance + "\n" +
                         _resourceManager.GetString(
                             "DIRECTION_STRAIGHT_STRING", 
-                            currentLanguage) + "\n{0}", 
+                            currentLanguage) + "\n{0}" +  
                             instruction._nextWaypointName);
 					stepImage = "Arrow_up";
 					break;
 
 				case TurnDirection.Forward:
 					stepLabel = string.Format(
+                        instruction._information._distance + "\n" +
                         _resourceManager.GetString(
                             "DIRECTION_STRAIGHT_STRING", 
                             currentLanguage) + "\n{0}", 
@@ -159,6 +161,7 @@ namespace IndoorNavigation.ViewModels.Navigation
 
 				case TurnDirection.Forward_Right:
 					stepLabel = string.Format(
+                        instruction._information._distance + "\n" +
                         _resourceManager.GetString(
                             "DIRECTION_RIGHT_FRONT_STRING", 
                             currentLanguage) + "\n{0}", 
@@ -168,6 +171,7 @@ namespace IndoorNavigation.ViewModels.Navigation
 
 				case TurnDirection.Right:
 					stepLabel = string.Format(
+                        instruction._information._distance + "\n" +
                         _resourceManager.GetString(
                             "DIRECTION_RIGHT_STRING", 
                             currentLanguage) + "\n{0}", 
@@ -177,6 +181,7 @@ namespace IndoorNavigation.ViewModels.Navigation
 
 				case TurnDirection.Backward_Right:
 					stepLabel = string.Format(
+                        instruction._information._distance + "\n" +
                         _resourceManager.GetString(
                             "DIRECTION_RIGHT_REAR_STRING", 
                             currentLanguage) + "\n{0}", 
@@ -186,6 +191,7 @@ namespace IndoorNavigation.ViewModels.Navigation
 
 				case TurnDirection.Backward:
 					stepLabel = string.Format(
+                        instruction._information._distance + "\n" +
                         _resourceManager.GetString(
                             "DIRECTION_REAR_STRING", 
                             currentLanguage) + "\n{0}", 
@@ -195,6 +201,7 @@ namespace IndoorNavigation.ViewModels.Navigation
 
 				case TurnDirection.Backward_Left:
 					stepLabel = string.Format(
+                        instruction._information._distance + "\n" +
                         _resourceManager.GetString(
                             "DIRECTION_LEFT_REAR_STRING", 
                             currentLanguage) + "\n{0}", 
@@ -204,6 +211,7 @@ namespace IndoorNavigation.ViewModels.Navigation
 
 				case TurnDirection.Left:
 					stepLabel = string.Format(
+                        instruction._information._distance + "\n" +
                         _resourceManager.GetString(
                             "DIRECTION_LEFT_STRING", 
                             currentLanguage) + "\n{0}", 
@@ -213,6 +221,7 @@ namespace IndoorNavigation.ViewModels.Navigation
 
 				case TurnDirection.Forward_Left:
 					stepLabel = string.Format(
+                        instruction._information._distance + "\n" +
                         _resourceManager.GetString(
                             "DIRECTION_LEFT_FRONT_STRING", 
                             currentLanguage) + "\n{0}", 
@@ -222,19 +231,23 @@ namespace IndoorNavigation.ViewModels.Navigation
 
 				case TurnDirection.Up:
 					stepLabel = string.Format(
+                        instruction._information._connectionType + "\n" +
                         _resourceManager.GetString(
                             "DIRECTION_UP_STRING", 
-                            currentLanguage) + "\n{0}", 
-                            instruction._nextWaypointName);
+                            currentLanguage) + "\n{0} {1}", 
+                            instruction._information._floor +
+                            instruction._information._regionName);
 					stepImage = "Stairs_up";
 					break;
 
 				case TurnDirection.Down:
 					stepLabel = string.Format(
+                        instruction._information._connectionType + "\n" +
                         _resourceManager.GetString(
                             "DIRECTION_DOWN_STRING", 
-                            currentLanguage) + "\n{0}", 
-                            instruction._nextWaypointName);
+                            currentLanguage) + "\n{0} {1}", 
+                            instruction._information._floor +
+                            instruction._information._regionName);
 					stepImage = "Stairs_down";
 					break;
 				default:
