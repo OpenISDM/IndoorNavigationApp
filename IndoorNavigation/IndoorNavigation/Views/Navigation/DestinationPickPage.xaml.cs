@@ -91,17 +91,32 @@ namespace IndoorNavigation.Views.Navigation
                                                  CrossMultilingual.Current.CurrentCultureInfo);
 
                 if (pairRegion.Value._waypointsByCategory.ContainsKey(category))
-                {                    
-                    foreach (Waypoint waypoint in pairRegion.Value._waypointsByCategory[category])
-                    {
-                        _destinationItems.Add(new DestinationItem
+                {
+                        
+                        foreach (Waypoint waypoint in pairRegion.Value._waypointsByCategory[category])
                         {
-                            _regionID = pairRegion.Key,
-                            _waypointID = waypoint._id,
-                            _waypointName = waypoint._name,
-                            _floor = floorName
-                        }) ;
-                    }
+                            if (waypoint._type.ToString()=="terminal"||waypoint._type.ToString()== "landmark")
+                            {
+                            Console.WriteLine("check type : " + waypoint._type.ToString());
+                                _destinationItems.Add(new DestinationItem
+                                {
+                                    _regionID = pairRegion.Key,
+                                    _waypointID = waypoint._id,
+                                    _waypointName = waypoint._name,
+                                    _floor = floorName
+                                });
+
+
+                            }
+                            else
+                            {
+                                Console.WriteLine("Portal, No need to add!!");
+                            }
+                           
+                        }
+                        
+                  
+                    
                 }
             }
 
