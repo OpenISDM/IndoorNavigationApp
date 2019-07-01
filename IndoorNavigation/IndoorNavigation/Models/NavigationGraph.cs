@@ -93,6 +93,126 @@ namespace IndoorNavigation.Models.NavigaionLayer
             return (double)d * Math.PI / 180d;
         }
 
+        private RegionEdge GetRegionEdge(Guid sourceRegionID,
+                                         Guid sinkRegionID,
+                                         ConnectionType[] avoidConnectionTypes)
+        {
+            RegionEdge regionEdgeItem = new RegionEdge();
+
+            // compare the normal case (R1, R2)
+            Tuple<Guid, Guid> edgeKeyFromNode1 =
+                new Tuple<Guid, Guid>(sourceRegionID, sinkRegionID);
+
+            int distance = Int32.MaxValue;
+            int indexEdge = -1;
+            if(_edges.ContainsKey(edgeKeyFromNode1)){
+             
+                for(int i = 0; i < _edges[edgeKeyFromNode1].Count(); i++)
+                {
+                    RegionEdge edgeItem = _edges[edgeKeyFromNode1][i];
+                
+                    if (!avoidConnectionTypes.Contains(edgeItem._connectionType))
+                    {
+                        if (DirectionalConnection.BiDirection == edgeItem._biDirection ||
+                        (DirectionalConnection.OneWay == edgeItem._biDirection &&
+                        1 == edgeItem._source))
+                        {
+                            int edgeDistance = System.Convert.ToInt32(edgeItem._distance);
+                            if(edgeDistance < distance){
+                                distance = edgeDistance;
+                                indexEdge = i;
+                            }
+                        }
+                    }
+                }
+            }
+            if(-1 != indexEdge){
+                regionEdgeItem = _edges[edgeKeyFromNode1][indexEdge];
+                return regionEdgeItem;
+            }
+
+            // compare the reverse case (R2, R1) because normal case (R1, R2) cannot find regionEdge
+            Tuple<Guid, Guid> edgeKeyFromNode2 =
+                new Tuple<Guid, Guid>(sinkRegionID, sourceRegionID);
+
+            if(_edges.ContainsKey(edgeKeyFromNode2))
+            {
+                for(int i = 0 ; i < _edges[edgeKeyFromNode2].Count(); i++)
+                {
+                    RegionEdge edgeItem = _edges[edgeKeyFromNode2][i];
+                
+                    if (!avoidConnectionTypes.Contains(edgeItem._connectionType))
+                    {
+                        if (DirectionalConnection.BiDirection == edgeItem._biDirection ||
+                            (DirectionalConnection.OneWay == edgeItem._biDirection &&
+                            2 == edgeItem._source))
+                        {
+                            int edgeDistance = System.Convert.ToInt32(edgeItem._distance);
+                            if(edgeDistance < distance){
+                                distance = edgeDistance;
+                                indexEdge = i;
+                            }
+                        }
+                    }
+                }
+            }
+            if(-1 != indexEdge){
+                // need to reverse the resulted regionEdge from (R1/W1, R2/W2) pair to
+                // (R2/W2, R1/W1) pair before returning to caller
+                regionEdgeItem._region1 = _edges[edgeKeyFromNode2][indexEdge]._region2;
+                regionEdgeItem._region2 = _edges[edgeKeyFromNode2][indexEdge]._region1;
+                regionEdgeItem._waypoint1 = _edges[edgeKeyFromNode2][indexEdge]._waypoint2;
+                regionEdgeItem._waypoint2 = _edges[edgeKeyFromNode2][indexEdge]._waypoint1;
+                regionEdgeItem._biDirection = _edges[edgeKeyFromNode2][indexEdge]._biDirection;
+                if(2 == _edges[edgeKeyFromNode2][indexEdge]._source)
+                    regionEdgeItem._source = 1;
+                regionEdgeItem._distance = _edges[edgeKeyFromNode2][indexEdge]._distance;
+                if(System.Convert.ToInt32(_edges[edgeKeyFromNode2][indexEdge]._direction) +
+                   4 < 8)
+                {
+                    regionEdgeItem._direction = (CardinalDirection)
+                        (4 + _edges[edgeKeyFromNode2][indexEdge]._direction);
+                }
+                else
+                {
+                    regionEdgeItem._direction = (CardinalDirection)
+                        (4 + _edges[edgeKeyFromNode2][indexEdge]._direction - 8);
+                }
+                regionEdgeItem._connectionType =
+                    _edges[edgeKeyFromNode2][indexEdge]._connectionType;
+                
+                return regionEdgeItem;
+               
+            }
+            return regionEdgeItem;
+        }
+
+        private WaypointEdge GetWaypointEdgeInRegion(Guid regionID,
+                                                     Guid sourceWaypoindID,
+                                                     Guid sinkWaypointID,
+                                                     ConnectionType[] avoidConnectionTypes)
+        {
+            WaypointEdge waypointEdge = new WaypointEdge();
+
+            Tuple<Guid, Guid> edgeKeyFromNode1 =
+                new Tuple<Guid, Guid>(sourceWaypoindID, sinkWaypointID);
+
+            Tuple<Guid, Guid> edgeKeyFromNode2 =
+                new Tuple<Guid, Guid>(sinkWaypointID, sourceWaypoindID);
+                    
+            if(_navigraphs[regionID]._edges.ContainsKey(edgeKeyFromNode1))
+            {
+                // XML file contains (W1, W2) and the query input is (W1, W2) as well.
+                waypointEdge = _navigraphs[regionID]._edges[edgeKeyFromNode1];
+            }
+            else if(_navigraphs[regionID]._edges.ContainsKey(edgeKeyFromNode2))
+            {
+                // XML file contains (W1, W2) but the query string is (W2, W1).
+                waypointEdge = _navigraphs[regionID]._edges[edgeKeyFromNode2];
+            }
+            return waypointEdge;
+        }
+
         public NavigationGraph(XmlDocument xmlDocument) {
             Console.WriteLine(">> NavigationGraph");
 
@@ -565,50 +685,15 @@ namespace IndoorNavigation.Models.NavigaionLayer
             
             PortalWaypoints portalWaypoints = new PortalWaypoints();
 
-            Tuple<Guid, Guid> edgeKeyFromNode1 =
-                new Tuple<Guid, Guid>(sourceRegionID, sinkRegionID);
+            RegionEdge regionEdge = GetRegionEdge(sourceRegionID,
+                                                  sinkRegionID,
+                                                  avoidConnectionTypes);
 
-            Tuple<Guid, Guid> edgeKeyFromNode2 =
-                new Tuple<Guid, Guid>(sinkRegionID, sourceRegionID);
+            portalWaypoints._portalWaypoint1 = regionEdge._waypoint1;
+            portalWaypoints._portalWaypoint2 = regionEdge._waypoint2;
             
-            if(_edges.ContainsKey(edgeKeyFromNode1))
-            {
-                // XML file contains edge as (R1, R2), and query string is (R1, R2) as well. 
-                foreach (RegionEdge edgeItem in _edges[edgeKeyFromNode1])
-                {
-                    if (!avoidConnectionTypes.Contains(edgeItem._connectionType))
-                    {
-                        if (DirectionalConnection.BiDirection == edgeItem._biDirection ||
-                            (DirectionalConnection.OneWay == edgeItem._biDirection &&
-                            1 == edgeItem._source))
-                        {
-                            portalWaypoints._portalWaypoint1 = edgeItem._waypoint1;
-                            portalWaypoints._portalWaypoint2 = edgeItem._waypoint2;
-                            break;
-                        }
-                    }
-                }
-            } 
-            else if (_edges.ContainsKey(edgeKeyFromNode2))
-            {
-                // XML file contains edge as (R1, R2), but query string is (R2, R1).
-                foreach (RegionEdge edgeItem in _edges[edgeKeyFromNode2])
-                {
-                    if (!avoidConnectionTypes.Contains(edgeItem._connectionType))
-                    {
-                        if (DirectionalConnection.BiDirection == edgeItem._biDirection ||
-                            (DirectionalConnection.OneWay == edgeItem._biDirection &&
-                            2 == edgeItem._source))
-                        {
-                            portalWaypoints._portalWaypoint1 = edgeItem._waypoint2;
-                            portalWaypoints._portalWaypoint2 = edgeItem._waypoint1;
-                            break;
-                        }
-                    }
-                }
-            }
             return portalWaypoints;
-        }            
+        }
 
         public InstructionInformation GetInstructionInformation(
             int currentNavigationStep,
@@ -641,43 +726,12 @@ namespace IndoorNavigation.Models.NavigaionLayer
                         information._turnDirection = TurnDirection.Down;
                     }
 
-                    Tuple<Guid, Guid> edgeKeyFromNode1 =
-                        new Tuple<Guid, Guid>(currentRegionID, nextRegionID);
+                    RegionEdge regionEdgeItem = GetRegionEdge(currentRegionID,
+                                                              nextRegionID,
+                                                              avoidConnectionTypes);
 
-                    Tuple<Guid, Guid> edgeKeyFromNode2 =
-                        new Tuple<Guid, Guid>(nextRegionID, currentRegionID);
-
-                    if(_edges.ContainsKey(edgeKeyFromNode1)){
-                        foreach (RegionEdge edgeItem in _edges[edgeKeyFromNode1])
-                        {
-                            if (!avoidConnectionTypes.Contains(edgeItem._connectionType))
-                            {
-                                if (DirectionalConnection.BiDirection == edgeItem._biDirection ||
-                                (DirectionalConnection.OneWay == edgeItem._biDirection &&
-                                1 == edgeItem._source))
-                                {
-                                    information._connectionType = edgeItem._connectionType;
-                                    information._distance = edgeItem._distance;
-                                    break;
-                                }
-                            }
-                        }
-                    }else if(_edges.ContainsKey(edgeKeyFromNode2)){
-                        foreach (RegionEdge edgeItem in _edges[edgeKeyFromNode2])
-                        {
-                            if (!avoidConnectionTypes.Contains(edgeItem._connectionType))
-                            {
-                                if (DirectionalConnection.BiDirection == edgeItem._biDirection ||
-                                (DirectionalConnection.OneWay == edgeItem._biDirection &&
-                                2 == edgeItem._source))
-                                {
-                                    information._connectionType = edgeItem._connectionType;
-                                    information._distance = edgeItem._distance;
-                                    break;
-                                }
-                            }
-                        }
-                    }
+                    information._connectionType = regionEdgeItem._connectionType;
+                    information._distance = regionEdgeItem._distance;         
                 }
                 else
                 {
@@ -755,59 +809,20 @@ namespace IndoorNavigation.Models.NavigaionLayer
                         // currentWaypoint and nextWaypoint are in the same region
                         // previousWaypoint and currentWaypoint are in the same region
 
-                        CardinalDirection prevEdgeDirection = CardinalDirection.North;
-    
-                        Tuple<Guid, Guid> prevEdgeKeyFromNode1 =
-                            new Tuple<Guid, Guid>(previousWaypointID, currentWaypointID);
-
-                        Tuple<Guid, Guid> prevEdgeKeyFromNode2 =
-                            new Tuple<Guid, Guid>(currentWaypointID, previousWaypointID);
-                    
-                        if(_navigraphs[currentRegionID]._edges
-                           .ContainsKey(prevEdgeKeyFromNode1))
-                        {
-                            // XML file contains (W1, W2) and the query input is (W1, W2)
-                            // as well.
-
-                            prevEdgeDirection =
-                                _navigraphs[currentRegionID]
-                                ._edges[prevEdgeKeyFromNode1]._direction;
-                        }
-                        else if(_navigraphs[currentRegionID]._edges
-                                .ContainsKey(prevEdgeKeyFromNode2))
-                        {
-                            // XML file contains (W1, W2) but the query string is (W2, W1).
-                            prevEdgeDirection =
-                                _navigraphs[currentRegionID]
-                                ._edges[prevEdgeKeyFromNode2]._direction;
-                        
-                        }
-
-                        
-                        Tuple<Guid, Guid> currentEdgeKeyFromNode1 =
-                            new Tuple<Guid, Guid>(currentWaypointID, nextWaypointID);
-                        Tuple<Guid, Guid> currentEdgeKeyFromNode2 =
-                            new Tuple<Guid, Guid>(nextWaypointID, currentWaypointID);
-                        
-                        WaypointEdge currentEdge = new WaypointEdge();
-
-                        if(_navigraphs[currentRegionID]._edges
-                           .ContainsKey(currentEdgeKeyFromNode1))
-                        {
-                            // XML file contains (W1, W2) and query input is (W1, W2) as well.
-                            currentEdge =
-                                _navigraphs[currentRegionID]._edges[currentEdgeKeyFromNode1];
-                        }
-                        else if(_navigraphs[currentRegionID]._edges
-                                .ContainsKey(currentEdgeKeyFromNode2))
-                        {
-                            // XML file contains (W1, W2) but query input is (W2, W1).
-                            currentEdge =
-                                _navigraphs[currentRegionID]._edges[currentEdgeKeyFromNode2];
-                        }
+                        WaypointEdge prevEdge = GetWaypointEdgeInRegion(currentRegionID,
+                                                                        previousWaypointID,
+                                                                        currentWaypointID,
+                                                                        avoidConnectionTypes);
+                        CardinalDirection prevEdgeDirection = prevEdge._direction;
+                       
+                        WaypointEdge currentEdge = GetWaypointEdgeInRegion(currentRegionID,
+                                                                           currentWaypointID,
+                                                                           nextWaypointID,
+                                                                           avoidConnectionTypes);
+                        CardinalDirection currentEdgeDirection = currentEdge._direction;
 
                         int prevDirection = System.Convert.ToInt32(prevEdgeDirection);
-                        int currentDirection = System.Convert.ToInt32(currentEdge._direction);
+                        int currentDirection = System.Convert.ToInt32(currentEdgeDirection);
 
                         if(currentDirection - prevDirection >= 0){
                             information._turnDirection =
@@ -959,7 +974,6 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
         public struct RegionEdge
         {
-            //public Tuple<Guid, Guid> edge;
             public Guid _region1 { get; set; }
             public Guid _region2 { get; set; }
             public Guid _waypoint1 { get; set; }
