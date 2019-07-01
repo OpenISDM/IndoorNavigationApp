@@ -407,7 +407,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                     Console.WriteLine("node1 : " + waypointEdge._node1);
 
                     waypointEdge._node2 = Guid.Parse(xmlEdgeElement.GetAttribute("node2"));
-                    Console.WriteLine("node2 : " + waypointEdge._node1);
+                    Console.WriteLine("node2 : " + waypointEdge._node2);
 
                     waypointEdge._biDirection =
                         (DirectionalConnection)Enum.Parse(typeof(DirectionalConnection),
