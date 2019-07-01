@@ -235,7 +235,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                         _resourceManager.GetString(
                             "DIRECTION_UP_STRING", 
                             currentLanguage) + "\n{0} {1}", 
-                            instruction._information._floor +
+                            instruction._information._floor,
                             instruction._information._regionName);
 					stepImage = "Stairs_up";
 					break;
@@ -246,7 +246,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                         _resourceManager.GetString(
                             "DIRECTION_DOWN_STRING", 
                             currentLanguage) + "\n{0} {1}", 
-                            instruction._information._floor +
+                            instruction._information._floor,
                             instruction._information._regionName);
 					stepImage = "Stairs_down";
 					break;
