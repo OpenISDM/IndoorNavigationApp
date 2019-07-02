@@ -371,6 +371,7 @@ namespace IndoorNavigation.Modules
 
                     PortalWaypoints portalWaypoints =
                         _navigationGraph.GetPortalWaypoints(checkPoint._regionID,
+                                                            checkPoint._waypointID,
                                                             nextRegionID,
                                                             _avoidConnectionTypes);
 
