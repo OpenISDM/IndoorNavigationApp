@@ -15,11 +15,11 @@
  *      This view model implements properties and commands for NavigatorPage
  *      to build the data.
  *      It will create NavigationModule and subscribe to the needed event.
- *      
+ *
  * Version:
  *
  *      1.0.0, 20190605
- * 
+ *
  * File Name:
  *
  *      NavigatorPageViewModel.cs
@@ -27,14 +27,14 @@
  * Abstract:
  *
  *      Waypoint-based navigator is a mobile Bluetooth navigation application
- *      that runs on smart phones. It is structed to support anywhere 
- *      navigation indoors in areas covered by different indoor positioning 
+ *      that runs on smart phones. It is structed to support anywhere
+ *      navigation indoors in areas covered by different indoor positioning
  *      system (IPS) and outdoors covered by GPS.In particilar, it can rely on
- *      BeDIS (Building/environment Data and Information System) for indoor 
- *      positioning. This IPS provides a location beacon at every waypoint. The 
- *      beacon brocasts its own coordinates; Consequesntly, the navigator does 
+ *      BeDIS (Building/environment Data and Information System) for indoor
+ *      positioning. This IPS provides a location beacon at every waypoint. The
+ *      beacon brocasts its own coordinates; Consequesntly, the navigator does
  *      not need to continuously monitor its own position.
- *      This version makes use of Xamarin.Forms, which is a cross-platform UI 
+ *      This version makes use of Xamarin.Forms, which is a cross-platform UI
  *      tookit that runs on both iOS and Android.
  *
  * Authors:
@@ -118,13 +118,15 @@ namespace IndoorNavigation.ViewModels.Navigation
 					break;
 
 				case NavigationResult.AdjustRoute:
-					CurrentStepLabel = _resourceManager.GetString("DIRECTION_WRONG_WAY_STRING", currentLanguage);
+					CurrentStepLabel =
+                        _resourceManager.GetString("DIRECTION_WRONG_WAY_STRING", currentLanguage);
 					CurrentStepImage = "Waiting";
 					break;
 
 				case NavigationResult.Arrival:
 					CurrentWaypointName = DestinationWaypointName;
-					CurrentStepLabel = _resourceManager.GetString("DIRECTION_ARRIVED_STRING", currentLanguage);
+					CurrentStepLabel =
+                        _resourceManager.GetString("DIRECTION_ARRIVED_STRING", currentLanguage);
 					CurrentStepImage = "Arrived";
 					NavigationProgress = 100;
 					//Dispose();  // release resources
@@ -141,100 +143,119 @@ namespace IndoorNavigation.ViewModels.Navigation
 			{
 				case TurnDirection.FirstDirection:
 					stepLabel = string.Format(
-                        instruction._information._distance + "\n" +
                         _resourceManager.GetString(
-                            "DIRECTION_STRAIGHT_STRING", 
-                            currentLanguage) + "\n{0}", 
+                            "DIRECTION_STRAIGHT_STRING",
+                            currentLanguage),
+                            Environment.NewLine,
+                            instruction._information._distance,
+                            Environment.NewLine,
                             instruction._nextWaypointName);
 					stepImage = "Arrow_up";
 					break;
 
 				case TurnDirection.Forward:
 					stepLabel = string.Format(
-                        instruction._information._distance + "\n" +
                         _resourceManager.GetString(
-                            "DIRECTION_STRAIGHT_STRING", 
-                            currentLanguage) + "\n{0}", 
+                            "DIRECTION_STRAIGHT_STRING",
+                            currentLanguage),
+                            Environment.NewLine,
+                            instruction._information._distance,
+                            Environment.NewLine,
                             instruction._nextWaypointName);
 					stepImage = "Arrow_up";
 					break;
 
 				case TurnDirection.Forward_Right:
 					stepLabel = string.Format(
-                        instruction._information._distance + "\n" +
                         _resourceManager.GetString(
-                            "DIRECTION_RIGHT_FRONT_STRING", 
-                            currentLanguage) + "\n{0}", 
+                            "DIRECTION_RIGHT_FRONT_STRING",
+                            currentLanguage),
+                            Environment.NewLine,
+                            instruction._information._distance,
+                            Environment.NewLine,
                             instruction._nextWaypointName);
 					stepImage = "Arrow_frontright";
 					break;
 
 				case TurnDirection.Right:
 					stepLabel = string.Format(
-                        instruction._information._distance + "\n" +
                         _resourceManager.GetString(
-                            "DIRECTION_RIGHT_STRING", 
-                            currentLanguage) + "\n{0}", 
+                            "DIRECTION_RIGHT_STRING",
+                            currentLanguage),
+                            Environment.NewLine,
+                            instruction._information._distance,
+                            Environment.NewLine,
                             instruction._nextWaypointName);
 					stepImage = "Arrow_right";
 					break;
 
 				case TurnDirection.Backward_Right:
 					stepLabel = string.Format(
-                        instruction._information._distance + "\n" +
                         _resourceManager.GetString(
-                            "DIRECTION_RIGHT_REAR_STRING", 
-                            currentLanguage) + "\n{0}", 
+                            "DIRECTION_RIGHT_REAR_STRING",
+                            currentLanguage),
+                            Environment.NewLine,
+                            instruction._information._distance,
+                            Environment.NewLine,
                             instruction._nextWaypointName);
 					stepImage = "Arrow_rearright";
 					break;
 
 				case TurnDirection.Backward:
 					stepLabel = string.Format(
-                        instruction._information._distance + "\n" +
                         _resourceManager.GetString(
-                            "DIRECTION_REAR_STRING", 
-                            currentLanguage) + "\n{0}", 
+                            "DIRECTION_REAR_STRING",
+                            currentLanguage),
+                            Environment.NewLine,
+                            instruction._information._distance,
+                            Environment.NewLine,
                             instruction._nextWaypointName);
 					stepImage = "Arrow_rear";
 					break;
 
 				case TurnDirection.Backward_Left:
 					stepLabel = string.Format(
-                        instruction._information._distance + "\n" +
                         _resourceManager.GetString(
-                            "DIRECTION_LEFT_REAR_STRING", 
-                            currentLanguage) + "\n{0}", 
+                            "DIRECTION_LEFT_REAR_STRING",
+                            currentLanguage),
+                            Environment.NewLine,
+                            instruction._information._distance,
+                            Environment.NewLine,
                             instruction._nextWaypointName);
 					stepImage = "Arrow_rearleft";
 					break;
 
 				case TurnDirection.Left:
 					stepLabel = string.Format(
-                        instruction._information._distance + "\n" +
                         _resourceManager.GetString(
-                            "DIRECTION_LEFT_STRING", 
-                            currentLanguage) + "\n{0}", 
+                            "DIRECTION_LEFT_STRING",
+                            currentLanguage),
+                            Environment.NewLine,
+                            instruction._information._distance,
+                            Environment.NewLine,
                             instruction._nextWaypointName);
 					stepImage = "Arrow_left";
 					break;
 
 				case TurnDirection.Forward_Left:
 					stepLabel = string.Format(
-                        instruction._information._distance + "\n" +
                         _resourceManager.GetString(
-                            "DIRECTION_LEFT_FRONT_STRING", 
-                            currentLanguage) + "\n{0}", 
+                            "DIRECTION_LEFT_FRONT_STRING",
+                            currentLanguage),
+                            Environment.NewLine,
+                            instruction._information._distance,
+                            Environment.NewLine,
                             instruction._nextWaypointName);
 					stepImage = "Arrow_frontleft";
 					break;
 
 				case TurnDirection.Up:
 					stepLabel = string.Format(
-                        instruction._information._connectionType + "\n" +
                         _resourceManager.GetString(
-                            "DIRECTION_UP_STRING", 
-                            currentLanguage) + "\n{0} {1}", 
+                            "DIRECTION_UP_STRING",
+							currentLanguage),
+							instruction._information._connectionType,
+                            Environment.NewLine,
                             instruction._information._floor,
                             instruction._information._regionName);
 					stepImage = "Stairs_up";
@@ -242,10 +263,11 @@ namespace IndoorNavigation.ViewModels.Navigation
 
 				case TurnDirection.Down:
 					stepLabel = string.Format(
-                        instruction._information._connectionType + "\n" +
                         _resourceManager.GetString(
-                            "DIRECTION_DOWN_STRING", 
-                            currentLanguage) + "\n{0} {1}", 
+                            "DIRECTION_DOWN_STRING",
+                            currentLanguage),
+							instruction._information._connectionType,
+                            Environment.NewLine,
                             instruction._information._floor,
                             instruction._information._regionName);
 					stepImage = "Stairs_down";

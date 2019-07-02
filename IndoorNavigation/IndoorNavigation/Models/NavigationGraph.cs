@@ -731,7 +731,8 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                                               avoidConnectionTypes);
 
                     information._connectionType = regionEdgeItem._connectionType;
-                    information._distance = regionEdgeItem._distance;         
+                    information._distance = System.Convert
+                                            .ToInt32(regionEdgeItem._distance);         
                 }
                 else
                 {
@@ -780,6 +781,14 @@ namespace IndoorNavigation.Models.NavigaionLayer
                     // first waypoint from the beginning
                     // need to refine the turndirection in this case
                     information._turnDirection = TurnDirection.FirstDirection;
+
+                    WaypointEdge currentEdge = GetWaypointEdgeInRegion(currentRegionID,
+                                                                       currentWaypointID,
+                                                                       nextWaypointID,
+                                                                       avoidConnectionTypes);
+                    information._distance = System.Convert
+                                            .ToInt32(currentEdge._distance);
+                    information._connectionType = currentEdge._connectionType;
                 }
                 else
                 {
@@ -831,8 +840,8 @@ namespace IndoorNavigation.Models.NavigaionLayer
                             information._turnDirection =
                                 (TurnDirection)(currentDirection - prevDirection + 8);
                         }
-                        
-                        information._distance = currentEdge._distance;
+
+                        information._distance = System.Convert.ToInt32(currentEdge._distance);
                         information._connectionType = currentEdge._connectionType;
                     }
                 }
@@ -1002,7 +1011,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
         public ConnectionType _connectionType { get; set; }
         public int _floor { get; set; }
         public string _regionName { get; set; }
-        public double _distance { get; set; }
+        public int _distance { get; set; }
     }
 
     public enum LocationType

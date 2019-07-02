@@ -239,43 +239,43 @@
     </data>
     
     <data name="DIRECTION_STRAIGHT_STRING" xml:space="preserve">
-        <value>Please go straight to </value>
+        <value>Go straight{0}about {1}m to{2}{3} </value>
     </data>
     
      <data name="DIRECTION_RIGHT_FRONT_STRING" xml:space="preserve">
-        <value>Please go right front to </value>
+        <value>Go right front{0}about {1}m to{2}{3} </value>
     </data>
     
     <data name="DIRECTION_RIGHT_STRING" xml:space="preserve">
-        <value>Please go right to </value>
+        <value>Go right{0}about {1}m to{2}{3} </value>
     </data>
     
     <data name="DIRECTION_RIGHT_REAR_STRING" xml:space="preserve">
-        <value>Please go right rear to </value>
+        <value>Go right rear{0}about {1}m to{2}{3} </value>
     </data>
     
     <data name="DIRECTION_REAR_STRING" xml:space="preserve">
-        <value>Please go rear to </value>
+        <value>Go rear{0}about {1}m to{2}{3} </value>
     </data>
     
     <data name="DIRECTION_LEFT_REAR_STRING" xml:space="preserve">
-        <value>Please go left rear to </value>
+        <value>Go left rear{0}about {1}m to{2}{3} </value>
     </data>
     
     <data name="DIRECTION_LEFT_STRING" xml:space="preserve">
-        <value>Please go left to </value>
+        <value>Go left{0}about {1}m to{2}{3} </value>
     </data>
     
      <data name="DIRECTION_LEFT_FRONT_STRING" xml:space="preserve">
-        <value>Please go left front to </value>
+        <value>Go left front{0}about {1}m to{2}{3} </value>
     </data>
     
     <data name="DIRECTION_UP_STRING" xml:space="preserve">
-        <value>Please go upstairs to </value>
+        <value>Take {0} go upstairs to{1}{2}F {3} </value>
     </data>
     
     <data name="DIRECTION_DOWN_STRING" xml:space="preserve">
-        <value>Please go downstairs to </value>
+        <value>Take {0} go downstairs to{1}{2}F {3} </value>
     </data>
     
     <data name="DIRECTION_WRONG_WAY_STRING" xml:space="preserve">

@@ -239,47 +239,47 @@
     </data>
     
     <data name="DIRECTION_STRAIGHT_STRING" xml:space="preserve">
-        <value>請前進前往 </value>
+        <value>向前走{0}約{1}公尺到{2}{3} </value>
     </data>
     
     <data name="DIRECTION_RIGHT_FRONT_STRING" xml:space="preserve">
-        <value>請向右前方前往 </value>
+        <value>向右前方走{0}約{1}公尺到{2}{3} </value>
     </data>
     
     <data name="DIRECTION_RIGHT_STRING" xml:space="preserve">
-        <value>請向右前往 </value>
+        <value>向右轉{0}約{1}公尺到{2}{3} </value>
     </data>
     
     <data name="DIRECTION_RIGHT_REAR_STRING" xml:space="preserve">
-        <value>請向右後方前往 </value>
+        <value>向右後方走{0}約{1}公尺到{2}{3} </value>
     </data>
     
     <data name="DIRECTION_REAR_STRING" xml:space="preserve">
-        <value>請向後轉前往 </value>
+        <value>回頭走{0}約{1}公尺到{2}{3} </value>
     </data>
     
     <data name="DIRECTION_LEFT_REAR_STRING" xml:space="preserve">
-        <value>請向左後方前往 </value>
+        <value>向左後方走{0}約{1}公尺到{2}{3} </value>
     </data>
     
      <data name="DIRECTION_LEFT_STRING" xml:space="preserve">
-        <value>請向左前往 </value>
+        <value>向左轉{0}約{1}公尺到{2}{3} </value>
     </data>
     
     <data name="DIRECTION_LEFT_FRONT_STRING" xml:space="preserve">
-        <value>請向左前方前往 </value>
+        <value>向左前方走{0}約{1}公尺到{2}{3} </value>
     </data>
     
     <data name="DIRECTION_UP_STRING" xml:space="preserve">
-        <value>請上樓前往 </value>
+        <value>搭{0}上樓前往{1}{2}樓 {3} </value>
     </data>
     
     <data name="DIRECTION_DOWN_STRING" xml:space="preserve">
-        <value>請下樓前往 </value>
+        <value>搭{0}下樓前往{1}{2}樓 {3} </value>
     </data>
     
      <data name="DIRECTION_WRONG_WAY_STRING" xml:space="preserve">
-        <value>走錯路囉, 正在重新規劃路線 </value>
+        <value>遠離路線，正在重新規劃路徑</value>
     </data>
     
     <data name="DIRECTION_ARRIVED_STRING" xml:space="preserve">
