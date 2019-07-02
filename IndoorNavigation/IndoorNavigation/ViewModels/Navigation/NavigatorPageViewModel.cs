@@ -144,12 +144,13 @@ namespace IndoorNavigation.ViewModels.Navigation
 				case TurnDirection.FirstDirection:
 					stepLabel = string.Format(
                         _resourceManager.GetString(
-                            "DIRECTION_STRAIGHT_STRING",
+                            "DIRECTION_INITIAIL_STRING",
                             currentLanguage),
                             Environment.NewLine,
-                            instruction._information._distance,
+                            instruction._nextWaypointName,
                             Environment.NewLine,
-                            instruction._nextWaypointName);
+                            Environment.NewLine,
+                            instruction._information._distance);
 					stepImage = "Arrow_up";
 					break;
 

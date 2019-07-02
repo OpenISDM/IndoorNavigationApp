@@ -238,6 +238,10 @@
         <value>目前位置 : </value>
     </data>
     
+    <data name="DIRECTION_INITIAIL_STRING" xml:space="preserve">
+        <value>前往{0}{1}{2}{3}(約{4}公尺)</value>
+    </data>
+    
     <data name="DIRECTION_STRAIGHT_STRING" xml:space="preserve">
         <value>向前走{0}約{1}公尺到{2}{3} </value>
     </data>

@@ -377,6 +377,12 @@ namespace IndoorNavigation.Resources {
             }
         }
         
+        internal static string DIRECTION_INITIAIL_STRING {
+            get {
+                return ResourceManager.GetString("DIRECTION_INITIAIL_STRING", resourceCulture);
+            }
+        }
+        
         internal static string DIRECTION_STRAIGHT_STRING {
             get {
                 return ResourceManager.GetString("DIRECTION_STRAIGHT_STRING", resourceCulture);

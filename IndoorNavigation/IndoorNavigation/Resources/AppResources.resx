@@ -238,11 +238,15 @@
         <value>Current Location : </value>
     </data>
     
+    <data name="DIRECTION_INITIAIL_STRING" xml:space="preserve">
+        <value>Go toward{0}{1}{2}{3}(About {4}m) </value>
+    </data>
+    
     <data name="DIRECTION_STRAIGHT_STRING" xml:space="preserve">
         <value>Go straight{0}about {1}m to{2}{3} </value>
     </data>
     
-     <data name="DIRECTION_RIGHT_FRONT_STRING" xml:space="preserve">
+    <data name="DIRECTION_RIGHT_FRONT_STRING" xml:space="preserve">
         <value>Go right front{0}about {1}m to{2}{3} </value>
     </data>
     
