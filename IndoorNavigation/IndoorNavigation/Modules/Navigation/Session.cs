@@ -139,6 +139,9 @@ namespace IndoorNavigation.Modules
                     Console.WriteLine("Arrived destination! {0}/{1}",
                                       _destinationRegionID,
                                       _destinationWaypointID);
+
+                    _isKeepDetection = false;
+                    _IPSClient.Stop();
                     break;
                 }
 
@@ -168,7 +171,8 @@ namespace IndoorNavigation.Modules
                     _currentRegionID = _waypointsOnRoute[_nextWaypointStep]._regionID;
                     NavigateToNextWaypoint(_currentRegionID, _nextWaypointStep);
                 }
-                else {
+                else
+                {
                     /*
                     for (int i = 0; 
                          i < _waypointsOnWrongWay[_waypointsOnRoute[_nextWaypointStep]._id].Count; 

@@ -115,12 +115,22 @@ namespace IndoorNavigation.ViewModels.Navigation
 					CurrentStepImage = currentStepImage;
 					CurrentWaypointName = instruction._currentWaypointName;
 					NavigationProgress = instruction._progress;
+
+                    Utility._textToSpeech.Speak(
+                        CurrentStepLabel,
+                        _resourceManager.GetString("CULTURE_VERSION_STRING", currentLanguage));
+
 					break;
 
 				case NavigationResult.AdjustRoute:
 					CurrentStepLabel =
                         _resourceManager.GetString("DIRECTION_WRONG_WAY_STRING", currentLanguage);
 					CurrentStepImage = "Waiting";
+
+                    Utility._textToSpeech.Speak(
+                        CurrentStepLabel,
+                        _resourceManager.GetString("CULTURE_VERSION_STRING", currentLanguage));
+
 					break;
 
 				case NavigationResult.Arrival:
@@ -130,6 +140,11 @@ namespace IndoorNavigation.ViewModels.Navigation
 					CurrentStepImage = "Arrived";
 					NavigationProgress = 100;
 					//Dispose();  // release resources
+
+                    Utility._textToSpeech.Speak(
+                        CurrentStepLabel,
+                        _resourceManager.GetString("CULTURE_VERSION_STRING", currentLanguage));
+
 					break;
 			}
 		}
@@ -152,6 +167,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             Environment.NewLine,
                             instruction._information._distance);
 					stepImage = "Arrow_up";
+                  
 					break;
 
 				case TurnDirection.Forward:
@@ -164,7 +180,8 @@ namespace IndoorNavigation.ViewModels.Navigation
                             Environment.NewLine,
                             instruction._nextWaypointName);
 					stepImage = "Arrow_up";
-					break;
+
+                   	break;
 
 				case TurnDirection.Forward_Right:
 					stepLabel = string.Format(
@@ -176,6 +193,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             Environment.NewLine,
                             instruction._nextWaypointName);
 					stepImage = "Arrow_frontright";
+	
 					break;
 
 				case TurnDirection.Right:
@@ -188,6 +206,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             Environment.NewLine,
                             instruction._nextWaypointName);
 					stepImage = "Arrow_right";
+	
 					break;
 
 				case TurnDirection.Backward_Right:
@@ -200,6 +219,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             Environment.NewLine,
                             instruction._nextWaypointName);
 					stepImage = "Arrow_rearright";
+
 					break;
 
 				case TurnDirection.Backward:
@@ -212,6 +232,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             Environment.NewLine,
                             instruction._nextWaypointName);
 					stepImage = "Arrow_rear";
+
 					break;
 
 				case TurnDirection.Backward_Left:
@@ -224,6 +245,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             Environment.NewLine,
                             instruction._nextWaypointName);
 					stepImage = "Arrow_rearleft";
+
 					break;
 
 				case TurnDirection.Left:
@@ -236,6 +258,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             Environment.NewLine,
                             instruction._nextWaypointName);
 					stepImage = "Arrow_left";
+
 					break;
 
 				case TurnDirection.Forward_Left:
@@ -248,6 +271,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             Environment.NewLine,
                             instruction._nextWaypointName);
 					stepImage = "Arrow_frontleft";
+
 					break;
 
 				case TurnDirection.Up:
@@ -260,6 +284,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             instruction._information._floor,
                             instruction._information._regionName);
 					stepImage = "Stairs_up";
+
 					break;
 
 				case TurnDirection.Down:
@@ -272,10 +297,12 @@ namespace IndoorNavigation.ViewModels.Navigation
                             instruction._information._floor,
                             instruction._information._regionName);
 					stepImage = "Stairs_down";
+
 					break;
 				default:
 					stepLabel = "You're get ERROR status";
 					stepImage = "Warning";
+
 					break;
 			}
 		}

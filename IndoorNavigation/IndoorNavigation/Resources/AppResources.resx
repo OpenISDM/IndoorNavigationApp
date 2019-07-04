@@ -95,7 +95,7 @@
     </data>
     
      <data name="VOICE_SPEAK_STRING" xml:space="preserve">
-        <value>Welcome to use the Indoor Navigation of Beedi Tech</value>
+        <value>Welcome to use the Indoor Navigation of BeDITech</value>
     </data>
     
     <data name="VOICE_SELECT_STRING" xml:space="preserve">
@@ -287,7 +287,7 @@
     </data>
     
     <data name="DIRECTION_ARRIVED_STRING" xml:space="preserve">
-        <value>Congratulations! Arrived </value>
+        <value>Congratulations! You have arrived the destination.</value>
     </data>
     
     <data name="NULL_STRING" xml:space="preserve">
