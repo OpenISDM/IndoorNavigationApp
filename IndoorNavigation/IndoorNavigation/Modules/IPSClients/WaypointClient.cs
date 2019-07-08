@@ -73,7 +73,6 @@ namespace IndoorNavigation.Modules.IPSClients
         public void SetWaypointList(List<WaypointBeaconsMapping> waypointBeaconsList)
         {
             this._waypointBeaconsList = waypointBeaconsList;
-
             Utility._beaconScan.StartScan();
         }
 
@@ -102,11 +101,11 @@ namespace IndoorNavigation.Modules.IPSClients
                         {
                             if (beacon.UUID.Equals(beaconGuid)) {
                                 Console.WriteLine("Matched waypoint: {0} by detected Beacon {1}",
-                                                  waypointBeaconsMapping._WaypointID,
+                                                  waypointBeaconsMapping._WaypointIDAndRegionID._waypointID,
                                                   beaconGuid);
                                 _event.OnEventCall(new WaypointSignalEventArgs {
-                                    _detectedWaypointID = waypointBeaconsMapping._WaypointID
-                                }) ;
+                                    _detectedRegionWaypoint = waypointBeaconsMapping._WaypointIDAndRegionID
+                                });
                                 return;
                             }
                         }
@@ -140,7 +139,7 @@ namespace IndoorNavigation.Modules.IPSClients
   
     public class WaypointSignalEventArgs : EventArgs
     {
-        public Guid _detectedWaypointID { get; set; }
+        public RegionWaypointPoint _detectedRegionWaypoint { get; set; }
     }
 
 }

@@ -86,7 +86,7 @@ namespace IndoorNavigation.Models
 
     public class WaypointBeaconsMapping
     {
-        public Guid _WaypointID { get; set; }
+        public RegionWaypointPoint _WaypointIDAndRegionID { get; set; }
         public List<Guid> _Beacons { get; set; }
     }
     #endregion

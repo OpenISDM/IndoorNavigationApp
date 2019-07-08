@@ -718,6 +718,32 @@ namespace IndoorNavigation.Models.NavigaionLayer
             return portalWaypoints;
         }
 
+        public RegionWaypointPoint GiveNeighborWaypointInNeighborRegion(Guid sourceRegionID, Guid sourceWaypointID, Guid sinkRegionID)
+        {
+            RegionWaypointPoint regionWaypointPoint = new RegionWaypointPoint();
+            ConnectionType[] emptyAvoid = new ConnectionType[0];           
+            RegionEdge regionEdge = GetRegionEdgeMostNearSourceWaypoint(sourceRegionID,
+                                                                       sourceWaypointID,
+                                                                       sinkRegionID,
+                                                                       emptyAvoid);
+            regionWaypointPoint._waypointID = regionEdge._waypoint2;
+            regionWaypointPoint._regionID = regionEdge._region2;
+                return regionWaypointPoint;
+        }
+
+        public List<Guid> GetNeighbor(Guid regionID, Guid waypointID)
+        {
+            return _navigraphs[regionID]._waypoints[waypointID]._neighbors;
+        }
+
+        public double DistanceBetweenWaypoints(Guid region, Guid waypointID1, Guid waypointID2)
+        {
+            WaypointEdge waypointEdge = new WaypointEdge();
+            ConnectionType[] emptyAvoid = new ConnectionType[0];
+            waypointEdge = GetWaypointEdgeInRegion(region, waypointID1, waypointID2, emptyAvoid);
+            return waypointEdge._distance;
+        }
+
         public InstructionInformation GetInstructionInformation(
             int currentNavigationStep,
             Guid currentRegionID,
