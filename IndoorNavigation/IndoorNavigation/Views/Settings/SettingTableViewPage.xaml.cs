@@ -133,12 +133,13 @@ namespace IndoorNavigation.Views.Settings
 
             // In iOS, if the User has denied the permission, you might not be able to request for
             // permissions again.
+            /*
             var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Camera);
             if (status != PermissionStatus.Granted)
             {
             // await DisplayAlert("Oops...", "Sorry for that you denied the permission of camera
             // so you can't scan the QR code.", "OK");
-            }
+            }*/
 #endif
 
             if (!string.IsNullOrEmpty(qrCodeValue))
