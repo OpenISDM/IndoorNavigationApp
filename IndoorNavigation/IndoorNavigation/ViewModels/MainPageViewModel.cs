@@ -49,6 +49,10 @@ using IndoorNavigation.Modules.Utilities;
 using IndoorNavigation.Views.Settings;
 using MvvmHelpers;
 using Xamarin.Forms;
+using Plugin.Multilingual;
+using System.Resources;
+using IndoorNavigation.Resources.Helpers;
+using System.Reflection;
 
 namespace IndoorNavigation.ViewModels
 {
@@ -59,6 +63,9 @@ namespace IndoorNavigation.ViewModels
         private IEnumerable<Location> _returnedLocations;
         private Location _selectedItem;
         private string _searchedText;
+        const string _resourceId = "IndoorNavigation.Resources.AppResources";
+        ResourceManager _resourceManager =
+            new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
 
         public MainPageViewModel()
         {
@@ -81,9 +88,12 @@ namespace IndoorNavigation.ViewModels
             }
             else
             {
+                var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
                 Page mainPage = Application.Current.MainPage;
-                await mainPage.DisplayAlert("Go to the Setting page",
-                    "You should download the navigation graph first", "OK");
+                await mainPage.DisplayAlert(
+                    _resourceManager.GetString("GO_SETTING_PAGE_STRING", currentLanguage),
+                    _resourceManager.GetString("DOWNLOAD_NAVIGATION_GRAPH_STRING", currentLanguage),
+                    _resourceManager.GetString("OK_STRING", currentLanguage));
                 await mainPage.Navigation.PushAsync(new SettingTableViewPage());
             }
         }

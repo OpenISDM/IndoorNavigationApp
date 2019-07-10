@@ -215,6 +215,18 @@ namespace IndoorNavigation.Resources {
             }
         }
         
+        internal static string GO_SETTING_PAGE_STRING {
+            get {
+                return ResourceManager.GetString("GO_SETTING_PAGE_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string DOWNLOAD_NAVIGATION_GRAPH_STRING {
+            get {
+                return ResourceManager.GetString("DOWNLOAD_NAVIGATION_GRAPH_STRING", resourceCulture);
+            }
+        }
+        
         internal static string FLASH_STRING {
             get {
                 return ResourceManager.GetString("FLASH_STRING", resourceCulture);
@@ -329,9 +341,9 @@ namespace IndoorNavigation.Resources {
             }
         }
         
-        internal static string NTUH_YUNLIN_NAME_STRING {
+        internal static string HOSPITAL_NAME_STRING {
             get {
-                return ResourceManager.GetString("NTUH_YUNLIN_NAME_STRING", resourceCulture);
+                return ResourceManager.GetString("HOSPITAL_NAME_STRING", resourceCulture);
             }
         }
         
@@ -368,6 +380,12 @@ namespace IndoorNavigation.Resources {
         internal static string AVOID_ESCALATOR_STRING {
             get {
                 return ResourceManager.GetString("AVOID_ESCALATOR_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string AVOID_ALL_CONNECTION_TYPE_STRING {
+            get {
+                return ResourceManager.GetString("AVOID_ALL_CONNECTION_TYPE_STRING", resourceCulture);
             }
         }
         

@@ -50,13 +50,6 @@
         <sv:SettingsView x:Name="NavigationSettingsView" 
                          HasUnevenRows="true" >
     
-            <sv:Section Title="{i18n:Translate VOICE_SETTING_STRING}" >
-                <sv:TextPickerCell Title="{i18n:Translate VOICE_SELECT_STRING}" SelectedItem="中文" 
-                                   Items="{Binding VoiceSearchItems}" />
-                <sv:CommandCell x:Name="TestVoiceButton" Title="{i18n:Translate PLAY_VOICE_TEST_STRING}"
-                                 Tapped="SpeechTestBtn_Tapped"/>
-            </sv:Section>
-
             <sv:Section Title="{i18n:Translate ROUTE_OPTION_STRING}">
                 <sv:SwitchCell x:Name="AvoidStair" Title="{i18n:Translate AVOID_STAIR_STRING}" On="false" PropertyChanged="Handle_OptionPropertyChanged"/>
                 <sv:SwitchCell x:Name="AvoidElevator" Title="{i18n:Translate AVOID_ELEVATOR_STRING}" On="false" PropertyChanged="Handle_OptionPropertyChanged"/>

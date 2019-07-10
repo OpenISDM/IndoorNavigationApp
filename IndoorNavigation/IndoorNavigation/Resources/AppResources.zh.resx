@@ -130,6 +130,14 @@
         <value>前往導航頁面</value>
     </data>
     
+    <data name="GO_SETTING_PAGE_STRING" xml:space="preserve">
+        <value>前往設定頁面</value>
+    </data>
+    
+    <data name="DOWNLOAD_NAVIGATION_GRAPH_STRING" xml:space="preserve">
+        <value>系統沒有任何地圖資訊，您需要先下載地圖資訊。</value>
+    </data>
+    
     <data name="FLASH_STRING" xml:space="preserve">
         <value>打光</value>
     </data>
@@ -206,8 +214,8 @@
         <value>返回</value>
     </data>
     
-    <data name="NTUH_YUNLIN_NAME_STRING" xml:space="preserve">
-        <value>台大雲林醫院室內導航系統</value>
+    <data name="HOSPITAL_NAME_STRING" xml:space="preserve">
+        <value>台大醫院雲林分院</value>
     </data>
     
     <data name="PICK_LOCATION_STRING" xml:space="preserve">
@@ -232,6 +240,10 @@
     
     <data name="AVOID_ESCALATOR_STRING" xml:space="preserve">
         <value>避開手扶梯</value>
+    </data>
+    
+    <data name="AVOID_ALL_CONNECTION_TYPE_STRING" xml:space="preserve">
+        <value>無法避開所有路線選項</value>
     </data>
     
     <data name="DESTINATION_STRING" xml:space="preserve">

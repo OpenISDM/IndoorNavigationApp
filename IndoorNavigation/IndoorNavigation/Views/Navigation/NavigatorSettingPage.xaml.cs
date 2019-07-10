@@ -89,13 +89,6 @@ namespace IndoorNavigation.Views.Navigation
             }
         }
 
-		void SpeechTestBtn_Tapped(object sender, EventArgs e)
-		{
-			var ci = CrossMultilingual.Current.CurrentCultureInfo;
-			Utility._textToSpeech.Speak(_resourceManager.GetString("VOICE_SPEAK_STRING", ci),
-				_resourceManager.GetString("CULTURE_VERSION_STRING", ci));
-		}
-
 		protected override void OnDisappearing()
         {
             // Before page close, store the status of each route options
@@ -114,7 +107,11 @@ namespace IndoorNavigation.Views.Navigation
                 if (AvoidStair.On && AvoidElevator.On && AvoidEscalator.On)
                 {
                     (sender as AiForms.Renderers.SwitchCell).On = false;
-                    await DisplayAlert("Oops...", "The route options only could choose the two at the same time", "OK");
+                    var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+                    await DisplayAlert(_resourceManager.GetString("ERROR_STRING", currentLanguage),
+                        _resourceManager.GetString("AVOID_ALL_CONNECTION_TYPE_STRING",
+                                                   currentLanguage),
+                        _resourceManager.GetString("OK_STRING", currentLanguage));
                 }
             }
         }

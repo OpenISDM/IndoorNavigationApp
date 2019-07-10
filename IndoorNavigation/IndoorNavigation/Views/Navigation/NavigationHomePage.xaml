@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              x:Class="IndoorNavigation.Views.Navigation.NavigationHomePage"
              xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
-             Title="{i18n:Translate NTUH_YUNLIN_NAME_STRING}">
+             Title="{i18n:Translate HOSPITAL_NAME_STRING}">
     
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness">

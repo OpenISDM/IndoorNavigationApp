@@ -130,7 +130,15 @@
         <value>Go to navigation homepage</value>
     </data>
     
-     <data name="FLASH_STRING" xml:space="preserve">
+    <data name="GO_SETTING_PAGE_STRING" xml:space="preserve">
+        <value>Go to settings page</value>
+    </data>
+    
+    <data name="DOWNLOAD_NAVIGATION_GRAPH_STRING" xml:space="preserve">
+        <value>System does not have any navigation graphs, and you should download navigation graph first.</value>
+    </data>
+    
+    <data name="FLASH_STRING" xml:space="preserve">
         <value>flash</value>
     </data>
     
@@ -206,8 +214,8 @@
         <value>Back</value>
     </data>
     
-    <data name="NTUH_YUNLIN_NAME_STRING" xml:space="preserve">
-        <value>NTUH Yun-Lin Indoor Navigation System</value>
+    <data name="HOSPITAL_NAME_STRING" xml:space="preserve">
+        <value>NTUH Yunlin Branch</value>
     </data>
     
     <data name="PICK_LOCATION_STRING" xml:space="preserve">
@@ -232,6 +240,10 @@
     
     <data name="AVOID_ESCALATOR_STRING" xml:space="preserve">
         <value>Avoid Escalator</value>
+    </data>
+    
+    <data name="AVOID_ALL_CONNECTION_TYPE_STRING" xml:space="preserve">
+        <value>Unable to avoid all connection types</value>
     </data>
     
     <data name="DESTINATION_STRING" xml:space="preserve">
