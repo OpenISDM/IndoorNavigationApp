@@ -37,6 +37,10 @@
         <value>設定</value>
     </data>
     
+    <data name="BEDITECH_STRING" xml:space="preserve">
+        <value>畢迪科技</value>
+    </data>
+    
     <data name="DOWNLOAD_MAP_STRING" xml:space="preserve">
         <value>下載圖資</value>
     </data>
@@ -94,11 +98,11 @@
     </data>
     
     <data name="FEEDBACK_STRING" xml:space="preserve">
-        <value>意見回饋與功能許願池</value>
+        <value>意見回饋</value>
     </data>
     
     <data name="ABOUT_BEDI_STRING" xml:space="preserve">
-        <value>關於 BeDI科技</value>
+        <value>關於畢迪科技</value>
     </data>
     
     <!-- Navigation Homepage with NTUHYunlin -->

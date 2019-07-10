@@ -47,15 +47,25 @@
  *
  */
 using Xamarin.Forms;
+using Plugin.Multilingual;
+using System.Resources;
+using IndoorNavigation.Resources.Helpers;
+using System.Reflection;
 
 namespace IndoorNavigation.Views.Settings.LicensePages
 {
     public partial class LicenseMainPage : ContentPage
     {
+        const string _resourceId = "IndoorNavigation.Resources.AppResources";
+        ResourceManager _resourceManager =
+            new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+
         public LicenseMainPage()
         {
             InitializeComponent();
-            NavigationPage.SetBackButtonTitle(this, "授權");
+            var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+            NavigationPage.SetBackButtonTitle(this,
+                _resourceManager.GetString("LICENSE_STRING", currentLanguage));
         }
 
         async void IconsLicenseBtn_Tapped(object sender, System.EventArgs e)

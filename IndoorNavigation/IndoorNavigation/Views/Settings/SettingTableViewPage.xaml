@@ -48,7 +48,7 @@
     
             <sv:Section Title="{i18n:Translate SETTING_STRING}">
                 <sv:CommandCell IconSource="icon.png" IconSize="60,60"
-                                Title="BeDI" Description="openISDM@sinica.com"/>
+                                Title="{i18n:Translate BEDITECH_STRING}" Description=""/>
                 <sv:CommandCell x:Name="DownloadMapButton" Title="{i18n:Translate DOWNLOAD_MAP_STRING}" 
                                 Tapped="DownloadGraphBtn_Tapped"/>
                 <sv:TextPickerCell x:Name="CleanMapPicker" Title="{i18n:Translate DELETE_MAP_STRING}" 

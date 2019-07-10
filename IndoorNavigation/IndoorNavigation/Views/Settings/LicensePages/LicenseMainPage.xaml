@@ -1,9 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:sv="clr-namespace:AiForms.Renderers;assembly=SettingsView"
              x:Class="IndoorNavigation.Views.Settings.LicensePages.LicenseMainPage"
-             Title="BeDIS v1.0.0">
+             xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
+             Title="{i18n:Translate BEDITECH_STRING}">
     
     <ContentPage.Resources>
         <!-- SettingsView properties settings -->
@@ -49,7 +50,7 @@
         <sv:SettingsView HeaderPadding="0">
     
             <sv:Section>
-                <sv:CommandCell Title="BeDIS"/>
+                <sv:CommandCell Title="{i18n:Translate BEDITECH_STRING}"/>
                 <sv:CommandCell Title="Icons" Tapped="IconsLicenseBtn_Tapped"/>
                 <sv:CommandCell Title="..."/>
             </sv:Section>

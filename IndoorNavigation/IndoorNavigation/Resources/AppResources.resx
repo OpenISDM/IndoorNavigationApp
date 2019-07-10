@@ -34,7 +34,11 @@
     
     <!-- Setting page -->
     <data name="SETTING_STRING" xml:space="preserve">
-        <value>Setting</value>
+        <value>Settings</value>
+    </data>
+    
+    <data name="BEDITECH_STRING" xml:space="preserve">
+        <value>BeDITech</value>
     </data>
     
     <data name="DOWNLOAD_MAP_STRING" xml:space="preserve">

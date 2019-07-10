@@ -77,6 +77,12 @@ namespace IndoorNavigation.Resources {
             }
         }
         
+        internal static string BEDITECH_STRING {
+            get {
+                return ResourceManager.GetString("BEDITECH_STRING", resourceCulture);
+            }
+        }
+        
         internal static string DOWNLOAD_MAP_STRING {
             get {
                 return ResourceManager.GetString("DOWNLOAD_MAP_STRING", resourceCulture);

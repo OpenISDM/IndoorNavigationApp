@@ -137,8 +137,6 @@ namespace IndoorNavigation.Views.Settings
             var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Camera);
             if (status != PermissionStatus.Granted)
             {
-            // await DisplayAlert("Oops...", "Sorry for that you denied the permission of camera
-            // so you can't scan the QR code.", "OK");
             }*/
 #endif
 
@@ -320,7 +318,7 @@ namespace IndoorNavigation.Views.Settings
 
 
                     {
-                        // 刪除選擇的地圖資料
+                        // Delete selected map
                         NavigraphStorage.DeleteNavigationGraph(CleanMapPicker.SelectedItem.ToString());
 						await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", ci),
 										   _resourceManager.GetString("SUCCESSFULLY_DELETE_STRING", ci),
