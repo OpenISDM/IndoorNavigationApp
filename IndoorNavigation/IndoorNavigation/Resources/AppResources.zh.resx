@@ -135,7 +135,7 @@
     </data>
     
     <data name="DOWNLOAD_NAVIGATION_GRAPH_STRING" xml:space="preserve">
-        <value>系統沒有任何地圖資訊，您需要先下載地圖資訊。</value>
+        <value>您需要先下載地圖資訊</value>
     </data>
     
     <data name="FLASH_STRING" xml:space="preserve">

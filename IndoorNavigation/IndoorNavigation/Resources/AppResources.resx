@@ -135,7 +135,7 @@
     </data>
     
     <data name="DOWNLOAD_NAVIGATION_GRAPH_STRING" xml:space="preserve">
-        <value>System does not have any navigation graphs, and you should download navigation graph first.</value>
+        <value>You should download navigation graph first</value>
     </data>
     
     <data name="FLASH_STRING" xml:space="preserve">
