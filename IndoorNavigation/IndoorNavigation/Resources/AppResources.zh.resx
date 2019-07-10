@@ -222,6 +222,42 @@
         <value>【點選要去的地點】</value>
     </data>
     
+    <data name="CATEGORY_CLINICS_STRING" xml:space="preserve">
+        <value>各科門診</value>
+    </data>
+    
+    <data name="CATEGORY_CASHIER_STRING" xml:space="preserve">
+        <value>批價櫃台</value>
+    </data>
+    
+    <data name="CATEGORY_EXIT_STRING" xml:space="preserve">
+        <value>出口</value>
+    </data>
+    
+    <data name="CATEGORY_EXAMINATION_ROOM_STRING" xml:space="preserve">
+        <value>檢查室</value>
+    </data>
+    
+    <data name="CATEGORY_PHARMACY_STRING" xml:space="preserve">
+        <value>領藥</value>
+    </data>
+    
+    <data name="CATEGORY_CONVENIENCE_STORE_STRING" xml:space="preserve">
+        <value>便利商店</value>
+    </data>
+    
+    <data name="CATEGORY_OTHERS_STRING" xml:space="preserve">
+        <value>其他</value>
+    </data>
+    
+    <data name="CATEGORY_BATH_ROOM_STRING" xml:space="preserve">
+        <value>廁所</value>
+    </data>
+    
+    <data name="CATEGORY_BLOOD_COLLECTION_STRING" xml:space="preserve">
+        <value>抽血處</value>
+    </data>
+    
     <data name="PICK_DESTINATION_STRING" xml:space="preserve">
         <value>挑選目的地</value>
     </data>

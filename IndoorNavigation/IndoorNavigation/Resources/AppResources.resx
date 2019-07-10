@@ -222,6 +222,42 @@
         <value>【Click picture to select the location】</value>
     </data>
     
+    <data name="CATEGORY_CLINICS_STRING" xml:space="preserve">
+        <value>Clinics</value>
+    </data>
+    
+    <data name="CATEGORY_CASHIER_STRING" xml:space="preserve">
+        <value>Cashier</value>
+    </data>
+    
+    <data name="CATEGORY_EXIT_STRING" xml:space="preserve">
+        <value>Exit</value>
+    </data>
+    
+    <data name="CATEGORY_EXAMINATION_ROOM_STRING" xml:space="preserve">
+        <value>Examination Room</value>
+    </data>
+    
+    <data name="CATEGORY_PHARMACY_STRING" xml:space="preserve">
+        <value>Pharmacy</value>
+    </data>
+    
+    <data name="CATEGORY_CONVENIENCE_STORE_STRING" xml:space="preserve">
+        <value>Convenience Store</value>
+    </data>
+    
+    <data name="CATEGORY_OTHERS_STRING" xml:space="preserve">
+        <value>Others</value>
+    </data>
+    
+    <data name="CATEGORY_BATH_ROOM_STRING" xml:space="preserve">
+        <value>Bath Room</value>
+    </data>
+    
+    <data name="CATEGORY_BLOOD_COLLECTION_STRING" xml:space="preserve">
+        <value>Blood Collection Counter</value>
+    </data>
+    
     <data name="PICK_DESTINATION_STRING" xml:space="preserve">
         <value>Pick Destination</value>
     </data>

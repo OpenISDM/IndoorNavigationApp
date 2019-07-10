@@ -353,6 +353,60 @@ namespace IndoorNavigation.Resources {
             }
         }
         
+        internal static string CATEGORY_CLINICS_STRING {
+            get {
+                return ResourceManager.GetString("CATEGORY_CLINICS_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string CATEGORY_CASHIER_STRING {
+            get {
+                return ResourceManager.GetString("CATEGORY_CASHIER_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string CATEGORY_EXIT_STRING {
+            get {
+                return ResourceManager.GetString("CATEGORY_EXIT_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string CATEGORY_EXAMINATION_ROOM_STRING {
+            get {
+                return ResourceManager.GetString("CATEGORY_EXAMINATION_ROOM_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string CATEGORY_PHARMACY_STRING {
+            get {
+                return ResourceManager.GetString("CATEGORY_PHARMACY_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string CATEGORY_CONVENIENCE_STORE_STRING {
+            get {
+                return ResourceManager.GetString("CATEGORY_CONVENIENCE_STORE_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string CATEGORY_OTHERS_STRING {
+            get {
+                return ResourceManager.GetString("CATEGORY_OTHERS_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string CATEGORY_BATH_ROOM_STRING {
+            get {
+                return ResourceManager.GetString("CATEGORY_BATH_ROOM_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string CATEGORY_BLOOD_COLLECTION_STRING {
+            get {
+                return ResourceManager.GetString("CATEGORY_BLOOD_COLLECTION_STRING", resourceCulture);
+            }
+        }
+        
         internal static string PICK_DESTINATION_STRING {
             get {
                 return ResourceManager.GetString("PICK_DESTINATION_STRING", resourceCulture);
