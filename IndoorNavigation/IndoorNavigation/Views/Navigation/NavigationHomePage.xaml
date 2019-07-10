@@ -39,7 +39,7 @@
                 <ColumnDefinition Width="35*"/>
             </Grid.ColumnDefinitions>
             
-            <Image Grid.Row="0" Grid.ColumnSpan="3" Source="NTUH_logo" Scale="0.9"/>
+            <Image Grid.Row="0" Grid.ColumnSpan="3" Source="service_hospital_logo" Scale="0.9"/>
             
             <Label Grid.Row="1" Grid.ColumnSpan="3" HorizontalTextAlignment="Center"
                    Text="{i18n:Translate HOSPITAL_NAME_STRING}" TextColor="Black" FontSize="30" Margin="8, 8, 8, 8"/>

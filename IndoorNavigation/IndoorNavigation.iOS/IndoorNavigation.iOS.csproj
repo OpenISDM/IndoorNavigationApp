@@ -58,7 +58,7 @@
     <CodesignKey>iPhone Developer: Chun Yu Lai (262MR7SY5M)</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
-    <CodesignProvision>iOS Team Provisioning Profile: *</CodesignProvision>
+    <CodesignProvision>VS: WildCard Development</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>none</DebugType>
@@ -68,9 +68,8 @@
     <WarningLevel>4</WarningLevel>
     <MtouchArch>ARM64</MtouchArch>
     <ConsolePause>false</ConsolePause>
-    <CodesignKey>iPhone Distribution</CodesignKey>
+    <CodesignKey>iPhone Distribution: Chun Yu Lai (9K6K5L2N6F)</CodesignKey>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
-    <CodesignProvision>com.OpenISDM.IndoorNavigation</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Ad-Hoc|iPhone' ">
     <DebugType>none</DebugType>
@@ -244,7 +243,6 @@
     <BundleResource Include="Resources\Warning.png" />
     <BundleResource Include="Resources\Waiting.png" />
     <BundleResource Include="Resources\Arrived.png" />
-    <BundleResource Include="Resources\NTUH_logo.png" />
     <BundleResource Include="Resources\Clinics.png" />
     <BundleResource Include="Resources\Cashier.png" />
     <BundleResource Include="Resources\Exit.png" />
@@ -256,6 +254,7 @@
     <BundleResource Include="Resources\BloodCollectionCounter.png" />
     <BundleResource Include="Resources\Stairs_down.png" />
     <BundleResource Include="Resources\Stairs_up.png" />
+    <BundleResource Include="Resources\service_hospital_logo.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\close_circle_button.png" />
