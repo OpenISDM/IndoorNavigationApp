@@ -736,12 +736,15 @@ namespace IndoorNavigation.Models.NavigaionLayer
             return _navigraphs[regionID]._waypoints[waypointID]._neighbors;
         }
 
-        public double DistanceBetweenWaypoints(Guid region, Guid waypointID1, Guid waypointID2)
+        public double StraightDistanceBetweenWaypoints(Guid region, Guid waypointID1, Guid waypointID2)
         {
-            WaypointEdge waypointEdge = new WaypointEdge();
-            ConnectionType[] emptyAvoid = new ConnectionType[0];
-            waypointEdge = GetWaypointEdgeInRegion(region, waypointID1, waypointID2, emptyAvoid);
-            return waypointEdge._distance;
+
+            double lat1 = _navigraphs[region]._waypoints[waypointID1]._lat;
+            double lon1 = _navigraphs[region]._waypoints[waypointID1]._lon;
+            double lat2 = _navigraphs[region]._waypoints[waypointID2]._lat;
+            double lon2 = _navigraphs[region]._waypoints[waypointID2]._lon;
+            double distance = GetDistance(lon1, lat1, lon2, lat2);
+            return distance;
         }
 
         public InstructionInformation GetInstructionInformation(
