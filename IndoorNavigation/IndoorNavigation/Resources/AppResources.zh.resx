@@ -339,7 +339,7 @@
     </data>
     
     <data name="DIRECTION_ARRIVED_STRING" xml:space="preserve">
-        <value>恭喜你！已到達終點囉 </value>
+        <value>您已到達終點</value>
     </data>
     
    <data name="NULL_STRING" xml:space="preserve">
