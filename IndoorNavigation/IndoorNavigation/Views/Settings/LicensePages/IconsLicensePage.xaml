@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              x:Class="IndoorNavigation.Views.Settings.LicensePages.IconsLicensePage"
@@ -382,6 +382,22 @@
                                 <Span.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding HyperlinkClickCommand}"
                                                           CommandParameter="https://www.flaticon.com/authors/freepik/"/>
+                                </Span.GestureRecognizers>
+                            </Span>
+                            <Span Text=" from www.flaticon.com&#10;" 
+                                  FontSize="14"
+                                  FontAttributes="Bold"/>
+                            
+                            <Span Text="&#10;CityHall Icon made by " 
+                                  FontSize="14"
+                                  FontAttributes="Bold"/>
+                            <Span Text="geotatah"
+                                  TextColor="Blue"
+                                  FontSize="14"
+                                  FontAttributes="Bold">
+                                <Span.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding HyperlinkClickCommand}"
+                                                          CommandParameter="https://www.flaticon.com/authors/geotatah/"/>
                                 </Span.GestureRecognizers>
                             </Span>
                             <Span Text=" from www.flaticon.com&#10;" 

@@ -534,7 +534,6 @@ namespace IndoorNavigation.Modules
 
             int nextStep = 1;
             _waypointsOnWrongWay = new Dictionary<RegionWaypointPoint, List<RegionWaypointPoint>>();
-            Guid tempWaypoint = new Guid();
             Region tempRegion = new Region();
             List<Guid> neighborGuid = new List<Guid>();
 
@@ -546,11 +545,8 @@ namespace IndoorNavigation.Modules
                 //Get the neighbor of all wapoint in _waypointOnRoute.
                 neighborGuid = new List<Guid>();
                 neighborGuid = _navigationGraph.GetNeighbor(locationRegionWaypoint._regionID, locationRegionWaypoint._waypointID);
-                //tempRegion and tempWaypoint used to get their neighbors,
-                //therefore, we have tempRegion._neighbors and tempWaypoint,_neighbors later.
 
                 tempRegion = _regiongraphs[locationRegionWaypoint._regionID];
-                tempWaypoint = locationRegionWaypoint._waypointID;
 
                 LocationType locationType =
                         _navigationGraph.GetWaypointTypeInRegion(locationRegionWaypoint._regionID,
@@ -607,6 +603,9 @@ namespace IndoorNavigation.Modules
                                        locationRegionWaypoint._waypointID,
                                        guid);
                             double distanceBetweenNextAndNeighbor = 0;
+                            //If current region == next region, we can get get the straight distance of the neighbors of current waypoint and next waypoint.
+                            //If current region != next region, we just consider the distance between cuurent and its neighbers, therefore, we give distanceBetweenNextAndNeighbor
+                            //the same value of distanceBetweenCurrentAndNeighbor.
                             if (locationRegionWaypoint._regionID == _waypointsOnRoute[nextStep]._regionID)
                             {
                                 distanceBetweenNextAndNeighbor = _navigationGraph.StraightDistanceBetweenWaypoints(
@@ -734,6 +733,13 @@ namespace IndoorNavigation.Modules
                                                 tempRegionWaypoint._regionID = locationRegionWaypoint._regionID;
                                                 tempRegionWaypoint._waypointID = nearWaypointofSameRegion;
                                                 _waypointsOnWrongWay[locationRegionWaypoint].Add(tempRegionWaypoint);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (!_waypointsOnWrongWay.Keys.Contains(locationRegionWaypoint))
+                                            {
+                                                _waypointsOnWrongWay.Add(locationRegionWaypoint, new List<RegionWaypointPoint> { });
                                             }
                                         }
                                     }

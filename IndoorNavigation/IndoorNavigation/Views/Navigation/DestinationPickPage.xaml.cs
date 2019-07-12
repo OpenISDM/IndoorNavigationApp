@@ -64,19 +64,19 @@ namespace IndoorNavigation.Views.Navigation
     {
         private string _navigationGraphName;
         private NavigationGraph _navigationGraph;
-		public ResourceManager _resourceManager;
+        public ResourceManager _resourceManager;
 
-		public ObservableCollection<string> _items { get; set; }
+        public ObservableCollection<string> _items { get; set; }
         public ObservableCollection<DestinationItem> _destinationItems { get; set; }
 
         public DestinationPickPage(string navigationGraphName, CategoryType category)
         {
             InitializeComponent();
 
-			const string resourceId = "IndoorNavigation.Resources.AppResources";
-			_resourceManager = new ResourceManager(resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+            const string resourceId = "IndoorNavigation.Resources.AppResources";
+            _resourceManager = new ResourceManager(resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
 
-			_destinationItems = new ObservableCollection<DestinationItem>();
+            _destinationItems = new ObservableCollection<DestinationItem>();
 
             _navigationGraphName = navigationGraphName;
 
@@ -92,31 +92,31 @@ namespace IndoorNavigation.Views.Navigation
 
                 if (pairRegion.Value._waypointsByCategory.ContainsKey(category))
                 {
-                        
-                        foreach (Waypoint waypoint in pairRegion.Value._waypointsByCategory[category])
+
+                    foreach (Waypoint waypoint in pairRegion.Value._waypointsByCategory[category])
+                    {
+                        if (waypoint._type.ToString() == "terminal" || waypoint._type.ToString() == "landmark")
                         {
-                            if (waypoint._type.ToString()=="terminal"||waypoint._type.ToString()== "landmark")
-                            {
                             Console.WriteLine("check type : " + waypoint._type.ToString());
-                                _destinationItems.Add(new DestinationItem
-                                {
-                                    _regionID = pairRegion.Key,
-                                    _waypointID = waypoint._id,
-                                    _waypointName = waypoint._name,
-                                    _floor = floorName
-                                });
-
-
-                            }
-                            else
+                            _destinationItems.Add(new DestinationItem
                             {
-                                Console.WriteLine("Portal, No need to add!!");
-                            }
-                           
+                                _regionID = pairRegion.Key,
+                                _waypointID = waypoint._id,
+                                _waypointName = waypoint._name,
+                                _floor = floorName
+                            });
+
+
                         }
-                        
-                  
-                    
+                        else
+                        {
+                            Console.WriteLine("Portal, No need to add!!");
+                        }
+
+                    }
+
+
+
                 }
             }
 

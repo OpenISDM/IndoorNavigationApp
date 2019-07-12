@@ -218,6 +218,10 @@
         <value>台大醫院雲林分院</value>
     </data>
     
+    <data name="TAIPEI_CITY_HALL_STRING" xml:space="preserve">
+        <value>台北市政府</value>
+    </data>
+    
     <data name="PICK_LOCATION_STRING" xml:space="preserve">
         <value>【點選要去的地點】</value>
     </data>

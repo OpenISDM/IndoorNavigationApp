@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             x:Class="IndoorNavigation.Views.Navigation.CityHallHomePage"
+             xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
+             Title="{i18n:Translate HOSPITAL_NAME_STRING}">
+    
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness">
+            <OnPlatform.Platforms>
+                <On Platform="iOS" Value="4, 5, 4, 25" />
+                <On Platform="Android" Value="0, 0, 0, 0" />
+                <On Platform="UWP" Value="0, 0, 0, 0" />
+            </OnPlatform.Platforms>
+        </OnPlatform>
+    </ContentPage.Padding>
+    
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="InfoButton" Text="{i18n:Translate MORE_STRING}" Clicked="InfoButton_Clicked"/>
+    </ContentPage.ToolbarItems>
+    
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1.2*"/>
+                <RowDefinition Height="0.4*"/>
+                <RowDefinition Height="0.2*"/>
+                <RowDefinition Height="0.6*"/>
+                <RowDefinition Height="0.4*"/>
+                <RowDefinition Height="0.6*"/>
+                <RowDefinition Height="0.4*"/>
+                <RowDefinition Height="0.6*"/>
+                <RowDefinition Height="0.4*"/>
+            </Grid.RowDefinitions>
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="35*"/>
+                <ColumnDefinition Width="35*"/>
+                <ColumnDefinition Width="35*"/>
+            </Grid.ColumnDefinitions>
+            
+            <Image Grid.Row="0" Grid.ColumnSpan="3" Source="enterprise" Scale="0.9"/>
+            
+            <Label Grid.Row="1" Grid.ColumnSpan="3" HorizontalTextAlignment="Center"
+                   Text="{i18n:Translate TAIPEI_CITY_HALL_STRING}" TextColor="Black" FontSize="30" Margin="8, 8, 8, 8"/>
+
+            <Label Grid.Row="2" Grid.ColumnSpan="3" HorizontalTextAlignment="Center"
+                   Text="{i18n:Translate PICK_LOCATION_STRING}" TextColor="Gray" Margin="0, 0, 0, 8"/>
+            
+            <!-- Row 1 -->
+
+            
+            <ImageButton x:Name="CashierButton" Grid.Row="3"  Grid.Column="0" Source="Cashier" Clicked="Cashier_Clicked"/>
+            <Label Grid.Row="4" Grid.Column="0" Text="{i18n:Translate CATEGORY_CASHIER_STRING}" HorizontalTextAlignment="Center"/>
+            
+            <ImageButton x:Name="ExitButton" Grid.Row="3"  Grid.Column="1" Source="Exit" Clicked="ExitList_Clicked"/>
+            <Label Grid.Row="4" Grid.Column="1" Text="{i18n:Translate CATEGORY_EXIT_STRING}" HorizontalTextAlignment="Center"/>  
+            
+            <ImageButton x:Name="ConvenienceStoreButton" Grid.Row="3"  Grid.Column="2" Source="ConvenienceStore" Clicked="ConvenienceStore_Clicked"/>
+            <Label Grid.Row="4" Grid.Column="2" Text="{i18n:Translate CATEGORY_CONVENIENCE_STORE_STRING}" HorizontalTextAlignment="Center"/>
+            
+            <!-- Row 3 -->
+            <ImageButton x:Name="OthersButton" Grid.Row="5"  Grid.Column="0" Source="Others" Clicked="OthersList_Clicked"/>
+            <Label Grid.Row="6" Grid.Column="0" Text="{i18n:Translate CATEGORY_OTHERS_STRING}" HorizontalTextAlignment="Center"/>
+            
+            <ImageButton x:Name="BathroomButton" Grid.Row="5"  Grid.Column="1" Source="Bathroom" Clicked="BathroomList_Clicked"/>
+            <Label Grid.Row="6" Grid.Column="1" Text="{i18n:Translate CATEGORY_BATH_ROOM_STRING}" HorizontalTextAlignment="Center"/>
+            
+            
+        </Grid>
+    </ContentPage.Content>
+    
+</ContentPage>
