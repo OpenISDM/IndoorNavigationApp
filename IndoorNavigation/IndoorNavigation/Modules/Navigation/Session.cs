@@ -108,7 +108,7 @@ namespace IndoorNavigation.Modules
             _regiongraphs = _navigationGraph.GetRegions();
             _nextWaypointStep = -1;
             _isKeepDetection = true;
-/*
+            /*
             _IPSClient = new WaypointClient();
             _IPSClient._event._eventHandler += new EventHandler(CheckArrivedWaypoint);
             */
@@ -133,6 +133,7 @@ namespace IndoorNavigation.Modules
                    !(_currentRegionID.Equals(_destinationRegionID) &&
                      _currentWaypointID.Equals(_destinationWaypointID)))
             {
+
                 Console.WriteLine("Continue to navigate to next step, current location {0}/{1}",
                                   _currentRegionID, _currentWaypointID);
 
@@ -160,8 +161,9 @@ namespace IndoorNavigation.Modules
                                   _destinationWaypointID);
 
                     _nextWaypointStep++;
-                    _currentRegionID = _waypointsOnRoute[_nextWaypointStep]._regionID;
-                    NavigateToNextWaypoint(_currentRegionID, _nextWaypointStep);
+                    //_currentRegionID = _waypointsOnRoute[_nextWaypointStep]._regionID;
+                    Guid _nextRegionID = _waypointsOnRoute[_nextWaypointStep]._regionID;
+                    NavigateToNextWaypoint(_nextRegionID, _nextWaypointStep);
                 }
                 else if (_currentRegionID.Equals(
                          _waypointsOnRoute[_nextWaypointStep]._regionID) &&
@@ -172,8 +174,9 @@ namespace IndoorNavigation.Modules
                                       _currentRegionID,
                                       _currentWaypointID);
                     _nextWaypointStep++;
-                    _currentRegionID = _waypointsOnRoute[_nextWaypointStep]._regionID;
-                    NavigateToNextWaypoint(_currentRegionID, _nextWaypointStep);
+                    Guid _nextRegionID = _waypointsOnRoute[_nextWaypointStep]._regionID;
+                   // _currentRegionID = _waypointsOnRoute[_nextWaypointStep]._regionID;
+                    NavigateToNextWaypoint(_nextRegionID, _nextWaypointStep);
                 }
                 else if (_nextWaypointStep >= 1 && _waypointsOnWrongWay[_waypointsOnRoute[_nextWaypointStep - 1]].Contains(checkWrongRegionWaypoint) == false)
                 {
@@ -214,8 +217,9 @@ namespace IndoorNavigation.Modules
                     });
 
                     _nextWaypointStep++;
-                    _currentRegionID = _waypointsOnRoute[_nextWaypointStep]._regionID;
-                    NavigateToNextWaypoint(_currentRegionID, _nextWaypointStep);
+                    Guid _nextRegionID = _waypointsOnRoute[_nextWaypointStep]._regionID;
+                    //_currentRegionID = _waypointsOnRoute[_nextWaypointStep]._regionID;
+                    NavigateToNextWaypoint(_nextRegionID, _nextWaypointStep);
                 }
                 _nextWaypointEvent.Reset();
             }
