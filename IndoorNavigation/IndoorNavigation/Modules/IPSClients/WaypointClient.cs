@@ -83,7 +83,7 @@ namespace IndoorNavigation.Modules.IPSClients
             // Remove the obsolete data from buffer
             List<BeaconSignalModel> removeSignalBuffer =
                 new List<BeaconSignalModel>();
-            
+
             lock (_bufferLock)
             {
                 removeSignalBuffer.AddRange(
@@ -99,11 +99,13 @@ namespace IndoorNavigation.Modules.IPSClients
                     {
                         foreach (Guid beaconGuid in waypointBeaconsMapping._Beacons)
                         {
-                            if (beacon.UUID.Equals(beaconGuid)) {
+                            if (beacon.UUID.Equals(beaconGuid))
+                            {
                                 Console.WriteLine("Matched waypoint: {0} by detected Beacon {1}",
                                                   waypointBeaconsMapping._WaypointIDAndRegionID._waypointID,
                                                   beaconGuid);
-                                _event.OnEventCall(new WaypointSignalEventArgs {
+                                _event.OnEventCall(new WaypointSignalEventArgs
+                                {
                                     _detectedRegionWaypoint = waypointBeaconsMapping._WaypointIDAndRegionID
                                 });
                                 return;
@@ -112,7 +114,7 @@ namespace IndoorNavigation.Modules.IPSClients
                     }
                 }
             }
-            
+
             Console.WriteLine("<< In DetectWaypoints");
         }
 
@@ -120,7 +122,6 @@ namespace IndoorNavigation.Modules.IPSClients
         {
             IEnumerable<BeaconSignalModel> signals =
                 (e as BeaconScanEventArgs)._signals;
-
             foreach (BeaconSignalModel signal in signals)
             {
                 Console.WriteLine("Detected Beacon UUID : " + signal.UUID + " RSSI = " + signal.RSSI);
@@ -133,10 +134,10 @@ namespace IndoorNavigation.Modules.IPSClients
 
         public void Stop()
         {
-            Utility._beaconScan.StopScan();  
+            Utility._beaconScan.StopScan();
         }
     }
-  
+
     public class WaypointSignalEventArgs : EventArgs
     {
         public RegionWaypointPoint _detectedRegionWaypoint { get; set; }
