@@ -347,6 +347,12 @@ namespace IndoorNavigation.Resources {
             }
         }
         
+        internal static string TAIPEI_CITY_HALL_STRING {
+            get {
+                return ResourceManager.GetString("TAIPEI_CITY_HALL_STRING", resourceCulture);
+            }
+        }
+        
         internal static string PICK_LOCATION_STRING {
             get {
                 return ResourceManager.GetString("PICK_LOCATION_STRING", resourceCulture);

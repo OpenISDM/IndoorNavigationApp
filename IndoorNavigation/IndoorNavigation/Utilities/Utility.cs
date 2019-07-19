@@ -55,7 +55,8 @@ namespace IndoorNavigation.Modules
 {
     public static class Utility
     {
-        public static IBeaconScan _beaconScan;
+        public static IBeaconScan _ibeaconScan;
+        public static LBeaconScan _lbeaconScan;
         public static ITextToSpeech _textToSpeech;
 
         // Skip SSL checking

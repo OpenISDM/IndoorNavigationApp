@@ -95,11 +95,13 @@ namespace IndoorNavigation
 
             _viewModel = new MainPageViewModel();
             BindingContext = _viewModel;
-            
+
             // This will remove all the pages in the navigation stack excluding the Main Page
             // and another one page
-            for (int PageIndex = Navigation.NavigationStack.Count - 2; PageIndex > 0; PageIndex--)
+            Console.WriteLine("NavigationStack : " +Navigation.NavigationStack.Count);
+            for (int PageIndex = Navigation.NavigationStack.Count-2; PageIndex > 0; PageIndex--)
             {
+                Console.WriteLine("PageIndex : " +PageIndex);
                 Navigation.RemovePage(Navigation.NavigationStack[PageIndex]);
             }
 
@@ -150,6 +152,17 @@ namespace IndoorNavigation
                         if (answser)
                         {
                             await Navigation.PushAsync(new NavigationHomePage(location.UserNaming));
+                        }
+                        break;
+
+                    case "city_hall":
+                        var answser_city_hall = await DisplayAlert(
+                            _resourceManager.GetString("GO_NAVIGATION_HOME_PAGE_STRING", currentLanguage),
+                            location.UserNaming, _resourceManager.GetString("OK_STRING", currentLanguage),
+                            _resourceManager.GetString("CANCEL_STRING", currentLanguage));
+                        if (answser_city_hall)
+                        {
+                            await Navigation.PushAsync(new CityHallHomePage(location.UserNaming));
                         }
                         break;
 

@@ -63,6 +63,14 @@ namespace IndoorNavigation.Models
         NavigationEvent _event { get; }
     }
 
+    public interface LBeaconScan
+    {
+        void StartScan();
+        void StopScan();
+        void Close();
+        NavigationEvent _event { get; }
+    }
+
     public interface IQrCodeDecoder
     {
         Task<string> ScanAsync();

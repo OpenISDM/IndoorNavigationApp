@@ -58,7 +58,6 @@
     <CodesignKey>iPhone Developer: Chun Yu Lai (262MR7SY5M)</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
-    <CodesignProvision>VS: WildCard Development</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>none</DebugType>
@@ -117,6 +116,7 @@
     <Compile Include="Renderers\CustomContentPageRenderer.cs" />
     <None Include="Helpers\TranslateExtension.txt" />
     <Compile Include="TextToSpeech.cs" />
+    <Compile Include="BeaconScanForIBeacon.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />

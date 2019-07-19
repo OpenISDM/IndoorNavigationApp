@@ -19,11 +19,11 @@
  *      
  * Version:
  *
- *      1.0.0, 20190605
+ *      1.0.0, 20190719
  * 
  * File Name:
  *
- *      BeaconScan.cs
+ *      BeaconScanForIBeacon.cs
  *
  * Abstract:
  *
@@ -40,11 +40,10 @@
  *
  * Authors:
  *
- *      Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
- *      Paul Chang, paulchang@iis.sinica.edu.tw
- *      Chun-Yu Lai, chunyu1202@gmail.com
+ *      Eric Lee, ericlee@iis.sinica.edu.tw
  *
  */
+
 using System;
 using CoreBluetooth;
 using System.Linq;
@@ -53,31 +52,28 @@ using IndoorNavigation.Models;
 using System.Collections.Generic;
 using IndoorNavigation.iOS;
 
-[assembly: Xamarin.Forms.Dependency(typeof(BeaconScan))]
+[assembly: Xamarin.Forms.Dependency(typeof(BeaconScanForIBeacon))]
 namespace IndoorNavigation.iOS
 {
-    public class BeaconScan : LBeaconScan
+    public class BeaconScanForIBeacon : IBeaconScan
     {
         private readonly CBCentralManager _manager = new CBCentralManager();
 
-        private int _rssiThreshold = -40;
+        private int _rssiThreshold = -70;
 
         public NavigationEvent _event { get; private set; }
-
-        public BeaconScan()
+        public BeaconScanForIBeacon()
         {
-            
-  
             _event = new NavigationEvent();
             this._manager.DiscoveredPeripheral += this.DiscoveredPeripheral;
             this._manager.UpdatedState += this.UpdatedState;
-            Console.WriteLine("In BeaconScan constructor: CBCentralManager stata =" +
+            Console.WriteLine("In New BeaconScan constructor: CBCentralManager stata =" +
                               this._manager.State);
         }
 
         public void StartScan()
         {
-            Console.WriteLine("Start LBeacon");
+            Console.WriteLine("Start Ibeacon ");
             if (CBCentralManagerState.PoweredOn == this._manager.State)
             {
                 var uuids = new CBUUID[0];
@@ -88,42 +84,13 @@ namespace IndoorNavigation.iOS
             }
         }
 
-        public void StopScan()
-        {
-            this._manager.StopScan();
-        }
-
-        public void Close() {
-        }
-
-        public void Dispose()
-        {
-            Console.WriteLine("In Dispose");
-            this._manager.DiscoveredPeripheral -= this.DiscoveredPeripheral;
-            this._manager.UpdatedState -= this.UpdatedState;
-        }
-
         private void DiscoveredPeripheral(object sender, CBDiscoveredPeripheralEventArgs args)
         {
-           
             if ((args as CBDiscoveredPeripheralEventArgs).RSSI.Int32Value > _rssiThreshold &&
                 (args as CBDiscoveredPeripheralEventArgs).RSSI.Int32Value < 0)
             {
-                /*
-                Sample of AdvertisementData data:
-                AdvertisementData = {
-                    kCBAdvDataIsConnectable = 0;
-                    kCBAdvDataManufacturerData =
-                        <0f000215 00000018 00000000 24600000 00002300 00020000 ce>;
-                
-                */
-
-                
-                // var name = (args as CBDiscoveredPeripheralEventArgs);
-
                 var tempUUID = (args as CBDiscoveredPeripheralEventArgs).AdvertisementData
-                               .ValueForKey((NSString)"kCBAdvDataManufacturerData");
-
+                               .ValueForKey((NSString)"kCBAdvDataServiceData");
                 if (tempUUID != null)
                 {
                     string bufferUUID = tempUUID.ToString();
@@ -144,31 +111,49 @@ namespace IndoorNavigation.iOS
                         });
                     }
                 }
-            }       
+            }
         }
 
         private void UpdatedState(object sender, EventArgs args)
         {
-           
+
+        }
+
+        public void StopScan()
+        {
+            this._manager.StopScan();
+        }
+
+        public void Close()
+        {
+        }
+
+        public void Dispose()
+        {
+            Console.WriteLine("In Dispose");
+            this._manager.DiscoveredPeripheral -= this.DiscoveredPeripheral;
+            this._manager.UpdatedState -= this.UpdatedState;
         }
 
         private string ExtractBeaconUUID(string stringAdvertisementSpecificData)
         {
             string[] parse = stringAdvertisementSpecificData.Split(" ");
-        
-            if(parse.Count()<6)
+            if (parse.Count() < 8)
             {
                 return stringAdvertisementSpecificData;
             }
             else
             {
-                var parser = parse[1] + "-" +
-                             parse[2].Substring(0,4) + "-" +
-                             parse[2].Substring(4,4) + "-" +
-                             parse[3].Substring(0,4) + "-" +
-                             parse[3].Substring(4,4) + parse[4];
+                var parser = "00000000" + "-" +
+                             "0402" + "-" + parse[4] + "-" +
+                              parse[6].Substring(1, 4) + "-" +
+                              parse[6].Substring(5, 4) +
+                              parse[7].Substring(0, 8);
+                Console.WriteLine("parser : " + parser);
                 return parser.ToString();
             }
         }
+
     }
 }
+

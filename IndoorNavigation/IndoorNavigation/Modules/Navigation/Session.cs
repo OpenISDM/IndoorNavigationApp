@@ -241,9 +241,10 @@ namespace IndoorNavigation.Modules
                     _IPSClient = new WaypointClient();
                     _IPSClient._event._eventHandler += new EventHandler(CheckArrivedWaypoint);
                 }
-                else
+                else if(IPSType.iBeacon == nextRegionIPSType)
                 {
-
+                    _IPSClient = new IBeaconClient();
+                    _IPSClient._event._eventHandler += new EventHandler(CheckArrivedWaypoint);
                 }
 
                 List<Guid> waypointIDs =
@@ -289,9 +290,10 @@ namespace IndoorNavigation.Modules
                         _IPSClient = new WaypointClient();
                         _IPSClient._event._eventHandler += new EventHandler(CheckArrivedWaypoint);
                     }
-                    else
+                    else if (IPSType.iBeacon == nextRegionIPSType)
                     {
-
+                        _IPSClient = new IBeaconClient();
+                        _IPSClient._event._eventHandler += new EventHandler(CheckArrivedWaypoint);
                     }
 
                 }
@@ -344,7 +346,12 @@ namespace IndoorNavigation.Modules
                             RegionWaypointPoint tempRegionWaypointInWrongWay = new RegionWaypointPoint();
                             tempRegionWaypointInWrongWay._waypointID = items._waypointID;
                             tempRegionWaypointInWrongWay._regionID = tempGuid;
-
+                            Console.WriteLine("waypoint ID : " + items._waypointID);
+                            foreach (Guid guid in WrongbeaconIDs)
+                            {
+                                Console.WriteLine("related guid of waypoint ID : " + guid);
+                            }
+                          
                             monitorWaypointList.Add(new WaypointBeaconsMapping
                             {
                                 _WaypointIDAndRegionID = tempRegionWaypointInWrongWay,
@@ -359,7 +366,7 @@ namespace IndoorNavigation.Modules
                 {
                     Console.WriteLine("Check mapping Current WaypointID: " + _currentWaypointID);
                     Console.WriteLine("Expected next Step : " + _waypointsOnRoute[_nextWaypointStep]._waypointID);
-
+                    
                     foreach (Guid guids in waypointBeaconsMapping._Beacons)
                     {
                         Console.WriteLine("ALL Interested Guid : " + guids);

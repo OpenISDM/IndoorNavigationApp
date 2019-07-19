@@ -91,11 +91,12 @@ namespace IndoorNavigation
             AppCenter.Start("ios=3efcee27-6067-4f41-a94f-87c97d6b8118;" +
              "android=8cc03d85-0d94-4cec-b4b6-808719a60857",
              typeof(Analytics), typeof(Crashes));
-
+            
             // Beacon scan api must adjust later, it should regist after
             // navigraph is be loaded.
             // 由於android尚未實作beacon scanner的功能，如要在android上偵錯，請註解以下代碼
-            Utility._beaconScan = DependencyService.Get<IBeaconScan>();
+            Utility._ibeaconScan = DependencyService.Get<IBeaconScan>();
+            Utility._lbeaconScan = DependencyService.Get<LBeaconScan>();
             Utility._textToSpeech = DependencyService.Get<ITextToSpeech>();
             //Utility.SignalProcess = new SignalProcessModule();
         }

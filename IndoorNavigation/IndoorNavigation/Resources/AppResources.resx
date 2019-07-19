@@ -218,6 +218,10 @@
         <value>NTUH Yunlin Branch</value>
     </data>
     
+    <data name="TAIPEI_CITY_HALL_STRING" xml:space="preserve">
+        <value>Taipei City Hall</value>
+    </data>
+    
     <data name="PICK_LOCATION_STRING" xml:space="preserve">
         <value>【Click picture to select the location】</value>
     </data>
