@@ -230,6 +230,18 @@ namespace IndoorNavigation.Models.NavigaionLayer
             {
                 // XML file contains (W1, W2) but the query string is (W2, W1).
                 waypointEdge = _navigraphs[regionID]._edges[edgeKeyFromNode2];
+
+                if (System.Convert.ToInt32(waypointEdge._direction) +4 < 8)
+                {
+                    waypointEdge._direction = (CardinalDirection)
+                        (4 + waypointEdge._direction);
+                }
+                else
+                {
+                    waypointEdge._direction = (CardinalDirection)
+                        (4 + waypointEdge._direction - 8);
+                }
+
             }
             return waypointEdge;
         }
