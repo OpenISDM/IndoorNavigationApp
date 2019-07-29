@@ -495,7 +495,6 @@ namespace IndoorNavigation.Modules
                                   checkPoint._waypointID);
             }
 
-
             // fill in all the path between waypoints in the same region / navigraph
             for (int i = 0; i < _waypointsOnRoute.Count() - 1; i++)
             {
@@ -508,7 +507,7 @@ namespace IndoorNavigation.Modules
                         _navigationGraph.GenerateNavigraph(currentCheckPoint._regionID,
                                                            _avoidConnectionTypes);
 
-                    // generate path between two waypoints in the same region / navigraph 
+                    // generate path between two waypoints in the same region / navigraph
                     uint waypoint1Key = _graphNavigraph
                                         .Where(node => node.Item
                                                .Equals(currentCheckPoint._waypointID))
@@ -521,7 +520,7 @@ namespace IndoorNavigation.Modules
                     var pathWaypoints =
                         _graphNavigraph.Dijkstra(waypoint1Key, waypoint2Key).GetPath();
 
-                    for (int j = 0; j < pathWaypoints.Count(); j++)
+                    for (int j = pathWaypoints.Count()-1; j >0; j--)
                     {
                         if (j != 0 && j != pathWaypoints.Count() - 1)
                         {

@@ -95,9 +95,11 @@ namespace IndoorNavigation.Modules.IPSClients
 
                 foreach (var obsoleteBeaconSignal in removeSignalBuffer)
                     _beaconSignalBuffer.Remove(obsoleteBeaconSignal);
-
+                
+              
                 foreach (BeaconSignalModel beacon in _beaconSignalBuffer)
                 {
+                    Console.WriteLine("beacon : " + beacon.UUID);
                     foreach (WaypointBeaconsMapping waypointBeaconsMapping in _waypointBeaconsList)
                     {
                         foreach (Guid beaconGuid in waypointBeaconsMapping._Beacons)
@@ -139,6 +141,9 @@ namespace IndoorNavigation.Modules.IPSClients
         public void Stop()
         {
             Utility._lbeaconScan.StopScan();
+            _beaconSignalBuffer.Clear();
+            _waypointBeaconsList.Clear();
+            Utility._lbeaconScan._event._eventHandler -= _beaconScanEventHandler;
         }
     }
 
