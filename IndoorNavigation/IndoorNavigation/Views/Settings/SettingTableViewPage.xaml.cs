@@ -40,6 +40,7 @@
  *
  *      Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
  *      Paul Chang, paulchang@iis.sinica.edu.tw
+ *      Eric Lee, ericlee@iis.sinica.edu.tw
  *
  */
 using System;
@@ -81,7 +82,7 @@ namespace IndoorNavigation.Views.Settings
         const string _resourceId = "IndoorNavigation.Resources.AppResources";
         ResourceManager _resourceManager =
             new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
-        
+
         public SettingTableViewPage()
         {
             InitializeComponent();
@@ -124,7 +125,20 @@ namespace IndoorNavigation.Views.Settings
             else
             {
                 IQrCodeDecoder qrCodeDecoder = DependencyService.Get<IQrCodeDecoder>();
-                qrCodeValue = await qrCodeDecoder.ScanAsync();
+                var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+                if (Connectivity.NetworkAccess == NetworkAccess.Internet)
+                {
+                    qrCodeValue = await qrCodeDecoder.ScanAsync();
+                }
+                else
+                {
+                    await DisplayAlert(
+                            _resourceManager.GetString("WARN_STRING", currentLanguage),
+                            _resourceManager.GetString("PLEASE_CHECK_INTERNET_STRING", currentLanguage),
+                            _resourceManager.GetString("CANCEL_STRING", currentLanguage));
+                }
+
+               
             }
 #else
             // Open the camera to scan Barcode
@@ -153,6 +167,9 @@ namespace IndoorNavigation.Views.Settings
                     {
                         // open the page to input the data
                         _downloadURL = buffer[0];
+
+                        
+                        
                         await PopupNavigation.Instance.PushAsync(_downloadPage as DownloadPopUpPage);
                     }
                     else

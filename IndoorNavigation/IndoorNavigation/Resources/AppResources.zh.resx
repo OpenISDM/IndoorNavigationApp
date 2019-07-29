@@ -362,4 +362,8 @@
         <value>樓 </value>
     </data>
     
+    <data name="PLEASE_CHECK_INTERNET_STRING" xml:space="preserve">
+        <value>請檢查是否有網路 </value>
+    </data>
+    
 </root>

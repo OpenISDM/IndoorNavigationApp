@@ -556,5 +556,11 @@ namespace IndoorNavigation.Resources {
                 return ResourceManager.GetString("FLOOR_STRING", resourceCulture);
             }
         }
+        
+        internal static string PLEASE_CHECK_INTERNET_STRING {
+            get {
+                return ResourceManager.GetString("PLEASE_CHECK_INTERNET_STRING", resourceCulture);
+            }
+        }
     }
 }

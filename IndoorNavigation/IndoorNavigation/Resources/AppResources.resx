@@ -362,5 +362,9 @@
         <value>Floor </value>
     </data>
     
+     <data name="PLEASE_CHECK_INTERNET_STRING" xml:space="preserve">
+        <value>Please check your Internet </value>
+    </data>
+    
     
 </root>
