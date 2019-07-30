@@ -53,6 +53,8 @@ using Plugin.Multilingual;
 using System.Resources;
 using IndoorNavigation.Resources.Helpers;
 using System.Reflection;
+using IndoorNavigation.Views.Navigation;
+using Xamarin.Forms;
 
 namespace IndoorNavigation.ViewModels.Navigation
 {
@@ -68,8 +70,9 @@ namespace IndoorNavigation.ViewModels.Navigation
 		private double _navigationProgress;
 		private bool _disposedValue = false; // To detect redundant calls
 		public ResourceManager _resourceManager;
+        public NavigatorPage _navigatorPage;
 
-		public NavigatorPageViewModel(string navigationGraphName,
+        public NavigatorPageViewModel(string navigationGraphName,
                                       Guid sourceRegionID,
                                       Guid destinationRegionID,
                                       Guid destinationWaypointID,
@@ -84,7 +87,8 @@ namespace IndoorNavigation.ViewModels.Navigation
                                                      destinationWaypointID);
 			_navigationModule._event._eventHandler += GetNavigationResultEvent;
 
-			const string resourceId = "IndoorNavigation.Resources.AppResources";
+
+            const string resourceId = "IndoorNavigation.Resources.AppResources";
 			_resourceManager = new ResourceManager(resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
 			CurrentWaypointName = _resourceManager.GetString("NULL_STRING", CrossMultilingual.Current.CurrentCultureInfo);
 		}
@@ -102,12 +106,12 @@ namespace IndoorNavigation.ViewModels.Navigation
 		private void DisplayInstructions(EventArgs args)
 		{
 			Console.WriteLine(">> DisplayInstructions");
-			NavigationInstruction instruction = (args as NavigationEventArgs)._nextInstruction;
+			NavigationInstruction instruction = (args as Session.NavigationEventArgs)._nextInstruction;
 			var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
 			string currentStepImage;
 			string currentStepLabel;
-
-			switch ((args as NavigationEventArgs)._result)
+           
+			switch ((args as Session.NavigationEventArgs)._result)
 			{
 				case NavigationResult.Run:
 					SetInstruction(instruction, out currentStepLabel, out currentStepImage);
@@ -146,7 +150,15 @@ namespace IndoorNavigation.ViewModels.Navigation
                         _resourceManager.GetString("CULTURE_VERSION_STRING", currentLanguage));
 
 					break;
-			}
+
+                case NavigationResult.NoRoute:
+                    Console.WriteLine("No Route");                   
+                    GoAdjustAvoidType();
+                    Stop();
+                    break;
+
+
+            }
 		}
 
 		private void SetInstruction(NavigationInstruction instruction,
@@ -316,8 +328,31 @@ namespace IndoorNavigation.ViewModels.Navigation
 			DisplayInstructions(args);
 		}
 
-		#region NavigatorPage Binding Args
-		public string CurrentStepLabel
+        #region NavigatorPage Binding Args
+
+
+
+        public void GoAdjustAvoidType()
+        {
+          
+                var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+                Page tempMainPage = Application.Current.MainPage;
+
+            Device.BeginInvokeOnMainThread(async () =>
+            {
+                for (int PageIndex = tempMainPage.Navigation.NavigationStack.Count-1; PageIndex > 1; PageIndex--)
+                {
+                    tempMainPage.Navigation.RemovePage(tempMainPage.Navigation.NavigationStack[PageIndex]);
+                }
+                await tempMainPage.Navigation.PushAsync(new NavigatorSettingPage(), true);
+                await tempMainPage.DisplayAlert(
+                    _resourceManager.GetString("WARN_STRING", currentLanguage),
+                    _resourceManager.GetString("PLEASE_ADJUST_AVOID_ROUTE_STRING", currentLanguage),
+                    _resourceManager.GetString("OK_STRING", currentLanguage));
+            });
+        }
+
+        public string CurrentStepLabel
 		{
 			get
 			{

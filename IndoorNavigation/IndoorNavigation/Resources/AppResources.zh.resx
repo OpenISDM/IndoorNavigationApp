@@ -366,4 +366,8 @@
         <value>請檢查是否有網路 </value>
     </data>
     
+    <data name="PLEASE_ADJUST_AVOID_ROUTE_STRING" xml:space="preserve">
+        <value>請調整路線選項 </value>
+    </data>
+    
 </root>

@@ -404,6 +404,10 @@ namespace IndoorNavigation.Modules
             if (0 == pathRegions.Count())
             {
                 Console.WriteLine("No path. Need to change avoid connection type");
+                _event.OnEventCall(new NavigationEventArgs
+                {
+                    _result = NavigationResult.NoRoute
+                });
                 return;
             }
 
@@ -925,6 +929,7 @@ namespace IndoorNavigation.Modules
             Run = 0,
             AdjustRoute,
             Arrival,
+            NoRoute,
         }
 
         public class NavigationInstruction

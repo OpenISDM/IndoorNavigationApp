@@ -562,5 +562,11 @@ namespace IndoorNavigation.Resources {
                 return ResourceManager.GetString("PLEASE_CHECK_INTERNET_STRING", resourceCulture);
             }
         }
+        
+        internal static string PLEASE_ADJUST_AVOID_ROUTE_STRING {
+            get {
+                return ResourceManager.GetString("PLEASE_ADJUST_AVOID_ROUTE_STRING", resourceCulture);
+            }
+        }
     }
 }

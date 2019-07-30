@@ -358,12 +358,16 @@
         <value>Pick Region </value>
     </data>
     
-     <data name="FLOOR_STRING" xml:space="preserve">
+    <data name="FLOOR_STRING" xml:space="preserve">
         <value>Floor </value>
     </data>
     
-     <data name="PLEASE_CHECK_INTERNET_STRING" xml:space="preserve">
+    <data name="PLEASE_CHECK_INTERNET_STRING" xml:space="preserve">
         <value>Please check your Internet </value>
+    </data>
+    
+    <data name="PLEASE_ADJUST_AVOID_ROUTE_STRING" xml:space="preserve">
+        <value>Please adjust avoid route type </value>
     </data>
     
     
