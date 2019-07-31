@@ -98,12 +98,12 @@ namespace IndoorNavigation
 
             // This will remove all the pages in the navigation stack excluding the Main Page
             // and another one page
-            Console.WriteLine("NavigationStack : " +Navigation.NavigationStack.Count);
-            for (int PageIndex = Navigation.NavigationStack.Count-2; PageIndex > 0; PageIndex--)
-            {
-                Console.WriteLine("PageIndex : " +PageIndex);
-                Navigation.RemovePage(Navigation.NavigationStack[PageIndex]);
-            }
+            //Console.WriteLine("NavigationStack : " +Navigation.NavigationStack.Count);
+            //for (int PageIndex = Navigation.NavigationStack.Count-2; PageIndex > 0; PageIndex--)
+            //{
+            //    Console.WriteLine("PageIndex : " +PageIndex);
+            //    Navigation.RemovePage(Navigation.NavigationStack[PageIndex]);
+            //}
 
             switch (Device.RuntimePlatform)
             {

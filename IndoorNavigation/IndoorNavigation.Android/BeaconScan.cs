@@ -52,7 +52,7 @@ using System.Linq;
 [assembly: Xamarin.Forms.Dependency(typeof(BeaconScan))]
 namespace IndoorNavigation.Droid
 {
-    public class BeaconScan : Java.Lang.Object, BluetoothAdapter.ILeScanCallback, LBeaconScan
+    public class BeaconScan : Java.Lang.Object, BluetoothAdapter.ILeScanCallback, LBeaconScan, IBeaconScan
     {
         protected BluetoothAdapter _adapter;
         protected BluetoothManager _manager;
@@ -87,7 +87,7 @@ namespace IndoorNavigation.Droid
             {
                 string tempUUID = BitConverter.ToString(scanRecord);
                 string identifierUUID = ExtractBeaconUUID(tempUUID);
-                Console.WriteLine("\n >> Find A Beacon[{0}] Id:{1}; RSSI:{2}; Record:{3}\n", this._count, bleDevice.Address, rssi, identifierUUID);
+                Console.WriteLine("\n >> Find A Beacon[{0}] Name:{1}; Address:{2}; RSSI:{3}; Record:{4}\n", this._count, bleDevice.Name ,bleDevice.Address, rssi, identifierUUID);
                 if (identifierUUID.Length >= 36)
                 {
                     List<BeaconSignalModel> signals = new List<BeaconSignalModel>();
@@ -117,7 +117,6 @@ namespace IndoorNavigation.Droid
         private void UpdatedState(object sender, EventArgs args)
         {
         }
-
 
         private string ExtractBeaconUUID(string stringAdvertisementSpecificData)
         {
