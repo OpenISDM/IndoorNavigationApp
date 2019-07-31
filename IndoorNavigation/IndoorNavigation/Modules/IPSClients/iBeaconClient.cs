@@ -60,6 +60,7 @@ namespace IndoorNavigation.Modules.IPSClients
         public NavigationEvent _event { get; private set; }
 
         private List<BeaconSignalModel> _beaconSignalBuffer = new List<BeaconSignalModel>();
+        private int _previousWaypoint;
 
         public IBeaconClient()
         {
@@ -70,6 +71,7 @@ namespace IndoorNavigation.Modules.IPSClients
             _beaconScanEventHandler = new EventHandler(HandleBeaconScan);
             Utility._ibeaconScan._event._eventHandler += _beaconScanEventHandler;
             _waypointBeaconsList = new List<WaypointBeaconsMapping>();
+            _previousWaypoint = -100;
         }
         public void SetWaypointList(List<WaypointBeaconsMapping> waypointBeaconsList)
         {
@@ -91,10 +93,12 @@ namespace IndoorNavigation.Modules.IPSClients
                 foreach (var obsoleteBeaconSignal in removeSignalBuffer)
                     _beaconSignalBuffer.Remove(obsoleteBeaconSignal);
 
-                //Dictionary<RegionWaypointPoint, List<BeaconSignal>> possibleBeacon = new Dictionary<RegionWaypointPoint, List<BeaconSignal>>();
                 Dictionary<RegionWaypointPoint, List<BeaconSignal>> scannedData = new Dictionary<RegionWaypointPoint, List<BeaconSignal>>();
-                //List<BeaconSignal> scannedData = new List<BeaconSignal>();
+
                 Dictionary<RegionWaypointPoint, int> signalAvgValue = new Dictionary<RegionWaypointPoint, int>();
+
+                //In ibsclient, a waypoint has at least two beacon UUIDs,
+                //We put all waypoint we get in scannedData
                 foreach (BeaconSignalModel beacon in _beaconSignalBuffer)
                 {
                     foreach (WaypointBeaconsMapping waypointBeaconsMapping in _waypointBeaconsList)
@@ -118,10 +122,17 @@ namespace IndoorNavigation.Modules.IPSClients
 
                 foreach(KeyValuePair<RegionWaypointPoint, List<BeaconSignal>> calculateData in scannedData)
                 {
+                    //If a waypoint has at least two beacon UUIDs,
+                    //this waypoint might be our interested waypoint.
                     if(calculateData.Value.Count()>=2)
                     {
+                        //Sort the beacons by their Rssi
                         calculateData.Value.Sort((x, y) => { return x.RSSI.CompareTo(y.RSSI); });
-                        int avgSignal = 0; 
+                        int avgSignal = 0;
+                        //If we have more than ten data, we remove the highest 10%
+                        //and the lowest 10%, and calculate their average
+                        //If we have not more than 10 data,
+                        //we just calculate their average
                         if (calculateData.Value.Count() >= 10)
                         {
                             int min = Convert.ToInt32(scannedData.Count() * 0.1);
@@ -146,10 +157,10 @@ namespace IndoorNavigation.Modules.IPSClients
                     }
                 }
                 
-
                 int tempValue = -100;
                 bool haveThing = false;
                 RegionWaypointPoint possibleRegionWaypoint = new RegionWaypointPoint();
+                //Compare all data we have, and get the highest Rssi Waypoint as our interested waypoint
                 foreach(KeyValuePair<RegionWaypointPoint, int> calculateMax in signalAvgValue)
                 {
                     if(tempValue<calculateMax.Value)
@@ -162,7 +173,7 @@ namespace IndoorNavigation.Modules.IPSClients
                 }
                 
                 if(haveThing==true)
-                {
+                { 
                     _event.OnEventCall(new WaypointSignalEventArgs
                     {
                         _detectedRegionWaypoint = possibleRegionWaypoint
@@ -190,6 +201,8 @@ namespace IndoorNavigation.Modules.IPSClients
         public void Stop()
         {
             Utility._ibeaconScan.StopScan();
+            _beaconSignalBuffer.Clear();
+
         }
 
     }

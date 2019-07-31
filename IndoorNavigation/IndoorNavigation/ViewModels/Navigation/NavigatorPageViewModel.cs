@@ -99,7 +99,6 @@ namespace IndoorNavigation.ViewModels.Navigation
         }
 
 		/// <summary>
-		/// TODO: Add voice instructions and vibration
 		/// According to each navigation status displays the text and image instructions in UI.
 		/// </summary>
 		/// <param name="args">Arguments.</param>
@@ -330,11 +329,8 @@ namespace IndoorNavigation.ViewModels.Navigation
 
         #region NavigatorPage Binding Args
 
-
-
         public void GoAdjustAvoidType()
-        {
-          
+        {  
                 var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
                 Page tempMainPage = Application.Current.MainPage;
 

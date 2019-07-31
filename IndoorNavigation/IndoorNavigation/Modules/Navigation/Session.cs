@@ -87,6 +87,8 @@ namespace IndoorNavigation.Modules
         public NavigationEvent _event { get; private set; }
         private Dictionary<Guid, Region> _regiongraphs = new Dictionary<Guid, Region>();
 
+        private int _tooCLoseDistance;
+
         public Session(NavigationGraph navigationGraph,
                        Guid sourceRegionID,
                        Guid destinationRegionID,
@@ -102,7 +104,7 @@ namespace IndoorNavigation.Modules
             _destinationWaypointID = destinationWaypointID;
 
             _avoidConnectionTypes = avoidConnectionTypes;
-
+            _tooCLoseDistance = 2;
             // construct region graph (across regions) which we can use to generate route
             _graphRegionGraph = navigationGraph.GenerateRegionGraph(avoidConnectionTypes);
             _regiongraphs = _navigationGraph.GetRegions();
@@ -552,6 +554,8 @@ namespace IndoorNavigation.Modules
             List<Guid> neighborGuid = new List<Guid>();
 
             //For each waypoint in _waypointsOnRoute, decide their wrong waypoint.
+            //TODO: Don't consider previous waypoint as wrong waypoint and consider previous
+            //waypoint's neighbors as wrong waypoints.
             foreach (RegionWaypointPoint locationRegionWaypoint in _waypointsOnRoute)
             {
                 RegionWaypointPoint tempRegionWaypoint = new RegionWaypointPoint();
@@ -634,7 +638,7 @@ namespace IndoorNavigation.Modules
                             //If the distance of current and its neighbors and the distance between next and current's neighbors
                             //are far enough, we add them into _waypointOnWrongWay, else if the distance between current and its neighbors
                             //are too close, we need to find one more step.
-                            if (distanceBetweenCurrentAndNeighbor >= 2 && distanceBetweenNextAndNeighbor>=2)
+                            if (distanceBetweenCurrentAndNeighbor >= _tooCLoseDistance && distanceBetweenNextAndNeighbor>= _tooCLoseDistance)
                             {
                                 if (!_waypointsOnWrongWay.Keys.Contains(locationRegionWaypoint))
                                 {
@@ -651,7 +655,7 @@ namespace IndoorNavigation.Modules
                                     _waypointsOnWrongWay[locationRegionWaypoint].Add(tempRegionWaypoint);
                                 }
                             }
-                            else if(distanceBetweenCurrentAndNeighbor < 2/* && distanceBetweenNextAndNeighbor < 2*/)
+                            else if(distanceBetweenCurrentAndNeighbor < _tooCLoseDistance)
                             {
                                 List<Guid> nearWaypointNeighbor = new List<Guid>();
                                 nearWaypointNeighbor = _navigationGraph.GetNeighbor(locationRegionWaypoint._regionID, guid);
@@ -731,8 +735,8 @@ namespace IndoorNavigation.Modules
                                         
                                         if (_waypointsOnRoute[nextStep]._waypointID != nearWaypointofSameRegion &&
                                             nearWaypointofSameRegion!=guid&&
-                                            distanceBetweenCurrentAndNearNeighbor>=2&&
-                                            distanceBetweenNextAndNearNeighbor>=2)
+                                            distanceBetweenCurrentAndNearNeighbor>= _tooCLoseDistance &&
+                                            distanceBetweenNextAndNearNeighbor>= _tooCLoseDistance)
                                         {
                                             if (!_waypointsOnWrongWay.Keys.Contains(locationRegionWaypoint))
                                             {
