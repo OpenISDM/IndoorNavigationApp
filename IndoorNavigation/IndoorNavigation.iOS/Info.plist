@@ -21,7 +21,7 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>CFBundleDisplayName</key>
-	<string>IndoorNavigation</string>
+	<string>畢迪-室內導航</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.OpenISDM</string>
 	<key>CFBundleVersion</key>
@@ -47,5 +47,11 @@
 	<string>en_US</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
+		<string>bluetooth-central</string>
+		<string>bluetooth-peripheral</string>
+	</array>
 </dict>
 </plist>
