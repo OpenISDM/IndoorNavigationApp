@@ -38,7 +38,7 @@
     </data>
     
     <data name="BEDITECH_STRING" xml:space="preserve">
-        <value>BeDITech</value>
+        <value>BeDITech Indoor Navigator</value>
     </data>
     
     <data name="DOWNLOAD_MAP_STRING" xml:space="preserve">
@@ -90,7 +90,7 @@
     </data>
     
     <data name="ABOUT_BEDI_STRING" xml:space="preserve">
-        <value>About BeDITech</value>
+        <value>About BeDI Technology Inc.</value>
     </data>
     
     <!-- Navigation Homepage with NTUHYunlin -->
@@ -339,7 +339,7 @@
     </data>
     
     <data name="DIRECTION_WRONG_WAY_STRING" xml:space="preserve">
-        <value>You have the wrong way! Rerouting </value>
+        <value>You have gone the wrong way!</value>
     </data>
     
     <data name="DIRECTION_ARRIVED_STRING" xml:space="preserve">
