@@ -34,7 +34,8 @@
                        CancelButtonColor="#007BFF"
                        Text="{Binding SearchedText, Mode=TwoWay}"
                        BackgroundColor="#f0f0f0"
-                       VerticalOptions="StartAndExpand"/>
+                       VerticalOptions="StartAndExpand"
+                       FontSize="Large"/>
             
             <ListView x:Name="LocationListView" Grid.Row="1" Grid.RowSpan="2"
                       ItemsSource="{Binding NavigationGraphFiles}"
@@ -63,7 +64,8 @@
                                 <Label Text="{Binding UserNaming}" 
                                        HorizontalOptions="Start" 
                                        VerticalOptions="Center"
-                                       TextColor="#3F51B5" Margin="60, 0, 1, 10" />
+                                       TextColor="#3F51B5" Margin="60, 0, 1, 10" 
+                                       FontSize="Large"/>
                                 
                             </StackLayout>
                         </ViewCell>

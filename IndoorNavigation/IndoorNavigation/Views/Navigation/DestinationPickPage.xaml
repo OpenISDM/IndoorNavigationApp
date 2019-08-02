@@ -31,7 +31,8 @@
                                      Padding="15, 1, 15, 1">
                             <Label Text="{Binding Key, StringFormat='{0}'}"
                                    TextColor="#3F51B5"
-                                   FontAttributes="Bold"/>
+                                   FontAttributes="Bold"
+                                   FontSize="Large"/>
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>
@@ -43,7 +44,8 @@
                         <StackLayout Orientation="Horizontal"
                                      Padding="20, 20, 20, 1">
                             
-                        <Label Text="{Binding _waypointName}" />
+                        <Label Text="{Binding _waypointName}" 
+                               FontSize="Large"/>
                       </StackLayout>
                     </ViewCell>
                 </DataTemplate>

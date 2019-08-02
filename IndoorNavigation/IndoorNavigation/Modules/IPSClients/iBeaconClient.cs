@@ -60,8 +60,7 @@ namespace IndoorNavigation.Modules.IPSClients
         public NavigationEvent _event { get; private set; }
 
         private List<BeaconSignalModel> _beaconSignalBuffer = new List<BeaconSignalModel>();
-        private int _previousWaypoint;
-
+        
         public IBeaconClient()
         {
             Console.WriteLine("In Ibeacon Type");
@@ -71,7 +70,6 @@ namespace IndoorNavigation.Modules.IPSClients
             _beaconScanEventHandler = new EventHandler(HandleBeaconScan);
             Utility._ibeaconScan._event._eventHandler += _beaconScanEventHandler;
             _waypointBeaconsList = new List<WaypointBeaconsMapping>();
-            _previousWaypoint = -100;
         }
         public void SetWaypointList(List<WaypointBeaconsMapping> waypointBeaconsList)
         {

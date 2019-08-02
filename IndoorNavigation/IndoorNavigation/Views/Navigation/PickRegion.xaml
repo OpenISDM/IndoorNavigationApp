@@ -12,7 +12,7 @@
                         <StackLayout Orientation="Horizontal"
                                      Padding="20, 20, 20, 1">
                             
-                        <Label Text="{Binding _regionName}" />
+                        <Label Text="{Binding _regionName}" FontSize="Large"/>
                       </StackLayout>
                     </ViewCell>
                 </DataTemplate>

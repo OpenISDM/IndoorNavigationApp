@@ -87,7 +87,6 @@ namespace IndoorNavigation.Modules
         /// </summary>
         private void ConstructSession()
         {
-            const int falseInt = -100;
             List<ConnectionType> avoidList = new List<ConnectionType>();
 
             Console.WriteLine("-- setup preference --- ");

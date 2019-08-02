@@ -57,7 +57,7 @@
             <pb:ProgressBarView Grid.Row="5" Grid.ColumnSpan="2"
                                 Color="#3F51B5" Progress="{Binding NavigationProgress}"
                                 LabelShowIntValuesOnly="false" LabelStringFormat="{}{0:0.0} %"
-                                LabelFontSize="15" LabelPosition="AfterBar" />     
+                                LabelFontSize="20" LabelPosition="AfterBar" />     
         </Grid>
     </ContentPage.Content>
     
