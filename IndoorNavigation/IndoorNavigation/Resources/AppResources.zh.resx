@@ -105,9 +105,8 @@
         <value>關於畢迪科技股份有限公司</value>
     </data>
     
-    <!-- Navigation Homepage with NTUHYunlin -->
-    <data name="MORE_STRING" xml:space="preserve">
-        <value>更多</value>
+    <data name="PREFERENCES_STRING" xml:space="preserve">
+        <value>偏好設定</value>
     </data>
     
      <data name="VOICE_SPEAK_STRING" xml:space="preserve">

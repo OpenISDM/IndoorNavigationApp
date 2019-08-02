@@ -93,9 +93,8 @@
         <value>About BeDI Technology Inc.</value>
     </data>
     
-    <!-- Navigation Homepage with NTUHYunlin -->
-    <data name="MORE_STRING" xml:space="preserve">
-        <value>MORE</value>
+    <data name="PREFERENCES_STRING" xml:space="preserve">
+        <value>Preferences</value>
     </data>
     
      <data name="VOICE_SPEAK_STRING" xml:space="preserve">

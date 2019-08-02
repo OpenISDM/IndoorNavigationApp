@@ -4,7 +4,8 @@
              xmlns:sv="clr-namespace:AiForms.Renderers;assembly=SettingsView"
              xmlns:ef="clr-namespace:AiForms.Effects;assembly=AiForms.Effects"
              xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
-             x:Class="IndoorNavigation.Views.Navigation.NavigatorSettingPage">
+             x:Class="IndoorNavigation.Views.Navigation.NavigatorSettingPage"
+             Title="{i18n:Translate PREFERENCES_STRING}">
     
     <ContentPage.Resources>
         <!-- SettingsView properties settings -->

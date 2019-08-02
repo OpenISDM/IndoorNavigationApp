@@ -16,7 +16,7 @@
     </ContentPage.Padding>
     
     <ContentPage.ToolbarItems>
-        <ToolbarItem Name="InfoButton" Text="{i18n:Translate MORE_STRING}" Clicked="InfoButton_Clicked"/>
+        <ToolbarItem Name="InfoButton" Text="{i18n:Translate PREFERENCES_STRING}" Clicked="InfoButton_Clicked"/>
     </ContentPage.ToolbarItems>
     
     <ContentPage.Content>
