@@ -1,13 +1,13 @@
-﻿using System;
-
+﻿using Android;
 using Android.App;
 using Android.Content.PM;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Android.OS;
-using System.Threading;
+using Android.Support.V4.App;
+using Android.Support.V4.Content;
+using Android.Views;
 using Plugin.Permissions;
+using System;
+using System.Threading;
 
 namespace IndoorNavigation.Droid
 {
@@ -28,6 +28,11 @@ namespace IndoorNavigation.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(bundle);
+
+            if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.AccessCoarseLocation) != Permission.Granted)
+            {
+                ActivityCompat.RequestPermissions(this, new String[] { Manifest.Permission.AccessCoarseLocation, Manifest.Permission.AccessFineLocation }, 0);
+            }
 
             Xamarin.Forms.Forms.SetFlags("FastRenderers_Experimental");
             Rg.Plugins.Popup.Popup.Init(this, bundle);
