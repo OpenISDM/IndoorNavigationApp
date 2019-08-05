@@ -57,7 +57,7 @@ namespace IndoorNavigation.Droid
         protected BluetoothAdapter _adapter;
         protected BluetoothManager _manager;
         private int _count = 0;
-        private int _rssiThreshold = -45;
+        private int _rssiThreshold = -35;
 
         public NavigationEvent _event { get; private set; }
 
@@ -69,8 +69,9 @@ namespace IndoorNavigation.Droid
             this._adapter = this._manager.Adapter;
         }
 
-        public void StartScan()
+        public void StartScan(int rssiOption)
         {
+            _rssiThreshold = rssiOption;
             this._count = 0;
             this._adapter.StartLeScan(this);
         }
