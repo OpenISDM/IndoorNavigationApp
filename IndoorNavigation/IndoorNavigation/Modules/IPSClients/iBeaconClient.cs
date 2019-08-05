@@ -73,8 +73,29 @@ namespace IndoorNavigation.Modules.IPSClients
         }
         public void SetWaypointList(List<WaypointBeaconsMapping> waypointBeaconsList)
         {
+            int rssiOption = -55;
+            if (Application.Current.Properties.ContainsKey("StrongRssi"))
+            {
+                Console.WriteLine("Check Rssi");
+                if ((bool)Application.Current.Properties["StrongRssi"] == true)
+                {
+                    rssiOption = -80;
+                    Console.WriteLine("Strong");
+                }
+                else if ((bool)Application.Current.Properties["MediumRssi"] == true)
+                {
+                    rssiOption = -70;
+                    Console.WriteLine("Medium");
+                }
+                else if ((bool)Application.Current.Properties["WeakRssi"] == true)
+                {
+                    rssiOption = -55;
+                    Console.WriteLine("Weak");
+                }
+            }
+
             this._waypointBeaconsList = waypointBeaconsList;
-            Utility._ibeaconScan.StartScan();
+            Utility._ibeaconScan.StartScan(rssiOption);
         }
 
         public void DetectWaypoints()

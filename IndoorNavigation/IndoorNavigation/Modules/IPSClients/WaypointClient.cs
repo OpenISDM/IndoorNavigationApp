@@ -75,8 +75,29 @@ namespace IndoorNavigation.Modules.IPSClients
 
         public void SetWaypointList(List<WaypointBeaconsMapping> waypointBeaconsList)
         {
+            int rssiOption = -40;
+            if (Application.Current.Properties.ContainsKey("StrongRssi"))
+            {
+                Console.WriteLine("Check Rssi");
+                if ((bool)Application.Current.Properties["StrongRssi"] == true)
+                {
+                    rssiOption = -70;
+                    Console.WriteLine("Strong");
+                }
+                else if ((bool)Application.Current.Properties["MediumRssi"] == true)
+                {
+                    rssiOption = -55;
+                    Console.WriteLine("Medium");
+                }
+                else if ((bool)Application.Current.Properties["WeakRssi"] == true)
+                {
+                    rssiOption = -40;
+                    Console.WriteLine("Weak");
+                }
+            }
+                
             this._waypointBeaconsList = waypointBeaconsList;
-            Utility._lbeaconScan.StartScan();
+            Utility._lbeaconScan.StartScan(rssiOption);
         }
 
         public void DetectWaypoints()
@@ -95,11 +116,13 @@ namespace IndoorNavigation.Modules.IPSClients
 
                 foreach (var obsoleteBeaconSignal in removeSignalBuffer)
                     _beaconSignalBuffer.Remove(obsoleteBeaconSignal);
-                
-              
+
+                //BeaconSignalModel beaconSignalModel = new BeaconSignalModel();
+                //beaconSignalModel.UUID = new Guid("00000016-0000-0001-9500-000000014500");
+                //_beaconSignalBuffer.Add(beaconSignalModel);
+
                 foreach (BeaconSignalModel beacon in _beaconSignalBuffer)
                 {
-                    Console.WriteLine("beacon : " + beacon.UUID);
                     foreach (WaypointBeaconsMapping waypointBeaconsMapping in _waypointBeaconsList)
                     {
                         foreach (Guid beaconGuid in waypointBeaconsMapping._Beacons)

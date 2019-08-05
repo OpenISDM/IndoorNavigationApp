@@ -369,4 +369,25 @@
         <value>請調整路線選項 </value>
     </data>
     
+    <data name="RSSI_OPTION_STRING" xml:space="preserve">
+        <value>訊號強度選項 </value>
+    </data>
+    
+    <data name="STRONG_STRING" xml:space="preserve">
+        <value>強 </value>
+    </data>
+    
+    <data name="MEDIUM_STRING" xml:space="preserve">
+        <value>中 </value>
+    </data>
+    
+    <data name="WEAK_STRING" xml:space="preserve">
+        <value>弱 </value>
+    </data>
+    
+    <data name="PLEASE_CONTROL_RSSI_OPTION_STRING" xml:space="preserve">
+        <value>請只打開一個選項 </value>
+    </data>
+
+    
 </root>

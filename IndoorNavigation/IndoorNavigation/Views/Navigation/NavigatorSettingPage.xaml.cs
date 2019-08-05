@@ -87,6 +87,13 @@ namespace IndoorNavigation.Views.Navigation
                 AvoidElevator.On = (bool)Application.Current.Properties["AvoidElevator"];
                 AvoidEscalator.On = (bool)Application.Current.Properties["AvoidEscalator"];
             }
+            if (Application.Current.Properties.ContainsKey("StrongRssi"))
+            {
+                StrongRssi.On = (bool)Application.Current.Properties["StrongRssi"];
+                MediumRssi.On = (bool)Application.Current.Properties["MediumRssi"];
+                WeakRssi.On = (bool)Application.Current.Properties["WeakRssi"];
+            }
+
         }
 
 		protected override void OnDisappearing()
@@ -95,6 +102,11 @@ namespace IndoorNavigation.Views.Navigation
             Application.Current.Properties["AvoidStair"] = AvoidStair.On;
             Application.Current.Properties["AvoidElevator"] = AvoidElevator.On;
             Application.Current.Properties["AvoidEscalator"] = AvoidEscalator.On;
+
+            Application.Current.Properties["StrongRssi"] = StrongRssi.On;
+            Application.Current.Properties["MediumRssi"] = MediumRssi.On;
+            Application.Current.Properties["WeakRssi"] = WeakRssi.On;
+
 
             base.OnDisappearing();
         }
@@ -114,6 +126,19 @@ namespace IndoorNavigation.Views.Navigation
                         _resourceManager.GetString("OK_STRING", currentLanguage));
                 }
             }
+
+            if ((StrongRssi.On && MediumRssi.On) ||
+                    (StrongRssi.On && WeakRssi.On) ||
+                    (MediumRssi.On && WeakRssi.On))
+            {
+                (sender as AiForms.Renderers.SwitchCell).On = false;
+                var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+                await DisplayAlert(_resourceManager.GetString("ERROR_STRING", currentLanguage),
+                    _resourceManager.GetString("PLEASE_CONTROL_RSSI_OPTION_STRING",
+                                               currentLanguage),
+                    _resourceManager.GetString("OK_STRING", currentLanguage));
+            }
+
         }
 
     }

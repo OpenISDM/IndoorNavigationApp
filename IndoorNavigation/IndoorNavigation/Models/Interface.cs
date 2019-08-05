@@ -49,6 +49,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using GeoCoordinatePortable;
 
 
 namespace IndoorNavigation.Models
@@ -57,7 +58,7 @@ namespace IndoorNavigation.Models
 
     public interface IBeaconScan
     {
-        void StartScan();
+        void StartScan(int rssiOption);
         void StopScan();
         void Close();
         NavigationEvent _event { get; }
@@ -65,7 +66,7 @@ namespace IndoorNavigation.Models
 
     public interface LBeaconScan
     {
-        void StartScan();
+        void StartScan(int rssiOption);
         void StopScan();
         void Close();
         NavigationEvent _event { get; }

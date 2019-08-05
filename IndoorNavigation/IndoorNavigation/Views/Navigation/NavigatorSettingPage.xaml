@@ -56,6 +56,12 @@
                 <sv:SwitchCell x:Name="AvoidElevator" Title="{i18n:Translate AVOID_ELEVATOR_STRING}" On="false" PropertyChanged="Handle_OptionPropertyChanged"/>
                 <sv:SwitchCell x:Name="AvoidEscalator" Title="{i18n:Translate AVOID_ESCALATOR_STRING}" On="false" PropertyChanged="Handle_OptionPropertyChanged"/>
             </sv:Section>
+            
+            <sv:Section Title="{i18n:Translate RSSI_OPTION_STRING}">
+                <sv:SwitchCell x:Name="StrongRssi" Title="{i18n:Translate STRONG_STRING}" On="false" PropertyChanged="Handle_OptionPropertyChanged"/>
+                <sv:SwitchCell x:Name="MediumRssi" Title="{i18n:Translate MEDIUM_STRING}" On="false" PropertyChanged="Handle_OptionPropertyChanged"/>
+                <sv:SwitchCell x:Name="WeakRssi" Title="{i18n:Translate WEAK_STRING}" On="true" PropertyChanged="Handle_OptionPropertyChanged"/>
+            </sv:Section>
         
         </sv:SettingsView>
         

@@ -369,5 +369,25 @@
         <value>Please adjust avoid route type </value>
     </data>
     
+    <data name="RSSI_OPTION_STRING" xml:space="preserve">
+        <value>Rssi Option </value>
+    </data>
+    
+    <data name="STRONG_STRING" xml:space="preserve">
+        <value>Strong </value>
+    </data>
+    
+    <data name="MEDIUM_STRING" xml:space="preserve">
+        <value>Medium </value>
+    </data>
+    
+    <data name="WEAK_STRING" xml:space="preserve">
+        <value>Weak </value>
+    </data>
+    
+    <data name="PLEASE_CONTROL_RSSI_OPTION_STRING" xml:space="preserve">
+        <value>Please just open one option</value>
+    </data>
+    
     
 </root>

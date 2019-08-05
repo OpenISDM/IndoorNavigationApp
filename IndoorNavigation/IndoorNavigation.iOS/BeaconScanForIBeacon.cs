@@ -71,8 +71,10 @@ namespace IndoorNavigation.iOS
                               this._manager.State);
         }
 
-        public void StartScan()
+        public void StartScan(int rssiOption)
         {
+
+            _rssiThreshold = rssiOption;
             Console.WriteLine("Start Ibeacon ");
             if (CBCentralManagerState.PoweredOn == this._manager.State)
             {
@@ -86,11 +88,17 @@ namespace IndoorNavigation.iOS
 
         private void DiscoveredPeripheral(object sender, CBDiscoveredPeripheralEventArgs args)
         {
+
+
+
             if ((args as CBDiscoveredPeripheralEventArgs).RSSI.Int32Value > _rssiThreshold &&
                 (args as CBDiscoveredPeripheralEventArgs).RSSI.Int32Value < 0)
             {
+
+                Console.WriteLine("UUID : " + (args as CBDiscoveredPeripheralEventArgs).AdvertisementData);
                 var tempUUID = (args as CBDiscoveredPeripheralEventArgs).AdvertisementData
                                .ValueForKey((NSString)"kCBAdvDataServiceData");
+    
                 if (tempUUID != null)
                 {
                     string bufferUUID = tempUUID.ToString();
