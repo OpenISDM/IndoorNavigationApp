@@ -161,9 +161,9 @@ namespace IndoorNavigation.Resources {
             }
         }
         
-        internal static string MORE_STRING {
+        internal static string PREFERENCES_STRING {
             get {
-                return ResourceManager.GetString("MORE_STRING", resourceCulture);
+                return ResourceManager.GetString("PREFERENCES_STRING", resourceCulture);
             }
         }
         
@@ -413,6 +413,36 @@ namespace IndoorNavigation.Resources {
             }
         }
         
+        internal static string CATEGORY_ELEVATOR_STRING {
+            get {
+                return ResourceManager.GetString("CATEGORY_ELEVATOR_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string CATEGORY_PARKING_STRING {
+            get {
+                return ResourceManager.GetString("CATEGORY_PARKING_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string CATEGORY_OFFICE_STRING {
+            get {
+                return ResourceManager.GetString("CATEGORY_OFFICE_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string CATEGORY_CONFERENCE_ROOM_STRING {
+            get {
+                return ResourceManager.GetString("CATEGORY_CONFERENCE_ROOM_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string CATEGORY_STAIR_STRING {
+            get {
+                return ResourceManager.GetString("CATEGORY_STAIR_STRING", resourceCulture);
+            }
+        }
+        
         internal static string PICK_DESTINATION_STRING {
             get {
                 return ResourceManager.GetString("PICK_DESTINATION_STRING", resourceCulture);
@@ -566,6 +596,36 @@ namespace IndoorNavigation.Resources {
         internal static string PLEASE_ADJUST_AVOID_ROUTE_STRING {
             get {
                 return ResourceManager.GetString("PLEASE_ADJUST_AVOID_ROUTE_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string RSSI_OPTION_STRING {
+            get {
+                return ResourceManager.GetString("RSSI_OPTION_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string STRONG_STRING {
+            get {
+                return ResourceManager.GetString("STRONG_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string MEDIUM_STRING {
+            get {
+                return ResourceManager.GetString("MEDIUM_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string WEAK_STRING {
+            get {
+                return ResourceManager.GetString("WEAK_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string PLEASE_CONTROL_RSSI_OPTION_STRING {
+            get {
+                return ResourceManager.GetString("PLEASE_CONTROL_RSSI_OPTION_STRING", resourceCulture);
             }
         }
     }

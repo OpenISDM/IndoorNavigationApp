@@ -261,6 +261,26 @@
         <value>抽血處</value>
     </data>
     
+    <data name="CATEGORY_ELEVATOR_STRING" xml:space="preserve">
+        <value>電梯</value>
+    </data>
+    
+    <data name="CATEGORY_PARKING_STRING" xml:space="preserve">
+        <value>停車場</value>
+    </data>
+    
+    <data name="CATEGORY_OFFICE_STRING" xml:space="preserve">
+        <value>各局處</value>
+    </data>
+    
+    <data name="CATEGORY_CONFERENCE_ROOM_STRING" xml:space="preserve">
+        <value>會議室</value>
+    </data>
+    
+    <data name="CATEGORY_STAIR_STRING" xml:space="preserve">
+        <value>樓梯</value>
+    </data>
+    
     <data name="PICK_DESTINATION_STRING" xml:space="preserve">
         <value>挑選目的地</value>
     </data>

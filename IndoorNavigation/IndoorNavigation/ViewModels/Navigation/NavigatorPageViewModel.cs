@@ -77,21 +77,20 @@ namespace IndoorNavigation.ViewModels.Navigation
                                       Guid destinationRegionID,
                                       Guid destinationWaypointID,
                                       string destinationWaypointName)
-		{
-			_destinationID = destinationWaypointID;
-			DestinationWaypointName = destinationWaypointName;
-
-			_navigationModule = new NavigationModule(navigationGraphName,
+        {
+            _destinationID = destinationWaypointID;
+            DestinationWaypointName = destinationWaypointName;
+            CurrentStepImage = "waittingscan.gif";
+            _navigationModule = new NavigationModule(navigationGraphName,
                                                      sourceRegionID,
                                                      destinationRegionID,
                                                      destinationWaypointID);
-			_navigationModule._event._eventHandler += GetNavigationResultEvent;
-
+            _navigationModule._event._eventHandler += GetNavigationResultEvent;
 
             const string resourceId = "IndoorNavigation.Resources.AppResources";
-			_resourceManager = new ResourceManager(resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
-			CurrentWaypointName = _resourceManager.GetString("NULL_STRING", CrossMultilingual.Current.CurrentCultureInfo);
-		}
+            _resourceManager = new ResourceManager(resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+            CurrentWaypointName = _resourceManager.GetString("NULL_STRING", CrossMultilingual.Current.CurrentCultureInfo);
+        }     
 
         public void Stop() {
 
@@ -104,6 +103,7 @@ namespace IndoorNavigation.ViewModels.Navigation
 		/// <param name="args">Arguments.</param>
 		private void DisplayInstructions(EventArgs args)
 		{
+
 			Console.WriteLine(">> DisplayInstructions");
 			NavigationInstruction instruction = (args as Session.NavigationEventArgs)._nextInstruction;
 			var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
@@ -164,6 +164,7 @@ namespace IndoorNavigation.ViewModels.Navigation
 									out string stepLabel,
 									out string stepImage)
 		{
+           
 			var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
 			switch (instruction._information._turnDirection)
 			{

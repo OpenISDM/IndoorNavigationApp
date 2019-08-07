@@ -50,21 +50,32 @@
             <!-- Row 1 -->
 
             
-            <ImageButton x:Name="CashierButton" Grid.Row="3"  Grid.Column="0" Source="Cashier" Clicked="Cashier_Clicked"/>
-            <Label Grid.Row="4" Grid.Column="0" Text="{i18n:Translate CATEGORY_CASHIER_STRING}" FontSize="Medium" HorizontalTextAlignment="Center"/>
+            <ImageButton x:Name="ElevatorButton" Grid.Row="3"  Grid.Column="0" Source="homeicon_elevator2" Clicked="ElevatorList_Clicked"/>
+            <Label Grid.Row="4" Grid.Column="0" Text="{i18n:Translate CATEGORY_ELEVATOR_STRING}" FontSize="Medium" HorizontalTextAlignment="Center"/>
             
-            <ImageButton x:Name="ExitButton" Grid.Row="3"  Grid.Column="1" Source="Exit" Clicked="ExitList_Clicked"/>
-            <Label Grid.Row="4" Grid.Column="1" Text="{i18n:Translate CATEGORY_EXIT_STRING}" FontSize="Medium" HorizontalTextAlignment="Center"/>  
+            <ImageButton x:Name="BathroomButton" Grid.Row="3"  Grid.Column="1" Source="homeicon_wc" Clicked="BathroomList_Clicked"/>
+            <Label Grid.Row="4" Grid.Column="1" Text="{i18n:Translate CATEGORY_BATH_ROOM_STRING}" FontSize="Medium" HorizontalTextAlignment="Center"/>
             
-            <ImageButton x:Name="ConvenienceStoreButton" Grid.Row="3"  Grid.Column="2" Source="ConvenienceStore" Clicked="ConvenienceStore_Clicked"/>
-            <Label Grid.Row="4" Grid.Column="2" Text="{i18n:Translate CATEGORY_CONVENIENCE_STORE_STRING}" FontSize="Medium" HorizontalTextAlignment="Center"/>
+            <ImageButton x:Name="ParkingButton" Grid.Row="3"  Grid.Column="2" Source="homeicon_parking" Clicked="ParkingList_Clicked"/>
+            <Label Grid.Row="4" Grid.Column="2" Text="{i18n:Translate CATEGORY_PARKING_STRING}" FontSize="Medium" HorizontalTextAlignment="Center"/>
             
-            <!-- Row 3 -->
-            <ImageButton x:Name="OthersButton" Grid.Row="5"  Grid.Column="0" Source="Others" Clicked="OthersList_Clicked"/>
-            <Label Grid.Row="6" Grid.Column="0" Text="{i18n:Translate CATEGORY_OTHERS_STRING}" FontSize="Medium" HorizontalTextAlignment="Center"/>
+            <ImageButton x:Name="OfficeButton" Grid.Row="5"  Grid.Column="0" Source="homeicon_office2" Clicked="OfficeList_Clicked"/>
+            <Label Grid.Row="6" Grid.Column="0" Text="{i18n:Translate CATEGORY_OFFICE_STRING}" FontSize="Medium" HorizontalTextAlignment="Center"/>
             
-            <ImageButton x:Name="BathroomButton" Grid.Row="5"  Grid.Column="1" Source="Bathroom" Clicked="BathroomList_Clicked"/>
-            <Label Grid.Row="6" Grid.Column="1" Text="{i18n:Translate CATEGORY_BATH_ROOM_STRING}" FontSize="Medium" HorizontalTextAlignment="Center"/>
+            <ImageButton x:Name="OthersButton" Grid.Row="5"  Grid.Column="1" Source="homeicon_other" Clicked="OthersList_Clicked"/>
+            <Label Grid.Row="6" Grid.Column="1" Text="{i18n:Translate CATEGORY_OTHERS_STRING}" FontSize="Medium" HorizontalTextAlignment="Center"/>
+            
+            <ImageButton x:Name="BranchButton" Grid.Row="5"  Grid.Column="2" Source="homeicon_branch2" Clicked="BranchList_Clicked"/>
+            <Label Grid.Row="6" Grid.Column="2" Text="{i18n:Translate CATEGORY_CONFERENCE_ROOM_STRING}" FontSize="Medium" HorizontalTextAlignment="Center"/>  
+            
+            <ImageButton x:Name="ConvenienceStoreButton" Grid.Row="7"  Grid.Column="0" Source="homeicon_store" Clicked="ConvenienceStoreList_Clicked"/>
+            <Label Grid.Row="8" Grid.Column="0" Text="{i18n:Translate CATEGORY_CONVENIENCE_STORE_STRING}" FontSize="Medium" HorizontalTextAlignment="Center"/>
+            
+            <ImageButton x:Name="StairButton" Grid.Row="7"  Grid.Column="1" Source="homeicon_stairs" Clicked="StairList_Clicked"/>
+            <Label Grid.Row="8" Grid.Column="1" Text="{i18n:Translate CATEGORY_STAIR_STRING}" FontSize="Medium" HorizontalTextAlignment="Center"/>
+            
+            <ImageButton x:Name="ExitButton" Grid.Row="7"  Grid.Column="2" Source="homeicon_exit" Clicked="ExitList_Clicked"/>
+            <Label Grid.Row="8" Grid.Column="2" Text="{i18n:Translate CATEGORY_EXIT_STRING}" FontSize="Medium" HorizontalTextAlignment="Center"/>
             
             
         </Grid>

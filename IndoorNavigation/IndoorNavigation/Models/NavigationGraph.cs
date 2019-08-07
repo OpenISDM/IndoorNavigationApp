@@ -1267,6 +1267,11 @@ namespace IndoorNavigation.Models.NavigaionLayer
         Pharmacy,
         ConvenienceStore,
         Bathroom,
-        BloodCollectionCounter
+        BloodCollectionCounter,
+        Elevator,
+        Parking,
+        Office,
+        ConferenceRoom,
+        Stair
     }
 }

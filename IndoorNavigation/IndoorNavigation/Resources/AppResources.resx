@@ -261,6 +261,26 @@
         <value>Blood Collection Counter</value>
     </data>
     
+    <data name="CATEGORY_ELEVATOR_STRING" xml:space="preserve">
+        <value>Elevator</value>
+    </data>
+    
+    <data name="CATEGORY_PARKING_STRING" xml:space="preserve">
+        <value>Parking</value>
+    </data>
+    
+    <data name="CATEGORY_OFFICE_STRING" xml:space="preserve">
+        <value>Office</value>
+    </data>
+    
+    <data name="CATEGORY_CONFERENCE_ROOM_STRING" xml:space="preserve">
+        <value>Conference Room</value>
+    </data>
+    
+    <data name="CATEGORY_STAIR_STRING" xml:space="preserve">
+        <value>Stair</value>
+    </data>
+    
     <data name="PICK_DESTINATION_STRING" xml:space="preserve">
         <value>Pick Destination</value>
     </data>
@@ -388,6 +408,5 @@
     <data name="PLEASE_CONTROL_RSSI_OPTION_STRING" xml:space="preserve">
         <value>Please just open one option</value>
     </data>
-    
     
 </root>

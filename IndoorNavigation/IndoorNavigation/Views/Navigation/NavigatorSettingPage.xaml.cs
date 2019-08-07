@@ -114,12 +114,13 @@ namespace IndoorNavigation.Views.Navigation
         async void Handle_OptionPropertyChanged(object sender,
                                                 System.ComponentModel.PropertyChangedEventArgs e)
         {
+            var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
             if (e.PropertyName == AiForms.Renderers.SwitchCell.OnProperty.PropertyName)
             {
                 if (AvoidStair.On && AvoidElevator.On && AvoidEscalator.On)
                 {
                     (sender as AiForms.Renderers.SwitchCell).On = false;
-                    var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+
                     await DisplayAlert(_resourceManager.GetString("ERROR_STRING", currentLanguage),
                         _resourceManager.GetString("AVOID_ALL_CONNECTION_TYPE_STRING",
                                                    currentLanguage),
@@ -132,7 +133,6 @@ namespace IndoorNavigation.Views.Navigation
                     (MediumRssi.On && WeakRssi.On))
             {
                 (sender as AiForms.Renderers.SwitchCell).On = false;
-                var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
                 await DisplayAlert(_resourceManager.GetString("ERROR_STRING", currentLanguage),
                     _resourceManager.GetString("PLEASE_CONTROL_RSSI_OPTION_STRING",
                                                currentLanguage),
