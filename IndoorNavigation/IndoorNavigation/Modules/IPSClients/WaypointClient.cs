@@ -79,21 +79,17 @@ namespace IndoorNavigation.Modules.IPSClients
 
             if (Application.Current.Properties.ContainsKey("StrongRssi"))
             {
-                Console.WriteLine("Check Rssi");
                 if ((bool)Application.Current.Properties["StrongRssi"] == true)
                 {
                     rssiOption = -70;
-                    Console.WriteLine("Strong");
                 }
                 else if ((bool)Application.Current.Properties["WeakRssi"] == true)
                 {
                     rssiOption = -40;
-                    Console.WriteLine("Weak");
                 }
                 else if ((bool)Application.Current.Properties["MediumRssi"] == true)
                 {
                     rssiOption = -55;
-                    Console.WriteLine("Medium");
                 }
             }
 
