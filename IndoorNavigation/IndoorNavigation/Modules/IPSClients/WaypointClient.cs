@@ -76,6 +76,7 @@ namespace IndoorNavigation.Modules.IPSClients
         public void SetWaypointList(List<WaypointBeaconsMapping> waypointBeaconsList)
         {
             int rssiOption = -40;
+
             if (Application.Current.Properties.ContainsKey("StrongRssi"))
             {
                 Console.WriteLine("Check Rssi");
@@ -84,18 +85,18 @@ namespace IndoorNavigation.Modules.IPSClients
                     rssiOption = -70;
                     Console.WriteLine("Strong");
                 }
-                else if ((bool)Application.Current.Properties["MediumRssi"] == true)
-                {
-                    rssiOption = -55;
-                    Console.WriteLine("Medium");
-                }
                 else if ((bool)Application.Current.Properties["WeakRssi"] == true)
                 {
                     rssiOption = -40;
                     Console.WriteLine("Weak");
                 }
+                else if ((bool)Application.Current.Properties["MediumRssi"] == true)
+                {
+                    rssiOption = -55;
+                    Console.WriteLine("Medium");
+                }
             }
-                
+
             this._waypointBeaconsList = waypointBeaconsList;
             Utility._lbeaconScan.StartScan(rssiOption);
         }

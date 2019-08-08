@@ -255,6 +255,17 @@
     <BundleResource Include="Resources\Stairs_down.png" />
     <BundleResource Include="Resources\Stairs_up.png" />
     <BundleResource Include="Resources\service_hospital_logo.png" />
+    <BundleResource Include="Resources\waittingscan.gif" />
+    <BundleResource Include="Resources\homeicon_wc.png" />
+    <BundleResource Include="Resources\homeicon_store.png" />
+    <BundleResource Include="Resources\homeicon_stairs.png" />
+    <BundleResource Include="Resources\homeicon_parking.png" />
+    <BundleResource Include="Resources\homeicon_other.png" />
+    <BundleResource Include="Resources\homeicon_office2.png" />
+    <BundleResource Include="Resources\homeicon_exit.png" />
+    <BundleResource Include="Resources\homeicon_elevator2.png" />
+    <BundleResource Include="Resources\homeicon_branch2.png" />
+    <BundleResource Include="Resources\appicon2.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\close_circle_button.png" />

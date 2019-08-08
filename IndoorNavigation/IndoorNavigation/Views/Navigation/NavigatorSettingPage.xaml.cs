@@ -51,11 +51,16 @@ using System.Resources;
 using IndoorNavigation.Resources.Helpers;
 using System.Reflection;
 using IndoorNavigation.Modules;
+using System.Windows.Input;
+using Prism.Commands;
 
 namespace IndoorNavigation.Views.Navigation
 {
     public partial class NavigatorSettingPage : ContentPage
     {
+        
+        public IList _chooseRssi { get; } = new ObservableCollection<string>();
+        public ICommand _changeRssiCommand => new DelegateCommand(HandleChangeRssi);
         public IList _voiceSearchItems { get; } =
             new ObservableCollection<string>(new List<string> { "中文", "英文" });
 		const string _resourceId = "IndoorNavigation.Resources.AppResources";
@@ -65,6 +70,9 @@ namespace IndoorNavigation.Views.Navigation
 		public NavigatorSettingPage()
         {
             InitializeComponent();
+            AddItems();
+
+            BindingContext = this;
 
             switch (Device.RuntimePlatform)
             {
@@ -87,28 +95,77 @@ namespace IndoorNavigation.Views.Navigation
                 AvoidElevator.On = (bool)Application.Current.Properties["AvoidElevator"];
                 AvoidEscalator.On = (bool)Application.Current.Properties["AvoidEscalator"];
             }
-            if (Application.Current.Properties.ContainsKey("StrongRssi"))
-            {
-                StrongRssi.On = (bool)Application.Current.Properties["StrongRssi"];
-                MediumRssi.On = (bool)Application.Current.Properties["MediumRssi"];
-                WeakRssi.On = (bool)Application.Current.Properties["WeakRssi"];
-            }
-
         }
 
-		protected override void OnDisappearing()
+        private async void HandleChangeRssi()
+        {
+            switch (OptionPicker.SelectedItem.ToString().Trim())
+            {
+                case "Strong":
+                case "強":
+                    Application.Current.Properties["StrongRssi"] = true;
+					Application.Current.Properties["MediumRssi"] = false;
+					Application.Current.Properties["WeakRssi"] = false;
+                    break;
+                case "Weak":
+                case "弱":
+					Application.Current.Properties["StrongRssi"] = false;
+					Application.Current.Properties["MediumRssi"] = false;
+					Application.Current.Properties["WeakRssi"] = true;
+                    break;
+                case "Medium":
+                case "中":
+					Application.Current.Properties["StrongRssi"] = false;
+					Application.Current.Properties["MediumRssi"] = true;
+                    Application.Current.Properties["WeakRssi"] = false;
+                    break;
+            }
+        }
+
+        protected override void OnDisappearing()
         {
             // Before page close, store the status of each route options
             Application.Current.Properties["AvoidStair"] = AvoidStair.On;
             Application.Current.Properties["AvoidElevator"] = AvoidElevator.On;
             Application.Current.Properties["AvoidEscalator"] = AvoidEscalator.On;
+			if (OptionPicker.SelectedItem != null)
+			{
+				Device.BeginInvokeOnMainThread(async () =>
+				{	
+					switch (OptionPicker.SelectedItem.ToString().Trim())
+					{
+						case "Strong":
+						case "強":
+							Application.Current.Properties["StrongRssi"] = true;
+							Application.Current.Properties["MediumRssi"] = false;
+							Application.Current.Properties["WeakRssi"] = false;
+							break;
+						case "Medium":
+						case "中":
+                            Application.Current.Properties["StrongRssi"] = false;
+                            Application.Current.Properties["MediumRssi"] = true;
+                            Application.Current.Properties["WeakRssi"] = false;
+                            break;
+						case "Weak":
+						case "弱":
+                            Application.Current.Properties["StrongRssi"] = false;
+                            Application.Current.Properties["MediumRssi"] = false;
+                            Application.Current.Properties["WeakRssi"] = true;
+                            break;
+					}
+					await Application.Current.SavePropertiesAsync();
+				});
+			}
+			base.OnDisappearing();
+        }
 
-            Application.Current.Properties["StrongRssi"] = StrongRssi.On;
-            Application.Current.Properties["MediumRssi"] = MediumRssi.On;
-            Application.Current.Properties["WeakRssi"] = WeakRssi.On;
-
-
-            base.OnDisappearing();
+        private void AddItems()
+        {
+            var ci = CrossMultilingual.Current.CurrentCultureInfo;
+            _chooseRssi.Clear();
+            _chooseRssi.Add(_resourceManager.GetString("STRONG_STRING", ci));
+            _chooseRssi.Add(_resourceManager.GetString("MEDIUM_STRING", ci));
+            _chooseRssi.Add(_resourceManager.GetString("WEAK_STRING", ci));
         }
 
         async void Handle_OptionPropertyChanged(object sender,
@@ -126,17 +183,6 @@ namespace IndoorNavigation.Views.Navigation
                                                    currentLanguage),
                         _resourceManager.GetString("OK_STRING", currentLanguage));
                 }
-            }
-
-            if ((StrongRssi.On && MediumRssi.On) ||
-                    (StrongRssi.On && WeakRssi.On) ||
-                    (MediumRssi.On && WeakRssi.On))
-            {
-                (sender as AiForms.Renderers.SwitchCell).On = false;
-                await DisplayAlert(_resourceManager.GetString("ERROR_STRING", currentLanguage),
-                    _resourceManager.GetString("PLEASE_CONTROL_RSSI_OPTION_STRING",
-                                               currentLanguage),
-                    _resourceManager.GetString("OK_STRING", currentLanguage));
             }
 
         }
