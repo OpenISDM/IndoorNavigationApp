@@ -66,7 +66,9 @@ namespace IndoorNavigation.Views.Navigation
 		const string _resourceId = "IndoorNavigation.Resources.AppResources";
 		ResourceManager _resourceManager =
 			new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
-
+        //Application.Current.Properties["StrongRssi"] = new object ();
+        //Application.Current.Properties["MediumRssi"] = new object ();
+        //    Application.Current.Properties["WeakRssi"] = new object ();
 		public NavigatorSettingPage()
         {
             InitializeComponent();
@@ -87,6 +89,11 @@ namespace IndoorNavigation.Views.Navigation
                 default:
                     break;
             }
+
+
+            Application.Current.Properties["StrongRssi"] = false;
+            Application.Current.Properties["MediumRssi"] = false;
+            Application.Current.Properties["WeakRssi"] = false;
 
             // Restore the status of route options
             if (Application.Current.Properties.ContainsKey("AvoidStair"))
