@@ -91,9 +91,7 @@ namespace IndoorNavigation.Views.Navigation
             }
 
 
-            Application.Current.Properties["StrongRssi"] = false;
-            Application.Current.Properties["MediumRssi"] = false;
-            Application.Current.Properties["WeakRssi"] = false;
+          
 
             // Restore the status of route options
             if (Application.Current.Properties.ContainsKey("AvoidStair"))
@@ -103,18 +101,22 @@ namespace IndoorNavigation.Views.Navigation
                 AvoidEscalator.On = (bool)Application.Current.Properties["AvoidEscalator"];
             }
 
-            if((bool)Application.Current.Properties["StrongRssi"] == true)
+            if(Application.Current.Properties.ContainsKey("StrongRssi"))
             {
-                OptionPicker.SelectedItem = _resourceManager.GetString("STRONG_STRING", CrossMultilingual.Current.CurrentCultureInfo);
+                if ((bool)Application.Current.Properties["StrongRssi"] == true)
+                {
+                    OptionPicker.SelectedItem = _resourceManager.GetString("STRONG_STRING", CrossMultilingual.Current.CurrentCultureInfo);
+                }
+                else if ((bool)Application.Current.Properties["MediumRssi"] == true)
+                {
+                    OptionPicker.SelectedItem = _resourceManager.GetString("MEDIUM_STRING", CrossMultilingual.Current.CurrentCultureInfo);
+                }
+                else if ((bool)Application.Current.Properties["WeakRssi"] == true)
+                {
+                    OptionPicker.SelectedItem = _resourceManager.GetString("WEAK_STRING", CrossMultilingual.Current.CurrentCultureInfo);
+                }
             }
-            else if ((bool)Application.Current.Properties["MediumRssi"] == true)
-            {
-                OptionPicker.SelectedItem = _resourceManager.GetString("MEDIUM_STRING", CrossMultilingual.Current.CurrentCultureInfo);
-            }
-            else if ((bool)Application.Current.Properties["WeakRssi"] == true)
-            {
-                OptionPicker.SelectedItem = _resourceManager.GetString("WEAK_STRING", CrossMultilingual.Current.CurrentCultureInfo);
-            }
+            
         }
 
         private async void HandleChangeRssi()
