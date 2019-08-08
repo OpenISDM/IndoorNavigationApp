@@ -29,6 +29,9 @@
     <WarningLevel>4</WarningLevel>
     <AndroidLinkMode>None</AndroidLinkMode>
     <LangVersion>7.1</LangVersion>
+    <AotAssemblies>false</AotAssemblies>
+    <EnableLLVM>false</EnableLLVM>
+    <BundleAssemblies>false</BundleAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,6 +43,9 @@
     <AndroidManagedSymbols>true</AndroidManagedSymbols>
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
     <LangVersion>7.1</LangVersion>
+    <AotAssemblies>false</AotAssemblies>
+    <EnableLLVM>false</EnableLLVM>
+    <BundleAssemblies>false</BundleAssemblies>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
@@ -84,15 +90,10 @@
     <AndroidResource Include="Resources\mipmap-anydpi-v26\icon.xml" />
     <AndroidResource Include="Resources\mipmap-anydpi-v26\icon_round.xml" />
     <AndroidResource Include="Resources\mipmap-hdpi\Icon.png" />
-    <AndroidResource Include="Resources\mipmap-hdpi\launcher_foreground.png" />
     <AndroidResource Include="Resources\mipmap-mdpi\Icon.png" />
-    <AndroidResource Include="Resources\mipmap-mdpi\launcher_foreground.png" />
     <AndroidResource Include="Resources\mipmap-xhdpi\Icon.png" />
-    <AndroidResource Include="Resources\mipmap-xhdpi\launcher_foreground.png" />
     <AndroidResource Include="Resources\mipmap-xxhdpi\Icon.png" />
-    <AndroidResource Include="Resources\mipmap-xxhdpi\launcher_foreground.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\Icon.png" />
-    <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
     <AndroidResource Include="Resources\drawable\login_icon_navigation.png" />
     <AndroidResource Include="Resources\drawable\splash_screen.jpg" />
     <AndroidResource Include="Resources\drawable\splash_screen_3.jpg" />
@@ -117,7 +118,6 @@
     <AndroidResource Include="Resources\drawable\Arrow_frontright.png" />
     <AndroidResource Include="Resources\drawable\Arrow_frontleft.png" />
     <AndroidResource Include="Resources\drawable\Arrow_down.png" />
-    <AndroidResource Include="Resources\drawable\settings_gears_imagebutton.png" />
     <AndroidResource Include="Resources\drawable\Arrived.png" />
     <AndroidResource Include="Resources\drawable\Waiting.png" />
     <AndroidResource Include="Resources\drawable\Warning.png" />
