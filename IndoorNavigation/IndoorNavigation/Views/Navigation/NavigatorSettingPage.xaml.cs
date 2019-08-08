@@ -95,19 +95,6 @@ namespace IndoorNavigation.Views.Navigation
                 AvoidElevator.On = (bool)Application.Current.Properties["AvoidElevator"];
                 AvoidEscalator.On = (bool)Application.Current.Properties["AvoidEscalator"];
             }
-
-            if ((bool)Application.Current.Properties["StrongRssi"]==true)
-            {
-                OptionPicker.SelectedItem = _resourceManager.GetString("STRONG_STRING", CrossMultilingual.Current.CurrentCultureInfo);
-            }
-            else if ((bool)Application.Current.Properties["MediumRssi"] == true)
-            {
-                OptionPicker.SelectedItem = _resourceManager.GetString("MEDIUM_STRING", CrossMultilingual.Current.CurrentCultureInfo);
-            }
-            else if ((bool)Application.Current.Properties["WeakRssi"] == true)
-            {
-                OptionPicker.SelectedItem = _resourceManager.GetString("WEAK_STRING", CrossMultilingual.Current.CurrentCultureInfo);
-            }
         }
 
         private async void HandleChangeRssi()
