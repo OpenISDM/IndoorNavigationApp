@@ -83,25 +83,15 @@ namespace IndoorNavigation.Views.PopUpPage
 
             if (!IsAnimationEnabled)
             {
-                CloseImage.Rotation = 0;
-                CloseImage.Scale = 1;
-                CloseImage.Opacity = 1;
-
                 SaveButton.Scale = 1;
                 SaveButton.Opacity = 1;
-
-				
 
 				mapNameLabel.TranslationX = FileNameEntry.TranslationX = 0;
                 mapNameLabel.Opacity = FileNameEntry.Opacity = 1;
 
                 return;
             }
-
-            CloseImage.Rotation = 30;
-            CloseImage.Scale = 0.3;
-            CloseImage.Opacity = 0;
-
+            
             SaveButton.Scale = 0.3;
             SaveButton.Opacity = 0;
 
@@ -135,9 +125,6 @@ namespace IndoorNavigation.Views.PopUpPage
                 }))());
 
             await Task.WhenAll(
-                CloseImage.FadeTo(1),
-                CloseImage.ScaleTo(1, easing: Easing.SpringOut),
-                CloseImage.RotateTo(0),
                 SaveButton.ScaleTo(1),
                 SaveButton.FadeTo(1));
         }

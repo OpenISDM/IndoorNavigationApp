@@ -41,18 +41,16 @@
  *      Paul Chang, paulchang@iis.sinica.edu.tw
  *
  */
-using System;
+using IndoorNavigation.Resources.Helpers;
+using Plugin.Multilingual;
+using Prism.Commands;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Xamarin.Forms;
-using Plugin.Multilingual;
-using System.Resources;
-using IndoorNavigation.Resources.Helpers;
 using System.Reflection;
-using IndoorNavigation.Modules;
+using System.Resources;
 using System.Windows.Input;
-using Prism.Commands;
+using Xamarin.Forms;
 
 namespace IndoorNavigation.Views.Navigation
 {
@@ -68,7 +66,7 @@ namespace IndoorNavigation.Views.Navigation
 			new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
         //Application.Current.Properties["StrongRssi"] = new object ();
         //Application.Current.Properties["MediumRssi"] = new object ();
-        //    Application.Current.Properties["WeakRssi"] = new object ();
+        //Application.Current.Properties["WeakRssi"] = new object ();
 		public NavigatorSettingPage()
         {
             InitializeComponent();
@@ -89,10 +87,7 @@ namespace IndoorNavigation.Views.Navigation
                 default:
                     break;
             }
-
-
-          
-
+            
             // Restore the status of route options
             if (Application.Current.Properties.ContainsKey("AvoidStair"))
             {

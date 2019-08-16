@@ -73,7 +73,7 @@ namespace IndoorNavigation.Views.Navigation
                                                     destinationWaypointName);
             BindingContext = _viewModel;
 
-            Console.WriteLine("<<NavigatorPage constructor");
+            Console.WriteLine("<< NavigatorPage constructor");
         }
 
         protected override void OnDisappearing()

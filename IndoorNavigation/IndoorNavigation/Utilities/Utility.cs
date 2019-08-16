@@ -78,7 +78,7 @@ namespace IndoorNavigation.Modules
         {
             string filePath = Path.Combine(NavigraphStorage._navigraphFolder, 
                                             navigraphName);
- 
+
             try
             {
                 if (!Directory.Exists(NavigraphStorage._navigraphFolder))
@@ -90,11 +90,13 @@ namespace IndoorNavigation.Modules
 
                 return true;
             }
-            catch
+            catch (Exception e)
             {
+                Console.WriteLine(e);
                 return false;
             }
         }
+
 
     }
 }

@@ -79,6 +79,9 @@ namespace IndoorNavigation.Modules.Utilities
                 throw new FileNotFoundException();
 
             var xmlString = File.ReadAllText(filePath);
+            if (xmlString == "") { 
+                DeleteNavigationGraph(FileName);
+            }
             StringReader stringReader = new StringReader(xmlString);
             XmlDocument document = new XmlDocument();
             document.Load(filePath);

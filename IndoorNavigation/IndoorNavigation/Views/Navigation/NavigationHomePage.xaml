@@ -23,14 +23,14 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="1.2*"/>
-                <RowDefinition Height="0.4*"/>
+                <RowDefinition Height="0.35*"/>
+                <RowDefinition Height="0.25*"/>
+                <RowDefinition Height="0.6*"/>
                 <RowDefinition Height="0.3*"/>
                 <RowDefinition Height="0.6*"/>
-                <RowDefinition Height="0.35*"/>
+                <RowDefinition Height="0.4*"/>
                 <RowDefinition Height="0.6*"/>
-                <RowDefinition Height="0.45*"/>
-                <RowDefinition Height="0.6*"/>
-                <RowDefinition Height="0.35*"/>
+                <RowDefinition Height="0.3*"/>
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>

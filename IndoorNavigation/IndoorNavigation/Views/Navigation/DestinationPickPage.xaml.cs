@@ -131,7 +131,7 @@ namespace IndoorNavigation.Views.Navigation
         {
             if (e.Item is DestinationItem destination)
             {
-                Console.WriteLine(">>Handle_ItemTapped in DestinationPickPage");
+                Console.WriteLine(">> Handle_ItemTapped in DestinationPickPage");
 
                 await Navigation.PushAsync(new PickRegion(_navigationGraphName,
                                                           _navigationGraph,

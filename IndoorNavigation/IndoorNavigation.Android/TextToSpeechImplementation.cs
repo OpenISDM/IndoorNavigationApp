@@ -20,6 +20,7 @@ namespace IndoorNavigation.Droid
             else
             {
                 speaker.SetLanguage(new Java.Util.Locale(language));
+                speaker.SetSpeechRate(0.8f);
                 speaker.Speak(toSpeak, QueueMode.Flush, null, null);
             }
         }

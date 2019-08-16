@@ -977,7 +977,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 }
                 else
                 {
-					Console.Write("current = next case");
+					Console.WriteLine("current = next case");
                     if (!previousRegionID.Equals(currentRegionID))
                     {
 						Console.WriteLine("previous != current case");
