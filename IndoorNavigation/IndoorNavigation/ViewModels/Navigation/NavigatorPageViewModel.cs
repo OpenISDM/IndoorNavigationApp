@@ -73,7 +73,6 @@ namespace IndoorNavigation.ViewModels.Navigation
         public NavigatorPage _navigatorPage;
 
         public NavigatorPageViewModel(string navigationGraphName,
-                                      Guid sourceRegionID,
                                       Guid destinationRegionID,
                                       Guid destinationWaypointID,
                                       string destinationWaypointName)
@@ -82,7 +81,6 @@ namespace IndoorNavigation.ViewModels.Navigation
             DestinationWaypointName = destinationWaypointName;
             CurrentStepImage = "waittingscan.gif";
             _navigationModule = new NavigationModule(navigationGraphName,
-                                                     sourceRegionID,
                                                      destinationRegionID,
                                                      destinationWaypointID);
             _navigationModule._event._eventHandler += GetNavigationResultEvent;

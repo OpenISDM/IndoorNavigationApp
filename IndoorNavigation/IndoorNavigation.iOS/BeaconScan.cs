@@ -108,8 +108,6 @@ namespace IndoorNavigation.iOS
 
         private void DiscoveredPeripheral(object sender, CBDiscoveredPeripheralEventArgs args)
         {
-            //if(Application.Current.Properties)
-            Console.WriteLine("rssiThreshold : " + _rssiThreshold);
             if ((args as CBDiscoveredPeripheralEventArgs).RSSI.Int32Value > _rssiThreshold &&
                 (args as CBDiscoveredPeripheralEventArgs).RSSI.Int32Value < 0)
             {

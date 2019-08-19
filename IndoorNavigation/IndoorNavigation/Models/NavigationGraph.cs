@@ -733,6 +733,17 @@ namespace IndoorNavigation.Models.NavigaionLayer
             return waypointIDs;
         }
 
+        public List<Guid> GetAllRegionIDs()
+        {
+            List<Guid> regionIDs = new List<Guid>();
+            foreach (KeyValuePair<Guid, Region> regionItems in _regions)
+            {
+                regionIDs.Add(regionItems.Key);
+            }
+
+            return regionIDs;
+        }
+
         public LocationType GetWaypointTypeInRegion(Guid regionID, Guid waypointID) {
 
             return _navigraphs[regionID]._waypoints[waypointID]._type;

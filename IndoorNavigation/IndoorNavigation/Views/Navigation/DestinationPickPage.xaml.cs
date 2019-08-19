@@ -133,12 +133,10 @@ namespace IndoorNavigation.Views.Navigation
             {
                 Console.WriteLine(">> Handle_ItemTapped in DestinationPickPage");
 
-                await Navigation.PushAsync(new PickRegion(_navigationGraphName,
-                                                          _navigationGraph,
-                                                          destination._regionID,
-                                                           destination._waypointID,
-                                                         destination._waypointName
-                                                             ));
+                await Navigation.PushAsync(new NavigatorPage(_navigationGraphName,
+                                                             destination._regionID,
+                                                             destination._waypointID,
+                                                             destination._waypointName));
             }
 
             //Deselect Item

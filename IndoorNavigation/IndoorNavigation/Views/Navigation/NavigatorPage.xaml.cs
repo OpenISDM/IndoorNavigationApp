@@ -52,14 +52,12 @@ namespace IndoorNavigation.Views.Navigation
         private NavigatorPageViewModel _viewModel;
 
         public NavigatorPage(string navigationGraphName,
-                             Guid sourceRegionID,
                              Guid destinationRegionID,
                              Guid destinationWaypointID,
                              string destinationWaypointName)
         {
-            Console.WriteLine(">> NavigatorPage constructor: {0} {1} {2} {3} {4}",
+            Console.WriteLine(">> NavigatorPage constructor: {0} {1} {2} {3} ",
                               navigationGraphName,
-                              sourceRegionID,
                               destinationRegionID,
                               destinationWaypointID,
                               destinationWaypointName);
@@ -67,7 +65,6 @@ namespace IndoorNavigation.Views.Navigation
             InitializeComponent();
 
             _viewModel = new NavigatorPageViewModel(navigationGraphName,
-                                                    sourceRegionID,
                                                     destinationRegionID,
                                                     destinationWaypointID,
                                                     destinationWaypointName);
