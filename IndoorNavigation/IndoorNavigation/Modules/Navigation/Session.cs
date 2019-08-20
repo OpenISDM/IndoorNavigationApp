@@ -312,17 +312,16 @@ namespace IndoorNavigation.Modules
                         }
                         haveIBeacon = true;
                     }
-                    ibeaconCLient.SetWaypointList(monitorWaypointListInIBeaconClient);
                 }
 
                 if(haveLBeacon==true)
                 {
-                    waypointClient.SetWaypointList(monitorWaypointListInIBeaconClient);
+                    waypointClient.SetWaypointList(monitorWaypointListInWaypointClient);
                 }
 
                 if(haveIBeacon==true)
                 {
-                    waypointClient.SetWaypointList(monitorWaypointListInWaypointClient);
+                    ibeaconCLient.SetWaypointList(monitorWaypointListInIBeaconClient);
                 }
 
             }
