@@ -22,7 +22,7 @@
  * 
  * File Name:
  *
- *      BeaconScan.cs
+ *      BeaconScanForIBeacon.cs
  *
  * Abstract:
  *
@@ -42,7 +42,6 @@
  *      Wang-Chi Ho, h.wangchi.0970@gmail.com
  *
  */
-
 using Android.Bluetooth;
 using IndoorNavigation.Droid;
 using IndoorNavigation.Models;
@@ -50,10 +49,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-[assembly: Xamarin.Forms.Dependency(typeof(BeaconScan))]
+[assembly: Xamarin.Forms.Dependency(typeof(BeaconScanForIBeacon))]
 namespace IndoorNavigation.Droid
 {
-    public class BeaconScan : Java.Lang.Object, BluetoothAdapter.ILeScanCallback, LBeaconScan
+    public class BeaconScanForIBeacon : Java.Lang.Object, BluetoothAdapter.ILeScanCallback, IBeaconScan
     {
         protected BluetoothAdapter _adapter;
         protected BluetoothManager _manager;
@@ -62,7 +61,7 @@ namespace IndoorNavigation.Droid
 
         public NavigationEvent _event { get; private set; }
 
-        public BeaconScan()
+        public BeaconScanForIBeacon()
         {
             _event = new NavigationEvent();
             var appContext = Android.App.Application.Context;
@@ -123,7 +122,7 @@ namespace IndoorNavigation.Droid
         private void UpdatedState(object sender, EventArgs args)
         {
         }
-
+       
         private string ExtractBeaconUUID(string stringAdvertisementSpecificData)
         {
             string[] parse = stringAdvertisementSpecificData.Split("-");
@@ -134,12 +133,10 @@ namespace IndoorNavigation.Droid
             }
             else
             {
-                var parser = string.Format("{0}{1}{2}{3}-{4}{5}-{6}{7}-{8}{9}-{10}{11}{12}{13}{14}{15}",
-                                            parse[9], parse[10], parse[11], parse[12],
-                                            parse[13], parse[14],
-                                            parse[15], parse[16],
-                                            parse[17], parse[18],
-                                            parse[19], parse[20], parse[21], parse[22], parse[23], parse[24]);
+                var parser = string.Format("00000000-0402-{0}{1}-{2}{3}-{4}{5}{6}{7}{8}{9}",
+                                            parse[43], parse[42],
+                                            parse[44], parse[45],
+                                            parse[46], parse[47], parse[48], parse[49], parse[50], parse[51]);
                 return parser.ToString();
             }
         }

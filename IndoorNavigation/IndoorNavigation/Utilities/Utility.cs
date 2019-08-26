@@ -96,7 +96,5 @@ namespace IndoorNavigation.Modules
                 return false;
             }
         }
-
-
     }
 }
