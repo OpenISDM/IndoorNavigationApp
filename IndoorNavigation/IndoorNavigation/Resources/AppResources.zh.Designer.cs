@@ -83,6 +83,12 @@ namespace IndoorNavigation.Resources {
             }
         }
         
+        internal static string DOWNLOAD_QRCODE_MAP_STRING {
+            get {
+                return ResourceManager.GetString("DOWNLOAD_QRCODE_MAP_STRING", resourceCulture);
+            }
+        }
+        
         internal static string DOWNLOAD_MAP_STRING {
             get {
                 return ResourceManager.GetString("DOWNLOAD_MAP_STRING", resourceCulture);
@@ -626,6 +632,60 @@ namespace IndoorNavigation.Resources {
         internal static string PLEASE_CONTROL_RSSI_OPTION_STRING {
             get {
                 return ResourceManager.GetString("PLEASE_CONTROL_RSSI_OPTION_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string GO_STRAIGHT_STRING {
+            get {
+                return ResourceManager.GetString("GO_STRAIGHT_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string TURN_RIGHT_STRING {
+            get {
+                return ResourceManager.GetString("TURN_RIGHT_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string TURN_LEFT_STRING {
+            get {
+                return ResourceManager.GetString("TURN_LEFT_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string TURN_BACK_STRING {
+            get {
+                return ResourceManager.GetString("TURN_BACK_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string TURN_RIGHT_FRONT_STRING {
+            get {
+                return ResourceManager.GetString("TURN_RIGHT_FRONT_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string TURN_RIGHT_REAR_STRING {
+            get {
+                return ResourceManager.GetString("TURN_RIGHT_REAR_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string TURN_LEFT_FRONT_STRING {
+            get {
+                return ResourceManager.GetString("TURN_LEFT_FRONT_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string GO_LEFT_REAR_STRING {
+            get {
+                return ResourceManager.GetString("GO_LEFT_REAR_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string LAB_STRING {
+            get {
+                return ResourceManager.GetString("LAB_STRING", resourceCulture);
             }
         }
     }

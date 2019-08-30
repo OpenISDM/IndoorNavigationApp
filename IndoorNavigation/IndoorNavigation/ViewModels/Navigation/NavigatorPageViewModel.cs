@@ -55,6 +55,7 @@ using IndoorNavigation.Resources.Helpers;
 using System.Reflection;
 using IndoorNavigation.Views.Navigation;
 using Xamarin.Forms;
+using IndoorNavigation.Modules.Utilities;
 
 namespace IndoorNavigation.ViewModels.Navigation
 {
@@ -71,6 +72,8 @@ namespace IndoorNavigation.ViewModels.Navigation
 		private bool _disposedValue = false; // To detect redundant calls
 		public ResourceManager _resourceManager;
         public NavigatorPage _navigatorPage;
+        private FirstDirectionInstruction _firstDirectionInstruction;
+        private NavigationGraph _navigationGraph;
 
         public NavigatorPageViewModel(string navigationGraphName,
                                       Guid destinationRegionID,
@@ -84,10 +87,13 @@ namespace IndoorNavigation.ViewModels.Navigation
                                                      destinationRegionID,
                                                      destinationWaypointID);
             _navigationModule._event._eventHandler += GetNavigationResultEvent;
-
             const string resourceId = "IndoorNavigation.Resources.AppResources";
             _resourceManager = new ResourceManager(resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
             CurrentWaypointName = _resourceManager.GetString("NULL_STRING", CrossMultilingual.Current.CurrentCultureInfo);
+            var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+            _firstDirectionInstruction = NavigraphStorage.LoadFirstDirectionXML(navigationGraphName+"_"+currentLanguage+".xml");
+            _navigationGraph = NavigraphStorage.LoadNavigationGraphXML(navigationGraphName);
+
         }     
 
         public void Stop() {
@@ -116,7 +122,7 @@ namespace IndoorNavigation.ViewModels.Navigation
 					CurrentStepImage = currentStepImage;
 					CurrentWaypointName = instruction._currentWaypointName;
 					NavigationProgress = instruction._progress;
-
+                    
                     Utility._textToSpeech.Speak(
                         CurrentStepLabel,
                         _resourceManager.GetString("CULTURE_VERSION_STRING", currentLanguage));
@@ -163,21 +169,89 @@ namespace IndoorNavigation.ViewModels.Navigation
 									out string stepImage)
 		{
            
-			var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+            var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
 			switch (instruction._information._turnDirection)
 			{
 				case TurnDirection.FirstDirection:
-					stepLabel = string.Format(
+                    string firstDirection_Landmark = _firstDirectionInstruction.returnLandmark(instruction._currentWaypointGuid);
+                    CardinalDirection firstDirection_Direction = _firstDirectionInstruction.returnDirection(instruction._currentWaypointGuid);
+                    int faceDirection = (int)firstDirection_Direction;
+                    int turnDirection = (int)instruction._information._relatedDirectionOfFirstDirection;
+                    string instructionDirection = "";
+                    string stepImageString = "";
+                    if(faceDirection>turnDirection)
+                    {
+                        turnDirection = (turnDirection + 8) - faceDirection;
+                    }
+                    else
+                    {
+                        turnDirection = turnDirection - faceDirection;
+                    }
+                    CardinalDirection cardinalDirection = (CardinalDirection)turnDirection;
+                    switch(cardinalDirection)
+                    {
+                        case CardinalDirection.North:
+                            instructionDirection = _resourceManager.GetString(
+                            "GO_STRAIGHT_STRING",
+                            currentLanguage);
+                            stepImageString = "Arrow_up";
+                            break;
+                        case CardinalDirection.Northeast:
+                            instructionDirection = _resourceManager.GetString(
+                            "GO_RIGHT_FRONT_STRING",
+                            currentLanguage);
+                            stepImageString = "Arrow_frontright";
+                            break;
+                        case CardinalDirection.East:
+                            instructionDirection = _resourceManager.GetString(
+                            "TURN_RIGHT_STRING",
+                            currentLanguage);
+                            stepImageString = "Arrow_right";
+                            break;
+                        case CardinalDirection.Southeast:
+                            instructionDirection = _resourceManager.GetString(
+                            "TURN_RIGHT_REAR_STRING",
+                            currentLanguage);
+                            stepImageString = "Arrow_rearright";
+                            break;
+                        case CardinalDirection.South:
+                            instructionDirection = _resourceManager.GetString(
+                            "TURN_BACK_STRING",
+                            currentLanguage);
+                            stepImageString = "Arrow_down";
+                            break;
+                        case CardinalDirection.Southwest:
+                            instructionDirection = _resourceManager.GetString(
+                            "TURN_RIGHT_REAR_STRING",
+                            currentLanguage);
+                            stepImageString = "Arrow_rearleft";
+                            break;
+                        case CardinalDirection.West:
+                            instructionDirection = _resourceManager.GetString(
+                            "TURN_LEFT_STRING",
+                            currentLanguage);
+                            stepImageString = "Arrow_left";
+                            break;
+                        case CardinalDirection.Northwest:
+                            instructionDirection = _resourceManager.GetString(
+                            "TURN_LEFT_FRONT_STRING",
+                            currentLanguage);
+                            stepImageString = "Arrow_frontleft";
+                            break;
+                    }
+
+                    stepLabel = string.Format(
                         _resourceManager.GetString(
                             "DIRECTION_INITIAIL_STRING",
                             currentLanguage),
+                            firstDirection_Landmark,
+                            Environment.NewLine,
+                            instructionDirection,
                             Environment.NewLine,
                             instruction._nextWaypointName,
                             Environment.NewLine,
-                            Environment.NewLine,
                             instruction._information._distance);
-					stepImage = "Arrow_up";
-                  
+					stepImage = stepImageString;
 					break;
 
 				case TurnDirection.Forward:
@@ -241,7 +315,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             instruction._information._distance,
                             Environment.NewLine,
                             instruction._nextWaypointName);
-					stepImage = "Arrow_rear";
+					stepImage = "Arrow_down";
 
 					break;
 
@@ -330,8 +404,8 @@ namespace IndoorNavigation.ViewModels.Navigation
 
         public void GoAdjustAvoidType()
         {  
-                var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-                Page tempMainPage = Application.Current.MainPage;
+            var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+            Page tempMainPage = Application.Current.MainPage;
 
             Device.BeginInvokeOnMainThread(async () =>
             {

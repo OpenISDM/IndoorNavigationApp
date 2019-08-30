@@ -41,8 +41,12 @@
         <value>畢迪科技室內導航</value>
     </data>
     
+    <data name="DOWNLOAD_QRCODE_MAP_STRING" xml:space="preserve">
+        <value>下載QRCode圖資</value>
+    </data>
+    
     <data name="DOWNLOAD_MAP_STRING" xml:space="preserve">
-        <value>下載圖資</value>
+        <value>下載地圖資訊</value>
     </data>
     
     <data name="DELETE_MAP_STRING" xml:space="preserve">
@@ -312,9 +316,9 @@
      <data name="CURRENT_LOCATION_STRING" xml:space="preserve">
         <value>目前位置 : </value>
     </data>
-    
+
     <data name="DIRECTION_INITIAIL_STRING" xml:space="preserve">
-        <value>前往{0}{1}{2}{3}(約{4}公尺)</value>
+        <value>面向{0}{1}然後向{2}{3}前往{4}{5}(約{6}公尺)</value>
     </data>
     
     <data name="DIRECTION_STRAIGHT_STRING" xml:space="preserve">
@@ -408,6 +412,41 @@
     <data name="PLEASE_CONTROL_RSSI_OPTION_STRING" xml:space="preserve">
         <value>請只打開一個選項 </value>
     </data>
-
+    
+    <data name="GO_STRAIGHT_STRING" xml:space="preserve">
+        <value>直走</value>
+    </data>
+    
+    <data name="TURN_RIGHT_STRING" xml:space="preserve">
+        <value>向右轉</value>
+    </data>
+    
+    <data name="TURN_LEFT_STRING" xml:space="preserve">
+        <value>向左轉</value>
+    </data>
+    
+    <data name="TURN_BACK_STRING" xml:space="preserve">
+        <value>向後轉</value>
+    </data>
+    
+    <data name="TURN_RIGHT_FRONT_STRING" xml:space="preserve">
+        <value>向右前方轉</value>
+    </data>
+    
+    <data name="TURN_RIGHT_REAR_STRING" xml:space="preserve">
+        <value>向右後方轉</value>
+    </data>
+    
+    <data name="TURN_LEFT_FRONT_STRING" xml:space="preserve">
+        <value>向左前方轉</value>
+    </data>
+    
+    <data name="GO_LEFT_REAR_STRING" xml:space="preserve">
+        <value>向左後方轉</value>
+    </data>
+    
+    <data name="LAB_STRING" xml:space="preserve">
+        <value>實驗室</value>
+    </data>
     
 </root>

@@ -220,7 +220,11 @@ namespace IndoorNavigation.Modules
                                 _waypointsOnRoute[_nextWaypointStep + 1]._regionID,
                                 _waypointsOnRoute[_nextWaypointStep + 1]._waypointID,
                                 _avoidConnectionTypes
-                                )
+                                ),
+                            _currentWaypointGuid = _currentWaypointID,
+                            _nextWaypointGuid = _waypointsOnRoute[_nextWaypointStep + 1]._waypointID,
+                            _currentRegionGuid = _currentRegionID,
+                            _nextRegionGuid = _waypointsOnRoute[_nextWaypointStep + 1]._regionID
                         }
                     });
 
@@ -954,7 +958,10 @@ namespace IndoorNavigation.Modules
                             _waypointsOnRoute[_nextWaypointStep + 1]._regionID,
                             _waypointsOnRoute[_nextWaypointStep + 1]._waypointID,
                             _avoidConnectionTypes);
-
+                    navigationInstruction._currentWaypointGuid = _currentWaypointID;
+                    navigationInstruction._nextWaypointGuid = _waypointsOnRoute[_nextWaypointStep+1]._waypointID;
+                    navigationInstruction._currentRegionGuid = _currentRegionID;
+                    navigationInstruction._nextRegionGuid = _waypointsOnRoute[_nextWaypointStep + 1]._regionID;
                     //Get the progress
                     Console.WriteLine("calculate progress: {0}/{1}",
                                       _nextWaypointStep,
@@ -1016,6 +1023,14 @@ namespace IndoorNavigation.Modules
             public double _progress;
 
             public InstructionInformation _information { get; set; }
+
+            public Guid _currentWaypointGuid;
+
+            public Guid _nextWaypointGuid;
+
+            public Guid _currentRegionGuid;
+
+            public Guid _nextRegionGuid;
         }
 
         public class NavigationEventArgs : EventArgs

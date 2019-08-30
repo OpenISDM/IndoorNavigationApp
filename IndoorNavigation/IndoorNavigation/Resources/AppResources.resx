@@ -41,6 +41,10 @@
         <value>BeDITech Indoor Navigator</value>
     </data>
     
+    <data name="DOWNLOAD_QRCODE_MAP_STRING" xml:space="preserve">
+        <value>Download QRCode Map</value>
+    </data>
+    
     <data name="DOWNLOAD_MAP_STRING" xml:space="preserve">
         <value>Download Map</value>
     </data>
@@ -314,7 +318,7 @@
     </data>
     
     <data name="DIRECTION_INITIAIL_STRING" xml:space="preserve">
-        <value>Go toward{0}{1}{2}{3}(About {4}m) </value>
+        <value>Face to {0}{1}And {2}{3}to {4}{5}(About {6}m) </value>
     </data>
     
     <data name="DIRECTION_STRAIGHT_STRING" xml:space="preserve">
@@ -407,6 +411,42 @@
     
     <data name="PLEASE_CONTROL_RSSI_OPTION_STRING" xml:space="preserve">
         <value>Please just open one option</value>
+    </data>
+    
+    <data name="GO_STRAIGHT_STRING" xml:space="preserve">
+        <value>Go Straight</value>
+    </data>
+    
+    <data name="TURN_RIGHT_STRING" xml:space="preserve">
+        <value>Turn Right</value>
+    </data>
+    
+    <data name="TURN_LEFT_STRING" xml:space="preserve">
+        <value>Turn Left</value>
+    </data>
+    
+    <data name="TURN_BACK_STRING" xml:space="preserve">
+        <value>Turn Back</value>
+    </data>
+    
+    <data name="TURN_RIGHT_FRONT_STRING" xml:space="preserve">
+        <value>Turn Right Front</value>
+    </data>
+    
+    <data name="TURN_RIGHT_REAR_STRING" xml:space="preserve">
+        <value>Turn Right Rear</value>
+    </data>
+    
+    <data name="TURN_LEFT_FRONT_STRING" xml:space="preserve">
+        <value>Turn Left Front</value>
+    </data>
+    
+    <data name="TURN_LEFT_REAR_STRING" xml:space="preserve">
+        <value>Turn Left Rear</value>
+    </data>
+    
+    <data name="LAB_STRING" xml:space="preserve">
+        <value>Lab</value>
     </data>
     
 </root>

@@ -45,6 +45,9 @@
     <Folder Include="ViewModels\Navigation\" />
     <Folder Include="Modules\Navigation\Dijkstra.NET\" />
     <Folder Include="Resources\" />
+    <Folder Include="Resources\NTUH_YunLin\" />
+    <Folder Include="Resources\Taipei_City_Hall\" />
+    <Folder Include="Resources\Lab\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Models\NavigationStructure.cs" />
@@ -65,11 +68,17 @@
     <Compile Remove="Models\NavigraphModel.cs" />
     <Compile Remove="Utilities\XMLParser.cs" />
     <Compile Remove="Views\Navigation\PickRegion.xaml.cs" />
+    <Compile Remove="Models\MyPage.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Remove="Views\Navigation\TabbedPageRoutes.xaml" />
     <EmbeddedResource Remove="Views\Navigation\NavigationTabbedPage.xaml" />
     <EmbeddedResource Remove="Views\Navigation\TabbedPageNavigation.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Lab\Lab.xml" />
+    <EmbeddedResource Include="Resources\Lab\Lab_en-US.xml" />
+    <EmbeddedResource Include="Resources\Lab\Lab_zh.xml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Views\PopUpPage\DownloadPopUpPage.xaml">
@@ -86,6 +95,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Resources\AppResources.English" />
+    <None Remove="TestingXML.xml" />
+    <None Remove="Resources\Lab\Lab.xml" />
+    <None Remove="Resources\Lab\Lab_en-US.xml" />
+    <None Remove="Resources\Lab\Lab_zh.xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Resources\AppResources.Designer.cs">

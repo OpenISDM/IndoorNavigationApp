@@ -73,7 +73,7 @@ namespace IndoorNavigation.Modules.IPSClients
         }
         public void SetWaypointList(List<WaypointBeaconsMapping> waypointBeaconsList)
         {
-            int rssiOption = -55;
+            int rssiOption = -70;
             if (Application.Current.Properties.ContainsKey("StrongRssi"))
             {
                 if ((bool)Application.Current.Properties["StrongRssi"] == true)
@@ -82,11 +82,11 @@ namespace IndoorNavigation.Modules.IPSClients
                 }
                 else if ((bool)Application.Current.Properties["MediumRssi"] == true)
                 {
-                    rssiOption = -70;
+                    rssiOption = -75;
                 }
                 else if ((bool)Application.Current.Properties["WeakRssi"] == true)
                 {
-                    rssiOption = -55;
+                    rssiOption = -70;
                 }
             }
 
@@ -103,7 +103,7 @@ namespace IndoorNavigation.Modules.IPSClients
             {
                 removeSignalBuffer.AddRange(
                    _beaconSignalBuffer.Where(c =>
-                   c.Timestamp < DateTime.Now.AddMilliseconds(-1000)));
+                   c.Timestamp < DateTime.Now.AddMilliseconds(-1500)));
 
                 foreach (var obsoleteBeaconSignal in removeSignalBuffer)
                     _beaconSignalBuffer.Remove(obsoleteBeaconSignal);
@@ -186,7 +186,13 @@ namespace IndoorNavigation.Modules.IPSClients
                     tempValue = calculateMax.Value;
                     
                 }
-                
+
+                if(signalAvgValue.Count()>1)
+                {
+                    haveThing = false;
+                }
+
+                Console.WriteLine("have thing : " + haveThing);
                 if(haveThing==true)
                 { 
                     _event.OnEventCall(new WaypointSignalEventArgs
@@ -217,6 +223,8 @@ namespace IndoorNavigation.Modules.IPSClients
         {
             Utility._ibeaconScan.StopScan();
             _beaconSignalBuffer.Clear();
+            _waypointBeaconsList.Clear();
+            Utility._ibeaconScan._event._eventHandler -= _beaconScanEventHandler;
 
         }
 

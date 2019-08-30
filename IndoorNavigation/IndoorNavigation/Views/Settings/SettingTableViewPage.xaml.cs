@@ -73,6 +73,10 @@ namespace IndoorNavigation.Views.Settings
         public IList _selectNaviGraphItems { get; } = new ObservableCollection<string>();
         public IList _cleanNaviGraphItems { get; } = new ObservableCollection<string>();
         public IList _languageItems { get; } = new ObservableCollection<string>();
+        public IList _chooseMap { get; } = new ObservableCollection<string>();
+
+
+        public ICommand _chooseMapCommand => new DelegateCommand(HandleChooseMap);
         //public ICommand SelectedMapCommand => new DelegateCommand(HandleSelectedMap);
         public ICommand _cleanMapCommand => new DelegateCommand(async () =>
             { await HandleCLeanMapAsync(); });
@@ -86,7 +90,7 @@ namespace IndoorNavigation.Views.Settings
         public SettingTableViewPage()
         {
             InitializeComponent();
-
+            AddMapItems();
             _downloadPage._event.DownloadPopUpPageEventHandler +=
                 async delegate (object sender, EventArgs e) { await HandleDownloadPageAsync(sender, e); };
 
@@ -348,6 +352,39 @@ namespace IndoorNavigation.Views.Settings
 
             CleanMapPicker.SelectedItem = "";
             ReloadNaviGraphItems();
+        }
+
+        private void AddMapItems()
+        {
+            var ci = CrossMultilingual.Current.CurrentCultureInfo;
+            _chooseMap.Clear();
+            _chooseMap.Add(_resourceManager.GetString("TAIPEI_CITY_HALL_STRING", ci));
+            _chooseMap.Add(_resourceManager.GetString("HOSPITAL_NAME_STRING", ci));
+            _chooseMap.Add(_resourceManager.GetString("LAB_STRING", ci));
+        }
+
+        private async void HandleChooseMap()
+        {
+            var ci = CrossMultilingual.Current.CurrentCultureInfo;
+            string NTUH_YunLin = _resourceManager.GetString("HOSPITAL_NAME_STRING", ci).ToString();
+            string Taipei_City_Hall = _resourceManager.GetString("TAIPEI_CITY_HALL_STRING", ci).ToString();
+            string Lab = _resourceManager.GetString("LAB_STRING", ci).ToString();
+
+            if (OptionPicker.SelectedItem.ToString().Trim() == NTUH_YunLin)
+            {
+                NavigraphStorage.GenerateFileRoute("NTUH_YunLin");
+            }
+            else if (OptionPicker.SelectedItem.ToString().Trim() == Taipei_City_Hall)
+            {
+                NavigraphStorage.GenerateFileRoute("Taipei_City_Hall");
+            }
+            else if (OptionPicker.SelectedItem.ToString().Trim() == Lab)
+            {
+                NavigraphStorage.GenerateFileRoute("Lab");
+            }
+
+            ReloadNaviGraphItems();
+
         }
     }
 }

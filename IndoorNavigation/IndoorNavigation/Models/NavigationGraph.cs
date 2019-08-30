@@ -698,13 +698,18 @@ namespace IndoorNavigation.Models.NavigaionLayer
                     waypointEdge._direction = (CardinalDirection)
                         (4 + waypointEdge._direction - 8);
                 }
-
+                
             }
             return waypointEdge;
         }
 
         public string GetIndustryServer() {
             return _industryService;
+        }
+
+        public string GetBuildingName()
+        {
+            return _buildingName;
         }
 
         public Dictionary<Guid, Region> GetRegions() {
@@ -868,7 +873,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                                                 currentWaypointID,
                                                                 nextRegionID,
                                                                 avoidConnectionTypes);
-
+                        information._relatedDirectionOfFirstDirection = currentEdge._direction;
                         information._connectionType = currentEdge._connectionType;
                         information._distance = System.Convert
                                                 .ToInt32(currentEdge._distance);
@@ -983,6 +988,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                                                        nextWaypointID,
                                                                        avoidConnectionTypes);
                     information._connectionType = currentEdge._connectionType;
+                    information._relatedDirectionOfFirstDirection = currentEdge._direction;
                     information._distance = System.Convert
                                             .ToInt32(currentEdge._distance);
                 }
@@ -1205,6 +1211,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
     public struct InstructionInformation {
         public TurnDirection _turnDirection { get; set; }
+        public CardinalDirection _relatedDirectionOfFirstDirection { get; set; }
         public ConnectionType _connectionType { get; set; }
         public int _floor { get; set; }
         public string _regionName { get; set; }

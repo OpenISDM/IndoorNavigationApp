@@ -76,9 +76,8 @@ namespace IndoorNavigation.Modules
         /// <returns></returns>
         public static bool DownloadNavigraph(string URL, string navigraphName)
         {
-            string filePath = Path.Combine(NavigraphStorage._navigraphFolder, 
+            string filePath = Path.Combine(NavigraphStorage._navigraphFolder,
                                             navigraphName);
-
             try
             {
                 if (!Directory.Exists(NavigraphStorage._navigraphFolder))
@@ -87,7 +86,6 @@ namespace IndoorNavigation.Modules
 
                 using (WebClient webClient = new WebClient())
                     webClient.DownloadFileAsync(new Uri(URL), filePath);
-
                 return true;
             }
             catch (Exception e)
@@ -96,5 +94,26 @@ namespace IndoorNavigation.Modules
                 return false;
             }
         }
+        public static bool DownloadFirstDirectionFile(string URL, string fileName)
+        {
+            string filePath = Path.Combine(NavigraphStorage._firstDirectionInstuctionFolder, fileName);
+            try
+            {
+                if (!Directory.Exists(NavigraphStorage._firstDirectionInstuctionFolder))
+                    Directory.CreateDirectory(
+                        NavigraphStorage._firstDirectionInstuctionFolder);
+
+                using (WebClient webClient = new WebClient())
+                    webClient.DownloadFileAsync(new Uri(URL), filePath);
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+
+        }
+
     }
 }
