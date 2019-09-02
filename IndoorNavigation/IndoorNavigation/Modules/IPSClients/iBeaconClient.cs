@@ -114,6 +114,13 @@ namespace IndoorNavigation.Modules.IPSClients
 
                 //In ibsclient, a waypoint has at least two beacon UUIDs,
                 //We put all waypoint we get in scannedData
+
+                //BeaconSignalModel beaconSignalModel1 = new BeaconSignalModel();
+                //BeaconSignalModel beaconSignalModel2 = new BeaconSignalModel();
+                //beaconSignalModel1.UUID = new Guid("00000000-0402-5242-3d64-2019010049c8");
+                //beaconSignalModel2.UUID = new Guid("00000000-0402-5242-3d64-2019010049da");
+                //_beaconSignalBuffer.Add(beaconSignalModel1);
+                //_beaconSignalBuffer.Add(beaconSignalModel2);
                 foreach (BeaconSignalModel beacon in _beaconSignalBuffer)
                 {
                     foreach (WaypointBeaconsMapping waypointBeaconsMapping in _waypointBeaconsList)
@@ -192,7 +199,6 @@ namespace IndoorNavigation.Modules.IPSClients
                     haveThing = false;
                 }
 
-                Console.WriteLine("have thing : " + haveThing);
                 if(haveThing==true)
                 { 
                     _event.OnEventCall(new WaypointSignalEventArgs

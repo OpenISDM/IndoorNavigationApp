@@ -91,11 +91,9 @@ namespace IndoorNavigation.iOS
             if ((args as CBDiscoveredPeripheralEventArgs).RSSI.Int32Value > _rssiThreshold &&
                 (args as CBDiscoveredPeripheralEventArgs).RSSI.Int32Value < 0)
             {
-
-                Console.WriteLine("UUID : " + (args as CBDiscoveredPeripheralEventArgs).AdvertisementData);
                 var tempUUID = (args as CBDiscoveredPeripheralEventArgs).AdvertisementData
                                .ValueForKey((NSString)"kCBAdvDataServiceData");
-    
+               
                 if (tempUUID != null)
                 {
                     string bufferUUID = tempUUID.ToString();
@@ -142,21 +140,30 @@ namespace IndoorNavigation.iOS
 
         private string ExtractBeaconUUID(string stringAdvertisementSpecificData)
         {
-            string[] parse = stringAdvertisementSpecificData.Split(" ");
-            if (parse.Count() < 8)
+            
+            if(stringAdvertisementSpecificData.Length==35)
             {
-                return stringAdvertisementSpecificData;
+                string[] parse = stringAdvertisementSpecificData.Split(" ");
+                if (parse.Count() < 8)
+                {
+                    return stringAdvertisementSpecificData;
+                }
+                else
+                {
+                    var parser = "00000000" + "-" +
+                                 "0402" + "-" + parse[4] + "-" +
+                                  parse[6].Substring(1, 4) + "-" +
+                                  parse[6].Substring(5, 4) +
+                                  parse[7].Substring(0, 8);
+                    Console.WriteLine("parser : " + parser);
+                    return parser.ToString();
+                }
             }
             else
             {
-                var parser = "00000000" + "-" +
-                             "0402" + "-" + parse[4] + "-" +
-                              parse[6].Substring(1, 4) + "-" +
-                              parse[6].Substring(5, 4) +
-                              parse[7].Substring(0, 8);
-                Console.WriteLine("parser : " + parser);
-                return parser.ToString();
+                return "";
             }
+            
         }
 
     }
