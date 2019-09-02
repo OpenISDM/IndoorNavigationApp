@@ -231,14 +231,6 @@
     <BundleResource Include="Resources\tabitem3_setting_tabbed.png" />
     <BundleResource Include="Resources\tabitem2_routes_tabbed.png" />
     <BundleResource Include="Resources\tabitem1_navigator_tabbed.png" />
-    <BundleResource Include="Resources\Arrow_up.png" />
-    <BundleResource Include="Resources\Arrow_left.png" />
-    <BundleResource Include="Resources\Arrow_right.png" />
-    <BundleResource Include="Resources\Arrow_frontright.png" />
-    <BundleResource Include="Resources\Arrow_frontleft.png" />
-    <BundleResource Include="Resources\Arrow_down.png" />
-    <BundleResource Include="Resources\Arrow_rearright.png" />
-    <BundleResource Include="Resources\Arrow_rearleft.png" />
     <BundleResource Include="Resources\settings_gears_imagebutton.png" />
     <BundleResource Include="Resources\Warning.png" />
     <BundleResource Include="Resources\Waiting.png" />
@@ -265,6 +257,14 @@
     <BundleResource Include="Resources\Exit.png" />
     <BundleResource Include="Resources\Others.png" />
     <BundleResource Include="Resources\Pharmacy.png" />
+    <BundleResource Include="Resources\Arrow_down.png" />
+    <BundleResource Include="Resources\Arrow_frontleft.png" />
+    <BundleResource Include="Resources\Arrow_frontright.png" />
+    <BundleResource Include="Resources\Arrow_left.png" />
+    <BundleResource Include="Resources\Arrow_rearleft.png" />
+    <BundleResource Include="Resources\Arrow_rearright.png" />
+    <BundleResource Include="Resources\Arrow_right.png" />
+    <BundleResource Include="Resources\Arrow_up.png" />
     <BundleResource Include="Resources\service_hospital_logo.png" />
   </ItemGroup>
   <ItemGroup>
