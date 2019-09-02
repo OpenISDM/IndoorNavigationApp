@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml;
 
 namespace IndoorNavigation.Models.NavigaionLayer
@@ -17,18 +18,24 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
             foreach(XmlNode xmlNode in xmlWaypoint)
             {
-                Guid tempGuid= new Guid();
+                
                 string tempLandmark = "";
                 CardinalDirection tempRelatedDirection;
                 XmlElement xmlElement = (XmlElement)xmlNode;
-                tempGuid = Guid.Parse(xmlElement.GetAttribute("id"));
- 
+                
                 tempLandmark = xmlElement.GetAttribute("Landmark").ToString();
                 tempRelatedDirection = (CardinalDirection)Enum.Parse(typeof(CardinalDirection),
                                                   xmlElement.GetAttribute("RelatedDirection"),
                                                   false);
-                _landmark.Add(tempGuid, tempLandmark);
-                _relatedDirection.Add(tempGuid, tempRelatedDirection);
+                string waypointIDs = xmlElement.GetAttribute("id");
+                string[] arrayWaypointIDs = waypointIDs.Split(';');
+                for (int i = 0; i < arrayWaypointIDs.Count(); i++)
+                {
+                    Guid waypointID = new Guid();
+                    waypointID = Guid.Parse(arrayWaypointIDs[i]);
+                    _landmark.Add(waypointID, tempLandmark);
+                    _relatedDirection.Add(waypointID, tempRelatedDirection);
+                }
                 
             }
         }
