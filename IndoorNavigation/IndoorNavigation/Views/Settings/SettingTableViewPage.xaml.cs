@@ -249,6 +249,23 @@ namespace IndoorNavigation.Views.Settings
                                    _resourceManager.GetString("FAILED_DOWNLOAD_MAP_STRIN", ci),
                                    _resourceManager.GetString("OK_STRING", ci));
             }
+            string fileLanguageTaiwanChinese = fileName + "_zh.xml";
+            //Testing in Lab
+            string firstDirectionFile_zh_TW = "https://drive.google.com/uc?authuser=0&id=10Eq2jCYOAJOFUBmhmyaLXDa0uFL1w8SD&export=download";
+
+            //Testing in Taipei City hall 2F
+            //string firstDirectionFile_zh_TW = "https://drive.google.com/uc?authuser=0&id=1t4AI6FDrNK9zTtKLKs5I2V2mTKV3GL8i&export=download";
+            Console.WriteLine("Chinese : " + fileLanguageTaiwanChinese);
+            Utility.DownloadFirstDirectionFile(firstDirectionFile_zh_TW, fileLanguageTaiwanChinese);
+
+            string stringfileLanguageUSEnglish = fileName + "_en-US.xml";
+            //Testing in Lab
+            string firstDirectionFile_en_US = "https://drive.google.com/uc?authuser=0&id=1cjRqAKLvAJgq8f1Zc4WViNxIeBW-Ufaz&export=download";
+
+            //Testing in Taipei City Hall 2F
+            //string firstDirectionFile_en_US = "https://drive.google.com/uc?authuser=0&id=1f8zTIMWJFOsNybVwm-kkSo4enNM7lIKY&export=download";
+            Console.WriteLine("English : " + stringfileLanguageUSEnglish);
+            Utility.DownloadFirstDirectionFile(firstDirectionFile_en_US, stringfileLanguageUSEnglish);
 
             ReloadNaviGraphItems();
         }
@@ -269,7 +286,7 @@ namespace IndoorNavigation.Views.Settings
                 default:
                     break;
             }
-
+           
             AppResources.Culture = CrossMultilingual.Current.CurrentCultureInfo;
             await Navigation.PushAsync(new MainPage());
         }
