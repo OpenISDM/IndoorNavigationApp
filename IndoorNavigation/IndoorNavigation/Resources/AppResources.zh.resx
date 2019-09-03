@@ -449,4 +449,20 @@
         <value>實驗室</value>
     </data>
     
+    <data name="ELEVATOR_STRING" xml:space="preserve">
+        <value>電梯</value>
+    </data>
+    
+    <data name="STAIR_STRING" xml:space="preserve">
+        <value>樓梯</value>
+    </data>
+    
+    <data name="ESCALATOR_STRING" xml:space="preserve">
+        <value>手扶梯</value>
+    </data>
+    
+    <data name="NORMALHALLWAY_STRING" xml:space="preserve">
+        <value>走廊</value>
+    </data>
+    
 </root>

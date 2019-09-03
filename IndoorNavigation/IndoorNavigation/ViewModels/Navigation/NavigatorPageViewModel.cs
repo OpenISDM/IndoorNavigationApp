@@ -168,9 +168,9 @@ namespace IndoorNavigation.ViewModels.Navigation
 									out string stepLabel,
 									out string stepImage)
 		{
-           
             var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-			switch (instruction._information._turnDirection)
+            string connectionTypeString = "";
+            switch (instruction._information._turnDirection)
 			{
 				case TurnDirection.FirstDirection:
                     string firstDirection_Landmark = _firstDirectionInstruction.returnLandmark(instruction._currentWaypointGuid);
@@ -359,11 +359,26 @@ namespace IndoorNavigation.ViewModels.Navigation
 					break;
 
 				case TurnDirection.Up:
-					stepLabel = string.Format(
+                    switch (instruction._information._connectionType)
+                    {
+                        case ConnectionType.Elevator:
+                            connectionTypeString = _resourceManager.GetString("ELEVATOR_STRING", currentLanguage);
+                            break;
+                        case ConnectionType.Escalator:
+                            connectionTypeString = _resourceManager.GetString("ESCALATOR_STRING", currentLanguage);
+                            break;
+                        case ConnectionType.Stair:
+                            connectionTypeString = _resourceManager.GetString("STAIR_STRING", currentLanguage);
+                            break;
+                        case ConnectionType.NormalHallway:
+                            connectionTypeString = _resourceManager.GetString("NORMALHALLWAY_STRING", currentLanguage);
+                            break;
+                    }
+                    stepLabel = string.Format(
                         _resourceManager.GetString(
                             "DIRECTION_UP_STRING",
 							currentLanguage),
-							instruction._information._connectionType,
+                            connectionTypeString,
                             Environment.NewLine,
                             instruction._information._floor,
                             instruction._information._regionName);
@@ -372,11 +387,27 @@ namespace IndoorNavigation.ViewModels.Navigation
 					break;
 
 				case TurnDirection.Down:
+                    switch(instruction._information._connectionType)
+                    {
+                        case ConnectionType.Elevator:
+                            connectionTypeString = _resourceManager.GetString("ELEVATOR_STRING", currentLanguage);
+                            break;
+                        case ConnectionType.Escalator:
+                            connectionTypeString = _resourceManager.GetString("ESCALATOR_STRING", currentLanguage);
+                            break;
+                        case ConnectionType.Stair:
+                            connectionTypeString = _resourceManager.GetString("STAIR_STRING", currentLanguage);
+                            break;
+                        case ConnectionType.NormalHallway:
+                            connectionTypeString = _resourceManager.GetString("NORMALHALLWAY_STRING", currentLanguage);
+                            break;
+                    }
+
 					stepLabel = string.Format(
                         _resourceManager.GetString(
                             "DIRECTION_DOWN_STRING",
                             currentLanguage),
-							instruction._information._connectionType,
+                            connectionTypeString,
                             Environment.NewLine,
                             instruction._information._floor,
                             instruction._information._regionName);
@@ -386,7 +417,6 @@ namespace IndoorNavigation.ViewModels.Navigation
 				default:
 					stepLabel = "You're get ERROR status";
 					stepImage = "Warning";
-
 					break;
 			}
 		}

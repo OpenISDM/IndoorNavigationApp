@@ -981,8 +981,6 @@ namespace IndoorNavigation.Modules
             _navigationControllerThread.Abort();
         }
 
-
-
         public enum NavigationResult
         {
             Run = 0,

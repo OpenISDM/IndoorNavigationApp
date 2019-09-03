@@ -688,5 +688,29 @@ namespace IndoorNavigation.Resources {
                 return ResourceManager.GetString("LAB_STRING", resourceCulture);
             }
         }
+        
+        internal static string ELEVATOR_STRING {
+            get {
+                return ResourceManager.GetString("ELEVATOR_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string STAIR_STRING {
+            get {
+                return ResourceManager.GetString("STAIR_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string ESCALATOR_STRING {
+            get {
+                return ResourceManager.GetString("ESCALATOR_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string NORMALHALLWAY_STRING {
+            get {
+                return ResourceManager.GetString("NORMALHALLWAY_STRING", resourceCulture);
+            }
+        }
     }
 }

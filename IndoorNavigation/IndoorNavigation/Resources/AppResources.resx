@@ -449,4 +449,20 @@
         <value>Lab</value>
     </data>
     
+    <data name="ELEVATOR_STRING" xml:space="preserve">
+        <value>Elevator</value>
+    </data>
+    
+    <data name="STAIR_STRING" xml:space="preserve">
+        <value>Stair</value>
+    </data>
+    
+    <data name="ESCALATOR_STRING" xml:space="preserve">
+        <value>Escalator</value>
+    </data>
+    
+    <data name="NORMALHALLWAY_STRING" xml:space="preserve">
+        <value>NormalHallway</value>
+    </data>
+    
 </root>
