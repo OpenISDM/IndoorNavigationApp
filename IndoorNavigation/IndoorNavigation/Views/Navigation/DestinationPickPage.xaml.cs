@@ -85,7 +85,7 @@ namespace IndoorNavigation.Views.Navigation
             {
                 _nameInformation = NavigraphStorage.LoadInformationML(navigationGraphName + "_info_en-US.xml");
             }
-            else if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == "zh" || CrossMultilingual.Current.CurrentCultureInfo.ToString() == "zh_TW")
+            else if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == "zh" || CrossMultilingual.Current.CurrentCultureInfo.ToString() == "zh-TW")
             {
                 _nameInformation = NavigraphStorage.LoadInformationML(navigationGraphName + "_info_zh.xml");
             }
