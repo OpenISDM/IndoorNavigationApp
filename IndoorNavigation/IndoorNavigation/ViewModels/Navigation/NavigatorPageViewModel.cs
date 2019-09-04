@@ -99,7 +99,7 @@ namespace IndoorNavigation.ViewModels.Navigation
             {
                 _firstDirectionInstruction = NavigraphStorage.LoadFirstDirectionXML(navigationGraphName + "_en-US.xml");
             }
-            else if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == "zh" || CrossMultilingual.Current.CurrentCultureInfo.ToString() == "zh_TW")
+            else if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == "zh" || CrossMultilingual.Current.CurrentCultureInfo.ToString() == "zh-TW")
             {
                 _firstDirectionInstruction = NavigraphStorage.LoadFirstDirectionXML(navigationGraphName + "_zh.xml");
             }
