@@ -251,21 +251,30 @@ namespace IndoorNavigation.Views.Settings
             }
             string fileLanguageTaiwanChinese = fileName + "_zh.xml";
             //Testing in Lab
-            string firstDirectionFile_zh_TW = "https://drive.google.com/uc?authuser=0&id=10Eq2jCYOAJOFUBmhmyaLXDa0uFL1w8SD&export=download";
+            string firstDirectionFile_zh_TW = "https://drive.google.com/uc?authuser=0&id=1C_ncshn2Q2veLMVMgvqW81xLP3DJnQpW&export=download";
 
             //Testing in Taipei City hall 2F
-            //string firstDirectionFile_zh_TW = "https://drive.google.com/uc?authuser=0&id=1t4AI6FDrNK9zTtKLKs5I2V2mTKV3GL8i&export=download";
-            Console.WriteLine("Chinese : " + fileLanguageTaiwanChinese);
+           // string firstDirectionFile_zh_TW = "https://drive.google.com/uc?authuser=0&id=17AarNw7QqBFlRqSNMTjwU8_WkMK98SPI&export=download";
             Utility.DownloadFirstDirectionFile(firstDirectionFile_zh_TW, fileLanguageTaiwanChinese);
 
             string stringfileLanguageUSEnglish = fileName + "_en-US.xml";
             //Testing in Lab
-            string firstDirectionFile_en_US = "https://drive.google.com/uc?authuser=0&id=1cjRqAKLvAJgq8f1Zc4WViNxIeBW-Ufaz&export=download";
+            string firstDirectionFile_en_US = "https://drive.google.com/uc?authuser=0&id=1dvmo3WjW_2dljvJ0qY1sVK5qX6PNWg_g&export=download";
 
             //Testing in Taipei City Hall 2F
             //string firstDirectionFile_en_US = "https://drive.google.com/uc?authuser=0&id=1f8zTIMWJFOsNybVwm-kkSo4enNM7lIKY&export=download";
-            Console.WriteLine("English : " + stringfileLanguageUSEnglish);
+
             Utility.DownloadFirstDirectionFile(firstDirectionFile_en_US, stringfileLanguageUSEnglish);
+
+            string infoTaiwanChinese = fileName + "_info_zh.xml";
+            string infoEnglish = fileName + "_info_en-US.xml";
+
+
+            string infoFile_zh_TW = "https://drive.google.com/uc?authuser=0&id=1Fajcicwcrg_GHhabuygEZyhyUJxxDY3f&export=download";
+            Utility.DownloadInformationFile(infoFile_zh_TW, infoTaiwanChinese);
+
+            string infoFile_en_US = "https://drive.google.com/uc?authuser=0&id=1KCbZUDPrfGv5H14OTSX2PaTnREG8Xk94&export=download";
+            Utility.DownloadInformationFile(infoFile_en_US,infoEnglish);
 
             ReloadNaviGraphItems();
         }
@@ -335,6 +344,8 @@ namespace IndoorNavigation.Views.Settings
                     {
                         // Cancel All Map
                         NavigraphStorage.DeleteAllNavigationGraph();
+                        NavigraphStorage.DeleteAllFirstDirectionXML();
+                        NavigraphStorage.DeleteAllInformationXML();
                         await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", ci),
                                            _resourceManager.GetString("SUCCESSFULLY_DELETE_STRING", ci),
                                            _resourceManager.GetString("OK_STRING", ci));
@@ -353,6 +364,8 @@ namespace IndoorNavigation.Views.Settings
                     {
                         // Delete selected map
                         NavigraphStorage.DeleteNavigationGraph(CleanMapPicker.SelectedItem.ToString());
+                        NavigraphStorage.DeleteFirstDirectionXML(CleanMapPicker.SelectedItem.ToString());
+                        NavigraphStorage.DeleteInformationML(CleanMapPicker.SelectedItem.ToString());
                         await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", ci),
                                            _resourceManager.GetString("SUCCESSFULLY_DELETE_STRING", ci),
                                            _resourceManager.GetString("OK_STRING", ci));
@@ -386,18 +399,18 @@ namespace IndoorNavigation.Views.Settings
             string NTUH_YunLin = _resourceManager.GetString("HOSPITAL_NAME_STRING", ci).ToString();
             string Taipei_City_Hall = _resourceManager.GetString("TAIPEI_CITY_HALL_STRING", ci).ToString();
             string Lab = _resourceManager.GetString("LAB_STRING", ci).ToString();
-
+            
             if (OptionPicker.SelectedItem.ToString().Trim() == NTUH_YunLin)
             {
-                NavigraphStorage.GenerateFileRoute("NTUH_YunLin");
+                NavigraphStorage.GenerateFileRoute(NTUH_YunLin, "NTUH_YunLin");
             }
             else if (OptionPicker.SelectedItem.ToString().Trim() == Taipei_City_Hall)
             {
-                NavigraphStorage.GenerateFileRoute("Taipei_City_Hall");
+                NavigraphStorage.GenerateFileRoute(Taipei_City_Hall, "Taipei_City_Hall");
             }
             else if (OptionPicker.SelectedItem.ToString().Trim() == Lab)
             {
-                NavigraphStorage.GenerateFileRoute("Lab");
+                NavigraphStorage.GenerateFileRoute(Lab, "Lab");
             }
 
             ReloadNaviGraphItems();

@@ -318,7 +318,7 @@
     </data>
 
     <data name="DIRECTION_INITIAIL_STRING" xml:space="preserve">
-        <value>面向{0}{1}然後向{2}{3}前往{4}{5}(約{6}公尺)</value>
+        <value>面向{0}{1}然後{2}{3}前往{4}{5}(約{6}公尺)</value>
     </data>
     
     <data name="DIRECTION_STRAIGHT_STRING" xml:space="preserve">

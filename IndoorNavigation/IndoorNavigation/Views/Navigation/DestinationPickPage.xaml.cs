@@ -68,19 +68,27 @@ namespace IndoorNavigation.Views.Navigation
 
         public ObservableCollection<string> _items { get; set; }
         public ObservableCollection<DestinationItem> _destinationItems { get; set; }
-
+        private XMLInformation _nameInformation;
         public DestinationPickPage(string navigationGraphName, CategoryType category)
         {
             InitializeComponent();
 
             const string resourceId = "IndoorNavigation.Resources.AppResources";
             _resourceManager = new ResourceManager(resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
-
+ 
             _destinationItems = new ObservableCollection<DestinationItem>();
 
             _navigationGraphName = navigationGraphName;
-
+            
             _navigationGraph = NavigraphStorage.LoadNavigationGraphXML(navigationGraphName);
+            if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == "en" || CrossMultilingual.Current.CurrentCultureInfo.ToString() == "en-US")
+            {
+                _nameInformation = NavigraphStorage.LoadInformationML(navigationGraphName + "_info_en-US.xml");
+            }
+            else if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == "zh" || CrossMultilingual.Current.CurrentCultureInfo.ToString() == "zh_TW")
+            {
+                _nameInformation = NavigraphStorage.LoadInformationML(navigationGraphName + "_info_zh.xml");
+            }
 
             NavigationPage.SetBackButtonTitle(this, _resourceManager.GetString("BACK_STRING", CrossMultilingual.Current.CurrentCultureInfo));
 
@@ -95,6 +103,8 @@ namespace IndoorNavigation.Views.Navigation
 
                     foreach (Waypoint waypoint in pairRegion.Value._waypointsByCategory[category])
                     {
+                        string waypointName = waypoint._name;
+                        waypointName = _nameInformation.GiveWaypointName(waypoint._id);
                         if (waypoint._type.ToString() == "terminal" || waypoint._type.ToString() == "landmark")
                         {
                             Console.WriteLine("check type : " + waypoint._type.ToString());
@@ -102,11 +112,9 @@ namespace IndoorNavigation.Views.Navigation
                             {
                                 _regionID = pairRegion.Key,
                                 _waypointID = waypoint._id,
-                                _waypointName = waypoint._name,
+                                _waypointName = waypointName,
                                 _floor = floorName
                             });
-
-
                         }
                         else
                         {
@@ -114,8 +122,6 @@ namespace IndoorNavigation.Views.Navigation
                         }
 
                     }
-
-
 
                 }
             }
@@ -136,7 +142,9 @@ namespace IndoorNavigation.Views.Navigation
                 await Navigation.PushAsync(new NavigatorPage(_navigationGraphName,
                                                              destination._regionID,
                                                              destination._waypointID,
-                                                             destination._waypointName));
+                                                             destination._waypointName,
+                                                             _nameInformation
+                                                             ));
             }
 
             //Deselect Item

@@ -74,14 +74,17 @@ namespace IndoorNavigation.ViewModels.Navigation
         public NavigatorPage _navigatorPage;
         private FirstDirectionInstruction _firstDirectionInstruction;
         private NavigationGraph _navigationGraph;
+        private XMLInformation _xmlInformation;
 
         public NavigatorPageViewModel(string navigationGraphName,
                                       Guid destinationRegionID,
                                       Guid destinationWaypointID,
-                                      string destinationWaypointName)
+                                      string destinationWaypointName,
+                                      XMLInformation informationXML)
+                                    
         {
             _destinationID = destinationWaypointID;
-            DestinationWaypointName = destinationWaypointName;
+            _destinationWaypointName = destinationWaypointName;
             CurrentStepImage = "waittingscan.gif";
             _navigationModule = new NavigationModule(navigationGraphName,
                                                      destinationRegionID,
@@ -91,8 +94,18 @@ namespace IndoorNavigation.ViewModels.Navigation
             _resourceManager = new ResourceManager(resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
             CurrentWaypointName = _resourceManager.GetString("NULL_STRING", CrossMultilingual.Current.CurrentCultureInfo);
             var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-            _firstDirectionInstruction = NavigraphStorage.LoadFirstDirectionXML(navigationGraphName+"_"+currentLanguage+".xml");
+
+            if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == "en" || CrossMultilingual.Current.CurrentCultureInfo.ToString() == "en-US")
+            {
+                _firstDirectionInstruction = NavigraphStorage.LoadFirstDirectionXML(navigationGraphName + "_en-US.xml");
+            }
+            else if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == "zh" || CrossMultilingual.Current.CurrentCultureInfo.ToString() == "zh_TW")
+            {
+                _firstDirectionInstruction = NavigraphStorage.LoadFirstDirectionXML(navigationGraphName + "_zh.xml");
+            }
+
             _navigationGraph = NavigraphStorage.LoadNavigationGraphXML(navigationGraphName);
+            _xmlInformation = informationXML;
 
         }     
 
@@ -113,14 +126,15 @@ namespace IndoorNavigation.ViewModels.Navigation
 			var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
 			string currentStepImage;
 			string currentStepLabel;
-           
+            string currentWaypointName;
+
 			switch ((args as Session.NavigationEventArgs)._result)
 			{
 				case NavigationResult.Run:
 					SetInstruction(instruction, out currentStepLabel, out currentStepImage);
 					CurrentStepLabel = currentStepLabel;
 					CurrentStepImage = currentStepImage;
-					CurrentWaypointName = instruction._currentWaypointName;
+					CurrentWaypointName = _xmlInformation.GiveWaypointName(instruction._currentWaypointGuid);
 					NavigationProgress = instruction._progress;
                     
                     Utility._textToSpeech.Speak(
@@ -141,7 +155,7 @@ namespace IndoorNavigation.ViewModels.Navigation
 					break;
 
 				case NavigationResult.Arrival:
-					CurrentWaypointName = DestinationWaypointName;
+					CurrentWaypointName = _xmlInformation.GiveWaypointName(_destinationID);
 					CurrentStepLabel =
                         _resourceManager.GetString("DIRECTION_ARRIVED_STRING", currentLanguage);
 					CurrentStepImage = "Arrived";
@@ -170,6 +184,10 @@ namespace IndoorNavigation.ViewModels.Navigation
 		{
             var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
             string connectionTypeString = "";
+            string nextWaypointName = instruction._nextWaypointName;
+            nextWaypointName = _xmlInformation.GiveWaypointName(instruction._nextWaypointGuid);
+            string nextRegionName = instruction._information._regionName;
+            nextRegionName = _xmlInformation.GiveRegionName(instruction._currentRegionGuid);
             switch (instruction._information._turnDirection)
 			{
 				case TurnDirection.FirstDirection:
@@ -248,7 +266,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             Environment.NewLine,
                             instructionDirection,
                             Environment.NewLine,
-                            instruction._nextWaypointName,
+                            nextWaypointName,
                             Environment.NewLine,
                             instruction._information._distance);
 					stepImage = stepImageString;
@@ -262,7 +280,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             Environment.NewLine,
                             instruction._information._distance,
                             Environment.NewLine,
-                            instruction._nextWaypointName);
+                            nextWaypointName);
 					stepImage = "Arrow_up";
 
                    	break;
@@ -275,7 +293,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             Environment.NewLine,
                             instruction._information._distance,
                             Environment.NewLine,
-                            instruction._nextWaypointName);
+                            nextWaypointName);
 					stepImage = "Arrow_frontright";
 	
 					break;
@@ -288,7 +306,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             Environment.NewLine,
                             instruction._information._distance,
                             Environment.NewLine,
-                            instruction._nextWaypointName);
+                            nextWaypointName);
 					stepImage = "Arrow_right";
 	
 					break;
@@ -301,7 +319,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             Environment.NewLine,
                             instruction._information._distance,
                             Environment.NewLine,
-                            instruction._nextWaypointName);
+                            nextWaypointName);
 					stepImage = "Arrow_rearright";
 
 					break;
@@ -314,7 +332,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             Environment.NewLine,
                             instruction._information._distance,
                             Environment.NewLine,
-                            instruction._nextWaypointName);
+                            nextWaypointName);
 					stepImage = "Arrow_down";
 
 					break;
@@ -327,7 +345,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             Environment.NewLine,
                             instruction._information._distance,
                             Environment.NewLine,
-                            instruction._nextWaypointName);
+                            nextWaypointName);
 					stepImage = "Arrow_rearleft";
 
 					break;
@@ -340,7 +358,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             Environment.NewLine,
                             instruction._information._distance,
                             Environment.NewLine,
-                            instruction._nextWaypointName);
+                            nextWaypointName);
 					stepImage = "Arrow_left";
 
 					break;
@@ -353,7 +371,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             Environment.NewLine,
                             instruction._information._distance,
                             Environment.NewLine,
-                            instruction._nextWaypointName);
+                            nextWaypointName);
 					stepImage = "Arrow_frontleft";
 
 					break;
@@ -381,7 +399,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             connectionTypeString,
                             Environment.NewLine,
                             instruction._information._floor,
-                            instruction._information._regionName);
+                            nextRegionName);
 					stepImage = "Stairs_up";
 
 					break;
@@ -410,7 +428,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             connectionTypeString,
                             Environment.NewLine,
                             instruction._information._floor,
-                            instruction._information._regionName);
+                            nextRegionName);
 					stepImage = "Stairs_down";
 
 					break;

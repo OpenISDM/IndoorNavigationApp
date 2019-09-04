@@ -115,5 +115,26 @@ namespace IndoorNavigation.Modules
 
         }
 
+        public static bool DownloadInformationFile(string URL, string fileName)
+        {
+            string filePath = Path.Combine(NavigraphStorage._informationFolder, fileName);
+            try
+            {
+                if (!Directory.Exists(NavigraphStorage._informationFolder))
+                    Directory.CreateDirectory(
+                        NavigraphStorage._informationFolder);
+
+                using (WebClient webClient = new WebClient())
+                    webClient.DownloadFileAsync(new Uri(URL), filePath);
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+
+        }
+
     }
 }

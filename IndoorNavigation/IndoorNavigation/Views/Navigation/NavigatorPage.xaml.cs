@@ -44,6 +44,7 @@
 using System;
 using Xamarin.Forms;
 using IndoorNavigation.ViewModels.Navigation;
+using IndoorNavigation.Models.NavigaionLayer;
 
 namespace IndoorNavigation.Views.Navigation
 {
@@ -54,7 +55,8 @@ namespace IndoorNavigation.Views.Navigation
         public NavigatorPage(string navigationGraphName,
                              Guid destinationRegionID,
                              Guid destinationWaypointID,
-                             string destinationWaypointName)
+                             string destinationWaypointName,
+                             XMLInformation informationXML)
         {
             Console.WriteLine(">> NavigatorPage constructor: {0} {1} {2} {3} ",
                               navigationGraphName,
@@ -67,7 +69,8 @@ namespace IndoorNavigation.Views.Navigation
             _viewModel = new NavigatorPageViewModel(navigationGraphName,
                                                     destinationRegionID,
                                                     destinationWaypointID,
-                                                    destinationWaypointName);
+                                                    destinationWaypointName,
+                                                    informationXML);
             BindingContext = _viewModel;
 
             Console.WriteLine("<< NavigatorPage constructor");
