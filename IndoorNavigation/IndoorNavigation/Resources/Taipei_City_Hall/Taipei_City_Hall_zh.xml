@@ -69,7 +69,7 @@
     <waypoint id='00000000-0000-0000-0000-000000000809' Landmark='北區樓梯8' RelatedDirection = '2'/>
     <waypoint id='00000000-0000-0000-0000-000000001011' Landmark='路口10' RelatedDirection = '2'/>
     <waypoint id='00000000-0000-0000-0000-000000001213' Landmark='駐警隊大門口12' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000001414' Landmark='路口14' RelatedDirection = '2'/>
+    <waypoint id='00000000-0000-0000-0000-000000001415' Landmark='路口14' RelatedDirection = '2'/>
     <waypoint id='00000000-0000-0000-0000-000000001617' Landmark='地政局門口16' RelatedDirection = '2'/>
     <waypoint id='00000000-0000-0000-0000-000000001819' Landmark='南區樓梯18' RelatedDirection = '2'/>
     <waypoint id='00000000-0000-0000-0000-000000000020' Landmark='電梯20' RelatedDirection = '2'/>

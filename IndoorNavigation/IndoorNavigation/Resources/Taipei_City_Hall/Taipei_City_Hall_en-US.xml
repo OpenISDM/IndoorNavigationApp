@@ -69,7 +69,7 @@
     <waypoint id='00000000-0000-0000-0000-000000000809' Landmark='North Stair 8' RelatedDirection = '2'/>
     <waypoint id='00000000-0000-0000-0000-000000001011' Landmark='Block 10' RelatedDirection = '2'/>
     <waypoint id='00000000-0000-0000-0000-000000001213' Landmark='Police Office 12' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000001414' Landmark='block 14' RelatedDirection = '2'/>
+    <waypoint id='00000000-0000-0000-0000-000000001415' Landmark='block 14' RelatedDirection = '2'/>
     <waypoint id='00000000-0000-0000-0000-000000001617' Landmark='Department of Land Administration 16' RelatedDirection = '2'/>
     <waypoint id='00000000-0000-0000-0000-000000001819' Landmark='South Stair 18' RelatedDirection = '2'/>
     <waypoint id='00000000-0000-0000-0000-000000000020' Landmark='ELevator 20' RelatedDirection = '2'/>
