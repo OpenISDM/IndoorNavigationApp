@@ -106,7 +106,7 @@ namespace IndoorNavigation.Modules
             _destinationWaypointID = destinationWaypointID;
             
             _avoidConnectionTypes = avoidConnectionTypes;
-            _tooCLoseDistance = 2;
+            _tooCLoseDistance = 10;
             // construct region graph (across regions) which we can use to generate route
             _graphRegionGraph = navigationGraph.GenerateRegionGraph(avoidConnectionTypes);
             _regiongraphs = _navigationGraph.GetRegions();

@@ -57,7 +57,7 @@ namespace IndoorNavigation.Modules.IPSClients
         private readonly EventHandler _beaconScanEventHandler;
         //private Dictionary<string, Ibea>
         public NavigationEvent _event { get; private set; }
-
+        private const int _moreThanTwoIBeacon = 2;
         private List<BeaconSignalModel> _beaconSignalBuffer = new List<BeaconSignalModel>();
         
         public IBeaconClient()
@@ -81,11 +81,11 @@ namespace IndoorNavigation.Modules.IPSClients
                 }
                 else if ((bool)Application.Current.Properties["MediumRssi"] == true)
                 {
-                    rssiOption = -75;
+                    rssiOption = -73;
                 }
                 else if ((bool)Application.Current.Properties["WeakRssi"] == true)
                 {
-                    rssiOption = -70;
+                    rssiOption = -50;
                 }
             }
 
@@ -97,12 +97,12 @@ namespace IndoorNavigation.Modules.IPSClients
         {
             List<BeaconSignalModel> removeSignalBuffer =
                 new List<BeaconSignalModel>();
-
+            
             lock (_bufferLock)
             {
                 removeSignalBuffer.AddRange(
                    _beaconSignalBuffer.Where(c =>
-                   c.Timestamp < DateTime.Now.AddMilliseconds(-1500)));
+                   c.Timestamp < DateTime.Now.AddMilliseconds(-2000)));
 
                 foreach (var obsoleteBeaconSignal in removeSignalBuffer)
                     _beaconSignalBuffer.Remove(obsoleteBeaconSignal);
@@ -111,19 +111,33 @@ namespace IndoorNavigation.Modules.IPSClients
 
                 Dictionary<RegionWaypointPoint, int> signalAvgValue = new Dictionary<RegionWaypointPoint, int>();
 
+                Dictionary<RegionWaypointPoint, List<BeaconSignal>> correctData = new Dictionary<RegionWaypointPoint, List<BeaconSignal>>();
+
+
                 //In ibsclient, a waypoint has at least two beacon UUIDs,
                 //We put all waypoint we get in scannedData
 
                 //BeaconSignalModel beaconSignalModel1 = new BeaconSignalModel();
                 //BeaconSignalModel beaconSignalModel2 = new BeaconSignalModel();
-                //beaconSignalModel1.UUID = new Guid("00000000-0402-5242-3d64-2019010049c8");
-                //beaconSignalModel2.UUID = new Guid("00000000-0402-5242-3d64-2019010049da");
+                //BeaconSignalModel beaconSignalModel3 = new BeaconSignalModel();
+                //BeaconSignalModel beaconSignalModel4 = new BeaconSignalModel();
+                //beaconSignalModel1.UUID = new Guid("00000000-0402-5242-3d64-2019010044d0");
+                //beaconSignalModel2.UUID = new Guid("00000000-0402-5242-3d64-2019010044d0");
+                //beaconSignalModel3.UUID = new Guid("00000000-0402-5242-3d64-2019010047b2");
+                //beaconSignalModel4.UUID = new Guid("00000000-0402-5242-3d64-2019010049bf");
+                //beaconSignalModel1.RSSI = -50;
+                //beaconSignalModel2.RSSI = -60;
+               // beaconSignalModel3.RSSI = -55;
+                //beaconSignalModel4.RSSI = -33;
                 //_beaconSignalBuffer.Add(beaconSignalModel1);
                 //_beaconSignalBuffer.Add(beaconSignalModel2);
+                //_beaconSignalBuffer.Add(beaconSignalModel3);
+                _beaconSignalBuffer.Add(beaconSignalModel4);
                 foreach (BeaconSignalModel beacon in _beaconSignalBuffer)
                 {
                     foreach (WaypointBeaconsMapping waypointBeaconsMapping in _waypointBeaconsList)
                     {
+                        
                         foreach (Guid beaconGuid in waypointBeaconsMapping._Beacons)
                         {
                             if (beacon.UUID.Equals(beaconGuid))
@@ -140,12 +154,33 @@ namespace IndoorNavigation.Modules.IPSClients
                         }  
                     }
                 }
+               
+                foreach(KeyValuePair < RegionWaypointPoint, List < BeaconSignal >>interestedBeacon in scannedData)
+                {
+                    Dictionary<Guid, List<BeaconSignal>> tempSave = new Dictionary<Guid, List<BeaconSignal>>();
+                    foreach(BeaconSignal beaconSignal in interestedBeacon.Value)
+                    {
+                        if(!tempSave.Keys.Contains(beaconSignal.UUID))
+                        {
+                            tempSave.Add(beaconSignal.UUID, new List<BeaconSignal> { beaconSignal });
+                        }
+                        else
+                        {
+                            tempSave[beaconSignal.UUID].Add(beaconSignal);
+                        }
+                    }
+                    if(tempSave.Keys.Count()>= _moreThanTwoIBeacon)
+                    {
+                        correctData.Add(interestedBeacon.Key, interestedBeacon.Value);
+                    }
 
-                foreach(KeyValuePair<RegionWaypointPoint, List<BeaconSignal>> calculateData in scannedData)
+                }
+
+                foreach(KeyValuePair<RegionWaypointPoint, List<BeaconSignal>> calculateData in correctData)
                 {
                     //If a waypoint has at least two beacon UUIDs,
                     //this waypoint might be our interested waypoint.
-                    if(calculateData.Value.Count()>=2)
+                    if(calculateData.Value.Count()>=_moreThanTwoIBeacon)
                     {
                         //Sort the beacons by their Rssi
                         calculateData.Value.Sort((x, y) => { return x.RSSI.CompareTo(y.RSSI); });
@@ -186,17 +221,13 @@ namespace IndoorNavigation.Modules.IPSClients
                 {
                     if(tempValue<calculateMax.Value)
                     {
+                        possibleRegionWaypoint = new RegionWaypointPoint();
                         possibleRegionWaypoint = calculateMax.Key;
                         haveThing = true;
                     }
                     tempValue = calculateMax.Value;
                     
-                }
-
-                if(signalAvgValue.Count()>1)
-                {
-                    haveThing = false;
-                }
+                }             
 
                 if(haveThing==true)
                 { 
