@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<first_direction_XML country='Taiwan' city_county='YunLin' industry_service='hospital' owner_organization='BeDI' building_name='NTUH_YunLin'>
+    <waypoint id = "00000000-0000-0000-0000-000000000001" Landmark = "樓梯" RelatedDirection = "0" />
+    <waypoint id = "00000000-0000-0000-0000-000000000002" Landmark = "樓梯" RelatedDirection = "0" />
+    <waypoint id = "00000000-0000-0000-0000-000000000003" Landmark = "樓梯" RelatedDirection = "0" />
+    <waypoint id = "00000000-0000-0000-0000-000000000004" Landmark = "走廊" RelatedDirection = "0" />
+    <waypoint id = "00000000-0000-0000-0000-000000000005" Landmark = "走廊" RelatedDirection = "0" />
+    <waypoint id = "00000000-0000-0000-0000-000000000006" Landmark = "電梯" RelatedDirection = "4" />
+    <waypoint id = "00000000-0000-0000-0000-000000000007" Landmark = "樓梯" RelatedDirection = "0" />
+    <waypoint id = "00000000-0000-0000-0000-000000000008" Landmark = "樓梯" RelatedDirection = "0" />
+    <waypoint id = "00000000-0000-0000-0000-000000000009" Landmark = "電梯" RelatedDirection = "4" />
+    <waypoint id = "00000000-0000-0000-0000-000000000010" Landmark = "電梯" RelatedDirection = "4" />
+    <waypoint id = "00000000-0000-0000-0000-000000000011" Landmark = "電梯" RelatedDirection = "4" />
+    <waypoint id = "00000000-0000-0000-0000-000000000012" Landmark = "電梯" RelatedDirection = "4" />
+    <waypoint id = "00000000-0000-0000-0000-000000000013" Landmark = "電梯" RelatedDirection = "4" />
+    <waypoint id = "00000000-0000-0000-0000-000000000014" Landmark = "電梯" RelatedDirection = "4" />
+    <waypoint id = "00000000-0000-0000-0000-000000000015" Landmark = "後門" RelatedDirection = "0" />
+    <waypoint id = "00000000-0000-0000-0000-000000000016" Landmark = "後門" RelatedDirection = "0" />
+    <waypoint id = "00000000-0000-0000-0000-000000000017" Landmark = "後門" RelatedDirection = "0" />
+    <waypoint id = "00000000-0000-0000-0000-000000000018" Landmark = "後門" RelatedDirection = "0" />
+    <waypoint id = "00000000-0000-0000-0000-000000000019" Landmark = "連接走廊" RelatedDirection = "4" />
+</first_direction_XML>
