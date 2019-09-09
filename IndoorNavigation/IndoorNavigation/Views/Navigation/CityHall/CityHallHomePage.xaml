@@ -39,7 +39,7 @@
                 <ColumnDefinition Width="35*"/>
             </Grid.ColumnDefinitions>
             
-            <Image Grid.Row="0" Grid.ColumnSpan="3" Source="enterprise" Scale="0.9"/>
+            <Image Grid.Row="0" Grid.ColumnSpan="3" Source="appicon2" Scale="0.9"/>
             
             <Label Grid.Row="1" Grid.ColumnSpan="3" HorizontalTextAlignment="Center"
                    Text="{i18n:Translate TAIPEI_CITY_HALL_STRING}" TextColor="Black" FontSize="Large" Margin="8, 8, 8, 8"/>

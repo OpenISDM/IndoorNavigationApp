@@ -132,7 +132,7 @@ namespace IndoorNavigation.Modules.IPSClients
                 //_beaconSignalBuffer.Add(beaconSignalModel1);
                 //_beaconSignalBuffer.Add(beaconSignalModel2);
                 //_beaconSignalBuffer.Add(beaconSignalModel3);
-                _beaconSignalBuffer.Add(beaconSignalModel4);
+                //_beaconSignalBuffer.Add(beaconSignalModel4);
                 foreach (BeaconSignalModel beacon in _beaconSignalBuffer)
                 {
                     foreach (WaypointBeaconsMapping waypointBeaconsMapping in _waypointBeaconsList)

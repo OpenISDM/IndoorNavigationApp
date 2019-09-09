@@ -62,33 +62,33 @@
     <waypoint id='00000000-0000-0000-0000-000000000213' Landmark='路口s13' RelatedDirection = '2'/>
     <waypoint id='00000000-0000-0000-0000-000000000214' Landmark='轉角處s14' RelatedDirection = '2'/>
       
-    <waypoint id='00000000-0000-0000-0000-000000001102' Landmark='北區停車場門口1' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000304' Landmark='路口3' RelatedDirection = '2'/>
-	<waypoint id='00000000-0000-0000-0000-000000000005' Landmark='電梯5' RelatedDirection = '2'/>
-	<waypoint id='00000000-0000-0000-0000-000000000607' Landmark='電梯前路口6' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000809' Landmark='北區樓梯8' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000001011' Landmark='路口10' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000001213' Landmark='駐警隊大門口12' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000001415' Landmark='路口14' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000001617' Landmark='地政局門口16' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000001819' Landmark='南區樓梯18' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000020' Landmark='電梯20' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000002122' Landmark='電梯前路口21' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000023' Landmark='客貨梯23' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000002425' Landmark='路口24' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000002627' Landmark='南區停車場門口26' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000028' Landmark='電梯28' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000029' Landmark='轉角處29' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000030' Landmark='路口30' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000031' Landmark='男廁門口31' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000032' Landmark='公館中心門口32' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000033' Landmark='路口33' RelatedDirection = '2' />
-    <waypoint id='00000000-0000-0000-0000-000000000034' Landmark='走廊34' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000035' Landmark='公庫35' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000036' Landmark='轉角處36' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000037' Landmark='電梯37' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000038' Landmark='環境教育中心門口38' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000040' Landmark='路口40' RelatedDirection = '2'/>
+    <waypoint id='00000000-0000-0000-0000-000000001102' Landmark='北區停車場' RelatedDirection = '0'/>
+    <waypoint id='00000000-0000-0000-0000-000000000304' Landmark='北區停車場' RelatedDirection = '0'/>
+	<waypoint id='00000000-0000-0000-0000-000000000005' Landmark='出口方向' RelatedDirection = '2'/>
+	<waypoint id='00000000-0000-0000-0000-000000000607' Landmark='電梯方向' RelatedDirection = '6'/>
+    <waypoint id='00000000-0000-0000-0000-000000000809' Landmark='樓梯' RelatedDirection = '2'/>
+    <waypoint id='00000000-0000-0000-0000-000000001011' Landmark='這裡要用圖片' RelatedDirection = '2'/>
+    <waypoint id='00000000-0000-0000-0000-000000001213' Landmark='駐警隊大門口' RelatedDirection = '6'/>
+    <waypoint id='00000000-0000-0000-0000-000000001415' Landmark='這裡要用圖片' RelatedDirection = '2'/>
+    <waypoint id='00000000-0000-0000-0000-000000001617' Landmark='台北市政府徵收土地發放補償服務中心' RelatedDirection = '6'/>
+    <waypoint id='00000000-0000-0000-0000-000000001819' Landmark='台北市政府衛生局長期照護服務台' RelatedDirection = '6'/>
+    <waypoint id='00000000-0000-0000-0000-000000000020' Landmark='出口' RelatedDirection = '2'/>
+    <waypoint id='00000000-0000-0000-0000-000000002122' Landmark='停車場' RelatedDirection = '4'/>
+    <waypoint id='00000000-0000-0000-0000-000000000023' Landmark='出口' RelatedDirection = '6'/>
+    <waypoint id='00000000-0000-0000-0000-000000002425' Landmark='南區停車場' RelatedDirection = '4'/>
+    <waypoint id='00000000-0000-0000-0000-000000002627' Landmark='南區停車場' RelatedDirection = '4'/>
+    <waypoint id='00000000-0000-0000-0000-000000000028' Landmark='電梯' RelatedDirection = '4'/>
+    <waypoint id='00000000-0000-0000-0000-000000000029' Landmark='北區停車場' RelatedDirection = '6'/>
+    <waypoint id='00000000-0000-0000-0000-000000000030' Landmark='觀光傳播局' RelatedDirection = '6'/>
+    <waypoint id='00000000-0000-0000-0000-000000000031' Landmark='男廁' RelatedDirection = '0'/>
+    <waypoint id='00000000-0000-0000-0000-000000000032' Landmark='台北市政大樓公共事務管理中心' RelatedDirection = '0'/>
+    <waypoint id='00000000-0000-0000-0000-000000000033' Landmark='主計處檔案室' RelatedDirection = '6' />
+    <waypoint id='00000000-0000-0000-0000-000000000034' Landmark='駐警隊寢室' RelatedDirection = '0'/>
+    <waypoint id='00000000-0000-0000-0000-000000000035' Landmark='銀行' RelatedDirection = '2'/>
+    <waypoint id='00000000-0000-0000-0000-000000000036' Landmark='緊急出口' RelatedDirection = '6'/>
+    <waypoint id='00000000-0000-0000-0000-000000000037' Landmark='電梯37' RelatedDirection = '0'/>
+    <waypoint id='00000000-0000-0000-0000-000000000038' Landmark='環境教育中心' RelatedDirection = '0'/>
+    <waypoint id='00000000-0000-0000-0000-000000000040' Landmark='電梯' RelatedDirection = '4'/>
     <waypoint id='00000000-0000-0000-0000-000000000041' Landmark='電梯41' RelatedDirection = '2'/>
     <waypoint id='00000000-0000-0000-0000-000000000045' Landmark='南區電梯45' RelatedDirection = '2'/>
     <waypoint id='00000000-0000-0000-0000-000000000043' Landmark='北區電梯43' RelatedDirection = '2'/>
