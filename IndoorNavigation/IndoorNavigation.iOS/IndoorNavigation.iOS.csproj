@@ -266,6 +266,7 @@
     <BundleResource Include="Resources\Arrow_right.png" />
     <BundleResource Include="Resources\Arrow_up.png" />
     <BundleResource Include="Resources\service_hospital_logo.png" />
+    <BundleResource Include="Resources\11100004.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\close_circle_button.png" />

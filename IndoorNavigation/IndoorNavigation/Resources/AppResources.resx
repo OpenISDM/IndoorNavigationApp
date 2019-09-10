@@ -465,4 +465,8 @@
         <value>NormalHallway</value>
     </data>
     
+    <data name="PICTURE_DIRECTION_STRING" xml:space="preserve">
+        <value>Picture's Direction</value>
+    </data>
+    
 </root>

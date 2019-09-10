@@ -712,5 +712,11 @@ namespace IndoorNavigation.Resources {
                 return ResourceManager.GetString("NORMALHALLWAY_STRING", resourceCulture);
             }
         }
+        
+        internal static string PICTURE_DIRECTION_STRING {
+            get {
+                return ResourceManager.GetString("PICTURE_DIRECTION_STRING", resourceCulture);
+            }
+        }
     }
 }

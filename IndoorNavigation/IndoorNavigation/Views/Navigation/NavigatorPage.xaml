@@ -22,10 +22,10 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="3*"/>
-                <RowDefinition Height="2*"/>
+                <RowDefinition Height="2.5*"/>
                 <RowDefinition Height="1.5*"/>
                 <RowDefinition Height="0.5*"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="0.5*"/>
             </Grid.RowDefinitions>
             
             <Grid.ColumnDefinitions>
@@ -44,17 +44,23 @@
             <Label x:Name="CurrentInstructionLabel" 
                    Text="{Binding CurrentStepLabel}"
                    Grid.Row="2" Grid.ColumnSpan="2"
-                   Margin="0, -15, 0, 10"
+                   Margin="0, -30, 0, 10"
                    FontSize="Large"
                    VerticalTextAlignment="Center"
                    HorizontalTextAlignment="Center"/>
+            <Image x:Name="FirstDirectionPicture"
+                   Source="{Binding FirstDirectionPicture}"
+                   Grid.Row="3" Grid.ColumnSpan="2" HorizontalOptions="Fill"
+                   Scale="2" Margin="5,10,5,-10"/>
             <Image x:Name="CurrentInstructionImage" 
                    Source="{Binding CurrentStepImage}"
-                   Grid.Row="3" Grid.ColumnSpan="2"
-                   Margin="0, -15, 0, 0" />
+                   Grid.Row="{Binding InstructionLocationValue}" Grid.ColumnSpan="2" VerticalOptions="EndAndExpand"
+                   Margin="0, -5, 0, 5" Scale="2"
+                   RotationX = "{Binding RotationValue}"/>
             
-            <BoxView Grid.Row="5" Grid.ColumnSpan="2" Color="#dcdcdc"/>
-            <pb:ProgressBarView Grid.Row="5" Grid.ColumnSpan="2"
+            
+            <BoxView Grid.Row="6" Grid.ColumnSpan="2" Color="#dcdcdc"/>
+            <pb:ProgressBarView Grid.Row="6" Grid.ColumnSpan="2"
                                 Color="#3F51B5" Progress="{Binding NavigationProgress}"
                                 LabelShowIntValuesOnly="false" LabelStringFormat="{}{0:0.0} %"
                                 LabelFontSize="20" LabelPosition="AfterBar" />     
