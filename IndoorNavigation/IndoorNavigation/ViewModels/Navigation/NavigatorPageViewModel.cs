@@ -285,7 +285,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                         string regionString = instruction._currentRegionGuid.ToString();
                         string waypointString = instruction._currentWaypointGuid.ToString();
                        
-                        pictureName = regionString.Substring(33, 3) + waypointString.Substring(31, 5);
+                        pictureName = "p" + regionString.Substring(33, 3) + waypointString.Substring(31, 5);
                         Console.WriteLine("PictureName : " + pictureName);
                         stepLabel = string.Format(
                         _resourceManager.GetString(
