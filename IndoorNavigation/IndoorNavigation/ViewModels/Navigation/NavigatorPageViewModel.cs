@@ -207,6 +207,7 @@ namespace IndoorNavigation.ViewModels.Navigation
             string nextRegionName = instruction._information._regionName;
             firstDirectionImage = null;
             rotation = 0;
+            stepImage = "";
             location = _originalInstructionLocation;
             nextRegionName = _xmlInformation.GiveRegionName(instruction._currentRegionGuid);
             switch (instruction._information._turnDirection)
@@ -434,15 +435,19 @@ namespace IndoorNavigation.ViewModels.Navigation
                     {
                         case ConnectionType.Elevator:
                             connectionTypeString = _resourceManager.GetString("ELEVATOR_STRING", currentLanguage);
+                            stepImage = "Elevator_up";
                             break;
                         case ConnectionType.Escalator:
                             connectionTypeString = _resourceManager.GetString("ESCALATOR_STRING", currentLanguage);
+                             stepImage = "Stairs_up";
                             break;
                         case ConnectionType.Stair:
                             connectionTypeString = _resourceManager.GetString("STAIR_STRING", currentLanguage);
+                            stepImage = "Stairs_up";
                             break;
                         case ConnectionType.NormalHallway:
                             connectionTypeString = _resourceManager.GetString("NORMALHALLWAY_STRING", currentLanguage);
+                            stepImage = "Stairs_up";
                             break;
                     }
                     stepLabel = string.Format(
@@ -451,9 +456,8 @@ namespace IndoorNavigation.ViewModels.Navigation
 							currentLanguage),
                             connectionTypeString,
                             Environment.NewLine,
-                            instruction._information._regionName,
-                            nextRegionName);
-					stepImage = "Stairs_up";
+                            instruction._information._regionName);
+					//stepImage = "Stairs_up";
 
 					break;
 
@@ -462,15 +466,19 @@ namespace IndoorNavigation.ViewModels.Navigation
                     {
                         case ConnectionType.Elevator:
                             connectionTypeString = _resourceManager.GetString("ELEVATOR_STRING", currentLanguage);
+                            stepImage = "Elevtor_down";
                             break;
                         case ConnectionType.Escalator:
                             connectionTypeString = _resourceManager.GetString("ESCALATOR_STRING", currentLanguage);
+                            stepImage = "Stairs_down";
                             break;
                         case ConnectionType.Stair:
                             connectionTypeString = _resourceManager.GetString("STAIR_STRING", currentLanguage);
+                            stepImage = "Stairs_down";
                             break;
                         case ConnectionType.NormalHallway:
                             connectionTypeString = _resourceManager.GetString("NORMALHALLWAY_STRING", currentLanguage);
+                            stepImage = "Stairs_down";
                             break;
                     }
 
@@ -480,9 +488,8 @@ namespace IndoorNavigation.ViewModels.Navigation
                             currentLanguage),
                             connectionTypeString,
                             Environment.NewLine,
-                            instruction._information._regionName,
-                            nextRegionName);
-					stepImage = "Stairs_down";
+                            instruction._information._regionName);
+					//stepImage = "Stairs_down";
 
 					break;
 				default:

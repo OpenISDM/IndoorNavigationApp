@@ -7,9 +7,8 @@
     <waypoints>
         <waypoint id='00000000-0000-0000-0000-000000000001' name='Exit'/>
         <waypoint id='00000000-0000-0000-0000-000000000002' name='Information Desk'/>
-        <waypoint id='00000000-0000-0000-0000-000000000003' name='Stair'/>
-        <waypoint id='00000000-0000-0000-0000-000000000004' name='Psychiatry/Neurology'/>
+        <waypoint id='00000000-0000-0000-0000-000000000003' name='1F Stair'/>
+        <waypoint id='00000000-0000-0000-0000-000000000004' name='2F Stair'/>
         <waypoint id='00000000-0000-0000-0000-000000000005' name='Cardiology/Division of General Medicine/Physical Examination Center'/>
-         <waypoint id='00000000-0000-0000-0000-000000000025' name='Elevator' />
     </waypoints>
 </navigation_graph>

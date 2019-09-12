@@ -116,7 +116,27 @@
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>
-    <AndroidResource Include="Resources\drawable\p11100004.png">
+    <AndroidResource Include="Resources\drawable\Elevtor_down.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\Elevator_up.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <None Include="Resources\drawable\Lab\Lab11100004.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </None>
+    <AndroidResource Include="Resources\drawable\Arrow_down.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\Escalator_down.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\Escalator_up.png">
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>
@@ -156,7 +176,6 @@
     <AndroidResource Include="Resources\drawable\Arrow_right.png" />
     <AndroidResource Include="Resources\drawable\Arrow_frontright.png" />
     <AndroidResource Include="Resources\drawable\Arrow_frontleft.png" />
-    <AndroidResource Include="Resources\drawable\Arrow_down.png" />
     <AndroidResource Include="Resources\drawable\Arrived.png" />
     <AndroidResource Include="Resources\drawable\Waiting.png" />
     <AndroidResource Include="Resources\drawable\Warning.png" />
@@ -168,6 +187,7 @@
     <Folder Include="Resources\drawable-xhdpi\" />
     <Folder Include="Resources\drawable-xxhdpi\" />
     <Folder Include="Resources\drawable-xxxhdpi\" />
+    <Folder Include="Resources\drawable\Lab\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\IndoorNavigation\IndoorNavigation.csproj">

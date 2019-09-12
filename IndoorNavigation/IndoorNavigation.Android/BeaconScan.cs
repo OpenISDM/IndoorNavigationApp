@@ -70,13 +70,13 @@ namespace IndoorNavigation.Droid
             this._adapter = this._manager.Adapter;
         }
 
-        public void StartScan(int rssiOption)
+        public void StartScan()
         {
             if (!this._adapter.IsEnabled)
             {
                 _adapter.Enable();
             }
-            _rssiThreshold = rssiOption;
+            //_rssiThreshold = rssiOption;
             this._count = 0;
             this._adapter.StartLeScan(this);
         }

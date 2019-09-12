@@ -756,8 +756,15 @@ namespace IndoorNavigation.Modules
                         {
                             AddWrongWaypoint(portalWaypointRegionGuid._waypointID, portalWaypointRegionGuid._regionID, locationRegionWaypoint, tempRegionWaypoint);
                         }
+                        else
+                        {
+                            if (!_waypointsOnWrongWay.Keys.Contains(locationRegionWaypoint))
+                            {
+                                _waypointsOnWrongWay.Add(locationRegionWaypoint, new List<RegionWaypointPoint> { });
+                            }
+                        }
                     }
-
+                    //else
                 }
             }
         }

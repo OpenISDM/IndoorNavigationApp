@@ -354,11 +354,11 @@
     </data>
     
     <data name="DIRECTION_UP_STRING" xml:space="preserve">
-        <value>搭{0}上樓前往{1}{2}樓 {3} </value>
+        <value>{0}上樓前往{1}{2}樓 </value>
     </data>
     
     <data name="DIRECTION_DOWN_STRING" xml:space="preserve">
-        <value>搭{0}下樓前往{1}{2}樓 {3} </value>
+        <value>{0}下樓前往{1}{2}樓 </value>
     </data>
     
      <data name="DIRECTION_WRONG_WAY_STRING" xml:space="preserve">
@@ -450,19 +450,19 @@
     </data>
     
     <data name="ELEVATOR_STRING" xml:space="preserve">
-        <value>電梯</value>
+        <value>搭電梯</value>
     </data>
     
     <data name="STAIR_STRING" xml:space="preserve">
-        <value>樓梯</value>
+        <value>走樓梯</value>
     </data>
     
     <data name="ESCALATOR_STRING" xml:space="preserve">
-        <value>手扶梯</value>
+        <value>搭手扶梯</value>
     </data>
     
     <data name="NORMALHALLWAY_STRING" xml:space="preserve">
-        <value>走廊</value>
+        <value>走走廊</value>
     </data>
     
     <data name="PICTURE_DIRECTION_STRING" xml:space="preserve">
