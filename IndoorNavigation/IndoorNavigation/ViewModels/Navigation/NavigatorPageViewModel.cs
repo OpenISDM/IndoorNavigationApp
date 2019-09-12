@@ -56,6 +56,7 @@ using System.Reflection;
 using IndoorNavigation.Views.Navigation;
 using Xamarin.Forms;
 using IndoorNavigation.Modules.Utilities;
+using System.IO;
 
 namespace IndoorNavigation.ViewModels.Navigation
 {
@@ -285,7 +286,8 @@ namespace IndoorNavigation.ViewModels.Navigation
                         string regionString = instruction._currentRegionGuid.ToString();
                         string waypointString = instruction._currentWaypointGuid.ToString();
                        
-                        pictureName = "p" + regionString.Substring(33, 3) + waypointString.Substring(31, 5);
+                        pictureName = _navigationGraph.GetBuildingName() + regionString.Substring(33, 3) + waypointString.Substring(31, 5);
+                        string picturePath = Path.Combine(_navigationGraph.GetBuildingName(),pictureName);
                         Console.WriteLine("PictureName : " + pictureName);
                         stepLabel = string.Format(
                         _resourceManager.GetString(
@@ -300,7 +302,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             nextWaypointName,
                             " ",
                             instruction._information._distance);
-                        firstDirectionImage = pictureName;
+                        firstDirectionImage = picturePath;
                         stepImage = stepImageString;
                         rotation = 75;
                         location = _firstDirectionInstructionLocation;
@@ -449,7 +451,7 @@ namespace IndoorNavigation.ViewModels.Navigation
 							currentLanguage),
                             connectionTypeString,
                             Environment.NewLine,
-                            instruction._information._floor,
+                            instruction._information._regionName,
                             nextRegionName);
 					stepImage = "Stairs_up";
 
@@ -478,7 +480,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             currentLanguage),
                             connectionTypeString,
                             Environment.NewLine,
-                            instruction._information._floor,
+                            instruction._information._regionName,
                             nextRegionName);
 					stepImage = "Stairs_down";
 

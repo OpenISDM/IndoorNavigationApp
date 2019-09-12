@@ -61,7 +61,7 @@ namespace IndoorNavigation.iOS
     {
         private readonly CBCentralManager _manager = new CBCentralManager();
 
-        private int _rssiThreshold = -35;
+        private int _rssiThreshold = -55;
 
         public NavigationEvent _event { get; private set; }
 
@@ -76,10 +76,10 @@ namespace IndoorNavigation.iOS
                               this._manager.State);
         }
 
-        public void StartScan(int rssiOption)
+        public void StartScan()
         {
             Console.WriteLine("Start LBeacon");
-            _rssiThreshold = rssiOption;
+            //_rssiThreshold = rssiOption;
             if (CBCentralManagerState.PoweredOn == this._manager.State)
             {
                 var uuids = new CBUUID[0];
@@ -112,18 +112,6 @@ namespace IndoorNavigation.iOS
                 (args as CBDiscoveredPeripheralEventArgs).RSSI.Int32Value < 0)
             {
                 Console.WriteLine("Check UUID : " + (args as CBDiscoveredPeripheralEventArgs).AdvertisementData);
-                //Console.WriteLine("UUID : " + (args as CBDiscoveredPeripheralEventArgs).Peripheral);
-                /*
-                Sample of AdvertisementData data:
-                AdvertisementData = {
-                    kCBAdvDataIsConnectable = 0;
-                    kCBAdvDataManufacturerData =
-                        <0f000215 00000018 00000000 24600000 00002300 00020000 ce>;
-                
-                */
-
-
-                // var name = (args as CBDiscoveredPeripheralEventArgs);
 
                 var tempUUID = (args as CBDiscoveredPeripheralEventArgs).AdvertisementData
                                .ValueForKey((NSString)"kCBAdvDataManufacturerData");

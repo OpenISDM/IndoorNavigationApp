@@ -58,7 +58,7 @@ namespace IndoorNavigation.Models
 
     public interface IBeaconScan
     {
-        void StartScan(int rssiOption);
+        void StartScan();
         void StopScan();
         void Close();
         NavigationEvent _event { get; }
@@ -66,7 +66,7 @@ namespace IndoorNavigation.Models
 
     public interface LBeaconScan
     {
-        void StartScan(int rssiOption);
+        void StartScan();
         void StopScan();
         void Close();
         NavigationEvent _event { get; }
@@ -97,6 +97,7 @@ namespace IndoorNavigation.Models
     {
         public RegionWaypointPoint _WaypointIDAndRegionID { get; set; }
         public List<Guid> _Beacons { get; set; }
+        public Dictionary<Guid, int> _BeaconThreshold { get; set; }
     }
     #endregion
 }

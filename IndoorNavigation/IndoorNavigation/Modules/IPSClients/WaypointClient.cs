@@ -49,6 +49,7 @@ using System.Linq;
 using System.Collections.Generic;
 using IndoorNavigation.Models;
 using Xamarin.Forms;
+using IndoorNavigation.Models.NavigaionLayer;
 
 namespace IndoorNavigation.Modules.IPSClients
 {
@@ -58,10 +59,10 @@ namespace IndoorNavigation.Modules.IPSClients
 
         private object _bufferLock = new object();
         private readonly EventHandler _beaconScanEventHandler;
-
+       
         public NavigationEvent _event { get; private set; }
         private List<BeaconSignalModel> _beaconSignalBuffer = new List<BeaconSignalModel>();
-
+        private int rssiOption;
 
         public WaypointClient()
         {
@@ -70,31 +71,31 @@ namespace IndoorNavigation.Modules.IPSClients
             _beaconScanEventHandler = new EventHandler(HandleBeaconScan);
             Utility._lbeaconScan._event._eventHandler += _beaconScanEventHandler;
             _waypointBeaconsList = new List<WaypointBeaconsMapping>();
+            rssiOption = 0;
 
         }
 
         public void SetWaypointList(List<WaypointBeaconsMapping> waypointBeaconsList)
         {
-            int rssiOption = -40;
-
+            
             if (Application.Current.Properties.ContainsKey("StrongRssi"))
             {
                 if ((bool)Application.Current.Properties["StrongRssi"] == true)
                 {
-                    rssiOption = -70;
+                    rssiOption = 15;
                 }
                 else if ((bool)Application.Current.Properties["WeakRssi"] == true)
                 {
-                    rssiOption = -40;
+                    rssiOption = -10;
                 }
                 else if ((bool)Application.Current.Properties["MediumRssi"] == true)
                 {
-                    rssiOption = -55;
+                    rssiOption = 0;
                 }
             }
 
             this._waypointBeaconsList = waypointBeaconsList;
-            Utility._lbeaconScan.StartScan(rssiOption);
+            Utility._lbeaconScan.StartScan();
         }
 
         public void DetectWaypoints()
@@ -109,7 +110,7 @@ namespace IndoorNavigation.Modules.IPSClients
             {
                 removeSignalBuffer.AddRange(
                 _beaconSignalBuffer.Where(c =>
-                c.Timestamp < DateTime.Now.AddMilliseconds(-1000)));
+                c.Timestamp < DateTime.Now.AddMilliseconds(-500)));
 
                 foreach (var obsoleteBeaconSignal in removeSignalBuffer)
                     _beaconSignalBuffer.Remove(obsoleteBeaconSignal);
@@ -129,11 +130,14 @@ namespace IndoorNavigation.Modules.IPSClients
                                 Console.WriteLine("Matched waypoint: {0} by detected Beacon {1}",
                                 waypointBeaconsMapping._WaypointIDAndRegionID._waypointID,
                                 beaconGuid);
-                                _event.OnEventCall(new WaypointSignalEventArgs
+                                if (beacon.RSSI > (waypointBeaconsMapping._BeaconThreshold[beacon.UUID]-rssiOption))
                                 {
-                                    _detectedRegionWaypoint = waypointBeaconsMapping._WaypointIDAndRegionID
-                                });
-                                return;
+                                    _event.OnEventCall(new WaypointSignalEventArgs
+                                    {
+                                        _detectedRegionWaypoint = waypointBeaconsMapping._WaypointIDAndRegionID
+                                    });
+                                    return;
+                                }
                             }
                         }
                     }

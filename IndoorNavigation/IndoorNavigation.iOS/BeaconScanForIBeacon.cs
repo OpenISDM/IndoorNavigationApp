@@ -59,7 +59,7 @@ namespace IndoorNavigation.iOS
     {
         private readonly CBCentralManager _manager = new CBCentralManager();
 
-        private int _rssiThreshold = -70;
+        private int _rssiThreshold = -75;
 
         public NavigationEvent _event { get; private set; }
         public BeaconScanForIBeacon()
@@ -71,10 +71,8 @@ namespace IndoorNavigation.iOS
                               this._manager.State);
         }
 
-        public void StartScan(int rssiOption)
+        public void StartScan()
         {
-
-            _rssiThreshold = rssiOption;
             Console.WriteLine("Start Ibeacon ");
             if (CBCentralManagerState.PoweredOn == this._manager.State)
             {

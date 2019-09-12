@@ -85,6 +85,8 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
             //Guid is waypoint's Guid
             public Dictionary<Guid, List<Guid>> _beacons { get; set; }
+
+            public Dictionary<Guid,int> _beaconRSSIThreshold { get; set; }
         }
 
         public struct RegionEdge
@@ -365,7 +367,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 navigraph._waypoints = new Dictionary<Guid, Waypoint>();
                 navigraph._edges = new Dictionary<Tuple<Guid, Guid>, WaypointEdge>();
                 navigraph._beacons = new Dictionary<Guid, List<Guid>>();
-
+                navigraph._beaconRSSIThreshold = new Dictionary<Guid, int>();
                 // Read all attributes of each navigraph
                 XmlElement xmlElement = (XmlElement)navigraphNode;
                 navigraph._regionID = Guid.Parse(xmlElement.GetAttribute("region_id"));
@@ -518,6 +520,8 @@ namespace IndoorNavigation.Models.NavigaionLayer
                         }
                     }
 
+                    int beaconRSSI = Int32.Parse(xmlBeaconElement.GetAttribute("threshold"));
+                    navigraph._beaconRSSIThreshold.Add(beaconGuid,beaconRSSI);
                 }
 
                 _navigraphs.Add(navigraph._regionID, navigraph);
@@ -760,6 +764,11 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
         public IPSType GetRegionIPSType(Guid regionID) {
             return _regions[regionID]._IPSType;
+        }
+
+        public int GetBeaconRSSIThreshold(Guid regionGuid, Guid beaconGuid)
+        {
+            return _navigraphs[regionGuid]._beaconRSSIThreshold[beaconGuid];
         }
 
         public PortalWaypoints GetPortalWaypoints(Guid sourceRegionID,

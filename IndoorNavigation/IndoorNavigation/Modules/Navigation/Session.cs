@@ -275,6 +275,7 @@ namespace IndoorNavigation.Modules
                             tempRegionWaypointInInitialWaypointClient._waypointID = waypointID;
                             tempRegionWaypointInInitialWaypointClient._regionID = regionGuid;
                             List<Guid> beaconIDs = new List<Guid>();
+                            Dictionary<Guid, int> tempBeaconThresholdInWaypointClient = new Dictionary<Guid, int>();
                             if (IPSType.LBeacon == regionIPSType ||
                                 IPSType.iBeacon == regionIPSType)
                             {
@@ -282,10 +283,15 @@ namespace IndoorNavigation.Modules
                                             .GetAllBeaconIDInOneWaypointOfRegion(regionGuid,
                                                                                  waypointID);
                             }
+                            for(int i =0;i<beaconIDs.Count();i++)
+                            {
+                                tempBeaconThresholdInWaypointClient.Add(beaconIDs[i], _navigationGraph.GetBeaconRSSIThreshold(regionGuid, beaconIDs[i]));
+                            }
                             monitorWaypointListInWaypointClient.Add(new WaypointBeaconsMapping
                             {
                                 _WaypointIDAndRegionID = tempRegionWaypointInInitialWaypointClient,
-                                _Beacons = beaconIDs
+                                _Beacons = beaconIDs,
+                                _BeaconThreshold = tempBeaconThresholdInWaypointClient
                             });
                         }
                         haveLBeacon = true;
@@ -301,6 +307,7 @@ namespace IndoorNavigation.Modules
                             tempRegionWaypointInInitialIBeaconClient._waypointID = waypointID;
                             tempRegionWaypointInInitialIBeaconClient._regionID = regionGuid;
                             List<Guid> beaconIDs = new List<Guid>();
+                            Dictionary<Guid, int> tempBeaconThresholdInIBeaconClient = new Dictionary<Guid, int>();
                             if (IPSType.LBeacon == regionIPSType ||
                                 IPSType.iBeacon == regionIPSType)
                             {
@@ -308,10 +315,15 @@ namespace IndoorNavigation.Modules
                                             .GetAllBeaconIDInOneWaypointOfRegion(regionGuid,
                                                                                  waypointID);
                             }
+                            for(int i = 0; i < beaconIDs.Count(); i++)
+                            {
+                                tempBeaconThresholdInIBeaconClient.Add(beaconIDs[i], _navigationGraph.GetBeaconRSSIThreshold(regionGuid,beaconIDs[i]));
+                            }
                             monitorWaypointListInIBeaconClient.Add(new WaypointBeaconsMapping
                             {
                                 _WaypointIDAndRegionID = tempRegionWaypointInInitialIBeaconClient,
-                                _Beacons = beaconIDs
+                                _Beacons = beaconIDs,
+                                _BeaconThreshold = tempBeaconThresholdInIBeaconClient
                             });
                         }
                         haveIBeacon = true;
@@ -353,6 +365,8 @@ namespace IndoorNavigation.Modules
 
                 List<Guid> beaconIDs = new List<Guid>();
 
+
+                //Add nextWaypoint beacons' UUID
                 if (IPSType.LBeacon == nextRegionIPSType ||
                    IPSType.iBeacon == nextRegionIPSType)
                 {
@@ -366,11 +380,18 @@ namespace IndoorNavigation.Modules
                 RegionWaypointPoint tempRegionWaypointoutInInitial = new RegionWaypointPoint();
                 tempRegionWaypointoutInInitial._waypointID = checkPoint._waypointID;
                 tempRegionWaypointoutInInitial._regionID = regionID;
+                Dictionary<Guid, int> tempBeaconThresholdInitial = new Dictionary<Guid, int>();
+                for (int i = 0; i < beaconIDs.Count(); i++)
+                {
+                    tempBeaconThresholdInitial.Add(beaconIDs[i], _navigationGraph.GetBeaconRSSIThreshold(regionID, beaconIDs[i]));
+                }
+
 
                 monitorWaypointList.Add(new WaypointBeaconsMapping
                 {
                     _WaypointIDAndRegionID = tempRegionWaypointoutInInitial,
-                    _Beacons = beaconIDs
+                    _Beacons = beaconIDs,
+                    _BeaconThreshold = tempBeaconThresholdInitial
                 });
 
                 List<Guid> WrongbeaconIDs = new List<Guid>();
@@ -400,15 +421,19 @@ namespace IndoorNavigation.Modules
                             tempRegionWaypointInWrongWay._waypointID = items._waypointID;
                             tempRegionWaypointInWrongWay._regionID = tempGuid;
                             Console.WriteLine("waypoint ID : " + items._waypointID);
-                            foreach (Guid guid in WrongbeaconIDs)
+                            Dictionary<Guid, int> wrongWaypointsBeaconRSSI = new Dictionary<Guid, int>();
+
+                            for(int i = 0; i<WrongbeaconIDs.Count();i++)
                             {
-                                Console.WriteLine("related guid of waypoint ID : " + guid);
+                                wrongWaypointsBeaconRSSI.Add(WrongbeaconIDs[i],_navigationGraph.GetBeaconRSSIThreshold(tempGuid,WrongbeaconIDs[i]));
+                                Console.WriteLine("related guid of waypoint ID : " + WrongbeaconIDs[i]);
                             }
 
                             monitorWaypointList.Add(new WaypointBeaconsMapping
                             {
                                 _WaypointIDAndRegionID = tempRegionWaypointInWrongWay,
-                                _Beacons = WrongbeaconIDs
+                                _Beacons = WrongbeaconIDs,
+                                _BeaconThreshold = wrongWaypointsBeaconRSSI
                             });
                         }
                     }

@@ -10,7 +10,7 @@
             <waypoint id='00000000-0000-0000-0000-000000000308' name='社會局/老人福利局' type='terminal' lat='25.037978' lon='121.564525' category='Office' />
             <waypoint id='00000000-0000-0000-0000-000000000309' name='路口' type='junction' lat='25.037984' lon='121.56439' category='Others' />
             <waypoint id='00000000-0000-0000-0000-000000000310' name='路口' type='junction' lat='25.037986	' lon='121.564299' category='Others' />
-            <waypoint id='00000000-0000-0000-0000-000000000311' name='轉角處' type='junction' lat='25.037994' lon='121.564076' category='Exit' />
+            <waypoint id='00000000-0000-0000-0000-000000000311' name='轉角處' type='junction' lat='25.037994' lon='121.564076' category='Others' />
             <waypoint id='00000000-0000-0000-0000-000000000312' name='路口' type='junction' lat='25.037875' lon='121.564515' category='Bathroom' />
             <waypoint id='00000000-0000-0000-0000-000000000313' name='路口' type='junction' lat='25.037873	' lon='121.564388' category='Others' />
             <waypoint id='00000000-0000-0000-0000-000000000314' name='路口' type='junction' lat='25.037874' lon='121.564291' category='ConferenceRoom' />

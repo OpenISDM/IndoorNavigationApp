@@ -8,7 +8,7 @@
         <waypoint id = "00000000-0000-0000-0000-000000000301" name = "Elevator"/>
         <waypoint id = "00000000-0000-0000-0000-000000000302" name = "Economic Development Departmen"/>
         <waypoint id = "00000000-0000-0000-0000-000000000345" name = "Stair"/>
-        <waypoint id = "00000000-0000-0000-0000-000000000306" name = "Conference Room"/>
+        <waypoint id = "00000000-0000-0000-0000-000000000306" name = "BathRoom"/>
         <waypoint id = "00000000-0000-0000-0000-000000000307" name = "Corner"/>
         <waypoint id = "00000000-0000-0000-0000-000000000308" name = "Department of Social Welfare"/>
         <waypoint id = "00000000-0000-0000-0000-000000000309" name = "Intersection"/>

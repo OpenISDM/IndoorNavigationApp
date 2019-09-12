@@ -59,7 +59,8 @@ namespace IndoorNavigation.Modules.IPSClients
         public NavigationEvent _event { get; private set; }
         private const int _moreThanTwoIBeacon = 2;
         private List<BeaconSignalModel> _beaconSignalBuffer = new List<BeaconSignalModel>();
-        
+        private int rssiOption;
+
         public IBeaconClient()
         {
             Console.WriteLine("In Ibeacon Type");
@@ -69,28 +70,29 @@ namespace IndoorNavigation.Modules.IPSClients
             _beaconScanEventHandler = new EventHandler(HandleBeaconScan);
             Utility._ibeaconScan._event._eventHandler += _beaconScanEventHandler;
             _waypointBeaconsList = new List<WaypointBeaconsMapping>();
+            rssiOption = 0;
         }
         public void SetWaypointList(List<WaypointBeaconsMapping> waypointBeaconsList)
         {
-            int rssiOption = -70;
+            
             if (Application.Current.Properties.ContainsKey("StrongRssi"))
             {
                 if ((bool)Application.Current.Properties["StrongRssi"] == true)
                 {
-                    rssiOption = -80;
+                    rssiOption = -5;
                 }
                 else if ((bool)Application.Current.Properties["MediumRssi"] == true)
                 {
-                    rssiOption = -73;
+                    rssiOption = 0;
                 }
                 else if ((bool)Application.Current.Properties["WeakRssi"] == true)
                 {
-                    rssiOption = -50;
+                    rssiOption = 2;
                 }
             }
 
             this._waypointBeaconsList = waypointBeaconsList;
-            Utility._ibeaconScan.StartScan(rssiOption);
+            Utility._ibeaconScan.StartScan();
         }
 
         public void DetectWaypoints()
@@ -102,7 +104,7 @@ namespace IndoorNavigation.Modules.IPSClients
             {
                 removeSignalBuffer.AddRange(
                    _beaconSignalBuffer.Where(c =>
-                   c.Timestamp < DateTime.Now.AddMilliseconds(-2000)));
+                   c.Timestamp < DateTime.Now.AddMilliseconds(-500)));
 
                 foreach (var obsoleteBeaconSignal in removeSignalBuffer)
                     _beaconSignalBuffer.Remove(obsoleteBeaconSignal);
@@ -137,10 +139,9 @@ namespace IndoorNavigation.Modules.IPSClients
                 {
                     foreach (WaypointBeaconsMapping waypointBeaconsMapping in _waypointBeaconsList)
                     {
-                        
                         foreach (Guid beaconGuid in waypointBeaconsMapping._Beacons)
                         {
-                            if (beacon.UUID.Equals(beaconGuid))
+                            if ((beacon.UUID.Equals(beaconGuid))&&(beacon.RSSI>(waypointBeaconsMapping._BeaconThreshold[beacon.UUID]-rssiOption)))
                             {
                                 if (!scannedData.Keys.Contains(waypointBeaconsMapping._WaypointIDAndRegionID))
                                 {
