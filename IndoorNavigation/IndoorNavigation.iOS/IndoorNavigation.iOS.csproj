@@ -281,9 +281,5 @@
   <ItemGroup />
   <ItemGroup>
     <Folder Include="Resources\Lab\" />
-    <Folder Include="Resources\NTUH_YunLin\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\NTUH_YunLin\NTUH_YunLin11100001.png" />
   </ItemGroup>
 </Project>
