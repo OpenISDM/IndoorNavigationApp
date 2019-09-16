@@ -1,6 +1,6 @@
-﻿<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <first_direction_XML country='Taiwan' city_county='YunLin' industry_service='hospital' owner_organization='BeDI' building_name='NTUH_YunLin'>
-    <waypoint id = "00000000-0000-0000-0000-000000000001" Landmark = "樓梯" RelatedDirection = "0" />
+    <waypoint id = "00000000-0000-0000-0000-000000000001" Landmark = "picture" RelatedDirection = "6" />
     <waypoint id = "00000000-0000-0000-0000-000000000002" Landmark = "樓梯" RelatedDirection = "0" />
     <waypoint id = "00000000-0000-0000-0000-000000000003" Landmark = "樓梯" RelatedDirection = "0" />
     <waypoint id = "00000000-0000-0000-0000-000000000004" Landmark = "走廊" RelatedDirection = "0" />
