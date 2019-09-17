@@ -1,4 +1,4 @@
-﻿<first_direction_XML country='Taiwan' city_county='YunLin' industry_service='hospital' owner_organization='BeDI' building_name='NTUH_YunLin'>
+﻿<first_direction_XML country='Taiwan' city_county='YunLin' industry_service='hospital' owner_organization='BeDI' building_name='Lab'>
     <waypoint id = "00000000-0000-0000-0000-000000000001" Landmark = "Door" RelatedDirection = "0" />
     <waypoint id = "00000000-0000-0000-0000-000000000002" Landmark = "Calender" RelatedDirection = "6" />
     <waypoint id = "00000000-0000-0000-0000-000000000003" Landmark = "Scanner" RelatedDirection = "6" />

@@ -971,6 +971,7 @@ namespace IndoorNavigation.Modules
                     navigationInstruction._nextWaypointGuid = _waypointsOnRoute[_nextWaypointStep+1]._waypointID;
                     navigationInstruction._currentRegionGuid = _currentRegionID;
                     navigationInstruction._nextRegionGuid = _waypointsOnRoute[_nextWaypointStep + 1]._regionID;
+                    
                     //Get the progress
                     Console.WriteLine("calculate progress: {0}/{1}",
                                       _nextWaypointStep,
@@ -981,11 +982,24 @@ namespace IndoorNavigation.Modules
                                            (_waypointsOnRoute.Count - 1)), 3);
 
                     // Raise event to notify the UI/main thread with the result
-                    _event.OnEventCall(new NavigationEventArgs
+                    //if()
+                    if(navigationInstruction._information._connectionType==ConnectionType.VirtualHallway)
                     {
-                        _result = NavigationResult.Run,
-                        _nextInstruction = navigationInstruction
-                    });
+                        _event.OnEventCall(new NavigationEventArgs
+                        {
+                            _result = NavigationResult.ArriveVirtualPoint,
+                            _nextInstruction = navigationInstruction
+                        });
+                    }
+                    else
+                    {
+                        _event.OnEventCall(new NavigationEventArgs
+                        {
+                            _result = NavigationResult.Run,
+                            _nextInstruction = navigationInstruction
+                        });
+                    }
+                   
                 }
                 else if (_nextWaypointStep >= 1 &&
                     _waypointsOnWrongWay[_waypointsOnRoute[_nextWaypointStep - 1]].Contains(detectWrongWay) == false)
@@ -1019,6 +1033,7 @@ namespace IndoorNavigation.Modules
             AdjustRoute,
             Arrival,
             NoRoute,
+            ArriveVirtualPoint
         }
 
         public class NavigationInstruction

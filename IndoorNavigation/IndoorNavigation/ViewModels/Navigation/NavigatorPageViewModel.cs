@@ -180,7 +180,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                     Utility._textToSpeech.Speak(
                         CurrentStepLabel,
                         _resourceManager.GetString("CULTURE_VERSION_STRING", currentLanguage));
-
+                    Stop();
 					break;
 
                 case NavigationResult.NoRoute:
@@ -188,7 +188,21 @@ namespace IndoorNavigation.ViewModels.Navigation
                     GoAdjustAvoidType();
                     Stop();
                     break;
+                case NavigationResult.ArriveVirtualPoint:
+                    SetInstruction(instruction, out currentStepLabel, out currentStepImage, out firstDirectionPicture, out rotationValue, out locationValue);
+                    CurrentStepLabel = currentStepLabel;
+                    CurrentStepImage = "Arrived";
+                    NavigationProgress = 100;
+                    CurrentWaypointName = _xmlInformation.GiveWaypointName(instruction._currentWaypointGuid);
+                    FirstDirectionPicture = firstDirectionPicture;
+                    InstructionLocationValue = locationValue;
+                    RotationValue = rotationValue;
+                    Utility._textToSpeech.Speak(
+                        CurrentStepLabel,
+                        _resourceManager.GetString("CULTURE_VERSION_STRING", currentLanguage));
 
+                    Stop();
+                    break;
 
             }
 		}
@@ -289,7 +303,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                        
                         pictureName = _navigationGraph.GetBuildingName() + regionString.Substring(33, 3) + waypointString.Substring(31, 5);
                         string picturePath = Path.Combine(_navigationGraph.GetBuildingName(),pictureName);
-                        Console.WriteLine("PictureName : " + pictureName);
+                        Console.WriteLine("PictureName : " + picturePath);
                         stepLabel = string.Format(
                         _resourceManager.GetString(
                             "DIRECTION_INITIAIL_STRING",

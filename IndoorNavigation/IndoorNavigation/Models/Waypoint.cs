@@ -53,7 +53,7 @@ namespace IndoorNavigation.Models
         public Guid _id { get; set; }
         public string _name { get; set; }
         public LocationType _type { get; set; }
-        public CategoryType _category { get; set; }
+        public List<CategoryType> _category { get; set; }
         public List<Guid> _neighbors { get; set; }
 
         // We should save lon/lat inforamtion for calculating distance of

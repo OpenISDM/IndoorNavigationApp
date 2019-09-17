@@ -116,7 +116,7 @@ namespace IndoorNavigation.Modules.IPSClients
                     _beaconSignalBuffer.Remove(obsoleteBeaconSignal);
 
                 //BeaconSignalModel beaconSignalModel = new BeaconSignalModel();
-                //beaconSignalModel.UUID = new Guid("00000016-0000-0001-9500-000000014500");
+                //beaconSignalModel.UUID = new Guid("00000015-0000-0001-6000-000000016000");
                 //_beaconSignalBuffer.Add(beaconSignalModel);
 
                 foreach (BeaconSignalModel beacon in _beaconSignalBuffer)
@@ -143,7 +143,6 @@ namespace IndoorNavigation.Modules.IPSClients
                     }
                 }
             }
-
             Console.WriteLine("<< In DetectWaypoints");
         }
 
