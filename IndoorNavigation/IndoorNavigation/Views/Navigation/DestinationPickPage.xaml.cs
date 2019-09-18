@@ -94,13 +94,9 @@ namespace IndoorNavigation.Views.Navigation
 
             foreach (KeyValuePair<Guid, IndoorNavigation.Models.Region> pairRegion in _navigationGraph.GetRegions())
             {
-                string floorName = pairRegion.Value._floor.ToString() + " "
-                    + _resourceManager.GetString("FLOOR_STRING",
-                                                 CrossMultilingual.Current.CurrentCultureInfo);
-
+                string floorName = _nameInformation.GiveRegionName(pairRegion.Value._id);
                 if (pairRegion.Value._waypointsByCategory.ContainsKey(category))
                 {
-
                     foreach (Waypoint waypoint in pairRegion.Value._waypointsByCategory[category])
                     {
                         string waypointName = waypoint._name;

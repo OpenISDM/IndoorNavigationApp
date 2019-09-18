@@ -192,51 +192,51 @@ namespace IndoorNavigation.Models.NavigaionLayer
                     waypoint._lat = Double.Parse(xmlWaypointElement.GetAttribute("lat"));
                     Console.WriteLine("lat : " + waypoint._lat);
 
-                    string stringCategory = xmlWaypointElement.GetAttribute("category");
+                    //string stringCategory = xmlWaypointElement.GetAttribute("category");
 
-                    string[] parseCategory = stringCategory.Split(';');
-                    waypoint._category = new List<CategoryType>();
-                    foreach(string category in parseCategory)
-                    {
-                        waypoint._category.Add((CategoryType)Enum.Parse(typeof(CategoryType),
-                                                 category,
-                                                 false));
-                        Console.WriteLine("category : " + category);
-                    }
-
-                    //waypoint._category =
-                    //    (CategoryType)Enum.Parse(typeof(CategoryType),
-                    //                             xmlWaypointElement.GetAttribute("category"),
-                    //                             false);
-                    
-
-                    // fill data into _waypointsByCategory structure
-
-                    foreach(CategoryType categoryTypein in waypoint._category)
-                    {
-                        if (!region._waypointsByCategory.ContainsKey(categoryTypein))
-                        {
-                            List<Waypoint> tempList = new List<Waypoint>();
-                            tempList.Add(waypoint);
-                            region._waypointsByCategory.Add(categoryTypein, tempList);
-                        }
-                        else
-                        {
-                            region._waypointsByCategory[categoryTypein].Add(waypoint);
-                        }
-                    }
-
-                    //if (!region._waypointsByCategory.ContainsKey(waypoint._category))
+                    //string[] parseCategory = stringCategory.Split(';');
+                    //waypoint._category = new List<CategoryType>();
+                    //foreach(string category in parseCategory)
                     //{
-                    //    List<Waypoint> tempList = new List<Waypoint>();
-                    //    tempList.Add(waypoint);
-                    //    region._waypointsByCategory.Add(waypoint._category, tempList);
+                    //    waypoint._category.Add((CategoryType)Enum.Parse(typeof(CategoryType),
+                    //                             category,
+                    //                             false));
+                    //    Console.WriteLine("category : " + category);
                     //}
-                    //else
+
+                    waypoint._category =
+                        (CategoryType)Enum.Parse(typeof(CategoryType),
+                                                 xmlWaypointElement.GetAttribute("category"),
+                                                 false);
+
+
+                    //fill data into _waypointsByCategory structure
+
+                    //foreach (CategoryType categoryTypein in waypoint._category)
                     //{
-                    //    region._waypointsByCategory[waypoint._category].Add(waypoint);
+                    //    if (!region._waypointsByCategory.ContainsKey(categoryTypein))
+                    //    {
+                    //        List<Waypoint> tempList = new List<Waypoint>();
+                    //        tempList.Add(waypoint);
+                    //        region._waypointsByCategory.Add(categoryTypein, tempList);
+                    //    }
+                    //    else
+                    //    {
+                    //        region._waypointsByCategory[categoryTypein].Add(waypoint);
+                    //    }
                     //}
-               }
+
+                    if (!region._waypointsByCategory.ContainsKey(waypoint._category))
+                    {
+                        List<Waypoint> tempList = new List<Waypoint>();
+                        tempList.Add(waypoint);
+                        region._waypointsByCategory.Add(waypoint._category, tempList);
+                    }
+                    else
+                    {
+                        region._waypointsByCategory[waypoint._category].Add(waypoint);
+                    }
+                }
                 _regions.Add(region._id, region);
             }
 
@@ -432,23 +432,23 @@ namespace IndoorNavigation.Models.NavigaionLayer
                     Console.WriteLine("lat : " + waypoint._lat);
 
 
-                    string stringCategory = xmlWaypointElement.GetAttribute("category");
+                    //string stringCategory = xmlWaypointElement.GetAttribute("category");
 
-                    string[] parseCategory = stringCategory.Split(';');
-                    waypoint._category = new List<CategoryType>();
-                    foreach (string category in parseCategory)
-                    {
-                        waypoint._category.Add((CategoryType)Enum.Parse(typeof(CategoryType),
-                                                 category,
-                                                 false));
-                        Console.WriteLine("category : " + category);
-                    }
+                    //string[] parseCategory = stringCategory.Split(';');
+                    //waypoint._category = new List<CategoryType>();
+                    //foreach (string category in parseCategory)
+                    //{
+                    //    waypoint._category.Add((CategoryType)Enum.Parse(typeof(CategoryType),
+                    //                             category,
+                    //                             false));
+                    //    Console.WriteLine("category : " + category);
+                    //}
 
-                    //waypoint._category =
-                    //    (CategoryType)Enum.Parse(typeof(CategoryType),
-                    //                             xmlWaypointElement.GetAttribute("category"),
-                    //                             false);
-                    //Console.WriteLine("category : " + waypoint._category);
+                    waypoint._category =
+                        (CategoryType)Enum.Parse(typeof(CategoryType),
+                                                 xmlWaypointElement.GetAttribute("category"),
+                                                 false);
+                    Console.WriteLine("category : " + waypoint._category);
 
                     navigraph._waypoints.Add(waypoint._id, waypoint);
                 }

@@ -34,6 +34,16 @@
             <waypoint id='00000000-0000-0000-0000-000000323435' name='路口' type='junction' lat='25.036693' lon='121.564324' category='Others' /> 
             <waypoint id='00000000-0000-0000-0000-000000000333' name='轉角處' type='junction' lat='25.036645' lon='121.564489' category='Others' />
             <waypoint id='00000000-0000-0000-0000-000000000336' name='南區電梯' type='portal' lat='25.036547' lon='121.564494' category='Elevator' />
+            
+            <!--<waypoint id='00000000-0000-0000-0000-000000003210' name='會議室210' type='terminal' lat='25.038191' lon='121.564393' category='ConferenceRoom' />
+            <waypoint id='00000000-0000-0000-0000-000000003209' name='會議室209' type='terminal' lat='25.038135' lon='121.564392' category='ConferenceRoom' />
+            <waypoint id='00000000-0000-0000-0000-000000003208' name='會議室208' type='terminal' lat='25.038086' lon='121.564390' category='ConferenceRoom' />
+            <waypoint id='00000000-0000-0000-0000-000000003207' name='會議室207' type='terminal' lat='25.038194' lon='121.564307' category='ConferenceRoom' />
+            <waypoint id='00000000-0000-0000-0000-000000003206' name='會議室206' type='terminal' lat='25.038135' lon='121.564304' category='ConferenceRoom' />
+            
+            <waypoint id='00000000-0000-0000-0000-000000003218' name='會議室S218' type='terminal' lat='25.036725' lon='121.564386' category='ConferenceRoom' />
+            <waypoint id='00000000-0000-0000-0000-000000003217' name='會議室S217' type='terminal' lat='25.036868' lon='121.564386' category='ConferenceRoom' />
+            <waypoint id='00000000-0000-0000-0000-000000003216' name='會議室S216' type='terminal' lat='25.036910' lon='121.564384' category='ConferenceRoom' /> -->
         </region>
         <region id='11111111-1111-1111-1111-111111111111' ips_type='LBeacon' name='B1' floor='-1'>
             <waypoint id='00000000-0000-0000-0000-000000000101' name='停車場出入口n1' type='terminal' lat='25.038385' lon='121.564006' category='Parking' />

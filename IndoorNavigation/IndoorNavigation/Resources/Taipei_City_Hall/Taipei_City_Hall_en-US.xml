@@ -32,22 +32,22 @@
     <waypoint id = "00000000-0000-0000-0000-000000000333" Landmark = "Bulletin Board" RelatedDirection = "2" />
     <waypoint id = "00000000-0000-0000-0000-000000000336" Landmark = "Elevator" RelatedDirection = "2" />
     
-    <waypoint id='00000000-0000-0000-0000-000000000101' Landmark='Entrance of Parking n1' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000102' Landmark='Block n2' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000103' Landmark='Block n3' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000104' Landmark='Block n4' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000105' Landmark='Block n5' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000106' Landmark='Block n6' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000107' Landmark='Entrance n7' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000108' Landmark='Corner n8' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000109' Landmark='Block n9' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000110' Landmark='Block n10' RelatedDirection = '2'/>
+    <waypoint id='00000000-0000-0000-0000-000000000101' Landmark='Entrance of Garage' RelatedDirection = '2'/>
+    <waypoint id='00000000-0000-0000-0000-000000000102' Landmark='Intersection' RelatedDirection = '2'/>
+    <waypoint id='00000000-0000-0000-0000-000000000103' Landmark='Intersection' RelatedDirection = '2'/>
+    <waypoint id='00000000-0000-0000-0000-000000000104' Landmark='Intersection' RelatedDirection = '2'/>
+    <waypoint id='00000000-0000-0000-0000-000000000105' Landmark='Intersection' RelatedDirection = '2'/>
+    <waypoint id='00000000-0000-0000-0000-000000000106' Landmark='Intersection' RelatedDirection = '2'/>
+    <waypoint id='00000000-0000-0000-0000-000000000107' Landmark='Entrance' RelatedDirection = '2'/>
+    <waypoint id='00000000-0000-0000-0000-000000000108' Landmark='Corner' RelatedDirection = '2'/>
+    <waypoint id='00000000-0000-0000-0000-000000000109' Landmark='Block' RelatedDirection = '2'/>
+    <waypoint id='00000000-0000-0000-0000-000000000110' Landmark='Block ' RelatedDirection = '2'/>
     <waypoint id='00000000-0000-0000-0000-000000000111' Landmark='Central Area Entrance n11' RelatedDirection = '2'/>
     <waypoint id='00000000-0000-0000-0000-000000000112' Landmark='Block n12' RelatedDirection = '2'/>
     <waypoint id='00000000-0000-0000-0000-000000000113' Landmark='Block n13' RelatedDirection = '2'/>
     <waypoint id='00000000-0000-0000-0000-000000000114' Landmark='Corner n14' RelatedDirection = '2'/>
             
-    <waypoint id='00000000-0000-0000-0000-000000000201' Landmark='Entrance of Parking s1' RelatedDirection = '2'/>
+    <waypoint id='00000000-0000-0000-0000-000000000201' Landmark='Entrance of Garage' RelatedDirection = '2'/>
     <waypoint id='00000000-0000-0000-0000-000000000202' Landmark='Block s2' RelatedDirection = '2'/>
     <waypoint id='00000000-0000-0000-0000-000000000203' Landmark='Block s3' RelatedDirection = '2'/>
     <waypoint id='00000000-0000-0000-0000-000000000204' Landmark='Block s4' RelatedDirection = '2'/>
