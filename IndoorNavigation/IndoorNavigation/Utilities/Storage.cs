@@ -169,8 +169,8 @@ namespace IndoorNavigation.Modules.Utilities
 
         public static void DeleteInformationML(string fileName)
         {
-            string filePath_en = Path.Combine(_informationFolder, fileName + "info_en-US.xml");
-            string filePath_zh = Path.Combine(_informationFolder, fileName + "info_zh.xml");
+            string filePath_en = Path.Combine(_informationFolder, fileName + "_info_en-US.xml");
+            string filePath_zh = Path.Combine(_informationFolder, fileName + "_info_zh.xml");
             if (!Directory.Exists(_informationFolder))
                 Directory.CreateDirectory(_informationFolder);
 

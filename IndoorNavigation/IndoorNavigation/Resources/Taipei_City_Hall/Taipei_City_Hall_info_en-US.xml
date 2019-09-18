@@ -9,6 +9,9 @@
         <waypoint id = "00000000-0000-0000-0000-000000000302" name = "Economic Development Department"/>
         <waypoint id = "00000000-0000-0000-0000-000000000345" name = "Intersection"/>
         <waypoint id = "00000000-0000-0000-0000-000000000306" name = "Bathroom"/>
+        
+        <waypoint id = "00000000-0000-0000-0000-100000000306" name = "Conference Room"/>
+        
         <waypoint id = "00000000-0000-0000-0000-000000000307" name = "Corner"/>
         <waypoint id = "00000000-0000-0000-0000-000000000308" name = "Department of Social Welfare"/>
         <waypoint id = "00000000-0000-0000-0000-000000000309" name = "Intersection"/>
@@ -23,6 +26,7 @@
         <waypoint id = "00000000-0000-0000-0000-000000000317" name = "Elevator"/>
         <waypoint id = "00000000-0000-0000-0000-000000000318" name = "Escalator"/>
         <waypoint id = "00000000-0000-0000-0000-000000000319" name = "Rest Area"/>
+        <waypoint id = "00000000-0000-0000-0000-100000000319" name = "Stair"/>
         <waypoint id = "00000000-0000-0000-0000-000000000320" name = "Parent-child theater"/>
         <waypoint id = "00000000-0000-0000-0000-000000000321" name = "Stair"/>
         <waypoint id = "00000000-0000-0000-0000-000000000322" name = "Intersection"/>
@@ -79,7 +83,8 @@
         <waypoint id='00000000-0000-0000-0000-000000001213' name='Police Officer'/>
         <waypoint id='00000000-0000-0000-0000-000000001415' name='Intersection'/>
         <waypoint id='00000000-0000-0000-0000-000000001617' name='Department of Lan Administration'/>
-        <waypoint id='00000000-0000-0000-0000-000000001819' name='Elevator'/>
+        <waypoint id='00000000-0000-0000-0000-000000001819' name='South Stair'/>
+        <waypoint id='00000000-0000-0000-0000-000000000020' name='Elevator'/>
         <waypoint id='00000000-0000-0000-0000-000000002122' name='Intersection of Elevator'/>
         <waypoint id='00000000-0000-0000-0000-000000000023' name='Cargo Elevator'/>
         <waypoint id='00000000-0000-0000-0000-000000002425' name='Intersection'/>

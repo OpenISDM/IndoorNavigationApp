@@ -3,6 +3,9 @@
     <waypoint id = "00000000-0000-0000-0000-000000000302" Landmark = "The door of Economic Development Department" RelatedDirection = "4" />
     <waypoint id = "00000000-0000-0000-0000-000000000345" Landmark = "Stairs" RelatedDirection = "4" />
     <waypoint id = "00000000-0000-0000-0000-000000000306" Landmark = "Bathroom" RelatedDirection = "0" />
+    
+    <waypoint id = "00000000-0000-0000-0000-100000000306" Landmark = "Bathroom" RelatedDirection = "0" />
+    
     <waypoint id = "00000000-0000-0000-0000-000000000307" Landmark = "Exit" RelatedDirection = "4" />
     <waypoint id = "00000000-0000-0000-0000-000000000308" Landmark = "Department of Social Welfare" RelatedDirection = "0" />
     <waypoint id = "00000000-0000-0000-0000-000000000309" Landmark = "Stone chair/Screen Wall" RelatedDirection = "0" />
@@ -16,6 +19,7 @@
     <waypoint id = "00000000-0000-0000-0000-000000000317" Landmark = "Exit" RelatedDirection = "2" />
     <waypoint id = "00000000-0000-0000-0000-000000000318" Landmark = "Escalator" RelatedDirection = "4" />
     <waypoint id = "00000000-0000-0000-0000-000000000319" Landmark = "Stairs" RelatedDirection = "2" />
+    <waypoint id = "00000000-0000-0000-0000-100000000319" Landmark = "Stairs" RelatedDirection = "2" />
     <waypoint id = "00000000-0000-0000-0000-000000000320" Landmark = "Parent-child theater" RelatedDirection = "2" />
     <waypoint id = "00000000-0000-0000-0000-000000000321" Landmark = "Stair" RelatedDirection = "2" />
     <waypoint id = "00000000-0000-0000-0000-000000000322" Landmark = "Elevator" RelatedDirection = "6" />

@@ -3,6 +3,9 @@
     <waypoint id = "00000000-0000-0000-0000-000000000302" Landmark = "產業發展局門口" RelatedDirection = "4" />
     <waypoint id = "00000000-0000-0000-0000-000000000345" Landmark = "樓梯" RelatedDirection = "4" />
     <waypoint id = "00000000-0000-0000-0000-000000000306" Landmark = "廁所" RelatedDirection = "0" />
+    
+    <waypoint id = "00000000-0000-0000-0000-100000000306" Landmark = "廁所" RelatedDirection = "0" />
+    
     <waypoint id = "00000000-0000-0000-0000-000000000307" Landmark = "緊急出口大門" RelatedDirection = "4" />
     <waypoint id = "00000000-0000-0000-0000-000000000308" Landmark = "社會局/老人福利局" RelatedDirection = "0" />
     <waypoint id = "00000000-0000-0000-0000-000000000309" Landmark = "石椅/電視牆" RelatedDirection = "0" />
@@ -16,6 +19,7 @@
     <waypoint id = "00000000-0000-0000-0000-000000000317" Landmark = "出口方向" RelatedDirection = "2" />
     <waypoint id = "00000000-0000-0000-0000-000000000318" Landmark = "手扶梯" RelatedDirection = "4" />
     <waypoint id = "00000000-0000-0000-0000-000000000319" Landmark = "樓梯" RelatedDirection = "2" />
+    <waypoint id = "00000000-0000-0000-0000-100000000319" Landmark = "樓梯" RelatedDirection = "2" />
     <waypoint id = "00000000-0000-0000-0000-000000000320" Landmark = "親子劇場" RelatedDirection = "2" />
     <waypoint id = "00000000-0000-0000-0000-000000000321" Landmark = "樓梯" RelatedDirection = "2" />
     <waypoint id = "00000000-0000-0000-0000-000000000322" Landmark = "電梯" RelatedDirection = "6" />

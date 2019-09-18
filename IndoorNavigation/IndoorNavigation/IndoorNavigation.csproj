@@ -81,16 +81,16 @@
     <EmbeddedResource Include="Resources\Lab\Lab_zh.xml" />
     <EmbeddedResource Include="Resources\Lab\Lab_info_en-US.xml" />
     <EmbeddedResource Include="Resources\Lab\Lab_info_zh.xml" />
-    <EmbeddedResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall_en-US.xml" />
-    <EmbeddedResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall_zh.xml" />
-    <EmbeddedResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall_info_zh.xml" />
-    <EmbeddedResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall.xml" />
-    <EmbeddedResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall_info_en-US.xml" />
     <EmbeddedResource Include="Resources\NTUH_YunLin\NTUH_YunLin_en-US.xml" />
     <EmbeddedResource Include="Resources\NTUH_YunLin\NTUH_YunLin_zh.xml" />
     <EmbeddedResource Include="Resources\NTUH_YunLin\NTUH_YunLin.xml" />
     <EmbeddedResource Include="Resources\NTUH_YunLin\NTUH_YunLin_info_zh.xml" />
     <EmbeddedResource Include="Resources\NTUH_YunLin\NTUH_YunLin_info_en-US.xml" />
+    <EmbeddedResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall_info_en-US.xml" />
+    <EmbeddedResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall_en-US.xml" />
+    <EmbeddedResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall_zh.xml" />
+    <EmbeddedResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall.xml" />
+    <EmbeddedResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall_info_zh.xml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Views\PopUpPage\DownloadPopUpPage.xaml">
@@ -113,17 +113,18 @@
     <None Remove="Resources\Lab\Lab_zh.xml" />
     <None Remove="Resources\Lab\Lab_info_en-US.xml" />
     <None Remove="Resources\Lab\Lab_Info_zh.xml" />
-    <None Remove="Resources\Taipei_City_Hall\Taipei_City_Hall_en-US.xml" />
-    <None Remove="Resources\Taipei_City_Hall\Taipei_City_Hall_zh.xml" />
     <None Remove="Resources\Taipei_City_Hall\Taipei_City_Hall_Info_en-US.xml" />
     <None Remove="Resources\Taipei_City_Hall\Taipei_City_Hall_Info_zh.xml" />
-    <None Remove="Resources\Taipei_City_Hall\Taipei_City_Hall.xml" />
-    <None Remove="Resources\Taipei_City_Hall\Taipei_City_Hall_info_en-US.xml" />
     <None Remove="Resources\NTUH_YunLin\NTUH_YunLin_en-US.xml" />
     <None Remove="Resources\NTUH_YunLin\NTUH_YunLin_zh.xml" />
     <None Remove="Resources\NTUH_YunLin\NTUH_YunLin.xml" />
     <None Remove="Resources\NTUH_YunLin\NTUH_YunLin_info_zh.xml" />
     <None Remove="Resources\NTUH_YunLin\NTUH_YunLin_info_en-US.xml" />
+    <None Remove="Resources\Taipei_City_Hall\Taipei_City_Hall_info_en-US.xml" />
+    <None Remove="Resources\Taipei_City_Hall\Taipei_City_Hall_en-US.xml" />
+    <None Remove="Resources\Taipei_City_Hall\Taipei_City_Hall_zh.xml" />
+    <None Remove="Resources\Taipei_City_Hall\Taipei_City_Hall.xml" />
+    <None Remove="Resources\Taipei_City_Hall\Taipei_City_Hall_info_zh.xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Resources\AppResources.Designer.cs">
