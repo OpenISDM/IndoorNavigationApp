@@ -5,6 +5,9 @@
         <region id='22222222-2222-2222-2222-222222222222' name='2F'/>
     </regions>
     <waypoints>
+        <waypoint id = "00000000-0000-0000-0000-000000003206" name = "Conference Room 206"/> 
+        
+        
         <waypoint id = "00000000-0000-0000-0000-000000000301" name = "North Elevator"/>
         <waypoint id = "00000000-0000-0000-0000-000000000302" name = "Economic Development Department"/>
         <waypoint id = "00000000-0000-0000-0000-000000000345" name = "Intersection"/>

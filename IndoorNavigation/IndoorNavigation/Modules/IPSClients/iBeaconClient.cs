@@ -79,7 +79,7 @@ namespace IndoorNavigation.Modules.IPSClients
             {
                 if ((bool)Application.Current.Properties["StrongRssi"] == true)
                 {
-                    rssiOption = -5;
+                    rssiOption = 5;
                 }
                 else if ((bool)Application.Current.Properties["MediumRssi"] == true)
                 {
@@ -87,7 +87,7 @@ namespace IndoorNavigation.Modules.IPSClients
                 }
                 else if ((bool)Application.Current.Properties["WeakRssi"] == true)
                 {
-                    rssiOption = 2;
+                    rssiOption = -2;
                 }
             }
 
@@ -104,7 +104,7 @@ namespace IndoorNavigation.Modules.IPSClients
             {
                 removeSignalBuffer.AddRange(
                    _beaconSignalBuffer.Where(c =>
-                   c.Timestamp < DateTime.Now.AddMilliseconds(-500)));
+                   c.Timestamp < DateTime.Now.AddMilliseconds(-1000)));
 
                 foreach (var obsoleteBeaconSignal in removeSignalBuffer)
                     _beaconSignalBuffer.Remove(obsoleteBeaconSignal);

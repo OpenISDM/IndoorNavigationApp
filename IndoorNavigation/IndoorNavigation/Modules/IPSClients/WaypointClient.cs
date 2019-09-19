@@ -82,11 +82,11 @@ namespace IndoorNavigation.Modules.IPSClients
             {
                 if ((bool)Application.Current.Properties["StrongRssi"] == true)
                 {
-                    rssiOption = 15;
+                    rssiOption = 5;
                 }
                 else if ((bool)Application.Current.Properties["WeakRssi"] == true)
                 {
-                    rssiOption = -10;
+                    rssiOption = -5;
                 }
                 else if ((bool)Application.Current.Properties["MediumRssi"] == true)
                 {
@@ -115,9 +115,9 @@ namespace IndoorNavigation.Modules.IPSClients
                 foreach (var obsoleteBeaconSignal in removeSignalBuffer)
                     _beaconSignalBuffer.Remove(obsoleteBeaconSignal);
 
-                //BeaconSignalModel beaconSignalModel = new BeaconSignalModel();
-                //beaconSignalModel.UUID = new Guid("00000015-0000-0001-6000-000000016000");
-                //_beaconSignalBuffer.Add(beaconSignalModel);
+                BeaconSignalModel beaconSignalModel = new BeaconSignalModel();
+                beaconSignalModel.UUID = new Guid("00000015-0000-2503-8380-000021564175");
+                _beaconSignalBuffer.Add(beaconSignalModel);
 
                 foreach (BeaconSignalModel beacon in _beaconSignalBuffer)
                 {

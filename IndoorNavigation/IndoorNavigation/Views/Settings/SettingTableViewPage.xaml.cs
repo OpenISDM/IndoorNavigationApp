@@ -108,7 +108,7 @@ namespace IndoorNavigation.Views.Settings
             if (Application.Current.Properties.ContainsKey("LanguagePicker"))
             {
                 LanguagePicker.SelectedItem = Application.Current.Properties["LanguagePicker"].ToString();
-            }
+            }   
         }
 
         async void LicenseBtn_Tapped(object sender, EventArgs e)

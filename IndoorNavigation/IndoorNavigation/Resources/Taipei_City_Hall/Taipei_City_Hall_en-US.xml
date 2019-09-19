@@ -1,4 +1,5 @@
 <first_direction_XML country='Taiwan' city_county='YunLin' industry_service='hospital' owner_organization='BeDI' building_name='NTUH_YunLin'>
+    <waypoint id = "00000000-0000-0000-0000-000000003206" Landmark = "Conference Room 206" RelatedDirection = "6" />
     <waypoint id = "00000000-0000-0000-0000-000000000301" Landmark = "Elevator" RelatedDirection = "2" />
     <waypoint id = "00000000-0000-0000-0000-000000000302" Landmark = "The door of Economic Development Department" RelatedDirection = "4" />
     <waypoint id = "00000000-0000-0000-0000-000000000345" Landmark = "Stairs" RelatedDirection = "4" />
@@ -36,46 +37,46 @@
     <waypoint id = "00000000-0000-0000-0000-000000000333" Landmark = "Bulletin Board" RelatedDirection = "2" />
     <waypoint id = "00000000-0000-0000-0000-000000000336" Landmark = "Elevator" RelatedDirection = "2" />
     
-    <waypoint id='00000000-0000-0000-0000-000000000101' Landmark='Entrance of Garage' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000102' Landmark='Intersection' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000103' Landmark='Intersection' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000104' Landmark='Intersection' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000105' Landmark='Intersection' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000106' Landmark='Intersection' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000107' Landmark='Entrance' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000108' Landmark='Corner' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000109' Landmark='Block' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000110' Landmark='Block ' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000111' Landmark='Central Area Entrance n11' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000112' Landmark='Block n12' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000113' Landmark='Block n13' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000114' Landmark='Corner n14' RelatedDirection = '2'/>
+    <waypoint id='00000000-0000-0000-0000-000000000101' Landmark='Entrance of Garage' RelatedDirection = '0'/>
+    <waypoint id='00000000-0000-0000-0000-000000000102' Landmark='picture' RelatedDirection = '4'/>
+    <waypoint id='00000000-0000-0000-0000-000000000103' Landmark='picture' RelatedDirection = '4'/>
+    <waypoint id='00000000-0000-0000-0000-000000000104' Landmark='North Elevator' RelatedDirection = '0'/>
+    <waypoint id='00000000-0000-0000-0000-000000000105' Landmark='picture' RelatedDirection = '4'/>
+    <waypoint id='00000000-0000-0000-0000-000000000106' Landmark='picture' RelatedDirection = '4'/>
+    <waypoint id='00000000-0000-0000-0000-000000000107' Landmark='Entrance of Garage' RelatedDirection = '0'/>
+    <waypoint id='00000000-0000-0000-0000-000000000108' Landmark='picture' RelatedDirection = '2'/>
+    <waypoint id='00000000-0000-0000-0000-000000000109' Landmark='picture' RelatedDirection = '2'/>
+    <waypoint id='00000000-0000-0000-0000-000000000110' Landmark='Entrance of Central Area' RelatedDirection = '2'/>
+    <waypoint id='00000000-0000-0000-0000-000000000111' Landmark='Entrance of Central Area' RelatedDirection = '4'/>
+    <waypoint id='00000000-0000-0000-0000-000000000112' Landmark='Entrance of Central Area' RelatedDirection = '6'/>
+    <waypoint id='00000000-0000-0000-0000-000000000113' Landmark='picture' RelatedDirection = '6'/>
+    <waypoint id='00000000-0000-0000-0000-000000000114' Landmark='picture' RelatedDirection = '6'/>
             
-    <waypoint id='00000000-0000-0000-0000-000000000201' Landmark='Entrance of Garage' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000202' Landmark='Block s2' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000203' Landmark='Block s3' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000204' Landmark='Block s4' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000205' Landmark='Block s5' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000206' Landmark='Block s6' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000207' Landmark='Entrance of Parking s7' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000208' Landmark='Corner s8' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000209' Landmark='Block s9' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000210' Landmark='Block s10' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000211' Landmark='Entrance of Central Area s11' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000212' Landmark='Block s12' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000213' Landmark='Block s13' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000214' Landmark='Corner s14' RelatedDirection = '2'/>
+    <waypoint id='00000000-0000-0000-0000-000000000201' Landmark='Entrance of Garage' RelatedDirection = '4'/>
+    <waypoint id='00000000-0000-0000-0000-000000000202' Landmark='picture' RelatedDirection = '0'/>
+    <waypoint id='00000000-0000-0000-0000-000000000203' Landmark='picture' RelatedDirection = '0'/>
+    <waypoint id='00000000-0000-0000-0000-000000000204' Landmark='South Elevator' RelatedDirection = '4'/>
+    <waypoint id='00000000-0000-0000-0000-000000000205' Landmark='picture' RelatedDirection = '0'/>
+    <waypoint id='00000000-0000-0000-0000-000000000206' Landmark='picture' RelatedDirection = '0'/>
+    <waypoint id='00000000-0000-0000-0000-000000000207' Landmark='Entrance of Garage' RelatedDirection = '4'/>
+    <waypoint id='00000000-0000-0000-0000-000000000208' Landmark='picture' RelatedDirection = '2'/>
+    <waypoint id='00000000-0000-0000-0000-000000000209' Landmark='picture' RelatedDirection = '2'/>
+    <waypoint id='00000000-0000-0000-0000-000000000210' Landmark='Entrance of Central Area' RelatedDirection = '2'/>
+    <waypoint id='00000000-0000-0000-0000-000000000211' Landmark='Entrance of Central Area' RelatedDirection = '0'/>
+    <waypoint id='00000000-0000-0000-0000-000000000212' Landmark='Entrance of Central Area' RelatedDirection = '6'/>
+    <waypoint id='00000000-0000-0000-0000-000000000213' Landmark='picture' RelatedDirection = '6'/>
+    <waypoint id='00000000-0000-0000-0000-000000000214' Landmark='picture' RelatedDirection = '6'/>
       
     <waypoint id='00000000-0000-0000-0000-000000001102' Landmark='North Parking' RelatedDirection = '0'/>
     <waypoint id='00000000-0000-0000-0000-000000000304' Landmark='North Parking' RelatedDirection = '0'/>
     <waypoint id='00000000-0000-0000-0000-000000000005' Landmark='Exit' RelatedDirection = '2'/>
     <waypoint id='00000000-0000-0000-0000-000000000607' Landmark='Elevator' RelatedDirection = '6'/>
     <waypoint id='00000000-0000-0000-0000-000000000809' Landmark='Stair' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000001011' Landmark='Here need Picture' RelatedDirection = '2'/>
+    <waypoint id='00000000-0000-0000-0000-000000001011' Landmark='picture' RelatedDirection = '6'/>
     <waypoint id='00000000-0000-0000-0000-000000001213' Landmark='Police Office' RelatedDirection = '6'/>
-    <waypoint id='00000000-0000-0000-0000-000000001415' Landmark='Here need Picture' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000001617' Landmark='台北市政府徵收土地發放補償服務中心' RelatedDirection = '6'/>
-    <waypoint id='00000000-0000-0000-0000-000000001819' Landmark='台北市政府衛生局長期照護服務台' RelatedDirection = '6'/>
+    <waypoint id='00000000-0000-0000-0000-000000001415' Landmark='picture' RelatedDirection = '6'/>
+    <waypoint id='00000000-0000-0000-0000-000000001617' Landmark='Land Acquisition Compensation Service Center' RelatedDirection = '6'/>
+    <waypoint id='00000000-0000-0000-0000-000000001819' Landmark='Information Counter, Long-term Care Division' RelatedDirection = '6'/>
     <waypoint id='00000000-0000-0000-0000-000000000020' Landmark='Exit' RelatedDirection = '2'/>
     <waypoint id='00000000-0000-0000-0000-000000002122' Landmark='Parking' RelatedDirection = '4'/>
     <waypoint id='00000000-0000-0000-0000-000000000023' Landmark='Exit' RelatedDirection = '6'/>
@@ -85,18 +86,18 @@
     <waypoint id='00000000-0000-0000-0000-000000000029' Landmark='North Parking' RelatedDirection = '6'/>
     <waypoint id='00000000-0000-0000-0000-000000000030' Landmark='Department of Information and Tourism' RelatedDirection = '6'/>
     <waypoint id='00000000-0000-0000-0000-000000000031' Landmark='Man Bathroom' RelatedDirection = '0'/>
-    <waypoint id='00000000-0000-0000-0000-000000000032' Landmark='台北市政大樓公共事務管理中心' RelatedDirection = '0'/>
-    <waypoint id='00000000-0000-0000-0000-000000000033' Landmark='主計處檔案室' RelatedDirection = '6' />
-    <waypoint id='00000000-0000-0000-0000-000000000034' Landmark='駐警隊寢室' RelatedDirection = '0'/>
+    <waypoint id='00000000-0000-0000-0000-000000000032' Landmark='Public Management Center' RelatedDirection = '0'/>
+    <waypoint id='00000000-0000-0000-0000-000000000033' Landmark='Archives Office/Accounting and Statistics Office' RelatedDirection = '6' />
+    <waypoint id='00000000-0000-0000-0000-000000000034' Landmark='Bedroom of Police' RelatedDirection = '0'/>
     <waypoint id='00000000-0000-0000-0000-000000000035' Landmark='Bank' RelatedDirection = '2'/>
     <waypoint id='00000000-0000-0000-0000-000000000036' Landmark='Exit' RelatedDirection = '6'/>
     <waypoint id='00000000-0000-0000-0000-000000000037' Landmark='Elevator' RelatedDirection = '0'/>
     <waypoint id='00000000-0000-0000-0000-000000000038' Landmark='Environment Education Center' RelatedDirection = '0'/>
     <waypoint id='00000000-0000-0000-0000-000000000040' Landmark='Elevator' RelatedDirection = '4'/>
-    <waypoint id='00000000-0000-0000-0000-000000000041' Landmark='電梯41' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000045' Landmark='南區電梯45' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000043' Landmark='北區電梯43' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000044' Landmark='廁所前岔路44' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000042' Landmark='電梯42' RelatedDirection = '2'/> 
+    <waypoint id='00000000-0000-0000-0000-000000000041' Landmark='Elevator' RelatedDirection = '2'/>
+    <waypoint id='00000000-0000-0000-0000-000000000045' Landmark='South Elevator' RelatedDirection = '2'/>
+    <waypoint id='00000000-0000-0000-0000-000000000043' Landmark='North Elevator' RelatedDirection = '2'/>
+    <waypoint id='00000000-0000-0000-0000-000000000044' Landmark='Intersection of Bathroom' RelatedDirection = '2'/>
+    <waypoint id='00000000-0000-0000-0000-000000000042' Landmark='Elevator' RelatedDirection = '2'/> 
     
 </first_direction_XML>

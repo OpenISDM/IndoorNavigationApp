@@ -271,7 +271,27 @@
     <BundleResource Include="Resources\Arrow_down.png" />
     <BundleResource Include="Resources\Escalator_down.png" />
     <BundleResource Include="Resources\Escalator_up.png" />
-    <BundleResource Include="Resources\NTUH_YunLin\NTUH_YunLin11100001.png" />
+    <BundleResource Include="Resources\NTUH_YunLin\NTUH_YunLin11100001.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11101011.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11101415.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100209.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100208.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100202.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100203.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100205.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100206.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100213.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100214.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100113.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100114.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100106.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100105.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100103.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100102.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100109.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100108.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\close_circle_button.png" />
@@ -283,5 +303,6 @@
   <ItemGroup>
     <Folder Include="Resources\Lab\" />
     <Folder Include="Resources\NTUH_YunLin\" />
+    <Folder Include="Resources\Taipei_City_Hall\" />
   </ItemGroup>
 </Project>

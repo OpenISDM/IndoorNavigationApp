@@ -50,7 +50,7 @@
                    HorizontalTextAlignment="Center"/>
             <Image x:Name="FirstDirectionPicture"
                    Source="{Binding FirstDirectionPicture}"
-                   Grid.Row="3" Grid.ColumnSpan="2" HorizontalOptions="Fill"
+                   Grid.Row="3" Grid.ColumnSpan="2" HorizontalOptions="FillAndExpand"
                    Scale="2" Margin="5,10,5,-10"/>
             <Image x:Name="CurrentInstructionImage" 
                    Source="{Binding CurrentStepImage}"

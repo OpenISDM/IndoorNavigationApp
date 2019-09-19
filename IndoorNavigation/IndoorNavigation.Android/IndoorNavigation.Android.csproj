@@ -188,6 +188,7 @@
     <Folder Include="Resources\drawable-xxhdpi\" />
     <Folder Include="Resources\drawable-xxxhdpi\" />
     <Folder Include="Resources\drawable\Lab\" />
+    <Folder Include="Resources\drawable\Taipei_City_Hall\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\IndoorNavigation\IndoorNavigation.csproj">
@@ -227,6 +228,26 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\service_hospital_logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\drawable\Taipei_City_Hall\Taipei_City_Hall11100102.png" />
+    <BundleResource Include="Resources\drawable\Taipei_City_Hall\Taipei_City_Hall11100103.png" />
+    <BundleResource Include="Resources\drawable\Taipei_City_Hall\Taipei_City_Hall11100105.png" />
+    <BundleResource Include="Resources\drawable\Taipei_City_Hall\Taipei_City_Hall11100106.png" />
+    <BundleResource Include="Resources\drawable\Taipei_City_Hall\Taipei_City_Hall11100108.png" />
+    <BundleResource Include="Resources\drawable\Taipei_City_Hall\Taipei_City_Hall11100109.png" />
+    <BundleResource Include="Resources\drawable\Taipei_City_Hall\Taipei_City_Hall11100113.png" />
+    <BundleResource Include="Resources\drawable\Taipei_City_Hall\Taipei_City_Hall11100114.png" />
+    <BundleResource Include="Resources\drawable\Taipei_City_Hall\Taipei_City_Hall11100202.png" />
+    <BundleResource Include="Resources\drawable\Taipei_City_Hall\Taipei_City_Hall11100203.png" />
+    <BundleResource Include="Resources\drawable\Taipei_City_Hall\Taipei_City_Hall11100205.png" />
+    <BundleResource Include="Resources\drawable\Taipei_City_Hall\Taipei_City_Hall11100206.png" />
+    <BundleResource Include="Resources\drawable\Taipei_City_Hall\Taipei_City_Hall11100208.png" />
+    <BundleResource Include="Resources\drawable\Taipei_City_Hall\Taipei_City_Hall11100209.png" />
+    <BundleResource Include="Resources\drawable\Taipei_City_Hall\Taipei_City_Hall11100213.png" />
+    <BundleResource Include="Resources\drawable\Taipei_City_Hall\Taipei_City_Hall11100214.png" />
+    <BundleResource Include="Resources\drawable\Taipei_City_Hall\Taipei_City_Hall11101011.png" />
+    <BundleResource Include="Resources\drawable\Taipei_City_Hall\Taipei_City_Hall11101415.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
