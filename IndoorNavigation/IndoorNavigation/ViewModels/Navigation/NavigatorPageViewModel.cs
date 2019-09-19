@@ -67,10 +67,14 @@ namespace IndoorNavigation.ViewModels.Navigation
         private const string _pictureType = "picture";
         private const int _originalInstructionLocation = 3;
         private const int _firstDirectionInstructionLocation = 4;
-		private string _currentStepLabelName;
+        private const int _firstDirectionInstructionScale = 2;
+        private const int _originalInstructionScale = 1;
+        private const int _millisecondsTimeout = 2000;
+        private string _currentStepLabelName;
 		private string _currentStepImageName;
         private string _firstDirectionPicture;
         private int _firstDirectionRotationValue;
+        private int _firsrDirectionInstructionScaleVale;
         private int _instructionLocation;
 		private string _currentWaypointName;
         private string _firstDirectiionPicture;
@@ -91,6 +95,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                                       XMLInformation informationXML)
                                     
         {
+            _firsrDirectionInstructionScaleVale = 1;
             _destinationID = destinationWaypointID;
             _destinationWaypointName = destinationWaypointName;
             CurrentStepImage = "waittingscan.gif";
@@ -139,16 +144,17 @@ namespace IndoorNavigation.ViewModels.Navigation
             string firstDirectionPicture = null;
             int rotationValue = 0;
             int locationValue = _originalInstructionLocation;
+            int instructionScale = 1;
 			switch ((args as Session.NavigationEventArgs)._result)
 			{
 				case NavigationResult.Run:
-					SetInstruction(instruction, out currentStepLabel, out currentStepImage, out firstDirectionPicture, out rotationValue, out locationValue);
+					SetInstruction(instruction, out currentStepLabel, out currentStepImage, out firstDirectionPicture, out rotationValue, out locationValue, out instructionScale);
 					CurrentStepLabel = currentStepLabel;
 					CurrentStepImage = currentStepImage;
                     FirstDirectionPicture = firstDirectionPicture;
                     InstructionLocationValue = locationValue;
                     RotationValue = rotationValue;
-
+                    InstructionScaleValue = instructionScale;
                     CurrentWaypointName = _xmlInformation.GiveWaypointName(instruction._currentWaypointGuid);
 					NavigationProgress = instruction._progress;
                     
@@ -166,7 +172,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                     Utility._textToSpeech.Speak(
                         CurrentStepLabel,
                         _resourceManager.GetString("CULTURE_VERSION_STRING", currentLanguage));
-
+                    System.Threading.Thread.Sleep(_millisecondsTimeout);
 					break;
 
 				case NavigationResult.Arrival:
@@ -189,7 +195,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                     Stop();
                     break;
                 case NavigationResult.ArriveVirtualPoint:
-                    SetInstruction(instruction, out currentStepLabel, out currentStepImage, out firstDirectionPicture, out rotationValue, out locationValue);
+                    SetInstruction(instruction, out currentStepLabel, out currentStepImage, out firstDirectionPicture, out rotationValue, out locationValue, out instructionScale);
                     CurrentStepLabel = currentStepLabel;
                     CurrentStepImage = "Arrived";
                     NavigationProgress = 100;
@@ -212,7 +218,8 @@ namespace IndoorNavigation.ViewModels.Navigation
 									out string stepImage,
                                     out string firstDirectionImage,
                                     out int rotation,
-                                    out int location)
+                                    out int location,
+                                    out int instructionValue)
 		{
             var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
             string connectionTypeString = "";
@@ -222,6 +229,7 @@ namespace IndoorNavigation.ViewModels.Navigation
             firstDirectionImage = null;
             rotation = 0;
             stepImage = "";
+            instructionValue = _originalInstructionScale;
             location = _originalInstructionLocation;
             nextRegionName = _xmlInformation.GiveRegionName(instruction._currentRegionGuid);
             switch (instruction._information._turnDirection)
@@ -321,6 +329,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                         stepImage = stepImageString;
                         rotation = 75;
                         location = _firstDirectionInstructionLocation;
+                        instructionValue = _firstDirectionInstructionScale;
                         break;
                     }
                     else
@@ -582,6 +591,18 @@ namespace IndoorNavigation.ViewModels.Navigation
             set
             {
                 SetProperty(ref _firstDirectionRotationValue, value);
+            }
+        }
+
+        public int InstructionScaleValue
+        {
+            get
+            {
+                return _firsrDirectionInstructionScaleVale;
+            }
+            set
+            {
+                SetProperty(ref _firsrDirectionInstructionScaleVale, value);
             }
         }
 
