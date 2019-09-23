@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              x:Class="IndoorNavigation.Views.Navigation.CityHallHomePage"
              xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
-             Title="{i18n:Translate HOSPITAL_NAME_STRING}">
+             Title="{i18n:Translate TAIPEI_CITY_HALL_STRING}">
     
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness">
@@ -49,9 +49,7 @@
             
             <!-- Row 1 -->
 
-            
-            <ImageButton x:Name="ElevatorButton" Grid.Row="3"  Grid.Column="0" Source="homeicon_elevator2" Clicked="ElevatorList_Clicked"/>
-            <Label Grid.Row="4" Grid.Column="0" Text="{i18n:Translate CATEGORY_ELEVATOR_STRING}" FontSize="Medium" HorizontalTextAlignment="Center"/>
+           
             
             <ImageButton x:Name="BathroomButton" Grid.Row="3"  Grid.Column="1" Source="homeicon_wc" Clicked="BathroomList_Clicked"/>
             <Label Grid.Row="4" Grid.Column="1" Text="{i18n:Translate CATEGORY_BATH_ROOM_STRING}" FontSize="Medium" HorizontalTextAlignment="Center"/>
@@ -59,25 +57,16 @@
             <ImageButton x:Name="ParkingButton" Grid.Row="3"  Grid.Column="2" Source="homeicon_parking" Clicked="ParkingList_Clicked"/>
             <Label Grid.Row="4" Grid.Column="2" Text="{i18n:Translate CATEGORY_PARKING_STRING}" FontSize="Medium" HorizontalTextAlignment="Center"/>
             
-            <ImageButton x:Name="OfficeButton" Grid.Row="5"  Grid.Column="0" Source="homeicon_office2" Clicked="OfficeList_Clicked"/>
-            <Label Grid.Row="6" Grid.Column="0" Text="{i18n:Translate CATEGORY_OFFICE_STRING}" FontSize="Medium" HorizontalTextAlignment="Center"/>
+            <ImageButton x:Name="OfficeButton" Grid.Row="3"  Grid.Column="0" Source="homeicon_office2" Clicked="OfficeList_Clicked"/>
+            <Label Grid.Row="4" Grid.Column="0" Text="{i18n:Translate CATEGORY_OFFICE_STRING}" FontSize="Medium" HorizontalTextAlignment="Center"/>
             
-            <ImageButton x:Name="OthersButton" Grid.Row="5"  Grid.Column="1" Source="homeicon_other" Clicked="OthersList_Clicked"/>
-            <Label Grid.Row="6" Grid.Column="1" Text="{i18n:Translate CATEGORY_OTHERS_STRING}" FontSize="Medium" HorizontalTextAlignment="Center"/>
+            <ImageButton x:Name="OthersButton" Grid.Row="5"  Grid.Column="0" Source="homeicon_other" Clicked="OthersList_Clicked"/>
+            <Label Grid.Row="6" Grid.Column="0" Text="{i18n:Translate CATEGORY_OTHERS_STRING}" FontSize="Medium" HorizontalTextAlignment="Center"/>
             
-            <ImageButton x:Name="BranchButton" Grid.Row="5"  Grid.Column="2" Source="homeicon_branch2" Clicked="BranchList_Clicked"/>
-            <Label Grid.Row="6" Grid.Column="2" Text="{i18n:Translate CATEGORY_CONFERENCE_ROOM_STRING}" FontSize="Medium" HorizontalTextAlignment="Center"/>  
+            <ImageButton x:Name="BranchButton" Grid.Row="5"  Grid.Column="1" Source="homeicon_branch2" Clicked="BranchList_Clicked"/>
+            <Label Grid.Row="6" Grid.Column="1" Text="{i18n:Translate CATEGORY_CONFERENCE_ROOM_STRING}" FontSize="Medium" HorizontalTextAlignment="Center"/>  
             
-            <ImageButton x:Name="ConvenienceStoreButton" Grid.Row="7"  Grid.Column="0" Source="homeicon_store" Clicked="ConvenienceStoreList_Clicked"/>
-            <Label Grid.Row="8" Grid.Column="0" Text="{i18n:Translate CATEGORY_CONVENIENCE_STORE_STRING}" FontSize="Medium" HorizontalTextAlignment="Center"/>
-            
-            <ImageButton x:Name="StairButton" Grid.Row="7"  Grid.Column="1" Source="homeicon_stairs" Clicked="StairList_Clicked"/>
-            <Label Grid.Row="8" Grid.Column="1" Text="{i18n:Translate CATEGORY_STAIR_STRING}" FontSize="Medium" HorizontalTextAlignment="Center"/>
-            
-            <ImageButton x:Name="ExitButton" Grid.Row="7"  Grid.Column="2" Source="homeicon_exit" Clicked="ExitList_Clicked"/>
-            <Label Grid.Row="8" Grid.Column="2" Text="{i18n:Translate CATEGORY_EXIT_STRING}" FontSize="Medium" HorizontalTextAlignment="Center"/>
-            
-            
+        
         </Grid>
     </ContentPage.Content>
     

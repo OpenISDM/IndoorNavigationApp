@@ -45,7 +45,8 @@
                                      Padding="20, 20, 20, 1">
                             
                         <Label Text="{Binding _waypointName}" 
-                               FontSize="Large"/>
+                               FontSize="Large" LineBreakMode ="TailTruncation"/>
+                            
                       </StackLayout>
                     </ViewCell>
                 </DataTemplate>

@@ -21,7 +21,7 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>CFBundleDisplayName</key>
-	<string>畢迪-室內導航</string>
+	<string>(WPIN)Waypoint-based Indoor Navigator</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.OpenISDM</string>
 	<key>CFBundleVersion</key>

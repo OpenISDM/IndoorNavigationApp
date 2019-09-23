@@ -497,9 +497,21 @@ namespace IndoorNavigation.Resources {
             }
         }
         
-        internal static string DIRECTION_INITIAIL_STRING {
+        internal static string DIRECTION_INITIAIL_FACE_STRING {
             get {
-                return ResourceManager.GetString("DIRECTION_INITIAIL_STRING", resourceCulture);
+                return ResourceManager.GetString("DIRECTION_INITIAIL_FACE_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string DIRECTION_INITIAIL_BACK_STRING {
+            get {
+                return ResourceManager.GetString("DIRECTION_INITIAIL_BACK_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string DIRECTION_INITIAIL_CROSS_REGION_STRING {
+            get {
+                return ResourceManager.GetString("DIRECTION_INITIAIL_CROSS_REGION_STRING", resourceCulture);
             }
         }
         
@@ -716,6 +728,12 @@ namespace IndoorNavigation.Resources {
         internal static string PICTURE_DIRECTION_STRING {
             get {
                 return ResourceManager.GetString("PICTURE_DIRECTION_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string NO_SIGNAL_STRING {
+            get {
+                return ResourceManager.GetString("NO_SIGNAL_STRING", resourceCulture);
             }
         }
     }

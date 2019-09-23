@@ -128,15 +128,23 @@
       <SubType></SubType>
       <Generator></Generator>
     </None>
-    <AndroidResource Include="Resources\drawable\Arrow_down.png">
-      <SubType></SubType>
-      <Generator></Generator>
-    </AndroidResource>
     <AndroidResource Include="Resources\drawable\Escalator_down.png">
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>
     <AndroidResource Include="Resources\drawable\Escalator_up.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\Arrow_down.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\Arrow_left.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\Arrow_right.png">
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>
@@ -172,8 +180,6 @@
     <AndroidResource Include="Resources\drawable\Arrow_rearright.png" />
     <AndroidResource Include="Resources\drawable\Arrow_rearleft.png" />
     <AndroidResource Include="Resources\drawable\Arrow_up.png" />
-    <AndroidResource Include="Resources\drawable\Arrow_left.png" />
-    <AndroidResource Include="Resources\drawable\Arrow_right.png" />
     <AndroidResource Include="Resources\drawable\Arrow_frontright.png" />
     <AndroidResource Include="Resources\drawable\Arrow_frontleft.png" />
     <AndroidResource Include="Resources\drawable\Arrived.png" />

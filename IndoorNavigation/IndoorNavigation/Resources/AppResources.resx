@@ -317,8 +317,16 @@
         <value>Current Location : </value>
     </data>
     
-    <data name="DIRECTION_INITIAIL_STRING" xml:space="preserve">
+    <data name="DIRECTION_INITIAIL_FACE_STRING" xml:space="preserve">
         <value>Face to {0}{1}And {2}{3}to {4}{5}(About {6}m) </value>
+    </data>
+    
+    <data name="DIRECTION_INITIAIL_BACK_STRING" xml:space="preserve">
+        <value>Back to {0}{1}And {2}{3}to {4}{5}(About {6}m) </value>
+    </data>
+    
+    <data name="DIRECTION_INITIAIL_CROSS_REGION_STRING" xml:space="preserve">
+        <value>{0}{1}And Go to {2}{3}(About {4}公尺)</value>
     </data>
     
     <data name="DIRECTION_STRAIGHT_STRING" xml:space="preserve">
@@ -467,6 +475,10 @@
     
     <data name="PICTURE_DIRECTION_STRING" xml:space="preserve">
         <value>Picture's Direction</value>
+    </data>
+    
+    <data name="NO_SIGNAL_STRING" xml:space="preserve">
+        <value>If you do not get the signal, please go to any intersection</value>
     </data>
     
 </root>

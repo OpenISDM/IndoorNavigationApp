@@ -980,7 +980,7 @@ namespace IndoorNavigation.Modules
                     navigationInstruction._progress =
                         (double)Math.Round(100 * ((decimal)_nextWaypointStep /
                                            (_waypointsOnRoute.Count - 1)), 3);
-
+                    navigationInstruction._previousRegionGuid = previousRegionID;
                     // Raise event to notify the UI/main thread with the result
                     //if()
                     if(navigationInstruction._information._connectionType==ConnectionType.VirtualHallway)
@@ -1053,6 +1053,8 @@ namespace IndoorNavigation.Modules
             public Guid _currentRegionGuid;
 
             public Guid _nextRegionGuid;
+
+            public Guid _previousRegionGuid;
         }
 
         public class NavigationEventArgs : EventArgs

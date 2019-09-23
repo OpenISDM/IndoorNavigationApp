@@ -103,12 +103,6 @@ namespace IndoorNavigation.Views.Navigation
             await Navigation.PushAsync(new NavigatorSettingPage());
         }
 
-        async void ElevatorList_Clicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName,
-                                                               CategoryType.Elevator));
-        }
-
         async void BathroomList_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName,
@@ -138,24 +132,5 @@ namespace IndoorNavigation.Views.Navigation
             await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName,
                                                                CategoryType.ConferenceRoom));
         }
-
-        async void ConvenienceStoreList_Clicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName,
-                                                               CategoryType.ConvenienceStore));
-        }
-
-        async void StairList_Clicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName,
-                                                               CategoryType.Stair));
-        }
-
-        async void ExitList_Clicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName,
-                                                               CategoryType.Exit));
-        }
-
     }
 }

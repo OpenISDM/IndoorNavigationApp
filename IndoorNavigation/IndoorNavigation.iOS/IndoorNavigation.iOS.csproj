@@ -259,16 +259,13 @@
     <BundleResource Include="Resources\Pharmacy.png" />
     <BundleResource Include="Resources\Arrow_frontleft.png" />
     <BundleResource Include="Resources\Arrow_frontright.png" />
-    <BundleResource Include="Resources\Arrow_left.png" />
     <BundleResource Include="Resources\Arrow_rearleft.png" />
     <BundleResource Include="Resources\Arrow_rearright.png" />
-    <BundleResource Include="Resources\Arrow_right.png" />
     <BundleResource Include="Resources\Arrow_up.png" />
     <BundleResource Include="Resources\service_hospital_logo.png" />
     <BundleResource Include="Resources\Lab\Lab11100004.png" />
     <BundleResource Include="Resources\Elevtor_down.png" />
     <BundleResource Include="Resources\Elevator_up.png" />
-    <BundleResource Include="Resources\Arrow_down.png" />
     <BundleResource Include="Resources\Escalator_down.png" />
     <BundleResource Include="Resources\Escalator_up.png" />
     <BundleResource Include="Resources\NTUH_YunLin\NTUH_YunLin11100001.png">
@@ -292,6 +289,9 @@
     <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100102.png" />
     <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100109.png" />
     <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100108.png" />
+    <BundleResource Include="Resources\Arrow_down.png" />
+    <BundleResource Include="Resources\Arrow_left.png" />
+    <BundleResource Include="Resources\Arrow_right.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\close_circle_button.png" />

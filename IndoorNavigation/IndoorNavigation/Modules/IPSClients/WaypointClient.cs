@@ -115,9 +115,9 @@ namespace IndoorNavigation.Modules.IPSClients
                 foreach (var obsoleteBeaconSignal in removeSignalBuffer)
                     _beaconSignalBuffer.Remove(obsoleteBeaconSignal);
 
-                BeaconSignalModel beaconSignalModel = new BeaconSignalModel();
-                beaconSignalModel.UUID = new Guid("00000015-0000-2503-8380-000021564175");
-                _beaconSignalBuffer.Add(beaconSignalModel);
+                //BeaconSignalModel beaconSignalModel = new BeaconSignalModel();
+                //beaconSignalModel.UUID = new Guid("00000015-0000-2503-8380-000021564175");
+                //_beaconSignalBuffer.Add(beaconSignalModel);
 
                 foreach (BeaconSignalModel beacon in _beaconSignalBuffer)
                 {

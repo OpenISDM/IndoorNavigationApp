@@ -1,103 +1,124 @@
 <first_direction_XML country='Taiwan' city_county='YunLin' industry_service='hospital' owner_organization='BeDI' building_Landmark='NTUH_YunLin'>
-    <waypoint id = "00000000-0000-0000-0000-000000003206" Landmark = "會議室206" RelatedDirection = "6" />
+    <waypoint id = "00000000-0000-0000-0000-000000003206" Landmark = "會議室N206" RelatedDirection = "6" FaceOrBack = "0"/>
+    <waypoint id = "00000000-0000-0000-0000-000000003205" Landmark = "會議室N205" RelatedDirection = "6" FaceOrBack = "0"/> 
+    <waypoint id = "00000000-0000-0000-0000-000000003203" Landmark = "會議室N203" RelatedDirection = "2" FaceOrBack = "0"/> 
+    <waypoint id = "00000000-0000-0000-0000-000000003202" Landmark = "會議室N202" RelatedDirection = "2" FaceOrBack = "0"/>
+    <waypoint id = "00000000-0000-0000-0000-000000003201" Landmark = "會議室N201" RelatedDirection = "0" FaceOrBack = "0"/> 
+    <waypoint id = "00000000-0000-0000-0000-000000003207" Landmark = "會議室N207" RelatedDirection = '6' FaceOrBack = "0"/> 
+    <waypoint id = "00000000-0000-0000-0000-000000003208" Landmark = "會議室N208" RelatedDirection = '2' FaceOrBack = "0"/> 
+    <waypoint id = "00000000-0000-0000-0000-000000003209" Landmark = "會議室N209" RelatedDirection = '2' FaceOrBack = "0"/> 
+    <waypoint id = "00000000-0000-0000-0000-000000003210" Landmark = "會議室N210" RelatedDirection = '2' FaceOrBack = "0"/> 
+    <waypoint id = "00000000-0000-0000-0000-000000003211" Landmark = "會議室N211" RelatedDirection = '4' FaceOrBack = "0"/> 
+    <waypoint id = "00000000-0000-0000-0000-000000003212" Landmark = "會議室N212" RelatedDirection = '4' FaceOrBack = "0"/> 
+    <waypoint id = "00000000-0000-0000-0000-000000003213" Landmark = "會議室N213" RelatedDirection = '4' FaceOrBack = "0"/> 
+    <waypoint id = "00000000-0000-0000-0000-000000003214" Landmark = "會議室N214" RelatedDirection = '0' FaceOrBack = "0"/> 
+    <waypoint id = "00000000-0000-0000-0000-000000003215" Landmark = "會議室N215" RelatedDirection = '0' FaceOrBack = "0"/> 
+    <waypoint id = "00000000-0000-0000-0000-000000003216" Landmark = "會議室S216" RelatedDirection = '0' FaceOrBack = "0"/> 
+    <waypoint id = "00000000-0000-0000-0000-000000003217" Landmark = "會議室S217" RelatedDirection = '2' FaceOrBack = "0"/>
+    <waypoint id = "00000000-0000-0000-0000-000000003218" Landmark = "會議室S218" RelatedDirection = '2' FaceOrBack = "0"/> 
     
-    <waypoint id = "00000000-0000-0000-0000-000000000301" Landmark = "電梯" RelatedDirection = "2" />
-    <waypoint id = "00000000-0000-0000-0000-000000000302" Landmark = "產業發展局門口" RelatedDirection = "4" />
-    <waypoint id = "00000000-0000-0000-0000-000000000345" Landmark = "樓梯" RelatedDirection = "4" />
-    <waypoint id = "00000000-0000-0000-0000-000000000306" Landmark = "廁所" RelatedDirection = "0" />
     
-    <waypoint id = "00000000-0000-0000-0000-100000000306" Landmark = "廁所" RelatedDirection = "0" />
+    <waypoint id = "00000000-0000-0000-0000-000000000301" Landmark = "電梯" RelatedDirection = "6"  FaceOrBack = "1"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000302" Landmark = "產業發展局門口" RelatedDirection = "4"  FaceOrBack = "0"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000345" Landmark = "樓梯" RelatedDirection = "4"  FaceOrBack = "0"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000306" Landmark = "廁所" RelatedDirection = "0"  FaceOrBack = "0"/>
     
-    <waypoint id = "00000000-0000-0000-0000-000000000307" Landmark = "緊急出口大門" RelatedDirection = "4" />
-    <waypoint id = "00000000-0000-0000-0000-000000000308" Landmark = "社會局/老人福利局" RelatedDirection = "0" />
-    <waypoint id = "00000000-0000-0000-0000-000000000309" Landmark = "石椅/電視牆" RelatedDirection = "0" />
-    <waypoint id = "00000000-0000-0000-0000-000000000310" Landmark = "石椅/電視牆" RelatedDirection = "0" />
-    <waypoint id = "00000000-0000-0000-0000-000000000311" Landmark = "緊急出口大門" RelatedDirection = "0" />
-    <waypoint id = "00000000-0000-0000-0000-000000000312" Landmark = "廁所" RelatedDirection = "0" />
-    <waypoint id = "00000000-0000-0000-0000-000000000313" Landmark = "手扶梯" RelatedDirection = "4" />
-    <waypoint id = "00000000-0000-0000-0000-000000000314" Landmark = "會議室專區211~215" RelatedDirection = "6" />  
-    <waypoint id = "00000000-0000-0000-0000-000000000315" Landmark = "電梯" RelatedDirection = "4" />  
-    <waypoint id = "00000000-0000-0000-0000-000000000316" Landmark = "電梯" RelatedDirection = "6" />
-    <waypoint id = "00000000-0000-0000-0000-000000000317" Landmark = "出口方向" RelatedDirection = "2" />
-    <waypoint id = "00000000-0000-0000-0000-000000000318" Landmark = "手扶梯" RelatedDirection = "4" />
-    <waypoint id = "00000000-0000-0000-0000-000000000319" Landmark = "樓梯" RelatedDirection = "2" />
-    <waypoint id = "00000000-0000-0000-0000-100000000319" Landmark = "樓梯" RelatedDirection = "2" />
-    <waypoint id = "00000000-0000-0000-0000-000000000320" Landmark = "親子劇場" RelatedDirection = "2" />
-    <waypoint id = "00000000-0000-0000-0000-000000000321" Landmark = "樓梯" RelatedDirection = "2" />
-    <waypoint id = "00000000-0000-0000-0000-000000000322" Landmark = "電梯" RelatedDirection = "6" />
-    <waypoint id = "00000000-0000-0000-0000-000000000323" Landmark = "出口方向" RelatedDirection = "2" />
-    <waypoint id = "00000000-0000-0000-0000-000000000324" Landmark = "手扶梯" RelatedDirection = "0" />
-    <waypoint id = "00000000-0000-0000-0000-000000000325" Landmark = "衛生局" RelatedDirection = "2" />
-    <waypoint id = "00000000-0000-0000-0000-000000000326" Landmark = "衛生局" RelatedDirection = "2" />
-    <waypoint id = "00000000-0000-0000-0000-000000000327" Landmark = "建管處" RelatedDirection = "6" />
-    <waypoint id = "00000000-0000-0000-0000-000000000328" Landmark = "建管處" RelatedDirection = "4" />
-    <waypoint id = "00000000-0000-0000-0000-000000000329" Landmark = "石椅" RelatedDirection = "4" />
-    <waypoint id = "00000000-0000-0000-0000-000000000330" Landmark = "石椅" RelatedDirection = "4" />
-    <waypoint id = "00000000-0000-0000-0000-000000000331" Landmark = "建築管理工程處資訊室" RelatedDirection = "6" />
-    <waypoint id = "00000000-0000-0000-0000-000000323435" Landmark = "員工子女幼兒園" RelatedDirection = "6" />    
-    <waypoint id = "00000000-0000-0000-0000-000000000333" Landmark = "公佈欄" RelatedDirection = "2" />
-    <waypoint id = "00000000-0000-0000-0000-000000000336" Landmark = "電梯" RelatedDirection = "2" />
+    <waypoint id = "00000000-0000-0000-0000-100000000306" Landmark = "廁所" RelatedDirection = "0"  FaceOrBack = "0"/>
     
-    <waypoint id='00000000-0000-0000-0000-000000000101' Landmark='停車場出入口' RelatedDirection = '0'/>
-    <waypoint id='00000000-0000-0000-0000-000000000102' Landmark='picture' RelatedDirection = '4'/>
-    <waypoint id='00000000-0000-0000-0000-000000000103' Landmark='picture' RelatedDirection = '4'/>
-    <waypoint id='00000000-0000-0000-0000-000000000104' Landmark='北區電梯' RelatedDirection = '0'/>
-    <waypoint id='00000000-0000-0000-0000-000000000105' Landmark='picture' RelatedDirection = '4'/>
-    <waypoint id='00000000-0000-0000-0000-000000000106' Landmark='picture' RelatedDirection = '4'/>
-    <waypoint id='00000000-0000-0000-0000-000000000107' Landmark='停車場出入口' RelatedDirection = '0'/>
-    <waypoint id='00000000-0000-0000-0000-000000000108' Landmark='picture' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000109' Landmark='picture' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000110' Landmark='中央區入口' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000111' Landmark='中央區入口' RelatedDirection = '4'/>
-    <waypoint id='00000000-0000-0000-0000-000000000112' Landmark='中央區入口' RelatedDirection = '6'/>
-    <waypoint id='00000000-0000-0000-0000-000000000113' Landmark='picture' RelatedDirection = '6'/>
-    <waypoint id='00000000-0000-0000-0000-000000000114' Landmark='picture' RelatedDirection = '6'/>
+    <waypoint id = "00000000-0000-0000-0000-000000000307" Landmark = "緊急出口大門" RelatedDirection = "4"  FaceOrBack = "0"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000308" Landmark = "社會局/老人福利局" RelatedDirection = "0"  FaceOrBack = "0"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000309" Landmark = "石椅/電視牆右側走道" RelatedDirection = "0"  FaceOrBack = "0"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000310" Landmark = "石椅/電視牆左側走道" RelatedDirection = "0"  FaceOrBack = "0"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000311" Landmark = "緊急出口大門" RelatedDirection = "0"  FaceOrBack = "0"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000312" Landmark = "男女廁中間通道" RelatedDirection = "0"  FaceOrBack = "0"/>
+    <waypoint id = "00000000-0000-0000-0000-100000000312" Landmark = "男女廁中間通道" RelatedDirection = "0"  FaceOrBack = "0"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000313" Landmark = "手扶梯" RelatedDirection = "0"  FaceOrBack = "1"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000314" Landmark = "會議室專區211~215" RelatedDirection = "6"  FaceOrBack = "0"/>  
+    <waypoint id = "00000000-0000-0000-0000-000000000315" Landmark = "電梯" RelatedDirection = "4"  FaceOrBack = "0"/>  
+    <waypoint id = "00000000-0000-0000-0000-000000000316" Landmark = "電梯" RelatedDirection = "6"  FaceOrBack = "0"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000317" Landmark = "出口方向" RelatedDirection = "2"  FaceOrBack = "0"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000318" Landmark = "手扶梯" RelatedDirection = "4"  FaceOrBack = "0"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000319" Landmark = "樓梯" RelatedDirection = "2"  FaceOrBack = "0"/>
+    <waypoint id = "00000000-0000-0000-0000-100000000319" Landmark = "樓梯" RelatedDirection = "6"  FaceOrBack = "1"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000320" Landmark = "親子劇場" RelatedDirection = "2"  FaceOrBack = "0"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000321" Landmark = "樓梯" RelatedDirection = "6"  FaceOrBack = "1"/>
+    <waypoint id = "00000000-0000-0000-0000-100000000321" Landmark = "樓梯" RelatedDirection = "2"  FaceOrBack = "0"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000322" Landmark = "電梯" RelatedDirection = "6"  FaceOrBack = "0"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000323" Landmark = "出口方向" RelatedDirection = "2"  FaceOrBack = "0"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000324" Landmark = "手扶梯" RelatedDirection = "0"  FaceOrBack = "0"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000325" Landmark = "衛生局" RelatedDirection = "2"  FaceOrBack = "0"/>
+    <waypoint id = "00000000-0000-0000-0000-100000000325" Landmark = "衛生局" RelatedDirection = "2"  FaceOrBack = "0"/>
+    <waypoint id = "00000000-0000-0000-0000-200000000325" Landmark = "衛生局" RelatedDirection = "2"  FaceOrBack = "0"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000326" Landmark = "衛生局" RelatedDirection = "2"  FaceOrBack = "0"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000327" Landmark = "建管處" RelatedDirection = "6"  FaceOrBack = "0"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000328" Landmark = "建管處" RelatedDirection = "4"  FaceOrBack = "0"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000329" Landmark = "石椅" RelatedDirection = "4"  FaceOrBack = "0"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000330" Landmark = "石椅" RelatedDirection = "4"  FaceOrBack = "0"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000331" Landmark = "建築管理工程處資訊室" RelatedDirection = "6"  FaceOrBack = "0"/>
+    <waypoint id = "00000000-0000-0000-0000-000000323435" Landmark = "員工子女幼兒園" RelatedDirection = "6"  FaceOrBack = "0"/>    
+    <waypoint id = "00000000-0000-0000-0000-000000000333" Landmark = "公佈欄" RelatedDirection = "2"  FaceOrBack = "0"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000336" Landmark = "南區電梯" RelatedDirection = "6"  FaceOrBack = "1"/>
+    
+    <waypoint id='00000000-0000-0000-0000-000000000101' Landmark='停車場出入口' RelatedDirection = '0' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000102' Landmark='picture' RelatedDirection = '4' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000103' Landmark='picture' RelatedDirection = '4' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000104' Landmark='北區電梯' RelatedDirection = '0' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000105' Landmark='picture' RelatedDirection = '4' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000106' Landmark='picture' RelatedDirection = '4' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000107' Landmark='停車場出入口' RelatedDirection = '0' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000108' Landmark='picture' RelatedDirection = '2' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000109' Landmark='picture' RelatedDirection = '2' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000110' Landmark='中央區入口' RelatedDirection = '2' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000111' Landmark='中央區入口' RelatedDirection = '4' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000112' Landmark='中央區入口' RelatedDirection = '6' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000113' Landmark='picture' RelatedDirection = '6' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000114' Landmark='picture' RelatedDirection = '6' FaceOrBack = "0"/>
             
-    <waypoint id='00000000-0000-0000-0000-000000000201' Landmark='停車場出入口' RelatedDirection = '4'/>
-    <waypoint id='00000000-0000-0000-0000-000000000202' Landmark='picture' RelatedDirection = '0'/>
-    <waypoint id='00000000-0000-0000-0000-000000000203' Landmark='picture' RelatedDirection = '0'/>
-    <waypoint id='00000000-0000-0000-0000-000000000204' Landmark='南區電梯' RelatedDirection = '4'/>
-    <waypoint id='00000000-0000-0000-0000-000000000205' Landmark='picture' RelatedDirection = '0'/>
-    <waypoint id='00000000-0000-0000-0000-000000000206' Landmark='picture' RelatedDirection = '0'/>
-    <waypoint id='00000000-0000-0000-0000-000000000207' Landmark='停車場出入口' RelatedDirection = '4'/>
-    <waypoint id='00000000-0000-0000-0000-000000000208' Landmark='picture' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000209' Landmark='picture' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000210' Landmark='中央區入口' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000211' Landmark='中央區入口' RelatedDirection = '0'/>
-    <waypoint id='00000000-0000-0000-0000-000000000212' Landmark='中央區入口' RelatedDirection = '6'/>
-    <waypoint id='00000000-0000-0000-0000-000000000213' Landmark='picture' RelatedDirection = '6'/>
-    <waypoint id='00000000-0000-0000-0000-000000000214' Landmark='picture' RelatedDirection = '6'/>
+    <waypoint id='00000000-0000-0000-0000-000000000201' Landmark='停車場出入口' RelatedDirection = '4' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000202' Landmark='picture' RelatedDirection = '0' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000203' Landmark='picture' RelatedDirection = '0' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000204' Landmark='南區電梯' RelatedDirection = '4' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000205' Landmark='picture' RelatedDirection = '0' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000206' Landmark='picture' RelatedDirection = '0' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000207' Landmark='停車場出入口' RelatedDirection = '4' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000208' Landmark='picture' RelatedDirection = '2' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000209' Landmark='picture' RelatedDirection = '2' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000210' Landmark='中央區入口' RelatedDirection = '2' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000211' Landmark='中央區入口' RelatedDirection = '0' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000212' Landmark='中央區入口' RelatedDirection = '6' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000213' Landmark='picture' RelatedDirection = '6' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000214' Landmark='picture' RelatedDirection = '6' FaceOrBack = "0"/>
       
-    <waypoint id='00000000-0000-0000-0000-000000001102' Landmark='北區停車場' RelatedDirection = '0'/>
-    <waypoint id='00000000-0000-0000-0000-000000000304' Landmark='北區停車場' RelatedDirection = '0'/>
-	<waypoint id='00000000-0000-0000-0000-000000000005' Landmark='出口方向' RelatedDirection = '2'/>
-	<waypoint id='00000000-0000-0000-0000-000000000607' Landmark='電梯方向' RelatedDirection = '6'/>
-    <waypoint id='00000000-0000-0000-0000-000000000809' Landmark='樓梯' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000001011' Landmark='picture' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000001213' Landmark='駐警隊大門口' RelatedDirection = '6'/>
-    <waypoint id='00000000-0000-0000-0000-000000001415' Landmark='picture' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000001617' Landmark='台北市政府徵收土地發放補償服務中心' RelatedDirection = '6'/>
-    <waypoint id='00000000-0000-0000-0000-000000001819' Landmark='台北市政府衛生局長期照護服務台' RelatedDirection = '6'/>
-    <waypoint id='00000000-0000-0000-0000-000000000020' Landmark='出口' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000002122' Landmark='停車場' RelatedDirection = '4'/>
-    <waypoint id='00000000-0000-0000-0000-000000000023' Landmark='出口' RelatedDirection = '6'/>
-    <waypoint id='00000000-0000-0000-0000-000000002425' Landmark='南區停車場' RelatedDirection = '4'/>
-    <waypoint id='00000000-0000-0000-0000-000000002627' Landmark='南區停車場' RelatedDirection = '4'/>
-    <waypoint id='00000000-0000-0000-0000-000000000028' Landmark='電梯' RelatedDirection = '4'/>
-    <waypoint id='00000000-0000-0000-0000-000000000029' Landmark='北區停車場' RelatedDirection = '6'/>
-    <waypoint id='00000000-0000-0000-0000-000000000030' Landmark='觀光傳播局' RelatedDirection = '6'/>
-    <waypoint id='00000000-0000-0000-0000-000000000031' Landmark='男廁' RelatedDirection = '0'/>
-    <waypoint id='00000000-0000-0000-0000-000000000032' Landmark='台北市政大樓公共事務管理中心' RelatedDirection = '0'/>
-    <waypoint id='00000000-0000-0000-0000-000000000033' Landmark='主計處檔案室' RelatedDirection = '6' />
-    <waypoint id='00000000-0000-0000-0000-000000000034' Landmark='駐警隊寢室' RelatedDirection = '0'/>
-    <waypoint id='00000000-0000-0000-0000-000000000035' Landmark='銀行' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000036' Landmark='緊急出口' RelatedDirection = '6'/>
-    <waypoint id='00000000-0000-0000-0000-000000000037' Landmark='電梯' RelatedDirection = '0'/>
-    <waypoint id='00000000-0000-0000-0000-000000000038' Landmark='環境教育中心' RelatedDirection = '0'/>
-    <waypoint id='00000000-0000-0000-0000-000000000040' Landmark='電梯' RelatedDirection = '4'/>
-    <waypoint id='00000000-0000-0000-0000-000000000041' Landmark='電梯41' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000045' Landmark='南區電梯' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000043' Landmark='北區電梯' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000044' Landmark='廁所前岔路' RelatedDirection = '2'/>
-    <waypoint id='00000000-0000-0000-0000-000000000042' Landmark='電梯' RelatedDirection = '2'/> 
+    <waypoint id='00000000-0000-0000-0000-000000001102' Landmark='北區停車場' RelatedDirection = '0' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000304' Landmark='北區停車場' RelatedDirection = '0' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000005' Landmark='出口方向' RelatedDirection = '2' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000607' Landmark='電梯方向' RelatedDirection = '6' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000809' Landmark='樓梯' RelatedDirection = '6' FaceOrBack = "1"/>
+    <waypoint id='00000000-0000-0000-0000-000000001011' Landmark='picture' RelatedDirection = '6' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000001213' Landmark='駐警隊大門口' RelatedDirection = '6' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000001415' Landmark='picture' RelatedDirection = '6' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000001617' Landmark='台北市政府徵收土地發放補償服務中心' RelatedDirection = '6' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000001819' Landmark='台北市政府衛生局長期照護服務台' RelatedDirection = '6' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000020' Landmark='出口' RelatedDirection = '2' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000002122' Landmark='停車場' RelatedDirection = '4' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000023' Landmark='出口' RelatedDirection = '6' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000002425' Landmark='南區停車場' RelatedDirection = '4' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000002627' Landmark='南區停車場' RelatedDirection = '4' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000028' Landmark='電梯' RelatedDirection = '4' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000029' Landmark='北區停車場' RelatedDirection = '6' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000030' Landmark='觀光傳播局' RelatedDirection = '6' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000031' Landmark='男廁' RelatedDirection = '0' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000032' Landmark='台北市政大樓公共事務管理中心' RelatedDirection = '0' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000033' Landmark='主計處檔案室' RelatedDirection = '6'  FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000034' Landmark='駐警隊寢室' RelatedDirection = '0' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000035' Landmark='銀行' RelatedDirection = '2' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000036' Landmark='緊急出口' RelatedDirection = '6' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000037' Landmark='電梯' RelatedDirection = '0' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000038' Landmark='環境教育中心' RelatedDirection = '0' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000040' Landmark='電梯' RelatedDirection = '4' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000041' Landmark='電梯41' RelatedDirection = '2' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000045' Landmark='南區電梯' RelatedDirection = '6' FaceOrBack = "1"/>
+    <waypoint id='00000000-0000-0000-0000-000000000043' Landmark='北區電梯' RelatedDirection = '6' FaceOrBack = "1"/>
+    <waypoint id='00000000-0000-0000-0000-000000000044' Landmark='廁所前岔路' RelatedDirection = '2' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000042' Landmark='電梯' RelatedDirection = '2' FaceOrBack = "0"/> 
 </first_direction_XML>

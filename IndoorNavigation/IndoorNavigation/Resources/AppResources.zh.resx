@@ -317,8 +317,16 @@
         <value>目前位置 : </value>
     </data>
 
-    <data name="DIRECTION_INITIAIL_STRING" xml:space="preserve">
+    <data name="DIRECTION_INITIAIL_FACE_STRING" xml:space="preserve">
         <value>面向{0}{1}然後{2}{3}前往{4}{5}(約{6}公尺)</value>
+    </data>
+    
+    <data name="DIRECTION_INITIAIL_BACK_STRING" xml:space="preserve">
+        <value>背向{0}{1}然後{2}{3}前往{4}{5}(約{6}公尺)</value>
+    </data>
+    
+    <data name="DIRECTION_INITIAIL_CROSS_REGION_STRING" xml:space="preserve">
+        <value>{0}{1}前往{2}{3}(約{4}公尺)</value>
     </data>
     
     <data name="DIRECTION_STRAIGHT_STRING" xml:space="preserve">
@@ -467,6 +475,10 @@
     
     <data name="PICTURE_DIRECTION_STRING" xml:space="preserve">
         <value>圖片的方向</value>
+    </data>
+    
+    <data name="NO_SIGNAL_STRING" xml:space="preserve">
+        <value>如果沒收到信號，請至任一路口</value>
     </data>
     
 </root>
