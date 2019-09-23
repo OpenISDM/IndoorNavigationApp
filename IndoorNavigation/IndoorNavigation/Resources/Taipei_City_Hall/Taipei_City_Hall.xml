@@ -169,7 +169,7 @@
             <waypoint id='00000000-0000-0000-0000-000000000325' name='路口' type='junction' lat='25.037184' lon='121.564514' category='Others' />
             <waypoint id='00000000-0000-0000-0000-100000000325' name='衛生局' type='terminal' lat='25.037184' lon='121.564514' category='Office' />
             <waypoint id='00000000-0000-0000-0000-200000000325' name='廁所(南區衛生局旁)' type='terminal' lat='25.037184' lon='121.564514' category='Bathroom' />
-            <waypoint id='00000000-0000-0000-0000-000000000326' name='路口' type='junction' lat='25.037829' lon='121.564386' category='Others' />
+            <waypoint id='00000000-0000-0000-0000-000000000326' name='路口' type='junction' lat='25.037182' lon='121.564386' category='Others' />
             <waypoint id='00000000-0000-0000-0000-000000000327' name='建管處' type='terminal' lat='25.037182' lon='121.564285' category='Office' />
             <waypoint id='00000000-0000-0000-0000-000000000328' name='建管處' type='terminal' lat='25.037079' lon='121.564509' category='Office' />
             <waypoint id='00000000-0000-0000-0000-000000000329' name='石椅' type='terminal' lat='25.037071' lon='121.564386' category='Others' />
