@@ -104,7 +104,7 @@ namespace IndoorNavigation.Modules.IPSClients
             {
                 removeSignalBuffer.AddRange(
                    _beaconSignalBuffer.Where(c =>
-                   c.Timestamp < DateTime.Now.AddMilliseconds(-1000)));
+                   c.Timestamp < DateTime.Now.AddMilliseconds(-1500)));
 
                 foreach (var obsoleteBeaconSignal in removeSignalBuffer)
                     _beaconSignalBuffer.Remove(obsoleteBeaconSignal);

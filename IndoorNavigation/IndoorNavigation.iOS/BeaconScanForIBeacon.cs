@@ -59,7 +59,7 @@ namespace IndoorNavigation.iOS
     {
         private readonly CBCentralManager _manager = new CBCentralManager();
 
-        private int _rssiThreshold = -80;
+        private int _rssiThreshold = -100;
 
         public NavigationEvent _event { get; private set; }
         public BeaconScanForIBeacon()
