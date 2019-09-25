@@ -362,11 +362,11 @@
     </data>
     
     <data name="DIRECTION_UP_STRING" xml:space="preserve">
-        <value>Take {0} go upstairs to{1}{2}F {3} </value>
+        <value>Take {0} go upstairs to{1}{2} </value>
     </data>
     
     <data name="DIRECTION_DOWN_STRING" xml:space="preserve">
-        <value>Take {0} go downstairs to{1}{2}F {3} </value>
+        <value>Take {0} go downstairs to{1}{2} </value>
     </data>
     
     <data name="DIRECTION_WRONG_WAY_STRING" xml:space="preserve">

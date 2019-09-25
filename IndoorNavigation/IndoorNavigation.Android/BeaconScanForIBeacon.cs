@@ -57,7 +57,7 @@ namespace IndoorNavigation.Droid
         protected BluetoothAdapter _adapter;
         protected BluetoothManager _manager;
         private int _count = 0;
-        private int _rssiThreshold = -35;
+        private int _rssiThreshold = -80;
 
         public NavigationEvent _event { get; private set; }
 

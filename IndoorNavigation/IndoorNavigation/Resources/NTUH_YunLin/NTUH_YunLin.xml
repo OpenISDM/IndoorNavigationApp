@@ -6,7 +6,7 @@
             <waypoint id='00000000-0000-0000-0000-000000000002' name='超音波/內視鏡檢查室' type='terminal' lat='23.697910616644298' lon='120.527170861' category='ExaminationRoom' />
             <waypoint id='00000000-0000-0000-0000-000000000003' name='心臟血管功能檢查室' type='terminal' lat='23.697966616644298' lon='120.527347418' category='ExaminationRoom' />
             <waypoint id='00000000-0000-0000-0000-000000000004' name='廁所' type='terminal' lat='23.69811007026142' lon='120.52725700409886' category='Bathroom' />
-            <waypoint id='00000000-0000-0000-0000-000000000005' name='樓梯' type='junction' lat='23.69811007026142' lon='120.52725700409886' category='Others' />
+            <waypoint id='00000000-0000-0000-0000-000000000005' name='樓梯' type='portal' lat='23.69811007026142' lon='120.52725700409886' category='Others' />
             <waypoint id='00000000-0000-0000-0000-000000000007' name='神經部檢查室前迴轉樓梯' type='portal' lat='23.697910616644298' lon='120.527170861' category='Others' />
             <waypoint id='00000000-0000-0000-0000-000000000008' name='心臟血管檢查室前迴轉樓梯' type='portal' lat='23.697910616644298' lon='120.527347418' category='Others' />
         </region>

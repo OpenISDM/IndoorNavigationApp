@@ -362,11 +362,11 @@
     </data>
     
     <data name="DIRECTION_UP_STRING" xml:space="preserve">
-        <value>{0}上樓前往{1}{2}樓 </value>
+        <value>{0}上樓前往{1}{2} </value>
     </data>
     
     <data name="DIRECTION_DOWN_STRING" xml:space="preserve">
-        <value>{0}下樓前往{1}{2}樓 </value>
+        <value>{0}下樓前往{1}{2} </value>
     </data>
     
      <data name="DIRECTION_WRONG_WAY_STRING" xml:space="preserve">
