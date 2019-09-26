@@ -518,7 +518,7 @@ namespace IndoorNavigation.ViewModels.Navigation
 							currentLanguage),
                             connectionTypeString,
                             Environment.NewLine,
-                            instruction._information._regionName);
+                            nextRegionName);
 					break;
 
 				case TurnDirection.Down:
@@ -548,7 +548,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             currentLanguage),
                             connectionTypeString,
                             Environment.NewLine,
-                            instruction._information._regionName);
+                            nextRegionName);
 					break;
 				default:
 					stepLabel = "You're get ERROR status";
