@@ -946,6 +946,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                                             nextWaypointID,
                                                             avoidConnectionTypes);
                                 information._connectionType = currentEdge._connectionType;
+                                information._relatedDirectionOfFirstDirection = currentEdge._direction;
                                 information._distance = System.Convert
                                                         .ToInt32(currentEdge._distance);
                             }
@@ -1063,6 +1064,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                                         nextWaypointID,
                                                         avoidConnectionTypes);
                             information._connectionType = currentEdge._connectionType;
+                            information._relatedDirectionOfFirstDirection = currentEdge._direction;
                             information._distance = System.Convert
                                                     .ToInt32(currentEdge._distance);
                         }

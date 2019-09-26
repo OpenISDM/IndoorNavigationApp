@@ -37,10 +37,10 @@
     <waypoint id = '00000000-0000-0000-0000-000000000317' Landmark = 'Exit' RelatedDirection = '2' FaceOrBack = '0'/>
     <waypoint id = '00000000-0000-0000-0000-000000000318' Landmark = 'Escalator' RelatedDirection = '4' FaceOrBack = '0'/>
     <waypoint id = '00000000-0000-0000-0000-000000000319' Landmark = 'Stairs' RelatedDirection = '2' FaceOrBack = '0'/>
-    <waypoint id = '00000000-0000-0000-0000-100000000319' Landmark = 'Stairs' RelatedDirection = '6' FaceOrBack = '1'/>
+    <waypoint id = '00000000-0000-0000-0000-100000000319' Landmark = 'Stairs' RelatedDirection = '2' FaceOrBack = '1'/>
     <waypoint id = '00000000-0000-0000-0000-000000000320' Landmark = 'Parent-child theater' RelatedDirection = '2' FaceOrBack = '0'/>
-    <waypoint id = '00000000-0000-0000-0000-000000000321' Landmark = 'Stair' RelatedDirection = '6' FaceOrBack = '1'/>
-    <waypoint id = '00000000-0000-0000-0000-100000000321' Landmark = 'Stair' RelatedDirection = '2' FaceOrBack = '0'/>
+    <waypoint id = '00000000-0000-0000-0000-000000000321' Landmark = 'Stair' RelatedDirection = '2' FaceOrBack = '1'/>
+    <waypoint id = '00000000-0000-0000-0000-100000000321' Landmark = 'Stair' RelatedDirection = '2' FaceOrBack = '1'/>
     <waypoint id = '00000000-0000-0000-0000-000000000322' Landmark = 'Elevator' RelatedDirection = '6' FaceOrBack = '0'/>
     <waypoint id = '00000000-0000-0000-0000-000000000323' Landmark = 'Exit' RelatedDirection = '2' FaceOrBack = '0'/>
     <waypoint id = '00000000-0000-0000-0000-000000000324' Landmark = 'Escalator' RelatedDirection = '0' FaceOrBack = '0'/>
@@ -53,7 +53,7 @@
     <waypoint id = '00000000-0000-0000-0000-000000000331' Landmark = 'Taipei City Construction Management Office Information room' RelatedDirection = '6' FaceOrBack = '0'/>
     <waypoint id = '00000000-0000-0000-0000-000000323435' Landmark = 'Employee child kindergarten' RelatedDirection = '6' FaceOrBack = '0'/>    
     <waypoint id = '00000000-0000-0000-0000-000000000333' Landmark = 'Bulletin Board' RelatedDirection = '2' FaceOrBack = '0'/>
-    <waypoint id = '00000000-0000-0000-0000-000000000336' Landmark = 'South Elevator' RelatedDirection = '6' FaceOrBack = '1'/>
+    <waypoint id = '00000000-0000-0000-0000-000000000336' Landmark = 'South Elevator' RelatedDirection = '2' FaceOrBack = '1'/>
     
     <waypoint id='00000000-0000-0000-0000-000000000101' Landmark='Entrance of Garage' RelatedDirection = '0' FaceOrBack = '0'/>
     <waypoint id='00000000-0000-0000-0000-000000000102' Landmark='picture' RelatedDirection = '4' FaceOrBack = '0'/>
@@ -90,7 +90,7 @@
     <waypoint id='00000000-0000-0000-0000-000000000304' Landmark='North Garage' RelatedDirection = '0' FaceOrBack = "0"/>
     <waypoint id='00000000-0000-0000-0000-000000000005' Landmark='Exit' RelatedDirection = '2' FaceOrBack = "0"/>
     <waypoint id='00000000-0000-0000-0000-000000000607' Landmark='Elevator' RelatedDirection = '6' FaceOrBack = "0"/>
-    <waypoint id='00000000-0000-0000-0000-000000000809' Landmark='Stair' RelatedDirection = '2' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000809' Landmark='Stair' RelatedDirection = '2' FaceOrBack = "1"/>
     <waypoint id='00000000-0000-0000-0000-000000001011' Landmark='picture' RelatedDirection = '6' FaceOrBack = "0"/>
     <waypoint id='00000000-0000-0000-0000-000000001213' Landmark='Police Office' RelatedDirection = '6' FaceOrBack = "0"/>
     <waypoint id='00000000-0000-0000-0000-000000001415' Landmark='picture' RelatedDirection = '6' FaceOrBack = "0"/>
@@ -116,8 +116,8 @@
     <waypoint id='00000000-0000-0000-0000-000000000038' Landmark='Environment Education Center' RelatedDirection = '0' FaceOrBack = "0"/>
     <waypoint id='00000000-0000-0000-0000-000000000040' Landmark='Elevator' RelatedDirection = '4' FaceOrBack = "0"/>
     <waypoint id='00000000-0000-0000-0000-000000000041' Landmark='Elevator' RelatedDirection = '2' FaceOrBack = "0"/>
-    <waypoint id='00000000-0000-0000-0000-000000000045' Landmark='South Elevator' RelatedDirection = '6' FaceOrBack = "1"/>
-    <waypoint id='00000000-0000-0000-0000-000000000043' Landmark='North Elevator' RelatedDirection = '6' FaceOrBack = "1"/>
+    <waypoint id='00000000-0000-0000-0000-000000000045' Landmark='South Elevator' RelatedDirection = '2' FaceOrBack = "1"/>
+    <waypoint id='00000000-0000-0000-0000-000000000043' Landmark='North Elevator' RelatedDirection = '2' FaceOrBack = "1"/>
     <waypoint id='00000000-0000-0000-0000-000000000044' Landmark='Intersection of Bathroom' RelatedDirection = '2' FaceOrBack = "0"/>
     <waypoint id='00000000-0000-0000-0000-000000000042' Landmark='Elevator' RelatedDirection = '2' FaceOrBack = "0"/> 
     

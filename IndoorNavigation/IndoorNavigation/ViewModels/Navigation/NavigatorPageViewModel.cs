@@ -239,10 +239,11 @@ namespace IndoorNavigation.ViewModels.Navigation
                     CardinalDirection firstDirection_Direction = _firstDirectionInstruction.returnDirection(instruction._currentWaypointGuid);
                     int faceDirection = (int)firstDirection_Direction;
                     int turnDirection = (int)instruction._information._relatedDirectionOfFirstDirection;
-                    
-                    string instructionDirection = "";
-                    string stepImageString = "";
-                    if(faceDirection>turnDirection)
+                    string initialDirectionString = "";
+                    int directionFaceorBack = _firstDirectionInstruction.returnFaceOrBack(instruction._currentWaypointGuid);
+                    Console.WriteLine("Face : " + faceDirection);
+                    Console.WriteLine("First Turn : " + turnDirection);
+                    if (faceDirection>turnDirection)
                     {
                         turnDirection = (turnDirection + 8) - faceDirection;
                     }
@@ -250,6 +251,32 @@ namespace IndoorNavigation.ViewModels.Navigation
                     {
                         turnDirection = turnDirection - faceDirection;
                     }
+
+                    if (directionFaceorBack == _initialFaceDirection)
+                    {
+                        initialDirectionString = _resourceManager.GetString(
+                        "DIRECTION_INITIAIL_FACE_STRING",
+                        currentLanguage);
+                        
+                    }
+                    else if (directionFaceorBack == _initialBackDirection)
+                    {
+                        
+                        initialDirectionString = _resourceManager.GetString(
+                        "DIRECTION_INITIAIL_BACK_STRING",
+                        currentLanguage);
+                        if (turnDirection < 4)
+                        {
+                            turnDirection = turnDirection + 4;
+                        }
+                        else if (turnDirection >= 4)
+                        {
+                            turnDirection = turnDirection - 4;
+                        }
+                    }
+                    string instructionDirection = "";
+                    string stepImageString = "";
+                    
                     CardinalDirection cardinalDirection = (CardinalDirection)turnDirection;
                     switch(cardinalDirection)
                     {
@@ -319,25 +346,14 @@ namespace IndoorNavigation.ViewModels.Navigation
                     else if (firstDirection_Landmark == _pictureType)
                     {
                         string pictureName;
-                        string initialDirectionString = "";
+
                         string regionString = instruction._currentRegionGuid.ToString();
                         string waypointString = instruction._currentWaypointGuid.ToString();
-                        int directionFaceorBack = _firstDirectionInstruction.returnFaceOrBack(instruction._currentWaypointGuid);
+
                         pictureName = _navigationGraph.GetBuildingName() + regionString.Substring(33, 3) + waypointString.Substring(31, 5);
                         string picturePath = Path.Combine(_navigationGraph.GetBuildingName(),pictureName);
                         Console.WriteLine("PictureName : " + picturePath);
-                        if(directionFaceorBack == _initialFaceDirection)
-                        {
-                            initialDirectionString = _resourceManager.GetString(
-                            "DIRECTION_INITIAIL_FACE_STRING",
-                            currentLanguage);
-                        }
-                        else if(directionFaceorBack == _initialBackDirection)
-                        {
-                            initialDirectionString = _resourceManager.GetString(
-                            "DIRECTION_INITIAIL_BACK_STRING",
-                            currentLanguage);
-                        }
+  
                         stepLabel = string.Format(
                             initialDirectionString,
                             _resourceManager.GetString(
@@ -358,20 +374,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                     }
                     else
                     {
-                        string initialDirectionString = "";
-                        int directionFaceorBack = _firstDirectionInstruction.returnFaceOrBack(instruction._currentWaypointGuid);
-                        if (directionFaceorBack == _initialFaceDirection)
-                        {
-                            initialDirectionString = _resourceManager.GetString(
-                            "DIRECTION_INITIAIL_FACE_STRING",
-                            currentLanguage);
-                        }
-                        else if (directionFaceorBack == _initialBackDirection)
-                        {
-                            initialDirectionString = _resourceManager.GetString(
-                            "DIRECTION_INITIAIL_BACK_STRING",
-                            currentLanguage);
-                        }
+                        
                         stepLabel = string.Format(
                             initialDirectionString,
                             firstDirection_Landmark,
