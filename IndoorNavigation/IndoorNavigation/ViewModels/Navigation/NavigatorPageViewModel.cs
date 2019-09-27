@@ -162,8 +162,8 @@ namespace IndoorNavigation.ViewModels.Navigation
                     Utility._textToSpeech.Speak(
                         CurrentStepLabel,
                         _resourceManager.GetString("CULTURE_VERSION_STRING", currentLanguage));
-
-					break;
+                    System.Threading.Thread.Sleep(_millisecondsTimeout);
+                    break;
 
 				case NavigationResult.AdjustRoute:
 					CurrentStepLabel =

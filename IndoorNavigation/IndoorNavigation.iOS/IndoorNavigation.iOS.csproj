@@ -234,40 +234,14 @@
     <BundleResource Include="Resources\settings_gears_imagebutton.png" />
     <BundleResource Include="Resources\Warning.png" />
     <BundleResource Include="Resources\Waiting.png" />
-    <BundleResource Include="Resources\Arrived.png" />
     <BundleResource Include="Resources\Stairs_down.png" />
     <BundleResource Include="Resources\Stairs_up.png" />
     <BundleResource Include="Resources\waittingscan.gif" />
     <BundleResource Include="Resources\homeicon_wc.png" />
-    <BundleResource Include="Resources\homeicon_store.png" />
-    <BundleResource Include="Resources\homeicon_stairs.png" />
-    <BundleResource Include="Resources\homeicon_parking.png" />
-    <BundleResource Include="Resources\homeicon_other.png" />
-    <BundleResource Include="Resources\homeicon_office2.png" />
-    <BundleResource Include="Resources\homeicon_exit.png" />
-    <BundleResource Include="Resources\homeicon_elevator2.png" />
-    <BundleResource Include="Resources\homeicon_branch2.png" />
-    <BundleResource Include="Resources\appicon2.png" />
-    <BundleResource Include="Resources\Bathroom.png" />
-    <BundleResource Include="Resources\BloodCollectionCounter.png" />
-    <BundleResource Include="Resources\Cashier.png" />
-    <BundleResource Include="Resources\Clinics.png" />
-    <BundleResource Include="Resources\ConvenienceStore.png" />
-    <BundleResource Include="Resources\ExaminationRoom.png" />
-    <BundleResource Include="Resources\Exit.png" />
     <BundleResource Include="Resources\Others.png" />
     <BundleResource Include="Resources\Pharmacy.png" />
-    <BundleResource Include="Resources\Arrow_frontleft.png" />
-    <BundleResource Include="Resources\Arrow_frontright.png" />
-    <BundleResource Include="Resources\Arrow_rearleft.png" />
-    <BundleResource Include="Resources\Arrow_rearright.png" />
-    <BundleResource Include="Resources\Arrow_up.png" />
     <BundleResource Include="Resources\service_hospital_logo.png" />
     <BundleResource Include="Resources\Lab\Lab11100004.png" />
-    <BundleResource Include="Resources\Elevtor_down.png" />
-    <BundleResource Include="Resources\Elevator_up.png" />
-    <BundleResource Include="Resources\Escalator_down.png" />
-    <BundleResource Include="Resources\Escalator_up.png" />
     <BundleResource Include="Resources\NTUH_YunLin\NTUH_YunLin11100001.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </BundleResource>
@@ -289,14 +263,36 @@
     <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100102.png" />
     <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100109.png" />
     <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100108.png" />
+    <BundleResource Include="Resources\Arrived.png" />
+    <BundleResource Include="Resources\homeicon_store.png" />
+    <BundleResource Include="Resources\homeicon_stairs.png" />
+    <BundleResource Include="Resources\homeicon_parking.png" />
+    <BundleResource Include="Resources\homeicon_other.png" />
+    <BundleResource Include="Resources\homeicon_office2.png" />
+    <BundleResource Include="Resources\homeicon_exit.png" />
+    <BundleResource Include="Resources\homeicon_elevator2.png" />
+    <BundleResource Include="Resources\homeicon_branch2.png" />
+    <BundleResource Include="Resources\appicon2.png" />
+    <BundleResource Include="Resources\Bathroom.png" />
+    <BundleResource Include="Resources\BloodCollectionCounter.png" />
+    <BundleResource Include="Resources\Cashier.png" />
+    <BundleResource Include="Resources\Clinics.png" />
+    <BundleResource Include="Resources\ConvenienceStore.png" />
+    <BundleResource Include="Resources\ExaminationRoom.png" />
+    <BundleResource Include="Resources\Exit.png" />
+    <BundleResource Include="Resources\Arrow_frontleft.png" />
+    <BundleResource Include="Resources\Arrow_frontright.png" />
+    <BundleResource Include="Resources\Arrow_rearleft.png" />
+    <BundleResource Include="Resources\Arrow_rearright.png" />
+    <BundleResource Include="Resources\Arrow_up.png" />
+    <BundleResource Include="Resources\Elevtor_down.png" />
+    <BundleResource Include="Resources\Elevator_up.png" />
+    <BundleResource Include="Resources\Escalator_down.png" />
+    <BundleResource Include="Resources\Escalator_up.png" />
     <BundleResource Include="Resources\Arrow_down.png" />
     <BundleResource Include="Resources\Arrow_left.png" />
     <BundleResource Include="Resources\Arrow_right.png" />
-  </ItemGroup>
-  <ItemGroup>
     <BundleResource Include="Resources\close_circle_button.png" />
-  </ItemGroup>
-  <ItemGroup>
     <BundleResource Include="Resources\cloud_computing.png" />
   </ItemGroup>
   <ItemGroup />

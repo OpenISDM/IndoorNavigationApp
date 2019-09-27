@@ -53,6 +53,7 @@ using Plugin.Multilingual;
 using System.Resources;
 using IndoorNavigation.Resources.Helpers;
 using System.Reflection;
+using System;
 
 namespace IndoorNavigation.ViewModels
 {
@@ -66,7 +67,8 @@ namespace IndoorNavigation.ViewModels
         const string _resourceId = "IndoorNavigation.Resources.AppResources";
         ResourceManager _resourceManager =
             new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
-
+        private const string _tapei_city_hall = "Taipei_City_Hall";
+        private const string _ntuh_yunlin = "NTUH_YunLin";
         public MainPageViewModel()
         {
             _returnedLocations = new ObservableRangeCollection<Location>();
@@ -76,6 +78,19 @@ namespace IndoorNavigation.ViewModels
         public async void LoadNavigationGraph()
         {
             _locations = new ObservableRangeCollection<Location>();
+
+            var ci = CrossMultilingual.Current.CurrentCultureInfo;
+
+            if (!Application.Current.Properties.ContainsKey("FirstUse"))
+            {
+                
+                string NTUH_YunLin = _resourceManager.GetString("HOSPITAL_NAME_STRING", ci).ToString();
+                string Taipei_City_Hall = _resourceManager.GetString("TAIPEI_CITY_HALL_STRING", ci).ToString();
+                NavigraphStorage.GenerateFileRoute(NTUH_YunLin, "NTUH_YunLin");
+                NavigraphStorage.GenerateFileRoute(Taipei_City_Hall, "Taipei_City_Hall");
+                Application.Current.Properties["FirstUse"] = false;
+            }
+
 
             foreach (string naviGraphName in NavigraphStorage.GetAllNavigationGraphs())
             {
