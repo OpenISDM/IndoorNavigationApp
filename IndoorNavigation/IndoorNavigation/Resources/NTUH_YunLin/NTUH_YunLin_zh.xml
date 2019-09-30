@@ -1,22 +1,54 @@
-<?xml version="1.0" encoding="UTF-8" ?>
 <first_direction_XML country='Taiwan' city_county='YunLin' industry_service='hospital' owner_organization='BeDI' building_name='NTUH_YunLin'>
-    <waypoint id = "00000000-0000-0000-0000-000000000001" Landmark = "picture" RelatedDirection = "6" />
-    <waypoint id = "00000000-0000-0000-0000-000000000002" Landmark = "樓梯" RelatedDirection = "0" />
-    <waypoint id = "00000000-0000-0000-0000-000000000003" Landmark = "樓梯" RelatedDirection = "0" />
-    <waypoint id = "00000000-0000-0000-0000-000000000004" Landmark = "走廊" RelatedDirection = "0" />
-    <waypoint id = "00000000-0000-0000-0000-000000000005" Landmark = "走廊" RelatedDirection = "0" />
-    <waypoint id = "00000000-0000-0000-0000-000000000006" Landmark = "電梯" RelatedDirection = "4" />
-    <waypoint id = "00000000-0000-0000-0000-000000000007" Landmark = "樓梯" RelatedDirection = "0" />
-    <waypoint id = "00000000-0000-0000-0000-000000000008" Landmark = "樓梯" RelatedDirection = "0" />
-    <waypoint id = "00000000-0000-0000-0000-000000000009" Landmark = "電梯" RelatedDirection = "4" />
-    <waypoint id = "00000000-0000-0000-0000-000000000010" Landmark = "電梯" RelatedDirection = "4" />
-    <waypoint id = "00000000-0000-0000-0000-000000000011" Landmark = "電梯" RelatedDirection = "4" />
-    <waypoint id = "00000000-0000-0000-0000-000000000012" Landmark = "電梯" RelatedDirection = "4" />
-    <waypoint id = "00000000-0000-0000-0000-000000000013" Landmark = "電梯" RelatedDirection = "4" />
-    <waypoint id = "00000000-0000-0000-0000-000000000014" Landmark = "電梯" RelatedDirection = "4" />
-    <waypoint id = "00000000-0000-0000-0000-000000000015" Landmark = "後門" RelatedDirection = "0" />
-    <waypoint id = "00000000-0000-0000-0000-000000000016" Landmark = "後門" RelatedDirection = "0" />
-    <waypoint id = "00000000-0000-0000-0000-000000000017" Landmark = "後門" RelatedDirection = "0" />
-    <waypoint id = "00000000-0000-0000-0000-000000000018" Landmark = "後門" RelatedDirection = "0" />
-    <waypoint id = "00000000-0000-0000-0000-000000000019" Landmark = "連接走廊" RelatedDirection = "4" />
+    <waypoint id = "00000000-0000-0000-0000-000000000001" Landmark = "picture" RelatedDirection = "6" FaceOrBack = "0"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000002" Landmark = "樓梯" RelatedDirection = "0" FaceOrBack = "1"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000003" Landmark = "樓梯" RelatedDirection = "0" FaceOrBack = "1"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000004" Landmark = "走廊" RelatedDirection = "0" FaceOrBack = "0"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000005" Landmark = "走廊" RelatedDirection = "0" FaceOrBack = "0"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000006" Landmark = "電梯" RelatedDirection = "4" FaceOrBack = "0"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000007" Landmark = "樓梯" RelatedDirection = "0" FaceOrBack = "1"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000008" Landmark = "樓梯" RelatedDirection = "0" FaceOrBack = "1"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000009" Landmark = "電梯" RelatedDirection = "4" FaceOrBack = "0"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000010" Landmark = "電梯" RelatedDirection = "4" FaceOrBack = "0"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000011" Landmark = "電梯" RelatedDirection = "4" FaceOrBack = "0"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000012" Landmark = "電梯" RelatedDirection = "4" FaceOrBack = "0"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000013" Landmark = "電梯" RelatedDirection = "4" FaceOrBack = "0"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000014" Landmark = "電梯" RelatedDirection = "4" FaceOrBack = "0"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000015" Landmark = "後門" RelatedDirection = "0" FaceOrBack = "0"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000016" Landmark = "後門" RelatedDirection = "0" FaceOrBack = "0"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000017" Landmark = "後門" RelatedDirection = "0" FaceOrBack = "0"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000018" Landmark = "後門" RelatedDirection = "0" FaceOrBack = "0"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000019" Landmark = "連接走廊" RelatedDirection = "4" FaceOrBack = "0"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000020" Landmark = "picture" RelatedDirection = "6" FaceOrBack = "0"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000021" Landmark = "picture" RelatedDirection = "6" FaceOrBack = "0"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000022" Landmark = "picture" RelatedDirection = "6" FaceOrBack = "0"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000023" Landmark = "服務台" RelatedDirection = "4" FaceOrBack = "0"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000024" Landmark = "前門" RelatedDirection = "4" FaceOrBack = "0"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000025" Landmark = "前門" RelatedDirection = "4" FaceOrBack = "0"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000026" Landmark = "批價掛號櫃臺" RelatedDirection = "4" FaceOrBack = "0"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000027" Landmark = "批價掛號櫃臺" RelatedDirection = "2" FaceOrBack = "0"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000028" Landmark = "26~29診走廊出口" RelatedDirection = "6" FaceOrBack = "0"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000029" Landmark = "picture" RelatedDirection = "6" FaceOrBack = "0"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000030" Landmark = "picture" RelatedDirection = "4" FaceOrBack = "0"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000031" Landmark = "樓梯" RelatedDirection = "2" FaceOrBack = "1"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000032" Landmark = "電梯" RelatedDirection = "4" FaceOrBack = "1"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000033" Landmark = "picture" RelatedDirection = "2" FaceOrBack = "0"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000034" Landmark = "picture" RelatedDirection = "2" FaceOrBack = "0"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000035" Landmark = "picture" RelatedDirection = "6" FaceOrBack = "0"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000036" Landmark = "picture" RelatedDirection = "4" FaceOrBack = "0"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000037" Landmark = "picture" RelatedDirection = "0" FaceOrBack = "0"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000038" Landmark = "picture" RelatedDirection = "2" FaceOrBack = "0"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000039" Landmark = "picture" RelatedDirection = "6" FaceOrBack = "0"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000040" Landmark = "男廁" RelatedDirection = "4" FaceOrBack = "0"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000041" Landmark = "42~49診走廊出口" RelatedDirection = "6" FaceOrBack = "0"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000042" Landmark = "萊爾富" RelatedDirection = "2" FaceOrBack = "0"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000043" Landmark = "杏一藥局" RelatedDirection = "6" FaceOrBack = "0"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000044" Landmark = "中央出口" RelatedDirection = "6" FaceOrBack = "0"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000045" Landmark = "連接走廊" RelatedDirection = "0" FaceOrBack = "0"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000046" Landmark = "樓梯" RelatedDirection = "2" FaceOrBack = "1"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000047" Landmark = "電梯" RelatedDirection = "0" FaceOrBack = "0"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000048" Landmark = "樓梯" RelatedDirection = "4" FaceOrBack = "0"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000049" Landmark = "樓梯" RelatedDirection = "4" FaceOrBack = "0"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000050" Landmark = "電梯" RelatedDirection = "0" FaceOrBack = "1"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000051" Landmark = "交誼廳" RelatedDirection = "4" FaceOrBack = "0"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000052" Landmark = "5B病房櫃台" RelatedDirection = "6" FaceOrBack = "0"/>
 </first_direction_XML>

@@ -53,5 +53,7 @@
 		<string>bluetooth-central</string>
 		<string>bluetooth-peripheral</string>
 	</array>
+	<key>MinimumOSVersion</key>
+	<string>12.4</string>
 </dict>
 </plist>

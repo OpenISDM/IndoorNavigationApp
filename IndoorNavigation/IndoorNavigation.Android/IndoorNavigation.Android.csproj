@@ -254,6 +254,19 @@
     <BundleResource Include="Resources\drawable\Taipei_City_Hall\Taipei_City_Hall11100214.png" />
     <BundleResource Include="Resources\drawable\Taipei_City_Hall\Taipei_City_Hall11101011.png" />
     <BundleResource Include="Resources\drawable\Taipei_City_Hall\Taipei_City_Hall11101415.png" />
+    <BundleResource Include="Resources\drawable\NTUH_YunLin\NTUH_YunLin11100001.png" />
+    <BundleResource Include="Resources\drawable\NTUH_YunLin\NTUH_YunLin33300020.png" />
+    <BundleResource Include="Resources\drawable\NTUH_YunLin\NTUH_YunLin33300021.png" />
+    <BundleResource Include="Resources\drawable\NTUH_YunLin\NTUH_YunLin33300022.png" />
+    <BundleResource Include="Resources\drawable\NTUH_YunLin\NTUH_YunLin33300029.png" />
+    <BundleResource Include="Resources\drawable\NTUH_YunLin\NTUH_YunLin33300030.png" />
+    <BundleResource Include="Resources\drawable\NTUH_YunLin\NTUH_YunLin33300033.png" />
+    <BundleResource Include="Resources\drawable\NTUH_YunLin\NTUH_YunLin33300034.png" />
+    <BundleResource Include="Resources\drawable\NTUH_YunLin\NTUH_YunLin33300035.png" />
+    <BundleResource Include="Resources\drawable\NTUH_YunLin\NTUH_YunLin33300036.png" />
+    <BundleResource Include="Resources\drawable\NTUH_YunLin\NTUH_YunLin33300037.png" />
+    <BundleResource Include="Resources\drawable\NTUH_YunLin\NTUH_YunLin33300038.png" />
+    <BundleResource Include="Resources\drawable\NTUH_YunLin\NTUH_YunLin33300039.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
