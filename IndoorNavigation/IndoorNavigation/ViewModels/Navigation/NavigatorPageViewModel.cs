@@ -162,7 +162,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                     Utility._textToSpeech.Speak(
                         CurrentStepLabel,
                         _resourceManager.GetString("CULTURE_VERSION_STRING", currentLanguage));
-                    System.Threading.Thread.Sleep(_millisecondsTimeout);
+                   
                     break;
 
 				case NavigationResult.AdjustRoute:
@@ -231,7 +231,7 @@ namespace IndoorNavigation.ViewModels.Navigation
             stepImage = "";
             instructionValue = _originalInstructionScale;
             location = _originalInstructionLocation;
-            nextRegionName = _xmlInformation.GiveRegionName(instruction._currentRegionGuid);
+            nextRegionName = _xmlInformation.GiveRegionName(instruction._nextRegionGuid);
             switch (instruction._information._turnDirection)
 			{
 				case TurnDirection.FirstDirection:
@@ -241,8 +241,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                     int turnDirection = (int)instruction._information._relatedDirectionOfFirstDirection;
                     string initialDirectionString = "";
                     int directionFaceorBack = _firstDirectionInstruction.returnFaceOrBack(instruction._currentWaypointGuid);
-                    Console.WriteLine("Face : " + faceDirection);
-                    Console.WriteLine("First Turn : " + turnDirection);
+        
                     if (faceDirection>turnDirection)
                     {
                         turnDirection = (turnDirection + 8) - faceDirection;
