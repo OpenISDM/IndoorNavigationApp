@@ -241,28 +241,6 @@
     <BundleResource Include="Resources\Others.png" />
     <BundleResource Include="Resources\Pharmacy.png" />
     <BundleResource Include="Resources\service_hospital_logo.png" />
-    <BundleResource Include="Resources\Lab\Lab11100004.png" />
-    <BundleResource Include="Resources\NTUH_YunLin\NTUH_YunLin11100001.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </BundleResource>
-    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11101011.png" />
-    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11101415.png" />
-    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100209.png" />
-    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100208.png" />
-    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100202.png" />
-    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100203.png" />
-    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100205.png" />
-    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100206.png" />
-    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100213.png" />
-    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100214.png" />
-    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100113.png" />
-    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100114.png" />
-    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100106.png" />
-    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100105.png" />
-    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100103.png" />
-    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100102.png" />
-    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100109.png" />
-    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100108.png" />
     <BundleResource Include="Resources\Arrived.png" />
     <BundleResource Include="Resources\homeicon_store.png" />
     <BundleResource Include="Resources\homeicon_stairs.png" />
@@ -294,18 +272,40 @@
     <BundleResource Include="Resources\Arrow_right.png" />
     <BundleResource Include="Resources\close_circle_button.png" />
     <BundleResource Include="Resources\cloud_computing.png" />
-    <BundleResource Include="Resources\NTUH_YunLin\NTUH_YunLin33300036.png" />
-    <BundleResource Include="Resources\NTUH_YunLin\NTUH_YunLin33300022.png" />
-    <BundleResource Include="Resources\NTUH_YunLin\NTUH_YunLin33300037.png" />
-    <BundleResource Include="Resources\NTUH_YunLin\NTUH_YunLin33300021.png" />
-    <BundleResource Include="Resources\NTUH_YunLin\NTUH_YunLin33300035.png" />
-    <BundleResource Include="Resources\NTUH_YunLin\NTUH_YunLin33300034.png" />
-    <BundleResource Include="Resources\NTUH_YunLin\NTUH_YunLin33300020.png" />
-    <BundleResource Include="Resources\NTUH_YunLin\NTUH_YunLin33300030.png" />
-    <BundleResource Include="Resources\NTUH_YunLin\NTUH_YunLin33300033.png" />
-    <BundleResource Include="Resources\NTUH_YunLin\NTUH_YunLin33300029.png" />
-    <BundleResource Include="Resources\NTUH_YunLin\NTUH_YunLin33300039.png" />
-    <BundleResource Include="Resources\NTUH_YunLin\NTUH_YunLin33300038.png" />
+    <BundleResource Include="Resources\Lab11100004.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall11100102.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall11100103.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall11100105.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall11100106.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall11100108.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall11100109.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall11100113.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall11100114.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall11100202.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall11100203.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall11100205.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall11100206.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall11100208.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall11100209.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall11100213.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall11100214.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall11101011.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall11101415.png" />
+    <BundleResource Include="Resources\NTUH_YunLin11100001.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\NTUH_YunLin33300020.png" />
+    <BundleResource Include="Resources\NTUH_YunLin33300021.png" />
+    <BundleResource Include="Resources\NTUH_YunLin33300022.png" />
+    <BundleResource Include="Resources\NTUH_YunLin33300029.png" />
+    <BundleResource Include="Resources\NTUH_YunLin33300030.png" />
+    <BundleResource Include="Resources\NTUH_YunLin33300033.png" />
+    <BundleResource Include="Resources\NTUH_YunLin33300034.png" />
+    <BundleResource Include="Resources\NTUH_YunLin33300035.png" />
+    <BundleResource Include="Resources\NTUH_YunLin33300036.png" />
+    <BundleResource Include="Resources\NTUH_YunLin33300037.png" />
+    <BundleResource Include="Resources\NTUH_YunLin33300038.png" />
+    <BundleResource Include="Resources\NTUH_YunLin33300039.png" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

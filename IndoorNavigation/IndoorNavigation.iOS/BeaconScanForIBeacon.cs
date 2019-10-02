@@ -96,7 +96,7 @@ namespace IndoorNavigation.iOS
                 {
                     string bufferUUID = tempUUID.ToString();
                     string identifierUUID = ExtractBeaconUUID(bufferUUID);
-                    if (identifierUUID.Length >= 36)
+                    if (identifierUUID.Length == 36)
                     {
                         List<BeaconSignalModel> signals = new List<BeaconSignalModel>();
 

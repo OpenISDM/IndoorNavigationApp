@@ -69,7 +69,8 @@ namespace IndoorNavigation.ViewModels.Navigation
         private const int _firstDirectionInstructionLocation = 4;
         private const int _firstDirectionInstructionScale = 2;
         private const int _originalInstructionScale = 1;
-        private const int _millisecondsTimeout = 2000;
+        private const int _millisecondsTimeoutForTwoSecond = 2000;
+        private const int _millisecondsTimeoutForOneSecond = 1000;
         private const int _initialFaceDirection = 0;
         private const int _initialBackDirection = 1;
         private string _currentStepLabelName=" ";
@@ -162,7 +163,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                     Utility._textToSpeech.Speak(
                         CurrentStepLabel,
                         _resourceManager.GetString("CULTURE_VERSION_STRING", currentLanguage));
-                   
+                    //System.Threading.Thread.Sleep(_millisecondsTimeoutForOneSecond);
                     break;
 
 				case NavigationResult.AdjustRoute:
@@ -173,7 +174,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                     Utility._textToSpeech.Speak(
                         CurrentStepLabel,
                         _resourceManager.GetString("CULTURE_VERSION_STRING", currentLanguage));
-                    System.Threading.Thread.Sleep(_millisecondsTimeout);
+                    //System.Threading.Thread.Sleep(_millisecondsTimeoutForTwoSecond);
 					break;
 
 				case NavigationResult.Arrival:
@@ -351,7 +352,7 @@ namespace IndoorNavigation.ViewModels.Navigation
 
                         pictureName = _navigationGraph.GetBuildingName() + regionString.Substring(33, 3) + waypointString.Substring(31, 5);
                         string picturePath = Path.Combine(_navigationGraph.GetBuildingName(),pictureName);
-                        Console.WriteLine("PictureName : " + picturePath);
+                        Console.WriteLine("PictureName : " + pictureName);
   
                         stepLabel = string.Format(
                             initialDirectionString,
@@ -364,7 +365,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             nextWaypointName,
                             " ",
                             instruction._information._distance);
-                        firstDirectionImage = picturePath;
+                        firstDirectionImage = pictureName;
                         stepImage = stepImageString;
                         rotation = 75;
                         location = _firstDirectionInstructionLocation;

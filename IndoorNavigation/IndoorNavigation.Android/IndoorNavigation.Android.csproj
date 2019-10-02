@@ -124,10 +124,6 @@
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>
-    <None Include="Resources\drawable\Lab\Lab11100004.png">
-      <SubType></SubType>
-      <Generator></Generator>
-    </None>
     <AndroidResource Include="Resources\drawable\Escalator_down.png">
       <SubType></SubType>
       <Generator></Generator>
@@ -145,6 +141,82 @@
       <Generator></Generator>
     </AndroidResource>
     <AndroidResource Include="Resources\drawable\Arrow_right.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\Taipei_City_Hall11100102.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\Taipei_City_Hall11100103.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\Taipei_City_Hall11100105.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\Taipei_City_Hall11100106.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\Taipei_City_Hall11100108.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\Taipei_City_Hall11100109.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\Taipei_City_Hall11100113.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\Taipei_City_Hall11100114.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\Taipei_City_Hall11100202.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\Taipei_City_Hall11100203.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\Taipei_City_Hall11100205.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\Taipei_City_Hall11100206.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\Taipei_City_Hall11100208.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\Taipei_City_Hall11100209.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\Taipei_City_Hall11100213.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\Taipei_City_Hall11100214.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\Taipei_City_Hall11101011.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\Taipei_City_Hall11101415.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\Lab11100004.png">
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>
@@ -193,8 +265,6 @@
     <Folder Include="Resources\drawable-xhdpi\" />
     <Folder Include="Resources\drawable-xxhdpi\" />
     <Folder Include="Resources\drawable-xxxhdpi\" />
-    <Folder Include="Resources\drawable\Lab\" />
-    <Folder Include="Resources\drawable\Taipei_City_Hall\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\IndoorNavigation\IndoorNavigation.csproj">
@@ -236,37 +306,19 @@
     <AndroidResource Include="Resources\drawable\service_hospital_logo.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\drawable\Taipei_City_Hall\Taipei_City_Hall11100102.png" />
-    <BundleResource Include="Resources\drawable\Taipei_City_Hall\Taipei_City_Hall11100103.png" />
-    <BundleResource Include="Resources\drawable\Taipei_City_Hall\Taipei_City_Hall11100105.png" />
-    <BundleResource Include="Resources\drawable\Taipei_City_Hall\Taipei_City_Hall11100106.png" />
-    <BundleResource Include="Resources\drawable\Taipei_City_Hall\Taipei_City_Hall11100108.png" />
-    <BundleResource Include="Resources\drawable\Taipei_City_Hall\Taipei_City_Hall11100109.png" />
-    <BundleResource Include="Resources\drawable\Taipei_City_Hall\Taipei_City_Hall11100113.png" />
-    <BundleResource Include="Resources\drawable\Taipei_City_Hall\Taipei_City_Hall11100114.png" />
-    <BundleResource Include="Resources\drawable\Taipei_City_Hall\Taipei_City_Hall11100202.png" />
-    <BundleResource Include="Resources\drawable\Taipei_City_Hall\Taipei_City_Hall11100203.png" />
-    <BundleResource Include="Resources\drawable\Taipei_City_Hall\Taipei_City_Hall11100205.png" />
-    <BundleResource Include="Resources\drawable\Taipei_City_Hall\Taipei_City_Hall11100206.png" />
-    <BundleResource Include="Resources\drawable\Taipei_City_Hall\Taipei_City_Hall11100208.png" />
-    <BundleResource Include="Resources\drawable\Taipei_City_Hall\Taipei_City_Hall11100209.png" />
-    <BundleResource Include="Resources\drawable\Taipei_City_Hall\Taipei_City_Hall11100213.png" />
-    <BundleResource Include="Resources\drawable\Taipei_City_Hall\Taipei_City_Hall11100214.png" />
-    <BundleResource Include="Resources\drawable\Taipei_City_Hall\Taipei_City_Hall11101011.png" />
-    <BundleResource Include="Resources\drawable\Taipei_City_Hall\Taipei_City_Hall11101415.png" />
-    <BundleResource Include="Resources\drawable\NTUH_YunLin\NTUH_YunLin11100001.png" />
-    <BundleResource Include="Resources\drawable\NTUH_YunLin\NTUH_YunLin33300020.png" />
-    <BundleResource Include="Resources\drawable\NTUH_YunLin\NTUH_YunLin33300021.png" />
-    <BundleResource Include="Resources\drawable\NTUH_YunLin\NTUH_YunLin33300022.png" />
-    <BundleResource Include="Resources\drawable\NTUH_YunLin\NTUH_YunLin33300029.png" />
-    <BundleResource Include="Resources\drawable\NTUH_YunLin\NTUH_YunLin33300030.png" />
-    <BundleResource Include="Resources\drawable\NTUH_YunLin\NTUH_YunLin33300033.png" />
-    <BundleResource Include="Resources\drawable\NTUH_YunLin\NTUH_YunLin33300034.png" />
-    <BundleResource Include="Resources\drawable\NTUH_YunLin\NTUH_YunLin33300035.png" />
-    <BundleResource Include="Resources\drawable\NTUH_YunLin\NTUH_YunLin33300036.png" />
-    <BundleResource Include="Resources\drawable\NTUH_YunLin\NTUH_YunLin33300037.png" />
-    <BundleResource Include="Resources\drawable\NTUH_YunLin\NTUH_YunLin33300038.png" />
-    <BundleResource Include="Resources\drawable\NTUH_YunLin\NTUH_YunLin33300039.png" />
+    <BundleResource Include="Resources\NTUH_YunLin11100001.png" />
+    <BundleResource Include="Resources\NTUH_YunLin33300020.png" />
+    <BundleResource Include="Resources\NTUH_YunLin33300021.png" />
+    <BundleResource Include="Resources\NTUH_YunLin33300022.png" />
+    <BundleResource Include="Resources\NTUH_YunLin33300029.png" />
+    <BundleResource Include="Resources\NTUH_YunLin33300030.png" />
+    <BundleResource Include="Resources\NTUH_YunLin33300033.png" />
+    <BundleResource Include="Resources\NTUH_YunLin33300034.png" />
+    <BundleResource Include="Resources\NTUH_YunLin33300035.png" />
+    <BundleResource Include="Resources\NTUH_YunLin33300036.png" />
+    <BundleResource Include="Resources\NTUH_YunLin33300037.png" />
+    <BundleResource Include="Resources\NTUH_YunLin33300038.png" />
+    <BundleResource Include="Resources\NTUH_YunLin33300039.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
