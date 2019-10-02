@@ -351,8 +351,6 @@ namespace IndoorNavigation.ViewModels.Navigation
                         string waypointString = instruction._currentWaypointGuid.ToString();
 
                         pictureName = _navigationGraph.GetBuildingName() + regionString.Substring(33, 3) + waypointString.Substring(31, 5);
-                        string picturePath = Path.Combine(_navigationGraph.GetBuildingName(),pictureName);
-                        Console.WriteLine("PictureName : " + pictureName);
   
                         stepLabel = string.Format(
                             initialDirectionString,
