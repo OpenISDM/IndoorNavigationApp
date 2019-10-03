@@ -30,7 +30,7 @@
 	<string>IndoorNavigation</string>
 	<key>NSCameraUsageDescription</key>
 	<string>This app needs to access a camera to scan the barcode.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Indoor navigation requires location permission</string>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcon.appiconset</string>
@@ -54,6 +54,8 @@
 		<string>bluetooth-peripheral</string>
 	</array>
 	<key>MinimumOSVersion</key>
-	<string>12.4</string>
+	<string>12.2</string>
+	<key>NSContactsUsageDescription</key>
+	<string>contactsDescription</string>
 </dict>
 </plist>
