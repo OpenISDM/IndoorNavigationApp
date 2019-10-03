@@ -270,9 +270,6 @@
     <AndroidResource Include="Resources\drawable\service_hospital_logo.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\NTUH_YunLin11100001.png" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable\NTUH_YunLin33300020.png" />
   </ItemGroup>
   <ItemGroup>

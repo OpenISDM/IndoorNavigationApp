@@ -1,9 +1,9 @@
 <first_direction_XML country='Taiwan' city_county='YunLin' industry_service='hospital' owner_organization='BeDI' building_name='NTUH_YunLin'>
-    <waypoint id = "00000000-0000-0000-0000-000000000001" Landmark = "picture" RelatedDirection = "6" FaceOrBack = "0"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000001" Landmark = "Stairs" RelatedDirection = "0" FaceOrBack = "1"/>
     <waypoint id = "00000000-0000-0000-0000-000000000002" Landmark = "Stairs" RelatedDirection = "0" FaceOrBack = "1"/>
     <waypoint id = "00000000-0000-0000-0000-000000000003" Landmark = "Stairs" RelatedDirection = "0" FaceOrBack = "1"/>
     <waypoint id = "00000000-0000-0000-0000-000000000004" Landmark = "Corridor" RelatedDirection = "0" FaceOrBack = "0"/>
-    <waypoint id = "00000000-0000-0000-0000-000000000005" Landmark = "Corridor" RelatedDirection = "0" FaceOrBack = "0"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000005" Landmark = "Stairs" RelatedDirection = "6" FaceOrBack = "1"/>
 	<waypoint id = "00000000-0000-0000-0000-000000000006" Landmark = "Elevator" RelatedDirection = "4" FaceOrBack = "0"/>
 	<waypoint id = "00000000-0000-0000-0000-000000000007" Landmark = "Stairs" RelatedDirection = "0" FaceOrBack = "1"/>
 	<waypoint id = "00000000-0000-0000-0000-000000000008" Landmark = "Stairs" RelatedDirection = "0" FaceOrBack = "1"/>
@@ -13,11 +13,11 @@
 	<waypoint id = "00000000-0000-0000-0000-000000000012" Landmark = "Elevator" RelatedDirection = "4" FaceOrBack = "0"/>
 	<waypoint id = "00000000-0000-0000-0000-000000000013" Landmark = "Elevator" RelatedDirection = "4" FaceOrBack = "0"/>
 	<waypoint id = "00000000-0000-0000-0000-000000000014" Landmark = "Elevator" RelatedDirection = "4" FaceOrBack = "0"/>
-	<waypoint id = "00000000-0000-0000-0000-000000000015" Landmark = "Back Door" RelatedDirection = "0" FaceOrBack = "0"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000015" Landmark = "Stairs" RelatedDirection = "4" FaceOrBack = "1"/>
 	<waypoint id = "00000000-0000-0000-0000-000000000016" Landmark = "Back Door" RelatedDirection = "0" FaceOrBack = "0"/>
-	<waypoint id = "00000000-0000-0000-0000-000000000017" Landmark = "Back Door" RelatedDirection = "0" FaceOrBack = "0"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000017" Landmark = "Stairs" RelatedDirection = "4" FaceOrBack = "1"/>
 	<waypoint id = "00000000-0000-0000-0000-000000000018" Landmark = "Back Door" RelatedDirection = "0" FaceOrBack = "0"/>
-	<waypoint id = "00000000-0000-0000-0000-000000000019" Landmark = "Connecting Corridor" RelatedDirection = "4" FaceOrBack = "0"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000019" Landmark = "Stairs" RelatedDirection = "6" FaceOrBack = "1"/>
 	<waypoint id = "00000000-0000-0000-0000-000000000020" Landmark = "picture" RelatedDirection = "6" FaceOrBack = "0"/>
 	<waypoint id = "00000000-0000-0000-0000-000000000021" Landmark = "picture" RelatedDirection = "6" FaceOrBack = "0"/>
 	<waypoint id = "00000000-0000-0000-0000-000000000022" Landmark = "picture" RelatedDirection = "6" FaceOrBack = "0"/>
