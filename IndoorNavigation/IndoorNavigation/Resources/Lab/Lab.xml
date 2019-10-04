@@ -2,21 +2,20 @@
 <navigation_graph country='Taiwan' city_county='YunLin' industry_service='hospital' owner_organization='BeDI' building_name='Lab'>
     <regions region_numbers='2' edge_numbers='1'>
         <region id='11111111-1111-1111-1111-111111111111' ips_type='LBeacon' name='First' floor='1'>
-            <waypoint id='00000000-0000-0000-0000-000000000001' name='前門出口' type='terminal' lat='0.00006660' lon='0.00011900' category='Others' />
-            <waypoint id='00000000-0000-0000-0000-000000000002' name='服務台' type='terminal' lat='0.00003060' lon='0.00010700' category='Others' />
-            <waypoint id='00000000-0000-0000-0000-000000000003' name='樓梯' type='portal' lat='0.00002460' lon='0.00005900' category='Others' />
-       
-            <waypoint id='00000000-0000-0000-0000-000000000005' name='心臟科' type='terminal' lat='0.00002460' lon='0.00002300' category='Others' />
-            <waypoint id='00000000-0000-0000-0000-000000000004' name='精神科' type='terminal' lat='0.00006060' lon='0.00005900' category='Others' />
+            <waypoint id='00000000-0000-0000-0000-000000000001' name='前門出口' type='terminal' lat='0.00006660' lon='0.00011900' category='Exit' />
+            <waypoint id='00000000-0000-0000-0000-000000000002' name='檢查室' type='terminal' lat='0.00003060' lon='0.00010700' category='ExaminationRoom' />
+            <waypoint id='00000000-0000-0000-0000-000000000003' name='批價櫃臺' type='terminal' lat='0.00002460' lon='0.00005900' category='Cashier' />
+            <waypoint id='00000000-0000-0000-0000-000000000004' name='精神科' type='terminal' lat='0.00006060' lon='0.00005900' category='Clinics' />
+            <waypoint id='00000000-0000-0000-0000-000000000005' name='心臟科' type='terminal' lat='0.00002460' lon='0.00002300' category='Clinics' />
         </region>
     </regions>
     <navigraphs navigrap_numbers='1'>
         <navigraph region_id='11111111-1111-1111-1111-111111111111' waypoint_numbers='4' edge_numbers='4'>
-            <waypoint id='00000000-0000-0000-0000-000000000001' name='前門出口' type='terminal' lat='0.00006660' lon='0.00011900' category='Others' />
-            <waypoint id='00000000-0000-0000-0000-000000000002' name='服務台' type='terminal' lat='0.00003060' lon='0.00010700' category='Others' />
-            <waypoint id='00000000-0000-0000-0000-000000000003' name='批價櫃臺' type='terminal' lat='0.00002460' lon='0.00005900' category='Others' />
-            <waypoint id='00000000-0000-0000-0000-000000000005' name='心臟科' type='terminal' lat='0.00002460' lon='0.00002300' category='Others' />
-            <waypoint id='00000000-0000-0000-0000-000000000004' name='精神科' type='terminal' lat='0.00006060' lon='0.00005900' category='Others' />
+            <waypoint id='00000000-0000-0000-0000-000000000001' name='前門出口' type='terminal' lat='0.00006660' lon='0.00011900' category='Exit' />
+            <waypoint id='00000000-0000-0000-0000-000000000002' name='檢查室' type='terminal' lat='0.00003060' lon='0.00010700' category='ExaminationRoom' />
+            <waypoint id='00000000-0000-0000-0000-000000000003' name='批價櫃臺' type='terminal' lat='0.00002460' lon='0.00005900' category='Cashier' />
+            <waypoint id='00000000-0000-0000-0000-000000000004' name='精神科' type='terminal' lat='0.00006060' lon='0.00005900' category='Clinics' />
+            <waypoint id='00000000-0000-0000-0000-000000000005' name='心臟科' type='terminal' lat='0.00002460' lon='0.00002300' category='Clinics' />
             <edge node1='00000000-0000-0000-0000-000000000001' node2='00000000-0000-0000-0000-000000000002' bi_direction='2' source = '' direction='6' connection_type='NormalHallway' />
             <edge node1='00000000-0000-0000-0000-000000000002' node2='00000000-0000-0000-0000-000000000003' bi_direction='2' source = '' direction='4' connection_type='NormalHallway' />
             <edge node1='00000000-0000-0000-0000-000000000003' node2='00000000-0000-0000-0000-000000000004' bi_direction='2' source = '' direction='2' connection_type='NormalHallway' />
@@ -24,11 +23,11 @@
 
             <beacons beacon_numbers='5'>
                 
-                <beacon uuid='00010018-0000-0000-6660-000000011900' waypoint_ids='00000000-0000-0000-0000-000000000001' threshold='-40'/>
-                <beacon uuid='00010018-0000-0000-2460-000000009500' waypoint_ids='00000000-0000-0000-0000-000000000002' threshold='-40'/>
-                <beacon uuid='00010018-0000-0000-2460-000000005900' waypoint_ids='00000000-0000-0000-0000-000000000003' threshold='-40'/>
-                <beacon uuid='00020018-0000-0000-6060-000000005900' waypoint_ids='00000000-0000-0000-0000-000000000004' threshold='-40'/>
-                <beacon uuid='00010018-0000-0000-2460-000000002300' waypoint_ids='00000000-0000-0000-0000-000000000005' threshold='-40'/>
+                <beacon uuid='00010018-0000-0000-6660-000000011900' waypoint_ids='00000000-0000-0000-0000-000000000001' threshold='-45'/>
+                <beacon uuid='00010018-0000-0000-2460-000000009500' waypoint_ids='00000000-0000-0000-0000-000000000002' threshold='-45'/>
+                <beacon uuid='00010018-0000-0000-2460-000000005900' waypoint_ids='00000000-0000-0000-0000-000000000003' threshold='-45'/>
+                <beacon uuid='00010018-0000-0000-6060-000000005900' waypoint_ids='00000000-0000-0000-0000-000000000004' threshold='-45'/>
+                <beacon uuid='00010018-0000-0000-2460-000000002300' waypoint_ids='00000000-0000-0000-0000-000000000005' threshold='-45'/>
             </beacons>
         </navigraph>
         
