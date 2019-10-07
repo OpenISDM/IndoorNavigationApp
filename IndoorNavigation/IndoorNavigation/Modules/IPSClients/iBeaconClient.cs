@@ -155,12 +155,16 @@ namespace IndoorNavigation.Modules.IPSClients
                         }  
                     }
                 }
-               
+
+
                 foreach(KeyValuePair < RegionWaypointPoint, List < BeaconSignal >>interestedBeacon in scannedData)
                 {
+                    //Console.WriteLine("Key : " + interestedBeacon.Value);
                     Dictionary<Guid, List<BeaconSignal>> tempSave = new Dictionary<Guid, List<BeaconSignal>>();
+
                     foreach(BeaconSignal beaconSignal in interestedBeacon.Value)
                     {
+
                         if(!tempSave.Keys.Contains(beaconSignal.UUID))
                         {
                             tempSave.Add(beaconSignal.UUID, new List<BeaconSignal> { beaconSignal });
@@ -183,9 +187,12 @@ namespace IndoorNavigation.Modules.IPSClients
                     //this waypoint might be our interested waypoint.
                     if(calculateData.Value.Count()>=_moreThanTwoIBeacon)
                     {
+                        Dictionary<Guid, List<int>> saveEachBeacons = new Dictionary<Guid, List<int>>();
                         //Sort the beacons by their Rssi
                         calculateData.Value.Sort((x, y) => { return x.RSSI.CompareTo(y.RSSI); });
                         int avgSignal = 0;
+                        //int averageSignal = 0;
+                        //List<int> signalOfEachBeacon = new List<int>();
                         //If we have more than ten data, we remove the highest 10%
                         //and the lowest 10%, and calculate their average
                         //If we have not more than 10 data,
@@ -195,18 +202,77 @@ namespace IndoorNavigation.Modules.IPSClients
                             int min = Convert.ToInt32(scannedData.Count() * 0.1);
                             int max = Convert.ToInt32(scannedData.Count() * 0.9);
                             int minus = max - min;
+                           
                             for (int i = min; i < max; i++)
                             {
+                            //    if (saveEachBeacons.Keys.Contains(calculateData.Value[i].UUID))
+                            //    {
+                            //        saveEachBeacons[calculateData.Value[i].UUID].Add(calculateData.Value[i].RSSI);
+                            //    }
+                            //    else
+                            //    {
+                            //        saveEachBeacons.Add(calculateData.Value[i].UUID, new List<int> { calculateData.Value[i].RSSI });
+                            //    }
                                 avgSignal += calculateData.Value[i].RSSI;
                             }
+
+                            //foreach (KeyValuePair<Guid, List<int>> calculate in saveEachBeacons)
+                            //{
+
+                            //    foreach (int value in calculate.Value)
+                            //    {
+                            //        averageSignal = averageSignal + value;
+                            //    }
+                            //    averageSignal = averageSignal / calculate.Value.Count();
+                            //    signalOfEachBeacon.Add(averageSignal);
+                            //    Console.WriteLine("First : " + averageSignal);
+                            //}
+
+                            //averageSignal = 0;
+                            //foreach (int tempInt in signalOfEachBeacon)
+                            //{
+                            //    averageSignal = averageSignal + tempInt;
+                            //}
+                            //averageSignal = averageSignal / signalOfEachBeacon.Count();
+                            //Console.WriteLine("First : " + averageSignal);
                             avgSignal = avgSignal / minus;
                         }
                         else
                         {
+                            
+                            
                             foreach (BeaconSignal value in calculateData.Value)
                             {
+                                //if (saveEachBeacons.Keys.Contains(value.UUID))
+                                //{
+                                //    saveEachBeacons[value.UUID].Add(value.RSSI);
+                                //}
+                                //else
+                                //{
+                                //    saveEachBeacons.Add(value.UUID, new List<int> { value.RSSI });
+                                //}
+
+
                                 avgSignal += value.RSSI;
                             }
+                            //foreach (KeyValuePair<Guid, List<int>> calculate in saveEachBeacons)
+                            //{
+                                
+                            //    foreach (int value in calculate.Value)
+                            //    {
+                            //        averageSignal = averageSignal + value;
+                            //    }
+                            //    averageSignal = averageSignal / calculate.Value.Count();
+                            //    signalOfEachBeacon.Add(averageSignal);
+                            //}
+
+
+                            //averageSignal = 0;
+                            //foreach (int tempInt in signalOfEachBeacon)
+                            //{
+                            //    averageSignal = averageSignal + tempInt;
+                            //}
+                            //averageSignal = averageSignal / signalOfEachBeacon.Count();
                             avgSignal = avgSignal / scannedData.Count();
 
                         }
@@ -220,6 +286,7 @@ namespace IndoorNavigation.Modules.IPSClients
                 //Compare all data we have, and get the highest Rssi Waypoint as our interested waypoint
                 foreach(KeyValuePair<RegionWaypointPoint, int> calculateMax in signalAvgValue)
                 {
+                    Console.WriteLine("caculatemax : " + calculateMax.Value);
                     if(tempValue<calculateMax.Value)
                     {
                         possibleRegionWaypoint = new RegionWaypointPoint();

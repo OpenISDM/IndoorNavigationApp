@@ -10,12 +10,6 @@
  *
  *      IndoorNavigation
  *
- * File Description:
- * 
- *      This class is used to select the route specified by the starting
- *      point, destination, and user preferences. When in navigation,
- *      the class will give the next waypoint, and when the user is in
- *      the wrong way, the class will re-route.
  *      
  * Version:
  *
@@ -27,21 +21,15 @@
  *
  * Abstract:
  *
- *      Waypoint-based navigator is a mobile Bluetooth navigation application
- *      that runs on smart phones. It is structed to support anywhere 
- *      navigation. Indoors in areas covered by different indoor positioning 
- *      system (IPS) and outdoors covered by GPS. In particilar, it can rely
- *      on BeDIS (Building/environment Data and Information System) for
- *      indoor positioning. Using this IPS, the navigator does not need to 
- *      continuously monitor its own position, since the IPS broadcast to the 
- *      navigator the location of each waypoint. 
- *      This version makes use of Xamarin.Forms, which is a complete 
- *      cross-platform UI tookit that runs on both iOS and Android.
+ *      1. This class used to decide which IPS we need to call.
+ *      2. We use this class to switch the IPS.
+ *      3. We read the beacon information in this class.
+ *   
  *
  * Authors:
  *
  *      Eric Lee, ericlee@iis.sinica.edu.tw
- *      Chun-Yu Lai, chunyu1202@gmail.com
+ *      
  *
  */
 
@@ -80,7 +68,7 @@ namespace IndoorNavigation.Modules
         private bool _isKeepDetection;
         private Guid _currentRegionID = new Guid();
         private Guid _currentWaypointID = new Guid();
-
+        
         private ConnectionType[] _avoidConnectionTypes;
 
         private ManualResetEventSlim _nextWaypointEvent = new ManualResetEventSlim(false);
@@ -188,6 +176,7 @@ namespace IndoorNavigation.Modules
                 }
                 else if (_nextWaypointStep >= 1 && _waypointsOnWrongWay[_waypointsOnRoute[_nextWaypointStep - 1]].Contains(checkWrongRegionWaypoint) == false)
                 {
+                    
                     Console.WriteLine("In Program Wrong, going to Re-calculate the route");
                     _nextWaypointStep = 0;
 
@@ -202,6 +191,9 @@ namespace IndoorNavigation.Modules
                     Guid previousRegionID = new Guid();
                     Guid previousWaypointID = new Guid();
 
+                    // Add this function can avoid that when users go to the worong waypoint,
+                    // the instuction will jump to fast.
+                    SpinWait.SpinUntil(()=>false,5000);
                     _event.OnEventCall(new NavigationEventArgs
                     {
                         _result = NavigationResult.Run,
@@ -227,10 +219,9 @@ namespace IndoorNavigation.Modules
                             _nextRegionGuid = _waypointsOnRoute[_nextWaypointStep + 1]._regionID
                         }
                     });
-
+                    
                     _nextWaypointStep++;
                     Guid _nextRegionID = _waypointsOnRoute[_nextWaypointStep]._regionID;
-                    //_currentRegionID = _waypointsOnRoute[_nextWaypointStep]._regionID;
                     NavigateToNextWaypoint(_nextRegionID, _nextWaypointStep);
                 }
                 _nextWaypointEvent.Reset();
@@ -247,6 +238,8 @@ namespace IndoorNavigation.Modules
                                         new List<WaypointBeaconsMapping>();
             if (nextStep == -1)
             {
+                
+
                 waypointClient._event._eventHandler += new EventHandler(CheckArrivedWaypoint);
                 ibeaconCLient._event._eventHandler += new EventHandler(CheckArrivedWaypoint);
                 IPSType regionIPSType;
@@ -416,7 +409,7 @@ namespace IndoorNavigation.Modules
 
                             WrongbeaconIDs = _navigationGraph
                                         .GetAllBeaconIDInOneWaypointOfRegion(tempGuid, items._waypointID);
-
+                            
                             RegionWaypointPoint tempRegionWaypointInWrongWay = new RegionWaypointPoint();
                             tempRegionWaypointInWrongWay._waypointID = items._waypointID;
                             tempRegionWaypointInWrongWay._regionID = tempGuid;
@@ -998,6 +991,7 @@ namespace IndoorNavigation.Modules
                             _result = NavigationResult.Run,
                             _nextInstruction = navigationInstruction
                         });
+                        
                     }
                    
                 }
@@ -1010,6 +1004,7 @@ namespace IndoorNavigation.Modules
                         _result = NavigationResult.AdjustRoute
                     });
                     Console.WriteLine("Adjust Route");
+                    
                 }
 
                 _nextWaypointEvent.Set();

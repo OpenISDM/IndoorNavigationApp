@@ -112,10 +112,13 @@ namespace IndoorNavigation.Modules.IPSClients
                 _beaconSignalBuffer.Where(c =>
                 c.Timestamp < DateTime.Now.AddMilliseconds(-500)));
 
+ 
                 foreach (var obsoleteBeaconSignal in removeSignalBuffer)
                     _beaconSignalBuffer.Remove(obsoleteBeaconSignal);
-                _beaconSignalBuffer.Sort((x, y) => { return x.RSSI.CompareTo(y.RSSI); });
 
+                //Sort beacons through their RSSI, to let the stronger beacon can get in first
+                //_beaconSignalBuffer.Sort((x, y) => { return y.RSSI.CompareTo(x.RSSI); });
+                _beaconSignalBuffer.Sort((x, y) => { return y.RSSI.CompareTo(x.RSSI); });
                 //BeaconSignalModel beaconSignalModel = new BeaconSignalModel();
                 //beaconSignalModel.UUID = new Guid("00000015-0000-2503-8380-000021564175");
                 //_beaconSignalBuffer.Add(beaconSignalModel);

@@ -56,7 +56,7 @@ using System.Reflection;
 using IndoorNavigation.Views.Navigation;
 using Xamarin.Forms;
 using IndoorNavigation.Modules.Utilities;
-using System.IO;
+
 
 namespace IndoorNavigation.ViewModels.Navigation
 {
@@ -163,7 +163,6 @@ namespace IndoorNavigation.ViewModels.Navigation
                     Utility._textToSpeech.Speak(
                         CurrentStepLabel,
                         _resourceManager.GetString("CULTURE_VERSION_STRING", currentLanguage));
-                    //System.Threading.Thread.Sleep(_millisecondsTimeoutForOneSecond);
                     break;
 
 				case NavigationResult.AdjustRoute:
@@ -174,7 +173,6 @@ namespace IndoorNavigation.ViewModels.Navigation
                     Utility._textToSpeech.Speak(
                         CurrentStepLabel,
                         _resourceManager.GetString("CULTURE_VERSION_STRING", currentLanguage));
-                    //System.Threading.Thread.Sleep(_millisecondsTimeoutForTwoSecond);
 					break;
 
 				case NavigationResult.Arrival:
@@ -212,7 +210,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                     break;
 
             }
-		}
+        }
 
 		private void SetInstruction(NavigationInstruction instruction,
 									out string stepLabel,
@@ -547,6 +545,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             connectionTypeString,
                             Environment.NewLine,
                             nextRegionName);
+                    
 					break;
 				default:
 					stepLabel = "You're get ERROR status";
@@ -602,17 +601,16 @@ namespace IndoorNavigation.ViewModels.Navigation
 		{
 			get
 			{
-				return string.Format("{0}.png", _currentStepImageName);
-			}
-
+                return string.Format("{0}.png", _currentStepImageName);
+            }
 			set
 			{
 				if (_currentStepImageName != value)
 				{
 					_currentStepImageName = value;
-					OnPropertyChanged("CurrentStepImage");
-				}
-			}
+					OnPropertyChanged("CurrentStepImage");            
+                }
+			}          
 		}
 
         public int RotationValue
