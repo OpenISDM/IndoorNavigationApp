@@ -18,7 +18,8 @@
     <waypoint id = '00000000-0000-0000-0000-000000003218' Landmark = 'Conference Room S218' RelatedDirection = '2' FaceOrBack = "0"/> 
     <waypoint id = '00000000-0000-0000-0000-000000000301' Landmark = 'Elevator' RelatedDirection = '6' FaceOrBack = "1"/>
     <waypoint id = '00000000-0000-0000-0000-000000000302' Landmark = 'The door of Economic Development Department' RelatedDirection = '4' FaceOrBack = "0"/>
-    <waypoint id = '00000000-0000-0000-0000-000000000345' Landmark = 'Stairs' RelatedDirection = '4' FaceOrBack = "0"/>
+    <waypoint id = '00000000-0000-0000-0000-000000303304' Landmark = 'The Left hallway of the stair' RelatedDirection = '4' FaceOrBack = "0"/>
+    <waypoint id = '00000000-0000-0000-0000-000000305304' Landmark = 'The right hallway of the stair' RelatedDirection = '4' FaceOrBack = "0"/>
     <waypoint id = '00000000-0000-0000-0000-000000000306' Landmark = 'Bathroom' RelatedDirection = '0' FaceOrBack = "0"/>
     
     <waypoint id = '00000000-0000-0000-0000-100000000306' Landmark = 'Bathroom' RelatedDirection = '0' FaceOrBack = "0"/>
@@ -51,7 +52,8 @@
     <waypoint id = '00000000-0000-0000-0000-000000000329' Landmark = 'Left Hallway of Stone chair' RelatedDirection = '4' FaceOrBack = '0'/>
     <waypoint id = '00000000-0000-0000-0000-000000000330' Landmark = 'Right Hallway of Stone chair' RelatedDirection = '4' FaceOrBack = '0'/>
     <waypoint id = '00000000-0000-0000-0000-000000000331' Landmark = 'Taipei City Construction Management Office Information room' RelatedDirection = '6' FaceOrBack = '0'/>
-    <waypoint id = '00000000-0000-0000-0000-000000323435' Landmark = 'Employee child kindergarten' RelatedDirection = '6' FaceOrBack = '0'/>    
+    <waypoint id = '00000000-0000-0000-0000-000000003234' Landmark = 'Kindergarten' RelatedDirection = '6' FaceOrBack = '0'/>    
+    <waypoint id = '00000000-0000-0000-0000-000000003235' Landmark = 'Kindergarten' RelatedDirection = '6' FaceOrBack = '0'/>    
     <waypoint id = '00000000-0000-0000-0000-000000000333' Landmark = 'Bulletin Board' RelatedDirection = '2' FaceOrBack = '0'/>
     <waypoint id = '00000000-0000-0000-0000-000000000336' Landmark = 'South Elevator' RelatedDirection = '2' FaceOrBack = '1'/>
     

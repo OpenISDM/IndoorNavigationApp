@@ -26,7 +26,8 @@
         
         <waypoint id = "00000000-0000-0000-0000-000000000301" name = "North Elevator"/>
         <waypoint id = "00000000-0000-0000-0000-000000000302" name = "Economic Development Department"/>
-        <waypoint id = "00000000-0000-0000-0000-000000000345" name = "Intersection"/>
+        <waypoint id = "00000000-0000-0000-0000-000000303304" name = "Intersection"/>
+        <waypoint id = "00000000-0000-0000-0000-000000305304" name = "Intersection"/>
         <waypoint id = "00000000-0000-0000-0000-000000000306" name = "Bathroom(Near Conference Room 204)"/>
         
         <waypoint id = "00000000-0000-0000-0000-100000000306" name = "Conference Room 204"/>
@@ -38,7 +39,7 @@
         <waypoint id = "00000000-0000-0000-0000-000000000311" name = "Corner"/>
         <waypoint id = "00000000-0000-0000-0000-000000000312" name = "Intersection"/>
         <waypoint id = "00000000-0000-0000-0000-100000000312" name = "Bathroom(Near North Social Welfare Department)"/>
-        <waypoint id = "00000000-0000-0000-0000-000000000313" name = "Intersection Between Escalator and Elevator"/>
+        <waypoint id = "00000000-0000-0000-0000-000000000313" name = "Intersection beside Elevator"/>
         <waypoint id = "00000000-0000-0000-0000-000000000314" name = "Intersection"/>  
         <waypoint id = "00000000-0000-0000-0000-000000000315" name = "Elevator"/>  
         <waypoint id = "00000000-0000-0000-0000-000000000316" name = "Intersection of Elevator"/>
@@ -61,7 +62,8 @@
         <waypoint id = "00000000-0000-0000-0000-000000000329" name = "Intersection"/>
         <waypoint id = "00000000-0000-0000-0000-000000000330" name = "Intersection"/>
         <waypoint id = "00000000-0000-0000-0000-000000000331" name = "Taipei City Construction Management Office Information room"/>
-        <waypoint id = "00000000-0000-0000-0000-000000323435" name = "Intersection"/>    
+        <waypoint id = "00000000-0000-0000-0000-000000003234" name = "Intersection"/>
+        <waypoint id = "00000000-0000-0000-0000-000000003235" name = "Kindergarten"/> 
         <waypoint id = "00000000-0000-0000-0000-000000000333" name = "Corner"/>
         <waypoint id = "00000000-0000-0000-0000-000000000336" name = "South Elevator"/> 
         
