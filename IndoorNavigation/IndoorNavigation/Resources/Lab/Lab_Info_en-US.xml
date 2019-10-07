@@ -4,10 +4,10 @@
         <region id='11111111-1111-1111-1111-111111111111' name='1F'/>
 	</regions>
     <waypoints>
-        <waypoint id='00000000-0000-0000-0000-000000000001' name='Exit'/>
-        <waypoint id='00000000-0000-0000-0000-000000000002' name='Information Desk'/>
-        <waypoint id='00000000-0000-0000-0000-000000000003' name='1F Stair'/>
-        <waypoint id='00000000-0000-0000-0000-000000000004' name='2F Stair'/>
-        <waypoint id='00000000-0000-0000-0000-000000000005' name='2F Stair'/>
+        <waypoint id='00000000-0000-0000-0000-000000000001' name='Front door'/>
+        <waypoint id='00000000-0000-0000-0000-000000000002' name='ExaminationRoom'/>
+        <waypoint id='00000000-0000-0000-0000-000000000003' name='Casher'/>
+        <waypoint id='00000000-0000-0000-0000-000000000004' name='Psychiatry'/>
+        <waypoint id='00000000-0000-0000-0000-000000000005' name='Cardiology'/>
     </waypoints>
 </navigation_graph>
