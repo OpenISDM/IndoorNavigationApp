@@ -243,21 +243,21 @@ namespace IndoorNavigation.Modules.IPSClients
                             
                             foreach (BeaconSignal value in calculateData.Value)
                             {
-                                //if (saveEachBeacons.Keys.Contains(value.UUID))
-                                //{
-                                //    saveEachBeacons[value.UUID].Add(value.RSSI);
-                                //}
-                                //else
-                                //{
-                                //    saveEachBeacons.Add(value.UUID, new List<int> { value.RSSI });
-                                //}
+                            //if (saveEachBeacons.Keys.Contains(value.UUID))
+                            //    {
+                            //        saveEachBeacons[value.UUID].Add(value.RSSI);
+                            //    }
+                            //    else
+                            //    {
+                            //        saveEachBeacons.Add(value.UUID, new List<int> { value.RSSI });
+                            //    }
 
 
                                 avgSignal += value.RSSI;
                             }
                             //foreach (KeyValuePair<Guid, List<int>> calculate in saveEachBeacons)
                             //{
-                                
+
                             //    foreach (int value in calculate.Value)
                             //    {
                             //        averageSignal = averageSignal + value;
@@ -267,13 +267,13 @@ namespace IndoorNavigation.Modules.IPSClients
                             //}
 
 
-                            //averageSignal = 0;
+                            //avgSignal = 0;
                             //foreach (int tempInt in signalOfEachBeacon)
                             //{
                             //    averageSignal = averageSignal + tempInt;
                             //}
                             //averageSignal = averageSignal / signalOfEachBeacon.Count();
-                            avgSignal = avgSignal / scannedData.Count();
+                            avgSignal = avgSignal / calculateData.Value.Count();
 
                         }
                         signalAvgValue.Add(calculateData.Key, avgSignal);
