@@ -53,7 +53,7 @@ namespace IndoorNavigation.Modules.IPSClients
     {
         private List<WaypointBeaconsMapping> _waypointBeaconsList = new List<WaypointBeaconsMapping>();
 
-        private object _bufferLock = new object();
+        private object _bufferLock;// = new object();
         private readonly EventHandler _beaconScanEventHandler;
         //private Dictionary<string, Ibea>
         public NavigationEvent _event { get; private set; }
@@ -66,7 +66,8 @@ namespace IndoorNavigation.Modules.IPSClients
             Console.WriteLine("In Ibeacon Type");
 
             _event = new NavigationEvent();
-        
+            Utility._ibeaconScan = DependencyService.Get<IBeaconScan>();
+            _bufferLock = new object();
             _beaconScanEventHandler = new EventHandler(HandleBeaconScan);
             Utility._ibeaconScan._event._eventHandler += _beaconScanEventHandler;
             _waypointBeaconsList = new List<WaypointBeaconsMapping>();
@@ -129,7 +130,7 @@ namespace IndoorNavigation.Modules.IPSClients
                 //beaconSignalModel4.UUID = new Guid("00000000-0402-5242-3d64-2019010049bf");
                 //beaconSignalModel1.RSSI = -50;
                 //beaconSignalModel2.RSSI = -60;
-               // beaconSignalModel3.RSSI = -55;
+                //beaconSignalModel3.RSSI = -55;
                 //beaconSignalModel4.RSSI = -33;
                 //_beaconSignalBuffer.Add(beaconSignalModel1);
                 //_beaconSignalBuffer.Add(beaconSignalModel2);
@@ -325,6 +326,7 @@ namespace IndoorNavigation.Modules.IPSClients
 
         public void Stop()
         {
+            _bufferLock = new object();
             Utility._ibeaconScan.StopScan();
             _beaconSignalBuffer.Clear();
             _waypointBeaconsList.Clear();

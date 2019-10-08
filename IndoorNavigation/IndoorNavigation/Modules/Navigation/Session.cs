@@ -1016,10 +1016,18 @@ namespace IndoorNavigation.Modules
         public void CloseSession()
         {
             _isKeepDetection = false;
+            _nextWaypointStep = -1;
             _IPSClient.Stop();
             _nextWaypointEvent.Dispose();
             _waypointDetectionThread.Abort();
             _navigationControllerThread.Abort();
+            _waypointsOnWrongWay = new Dictionary<RegionWaypointPoint, List<RegionWaypointPoint>>();
+            _waypointsOnRoute = new List<RegionWaypointPoint>();
+            waypointClient.Stop();
+            ibeaconCLient.Stop();
+            waypointClient._event._eventHandler -= new EventHandler(CheckArrivedWaypoint);
+            ibeaconCLient._event._eventHandler -= new EventHandler(CheckArrivedWaypoint);
+            _IPSClient._event._eventHandler -= new EventHandler(CheckArrivedWaypoint);
         }
 
         public enum NavigationResult

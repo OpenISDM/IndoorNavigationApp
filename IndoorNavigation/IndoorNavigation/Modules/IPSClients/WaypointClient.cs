@@ -57,7 +57,7 @@ namespace IndoorNavigation.Modules.IPSClients
     {
         private List<WaypointBeaconsMapping> _waypointBeaconsList = new List<WaypointBeaconsMapping>();
 
-        private object _bufferLock = new object();
+        private object _bufferLock;// = new object();
         private readonly EventHandler _beaconScanEventHandler;
        
         public NavigationEvent _event { get; private set; }
@@ -72,7 +72,7 @@ namespace IndoorNavigation.Modules.IPSClients
             Utility._lbeaconScan._event._eventHandler += _beaconScanEventHandler;
             _waypointBeaconsList = new List<WaypointBeaconsMapping>();
             rssiOption = 0;
-
+            _bufferLock = new object();
         }
 
         public void SetWaypointList(List<WaypointBeaconsMapping> waypointBeaconsList)
@@ -167,6 +167,7 @@ namespace IndoorNavigation.Modules.IPSClients
 
         public void Stop()
         {
+            _bufferLock = new object();
             Utility._lbeaconScan.StopScan();
             _beaconSignalBuffer.Clear();
             _waypointBeaconsList.Clear();
