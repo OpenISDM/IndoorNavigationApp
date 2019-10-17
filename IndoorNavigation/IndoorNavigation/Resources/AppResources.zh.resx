@@ -318,47 +318,47 @@
     </data>
 
     <data name="DIRECTION_INITIAIL_FACE_STRING" xml:space="preserve">
-        <value>面向{0}{1}然後{2}{3}前往{4}{5}(約{6}公尺)</value>
+        <value>面向{0}{1}然後{2}{3}直走約{4}公尺</value>
     </data>
     
     <data name="DIRECTION_INITIAIL_BACK_STRING" xml:space="preserve">
-        <value>背向{0}{1}然後{2}{3}前往{4}{5}(約{6}公尺)</value>
+        <value>背向{0}{1}然後{2}{3}直走約{4}公尺</value>
     </data>
     
     <data name="DIRECTION_INITIAIL_CROSS_REGION_STRING" xml:space="preserve">
-        <value>{0}{1}前往{2}{3}(約{4}公尺)</value>
+        <value>{0}{1}然後直走{2}約{3}公尺</value>
     </data>
     
     <data name="DIRECTION_STRAIGHT_STRING" xml:space="preserve">
-        <value>向前走{0}約{1}公尺到{2}{3} </value>
+        <value>繼續向前走 </value>
     </data>
     
     <data name="DIRECTION_RIGHT_FRONT_STRING" xml:space="preserve">
-        <value>向右前方走{0}約{1}公尺到{2}{3} </value>
+        <value>向右前方轉{0} 然後直走約{1}公尺 </value>
     </data>
     
     <data name="DIRECTION_RIGHT_STRING" xml:space="preserve">
-        <value>向右轉{0}約{1}公尺到{2}{3} </value>
+        <value>向右轉{0} 然後直走約{1}公尺 </value>
     </data>
     
     <data name="DIRECTION_RIGHT_REAR_STRING" xml:space="preserve">
-        <value>向右後方走{0}約{1}公尺到{2}{3} </value>
+        <value>向右後轉{0} 然後直走約{1}公尺 </value>
     </data>
     
     <data name="DIRECTION_REAR_STRING" xml:space="preserve">
-        <value>回頭走{0}約{1}公尺到{2}{3} </value>
+        <value>向後轉{0} 然後直走約{1}公尺 </value>
     </data>
     
     <data name="DIRECTION_LEFT_REAR_STRING" xml:space="preserve">
-        <value>向左後方走{0}約{1}公尺到{2}{3} </value>
+        <value>向左後轉{0} 然後直走約{1}公尺 </value>
     </data>
     
      <data name="DIRECTION_LEFT_STRING" xml:space="preserve">
-        <value>向左轉{0}約{1}公尺到{2}{3} </value>
+        <value>向左轉{0} 然後直走約{1}公尺 </value>
     </data>
     
     <data name="DIRECTION_LEFT_FRONT_STRING" xml:space="preserve">
-        <value>向左前方走{0}約{1}公尺到{2}{3} </value>
+        <value>向左前轉{0} 然後直走約{1}公尺 </value>
     </data>
     
     <data name="DIRECTION_UP_STRING" xml:space="preserve">
@@ -422,7 +422,7 @@
     </data>
     
     <data name="GO_STRAIGHT_STRING" xml:space="preserve">
-        <value>直走</value>
+        <value>向前走</value>
     </data>
     
     <data name="TURN_RIGHT_STRING" xml:space="preserve">
@@ -479,6 +479,10 @@
     
     <data name="NO_SIGNAL_STRING" xml:space="preserve">
         <value>如果沒收到信號，請至任一路口</value>
+    </data>
+    
+    <data name="DIRECTION_ARRIVED_VIRTUAL_STRING" xml:space="preserve">
+        <value>{0}{1}到達目的地</value>
     </data>
     
 </root>

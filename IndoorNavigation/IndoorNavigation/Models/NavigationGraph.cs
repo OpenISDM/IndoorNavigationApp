@@ -747,6 +747,48 @@ namespace IndoorNavigation.Models.NavigaionLayer
             return waypointEdge;
         }
 
+        public int GetDistanceOfLongHallway(RegionWaypointPoint currentGuid, int nextStep, List<RegionWaypointPoint> allRoute, ConnectionType[] avoidConnectionType)
+        {
+            int distance = 0;
+            if (nextStep <= 0)
+            {
+                nextStep = 1;
+            }
+            Console.WriteLine("NextStep : " + nextStep);
+            Console.WriteLine("allroute : " + allRoute.Count());
+            for (int i = nextStep-1; i<allRoute.Count();i++)
+            {
+                Console.WriteLine("nextStep : " + nextStep);
+                if(allRoute[i]._regionID!=allRoute[i+1]._regionID)
+                {
+                    break;
+                }
+                else
+                {
+                    WaypointEdge waypointEdge = GetWaypointEdgeInRegion(allRoute[i]._regionID, allRoute[i]._waypointID,allRoute[i+1]._waypointID, avoidConnectionType);
+                    Console.WriteLine("distance : " + distance);
+                    Console.WriteLine("WaypointEdge : " + waypointEdge._distance);
+                    distance = distance + System.Convert.ToInt32(waypointEdge._distance);
+                    Console.WriteLine("distance2 : " + distance);
+                    if (i + 2 >= allRoute.Count())
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        WaypointEdge currentWaypointEdge = GetWaypointEdgeInRegion(allRoute[i]._regionID, allRoute[i]._waypointID, allRoute[i + 1]._waypointID, avoidConnectionType);
+                        WaypointEdge nextWaypointEdge = GetWaypointEdgeInRegion(allRoute[i+1]._regionID, allRoute[i+1]._waypointID, allRoute[i + 2]._waypointID, avoidConnectionType);
+                        if (currentWaypointEdge._direction != nextWaypointEdge._direction)
+                        {
+                            break;
+                        }
+                    }
+                }
+                
+            }
+            return distance;
+        }
+
         public string GetIndustryServer() {
             return _industryService;
         }

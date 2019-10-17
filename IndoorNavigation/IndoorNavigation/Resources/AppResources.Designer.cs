@@ -736,5 +736,11 @@ namespace IndoorNavigation.Resources {
                 return ResourceManager.GetString("NO_SIGNAL_STRING", resourceCulture);
             }
         }
+        
+        internal static string DIRECTION_ARRIVED_VIRTUAL_STRING {
+            get {
+                return ResourceManager.GetString("DIRECTION_ARRIVED_VIRTUAL_STRING", resourceCulture);
+            }
+        }
     }
 }

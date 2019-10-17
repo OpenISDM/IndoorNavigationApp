@@ -26,13 +26,13 @@
             
             <ListView.GroupHeaderTemplate>
                 <DataTemplate>
-                    <ViewCell Height="35">
+                    <ViewCell>
                         <StackLayout VerticalOptions="CenterAndExpand"
                                      Padding="15, 1, 15, 1">
                             <Label Text="{Binding Key, StringFormat='{0}'}"
                                    TextColor="#3F51B5"
                                    FontAttributes="Bold"
-                                   FontSize="Large"/>
+                                   FontSize="32"/>
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>
@@ -40,12 +40,12 @@
             
             <ListView.ItemTemplate>  
                 <DataTemplate>
-                    <ViewCell Height="70">
+                    <ViewCell>
                         <StackLayout Orientation="Horizontal"
                                      Padding="20, 20, 20, 1">
                             
                         <Label Text="{Binding _waypointName}" 
-                               FontSize="Large" LineBreakMode ="TailTruncation"/>
+                               FontSize="32" LineBreakMode ="WordWrap"/>
                             
                       </StackLayout>
                     </ViewCell>

@@ -184,11 +184,7 @@
       <Generator>
       </Generator>
     </AndroidResource>
-    <AndroidResource Include="Resources\drawable\Taipei_City_Hall11100202.png">
-      <SubType></SubType>
-      <Generator></Generator>
-    </AndroidResource>
-    <AndroidResource Include="Resources\drawable\Taipei_City_Hall11100203.png">
+    <AndroidResource Include="Resources\drawable\Taipei_City_Hall11100206.png">
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>
@@ -196,23 +192,15 @@
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>
-    <AndroidResource Include="Resources\drawable\Taipei_City_Hall11100206.png">
+    <AndroidResource Include="Resources\drawable\Taipei_City_Hall11100203.png">
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>
-    <AndroidResource Include="Resources\drawable\Taipei_City_Hall11100208.png">
+    <AndroidResource Include="Resources\drawable\Taipei_City_Hall11100202.png">
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>
-    <AndroidResource Include="Resources\drawable\Taipei_City_Hall11100209.png">
-      <SubType></SubType>
-      <Generator></Generator>
-    </AndroidResource>
-    <AndroidResource Include="Resources\drawable\Taipei_City_Hall11100213.png">
-      <SubType></SubType>
-      <Generator></Generator>
-    </AndroidResource>
-    <AndroidResource Include="Resources\drawable\Taipei_City_Hall11100214.png">
+    <AndroidResource Include="Resources\drawable\Taipei_City_Hall11101415.png">
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>
@@ -220,7 +208,19 @@
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>
-    <AndroidResource Include="Resources\drawable\Taipei_City_Hall11101415.png">
+    <AndroidResource Include="Resources\drawable\Taipei_City_Hall11100102.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\Taipei_City_Hall11100103.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\Taipei_City_Hall11100105.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\Taipei_City_Hall11100106.png">
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>
@@ -344,30 +344,6 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\NTUH_YunLin33300039.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Taipei_City_Hall11100102.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Taipei_City_Hall11100103.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Taipei_City_Hall11100105.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Taipei_City_Hall11100106.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Taipei_City_Hall11100108.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Taipei_City_Hall11100109.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Taipei_City_Hall11100113.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Taipei_City_Hall11100114.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

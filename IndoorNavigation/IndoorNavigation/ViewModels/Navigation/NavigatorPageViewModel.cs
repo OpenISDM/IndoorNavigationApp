@@ -68,7 +68,7 @@ namespace IndoorNavigation.ViewModels.Navigation
         private const int _originalInstructionLocation = 3;
         private const int _firstDirectionInstructionLocation = 4;
         private const int _firstDirectionInstructionScale = 2;
-        private const int _originalInstructionScale = 1;
+        private const int _originalInstructionScale = 4;
         private const int _millisecondsTimeoutForTwoSecond = 2000;
         private const int _millisecondsTimeoutForOneSecond = 1000;
         private const int _initialFaceDirection = 0;
@@ -82,6 +82,7 @@ namespace IndoorNavigation.ViewModels.Navigation
 		private string _currentWaypointName;
         private string _firstDirectiionPicture;
 		private string _destinationWaypointName;
+        private string _progressBar;
 		private double _navigationProgress;
 		private bool _disposedValue = false; // To detect redundant calls
 		public ResourceManager _resourceManager;
@@ -101,7 +102,7 @@ namespace IndoorNavigation.ViewModels.Navigation
             _destinationID = destinationWaypointID;
             _destinationWaypointName = destinationWaypointName;
             CurrentStepImage = "waittingscan.gif";
-
+            _progressBar = "0/0";
             _instructionLocation = _originalInstructionLocation;
             _navigationModule = new NavigationModule(navigationGraphName,
                                                      destinationRegionID,
@@ -159,13 +160,14 @@ namespace IndoorNavigation.ViewModels.Navigation
                     InstructionScaleValue = instructionScale;
                     CurrentWaypointName = _xmlInformation.GiveWaypointName(instruction._currentWaypointGuid);
 					NavigationProgress = instruction._progress;
-                    
+                    ProgressBar = instruction._progressBar;
                     Utility._textToSpeech.Speak(
                         CurrentStepLabel,
                         _resourceManager.GetString("CULTURE_VERSION_STRING", currentLanguage));
                     break;
 
 				case NavigationResult.AdjustRoute:
+                    Console.WriteLine("Wrong");
 					CurrentStepLabel =
                         _resourceManager.GetString("DIRECTION_WRONG_WAY_STRING", currentLanguage);
 					CurrentStepImage = "Waiting";
@@ -181,7 +183,8 @@ namespace IndoorNavigation.ViewModels.Navigation
                         _resourceManager.GetString("DIRECTION_ARRIVED_STRING", currentLanguage);
 					CurrentStepImage = "Arrived";
 					NavigationProgress = 100;
-
+                    ProgressBar = instruction._progressBar;
+                    //_progressBar = _i
                     Utility._textToSpeech.Speak(
                         CurrentStepLabel,
                         _resourceManager.GetString("CULTURE_VERSION_STRING", currentLanguage));
@@ -195,9 +198,14 @@ namespace IndoorNavigation.ViewModels.Navigation
                     break;
                 case NavigationResult.ArriveVirtualPoint:
                     SetInstruction(instruction, out currentStepLabel, out currentStepImage, out firstDirectionPicture, out rotationValue, out locationValue, out instructionScale);
-                    CurrentStepLabel = currentStepLabel;
+                    //CurrentStepLabel = currentStepLabel;
+                    CurrentStepLabel = string.Format(_resourceManager.GetString("DIRECTION_ARRIVED_VIRTUAL_STRING", currentLanguage),
+                                                        currentStepLabel,
+                                                        Environment.NewLine
+                                                        );
                     CurrentStepImage = "Arrived";
                     NavigationProgress = 100;
+                    ProgressBar = instruction._progressBar;
                     CurrentWaypointName = _xmlInformation.GiveWaypointName(instruction._currentWaypointGuid);
                     FirstDirectionPicture = firstDirectionPicture;
                     InstructionLocationValue = locationValue;
@@ -335,9 +343,8 @@ namespace IndoorNavigation.ViewModels.Navigation
                             currentLanguage),
                             instructionDirection,
                             Environment.NewLine,
-                            nextWaypointName,
                             Environment.NewLine,
-                            instruction._information._distance);
+                            instruction._turnDirectionDistance);
                         stepImage = stepImageString;
                         break;
                     }
@@ -358,9 +365,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             Environment.NewLine,
                             instructionDirection,
                             Environment.NewLine,
-                            nextWaypointName,
-                            " ",
-                            instruction._information._distance);
+                            instruction._turnDirectionDistance);
                         firstDirectionImage = pictureName;
                         stepImage = stepImageString;
                         rotation = 75;
@@ -377,9 +382,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             Environment.NewLine,
                             instructionDirection,
                             Environment.NewLine,
-                            nextWaypointName,
-                            Environment.NewLine,
-                            instruction._information._distance);
+                            instruction._turnDirectionDistance);
                         stepImage = stepImageString;
                         break;
                     }
@@ -387,12 +390,7 @@ namespace IndoorNavigation.ViewModels.Navigation
 				case TurnDirection.Forward:
 					stepLabel = string.Format(
                         _resourceManager.GetString(
-                            "DIRECTION_STRAIGHT_STRING",
-                            currentLanguage),
-                            Environment.NewLine,
-                            instruction._information._distance,
-                            Environment.NewLine,
-                            nextWaypointName);
+                            "DIRECTION_STRAIGHT_STRING",currentLanguage));
 					stepImage = "Arrow_up";
 
                    	break;
@@ -403,9 +401,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             "DIRECTION_RIGHT_FRONT_STRING",
                             currentLanguage),
                             Environment.NewLine,
-                            instruction._information._distance,
-                            Environment.NewLine,
-                            nextWaypointName);
+                            instruction._turnDirectionDistance);
 					stepImage = "Arrow_frontright";
 	
 					break;
@@ -416,9 +412,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             "DIRECTION_RIGHT_STRING",
                             currentLanguage),
                             Environment.NewLine,
-                            instruction._information._distance,
-                            Environment.NewLine,
-                            nextWaypointName);
+                            instruction._turnDirectionDistance);
 					stepImage = "Arrow_right";
 	
 					break;
@@ -429,9 +423,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             "DIRECTION_RIGHT_REAR_STRING",
                             currentLanguage),
                             Environment.NewLine,
-                            instruction._information._distance,
-                            Environment.NewLine,
-                            nextWaypointName);
+                            instruction._turnDirectionDistance);
 					stepImage = "Arrow_rearright";
 
 					break;
@@ -442,9 +434,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             "DIRECTION_REAR_STRING",
                             currentLanguage),
                             Environment.NewLine,
-                            instruction._information._distance,
-                            Environment.NewLine,
-                            nextWaypointName);
+                            instruction._turnDirectionDistance);
 					stepImage = "Arrow_down";
 
 					break;
@@ -455,9 +445,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             "DIRECTION_LEFT_REAR_STRING",
                             currentLanguage),
                             Environment.NewLine,
-                            instruction._information._distance,
-                            Environment.NewLine,
-                            nextWaypointName);
+                            instruction._turnDirectionDistance);
 					stepImage = "Arrow_rearleft";
 
 					break;
@@ -468,9 +456,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             "DIRECTION_LEFT_STRING",
                             currentLanguage),
                             Environment.NewLine,
-                            instruction._information._distance,
-                            Environment.NewLine,
-                            nextWaypointName);
+                            instruction._turnDirectionDistance);
 					stepImage = "Arrow_left";
 
 					break;
@@ -481,9 +467,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             "DIRECTION_LEFT_FRONT_STRING",
                             currentLanguage),
                             Environment.NewLine,
-                            instruction._information._distance,
-                            Environment.NewLine,
-                            nextWaypointName);
+                            instruction._turnDirectionDistance);
 					stepImage = "Arrow_frontleft";
 
 					break;
@@ -691,6 +675,18 @@ namespace IndoorNavigation.ViewModels.Navigation
 				SetProperty(ref _destinationWaypointName, value);
 			}
 		}
+
+        public string ProgressBar
+        {
+            get
+            {
+                return _progressBar;
+            }
+            set
+            {
+                SetProperty(ref _progressBar, value);
+            }
+        }
 
 		public double NavigationProgress
 		{

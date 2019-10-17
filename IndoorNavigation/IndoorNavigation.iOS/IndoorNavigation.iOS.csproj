@@ -30,7 +30,6 @@
     <MtouchDebug>true</MtouchDebug>
     <LangVersion>7.1</LangVersion>
     <CodesignKey>iPhone Developer: Chun Yu Lai (262MR7SY5M)</CodesignKey>
-    <CodesignProvision>VS: WildCard Development</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -67,7 +66,7 @@
     <WarningLevel>4</WarningLevel>
     <MtouchArch>ARM64</MtouchArch>
     <ConsolePause>false</ConsolePause>
-    <CodesignKey>iPhone Distribution: Chun Yu Lai (9K6K5L2N6F)</CodesignKey>
+    <CodesignKey>iPhone Distribution</CodesignKey>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Ad-Hoc|iPhone' ">
@@ -285,14 +284,16 @@
     <BundleResource Include="Resources\NTUH_YunLin33300037.png" />
     <BundleResource Include="Resources\NTUH_YunLin33300038.png" />
     <BundleResource Include="Resources\NTUH_YunLin33300039.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall11100206.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall11100205.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall11100203.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall11100202.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall11101415.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall11101011.png" />
     <BundleResource Include="Resources\Taipei_City_Hall11100102.png" />
     <BundleResource Include="Resources\Taipei_City_Hall11100103.png" />
     <BundleResource Include="Resources\Taipei_City_Hall11100105.png" />
     <BundleResource Include="Resources\Taipei_City_Hall11100106.png" />
-    <BundleResource Include="Resources\Taipei_City_Hall11100108.png" />
-    <BundleResource Include="Resources\Taipei_City_Hall11100109.png" />
-    <BundleResource Include="Resources\Taipei_City_Hall11100113.png" />
-    <BundleResource Include="Resources\Taipei_City_Hall11100114.png" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -64,13 +64,13 @@
     <waypoint id='00000000-0000-0000-0000-000000000105' Landmark='picture' RelatedDirection = '4' FaceOrBack = '0'/>
     <waypoint id='00000000-0000-0000-0000-000000000106' Landmark='picture' RelatedDirection = '4' FaceOrBack = '0'/>
     <waypoint id='00000000-0000-0000-0000-000000000107' Landmark='Entrance of Garage' RelatedDirection = '0' FaceOrBack = '0'/>
-    <waypoint id='00000000-0000-0000-0000-000000000108' Landmark='picture' RelatedDirection = '2' FaceOrBack = '0'/>
-    <waypoint id='00000000-0000-0000-0000-000000000109' Landmark='picture' RelatedDirection = '2' FaceOrBack = '0'/>
+    <waypoint id='00000000-0000-0000-0000-000000000108' Landmark='Scooter picture on the wall' RelatedDirection = '6' FaceOrBack = '1'/>
+    <waypoint id='00000000-0000-0000-0000-000000000109' Landmark='Scooter picture on the wall' RelatedDirection = '6' FaceOrBack = '1'/>
     <waypoint id='00000000-0000-0000-0000-000000000110' Landmark='Entrance of Central Area' RelatedDirection = '2' FaceOrBack = '0'/>
     <waypoint id='00000000-0000-0000-0000-000000000111' Landmark='Entrance of Central Area' RelatedDirection = '4' FaceOrBack = '0'/>
     <waypoint id='00000000-0000-0000-0000-000000000112' Landmark='Entrance of Central Area' RelatedDirection = '6' FaceOrBack = '0'/>
-    <waypoint id='00000000-0000-0000-0000-000000000113' Landmark='picture' RelatedDirection = '6' FaceOrBack = "0"/>
-    <waypoint id='00000000-0000-0000-0000-000000000114' Landmark='picture' RelatedDirection = '6' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000113' Landmark='Scooter picture on the wall' RelatedDirection = '2' FaceOrBack = "1"/>
+    <waypoint id='00000000-0000-0000-0000-000000000114' Landmark='Scooter picture on the wall' RelatedDirection = '2' FaceOrBack = "1"/>
             
     <waypoint id='00000000-0000-0000-0000-000000000201' Landmark='Entrance of Garage' RelatedDirection = '4' FaceOrBack = "0"/>
     <waypoint id='00000000-0000-0000-0000-000000000202' Landmark='picture' RelatedDirection = '0' FaceOrBack = "0"/>
@@ -79,13 +79,13 @@
     <waypoint id='00000000-0000-0000-0000-000000000205' Landmark='picture' RelatedDirection = '0' FaceOrBack = "0"/>
     <waypoint id='00000000-0000-0000-0000-000000000206' Landmark='picture' RelatedDirection = '0' FaceOrBack = "0"/>
     <waypoint id='00000000-0000-0000-0000-000000000207' Landmark='Entrance of Garage' RelatedDirection = '4' FaceOrBack = "0"/>
-    <waypoint id='00000000-0000-0000-0000-000000000208' Landmark='picture' RelatedDirection = '2' FaceOrBack = "0"/>
-    <waypoint id='00000000-0000-0000-0000-000000000209' Landmark='picture' RelatedDirection = '2' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000208' Landmark='Scooter picture on the wall' RelatedDirection = '6' FaceOrBack = "1"/>
+    <waypoint id='00000000-0000-0000-0000-000000000209' Landmark='Scooter picture on the wall' RelatedDirection = '6' FaceOrBack = "1"/>
     <waypoint id='00000000-0000-0000-0000-000000000210' Landmark='Entrance of Central Area' RelatedDirection = '2' FaceOrBack = "0"/>
     <waypoint id='00000000-0000-0000-0000-000000000211' Landmark='Entrance of Central Area' RelatedDirection = '0' FaceOrBack = "0"/>
     <waypoint id='00000000-0000-0000-0000-000000000212' Landmark='Entrance of Central Area' RelatedDirection = '6' FaceOrBack = "0"/>
-    <waypoint id='00000000-0000-0000-0000-000000000213' Landmark='picture' RelatedDirection = '6' FaceOrBack = "0"/>
-    <waypoint id='00000000-0000-0000-0000-000000000214' Landmark='picture' RelatedDirection = '6' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000213' Landmark='Scooter picture on the wall' RelatedDirection = '2' FaceOrBack = "1"/>
+    <waypoint id='00000000-0000-0000-0000-000000000214' Landmark='Scooter picture on the wall' RelatedDirection = '2' FaceOrBack = "1"/>
       
     <waypoint id='00000000-0000-0000-0000-000000001102' Landmark='North Garage' RelatedDirection = '0' FaceOrBack = "0"/>
     <waypoint id='00000000-0000-0000-0000-100000001102' Landmark='North Garage' RelatedDirection = '0' FaceOrBack = "0"/>

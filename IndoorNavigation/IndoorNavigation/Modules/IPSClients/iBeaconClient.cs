@@ -124,8 +124,8 @@ namespace IndoorNavigation.Modules.IPSClients
                 //BeaconSignalModel beaconSignalModel2 = new BeaconSignalModel();
                 //BeaconSignalModel beaconSignalModel3 = new BeaconSignalModel();
                 //BeaconSignalModel beaconSignalModel4 = new BeaconSignalModel();
-                //beaconSignalModel1.UUID = new Guid("00000000-0402-5242-3d64-2019010044d0");
-                //beaconSignalModel2.UUID = new Guid("00000000-0402-5242-3d64-2019010044d0");
+                //beaconSignalModel1.UUID = new Guid("00000000-0402-5242-3d64-00cdff001d09");
+                //beaconSignalModel2.UUID = new Guid("00000000-0402-5242-3d64-2019010044a4");
                 //beaconSignalModel3.UUID = new Guid("00000000-0402-5242-3d64-2019010047b2");
                 //beaconSignalModel4.UUID = new Guid("00000000-0402-5242-3d64-2019010049bf");
                 //beaconSignalModel1.RSSI = -50;

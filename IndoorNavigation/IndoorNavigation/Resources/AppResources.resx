@@ -318,47 +318,47 @@
     </data>
     
     <data name="DIRECTION_INITIAIL_FACE_STRING" xml:space="preserve">
-        <value>Face to {0}{1}And {2}{3}to {4}{5}(About {6}m) </value>
+        <value>Face to {0}{1}then {2}{3} And go straight about {4}m </value>
     </data>
     
     <data name="DIRECTION_INITIAIL_BACK_STRING" xml:space="preserve">
-        <value>Back to {0}{1}And {2}{3}to {4}{5}(About {6}m) </value>
+        <value>Back to {0}{1}then {2}{3} And go straight about {4}m </value>
     </data>
     
     <data name="DIRECTION_INITIAIL_CROSS_REGION_STRING" xml:space="preserve">
-        <value>{0}{1}And Go to {2}{3}(About {4}公尺)</value>
+        <value>{0}{1}And Go Straight {2}(About {3}公尺</value>
     </data>
     
     <data name="DIRECTION_STRAIGHT_STRING" xml:space="preserve">
-        <value>Go straight{0}about {1}m to{2}{3} </value>
+        <value>Continue to go straight </value>
     </data>
-    
+  
     <data name="DIRECTION_RIGHT_FRONT_STRING" xml:space="preserve">
-        <value>Go right front{0}about {1}m to{2}{3} </value>
+        <value>Turn right front{0} and go straight about{1}m </value>
     </data>
     
     <data name="DIRECTION_RIGHT_STRING" xml:space="preserve">
-        <value>Go right{0}about {1}m to{2}{3} </value>
+        <value>Turn right {0} and go straight about{1}m </value>
     </data>
     
     <data name="DIRECTION_RIGHT_REAR_STRING" xml:space="preserve">
-        <value>Go right rear{0}about {1}m to{2}{3} </value>
+        <value>Turn right rear{0} and go straight about{1}m </value>
     </data>
     
     <data name="DIRECTION_REAR_STRING" xml:space="preserve">
-        <value>Go rear{0}about {1}m to{2}{3} </value>
+        <value>Turn back{0} and go straight about{1}m </value>
     </data>
     
     <data name="DIRECTION_LEFT_REAR_STRING" xml:space="preserve">
-        <value>Go left rear{0}about {1}m to{2}{3} </value>
+        <value>Turn left rear{0} and go straight about{1}m </value>
     </data>
     
     <data name="DIRECTION_LEFT_STRING" xml:space="preserve">
-        <value>Go left{0}about {1}m to{2}{3} </value>
+        <value>Turn left{0} and go straight about{1}m </value>
     </data>
     
      <data name="DIRECTION_LEFT_FRONT_STRING" xml:space="preserve">
-        <value>Go left front{0}about {1}m to{2}{3} </value>
+        <value>Turn left front{0} and go straight about{1}m </value>
     </data>
     
     <data name="DIRECTION_UP_STRING" xml:space="preserve">
@@ -479,6 +479,10 @@
     
     <data name="NO_SIGNAL_STRING" xml:space="preserve">
         <value>If you do not get the signal, please go to any intersection</value>
+    </data>
+    
+     <data name="DIRECTION_ARRIVED_VIRTUAL_STRING" xml:space="preserve">
+        <value>{0}{1}to destination</value>
     </data>
     
 </root>

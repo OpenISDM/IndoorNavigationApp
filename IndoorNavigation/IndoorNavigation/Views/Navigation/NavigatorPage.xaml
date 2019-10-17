@@ -21,11 +21,11 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="3*"/>
-                <RowDefinition Height="2.5*"/>
+                <RowDefinition Height="5*"/>
+               <!-- <RowDefinition Height="2.5*"/>
                 <RowDefinition Height="1.5*"/>
-                <RowDefinition Height="0.5*"/>
-                <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="0.5*"/>-->
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             
             <Grid.ColumnDefinitions>
@@ -33,37 +33,40 @@
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
             
-            <Label Grid.Row="0" Grid.Column="0" Text="{i18n:Translate DESTINATION_STRING}" FontSize="Large"/>
+            <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="StartAndExpand" Text="{i18n:Translate DESTINATION_STRING}" FontSize="Large" LineBreakMode="WordWrap" />
             <Label x:Name="DestinationWaypointLabel" Text="{Binding DestinationWaypointName}"
-                   Grid.Row="0" Grid.Column="1" FontSize="Large"/>
+                   Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" FontSize="Large" LineBreakMode="WordWrap"/>
             
-            <Label Grid.Row="1" Grid.Column="0" Text="{i18n:Translate CURRENT_LOCATION_STRING}" FontSize="Large"/>
+            <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="StartAndExpand" Text="{i18n:Translate CURRENT_LOCATION_STRING}" FontSize="Large" LineBreakMode="WordWrap" />
             <Label x:Name="CurrentWaypointLabel" Text="{Binding CurrentWaypointName}"
-                   Grid.Row="1" Grid.Column="1" FontSize="Large"/>
+                   Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" FontSize="Large" LineBreakMode="WordWrap"/>
             
             <Label x:Name="CurrentInstructionLabel" 
                    Text="{Binding CurrentStepLabel}"
-                   Grid.Row="2" Grid.ColumnSpan="2"
-                   Margin="0, -30, 0, 10"
-                   FontSize="Large"
+                   Grid.Row="2" Grid.RowSpan="{Binding InstructionScaleValue}" Grid.Column="1" Grid.ColumnSpan="3" 
+                   Margin="0, 5, 5, 5"
+                   FontSize="30" LineBreakMode="WordWrap"
                    VerticalTextAlignment="Center"
+                   VerticalOptions="FillAndExpand"
+                   HorizontalOptions="FillAndExpand"
                    HorizontalTextAlignment="Center"/>
-            <Image x:Name="FirstDirectionPicture"
-                   Source="{Binding FirstDirectionPicture}"
-                   Grid.Row="3" Grid.ColumnSpan="2" HorizontalOptions="FillAndExpand"
-                   Scale="2" Margin="5,10,5,-10"/>
+            
             <Image x:Name="CurrentInstructionImage" 
                    Source="{Binding CurrentStepImage}"
-                   Grid.Row="{Binding InstructionLocationValue}" Grid.ColumnSpan="2" VerticalOptions="EndAndExpand"
-                   Margin="0, -5, 0, 5" Scale="{Binding InstructionScaleValue}"
-                   RotationX = "{Binding RotationValue}"/>
+                   Grid.Row="2" Grid.Column="0" Grid.RowSpan="{Binding InstructionScaleValue}" VerticalOptions="FillAndExpand"
+                   Margin="0,5, 5, 5" Scale="1"/>
             
             
-            <BoxView Grid.Row="6" Grid.ColumnSpan="2" Color="#dcdcdc"/>
-            <pb:ProgressBarView Grid.Row="6" Grid.ColumnSpan="2"
-                                Color="#3F51B5" Progress="{Binding NavigationProgress}"
-                                LabelShowIntValuesOnly="false" LabelStringFormat="{}{0:0.0} %"
-                                LabelFontSize="20" LabelPosition="AfterBar" />     
+            <BoxView Grid.Row="7" Grid.ColumnSpan="4" Color="#dcdcdc" VerticalOptions="EndAndExpand"/>
+            <pb:ProgressBarView Grid.Row="7" Grid.ColumnSpan="4"
+                                Color="Red" Progress="{Binding NavigationProgress}"
+                                LabelShowIntValuesOnly="false" LabelStringFormat=""
+                                LabelFontSize="20" LabelPosition="AfterBar" VerticalOptions="FillAndExpand" />
+                                <Label Text="{Binding ProgressBar}" Grid.Row="7" Grid.ColumnSpan="4" HorizontalTextAlignment="End" FontSize="25"/>
+            <Image x:Name="FirstDirectionPicture"
+                   Source="{Binding FirstDirectionPicture}"
+                   Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Grid.RowSpan="5" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
+                   Scale="1.3" Margin="5,0,0,0 " />
         </Grid>
     </ContentPage.Content>
     

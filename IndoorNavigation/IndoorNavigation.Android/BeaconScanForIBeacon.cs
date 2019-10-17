@@ -133,9 +133,8 @@ namespace IndoorNavigation.Droid
             }
             else
             {
-                var parser = string.Format("00000000-0402-{0}{1}-{2}{3}-{4}{5}{6}{7}{8}{9}",
+                var parser = string.Format("00000000-0402-{0}{1}-0000-{2}{3}{4}{5}{6}{7}",
                                             parse[43], parse[42],
-                                            parse[44], parse[45],
                                             parse[46], parse[47], parse[48], parse[49], parse[50], parse[51]);
                 return parser.ToString();
             }

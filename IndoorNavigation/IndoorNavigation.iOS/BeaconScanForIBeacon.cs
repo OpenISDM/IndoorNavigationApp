@@ -150,7 +150,7 @@ namespace IndoorNavigation.iOS
                 {
                     var parser = "00000000" + "-" +
                                  "0402" + "-" + parse[4] + "-" +
-                                  parse[6].Substring(1, 4) + "-" +
+                                  "0000" + "-" +
                                   parse[6].Substring(5, 4) +
                                   parse[7].Substring(0, 8);
                     Console.WriteLine("parser : " + parser);

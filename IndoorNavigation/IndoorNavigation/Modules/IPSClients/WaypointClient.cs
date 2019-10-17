@@ -99,6 +99,7 @@ namespace IndoorNavigation.Modules.IPSClients
         }
 
         public void DetectWaypoints()
+
         {
             Console.WriteLine(">> In DetectWaypoints");
             //Utility._beaconScan.StartScan();
@@ -120,7 +121,7 @@ namespace IndoorNavigation.Modules.IPSClients
                 //_beaconSignalBuffer.Sort((x, y) => { return y.RSSI.CompareTo(x.RSSI); });
                 _beaconSignalBuffer.Sort((x, y) => { return y.RSSI.CompareTo(x.RSSI); });
                 //BeaconSignalModel beaconSignalModel = new BeaconSignalModel();
-                //beaconSignalModel.UUID = new Guid("00000015-0000-2503-8380-000021564175");
+                //beaconSignalModel.UUID = new Guid("00000015-0000-2503-7431-000021564508");
                 //_beaconSignalBuffer.Add(beaconSignalModel);
 
                 foreach (BeaconSignalModel beacon in _beaconSignalBuffer)
