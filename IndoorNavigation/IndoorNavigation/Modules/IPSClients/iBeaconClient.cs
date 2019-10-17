@@ -98,9 +98,14 @@ namespace IndoorNavigation.Modules.IPSClients
 
         public void DetectWaypoints()
         {
+    
             List<BeaconSignalModel> removeSignalBuffer =
                 new List<BeaconSignalModel>();
-            
+            if (_beaconSignalBuffer.Count() >= 25)
+            {
+                _beaconSignalBuffer = new List<BeaconSignalModel>();
+                _bufferLock = new object();
+            }
             lock (_bufferLock)
             {
                 removeSignalBuffer.AddRange(
@@ -186,7 +191,8 @@ namespace IndoorNavigation.Modules.IPSClients
                 {
                     //If a waypoint has at least two beacon UUIDs,
                     //this waypoint might be our interested waypoint.
-                    if(calculateData.Value.Count()>=_moreThanTwoIBeacon)
+                  
+                    if (calculateData.Value.Count()>=_moreThanTwoIBeacon)
                     {
                         Dictionary<Guid, List<int>> saveEachBeacons = new Dictionary<Guid, List<int>>();
                         //Sort the beacons by their Rssi
@@ -287,7 +293,6 @@ namespace IndoorNavigation.Modules.IPSClients
                 //Compare all data we have, and get the highest Rssi Waypoint as our interested waypoint
                 foreach(KeyValuePair<RegionWaypointPoint, int> calculateMax in signalAvgValue)
                 {
-                    Console.WriteLine("caculatemax : " + calculateMax.Value);
                     if(tempValue<calculateMax.Value)
                     {
                         possibleRegionWaypoint = new RegionWaypointPoint();
@@ -296,10 +301,11 @@ namespace IndoorNavigation.Modules.IPSClients
                     }
                     tempValue = calculateMax.Value;
                     
-                }             
+                }
 
                 if(haveThing==true)
-                { 
+                {
+
                     _event.OnEventCall(new WaypointSignalEventArgs
                     {
                         _detectedRegionWaypoint = possibleRegionWaypoint

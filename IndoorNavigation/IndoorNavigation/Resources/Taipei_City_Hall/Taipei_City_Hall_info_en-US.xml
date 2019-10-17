@@ -39,19 +39,20 @@
         <waypoint id = "00000000-0000-0000-0000-000000000311" name = "Corner"/>
         <waypoint id = "00000000-0000-0000-0000-000000000312" name = "Intersection"/>
         <waypoint id = "00000000-0000-0000-0000-100000000312" name = "Bathroom(Near North Social Welfare Department)"/>
+        <waypoint id = "00000000-0000-0000-0000-200000000312" name = "Social Welfare Department"/>
         <waypoint id = "00000000-0000-0000-0000-000000000313" name = "Intersection beside Elevator"/>
         <waypoint id = "00000000-0000-0000-0000-000000000314" name = "Intersection"/>  
         <waypoint id = "00000000-0000-0000-0000-000000000315" name = "Elevator"/>  
-        <waypoint id = "00000000-0000-0000-0000-000000000316" name = "Intersection of Elevator"/>
-        <waypoint id = "00000000-0000-0000-0000-000000000317" name = "Elevator"/>
+        <waypoint id = "00000000-0000-0000-0000-000000316317" name = "Intersection of Elevator"/>
+        <waypoint id = "00000000-0000-0000-0000-100000316317" name = "Elevator"/>
         <waypoint id = "00000000-0000-0000-0000-000000000318" name = "Escalator"/>
         <waypoint id = "00000000-0000-0000-0000-000000000319" name = "Rest Area(North)"/>
         <waypoint id = "00000000-0000-0000-0000-100000000319" name = "Stair"/>
         <waypoint id = "00000000-0000-0000-0000-000000000320" name = "Parent-child theater"/>
         <waypoint id = "00000000-0000-0000-0000-000000000321" name = "Stair"/>
         <waypoint id = "00000000-0000-0000-0000-100000000321" name = "Rest Area(South)"/>
-        <waypoint id = "00000000-0000-0000-0000-000000000322" name = "Intersectionof Elevator"/>
-        <waypoint id = "00000000-0000-0000-0000-000000000323" name = "Elevator"/>
+        <waypoint id = "00000000-0000-0000-0000-000000322323" name = "Intersectionof Elevator"/>
+        <waypoint id = "00000000-0000-0000-0000-100000322323" name = "Elevator"/>
         <waypoint id = "00000000-0000-0000-0000-000000000324" name = "Escalator(South)"/>
         <waypoint id = "00000000-0000-0000-0000-000000000325" name = "Intersection"/>
         <waypoint id = "00000000-0000-0000-0000-100000000325" name = "Department of Health"/>

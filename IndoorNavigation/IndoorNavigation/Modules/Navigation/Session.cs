@@ -939,6 +939,10 @@ namespace IndoorNavigation.Modules
                 {
                     Console.WriteLine("---- [case: arrived destination] .... ");
                     int tempProgress = _waypointsOnRoute.Count() - 1;
+                    if (tempProgress <= 0)
+                    {
+                        tempProgress = 0;
+                    }
                     navigationInstruction._progressBar = tempProgress + " / " + tempProgress;
                     _event.OnEventCall(new NavigationEventArgs
                     {

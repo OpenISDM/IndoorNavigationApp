@@ -310,11 +310,11 @@
     </data>
     
     <data name="DESTINATION_STRING" xml:space="preserve">
-        <value>Destination : </value>
+        <value>Goal : </value>
     </data>
     
     <data name="CURRENT_LOCATION_STRING" xml:space="preserve">
-        <value>Current Location : </value>
+        <value>Current: </value>
     </data>
     
     <data name="DIRECTION_INITIAIL_FACE_STRING" xml:space="preserve">
@@ -326,7 +326,7 @@
     </data>
     
     <data name="DIRECTION_INITIAIL_CROSS_REGION_STRING" xml:space="preserve">
-        <value>{0}{1}And Go Straight {2}(About {3}公尺</value>
+        <value>{0}{1}And Go Straight {2} About {3}m</value>
     </data>
     
     <data name="DIRECTION_STRAIGHT_STRING" xml:space="preserve">

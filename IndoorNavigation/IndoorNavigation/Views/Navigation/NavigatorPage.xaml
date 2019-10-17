@@ -19,8 +19,8 @@
         <!-- TODO: Add PAUSE button -->
         <Grid Padding="15, 15, 15, 0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="1.5*"/>
+                <RowDefinition Height="1.5*"/>
                 <RowDefinition Height="5*"/>
                <!-- <RowDefinition Height="2.5*"/>
                 <RowDefinition Height="1.5*"/>
@@ -29,17 +29,17 @@
             </Grid.RowDefinitions>
             
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2.5*"/>
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
             
-            <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="StartAndExpand" Text="{i18n:Translate DESTINATION_STRING}" FontSize="Large" LineBreakMode="WordWrap" />
+            <Label Grid.Row="0" Grid.Column="0"  Grid.ColumnSpan="2" HorizontalOptions="StartAndExpand" Text="{i18n:Translate DESTINATION_STRING}" FontSize="Large" LineBreakMode="WordWrap"/>
             <Label x:Name="DestinationWaypointLabel" Text="{Binding DestinationWaypointName}"
-                   Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" FontSize="Large" LineBreakMode="WordWrap"/>
+                   Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" FontSize="Large" LineBreakMode="WordWrap" HorizontalOptions="StartAndExpand"/>
             
-            <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="StartAndExpand" Text="{i18n:Translate CURRENT_LOCATION_STRING}" FontSize="Large" LineBreakMode="WordWrap" />
+            <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="StartAndExpand" Text="{i18n:Translate CURRENT_LOCATION_STRING}" FontSize="Large" LineBreakMode="WordWrap"/>
             <Label x:Name="CurrentWaypointLabel" Text="{Binding CurrentWaypointName}"
-                   Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" FontSize="Large" LineBreakMode="WordWrap"/>
+                   Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" FontSize="Large" LineBreakMode="WordWrap" HorizontalOptions="StartAndExpand"/>
             
             <Label x:Name="CurrentInstructionLabel" 
                    Text="{Binding CurrentStepLabel}"
