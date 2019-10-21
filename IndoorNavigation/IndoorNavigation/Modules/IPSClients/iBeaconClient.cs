@@ -101,11 +101,7 @@ namespace IndoorNavigation.Modules.IPSClients
     
             List<BeaconSignalModel> removeSignalBuffer =
                 new List<BeaconSignalModel>();
-            if (_beaconSignalBuffer.Count() >= 25)
-            {
-                _beaconSignalBuffer = new List<BeaconSignalModel>();
-                _bufferLock = new object();
-            }
+            
             lock (_bufferLock)
             {
                 removeSignalBuffer.AddRange(
@@ -121,6 +117,11 @@ namespace IndoorNavigation.Modules.IPSClients
 
                 Dictionary<RegionWaypointPoint, List<BeaconSignal>> correctData = new Dictionary<RegionWaypointPoint, List<BeaconSignal>>();
 
+                //if (_beaconSignalBuffer.Count() >= 25)
+                //{
+                //    _beaconSignalBuffer = new List<BeaconSignalModel>();
+                //    _bufferLock = new object();
+                //}
 
                 //In ibsclient, a waypoint has at least two beacon UUIDs,
                 //We put all waypoint we get in scannedData
