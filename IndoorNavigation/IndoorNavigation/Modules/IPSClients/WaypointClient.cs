@@ -63,6 +63,7 @@ namespace IndoorNavigation.Modules.IPSClients
         public NavigationEvent _event { get; private set; }
         private List<BeaconSignalModel> _beaconSignalBuffer = new List<BeaconSignalModel>();
         private int rssiOption;
+        private System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
 
         public WaypointClient()
         {
@@ -73,6 +74,7 @@ namespace IndoorNavigation.Modules.IPSClients
             _waypointBeaconsList = new List<WaypointBeaconsMapping>();
             rssiOption = 0;
             _bufferLock = new object();
+            watch.Start();
         }
 
         public void SetWaypointList(List<WaypointBeaconsMapping> waypointBeaconsList)
@@ -101,6 +103,7 @@ namespace IndoorNavigation.Modules.IPSClients
         public void DetectWaypoints()
 
         {
+ 
             Console.WriteLine(">> In DetectWaypoints");
             //Utility._beaconScan.StartScan();
             // Remove the obsolete data from buffer
@@ -109,11 +112,21 @@ namespace IndoorNavigation.Modules.IPSClients
 
             lock (_bufferLock)
             {
+                Console.WriteLine("WaypointClient");
                 removeSignalBuffer.AddRange(
                 _beaconSignalBuffer.Where(c =>
                 c.Timestamp < DateTime.Now.AddMilliseconds(-500)));
 
- 
+                if (watch.Elapsed.TotalMilliseconds >= 90000)
+                {
+                    watch.Stop();
+                    watch.Reset();
+                    watch.Start();
+                    Utility._ibeaconScan.StopScan();
+                    Utility._ibeaconScan.StartScan();
+
+                }
+
                 foreach (var obsoleteBeaconSignal in removeSignalBuffer)
                     _beaconSignalBuffer.Remove(obsoleteBeaconSignal);
 
@@ -137,6 +150,9 @@ namespace IndoorNavigation.Modules.IPSClients
                                 beaconGuid);
                                 if (beacon.RSSI > (waypointBeaconsMapping._BeaconThreshold[beacon.UUID]-rssiOption))
                                 {
+                                    watch.Stop();
+                                    watch.Reset();
+                                    watch.Start();
                                     _event.OnEventCall(new WaypointSignalEventArgs
                                     {
                                         _detectedRegionWaypoint = waypointBeaconsMapping._WaypointIDAndRegionID
@@ -173,6 +189,7 @@ namespace IndoorNavigation.Modules.IPSClients
             _beaconSignalBuffer.Clear();
             _waypointBeaconsList.Clear();
             Utility._lbeaconScan._event._eventHandler -= _beaconScanEventHandler;
+            watch.Stop();
         }
     }
 

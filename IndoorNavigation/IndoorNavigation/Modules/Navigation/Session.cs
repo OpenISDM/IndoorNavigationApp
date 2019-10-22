@@ -353,11 +353,13 @@ namespace IndoorNavigation.Modules
 
                     if (IPSType.LBeacon == nextRegionIPSType)
                     {
+                        Console.WriteLine("nextLBeacon");
                         _IPSClient = new WaypointClient();
                         _IPSClient._event._eventHandler += new EventHandler(CheckArrivedWaypoint);
                     }
                     else if (IPSType.iBeacon == nextRegionIPSType)
                     {
+                        Console.WriteLine("nextiBeacon");
                         _IPSClient = new IBeaconClient();
                         _IPSClient._event._eventHandler += new EventHandler(CheckArrivedWaypoint);
                     }
@@ -914,22 +916,25 @@ namespace IndoorNavigation.Modules
 
             if (_nextWaypointStep == -1)
             {
-                waypointClient.Stop();
-                ibeaconCLient.Stop();
+                Console.WriteLine("current Waypoint : " + _currentWaypointID);
+
                 waypointClient._event._eventHandler -= new EventHandler(CheckArrivedWaypoint);
                 ibeaconCLient._event._eventHandler -= new EventHandler(CheckArrivedWaypoint);
-                
+                waypointClient.Stop();
+                ibeaconCLient.Stop();
                 _IPSClient.Stop();
                 _IPSClient._event._eventHandler -= new EventHandler(CheckArrivedWaypoint);
                 IPSType currentRegionIPSType =
                    _navigationGraph.GetRegionIPSType(_currentRegionID);
                 if (IPSType.LBeacon == currentRegionIPSType)
                 {
+                    Console.WriteLine("In waypointClient");
                     _IPSClient = new WaypointClient();
                     _IPSClient._event._eventHandler += new EventHandler(CheckArrivedWaypoint);
                 }
                 else if (IPSType.iBeacon == currentRegionIPSType)
                 {
+                    Console.WriteLine("In iBeaconClient");
                     _IPSClient = new IBeaconClient();
                     _IPSClient._event._eventHandler += new EventHandler(CheckArrivedWaypoint);
                 }

@@ -60,7 +60,7 @@ namespace IndoorNavigation.Modules.IPSClients
         private const int _moreThanTwoIBeacon = 2;
         private List<BeaconSignalModel> _beaconSignalBuffer = new List<BeaconSignalModel>();
         private int rssiOption;
-
+        private System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
         public IBeaconClient()
         {
             Console.WriteLine("In Ibeacon Type");
@@ -72,6 +72,8 @@ namespace IndoorNavigation.Modules.IPSClients
             Utility._ibeaconScan._event._eventHandler += _beaconScanEventHandler;
             _waypointBeaconsList = new List<WaypointBeaconsMapping>();
             rssiOption = 0;
+            
+            watch.Start();
         }
         public void SetWaypointList(List<WaypointBeaconsMapping> waypointBeaconsList)
         {
@@ -117,6 +119,18 @@ namespace IndoorNavigation.Modules.IPSClients
 
                 Dictionary<RegionWaypointPoint, List<BeaconSignal>> correctData = new Dictionary<RegionWaypointPoint, List<BeaconSignal>>();
 
+                
+                
+                Console.WriteLine("Time : " + watch.Elapsed.TotalMilliseconds);
+                if (watch.Elapsed.TotalMilliseconds >= 90000)
+                {
+                    watch.Stop();
+                    watch.Reset();
+                    watch.Start();
+                    Utility._ibeaconScan.StopScan();
+                    Utility._ibeaconScan.StartScan();
+
+                }
                 //if (_beaconSignalBuffer.Count() >= 25)
                 //{
                 //    _beaconSignalBuffer = new List<BeaconSignalModel>();
@@ -306,7 +320,9 @@ namespace IndoorNavigation.Modules.IPSClients
 
                 if(haveThing==true)
                 {
-
+                    watch.Stop();
+                    watch.Reset();
+                    watch.Start();
                     _event.OnEventCall(new WaypointSignalEventArgs
                     {
                         _detectedRegionWaypoint = possibleRegionWaypoint
@@ -338,7 +354,7 @@ namespace IndoorNavigation.Modules.IPSClients
             _beaconSignalBuffer.Clear();
             _waypointBeaconsList.Clear();
             Utility._ibeaconScan._event._eventHandler -= _beaconScanEventHandler;
-
+            watch.Stop();
         }
 
     }
