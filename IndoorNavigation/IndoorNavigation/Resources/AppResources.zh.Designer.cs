@@ -742,5 +742,17 @@ namespace IndoorNavigation.Resources {
                 return ResourceManager.GetString("DIRECTION_ARRIVED_VIRTUAL_STRING", resourceCulture);
             }
         }
+        
+        internal static string VERSION_STRING {
+            get {
+                return ResourceManager.GetString("VERSION_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string CURRENT_VERSION_STRING {
+            get {
+                return ResourceManager.GetString("CURRENT_VERSION_STRING", resourceCulture);
+            }
+        }
     }
 }

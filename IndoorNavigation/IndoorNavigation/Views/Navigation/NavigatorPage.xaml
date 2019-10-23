@@ -21,7 +21,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="1.5*"/>
                 <RowDefinition Height="1.5*"/>
-                <RowDefinition Height="5*"/>
+                <RowDefinition Height="5.5*"/>
                <!-- <RowDefinition Height="2.5*"/>
                 <RowDefinition Height="1.5*"/>
                 <RowDefinition Height="0.5*"/>-->
@@ -47,13 +47,13 @@
                    Margin="0, 5, 5, 5"
                    FontSize="30" LineBreakMode="WordWrap"
                    VerticalTextAlignment="Center"
-                   VerticalOptions="FillAndExpand"
+                   VerticalOptions="StartAndExpand"
                    HorizontalOptions="FillAndExpand"
                    HorizontalTextAlignment="Center"/>
             
             <Image x:Name="CurrentInstructionImage" 
                    Source="{Binding CurrentStepImage}"
-                   Grid.Row="2" Grid.Column="0" Grid.RowSpan="{Binding InstructionScaleValue}" VerticalOptions="FillAndExpand"
+                   Grid.Row="2" Grid.Column="0" Grid.RowSpan="{Binding InstructionScaleValue}" VerticalOptions="StartAndExpand"
                    Margin="0,5, 5, 5" Scale="1"/>
             
             

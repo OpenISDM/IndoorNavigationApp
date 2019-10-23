@@ -485,4 +485,12 @@
         <value>{0}{1}到達目的地</value>
     </data>
     
+    <data name="VERSION_STRING" xml:space="preserve">
+        <value>版本</value>
+    </data>
+    
+    <data name="CURRENT_VERSION_STRING" xml:space="preserve">
+        <value>1.0</value>
+    </data>
+    
 </root>

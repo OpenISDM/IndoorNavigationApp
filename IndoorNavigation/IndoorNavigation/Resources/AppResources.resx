@@ -485,4 +485,12 @@
         <value>{0}{1}to destination</value>
     </data>
     
+    <data name="VERSION_STRING" xml:space="preserve">
+        <value>Version</value>
+    </data>
+    
+    <data name="CURRENT_VERSION_STRING" xml:space="preserve">
+        <value>1.0</value>
+    </data>
+    
 </root>

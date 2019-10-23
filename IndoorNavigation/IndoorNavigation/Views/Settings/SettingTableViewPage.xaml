@@ -70,7 +70,11 @@
                     <sv:CommandCell Title="{i18n:Translate FEEDBACK_STRING}"/>
                     <sv:CommandCell Title="{i18n:Translate ABOUT_BEDI_STRING}"/>
             </sv:Section>
-        
+
+            <sv:Section Title="{i18n:Translate VERSION_STRING}">
+                    <sv:CommandCell Title="{i18n:Translate CURRENT_VERSION_STRING}"/>
+            </sv:Section>
+
         </sv:SettingsView>
         
     </ContentPage.Content>
