@@ -52,7 +52,8 @@ using Foundation;
 using IndoorNavigation.Models;
 using System.Collections.Generic;
 using IndoorNavigation.iOS;
-
+using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 
 [assembly: Xamarin.Forms.Dependency(typeof(BeaconScan))]
 namespace IndoorNavigation.iOS
@@ -112,15 +113,30 @@ namespace IndoorNavigation.iOS
                 (args as CBDiscoveredPeripheralEventArgs).RSSI.Int32Value < 0)
             {
                 Console.WriteLine("Check UUID : " + (args as CBDiscoveredPeripheralEventArgs).AdvertisementData);
-
+                //var data = Data(bytes: manufacturerData.bytes, count: Int(manufacturerData.length))
+         
                 var tempUUID = (args as CBDiscoveredPeripheralEventArgs).AdvertisementData
                                .ValueForKey((NSString)"kCBAdvDataManufacturerData");
+           
+          
+                
+
+
+
+                
+
 
                 if (tempUUID != null)
                 {
-                    string bufferUUID = tempUUID.ToString();
+                    var arr = (NSData)(args as CBDiscoveredPeripheralEventArgs).AdvertisementData.ObjectForKey((NSString)"kCBAdvDataManufacturerData");
+                    byte[] result = new byte[arr.Length];
+                    Marshal.Copy(arr.Bytes, result, 0, (int)arr.Length);
+                    var token = BitConverter.ToString(result).Replace("-", "");
+                    
+                    string bufferUUID = token.ToString();
                     string identifierUUID = ExtractBeaconUUID(bufferUUID);
-                    if (identifierUUID.Length == 36)
+                    
+                    if (identifierUUID.Length == 36&&Guid.TryParse(identifierUUID,out Guid guid)==true)
                     {
                         List<BeaconSignalModel> signals = new List<BeaconSignalModel>();
 
@@ -146,20 +162,18 @@ namespace IndoorNavigation.iOS
 
         private string ExtractBeaconUUID(string stringAdvertisementSpecificData)
         {
-            string[] parse = stringAdvertisementSpecificData.Split(" ");
-
-            if (parse.Count() < 6)
+            if(stringAdvertisementSpecificData.Length==50)
             {
-                return stringAdvertisementSpecificData;
+                var parser = stringAdvertisementSpecificData.Substring(8, 8) + "-" +
+                    stringAdvertisementSpecificData.Substring(16, 4) + "-" +
+                    stringAdvertisementSpecificData.Substring(20, 4) + "-" +
+                    stringAdvertisementSpecificData.Substring(24, 4) + "-" +
+                    stringAdvertisementSpecificData.Substring(28, 12);
+                return parser;
             }
             else
             {
-                var parser = parse[1] + "-" +
-                             parse[2].Substring(0, 4) + "-" +
-                             parse[2].Substring(4, 4) + "-" +
-                             parse[3].Substring(0, 4) + "-" +
-                             parse[3].Substring(4, 4) + parse[4];
-                return parser.ToString();
+                return stringAdvertisementSpecificData;
             }
         }
     }

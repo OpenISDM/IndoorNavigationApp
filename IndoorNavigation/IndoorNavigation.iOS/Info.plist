@@ -54,12 +54,8 @@
 		<string>bluetooth-peripheral</string>
 	</array>
 	<key>MinimumOSVersion</key>
-	<string>13.0</string>
+	<string>12.4</string>
 	<key>NSContactsUsageDescription</key>
 	<string>contactsDescription</string>
-	<key>NSBluetoothAlwaysUsageDescription</key>
-  	<string>Play with BLE Compatible devices</string>
- 	<key>NSBluetoothPeripheralUsageDescription</key>
- 	<string>Play with BLE Compatible devices</string>
 </dict>
 </plist>

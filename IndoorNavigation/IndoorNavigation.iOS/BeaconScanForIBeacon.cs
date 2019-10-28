@@ -96,7 +96,7 @@ namespace IndoorNavigation.iOS
                 {
                     string bufferUUID = tempUUID.ToString();
                     string identifierUUID = ExtractBeaconUUID(bufferUUID);
-                    if (identifierUUID.Length == 36)
+                    if (identifierUUID.Length == 36 && Guid.TryParse(identifierUUID, out Guid guid) == true)
                     {
                         List<BeaconSignalModel> signals = new List<BeaconSignalModel>();
 
@@ -138,13 +138,26 @@ namespace IndoorNavigation.iOS
 
         private string ExtractBeaconUUID(string stringAdvertisementSpecificData)
         {
-            
-            if(stringAdvertisementSpecificData.Length==35)
+            if(stringAdvertisementSpecificData.Length==35||stringAdvertisementSpecificData.Length==56)
             {
                 string[] parse = stringAdvertisementSpecificData.Split(" ");
+                Console.WriteLine("In IBeacon Parser");
+                for (int i = 0; i < parse.Count(); i++)
+                {
+                    Console.WriteLine("Parse : " + parse[i]);
+                }
                 if (parse.Count() < 8)
                 {
                     return stringAdvertisementSpecificData;
+                }
+                else if(parse[6].Substring(1, 6) == "length")
+                {
+                    var parser = "00000000" + "-" +
+                                 "0402" + "-" + parse[4] + "-" +
+                                  "0000" + "-" +
+                                  parse[11].Substring(6, 12);
+                    Console.WriteLine("parser : " + parser);
+                    return parser.ToString();
                 }
                 else
                 {

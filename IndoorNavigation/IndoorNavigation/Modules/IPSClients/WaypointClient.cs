@@ -112,7 +112,6 @@ namespace IndoorNavigation.Modules.IPSClients
 
             lock (_bufferLock)
             {
-                Console.WriteLine("WaypointClient");
                 removeSignalBuffer.AddRange(
                 _beaconSignalBuffer.Where(c =>
                 c.Timestamp < DateTime.Now.AddMilliseconds(-500)));
