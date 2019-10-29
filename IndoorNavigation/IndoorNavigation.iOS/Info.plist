@@ -57,5 +57,9 @@
 	<string>12.4</string>
 	<key>NSContactsUsageDescription</key>
 	<string>contactsDescription</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>My description for what i need Bluetooth Privs</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>My description for what i need Bluetooth Privs</string>
 </dict>
 </plist>
