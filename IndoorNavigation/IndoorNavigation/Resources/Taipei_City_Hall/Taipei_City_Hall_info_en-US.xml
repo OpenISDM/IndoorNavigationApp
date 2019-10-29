@@ -45,7 +45,7 @@
         <waypoint id = "00000000-0000-0000-0000-000000000315" name = "Elevator"/>  
         <waypoint id = "00000000-0000-0000-0000-000000316317" name = "Intersection of Elevator"/>
         <waypoint id = "00000000-0000-0000-0000-100000316317" name = "Elevator"/>
-        <waypoint id = "00000000-0000-0000-0000-000000000318" name = "Escalator"/>
+        <waypoint id = "00000000-0000-0000-0000-000000000318" name = "Escalator(North)"/>
         <waypoint id = "00000000-0000-0000-0000-000000000319" name = "Rest Area(North)"/>
         <waypoint id = "00000000-0000-0000-0000-100000000319" name = "Stair"/>
         <waypoint id = "00000000-0000-0000-0000-000000000320" name = "Parent-child theater"/>
