@@ -55,6 +55,8 @@ using IndoorNavigation.Resources.Helpers;
 using System.Reflection;
 using IndoorNavigation.Modules.Utilities;
 using IndoorNavigation.Models.NavigaionLayer;
+using System.Xml;
+using System.IO;
 
 namespace IndoorNavigation
 {
@@ -62,11 +64,13 @@ namespace IndoorNavigation
     public partial class MainPage : ContentPage
     {
         MainPageViewModel _viewModel;
-
+        internal static readonly string _versionRoute = "IndoorNavigation.Resources.Map_Version.xml";
         const string _resourceId = "IndoorNavigation.Resources.AppResources";
+        internal static readonly string _versionRouteInPhone
+             = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Version");
         ResourceManager _resourceManager =
             new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
-
+        private bool updateMapOrNot;
         public MainPage()
         {
             InitializeComponent();
@@ -74,7 +78,7 @@ namespace IndoorNavigation
             var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
             NavigationPage.SetBackButtonTitle(this, _resourceManager.GetString("HOME_STRING", currentLanguage));
             NavigationPage.SetHasBackButton(this, false);
-
+            updateMapOrNot = false;
             switch (Device.RuntimePlatform)
             {
                 case Device.Android:
@@ -142,34 +146,94 @@ namespace IndoorNavigation
             {
                 NavigationGraph navigationGraph = NavigraphStorage.LoadNavigationGraphXML(location.UserNaming);
 
-                switch (navigationGraph.GetIndustryServer())
+                // UpdateMap(location.UserNaming, navigationGraph);
+
+
+
+
+
+                XmlDocument xmlDocument = new XmlDocument();
+                using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(_versionRoute))
                 {
-                    case "hospital":
-                        var answser = await DisplayAlert(
-                            _resourceManager.GetString("GO_NAVIGATION_HOME_PAGE_STRING", currentLanguage),
-                            location.UserNaming, _resourceManager.GetString("OK_STRING", currentLanguage),
-                            _resourceManager.GetString("CANCEL_STRING", currentLanguage));
-                        if (answser)
-                        {
-                            await Navigation.PushAsync(new NavigationHomePage(location.UserNaming));
-                        }
-                        break;
-
-                    case "city_hall":
-                        var answser_city_hall = await DisplayAlert(
-                            _resourceManager.GetString("GO_NAVIGATION_HOME_PAGE_STRING", currentLanguage),
-                            location.UserNaming, _resourceManager.GetString("OK_STRING", currentLanguage),
-                            _resourceManager.GetString("CANCEL_STRING", currentLanguage));
-                        if (answser_city_hall)
-                        {
-                            await Navigation.PushAsync(new CityHallHomePage(location.UserNaming));
-                        }
-                        break;
-
-                    default:
-                        Console.WriteLine("Unknown _industryService");
-                        break;
+                    StreamReader tr = new StreamReader(stream);
+                    string fileContents = tr.ReadToEnd();
+                    xmlDocument.LoadXml(fileContents);
                 }
+
+
+                ReadVersion readVersion = new ReadVersion(xmlDocument);
+                double newVersion = readVersion.ReturnVersion(navigationGraph.GetBuildingName());
+                if (navigationGraph.GetVersion() != newVersion)
+                {
+                    //var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+                    var answser = await DisplayAlert(
+                                _resourceManager.GetString("UPDATE_MAP_STRING", currentLanguage),
+                                location.UserNaming, _resourceManager.GetString("OK_STRING", currentLanguage),
+                                _resourceManager.GetString("CANCEL_STRING", currentLanguage));
+                    var ci = CrossMultilingual.Current.CurrentCultureInfo;
+                    string NTUH_YunLin = _resourceManager.GetString("HOSPITAL_NAME_STRING", ci).ToString();
+                    string Taipei_City_Hall = _resourceManager.GetString("TAIPEI_CITY_HALL_STRING", ci).ToString();
+                    string Lab = _resourceManager.GetString("LAB_STRING", ci).ToString();
+                    if (answser)
+                    {
+                        NavigraphStorage.DeleteInformationML(location.UserNaming);
+                        if (location.UserNaming == NTUH_YunLin)
+                        {
+                            NavigraphStorage.GenerateFileRoute(NTUH_YunLin, "NTUH_YunLin");
+                        }
+                        else if (location.UserNaming == Taipei_City_Hall)
+                        {
+                            NavigraphStorage.GenerateFileRoute(Taipei_City_Hall, "Taipei_City_Hall");
+                        }
+                        else if (location.UserNaming == Lab)
+                        {
+                            NavigraphStorage.GenerateFileRoute(Lab, "Lab");
+                        }
+                        updateMapOrNot = true;
+                    }
+                    else
+                    {
+
+                        updateMapOrNot = false;
+                    }
+                }
+                else
+                {
+                    updateMapOrNot = true;
+                }
+
+                if(updateMapOrNot == true)
+                {
+                    switch (navigationGraph.GetIndustryServer())
+                    {
+                        case "hospital":
+                        //    var answser = await DisplayAlert(
+                        //        _resourceManager.GetString("GO_NAVIGATION_HOME_PAGE_STRING", currentLanguage),
+                        //        location.UserNaming, _resourceManager.GetString("OK_STRING", currentLanguage),
+                        //        _resourceManager.GetString("CANCEL_STRING", currentLanguage));
+                        //    if (answser)
+                        //    {
+                                await Navigation.PushAsync(new NavigationHomePage(location.UserNaming));
+                            //}
+                            break;
+
+                        case "city_hall":
+                            //var answser_city_hall = await DisplayAlert(
+                            //    _resourceManager.GetString("GO_NAVIGATION_HOME_PAGE_STRING", currentLanguage),
+                            //    location.UserNaming, _resourceManager.GetString("OK_STRING", currentLanguage),
+                            //    _resourceManager.GetString("CANCEL_STRING", currentLanguage));
+                            //if (answser_city_hall)
+                            //{
+                                await Navigation.PushAsync(new CityHallHomePage(location.UserNaming));
+                            //}
+                            break;
+
+                        default:
+                            Console.WriteLine("Unknown _industryService");
+                            break;
+                    }
+                }
+                
             }
         }
 
@@ -194,5 +258,6 @@ namespace IndoorNavigation
                 _viewModel.LoadNavigationGraph();
             }
         }
+        
     }
 }

@@ -493,4 +493,8 @@
         <value>1.0</value>
     </data>
     
+    <data name="UPDATE_MAP_STRING" xml:space="preserve">
+        <value>按下確定來更新圖資</value>
+    </data>
+    
 </root>

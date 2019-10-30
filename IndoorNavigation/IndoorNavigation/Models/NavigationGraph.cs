@@ -66,7 +66,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
         private string _industryService;
         private string _ownerOrganization;
         private string _buildingName;
-
+        private double _version;
         //Guid is region's Guid
         private Dictionary<Guid, Region> _regions;
 
@@ -132,7 +132,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
             _industryService = elementInNavigationGraph.GetAttribute("industry_service");
             _ownerOrganization = elementInNavigationGraph.GetAttribute("owner_organization");
             _buildingName = elementInNavigationGraph.GetAttribute("building_name");
-
+            _version = Convert.ToDouble(elementInNavigationGraph.GetAttribute("version"));
             // Read all <region> blocks within <regions>
             Console.WriteLine("Read attributes of <navigation_graph><regions>/<region>");
             XmlNodeList xmlRegion = xmlDocument.SelectNodes("navigation_graph/regions/region");
@@ -796,6 +796,11 @@ namespace IndoorNavigation.Models.NavigaionLayer
         public string GetBuildingName()
         {
             return _buildingName;
+        }
+
+        public double GetVersion()
+        {
+            return _version;
         }
 
         public Dictionary<Guid, Region> GetRegions() {

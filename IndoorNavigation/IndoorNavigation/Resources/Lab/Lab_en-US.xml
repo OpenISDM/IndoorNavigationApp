@@ -2,6 +2,6 @@
     <waypoint id = "00000000-0000-0000-0000-000000000001" Landmark = "Door" RelatedDirection = "0" FaceOrBack = "1"/>
     <waypoint id = "00000000-0000-0000-0000-000000000002" Landmark = "Calender" RelatedDirection = "6" FaceOrBack = "0"/>
     <waypoint id = "00000000-0000-0000-0000-000000000003" Landmark = "Scanner" RelatedDirection = "6" FaceOrBack = "0"/>
-    <waypoint id = "00000000-0000-0000-0000-000000000004" Landmark = "poster" RelatedDirection = "2" FaceOrBack = "0"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000004" Landmark = "picture" RelatedDirection = "2" FaceOrBack = "0"/>
     <waypoint id = "00000000-0000-0000-0000-000000000005" Landmark = "windows" RelatedDirection = "4" FaceOrBack = "0"/>
 </first_direction_XML>

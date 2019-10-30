@@ -91,6 +91,7 @@
     <EmbeddedResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall.xml" />
     <EmbeddedResource Include="Resources\NTUH_YunLin\NTUH_YunLin_info_en-US.xml" />
     <EmbeddedResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall_info_zh.xml" />
+    <EmbeddedResource Include="Resources\Map_Version.xml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Views\PopUpPage\DownloadPopUpPage.xaml">
@@ -129,6 +130,7 @@
     <None Remove="Resources\NTUH_YunLin\NTUH_YunLin_info_en-US.xml" />
     <None Remove="Resources\NTUH_YunLin\NTUH_YunLin_Info_en-US.xml" />
     <None Remove="Resources\Taipei_City_Hall\Taipei_City_Hall_info_zh.xml" />
+    <None Remove="Resources\Map_Version.xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Resources\AppResources.Designer.cs">

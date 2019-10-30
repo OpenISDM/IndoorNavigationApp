@@ -754,5 +754,11 @@ namespace IndoorNavigation.Resources {
                 return ResourceManager.GetString("CURRENT_VERSION_STRING", resourceCulture);
             }
         }
+        
+        internal static string UPDATE_MAP_STRING {
+            get {
+                return ResourceManager.GetString("UPDATE_MAP_STRING", resourceCulture);
+            }
+        }
     }
 }

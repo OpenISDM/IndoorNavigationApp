@@ -2,6 +2,6 @@
     <waypoint id = "00000000-0000-0000-0000-000000000001" Landmark = "門" RelatedDirection = "0" FaceOrBack = "1"/>
     <waypoint id = "00000000-0000-0000-0000-000000000002" Landmark = "月曆" RelatedDirection = "6" FaceOrBack = "0"/>
     <waypoint id = "00000000-0000-0000-0000-000000000003" Landmark = "掃描機" RelatedDirection = "6" FaceOrBack = "0"/>
-    <waypoint id = "00000000-0000-0000-0000-000000000004" Landmark = "海報" RelatedDirection = "2" FaceOrBack = "1"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000004" Landmark = "picture" RelatedDirection = "2" FaceOrBack = "1"/>
     <waypoint id = "00000000-0000-0000-0000-000000000005" Landmark = "窗戶" RelatedDirection = "4" FaceOrBack = "0"/>
 </first_direction_XML>
