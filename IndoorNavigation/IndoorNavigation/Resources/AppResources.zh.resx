@@ -478,7 +478,7 @@
     </data>
     
     <data name="NO_SIGNAL_STRING" xml:space="preserve">
-        <value>如果沒收到信號，請至任一路口</value>
+        <value>請至任一路口</value>
     </data>
     
     <data name="DIRECTION_ARRIVED_VIRTUAL_STRING" xml:space="preserve">

@@ -478,7 +478,7 @@
     </data>
     
     <data name="NO_SIGNAL_STRING" xml:space="preserve">
-        <value>If you do not get the signal, please go to any intersection</value>
+        <value>Please go to any intersection</value>
     </data>
     
      <data name="DIRECTION_ARRIVED_VIRTUAL_STRING" xml:space="preserve">
