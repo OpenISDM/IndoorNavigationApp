@@ -608,7 +608,6 @@ namespace IndoorNavigation.Models.NavigaionLayer
             int indexEdge = -1;
             if (_edges.ContainsKey(edgeKeyFromNode1))
             {
-
                 for (int i = 0; i < _edges[edgeKeyFromNode1].Count(); i++)
                 {
                     RegionEdge edgeItem = _edges[edgeKeyFromNode1][i];
@@ -649,18 +648,25 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
             if (_edges.ContainsKey(edgeKeyFromNode2))
             {
+   
                 for (int i = 0; i < _edges[edgeKeyFromNode2].Count(); i++)
                 {
+      
                     RegionEdge edgeItem = _edges[edgeKeyFromNode2][i];
 
                     if (!avoidConnectionTypes.Contains(edgeItem._connectionType))
                     {
+                  
                         if (DirectionalConnection.BiDirection == edgeItem._biDirection ||
                             (DirectionalConnection.OneWay == edgeItem._biDirection &&
                             2 == edgeItem._source))
                         {
+
+
+
                             Waypoint sinkWaypoint =
-                                _navigraphs[sourceRegionID]._waypoints[edgeItem._waypoint2];
+                                _navigraphs[sinkRegionID]._waypoints[edgeItem._waypoint1];
+
                             double distanceFromSource =
                                 GetDistance(sourceWaypoint._lon,
                                             sourceWaypoint._lat,
@@ -668,6 +674,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                             sinkWaypoint._lat);
 
                             int edgeDistance = System.Convert.ToInt32(distanceFromSource);
+
                             if (edgeDistance < distance)
                             {
                                 distance = edgeDistance;
@@ -679,6 +686,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
             }
             if (-1 != indexEdge)
             {
+
                 // need to reverse the resulted regionEdge from (R1/W1, R2/W2) pair to
                 // (R2/W2, R1/W1) pair before returning to caller
                 regionEdgeItem._region1 = _edges[edgeKeyFromNode2][indexEdge]._region2;
@@ -754,22 +762,28 @@ namespace IndoorNavigation.Models.NavigaionLayer
             {
                 nextStep = 1;
             }
-            Console.WriteLine("NextStep : " + nextStep);
-            Console.WriteLine("allroute : " + allRoute.Count());
             for (int i = nextStep-1; i<allRoute.Count();i++)
             {
-                Console.WriteLine("nextStep : " + nextStep);
+    
                 if(allRoute[i]._regionID!=allRoute[i+1]._regionID)
                 {
-                    break;
+                    if (_regions[allRoute[i]._regionID]._floor == _regions[allRoute[i + 1]._regionID]._floor)
+                    {
+                        RegionEdge regionEdge = GetRegionEdgeMostNearSourceWaypoint(allRoute[i]._regionID,allRoute[i]._waypointID,allRoute[i+1]._regionID,avoidConnectionType);
+                        distance = System.Convert.ToInt32(regionEdge._distance);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                   
                 }
                 else
                 {
                     WaypointEdge waypointEdge = GetWaypointEdgeInRegion(allRoute[i]._regionID, allRoute[i]._waypointID,allRoute[i+1]._waypointID, avoidConnectionType);
-                    Console.WriteLine("distance : " + distance);
-                    Console.WriteLine("WaypointEdge : " + waypointEdge._distance);
+
                     distance = distance + System.Convert.ToInt32(waypointEdge._distance);
-                    Console.WriteLine("distance2 : " + distance);
+
                     if (i + 2 >= allRoute.Count())
                     {
                         break;
@@ -982,23 +996,41 @@ namespace IndoorNavigation.Models.NavigaionLayer
                             if (!_regions[previousRegionID]._floor.Equals(
                                 _regions[currentRegionID]._floor))
                             {
+                                if (!currentRegionID.Equals(nextRegionID))
+                                {
+
+                                    information._turnDirection = TurnDirection.FirstDirection;
+                                    RegionEdge regionEdge = GetRegionEdgeMostNearSourceWaypoint(currentRegionID,
+                                                                currentWaypointID,
+                                                                nextRegionID,
+                                                                avoidConnectionTypes);
+                                    information._connectionType = regionEdge._connectionType;
+                                    information._distance = System.Convert.ToInt32(regionEdge._distance);
+                  
+                                    information._relatedDirectionOfFirstDirection = regionEdge._direction;
+                                }
+                                else
+                                {
+                                    information._turnDirection = TurnDirection.FirstDirection;
+                                    WaypointEdge currentEdge =
+                                        GetWaypointEdgeInRegion(currentRegionID,
+                                                                currentWaypointID,
+                                                                nextWaypointID,
+                                                                avoidConnectionTypes);
+                                    information._connectionType = currentEdge._connectionType;
+                                    information._relatedDirectionOfFirstDirection = currentEdge._direction;
+                                    information._distance = System.Convert
+                                                            .ToInt32(currentEdge._distance);
+
+                                }
                                 // previousWaypoint and currentWaypoint are on different
                                 // floor
                                 // need to refine the turndirection in this case
-                                information._turnDirection = TurnDirection.FirstDirection;
-
-                                WaypointEdge currentEdge =
-                                    GetWaypointEdgeInRegion(currentRegionID,
-                                                            currentWaypointID,
-                                                            nextWaypointID,
-                                                            avoidConnectionTypes);
-                                information._connectionType = currentEdge._connectionType;
-                                information._relatedDirectionOfFirstDirection = currentEdge._direction;
-                                information._distance = System.Convert
-                                                        .ToInt32(currentEdge._distance);
+                                
                             }
                             else
                             {
+
                                 // previousWaypoint and currentWaypoint are on the same floor
                                 RegionEdge prevEdge =
                                     GetRegionEdgeMostNearSourceWaypoint(previousRegionID,

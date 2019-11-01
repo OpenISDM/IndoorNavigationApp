@@ -219,9 +219,6 @@ namespace IndoorNavigation.Modules.Utilities
             string sinkInformation_en = Path.Combine(NavigraphStorage._informationFolder, fileName + "_info_en-US.xml");
             string sinkInformation_zh = Path.Combine(NavigraphStorage._informationFolder, fileName + "_info_zh.xml");
 
-            Console.WriteLine("generatefile : " + sourceNavigationData);
-
-
             try
             {
                 if (!Directory.Exists(NavigraphStorage._navigraphFolder))
