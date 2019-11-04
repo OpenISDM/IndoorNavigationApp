@@ -278,6 +278,10 @@
             <edge node1='00000000-0000-0000-0000-100000316317' node2='00000000-0000-0000-0000-000000000319' bi_direction='2' source = '' direction='4' connection_type='NormalHallway' />
             <edge node1='00000000-0000-0000-0000-000000000319' node2='00000000-0000-0000-0000-000000000320' bi_direction='2' source = '' direction='4' connection_type='NormalHallway' />
             
+            <edge node1='00000000-0000-0000-0000-000000000312' node2='00000000-0000-0000-0000-100000000312' bi_direction='2' source = '' direction='6' connection_type='NormalHallway' />
+            <edge node1='00000000-0000-0000-0000-000000000312' node2='00000000-0000-0000-0000-200000000312' bi_direction='2' source = '' direction='6' connection_type='NormalHallway' />
+            <edge node1='00000000-0000-0000-0000-100000000312' node2='00000000-0000-0000-0000-200000000312' bi_direction='2' source = '' direction='6' connection_type='NormalHallway' />
+            
             <edge node1='00000000-0000-0000-0000-100000000312' node2='00000000-0000-0000-0000-000000000313' bi_direction='2' source = '' direction='6' connection_type='NormalHallway' />
             <edge node1='00000000-0000-0000-0000-100000000312' node2='00000000-0000-0000-0000-000000316317' bi_direction='2' source = '' direction='4' connection_type='NormalHallway' />
             <edge node1='00000000-0000-0000-0000-100000000312' node2='00000000-0000-0000-0000-100000316317' bi_direction='2' source = '' direction='4' connection_type='NormalHallway' />
@@ -288,9 +292,13 @@
             <edge node1='00000000-0000-0000-0000-200000000312' node2='00000000-0000-0000-0000-100000316317' bi_direction='2' source = '' direction='4' connection_type='NormalHallway' />
             <edge node1='00000000-0000-0000-0000-000000000308' node2='00000000-0000-0000-0000-200000000312' bi_direction='2' source = '' direction='4' connection_type='NormalHallway' />
             
+            <edge node1='00000000-0000-0000-0000-000000000319' node2='00000000-0000-0000-0000-100000000319' bi_direction='2' source = '' direction='4' connection_type='NormalHallway' />
+            
             <edge node1='00000000-0000-0000-0000-000000316317' node2='00000000-0000-0000-0000-100000000319' bi_direction='2' source = '' direction='4' connection_type='NormalHallway' />
             <edge node1='00000000-0000-0000-0000-100000316317' node2='00000000-0000-0000-0000-100000000319' bi_direction='2' source = '' direction='4' connection_type='NormalHallway' />
             <edge node1='00000000-0000-0000-0000-100000000319' node2='00000000-0000-0000-0000-000000000320' bi_direction='2' source = '' direction='4' connection_type='NormalHallway' />
+            
+            <edge node1='00000000-0000-0000-0000-000000000321' node2='00000000-0000-0000-0000-100000000321' bi_direction='2' source = '' direction='4' connection_type='NormalHallway' />
             
             <edge node1='00000000-0000-0000-0000-000000000320' node2='00000000-0000-0000-0000-000000000321' bi_direction='2' source = '' direction='4' connection_type='NormalHallway' />
             <edge node1='00000000-0000-0000-0000-000000000321' node2='00000000-0000-0000-0000-000000322323' bi_direction='2' source = '' direction='4' connection_type='NormalHallway' />
@@ -305,6 +313,11 @@
             <edge node1='00000000-0000-0000-0000-000000000324' node2='00000000-0000-0000-0000-000000000327' bi_direction='2' source = '' direction='5' connection_type='NormalHallway' />
             <edge node1='00000000-0000-0000-0000-000000000326' node2='00000000-0000-0000-0000-000000000327' bi_direction='2' source = '' direction='6' connection_type='NormalHallway' />
             <edge node1='00000000-0000-0000-0000-000000000325' node2='00000000-0000-0000-0000-000000000328' bi_direction='2' source = '' direction='4' connection_type='NormalHallway' />
+            
+            <edge node1='00000000-0000-0000-0000-000000000325' node2='00000000-0000-0000-0000-100000000325' bi_direction='2' source = '' direction='4' connection_type='NormalHallway' />
+            <edge node1='00000000-0000-0000-0000-000000000325' node2='00000000-0000-0000-0000-200000000325' bi_direction='2' source = '' direction='4' connection_type='NormalHallway' />
+            <edge node1='00000000-0000-0000-0000-100000000325' node2='00000000-0000-0000-0000-200000000325' bi_direction='2' source = '' direction='4' connection_type='NormalHallway' />
+
             
             <edge node1='00000000-0000-0000-0000-000000322323' node2='00000000-0000-0000-0000-100000000325' bi_direction='2' source = '' direction='4' connection_type='NormalHallway' />
             <edge node1='00000000-0000-0000-0000-100000322323' node2='00000000-0000-0000-0000-100000000325' bi_direction='2' source = '' direction='4' connection_type='NormalHallway' />
