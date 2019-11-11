@@ -110,18 +110,11 @@ namespace IndoorNavigation.ViewModels.Navigation
             _navigationModule._event._eventHandler += GetNavigationResultEvent;
             const string resourceId = "IndoorNavigation.Resources.AppResources";
             _resourceManager = new ResourceManager(resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+            PhoneInformation phoneInformation = new PhoneInformation();
             CurrentWaypointName = _resourceManager.GetString("NULL_STRING", CrossMultilingual.Current.CurrentCultureInfo);
             CurrentStepLabel = _resourceManager.GetString("NO_SIGNAL_STRING", CrossMultilingual.Current.CurrentCultureInfo);
             var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-
-            if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == "en" || CrossMultilingual.Current.CurrentCultureInfo.ToString() == "en-US")
-            {
-                _firstDirectionInstruction = NavigraphStorage.LoadFirstDirectionXML(navigationGraphName + "_en-US.xml");
-            }
-            else if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == "zh" || CrossMultilingual.Current.CurrentCultureInfo.ToString() == "zh-TW")
-            {
-                _firstDirectionInstruction = NavigraphStorage.LoadFirstDirectionXML(navigationGraphName + "_zh.xml");
-            }
+            _firstDirectionInstruction = NavigraphStorage.LoadFirstDirectionXML(navigationGraphName + "_" + phoneInformation.GiveCurrentLanguage());
             _navigationGraph = NavigraphStorage.LoadNavigationGraphXML(navigationGraphName);
             _xmlInformation = informationXML;
         }     
