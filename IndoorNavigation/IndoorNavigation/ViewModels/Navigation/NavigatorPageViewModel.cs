@@ -166,7 +166,13 @@ namespace IndoorNavigation.ViewModels.Navigation
                         _resourceManager.GetString("CULTURE_VERSION_STRING", currentLanguage));
                     break;
 
-				case NavigationResult.AdjustRoute:
+                case NavigationResult.ArrivaIgnorePoint:
+                    CurrentWaypointName = _xmlInformation.GiveWaypointName(instruction._currentWaypointGuid);
+                    NavigationProgress = instruction._progress;
+                    ProgressBar = instruction._progressBar;
+                    break;
+
+                case NavigationResult.AdjustRoute:
                     Console.WriteLine("Wrong");
 					CurrentStepLabel =
                         _resourceManager.GetString("DIRECTION_WRONG_WAY_STRING", currentLanguage);
