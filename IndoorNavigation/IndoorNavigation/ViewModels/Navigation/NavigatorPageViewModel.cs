@@ -114,7 +114,7 @@ namespace IndoorNavigation.ViewModels.Navigation
             CurrentWaypointName = _resourceManager.GetString("NULL_STRING", CrossMultilingual.Current.CurrentCultureInfo);
             CurrentStepLabel = _resourceManager.GetString("NO_SIGNAL_STRING", CrossMultilingual.Current.CurrentCultureInfo);
             var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-            _firstDirectionInstruction = NavigraphStorage.LoadFirstDirectionXML(navigationGraphName + "_" + phoneInformation.GiveCurrentLanguage());
+            _firstDirectionInstruction = NavigraphStorage.LoadFirstDirectionXML(navigationGraphName + "_" + phoneInformation.GiveCurrentLanguage()+".xml");
             _navigationGraph = NavigraphStorage.LoadNavigationGraphXML(navigationGraphName);
             _xmlInformation = informationXML;
         }     

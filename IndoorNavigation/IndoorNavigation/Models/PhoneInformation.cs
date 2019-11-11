@@ -20,7 +20,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
             }
             else if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == "zh" || CrossMultilingual.Current.CurrentCultureInfo.ToString() == "zh-TW")
             {
-                return "zh.xml";
+                return "zh";
             }
             else
             {
