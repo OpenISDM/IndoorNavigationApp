@@ -207,25 +207,13 @@ namespace IndoorNavigation
                     switch (navigationGraph.GetIndustryServer())
                     {
                         case "hospital":
-                        //    var answser = await DisplayAlert(
-                        //        _resourceManager.GetString("GO_NAVIGATION_HOME_PAGE_STRING", currentLanguage),
-                        //        location.UserNaming, _resourceManager.GetString("OK_STRING", currentLanguage),
-                        //        _resourceManager.GetString("CANCEL_STRING", currentLanguage));
-                        //    if (answser)
-                        //    {
-                                await Navigation.PushAsync(new NavigationHomePage(location.UserNaming));
-                            //}
+                            await Navigation.PushAsync(new NavigationHomePage(location.UserNaming));
+   
                             break;
 
                         case "city_hall":
-                            //var answser_city_hall = await DisplayAlert(
-                            //    _resourceManager.GetString("GO_NAVIGATION_HOME_PAGE_STRING", currentLanguage),
-                            //    location.UserNaming, _resourceManager.GetString("OK_STRING", currentLanguage),
-                            //    _resourceManager.GetString("CANCEL_STRING", currentLanguage));
-                            //if (answser_city_hall)
-                            //{
-                                await Navigation.PushAsync(new CityHallHomePage(location.UserNaming));
-                            //}
+                            await Navigation.PushAsync(new CityHallHomePage(location.UserNaming));
+                            
                             break;
 
                         default:
