@@ -9,8 +9,13 @@ namespace IndoorNavigation.Models.NavigaionLayer
     {
         private Dictionary<Guid, string> returnWaypointName;
         private Dictionary<Guid, string> returnRegionName;
+        private string _buildingName;
         public XMLInformation(XmlDocument fileName)
         {
+            XmlNode buildingName =fileName.SelectSingleNode("navigation_graph");
+            XmlElement buildingElement = (XmlElement)buildingName;
+            _buildingName = buildingElement.GetAttribute("building_name");
+
             XmlNodeList xmlRegion = fileName.SelectNodes("navigation_graph/regions/region");
             XmlNodeList xmlWaypoint = fileName.SelectNodes("navigation_graph/waypoints/waypoint");
             returnWaypointName = new Dictionary<Guid, string>();
@@ -44,6 +49,10 @@ namespace IndoorNavigation.Models.NavigaionLayer
         public string GiveWaypointName(Guid guid)
         {
             return returnWaypointName[guid];
+        }
+        public string GiveGraphName()
+        {
+            return _buildingName;
         }
     }
 }

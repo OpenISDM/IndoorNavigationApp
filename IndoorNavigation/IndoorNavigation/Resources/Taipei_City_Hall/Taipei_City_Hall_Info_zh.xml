@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
-<navigation_graph country='台灣' city_county='雲林' industry_service='醫院」' owner_organization='畢迪科技' building_name='台大雲林醫院'>
+<navigation_graph country='台灣' city_county='雲林' industry_service='醫院」' owner_organization='畢迪科技' building_name='台北市政府'>
     <regions>
         <region id='11111111-1111-1111-1111-111111111111' name='地下一樓'/>
         <region id='22222222-2222-2222-2222-222222222222' name='二樓'/>

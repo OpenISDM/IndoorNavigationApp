@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Plugin.Multilingual;
 using Xamarin.Forms;
 
@@ -6,6 +7,10 @@ namespace IndoorNavigation.Models.NavigaionLayer
 {
     public class PhoneInformation
     {
+        private string _en = "en";
+        private string _returnEnglish = "en-US";
+        private string _returnChinese = "zh";
+        private string _zhTW = "zh-TW";
         public PhoneInformation()
         {
             Console.WriteLine("Give the information of Language or phone type");
@@ -14,18 +19,25 @@ namespace IndoorNavigation.Models.NavigaionLayer
         public string GiveCurrentLanguage()
         {
 
-            if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == "en" || CrossMultilingual.Current.CurrentCultureInfo.ToString() == "en-US")
+            if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == _en || CrossMultilingual.Current.CurrentCultureInfo.ToString() == _returnEnglish)
             {
-                return "en-US";
+                return _returnEnglish;
             }
-            else if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == "zh" || CrossMultilingual.Current.CurrentCultureInfo.ToString() == "zh-TW")
+            else if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == _returnChinese || CrossMultilingual.Current.CurrentCultureInfo.ToString() == _zhTW)
             {
-                return "zh";
+                return _returnChinese;
             }
             else
             {
                 return null;
             }
+        }
+        public List<string> GiveAllLanguage()
+        {
+            List<string> giveAllLanguage = new List<string>();
+            giveAllLanguage.Add(_returnChinese);
+            giveAllLanguage.Add(_returnChinese);
+            return giveAllLanguage;
         }
     }
 }

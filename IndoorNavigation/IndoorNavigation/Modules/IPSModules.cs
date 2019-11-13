@@ -19,11 +19,11 @@
  *      
  * Version:
  *
- *      1.0.0, 20191004
+ *      1.0.0, 201911123eee3333e
  * 
  * File Name:
  *
- *      Session.cs
+ *      IPSModules.cs
  *
  * Abstract:
  *
@@ -37,7 +37,7 @@
  *      navigator the location of each waypoint. 
  *      This version makes use of Xamarin.Forms, which is a complete 
  *      cross-platform UI tookit that runs on both iOS and Android.
- *
+ *      
  * Authors:
  *
  *      Eric Lee, ericlee@iis.sinica.edu.tw
@@ -117,12 +117,10 @@ namespace IndoorNavigation.Modules
             IPSType ipsType = _navigationGraph.GetRegionIPSType(regionGuid);
             if (ipsType == IPSType.LBeacon)
             {
-                Console.WriteLine("haveLBeacon");
                 haveLBeacon = true;
                 List<WaypointBeaconsMapping> tempLBeaconMapping = new List<WaypointBeaconsMapping>();
                 tempLBeaconMapping = FindTheMappingOfWaypointAndItsBeacon(regionGuid, waypointGuids);
                 _monitorLBeaconGuid.AddRange(tempLBeaconMapping);
-
             }
         }
         public void ADDGPS(Guid regionGuid, List<Guid>waypointGuids)
@@ -243,7 +241,6 @@ namespace IndoorNavigation.Modules
         //This function gets the matched waypoint and region from each Clients, then pass the waypoint and region information to Session
         public void PassMatchedWaypointAndRegionToSession(object sender, EventArgs args)
         {
-            Console.WriteLine("In Pass");
             RegionWaypointPoint matchedWaypointAndRegion = new RegionWaypointPoint();
             matchedWaypointAndRegion._waypointID = (args as WaypointSignalEventArgs)._detectedRegionWaypoint._waypointID;
             matchedWaypointAndRegion._regionID = (args as WaypointSignalEventArgs)._detectedRegionWaypoint._regionID;
@@ -259,7 +256,6 @@ namespace IndoorNavigation.Modules
             IPSType nextIPSType = _navigationGraph.GetRegionIPSType(nextRegionGuid);
             if (!nextIPSType.Equals(currentIPSType)||firstStep==_firstStep)
             {
-                Console.WriteLine("different type");
                 HaveBeaconAllFalse();
                 _IPSClient.Stop();
                 _IPSClient._event._eventHandler -= new EventHandler(PassMatchedWaypointAndRegionToSession);

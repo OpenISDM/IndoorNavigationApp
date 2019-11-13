@@ -76,9 +76,27 @@ namespace IndoorNavigation.Modules.Utilities
                 Directory.CreateDirectory(_navigraphFolder);
             if (!Directory.Exists(_firstDirectionInstuctionFolder))
                 Directory.CreateDirectory(_firstDirectionInstuctionFolder);
-            return Directory.GetFiles(_navigraphFolder)
+            if (!Directory.Exists(_informationFolder))
+                Directory.CreateDirectory(_informationFolder);
+            PhoneInformation phoneInformation = new PhoneInformation();
+          
+
+            string[] existNavigraphname = Directory.GetFiles(_navigraphFolder)
                 .Select(path => Path.GetFileName(path))
                 .OrderBy(file => file).ToArray();
+            string[] returnGraphName = new string[existNavigraphname.Count()];
+            for (int i = 0;i< existNavigraphname.Count();i++)
+            {
+                XMLInformation information;
+                information = NavigraphStorage.LoadInformationML(existNavigraphname[i].ToString() + "_info_" + phoneInformation.GiveCurrentLanguage() + ".xml");
+                returnGraphName[i] = information.GiveGraphName();
+                Console.WriteLine("graph name : " + returnGraphName[i] );
+            }
+
+            //return Directory.GetFiles(_navigraphFolder)
+            //    .Select(path => Path.GetFileName(path))
+            //    .OrderBy(file => file).ToArray();
+            return returnGraphName;
         }
 
         public static NavigationGraph LoadNavigationGraphXML(string FileName)
