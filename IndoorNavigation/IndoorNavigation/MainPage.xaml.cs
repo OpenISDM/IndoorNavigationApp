@@ -57,6 +57,7 @@ using IndoorNavigation.Modules.Utilities;
 using IndoorNavigation.Models.NavigaionLayer;
 using System.Xml;
 using System.IO;
+using System.Collections.Generic;
 
 namespace IndoorNavigation
 {
@@ -71,6 +72,7 @@ namespace IndoorNavigation
         ResourceManager _resourceManager =
             new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
         private bool updateMapOrNot;
+        private static PhoneInformation _phoneInformation = new PhoneInformation();
         public MainPage()
         {
             InitializeComponent();
@@ -144,13 +146,17 @@ namespace IndoorNavigation
              var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
             if (e.Item is Location location)
             {
-                NavigationGraph navigationGraph = NavigraphStorage.LoadNavigationGraphXML(location.UserNaming);
+                
 
                 // UpdateMap(location.UserNaming, navigationGraph);
-
-
-
-
+                var ci = CrossMultilingual.Current.CurrentCultureInfo;
+                string NTUH_YunLin = _resourceManager.GetString("HOSPITAL_NAME_STRING", ci).ToString();
+                string Taipei_City_Hall = _resourceManager.GetString("TAIPEI_CITY_HALL_STRING", ci).ToString();
+                string Lab = _resourceManager.GetString("LAB_STRING", ci).ToString();
+                string loadFileName="";
+                string map = _phoneInformation.GiveCurrentMapName(location.UserNaming);
+                
+                NavigationGraph navigationGraph = NavigraphStorage.LoadNavigationGraphXML(map);
 
                 XmlDocument xmlDocument = new XmlDocument();
                 using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(_versionRoute))
@@ -170,25 +176,14 @@ namespace IndoorNavigation
                                 _resourceManager.GetString("UPDATE_MAP_STRING", currentLanguage),
                                 location.UserNaming, _resourceManager.GetString("OK_STRING", currentLanguage),
                                 _resourceManager.GetString("CANCEL_STRING", currentLanguage));
-                    var ci = CrossMultilingual.Current.CurrentCultureInfo;
-                    string NTUH_YunLin = _resourceManager.GetString("HOSPITAL_NAME_STRING", ci).ToString();
-                    string Taipei_City_Hall = _resourceManager.GetString("TAIPEI_CITY_HALL_STRING", ci).ToString();
-                    string Lab = _resourceManager.GetString("LAB_STRING", ci).ToString();
+                    
+                    
                     if (answser)
                     {
-                        NavigraphStorage.DeleteInformationML(location.UserNaming);
-                        if (location.UserNaming == NTUH_YunLin)
-                        {
-                            NavigraphStorage.GenerateFileRoute(NTUH_YunLin, "NTUH_YunLin");
-                        }
-                        else if (location.UserNaming == Taipei_City_Hall)
-                        {
-                            NavigraphStorage.GenerateFileRoute(Taipei_City_Hall, "Taipei_City_Hall");
-                        }
-                        else if (location.UserNaming == Lab)
-                        {
-                            NavigraphStorage.GenerateFileRoute(Lab, "Lab");
-                        }
+
+                        List<string> generateName = _phoneInformation.GiveGenerateMapName(location.UserNaming);
+
+                        NavigraphStorage.GenerateFileRoute(generateName[0], generateName[1]);
                         updateMapOrNot = true;
                     }
                     else
@@ -239,10 +234,27 @@ namespace IndoorNavigation
         void Item_Delete(object sender, EventArgs e)
         {
             var item = (Location)((MenuItem)sender).CommandParameter;
+            var ci = CrossMultilingual.Current.CurrentCultureInfo;
+            string NTUH_YunLin = _resourceManager.GetString("HOSPITAL_NAME_STRING", ci).ToString();
+            string Taipei_City_Hall = _resourceManager.GetString("TAIPEI_CITY_HALL_STRING", ci).ToString();
+            string Lab = _resourceManager.GetString("LAB_STRING", ci).ToString();
+            string loadFileName = "";
 
+            if (item.UserNaming == NTUH_YunLin)
+            {
+                loadFileName = "NTUH Yunlin Branch";
+            }
+            else if (item.UserNaming == Taipei_City_Hall)
+            {
+                loadFileName = "Taipei City Hall";
+            }
+            else if (item.UserNaming == Lab)
+            {
+                loadFileName = "Lab";
+            }
             if (item != null)
             {
-                NavigraphStorage.DeleteNavigationGraph(item.UserNaming);
+                NavigraphStorage.DeleteNavigationGraph(loadFileName);
                 _viewModel.LoadNavigationGraph();
             }
         }
