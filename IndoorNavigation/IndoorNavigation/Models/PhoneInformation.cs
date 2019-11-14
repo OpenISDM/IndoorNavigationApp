@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
+using System.Resources;
+using IndoorNavigation.Resources.Helpers;
 using Plugin.Multilingual;
 using Xamarin.Forms;
 
@@ -10,10 +13,12 @@ namespace IndoorNavigation.Models.NavigaionLayer
         private string _en = "en";
         private string _returnEnglish = "en-US";
         private string _returnChinese = "zh";
-        private string _zhTW = "zh-TW";
+        private string _zhTW = "zh-TW"; const string _resourceId = "IndoorNavigation.Resources.AppResources";
+        ResourceManager _resourceManager =
+        new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
         public PhoneInformation()
         {
-            Console.WriteLine("Give the information of Language or phone type");
+           
         }
 
         public string GiveCurrentLanguage()
@@ -38,6 +43,54 @@ namespace IndoorNavigation.Models.NavigaionLayer
             giveAllLanguage.Add(_returnChinese);
             giveAllLanguage.Add(_returnChinese);
             return giveAllLanguage;
+        }
+
+        public string GiveCurrentMapName(string userNaming)
+        {
+            var ci = CrossMultilingual.Current.CurrentCultureInfo;
+            string NTUH_YunLin = _resourceManager.GetString("HOSPITAL_NAME_STRING", ci).ToString();
+            string Taipei_City_Hall = _resourceManager.GetString("TAIPEI_CITY_HALL_STRING", ci).ToString();
+            string Lab = _resourceManager.GetString("LAB_STRING", ci).ToString();
+            string loadFileName = "";
+
+            if (userNaming == NTUH_YunLin)
+            {
+                loadFileName = "NTUH Yunlin Branch";
+            }
+            else if (userNaming == Taipei_City_Hall)
+            {
+                loadFileName = "Taipei City Hall";
+            }
+            else if (userNaming == Lab)
+            {
+                loadFileName = "Lab";
+            }
+            return loadFileName;
+        }
+        public List<string>GiveGenerateMapName(string userNaming)
+        {
+            var ci = CrossMultilingual.Current.CurrentCultureInfo;
+            string NTUH_YunLin = _resourceManager.GetString("HOSPITAL_NAME_STRING", ci).ToString();
+            string Taipei_City_Hall = _resourceManager.GetString("TAIPEI_CITY_HALL_STRING", ci).ToString();
+            string Lab = _resourceManager.GetString("LAB_STRING", ci).ToString();
+            List<string> loadFileName = new List<string>();
+
+            if (userNaming == NTUH_YunLin)
+            {
+                loadFileName.Add("NTUH Yunlin Branch");
+                loadFileName.Add("NTUH_YunLin");
+            }
+            else if (userNaming == Taipei_City_Hall)
+            {
+                loadFileName.Add("Taipei City Hall");
+                loadFileName.Add("Taipei_City_Hall");
+            }
+            else if (userNaming == Lab)
+            {
+                loadFileName.Add("Lab");
+                loadFileName.Add("Lab");
+            }
+            return loadFileName;
         }
     }
 }

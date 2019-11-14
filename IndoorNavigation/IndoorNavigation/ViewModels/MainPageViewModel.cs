@@ -86,8 +86,8 @@ namespace IndoorNavigation.ViewModels
                 
                 string NTUH_YunLin = _resourceManager.GetString("HOSPITAL_NAME_STRING", ci).ToString();
                 string Taipei_City_Hall = _resourceManager.GetString("TAIPEI_CITY_HALL_STRING", ci).ToString();
-                NavigraphStorage.GenerateFileRoute(NTUH_YunLin, "NTUH_YunLin");
-                NavigraphStorage.GenerateFileRoute(Taipei_City_Hall, "Taipei_City_Hall");
+                NavigraphStorage.GenerateFileRoute("NTUH Yunlin Branch", "NTUH_YunLin");
+                NavigraphStorage.GenerateFileRoute("Taipei City Hall", "Taipei_City_Hall");
                 Application.Current.Properties["FirstUse"] = false;
             }
 

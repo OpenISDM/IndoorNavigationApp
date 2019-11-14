@@ -66,7 +66,7 @@ namespace IndoorNavigation.Modules.Utilities
              = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Information");
 
         internal static readonly string _embeddedResourceReoute = "IndoorNavigation.Resources.";
-
+        private static PhoneInformation _phoneInformation = new PhoneInformation();
         private static object _fileLock = new object();
         
         public static string[] GetAllNavigationGraphs()
@@ -90,7 +90,6 @@ namespace IndoorNavigation.Modules.Utilities
                 XMLInformation information;
                 information = NavigraphStorage.LoadInformationML(existNavigraphname[i].ToString() + "_info_" + phoneInformation.GiveCurrentLanguage() + ".xml");
                 returnGraphName[i] = information.GiveGraphName();
-                Console.WriteLine("graph name : " + returnGraphName[i] );
             }
 
             //return Directory.GetFiles(_navigraphFolder)
@@ -101,7 +100,9 @@ namespace IndoorNavigation.Modules.Utilities
 
         public static NavigationGraph LoadNavigationGraphXML(string FileName)
         {
+            Console.WriteLine("FileName : " + FileName);
             string filePath = Path.Combine(_navigraphFolder, FileName);
+            Console.WriteLine("Reading File Name : " + filePath);
             if (!File.Exists(filePath))
                 throw new FileNotFoundException();
 
@@ -142,6 +143,7 @@ namespace IndoorNavigation.Modules.Utilities
         public static XMLInformation LoadInformationML(string FileName)
         {
             string filePath = Path.Combine(_informationFolder, FileName);
+         
 
             var xmlString = File.ReadAllText(filePath);
             if (xmlString == "")
@@ -203,14 +205,19 @@ namespace IndoorNavigation.Modules.Utilities
         public static void DeleteAllNavigationGraph()
         {
             foreach (string place in GetAllNavigationGraphs())
-                DeleteNavigationGraph(place);
+            {
+                string map = _phoneInformation.GiveCurrentMapName(place);
+                DeleteNavigationGraph(map);
+            }
+                
         }
 
         public static void DeleteAllFirstDirectionXML()
         {
             foreach(string place in GetAllNavigationGraphs())
             {
-                DeleteFirstDirectionXML(place);
+                string map = _phoneInformation.GiveCurrentMapName(place);
+                DeleteFirstDirectionXML(map);
             }
         }
 
@@ -218,7 +225,8 @@ namespace IndoorNavigation.Modules.Utilities
         {
             foreach (string place in GetAllNavigationGraphs())
             {
-                DeleteInformationML(place);
+                string map = _phoneInformation.GiveCurrentMapName(place);
+                DeleteInformationML(map);
             }
         }
 
@@ -236,6 +244,8 @@ namespace IndoorNavigation.Modules.Utilities
             string sourceInformation_zh = Path.Combine(_embeddedResourceReoute + readingPath + "." + readingPath + "_info_zh.xml");
             string sinkInformation_en = Path.Combine(NavigraphStorage._informationFolder, fileName + "_info_en-US.xml");
             string sinkInformation_zh = Path.Combine(NavigraphStorage._informationFolder, fileName + "_info_zh.xml");
+
+            Console.WriteLine("SinkNavigationData : " + sinkNavigationData);
 
             try
             {

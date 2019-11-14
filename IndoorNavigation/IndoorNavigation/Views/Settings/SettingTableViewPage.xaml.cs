@@ -44,6 +44,7 @@
  *
  */
 using IndoorNavigation.Models;
+using IndoorNavigation.Models.NavigaionLayer;
 using IndoorNavigation.Modules;
 using IndoorNavigation.Modules.Utilities;
 using IndoorNavigation.Resources;
@@ -55,6 +56,7 @@ using Prism.Commands;
 using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Reflection;
@@ -82,7 +84,7 @@ namespace IndoorNavigation.Views.Settings
             { await HandleCLeanMapAsync(); });
 
         public ICommand _changeLanguageCommand => new DelegateCommand(HandleChangeLanguage);
-
+        private PhoneInformation _phoneInformation;
         const string _resourceId = "IndoorNavigation.Resources.AppResources";
         ResourceManager _resourceManager =
             new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
@@ -91,6 +93,7 @@ namespace IndoorNavigation.Views.Settings
         {
             InitializeComponent();
             AddMapItems();
+            _phoneInformation = new PhoneInformation();
             _downloadPage._event.DownloadPopUpPageEventHandler +=
                 async delegate (object sender, EventArgs e) { await HandleDownloadPageAsync(sender, e); };
 
@@ -363,9 +366,11 @@ namespace IndoorNavigation.Views.Settings
 
                     {
                         // Delete selected map
-                        NavigraphStorage.DeleteNavigationGraph(CleanMapPicker.SelectedItem.ToString());
-                        NavigraphStorage.DeleteFirstDirectionXML(CleanMapPicker.SelectedItem.ToString());
-                        NavigraphStorage.DeleteInformationML(CleanMapPicker.SelectedItem.ToString());
+                        string currentMap = _phoneInformation.GiveCurrentMapName(CleanMapPicker.SelectedItem.ToString());
+
+                        NavigraphStorage.DeleteNavigationGraph(currentMap);
+                        NavigraphStorage.DeleteFirstDirectionXML(currentMap);
+                        NavigraphStorage.DeleteInformationML(currentMap);
                         await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", ci),
                                            _resourceManager.GetString("SUCCESSFULLY_DELETE_STRING", ci),
                                            _resourceManager.GetString("OK_STRING", ci));
@@ -395,23 +400,27 @@ namespace IndoorNavigation.Views.Settings
 
         private async void HandleChooseMap()
         {
-            var ci = CrossMultilingual.Current.CurrentCultureInfo;
-            string NTUH_YunLin = _resourceManager.GetString("HOSPITAL_NAME_STRING", ci).ToString();
-            string Taipei_City_Hall = _resourceManager.GetString("TAIPEI_CITY_HALL_STRING", ci).ToString();
-            string Lab = _resourceManager.GetString("LAB_STRING", ci).ToString();
+            //var ci = CrossMultilingual.Current.CurrentCultureInfo;
+            //string NTUH_YunLin = _resourceManager.GetString("HOSPITAL_NAME_STRING", ci).ToString();
+            //string Taipei_City_Hall = _resourceManager.GetString("TAIPEI_CITY_HALL_STRING", ci).ToString();
+            //string Lab = _resourceManager.GetString("LAB_STRING", ci).ToString();
             
-            if (OptionPicker.SelectedItem.ToString().Trim() == NTUH_YunLin)
-            {
-                NavigraphStorage.GenerateFileRoute(NTUH_YunLin, "NTUH_YunLin");
-            }
-            else if (OptionPicker.SelectedItem.ToString().Trim() == Taipei_City_Hall)
-            {
-                NavigraphStorage.GenerateFileRoute(Taipei_City_Hall, "Taipei_City_Hall");
-            }
-            else if (OptionPicker.SelectedItem.ToString().Trim() == Lab)
-            {
-                NavigraphStorage.GenerateFileRoute(Lab, "Lab");
-            }
+            //if (OptionPicker.SelectedItem.ToString().Trim() == NTUH_YunLin)
+            //{
+            //    NavigraphStorage.GenerateFileRoute("NTUH Yunlin Branch", "NTUH_YunLin");
+            //}
+            //else if (OptionPicker.SelectedItem.ToString().Trim() == Taipei_City_Hall)
+            //{
+            //    NavigraphStorage.GenerateFileRoute("Taipei City Hall", "Taipei_City_Hall");
+            //}
+            //else if (OptionPicker.SelectedItem.ToString().Trim() == Lab)
+            //{
+            //    NavigraphStorage.GenerateFileRoute("Lab", "Lab");
+            //}
+
+            List<string> generateName = _phoneInformation.GiveGenerateMapName(OptionPicker.SelectedItem.ToString().Trim());
+
+            NavigraphStorage.GenerateFileRoute(generateName[0],generateName[1]);
 
             ReloadNaviGraphItems();
 
