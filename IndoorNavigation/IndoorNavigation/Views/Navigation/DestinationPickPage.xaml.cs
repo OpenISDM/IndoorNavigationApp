@@ -80,8 +80,8 @@ namespace IndoorNavigation.Views.Navigation
 
             _navigationGraphName = navigationGraphName;
             PhoneInformation phoneInformation = new PhoneInformation();
-            _navigationGraph = NavigraphStorage.LoadNavigationGraphXML(navigationGraphName);
-            _nameInformation = NavigraphStorage.LoadInformationML(navigationGraphName + "_info_" + phoneInformation.GiveCurrentLanguage()+".xml");
+            _navigationGraph = NavigraphStorage.LoadNavigationGraphXML(phoneInformation.GiveCurrentMapName(_navigationGraphName));
+            _nameInformation = NavigraphStorage.LoadInformationML(phoneInformation.GiveCurrentMapName(_navigationGraphName) + "_info_" + phoneInformation.GiveCurrentLanguage()+".xml");
            
             NavigationPage.SetBackButtonTitle(this, _resourceManager.GetString("BACK_STRING", CrossMultilingual.Current.CurrentCultureInfo));
 

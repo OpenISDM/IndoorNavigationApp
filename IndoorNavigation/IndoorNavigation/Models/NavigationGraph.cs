@@ -1423,4 +1423,10 @@ namespace IndoorNavigation.Models.NavigaionLayer
         ConferenceRoom,
         Stair
     }
+
+    public enum waypointDecisionOrIgnore
+    {
+        DecisionWaypoint,
+        IgnoreWaypoint
+    }
 }

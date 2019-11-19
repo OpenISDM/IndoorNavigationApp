@@ -67,4 +67,10 @@ namespace IndoorNavigation.Models
         public Guid _portalWaypoint1 { get; set; }
         public Guid _portalWaypoint2 { get; set; }
     }
+
+    public class GroupWaypoint
+    {
+        public List<RegionWaypointPoint> _regionsAndWaypoints;
+        public waypointDecisionOrIgnore _decisionOrIgnore;
+    }
 }

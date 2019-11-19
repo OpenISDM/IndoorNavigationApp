@@ -65,8 +65,8 @@ namespace IndoorNavigation.Modules
         private Thread _waypointDetectionThread;
         private Thread _navigationControllerThread;
 
-        private int _remindDistance = 30;
-        private int _accumulateStraightDistance;
+        private int _remindDistance = 50;
+        private int _accumulateStraightDistance = 0;
 
         private bool _isKeepDetection;
         private Guid _currentRegionID = new Guid();
@@ -136,7 +136,6 @@ namespace IndoorNavigation.Modules
                                   _currentRegionID, _currentWaypointID);
 
                 _nextWaypointEvent.Wait();
-                Console.WriteLine("CuCu");
                 if (_currentRegionID.Equals(_destinationRegionID) &&
                     _currentWaypointID.Equals(_destinationWaypointID))
                 {
@@ -964,7 +963,7 @@ namespace IndoorNavigation.Modules
             if (_nextWaypointStep == -1)
             {
                 Console.WriteLine("current Waypoint : " + _currentWaypointID);
-
+                _accumulateStraightDistance = 0;
                 //waypointClient._event._eventHandler -= new EventHandler(CheckArrivedWaypoint);
                 //ibeaconCLient._event._eventHandler -= new EventHandler(CheckArrivedWaypoint);
                 //waypointClient.Stop();

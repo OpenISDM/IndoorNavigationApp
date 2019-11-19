@@ -400,24 +400,6 @@ namespace IndoorNavigation.Views.Settings
 
         private async void HandleChooseMap()
         {
-            //var ci = CrossMultilingual.Current.CurrentCultureInfo;
-            //string NTUH_YunLin = _resourceManager.GetString("HOSPITAL_NAME_STRING", ci).ToString();
-            //string Taipei_City_Hall = _resourceManager.GetString("TAIPEI_CITY_HALL_STRING", ci).ToString();
-            //string Lab = _resourceManager.GetString("LAB_STRING", ci).ToString();
-            
-            //if (OptionPicker.SelectedItem.ToString().Trim() == NTUH_YunLin)
-            //{
-            //    NavigraphStorage.GenerateFileRoute("NTUH Yunlin Branch", "NTUH_YunLin");
-            //}
-            //else if (OptionPicker.SelectedItem.ToString().Trim() == Taipei_City_Hall)
-            //{
-            //    NavigraphStorage.GenerateFileRoute("Taipei City Hall", "Taipei_City_Hall");
-            //}
-            //else if (OptionPicker.SelectedItem.ToString().Trim() == Lab)
-            //{
-            //    NavigraphStorage.GenerateFileRoute("Lab", "Lab");
-            //}
-
             List<string> generateName = _phoneInformation.GiveGenerateMapName(OptionPicker.SelectedItem.ToString().Trim());
 
             NavigraphStorage.GenerateFileRoute(generateName[0],generateName[1]);

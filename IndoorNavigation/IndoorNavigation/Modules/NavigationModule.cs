@@ -62,7 +62,7 @@ namespace IndoorNavigation.Modules
         private Guid _destinationWaypointID;
 
         private EventHandler _navigationResultEventHandler;
-
+        private PhoneInformation _phoneInfomation;
         public NavigationEvent _event { get; private set; }
 
         public NavigationModule(string navigationGraphName,
@@ -70,7 +70,7 @@ namespace IndoorNavigation.Modules
                                 Guid destinationWaypointID)
         {
             _event = new NavigationEvent();
-
+            _phoneInfomation = new PhoneInformation();
             _navigationGraphName = navigationGraphName;
             _destinationRegionID = destinationRegionID;
             _destinationWaypointID = destinationWaypointID;
@@ -106,7 +106,7 @@ namespace IndoorNavigation.Modules
 
             // Start the session
             _session = new Session(
-                    NavigraphStorage.LoadNavigationGraphXML(_navigationGraphName),
+                    NavigraphStorage.LoadNavigationGraphXML(_phoneInfomation.GiveCurrentMapName(_navigationGraphName)),
                     _destinationRegionID,
                     _destinationWaypointID,
                     avoidList.ToArray());

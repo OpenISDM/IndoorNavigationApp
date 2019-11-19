@@ -57,7 +57,7 @@
                    Margin="0,5, 5, 5" Scale="1"/>
             
             
-            <BoxView Grid.Row="7" Grid.ColumnSpan="4" Color="#dcdcdc" VerticalOptions="EndAndExpand"/>
+            <BoxView Grid.Row="7" Grid.ColumnSpan="4" Color="#dcdcdc" VerticalOptions="EndAndExpand" />
             <pb:ProgressBarView Grid.Row="7" Grid.ColumnSpan="4"
                                 Color="Red" Progress="{Binding NavigationProgress}"
                                 LabelShowIntValuesOnly="false" LabelStringFormat=""
