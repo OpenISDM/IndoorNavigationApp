@@ -44,7 +44,6 @@
     <Folder Include="Views\Settings\LicensePages\" />
     <Folder Include="ViewModels\Navigation\" />
     <Folder Include="Modules\Navigation\Dijkstra.NET\" />
-    <Folder Include="Resources\" />
     <Folder Include="Resources\NTUH_YunLin\" />
     <Folder Include="Resources\Taipei_City_Hall\" />
     <Folder Include="Resources\Lab\" />
@@ -92,6 +91,11 @@
     <EmbeddedResource Include="Resources\NTUH_YunLin\NTUH_YunLin_info_en-US.xml" />
     <EmbeddedResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall_info_zh.xml" />
     <EmbeddedResource Include="Resources\Map_Version.xml" />
+    <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital.xml" />
+    <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_en-US.xml" />
+    <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_info_en-US.xml" />
+    <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_info_zh.xml" />
+    <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_zh.xml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Views\PopUpPage\DownloadPopUpPage.xaml">
@@ -108,6 +112,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Resources\AppResources.English" />
+    <None Remove="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital.xml" />
+    <None Remove="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_en-US.xml" />
+    <None Remove="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_Info_en-US.xml" />
+    <None Remove="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_Info_zh.xml" />
+    <None Remove="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_zh.xml" />
     <None Remove="TestingXML.xml" />
     <None Remove="Resources\Lab\Lab.xml" />
     <None Remove="Resources\Lab\Lab_en-US.xml" />
@@ -138,6 +147,8 @@
     </Compile>
     <Compile Update="Resources\AppResources.Designer.cs">
       <DependentUpon>AppResources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Update="Resources\AppResources.zh.Designer.cs">
       <DependentUpon>AppResources.zh.resx</DependentUpon>

@@ -389,6 +389,7 @@ namespace IndoorNavigation.Views.Settings
             var ci = CrossMultilingual.Current.CurrentCultureInfo;
             _chooseMap.Clear();
             _chooseMap.Add(_resourceManager.GetString("TAIPEI_CITY_HALL_STRING", ci));
+            _chooseMap.Add(_resourceManager.GetString("YUANLIN_CHRISTIAN_HOSPITAL_STRING", ci));
             _chooseMap.Add(_resourceManager.GetString("HOSPITAL_NAME_STRING", ci));
             _chooseMap.Add(_resourceManager.GetString("LAB_STRING", ci));
         }
@@ -398,6 +399,8 @@ namespace IndoorNavigation.Views.Settings
             var ci = CrossMultilingual.Current.CurrentCultureInfo;
             string NTUH_YunLin = _resourceManager.GetString("HOSPITAL_NAME_STRING", ci).ToString();
             string Taipei_City_Hall = _resourceManager.GetString("TAIPEI_CITY_HALL_STRING", ci).ToString();
+            string Yuanlin_Christian_Hospital = _resourceManager.GetString("YUANLIN_CHRISTIAN_HOSPITAL_STRING", ci).ToString();
+
             string Lab = _resourceManager.GetString("LAB_STRING", ci).ToString();
             
             if (OptionPicker.SelectedItem.ToString().Trim() == NTUH_YunLin)
@@ -411,6 +414,10 @@ namespace IndoorNavigation.Views.Settings
             else if (OptionPicker.SelectedItem.ToString().Trim() == Lab)
             {
                 NavigraphStorage.GenerateFileRoute(Lab, "Lab");
+            }
+            else if (OptionPicker.SelectedItem.ToString().Trim() == Yuanlin_Christian_Hospital)
+            {
+                NavigraphStorage.GenerateFileRoute(Yuanlin_Christian_Hospital, "Yuanlin_Christian_Hospital");
             }
 
             ReloadNaviGraphItems();

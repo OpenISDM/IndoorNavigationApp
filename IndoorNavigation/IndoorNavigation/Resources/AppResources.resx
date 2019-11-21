@@ -1,500 +1,480 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-    <resheader name="resmimetype">
-        <value>text/microsoft-resx</value>
-    </resheader>
-    <resheader name="version">
-        <value>2.0</value>
-    </resheader>
-    <resheader name="reader">
-        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-    </resheader>
-    <resheader name="writer">
-        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-    </resheader>
-    
-   
-    
-    <!-- Main page -->
-    <data name="HOME_STRING" xml:space="preserve">
-        <value>Home</value>
-    </data>
-    
-    <data name="LOCATION_STRING" xml:space="preserve">
-        <value>Locations</value>
-    </data>
-    
-    <data name="SELECT_LOCATION_STRING" xml:space="preserve">
-        <value>Pick your goal within locations</value>
-    </data>
-    
-    <data name="EDIT_STRING" xml:space="preserve">
-        <value>Edit</value>
-    </data>
-    
-    <!-- Setting page -->
-    <data name="SETTING_STRING" xml:space="preserve">
-        <value>Settings</value>
-    </data>
-    
-    <data name="BEDITECH_STRING" xml:space="preserve">
-        <value>BeDITech Indoor Navigator</value>
-    </data>
-    
-    <data name="DOWNLOAD_QRCODE_MAP_STRING" xml:space="preserve">
-        <value>Download QRCode Map</value>
-    </data>
-    
-    <data name="DOWNLOAD_MAP_STRING" xml:space="preserve">
-        <value>Download Map</value>
-    </data>
-    
-    <data name="DELETE_MAP_STRING" xml:space="preserve">
-        <value>Delete Map</value>
-    </data>
-    
-    <data name="VOICE_TEST_STRING" xml:space="preserve">
-        <value>Voice Test</value>
-    </data>
-    
-    <data name="CHANGE_LANGUAGE_STRING" xml:space="preserve">
-        <value>Change Language</value>
-    </data>
-    
-    <data name="SELECT_LANGUAGE_STRING" xml:space="preserve">
-        <value>Select Language</value>
-    </data>
-    
-    <data name="CHINESE_STRING" xml:space="preserve">
-        <value>Chinese</value>
-    </data>
-    
-    <data name="ENGLISH_STRING" xml:space="preserve">
-        <value>English</value>
-    </data>
-    
-    <data name="LICENSE_AND_PRIVACY_STRING" xml:space="preserve">
-        <value>License and Privacy</value>
-    </data>
-    
-    <data name="LICENSE_STRING" xml:space="preserve">
-        <value>License</value>
-    </data>
-    
-    <data name="PRIVACY_STRING" xml:space="preserve">
-        <value>Privacy</value>
-    </data>
-    
-    <data name="OTHERS_STRING" xml:space="preserve">
-        <value>Others</value>
-    </data>
-    
-    <data name="FEEDBACK_STRING" xml:space="preserve">
-        <value>Feedback</value>
-    </data>
-    
-    <data name="ABOUT_BEDI_STRING" xml:space="preserve">
-        <value>About BeDI Technology Inc.</value>
-    </data>
-    
-    <data name="PREFERENCES_STRING" xml:space="preserve">
-        <value>Preferences</value>
-    </data>
-    
-     <data name="VOICE_SPEAK_STRING" xml:space="preserve">
-        <value>Welcome to use the Indoor Navigation of BeDITech</value>
-    </data>
-    
-    <data name="VOICE_SELECT_STRING" xml:space="preserve">
-        <value>Voice Select</value>
-    </data>
-    
-    <data name="VOICE_SETTING_STRING" xml:space="preserve">
-        <value>Voice Setting</value>
-    </data>
-    
-    <data name="PLAY_VOICE_TEST_STRING" xml:space="preserve">
-        <value>Play voice test</value>
-    </data>
-    
-     <data name="CULTURE_VERSION_STRING" xml:space="preserve">
-        <value>en-US</value>
-    </data>
-    
-    <data name="OK_STRING" xml:space="preserve">
-        <value>OK</value>
-    </data>
-    
-    <data name="CANCEL_STRING" xml:space="preserve">
-        <value>cancel</value>
-    </data>
-    
-    <data name="GO_NAVIGATION_HOME_PAGE_STRING" xml:space="preserve">
-        <value>Go to navigation homepage</value>
-    </data>
-    
-    <data name="GO_SETTING_PAGE_STRING" xml:space="preserve">
-        <value>Go to settings page</value>
-    </data>
-    
-    <data name="DOWNLOAD_NAVIGATION_GRAPH_STRING" xml:space="preserve">
-        <value>You should download navigation graph first</value>
-    </data>
-    
-    <data name="FLASH_STRING" xml:space="preserve">
-        <value>flash</value>
-    </data>
-    
-    <data name="CHOOSE_MAP_STRING" xml:space="preserve">
-        <value>--Please Choose Map--</value>
-    </data>
-    
-    <data name="ALL_STRING" xml:space="preserve">
-        <value>--All--</value>
-    </data>
-    
-    <data name="WARN_STRING" xml:space="preserve">
-        <value>Warning</value>
-    </data>
-    
-    <data name="ASK_IF_CANCEL_ALL_MAP_STRING" xml:space="preserve">
-        <value>Are you sure you want to delete all maps?</value>
-    </data>
-    
-     <data name="ASK_IF_CANCEL_MAP_STRING" xml:space="preserve">
-        <value>Are you sure you want to delete </value>
-    </data>
-    
-    <data name="MESSAGE_STRING" xml:space="preserve">
-        <value>Message</value>
-    </data>
-    
-    <data name="SUCCESSFULLY_DELETE_STRING" xml:space="preserve">
-        <value>Successfully Delete</value>
-    </data>
-      
-    <data name="MAP_STRING" xml:space="preserve">
-        <value>MAP</value>
-    </data>
-    
-     <data name="ERROR_STRING" xml:space="preserve">
-        <value>Error</value>
-    </data>
-    
-    <data name="ERROR_TO_DELETE_STRING" xml:space="preserve">
-        <value>Fail to delete the map</value>
-    </data>
-    
-    <data name="SUCCESSFULLY_DOWNLOAD_MAP_STRING" xml:space="preserve">
-        <value>Successfully download the map</value>
-    </data>
-    
-     <data name="FAILED_DOWNLOAD_MAP_STRING" xml:space="preserve">
-        <value>Failed to download the map</value>
-    </data>
-    
-    <data name="NOTIFY_STRING" xml:space="preserve">
-        <value>Notify</value>
-    </data>
-    
-    <data name="SURE_TO_OPEN_WEBSITE_STRING" xml:space="preserve">
-        <value>Are you sure to open the website?</value>
-    </data>
-    
-    <data name="QRCODE_CONTENT_STRING" xml:space="preserve">
-        <value>Qrcode Content</value>
-    </data>
-    
-     <data name="INPUT_MAP_NAME_STRING" xml:space="preserve">
-        <value>Please enter the map name</value>
-    </data>
-    
-    <data name="MAP_NAME_STRING" xml:space="preserve">
-        <value>Map Name</value>
-    </data>
-    
-    <data name="BACK_STRING" xml:space="preserve">
-        <value>Back</value>
-    </data>
-    
-    <data name="HOSPITAL_NAME_STRING" xml:space="preserve">
-        <value>NTUH Yunlin Branch</value>
-    </data>
-    
-    <data name="TAIPEI_CITY_HALL_STRING" xml:space="preserve">
-        <value>Taipei City Hall</value>
-    </data>
-    
-    <data name="PICK_LOCATION_STRING" xml:space="preserve">
-        <value>【Click picture to select the location】</value>
-    </data>
-    
-    <data name="CATEGORY_CLINICS_STRING" xml:space="preserve">
-        <value>Clinics</value>
-    </data>
-    
-    <data name="CATEGORY_CASHIER_STRING" xml:space="preserve">
-        <value>Cashier</value>
-    </data>
-    
-    <data name="CATEGORY_EXIT_STRING" xml:space="preserve">
-        <value>Exit</value>
-    </data>
-    
-    <data name="CATEGORY_EXAMINATION_ROOM_STRING" xml:space="preserve">
-        <value>Examination Room</value>
-    </data>
-    
-    <data name="CATEGORY_PHARMACY_STRING" xml:space="preserve">
-        <value>Pharmacy</value>
-    </data>
-    
-    <data name="CATEGORY_CONVENIENCE_STORE_STRING" xml:space="preserve">
-        <value>Convenience Store</value>
-    </data>
-    
-    <data name="CATEGORY_OTHERS_STRING" xml:space="preserve">
-        <value>Others</value>
-    </data>
-    
-    <data name="CATEGORY_BATH_ROOM_STRING" xml:space="preserve">
-        <value>Bath Room</value>
-    </data>
-    
-    <data name="CATEGORY_BLOOD_COLLECTION_STRING" xml:space="preserve">
-        <value>Blood Collection Counter</value>
-    </data>
-    
-    <data name="CATEGORY_ELEVATOR_STRING" xml:space="preserve">
-        <value>Elevator</value>
-    </data>
-    
-    <data name="CATEGORY_PARKING_STRING" xml:space="preserve">
-        <value>Parking</value>
-    </data>
-    
-    <data name="CATEGORY_OFFICE_STRING" xml:space="preserve">
-        <value>Office</value>
-    </data>
-    
-    <data name="CATEGORY_CONFERENCE_ROOM_STRING" xml:space="preserve">
-        <value>Conference Room</value>
-    </data>
-    
-    <data name="CATEGORY_STAIR_STRING" xml:space="preserve">
-        <value>Stair</value>
-    </data>
-    
-    <data name="PICK_DESTINATION_STRING" xml:space="preserve">
-        <value>Pick Destination</value>
-    </data>
-    
-    <data name="ROUTE_OPTION_STRING" xml:space="preserve">
-        <value>Route Option</value>
-    </data>
-    
-    <data name="AVOID_STAIR_STRING" xml:space="preserve">
-        <value>Avoid Stair</value>
-    </data>
-    
-     <data name="AVOID_ELEVATOR_STRING" xml:space="preserve">
-        <value>Avoid Elevator</value>
-    </data>
-    
-    <data name="AVOID_ESCALATOR_STRING" xml:space="preserve">
-        <value>Avoid Escalator</value>
-    </data>
-    
-    <data name="AVOID_ALL_CONNECTION_TYPE_STRING" xml:space="preserve">
-        <value>Unable to avoid all connection types</value>
-    </data>
-    
-    <data name="DESTINATION_STRING" xml:space="preserve">
-        <value>Goal : </value>
-    </data>
-    
-    <data name="CURRENT_LOCATION_STRING" xml:space="preserve">
-        <value>Current: </value>
-    </data>
-    
-    <data name="DIRECTION_INITIAIL_FACE_STRING" xml:space="preserve">
-        <value>Face to {0}{1}then {2}{3} And go straight about {4}m </value>
-    </data>
-    
-    <data name="DIRECTION_INITIAIL_BACK_STRING" xml:space="preserve">
-        <value>Back to {0}{1}then {2}{3} And go straight about {4}m </value>
-    </data>
-    
-    <data name="DIRECTION_INITIAIL_CROSS_REGION_STRING" xml:space="preserve">
-        <value>{0}{1}And Go Straight {2} About {3}m</value>
-    </data>
-    
-    <data name="DIRECTION_STRAIGHT_STRING" xml:space="preserve">
-        <value>Continue to go straight </value>
-    </data>
-  
-    <data name="DIRECTION_RIGHT_FRONT_STRING" xml:space="preserve">
-        <value>Turn right front{0} and go straight about{1}m </value>
-    </data>
-    
-    <data name="DIRECTION_RIGHT_STRING" xml:space="preserve">
-        <value>Turn right {0} and go straight about{1}m </value>
-    </data>
-    
-    <data name="DIRECTION_RIGHT_REAR_STRING" xml:space="preserve">
-        <value>Turn right rear{0} and go straight about{1}m </value>
-    </data>
-    
-    <data name="DIRECTION_REAR_STRING" xml:space="preserve">
-        <value>Turn back{0} and go straight about{1}m </value>
-    </data>
-    
-    <data name="DIRECTION_LEFT_REAR_STRING" xml:space="preserve">
-        <value>Turn left rear{0} and go straight about{1}m </value>
-    </data>
-    
-    <data name="DIRECTION_LEFT_STRING" xml:space="preserve">
-        <value>Turn left{0} and go straight about{1}m </value>
-    </data>
-    
-     <data name="DIRECTION_LEFT_FRONT_STRING" xml:space="preserve">
-        <value>Turn left front{0} and go straight about{1}m </value>
-    </data>
-    
-    <data name="DIRECTION_UP_STRING" xml:space="preserve">
-        <value>Take {0} go upstairs to{1}{2} </value>
-    </data>
-    
-    <data name="DIRECTION_DOWN_STRING" xml:space="preserve">
-        <value>Take {0} go downstairs to{1}{2} </value>
-    </data>
-    
-    <data name="DIRECTION_WRONG_WAY_STRING" xml:space="preserve">
-        <value>You have gone the wrong way!</value>
-    </data>
-    
-    <data name="DIRECTION_ARRIVED_STRING" xml:space="preserve">
-        <value>You have arrived the destination.</value>
-    </data>
-    
-    <data name="NULL_STRING" xml:space="preserve">
-        <value>Null </value>
-    </data>
-    
-     <data name="PICK_DESTINATION_STRING" xml:space="preserve">
-        <value>Pick Destination </value>
-    </data>
-    
-    <data name="PICK_REGION_STRING" xml:space="preserve">
-        <value>Pick Region </value>
-    </data>
-    
-    <data name="FLOOR_STRING" xml:space="preserve">
-        <value>Floor </value>
-    </data>
-    
-    <data name="PLEASE_CHECK_INTERNET_STRING" xml:space="preserve">
-        <value>Please check your Internet </value>
-    </data>
-    
-    <data name="PLEASE_ADJUST_AVOID_ROUTE_STRING" xml:space="preserve">
-        <value>Please adjust avoid route type </value>
-    </data>
-    
-    <data name="RSSI_OPTION_STRING" xml:space="preserve">
-        <value>Rssi Option </value>
-    </data>
-    
-    <data name="STRONG_STRING" xml:space="preserve">
-        <value>Strong </value>
-    </data>
-    
-    <data name="MEDIUM_STRING" xml:space="preserve">
-        <value>Medium </value>
-    </data>
-    
-    <data name="WEAK_STRING" xml:space="preserve">
-        <value>Weak </value>
-    </data>
-    
-    <data name="PLEASE_CONTROL_RSSI_OPTION_STRING" xml:space="preserve">
-        <value>Please just open one option</value>
-    </data>
-    
-    <data name="GO_STRAIGHT_STRING" xml:space="preserve">
-        <value>Go Straight</value>
-    </data>
-    
-    <data name="TURN_RIGHT_STRING" xml:space="preserve">
-        <value>Turn Right</value>
-    </data>
-    
-    <data name="TURN_LEFT_STRING" xml:space="preserve">
-        <value>Turn Left</value>
-    </data>
-    
-    <data name="TURN_BACK_STRING" xml:space="preserve">
-        <value>Turn Back</value>
-    </data>
-    
-    <data name="TURN_RIGHT_FRONT_STRING" xml:space="preserve">
-        <value>Turn Right Front</value>
-    </data>
-    
-    <data name="TURN_RIGHT_REAR_STRING" xml:space="preserve">
-        <value>Turn Right Rear</value>
-    </data>
-    
-    <data name="TURN_LEFT_FRONT_STRING" xml:space="preserve">
-        <value>Turn Left Front</value>
-    </data>
-    
-    <data name="TURN_LEFT_REAR_STRING" xml:space="preserve">
-        <value>Turn Left Rear</value>
-    </data>
-    
-    <data name="LAB_STRING" xml:space="preserve">
-        <value>Lab</value>
-    </data>
-    
-    <data name="ELEVATOR_STRING" xml:space="preserve">
-        <value>Elevator</value>
-    </data>
-    
-    <data name="STAIR_STRING" xml:space="preserve">
-        <value>Stair</value>
-    </data>
-    
-    <data name="ESCALATOR_STRING" xml:space="preserve">
-        <value>Escalator</value>
-    </data>
-    
-    <data name="NORMALHALLWAY_STRING" xml:space="preserve">
-        <value>NormalHallway</value>
-    </data>
-    
-    <data name="PICTURE_DIRECTION_STRING" xml:space="preserve">
-        <value>Picture's Direction</value>
-    </data>
-    
-    <data name="NO_SIGNAL_STRING" xml:space="preserve">
-        <value>Please go to any intersection</value>
-    </data>
-    
-     <data name="DIRECTION_ARRIVED_VIRTUAL_STRING" xml:space="preserve">
-        <value>{0}{1}to destination</value>
-    </data>
-    
-    <data name="VERSION_STRING" xml:space="preserve">
-        <value>Version</value>
-    </data>
-    
-    <data name="CURRENT_VERSION_STRING" xml:space="preserve">
-        <value>1.0</value>
-    </data>
-    
-    <data name="UPDATE_MAP_STRING" xml:space="preserve">
-        <value>Press OK to update Map</value>
-    </data>
-    
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="HOME_STRING" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="LOCATION_STRING" xml:space="preserve">
+    <value>Locations</value>
+  </data>
+  <data name="SELECT_LOCATION_STRING" xml:space="preserve">
+    <value>Pick your goal within locations</value>
+  </data>
+  <data name="EDIT_STRING" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="SETTING_STRING" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="BEDITECH_STRING" xml:space="preserve">
+    <value>BeDITech Indoor Navigator</value>
+  </data>
+  <data name="DOWNLOAD_QRCODE_MAP_STRING" xml:space="preserve">
+    <value>Download QRCode Map</value>
+  </data>
+  <data name="DOWNLOAD_MAP_STRING" xml:space="preserve">
+    <value>Download Map</value>
+  </data>
+  <data name="DELETE_MAP_STRING" xml:space="preserve">
+    <value>Delete Map</value>
+  </data>
+  <data name="VOICE_TEST_STRING" xml:space="preserve">
+    <value>Voice Test</value>
+  </data>
+  <data name="CHANGE_LANGUAGE_STRING" xml:space="preserve">
+    <value>Change Language</value>
+  </data>
+  <data name="SELECT_LANGUAGE_STRING" xml:space="preserve">
+    <value>Select Language</value>
+  </data>
+  <data name="CHINESE_STRING" xml:space="preserve">
+    <value>Chinese</value>
+  </data>
+  <data name="ENGLISH_STRING" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="LICENSE_AND_PRIVACY_STRING" xml:space="preserve">
+    <value>License and Privacy</value>
+  </data>
+  <data name="LICENSE_STRING" xml:space="preserve">
+    <value>License</value>
+  </data>
+  <data name="PRIVACY_STRING" xml:space="preserve">
+    <value>Privacy</value>
+  </data>
+  <data name="OTHERS_STRING" xml:space="preserve">
+    <value>Others</value>
+  </data>
+  <data name="FEEDBACK_STRING" xml:space="preserve">
+    <value>Feedback</value>
+  </data>
+  <data name="ABOUT_BEDI_STRING" xml:space="preserve">
+    <value>About BeDI Technology Inc.</value>
+  </data>
+  <data name="PREFERENCES_STRING" xml:space="preserve">
+    <value>Preferences</value>
+  </data>
+  <data name="VOICE_SPEAK_STRING" xml:space="preserve">
+    <value>Welcome to use the Indoor Navigation of BeDITech</value>
+  </data>
+  <data name="VOICE_SELECT_STRING" xml:space="preserve">
+    <value>Voice Select</value>
+  </data>
+  <data name="VOICE_SETTING_STRING" xml:space="preserve">
+    <value>Voice Setting</value>
+  </data>
+  <data name="PLAY_VOICE_TEST_STRING" xml:space="preserve">
+    <value>Play voice test</value>
+  </data>
+  <data name="CULTURE_VERSION_STRING" xml:space="preserve">
+    <value>en-US</value>
+  </data>
+  <data name="OK_STRING" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="CANCEL_STRING" xml:space="preserve">
+    <value>cancel</value>
+  </data>
+  <data name="GO_NAVIGATION_HOME_PAGE_STRING" xml:space="preserve">
+    <value>Go to navigation homepage</value>
+  </data>
+  <data name="GO_SETTING_PAGE_STRING" xml:space="preserve">
+    <value>Go to settings page</value>
+  </data>
+  <data name="DOWNLOAD_NAVIGATION_GRAPH_STRING" xml:space="preserve">
+    <value>You should download navigation graph first</value>
+  </data>
+  <data name="FLASH_STRING" xml:space="preserve">
+    <value>flash</value>
+  </data>
+  <data name="CHOOSE_MAP_STRING" xml:space="preserve">
+    <value>--Please Choose Map--</value>
+  </data>
+  <data name="ALL_STRING" xml:space="preserve">
+    <value>--All--</value>
+  </data>
+  <data name="WARN_STRING" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="ASK_IF_CANCEL_ALL_MAP_STRING" xml:space="preserve">
+    <value>Are you sure you want to delete all maps?</value>
+  </data>
+  <data name="ASK_IF_CANCEL_MAP_STRING" xml:space="preserve">
+    <value>Are you sure you want to delete </value>
+  </data>
+  <data name="MESSAGE_STRING" xml:space="preserve">
+    <value>Message</value>
+  </data>
+  <data name="SUCCESSFULLY_DELETE_STRING" xml:space="preserve">
+    <value>Successfully Delete</value>
+  </data>
+  <data name="MAP_STRING" xml:space="preserve">
+    <value>MAP</value>
+  </data>
+  <data name="ERROR_STRING" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="ERROR_TO_DELETE_STRING" xml:space="preserve">
+    <value>Fail to delete the map</value>
+  </data>
+  <data name="SUCCESSFULLY_DOWNLOAD_MAP_STRING" xml:space="preserve">
+    <value>Successfully download the map</value>
+  </data>
+  <data name="FAILED_DOWNLOAD_MAP_STRING" xml:space="preserve">
+    <value>Failed to download the map</value>
+  </data>
+  <data name="NOTIFY_STRING" xml:space="preserve">
+    <value>Notify</value>
+  </data>
+  <data name="SURE_TO_OPEN_WEBSITE_STRING" xml:space="preserve">
+    <value>Are you sure to open the website?</value>
+  </data>
+  <data name="QRCODE_CONTENT_STRING" xml:space="preserve">
+    <value>Qrcode Content</value>
+  </data>
+  <data name="INPUT_MAP_NAME_STRING" xml:space="preserve">
+    <value>Please enter the map name</value>
+  </data>
+  <data name="MAP_NAME_STRING" xml:space="preserve">
+    <value>Map Name</value>
+  </data>
+  <data name="BACK_STRING" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="HOSPITAL_NAME_STRING" xml:space="preserve">
+    <value>NTUH Yunlin Branch</value>
+  </data>
+  <data name="TAIPEI_CITY_HALL_STRING" xml:space="preserve">
+    <value>Taipei City Hall</value>
+  </data>
+  <data name="PICK_LOCATION_STRING" xml:space="preserve">
+    <value>【Click picture to select the location】</value>
+  </data>
+  <data name="CATEGORY_CLINICS_STRING" xml:space="preserve">
+    <value>Clinics</value>
+  </data>
+  <data name="CATEGORY_CASHIER_STRING" xml:space="preserve">
+    <value>Cashier</value>
+  </data>
+  <data name="CATEGORY_EXIT_STRING" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="CATEGORY_EXAMINATION_ROOM_STRING" xml:space="preserve">
+    <value>Examination Room</value>
+  </data>
+  <data name="CATEGORY_PHARMACY_STRING" xml:space="preserve">
+    <value>Pharmacy</value>
+  </data>
+  <data name="CATEGORY_CONVENIENCE_STORE_STRING" xml:space="preserve">
+    <value>Convenience Store</value>
+  </data>
+  <data name="CATEGORY_OTHERS_STRING" xml:space="preserve">
+    <value>Others</value>
+  </data>
+  <data name="CATEGORY_BATH_ROOM_STRING" xml:space="preserve">
+    <value>Bath Room</value>
+  </data>
+  <data name="CATEGORY_BLOOD_COLLECTION_STRING" xml:space="preserve">
+    <value>Blood Collection Counter</value>
+  </data>
+  <data name="CATEGORY_ELEVATOR_STRING" xml:space="preserve">
+    <value>Elevator</value>
+  </data>
+  <data name="CATEGORY_PARKING_STRING" xml:space="preserve">
+    <value>Parking</value>
+  </data>
+  <data name="CATEGORY_OFFICE_STRING" xml:space="preserve">
+    <value>Office</value>
+  </data>
+  <data name="CATEGORY_CONFERENCE_ROOM_STRING" xml:space="preserve">
+    <value>Conference Room</value>
+  </data>
+  <data name="CATEGORY_STAIR_STRING" xml:space="preserve">
+    <value>Stair</value>
+  </data>
+  <data name="PICK_DESTINATION_STRING" xml:space="preserve">
+    <value>Pick Destination </value>
+  </data>
+  <data name="ROUTE_OPTION_STRING" xml:space="preserve">
+    <value>Route Option</value>
+  </data>
+  <data name="AVOID_STAIR_STRING" xml:space="preserve">
+    <value>Avoid Stair</value>
+  </data>
+  <data name="AVOID_ELEVATOR_STRING" xml:space="preserve">
+    <value>Avoid Elevator</value>
+  </data>
+  <data name="AVOID_ESCALATOR_STRING" xml:space="preserve">
+    <value>Avoid Escalator</value>
+  </data>
+  <data name="AVOID_ALL_CONNECTION_TYPE_STRING" xml:space="preserve">
+    <value>Unable to avoid all connection types</value>
+  </data>
+  <data name="DESTINATION_STRING" xml:space="preserve">
+    <value>Goal : </value>
+  </data>
+  <data name="CURRENT_LOCATION_STRING" xml:space="preserve">
+    <value>Current: </value>
+  </data>
+  <data name="DIRECTION_INITIAIL_FACE_STRING" xml:space="preserve">
+    <value>Face to {0}{1}then {2}{3} And go straight about {4}m </value>
+  </data>
+  <data name="DIRECTION_INITIAIL_BACK_STRING" xml:space="preserve">
+    <value>Back to {0}{1}then {2}{3} And go straight about {4}m </value>
+  </data>
+  <data name="DIRECTION_INITIAIL_CROSS_REGION_STRING" xml:space="preserve">
+    <value>{0}{1}And Go Straight {2} About {3}m</value>
+  </data>
+  <data name="DIRECTION_STRAIGHT_STRING" xml:space="preserve">
+    <value>Continue to go straight </value>
+  </data>
+  <data name="DIRECTION_RIGHT_FRONT_STRING" xml:space="preserve">
+    <value>Turn right front{0} and go straight about{1}m </value>
+  </data>
+  <data name="DIRECTION_RIGHT_STRING" xml:space="preserve">
+    <value>Turn right {0} and go straight about{1}m </value>
+  </data>
+  <data name="DIRECTION_RIGHT_REAR_STRING" xml:space="preserve">
+    <value>Turn right rear{0} and go straight about{1}m </value>
+  </data>
+  <data name="DIRECTION_REAR_STRING" xml:space="preserve">
+    <value>Turn back{0} and go straight about{1}m </value>
+  </data>
+  <data name="DIRECTION_LEFT_REAR_STRING" xml:space="preserve">
+    <value>Turn left rear{0} and go straight about{1}m </value>
+  </data>
+  <data name="DIRECTION_LEFT_STRING" xml:space="preserve">
+    <value>Turn left{0} and go straight about{1}m </value>
+  </data>
+  <data name="DIRECTION_LEFT_FRONT_STRING" xml:space="preserve">
+    <value>Turn left front{0} and go straight about{1}m </value>
+  </data>
+  <data name="DIRECTION_UP_STRING" xml:space="preserve">
+    <value>Take {0} go upstairs to{1}{2} </value>
+  </data>
+  <data name="DIRECTION_DOWN_STRING" xml:space="preserve">
+    <value>Take {0} go downstairs to{1}{2} </value>
+  </data>
+  <data name="DIRECTION_WRONG_WAY_STRING" xml:space="preserve">
+    <value>You have gone the wrong way!</value>
+  </data>
+  <data name="DIRECTION_ARRIVED_STRING" xml:space="preserve">
+    <value>You have arrived the destination.</value>
+  </data>
+  <data name="NULL_STRING" xml:space="preserve">
+    <value>Null </value>
+  </data>
+  <data name="PICK_REGION_STRING" xml:space="preserve">
+    <value>Pick Region </value>
+  </data>
+  <data name="FLOOR_STRING" xml:space="preserve">
+    <value>Floor </value>
+  </data>
+  <data name="PLEASE_CHECK_INTERNET_STRING" xml:space="preserve">
+    <value>Please check your Internet </value>
+  </data>
+  <data name="PLEASE_ADJUST_AVOID_ROUTE_STRING" xml:space="preserve">
+    <value>Please adjust avoid route type </value>
+  </data>
+  <data name="RSSI_OPTION_STRING" xml:space="preserve">
+    <value>Rssi Option </value>
+  </data>
+  <data name="STRONG_STRING" xml:space="preserve">
+    <value>Strong </value>
+  </data>
+  <data name="MEDIUM_STRING" xml:space="preserve">
+    <value>Medium </value>
+  </data>
+  <data name="WEAK_STRING" xml:space="preserve">
+    <value>Weak </value>
+  </data>
+  <data name="PLEASE_CONTROL_RSSI_OPTION_STRING" xml:space="preserve">
+    <value>Please just open one option</value>
+  </data>
+  <data name="GO_STRAIGHT_STRING" xml:space="preserve">
+    <value>Go Straight</value>
+  </data>
+  <data name="TURN_RIGHT_STRING" xml:space="preserve">
+    <value>Turn Right</value>
+  </data>
+  <data name="TURN_LEFT_STRING" xml:space="preserve">
+    <value>Turn Left</value>
+  </data>
+  <data name="TURN_BACK_STRING" xml:space="preserve">
+    <value>Turn Back</value>
+  </data>
+  <data name="TURN_RIGHT_FRONT_STRING" xml:space="preserve">
+    <value>Turn Right Front</value>
+  </data>
+  <data name="TURN_RIGHT_REAR_STRING" xml:space="preserve">
+    <value>Turn Right Rear</value>
+  </data>
+  <data name="TURN_LEFT_FRONT_STRING" xml:space="preserve">
+    <value>Turn Left Front</value>
+  </data>
+  <data name="TURN_LEFT_REAR_STRING" xml:space="preserve">
+    <value>Turn Left Rear</value>
+  </data>
+  <data name="LAB_STRING" xml:space="preserve">
+    <value>Lab</value>
+  </data>
+  <data name="ELEVATOR_STRING" xml:space="preserve">
+    <value>Elevator</value>
+  </data>
+  <data name="STAIR_STRING" xml:space="preserve">
+    <value>Stair</value>
+  </data>
+  <data name="ESCALATOR_STRING" xml:space="preserve">
+    <value>Escalator</value>
+  </data>
+  <data name="NORMALHALLWAY_STRING" xml:space="preserve">
+    <value>NormalHallway</value>
+  </data>
+  <data name="PICTURE_DIRECTION_STRING" xml:space="preserve">
+    <value>Picture's Direction</value>
+  </data>
+  <data name="NO_SIGNAL_STRING" xml:space="preserve">
+    <value>Please go to any intersection</value>
+  </data>
+  <data name="DIRECTION_ARRIVED_VIRTUAL_STRING" xml:space="preserve">
+    <value>{0}{1}to destination</value>
+  </data>
+  <data name="VERSION_STRING" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="CURRENT_VERSION_STRING" xml:space="preserve">
+    <value>1.0</value>
+  </data>
+  <data name="UPDATE_MAP_STRING" xml:space="preserve">
+    <value>Press OK to update Map</value>
+  </data>
+  <data name="YUANLIN_CHRISTIAN_HOSPITAL_STRING" xml:space="preserve">
+    <value>Yuanlin_Christian_Hospital</value>
+  </data>
 </root>

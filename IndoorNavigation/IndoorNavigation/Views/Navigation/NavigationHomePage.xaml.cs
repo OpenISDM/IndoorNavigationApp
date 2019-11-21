@@ -45,33 +45,35 @@
  */
 using System;
 using Xamarin.Forms;
+using MvvmHelpers;
 using Xamarin.Forms.Xaml;
 using IndoorNavigation.Models.NavigaionLayer;
 using Plugin.Multilingual;
 using System.Resources;
 using IndoorNavigation.Resources.Helpers;
 using System.Reflection;
-
+using System.Collections.ObjectModel;
+using System.Collections;
 
 namespace IndoorNavigation.Views.Navigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class NavigationHomePage : ContentPage
     {
-		const string _resourceId = "IndoorNavigation.Resources.AppResources";
-		ResourceManager _resourceManager =
-			new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
-
-		private string _navigationGraphName;
-
+        const string _resourceId = "IndoorNavigation.Resources.AppResources";
+        ResourceManager _resourceManager =
+            new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+        private string _navigationGraphName;
+        public string myProperty { get; } = "";
         public NavigationHomePage(string navigationGraphName)
         {
             InitializeComponent();
-			var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-			this._navigationGraphName = navigationGraphName;
-
+            
+            var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+            myProperty = navigationGraphName;
+            BindingContext = this;
+            this._navigationGraphName = navigationGraphName;
             NavigationPage.SetBackButtonTitle(this, _resourceManager.GetString("BACK_STRING", currentLanguage));
-
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#3F51B5");
             ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
 
@@ -91,8 +93,9 @@ namespace IndoorNavigation.Views.Navigation
                 default:
                     break;
             }
+            
         }
-
+    
         protected override void OnAppearing()
         {
             base.OnAppearing();
@@ -105,55 +108,55 @@ namespace IndoorNavigation.Views.Navigation
 
         async void ClinicList_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName, 
+            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName,
                                                                CategoryType.Clinics));
         }
 
         async void Cashier_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName, 
+            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName,
                                                                CategoryType.Cashier));
         }
 
         async void ExitList_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName, 
+            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName,
                                                                CategoryType.Exit));
         }
 
         async void ExaminationRoomList_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName, 
+            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName,
                                                                CategoryType.ExaminationRoom));
         }
 
         async void Pharmacy_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName, 
+            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName,
                                                                CategoryType.Pharmacy));
         }
 
         async void ConvenienceStore_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName, 
+            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName,
                                                                CategoryType.ConvenienceStore));
         }
 
         async void OthersList_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName, 
+            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName,
                                                                CategoryType.Others));
         }
 
         async void BathroomList_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName, 
+            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName,
                                                                CategoryType.Bathroom));
         }
 
         async void BloodCollectionCounter_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName, 
+            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName,
                                                                CategoryType.BloodCollectionCounter));
         }
     }

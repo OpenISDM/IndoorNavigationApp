@@ -1,500 +1,480 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-    <resheader name="resmimetype">
-        <value>text/microsoft-resx</value>
-    </resheader>
-    <resheader name="version">
-        <value>2.0</value>
-    </resheader>
-    <resheader name="reader">
-        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-    </resheader>
-    <resheader name="writer">
-        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-    </resheader>
-    
-  
-    
-    <!-- Main page -->
-    <data name="HOME_STRING" xml:space="preserve">
-        <value>首頁</value>
-    </data>
-    
-    <data name="LOCATION_STRING" xml:space="preserve">
-        <value>地點</value>
-    </data>
-    
-    <data name="SELECT_LOCATION_STRING" xml:space="preserve">
-        <value>請選擇您要導航的地點</value>
-    </data>
-    
-    <data name="EDIT_STRING" xml:space="preserve">
-        <value>編輯</value>
-    </data>
-    
-    <!-- Setting page -->
-    <data name="SETTING_STRING" xml:space="preserve">
-        <value>設定</value>
-    </data>
-    
-    <data name="BEDITECH_STRING" xml:space="preserve">
-        <value>畢迪科技室內導航</value>
-    </data>
-    
-    <data name="DOWNLOAD_QRCODE_MAP_STRING" xml:space="preserve">
-        <value>下載QRCode圖資</value>
-    </data>
-    
-    <data name="DOWNLOAD_MAP_STRING" xml:space="preserve">
-        <value>下載地圖資訊</value>
-    </data>
-    
-    <data name="DELETE_MAP_STRING" xml:space="preserve">
-        <value>刪除圖資</value>
-    </data>
-    
-    <data name="VOICE_TEST_STRING" xml:space="preserve">
-        <value>語音測試</value>
-    </data>
-    
-    <data name="PLAY_VOICE_TEST_STRING" xml:space="preserve">
-        <value>播放語音測試</value>
-    </data>
-    
-    <data name="VOICE_SELECT_STRING" xml:space="preserve">
-        <value>語音選擇</value>
-    </data>
-    
-    <data name="VOICE_SETTING_STRING" xml:space="preserve">
-        <value>語音設定</value>
-    </data>
-    
-    <data name="CHANGE_LANGUAGE_STRING" xml:space="preserve">
-        <value>更改語言</value>
-    </data>
-    
-    <data name="SELECT_LANGUAGE_STRING" xml:space="preserve">
-        <value>選擇語言</value>
-    </data>
-    
-    <data name="CHINESE_STRING" xml:space="preserve">
-        <value>中文</value>
-    </data>
-    
-    <data name="ENGLISH_STRING" xml:space="preserve">
-        <value>英文</value>
-    </data>
-    
-    <data name="LICENSE_AND_PRIVACY_STRING" xml:space="preserve">
-        <value>版權以及隱私權</value>
-    </data>
-    
-    <data name="LICENSE_STRING" xml:space="preserve">
-        <value>版權聲明</value>
-    </data>
-    
-    <data name="PRIVACY_STRING" xml:space="preserve">
-        <value>隱私權保護政策</value>
-    </data>
-    
-    <data name="OTHERS_STRING" xml:space="preserve">
-        <value>其他</value>
-    </data>
-    
-    <data name="FEEDBACK_STRING" xml:space="preserve">
-        <value>意見回饋</value>
-    </data>
-    
-    <data name="ABOUT_BEDI_STRING" xml:space="preserve">
-        <value>關於畢迪科技股份有限公司</value>
-    </data>
-    
-    <data name="PREFERENCES_STRING" xml:space="preserve">
-        <value>偏好設定</value>
-    </data>
-    
-     <data name="VOICE_SPEAK_STRING" xml:space="preserve">
-        <value>歡迎使用畢迪科技室內導航</value>
-    </data>
-    
-      <data name="CULTURE_VERSION_STRING" xml:space="preserve">
-        <value>zh-TW</value>
-    </data>
-    
-    <data name="OK_STRING" xml:space="preserve">
-        <value>確定</value>
-    </data>
-    
-    <data name="CANCEL_STRING" xml:space="preserve">
-        <value>取消</value>
-    </data>
-    
-    <data name="GO_NAVIGATION_HOME_PAGE_STRING" xml:space="preserve">
-        <value>前往導航頁面</value>
-    </data>
-    
-    <data name="GO_SETTING_PAGE_STRING" xml:space="preserve">
-        <value>前往設定頁面</value>
-    </data>
-    
-    <data name="DOWNLOAD_NAVIGATION_GRAPH_STRING" xml:space="preserve">
-        <value>您需要先下載地圖資訊</value>
-    </data>
-    
-    <data name="FLASH_STRING" xml:space="preserve">
-        <value>打光</value>
-    </data>
-    
-    <data name="CHOOSE_MAP_STRING" xml:space="preserve">
-        <value>--請選擇圖資--</value>
-    </data>
-    
-     <data name="ALL_STRING" xml:space="preserve">
-        <value>--全部--</value>
-    </data>
-    
-    <data name="WARN_STRING" xml:space="preserve">
-        <value>警告</value>
-    </data>
-    
-    <data name="ASK_IF_CANCEL_ALL_MAP_STRING" xml:space="preserve">
-        <value>確定要刪除所有地圖嗎</value>
-    </data>
-    
-    <data name="ASK_IF_CANCEL_MAP_STRING" xml:space="preserve">
-        <value>確定要刪除</value>
-    </data>
-    
-    <data name="MESSAGE_STRING" xml:space="preserve">
-        <value>訊息</value>
-    </data>
-    
-    <data name="SUCCESSFULLY_DELETE_STRING" xml:space="preserve">
-        <value>刪除成功</value>
-    </data>
-    
-    <data name="MAP_STRING" xml:space="preserve">
-        <value>地圖</value>
-    </data>
-    
-     <data name="ERROR_STRING" xml:space="preserve">
-        <value>錯誤</value>
-    </data>
-    
-    <data name="ERROR_TO_DELETE_STRING" xml:space="preserve">
-        <value>刪除地圖時發生錯誤</value>
-    </data>
-    
-     <data name="SUCCESSFULLY_DOWNLOAD_MAP_STRING" xml:space="preserve">
-        <value>地圖下載完成</value>
-    </data>
-    
-    <data name="FAILED_DOWNLOAD_MAP_STRING" xml:space="preserve">
-        <value>地圖下載失敗</value>
-    </data>
-    
-    <data name="NOTIFY_STRING" xml:space="preserve">
-        <value>通知</value>
-    </data>
-    
-    <data name="SURE_TO_OPEN_WEBSITE_STRING" xml:space="preserve">
-        <value>確定要開啟網頁嗎</value>
-    </data>
-    
-    <data name="QRCODE_CONTENT_STRING" xml:space="preserve">
-        <value>Qrcode內容</value>
-    </data>
-    
-    <data name="INPUT_MAP_NAME_STRING" xml:space="preserve">
-        <value>請輸入地圖名稱</value>
-    </data>
-    
-    <data name="MAP_NAME_STRING" xml:space="preserve">
-        <value>地圖名稱</value>
-    </data>
-    
-    <data name="BACK_STRING" xml:space="preserve">
-        <value>返回</value>
-    </data>
-    
-    <data name="HOSPITAL_NAME_STRING" xml:space="preserve">
-        <value>台大醫院雲林分院</value>
-    </data>
-    
-    <data name="TAIPEI_CITY_HALL_STRING" xml:space="preserve">
-        <value>台北市政府</value>
-    </data>
-    
-    <data name="PICK_LOCATION_STRING" xml:space="preserve">
-        <value>【點選要去的地點】</value>
-    </data>
-    
-    <data name="CATEGORY_CLINICS_STRING" xml:space="preserve">
-        <value>各科門診</value>
-    </data>
-    
-    <data name="CATEGORY_CASHIER_STRING" xml:space="preserve">
-        <value>批價櫃台</value>
-    </data>
-    
-    <data name="CATEGORY_EXIT_STRING" xml:space="preserve">
-        <value>出口</value>
-    </data>
-    
-    <data name="CATEGORY_EXAMINATION_ROOM_STRING" xml:space="preserve">
-        <value>檢查室</value>
-    </data>
-    
-    <data name="CATEGORY_PHARMACY_STRING" xml:space="preserve">
-        <value>領藥</value>
-    </data>
-    
-    <data name="CATEGORY_CONVENIENCE_STORE_STRING" xml:space="preserve">
-        <value>便利商店</value>
-    </data>
-    
-    <data name="CATEGORY_OTHERS_STRING" xml:space="preserve">
-        <value>其他</value>
-    </data>
-    
-    <data name="CATEGORY_BATH_ROOM_STRING" xml:space="preserve">
-        <value>廁所</value>
-    </data>
-    
-    <data name="CATEGORY_BLOOD_COLLECTION_STRING" xml:space="preserve">
-        <value>抽血處</value>
-    </data>
-    
-    <data name="CATEGORY_ELEVATOR_STRING" xml:space="preserve">
-        <value>電梯</value>
-    </data>
-    
-    <data name="CATEGORY_PARKING_STRING" xml:space="preserve">
-        <value>停車場</value>
-    </data>
-    
-    <data name="CATEGORY_OFFICE_STRING" xml:space="preserve">
-        <value>各局處</value>
-    </data>
-    
-    <data name="CATEGORY_CONFERENCE_ROOM_STRING" xml:space="preserve">
-        <value>會議室</value>
-    </data>
-    
-    <data name="CATEGORY_STAIR_STRING" xml:space="preserve">
-        <value>樓梯</value>
-    </data>
-    
-    <data name="PICK_DESTINATION_STRING" xml:space="preserve">
-        <value>挑選目的地</value>
-    </data>
-    
-     <data name="ROUTE_OPTION_STRING" xml:space="preserve">
-        <value>路線選項</value>
-    </data>
-    
-    <data name="AVOID_STAIR_STRING" xml:space="preserve">
-        <value>避開樓梯</value>
-    </data>
-    
-    <data name="AVOID_ELEVATOR_STRING" xml:space="preserve">
-        <value>避開電梯</value>
-    </data>
-    
-    <data name="AVOID_ESCALATOR_STRING" xml:space="preserve">
-        <value>避開手扶梯</value>
-    </data>
-    
-    <data name="AVOID_ALL_CONNECTION_TYPE_STRING" xml:space="preserve">
-        <value>無法避開所有路線選項</value>
-    </data>
-    
-    <data name="DESTINATION_STRING" xml:space="preserve">
-        <value>目的地 : </value>
-    </data>
-    
-     <data name="CURRENT_LOCATION_STRING" xml:space="preserve">
-        <value>目前位置 : </value>
-    </data>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
 
-    <data name="DIRECTION_INITIAIL_FACE_STRING" xml:space="preserve">
-        <value>面向{0}{1}然後{2}{3}直走約{4}公尺</value>
-    </data>
-    
-    <data name="DIRECTION_INITIAIL_BACK_STRING" xml:space="preserve">
-        <value>背向{0}{1}然後{2}{3}直走約{4}公尺</value>
-    </data>
-    
-    <data name="DIRECTION_INITIAIL_CROSS_REGION_STRING" xml:space="preserve">
-        <value>{0}{1}然後直走{2}約{3}公尺</value>
-    </data>
-    
-    <data name="DIRECTION_STRAIGHT_STRING" xml:space="preserve">
-        <value>繼續向前走 </value>
-    </data>
-    
-    <data name="DIRECTION_RIGHT_FRONT_STRING" xml:space="preserve">
-        <value>向右前方轉{0} 然後直走約{1}公尺 </value>
-    </data>
-    
-    <data name="DIRECTION_RIGHT_STRING" xml:space="preserve">
-        <value>向右轉{0} 然後直走約{1}公尺 </value>
-    </data>
-    
-    <data name="DIRECTION_RIGHT_REAR_STRING" xml:space="preserve">
-        <value>向右後轉{0} 然後直走約{1}公尺 </value>
-    </data>
-    
-    <data name="DIRECTION_REAR_STRING" xml:space="preserve">
-        <value>向後轉{0} 然後直走約{1}公尺 </value>
-    </data>
-    
-    <data name="DIRECTION_LEFT_REAR_STRING" xml:space="preserve">
-        <value>向左後轉{0} 然後直走約{1}公尺 </value>
-    </data>
-    
-     <data name="DIRECTION_LEFT_STRING" xml:space="preserve">
-        <value>向左轉{0} 然後直走約{1}公尺 </value>
-    </data>
-    
-    <data name="DIRECTION_LEFT_FRONT_STRING" xml:space="preserve">
-        <value>向左前轉{0} 然後直走約{1}公尺 </value>
-    </data>
-    
-    <data name="DIRECTION_UP_STRING" xml:space="preserve">
-        <value>{0}上樓前往{1}{2} </value>
-    </data>
-    
-    <data name="DIRECTION_DOWN_STRING" xml:space="preserve">
-        <value>{0}下樓前往{1}{2} </value>
-    </data>
-    
-     <data name="DIRECTION_WRONG_WAY_STRING" xml:space="preserve">
-        <value>遠離路線，正在重新規劃路徑</value>
-    </data>
-    
-    <data name="DIRECTION_ARRIVED_STRING" xml:space="preserve">
-        <value>您已到達目的地</value>
-    </data>
-    
-   <data name="NULL_STRING" xml:space="preserve">
-        <value>無 </value>
-    </data>
-    
-     <data name="PICK_DESTINATION_STRING" xml:space="preserve">
-        <value>挑選目的地 </value>
-    </data>
-    
-    <data name="PICK_REGION_STRING" xml:space="preserve">
-        <value>挑選所在區域 </value>
-    </data>
-    
-    <data name="FLOOR_STRING" xml:space="preserve">
-        <value>樓 </value>
-    </data>
-    
-    <data name="PLEASE_CHECK_INTERNET_STRING" xml:space="preserve">
-        <value>請檢查是否有網路 </value>
-    </data>
-    
-    <data name="PLEASE_ADJUST_AVOID_ROUTE_STRING" xml:space="preserve">
-        <value>請調整路線選項 </value>
-    </data>
-    
-    <data name="RSSI_OPTION_STRING" xml:space="preserve">
-        <value>訊號強度選項 </value>
-    </data>
-    
-    <data name="STRONG_STRING" xml:space="preserve">
-        <value>強 </value>
-    </data>
-    
-    <data name="MEDIUM_STRING" xml:space="preserve">
-        <value>中 </value>
-    </data>
-    
-    <data name="WEAK_STRING" xml:space="preserve">
-        <value>弱 </value>
-    </data>
-    
-    <data name="PLEASE_CONTROL_RSSI_OPTION_STRING" xml:space="preserve">
-        <value>請只打開一個選項 </value>
-    </data>
-    
-    <data name="GO_STRAIGHT_STRING" xml:space="preserve">
-        <value>向前走</value>
-    </data>
-    
-    <data name="TURN_RIGHT_STRING" xml:space="preserve">
-        <value>向右轉</value>
-    </data>
-    
-    <data name="TURN_LEFT_STRING" xml:space="preserve">
-        <value>向左轉</value>
-    </data>
-    
-    <data name="TURN_BACK_STRING" xml:space="preserve">
-        <value>向後轉</value>
-    </data>
-    
-    <data name="TURN_RIGHT_FRONT_STRING" xml:space="preserve">
-        <value>向右前方轉</value>
-    </data>
-    
-    <data name="TURN_RIGHT_REAR_STRING" xml:space="preserve">
-        <value>向右後方轉</value>
-    </data>
-    
-    <data name="TURN_LEFT_FRONT_STRING" xml:space="preserve">
-        <value>向左前方轉</value>
-    </data>
-    
-    <data name="GO_LEFT_REAR_STRING" xml:space="preserve">
-        <value>向左後方轉</value>
-    </data>
-    
-    <data name="LAB_STRING" xml:space="preserve">
-        <value>實驗室</value>
-    </data>
-    
-    <data name="ELEVATOR_STRING" xml:space="preserve">
-        <value>搭電梯</value>
-    </data>
-    
-    <data name="STAIR_STRING" xml:space="preserve">
-        <value>走樓梯</value>
-    </data>
-    
-    <data name="ESCALATOR_STRING" xml:space="preserve">
-        <value>搭手扶梯</value>
-    </data>
-    
-    <data name="NORMALHALLWAY_STRING" xml:space="preserve">
-        <value>走走廊</value>
-    </data>
-    
-    <data name="PICTURE_DIRECTION_STRING" xml:space="preserve">
-        <value>圖片的方向</value>
-    </data>
-    
-    <data name="NO_SIGNAL_STRING" xml:space="preserve">
-        <value>請至任一路口</value>
-    </data>
-    
-    <data name="DIRECTION_ARRIVED_VIRTUAL_STRING" xml:space="preserve">
-        <value>{0}{1}到達目的地</value>
-    </data>
-    
-    <data name="VERSION_STRING" xml:space="preserve">
-        <value>版本</value>
-    </data>
-    
-    <data name="CURRENT_VERSION_STRING" xml:space="preserve">
-        <value>1.0</value>
-    </data>
-    
-    <data name="UPDATE_MAP_STRING" xml:space="preserve">
-        <value>按下確定來更新圖資</value>
-    </data>
-    
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="HOME_STRING" xml:space="preserve">
+    <value>首頁</value>
+  </data>
+  <data name="LOCATION_STRING" xml:space="preserve">
+    <value>地點</value>
+  </data>
+  <data name="SELECT_LOCATION_STRING" xml:space="preserve">
+    <value>請選擇您要導航的地點</value>
+  </data>
+  <data name="EDIT_STRING" xml:space="preserve">
+    <value>編輯</value>
+  </data>
+  <data name="SETTING_STRING" xml:space="preserve">
+    <value>設定</value>
+  </data>
+  <data name="BEDITECH_STRING" xml:space="preserve">
+    <value>畢迪科技室內導航</value>
+  </data>
+  <data name="DOWNLOAD_QRCODE_MAP_STRING" xml:space="preserve">
+    <value>下載QRCode圖資</value>
+  </data>
+  <data name="DOWNLOAD_MAP_STRING" xml:space="preserve">
+    <value>下載地圖資訊</value>
+  </data>
+  <data name="DELETE_MAP_STRING" xml:space="preserve">
+    <value>刪除圖資</value>
+  </data>
+  <data name="VOICE_TEST_STRING" xml:space="preserve">
+    <value>語音測試</value>
+  </data>
+  <data name="PLAY_VOICE_TEST_STRING" xml:space="preserve">
+    <value>播放語音測試</value>
+  </data>
+  <data name="VOICE_SELECT_STRING" xml:space="preserve">
+    <value>語音選擇</value>
+  </data>
+  <data name="VOICE_SETTING_STRING" xml:space="preserve">
+    <value>語音設定</value>
+  </data>
+  <data name="CHANGE_LANGUAGE_STRING" xml:space="preserve">
+    <value>更改語言</value>
+  </data>
+  <data name="SELECT_LANGUAGE_STRING" xml:space="preserve">
+    <value>選擇語言</value>
+  </data>
+  <data name="CHINESE_STRING" xml:space="preserve">
+    <value>中文</value>
+  </data>
+  <data name="ENGLISH_STRING" xml:space="preserve">
+    <value>英文</value>
+  </data>
+  <data name="LICENSE_AND_PRIVACY_STRING" xml:space="preserve">
+    <value>版權以及隱私權</value>
+  </data>
+  <data name="LICENSE_STRING" xml:space="preserve">
+    <value>版權聲明</value>
+  </data>
+  <data name="PRIVACY_STRING" xml:space="preserve">
+    <value>隱私權保護政策</value>
+  </data>
+  <data name="OTHERS_STRING" xml:space="preserve">
+    <value>其他</value>
+  </data>
+  <data name="FEEDBACK_STRING" xml:space="preserve">
+    <value>意見回饋</value>
+  </data>
+  <data name="ABOUT_BEDI_STRING" xml:space="preserve">
+    <value>關於畢迪科技股份有限公司</value>
+  </data>
+  <data name="PREFERENCES_STRING" xml:space="preserve">
+    <value>偏好設定</value>
+  </data>
+  <data name="VOICE_SPEAK_STRING" xml:space="preserve">
+    <value>歡迎使用畢迪科技室內導航</value>
+  </data>
+  <data name="CULTURE_VERSION_STRING" xml:space="preserve">
+    <value>zh-TW</value>
+  </data>
+  <data name="OK_STRING" xml:space="preserve">
+    <value>確定</value>
+  </data>
+  <data name="CANCEL_STRING" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="GO_NAVIGATION_HOME_PAGE_STRING" xml:space="preserve">
+    <value>前往導航頁面</value>
+  </data>
+  <data name="GO_SETTING_PAGE_STRING" xml:space="preserve">
+    <value>前往設定頁面</value>
+  </data>
+  <data name="DOWNLOAD_NAVIGATION_GRAPH_STRING" xml:space="preserve">
+    <value>您需要先下載地圖資訊</value>
+  </data>
+  <data name="FLASH_STRING" xml:space="preserve">
+    <value>打光</value>
+  </data>
+  <data name="CHOOSE_MAP_STRING" xml:space="preserve">
+    <value>--請選擇圖資--</value>
+  </data>
+  <data name="ALL_STRING" xml:space="preserve">
+    <value>--全部--</value>
+  </data>
+  <data name="WARN_STRING" xml:space="preserve">
+    <value>警告</value>
+  </data>
+  <data name="ASK_IF_CANCEL_ALL_MAP_STRING" xml:space="preserve">
+    <value>確定要刪除所有地圖嗎</value>
+  </data>
+  <data name="ASK_IF_CANCEL_MAP_STRING" xml:space="preserve">
+    <value>確定要刪除</value>
+  </data>
+  <data name="MESSAGE_STRING" xml:space="preserve">
+    <value>訊息</value>
+  </data>
+  <data name="SUCCESSFULLY_DELETE_STRING" xml:space="preserve">
+    <value>刪除成功</value>
+  </data>
+  <data name="MAP_STRING" xml:space="preserve">
+    <value>地圖</value>
+  </data>
+  <data name="ERROR_STRING" xml:space="preserve">
+    <value>錯誤</value>
+  </data>
+  <data name="ERROR_TO_DELETE_STRING" xml:space="preserve">
+    <value>刪除地圖時發生錯誤</value>
+  </data>
+  <data name="SUCCESSFULLY_DOWNLOAD_MAP_STRING" xml:space="preserve">
+    <value>地圖下載完成</value>
+  </data>
+  <data name="FAILED_DOWNLOAD_MAP_STRING" xml:space="preserve">
+    <value>地圖下載失敗</value>
+  </data>
+  <data name="NOTIFY_STRING" xml:space="preserve">
+    <value>通知</value>
+  </data>
+  <data name="SURE_TO_OPEN_WEBSITE_STRING" xml:space="preserve">
+    <value>確定要開啟網頁嗎</value>
+  </data>
+  <data name="QRCODE_CONTENT_STRING" xml:space="preserve">
+    <value>Qrcode內容</value>
+  </data>
+  <data name="INPUT_MAP_NAME_STRING" xml:space="preserve">
+    <value>請輸入地圖名稱</value>
+  </data>
+  <data name="MAP_NAME_STRING" xml:space="preserve">
+    <value>地圖名稱</value>
+  </data>
+  <data name="BACK_STRING" xml:space="preserve">
+    <value>返回</value>
+  </data>
+  <data name="HOSPITAL_NAME_STRING" xml:space="preserve">
+    <value>台大醫院雲林分院</value>
+  </data>
+  <data name="TAIPEI_CITY_HALL_STRING" xml:space="preserve">
+    <value>台北市政府</value>
+  </data>
+  <data name="PICK_LOCATION_STRING" xml:space="preserve">
+    <value>【點選要去的地點】</value>
+  </data>
+  <data name="CATEGORY_CLINICS_STRING" xml:space="preserve">
+    <value>各科門診</value>
+  </data>
+  <data name="CATEGORY_CASHIER_STRING" xml:space="preserve">
+    <value>批價櫃台</value>
+  </data>
+  <data name="CATEGORY_EXIT_STRING" xml:space="preserve">
+    <value>出口</value>
+  </data>
+  <data name="CATEGORY_EXAMINATION_ROOM_STRING" xml:space="preserve">
+    <value>檢查室</value>
+  </data>
+  <data name="CATEGORY_PHARMACY_STRING" xml:space="preserve">
+    <value>領藥</value>
+  </data>
+  <data name="CATEGORY_CONVENIENCE_STORE_STRING" xml:space="preserve">
+    <value>便利商店</value>
+  </data>
+  <data name="CATEGORY_OTHERS_STRING" xml:space="preserve">
+    <value>其他</value>
+  </data>
+  <data name="CATEGORY_BATH_ROOM_STRING" xml:space="preserve">
+    <value>廁所</value>
+  </data>
+  <data name="CATEGORY_BLOOD_COLLECTION_STRING" xml:space="preserve">
+    <value>抽血處</value>
+  </data>
+  <data name="CATEGORY_ELEVATOR_STRING" xml:space="preserve">
+    <value>電梯</value>
+  </data>
+  <data name="CATEGORY_PARKING_STRING" xml:space="preserve">
+    <value>停車場</value>
+  </data>
+  <data name="CATEGORY_OFFICE_STRING" xml:space="preserve">
+    <value>各局處</value>
+  </data>
+  <data name="CATEGORY_CONFERENCE_ROOM_STRING" xml:space="preserve">
+    <value>會議室</value>
+  </data>
+  <data name="CATEGORY_STAIR_STRING" xml:space="preserve">
+    <value>樓梯</value>
+  </data>
+  <data name="PICK_DESTINATION_STRING" xml:space="preserve">
+    <value>挑選目的地 </value>
+  </data>
+  <data name="ROUTE_OPTION_STRING" xml:space="preserve">
+    <value>路線選項</value>
+  </data>
+  <data name="AVOID_STAIR_STRING" xml:space="preserve">
+    <value>避開樓梯</value>
+  </data>
+  <data name="AVOID_ELEVATOR_STRING" xml:space="preserve">
+    <value>避開電梯</value>
+  </data>
+  <data name="AVOID_ESCALATOR_STRING" xml:space="preserve">
+    <value>避開手扶梯</value>
+  </data>
+  <data name="AVOID_ALL_CONNECTION_TYPE_STRING" xml:space="preserve">
+    <value>無法避開所有路線選項</value>
+  </data>
+  <data name="DESTINATION_STRING" xml:space="preserve">
+    <value>目的地 : </value>
+  </data>
+  <data name="CURRENT_LOCATION_STRING" xml:space="preserve">
+    <value>目前位置 : </value>
+  </data>
+  <data name="DIRECTION_INITIAIL_FACE_STRING" xml:space="preserve">
+    <value>面向{0}{1}然後{2}{3}直走約{4}公尺</value>
+  </data>
+  <data name="DIRECTION_INITIAIL_BACK_STRING" xml:space="preserve">
+    <value>背向{0}{1}然後{2}{3}直走約{4}公尺</value>
+  </data>
+  <data name="DIRECTION_INITIAIL_CROSS_REGION_STRING" xml:space="preserve">
+    <value>{0}{1}然後直走{2}約{3}公尺</value>
+  </data>
+  <data name="DIRECTION_STRAIGHT_STRING" xml:space="preserve">
+    <value>繼續向前走 </value>
+  </data>
+  <data name="DIRECTION_RIGHT_FRONT_STRING" xml:space="preserve">
+    <value>向右前方轉{0} 然後直走約{1}公尺 </value>
+  </data>
+  <data name="DIRECTION_RIGHT_STRING" xml:space="preserve">
+    <value>向右轉{0} 然後直走約{1}公尺 </value>
+  </data>
+  <data name="DIRECTION_RIGHT_REAR_STRING" xml:space="preserve">
+    <value>向右後轉{0} 然後直走約{1}公尺 </value>
+  </data>
+  <data name="DIRECTION_REAR_STRING" xml:space="preserve">
+    <value>向後轉{0} 然後直走約{1}公尺 </value>
+  </data>
+  <data name="DIRECTION_LEFT_REAR_STRING" xml:space="preserve">
+    <value>向左後轉{0} 然後直走約{1}公尺 </value>
+  </data>
+  <data name="DIRECTION_LEFT_STRING" xml:space="preserve">
+    <value>向左轉{0} 然後直走約{1}公尺 </value>
+  </data>
+  <data name="DIRECTION_LEFT_FRONT_STRING" xml:space="preserve">
+    <value>向左前轉{0} 然後直走約{1}公尺 </value>
+  </data>
+  <data name="DIRECTION_UP_STRING" xml:space="preserve">
+    <value>{0}上樓前往{1}{2} </value>
+  </data>
+  <data name="DIRECTION_DOWN_STRING" xml:space="preserve">
+    <value>{0}下樓前往{1}{2} </value>
+  </data>
+  <data name="DIRECTION_WRONG_WAY_STRING" xml:space="preserve">
+    <value>遠離路線，正在重新規劃路徑</value>
+  </data>
+  <data name="DIRECTION_ARRIVED_STRING" xml:space="preserve">
+    <value>您已到達目的地</value>
+  </data>
+  <data name="NULL_STRING" xml:space="preserve">
+    <value>無 </value>
+  </data>
+  <data name="PICK_REGION_STRING" xml:space="preserve">
+    <value>挑選所在區域 </value>
+  </data>
+  <data name="FLOOR_STRING" xml:space="preserve">
+    <value>樓 </value>
+  </data>
+  <data name="PLEASE_CHECK_INTERNET_STRING" xml:space="preserve">
+    <value>請檢查是否有網路 </value>
+  </data>
+  <data name="PLEASE_ADJUST_AVOID_ROUTE_STRING" xml:space="preserve">
+    <value>請調整路線選項 </value>
+  </data>
+  <data name="RSSI_OPTION_STRING" xml:space="preserve">
+    <value>訊號強度選項 </value>
+  </data>
+  <data name="STRONG_STRING" xml:space="preserve">
+    <value>強 </value>
+  </data>
+  <data name="MEDIUM_STRING" xml:space="preserve">
+    <value>中 </value>
+  </data>
+  <data name="WEAK_STRING" xml:space="preserve">
+    <value>弱 </value>
+  </data>
+  <data name="PLEASE_CONTROL_RSSI_OPTION_STRING" xml:space="preserve">
+    <value>請只打開一個選項 </value>
+  </data>
+  <data name="GO_STRAIGHT_STRING" xml:space="preserve">
+    <value>向前走</value>
+  </data>
+  <data name="TURN_RIGHT_STRING" xml:space="preserve">
+    <value>向右轉</value>
+  </data>
+  <data name="TURN_LEFT_STRING" xml:space="preserve">
+    <value>向左轉</value>
+  </data>
+  <data name="TURN_BACK_STRING" xml:space="preserve">
+    <value>向後轉</value>
+  </data>
+  <data name="TURN_RIGHT_FRONT_STRING" xml:space="preserve">
+    <value>向右前方轉</value>
+  </data>
+  <data name="TURN_RIGHT_REAR_STRING" xml:space="preserve">
+    <value>向右後方轉</value>
+  </data>
+  <data name="TURN_LEFT_FRONT_STRING" xml:space="preserve">
+    <value>向左前方轉</value>
+  </data>
+  <data name="GO_LEFT_REAR_STRING" xml:space="preserve">
+    <value>向左後方轉</value>
+  </data>
+  <data name="LAB_STRING" xml:space="preserve">
+    <value>實驗室</value>
+  </data>
+  <data name="ELEVATOR_STRING" xml:space="preserve">
+    <value>搭電梯</value>
+  </data>
+  <data name="STAIR_STRING" xml:space="preserve">
+    <value>走樓梯</value>
+  </data>
+  <data name="ESCALATOR_STRING" xml:space="preserve">
+    <value>搭手扶梯</value>
+  </data>
+  <data name="NORMALHALLWAY_STRING" xml:space="preserve">
+    <value>走走廊</value>
+  </data>
+  <data name="PICTURE_DIRECTION_STRING" xml:space="preserve">
+    <value>圖片的方向</value>
+  </data>
+  <data name="NO_SIGNAL_STRING" xml:space="preserve">
+    <value>請至任一路口</value>
+  </data>
+  <data name="DIRECTION_ARRIVED_VIRTUAL_STRING" xml:space="preserve">
+    <value>{0}{1}到達目的地</value>
+  </data>
+  <data name="VERSION_STRING" xml:space="preserve">
+    <value>版本</value>
+  </data>
+  <data name="CURRENT_VERSION_STRING" xml:space="preserve">
+    <value>1.0</value>
+  </data>
+  <data name="UPDATE_MAP_STRING" xml:space="preserve">
+    <value>按下確定來更新圖資</value>
+  </data>
+  <data name="YUANLIN_CHRISTIAN_HOSPITAL_STRING" xml:space="preserve">
+    <value>員林基督教醫院</value>
+  </data>
 </root>

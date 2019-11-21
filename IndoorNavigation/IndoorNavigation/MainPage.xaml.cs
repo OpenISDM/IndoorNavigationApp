@@ -174,6 +174,8 @@ namespace IndoorNavigation
                     string NTUH_YunLin = _resourceManager.GetString("HOSPITAL_NAME_STRING", ci).ToString();
                     string Taipei_City_Hall = _resourceManager.GetString("TAIPEI_CITY_HALL_STRING", ci).ToString();
                     string Lab = _resourceManager.GetString("LAB_STRING", ci).ToString();
+                    string Yuanlin_Christian_Hospital = _resourceManager.GetString("YUANLIN_CHRISTIAN_HOSPITAL_STRING", ci).ToString();
+
                     if (answser)
                     {
                         NavigraphStorage.DeleteInformationML(location.UserNaming);
@@ -188,6 +190,10 @@ namespace IndoorNavigation
                         else if (location.UserNaming == Lab)
                         {
                             NavigraphStorage.GenerateFileRoute(Lab, "Lab");
+                        }
+                        else if (location.UserNaming == Yuanlin_Christian_Hospital)
+                        {
+                            NavigraphStorage.GenerateFileRoute(Yuanlin_Christian_Hospital, "Yuanlin_Christian_Hospital");
                         }
                         updateMapOrNot = true;
                     }
