@@ -1,4 +1,39 @@
-﻿using System;
+﻿/*
+ * Copyright (c) 2019 Academia Sinica, Institude of Information Science
+ *
+ * License:
+ *      GPL 3.0 : The content of this file is subject to the terms and
+ *      conditions defined in file 'COPYING.txt', which is part of this source
+ *      code package.
+ *
+ * Project Name:
+ *
+ *      IndoorNavigation
+ *
+ * 
+ *     
+ *      
+ * Version:
+ *
+ *      1.0.0, 201911125
+ * 
+ * File Name:
+ *
+ *      PhoneInformation.cs
+ *
+ * Abstract:
+ *
+ *     This file used to get the information of the phone
+ *     Includes, current language, current existing map
+ *      
+ * Authors:
+ *
+ *      Eric Lee, ericlee@iis.sinica.edu.tw
+ *     
+ *
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Resources;

@@ -1,4 +1,41 @@
-﻿using System;
+﻿/*
+ * Copyright (c) 2019 Academia Sinica, Institude of Information Science
+ *
+ * License:
+ *      GPL 3.0 : The content of this file is subject to the terms and
+ *      conditions defined in file 'COPYING.txt', which is part of this source
+ *      code package.
+ *
+ * Project Name:
+ *
+ *      IndoorNavigation
+ *
+ * 
+ *     
+ *      
+ * Version:
+ *
+ *      1.0.0, 201911125
+ * 
+ * File Name:
+ *
+ *      ReadVersion.cs
+ *
+ * Abstract:
+ *
+ *      This file used to get the map version, the map version can help
+ *      the user know if their map is too old and need to update
+ *
+ *
+ *      
+ * Authors:
+ *
+ *      Eric Lee, ericlee@iis.sinica.edu.tw
+ *     
+ *
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Xml;
 using Xamarin.Forms;

@@ -1,4 +1,40 @@
-﻿using System;
+﻿/*
+ * Copyright (c) 2019 Academia Sinica, Institude of Information Science
+ *
+ * License:
+ *      GPL 3.0 : The content of this file is subject to the terms and
+ *      conditions defined in file 'COPYING.txt', which is part of this source
+ *      code package.
+ *
+ * Project Name:
+ *
+ *      IndoorNavigation
+ *
+ * 
+ *     
+ *      
+ * Version:
+ *
+ *      1.0.0, 201911125
+ * 
+ * File Name:
+ *
+ *      FirstDirectionInstruction.cs
+ *
+ * Abstract:
+ *
+ *      This file used to get the first direction information. When the user first uses our APP
+ *      They do not know where there are and which direction they should face.
+ *      FirstDirectionInstruction can tell the user their nearest landmark that they should face to.
+ *      
+ * Authors:
+ *
+ *      Eric Lee, ericlee@iis.sinica.edu.tw
+ *     
+ *
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
