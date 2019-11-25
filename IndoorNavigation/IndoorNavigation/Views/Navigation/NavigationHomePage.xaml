@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              x:Class="IndoorNavigation.Views.Navigation.NavigationHomePage"
              xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
-             Title="{i18n:Translate HOSPITAL_NAME_STRING}">
+             Title="{Binding mapName}">
 
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness">
@@ -42,7 +42,7 @@
             <Image Grid.Row="0" Grid.ColumnSpan="3" Source="service_hospital_logo" Scale="0.9"/>
 
             <Label Grid.Row="1" Grid.ColumnSpan="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
-                   Text="{i18n:Translate HOSPITAL_NAME_STRING}" FontSize="Large" TextColor="Black" Margin="0, 0, 0, 0"/>
+                   Text="{Binding mapName}" FontSize="Large" TextColor="Black" Margin="0, 0, 0, 0"/>
 
             <Label Grid.Row="2" Grid.ColumnSpan="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
                    Text="{i18n:Translate PICK_LOCATION_STRING}" FontSize="Default"  TextColor="Gray" Margin="0, 0, 0, 0"/>

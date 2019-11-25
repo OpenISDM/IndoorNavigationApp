@@ -63,11 +63,14 @@ namespace IndoorNavigation.Views.Navigation
 			new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
 
 		private string _navigationGraphName;
+        public string mapName { get; } = "";
 
         public NavigationHomePage(string navigationGraphName)
         {
             InitializeComponent();
 			var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+            mapName = navigationGraphName;
+            BindingContext = this;
 			this._navigationGraphName = navigationGraphName;
 
             NavigationPage.SetBackButtonTitle(this, _resourceManager.GetString("BACK_STRING", currentLanguage));
