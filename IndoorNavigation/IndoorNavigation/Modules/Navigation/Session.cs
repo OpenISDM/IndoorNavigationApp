@@ -53,6 +53,7 @@ namespace IndoorNavigation.Modules
         private int _nextWaypointStep;
 
         private List<RegionWaypointPoint> _waypointsOnRoute = new List<RegionWaypointPoint>();
+
         private Dictionary<RegionWaypointPoint, List<RegionWaypointPoint>>
             _waypointsOnWrongWay = new Dictionary<RegionWaypointPoint, List<RegionWaypointPoint>>();
 
@@ -65,7 +66,7 @@ namespace IndoorNavigation.Modules
         private Thread _waypointDetectionThread;
         private Thread _navigationControllerThread;
 
-        private int _remindDistance = 50;
+        private const int _remindDistance = 50;
         private int _accumulateStraightDistance = 0;
 
         private bool _isKeepDetection;
@@ -79,7 +80,7 @@ namespace IndoorNavigation.Modules
         public NavigationEvent _event { get; private set; }
         private Dictionary<Guid, Region> _regiongraphs = new Dictionary<Guid, Region>();
         private IPSModules _iPSModules;
-        private int _tooCLoseDistance;
+        private int _tooCLoseDistance = 10;
 
         public Session(NavigationGraph navigationGraph,
                        Guid destinationRegionID,
@@ -97,7 +98,6 @@ namespace IndoorNavigation.Modules
             _destinationWaypointID = destinationWaypointID;
             _accumulateStraightDistance = 0;
             _avoidConnectionTypes = avoidConnectionTypes;
-            _tooCLoseDistance = 10;
             // construct region graph (across regions) which we can use to generate route
             _graphRegionGraph = navigationGraph.GenerateRegionGraph(avoidConnectionTypes);
             _regiongraphs = _navigationGraph.GetRegions();
@@ -234,29 +234,7 @@ namespace IndoorNavigation.Modules
                       
                         _result = NavigationResult.Run,
                         _nextInstruction = navigationInstruction
-                        //_nextInstruction = new NavigationInstruction
-                        //{
-                        //    _currentWaypointName = _navigationGraph.GetWaypointNameInRegion(_currentRegionID,
-                        //                                         _currentWaypointID),
-                        //    _nextWaypointName = _navigationGraph.GetWaypointNameInRegion(_waypointsOnRoute[1]._regionID, _waypointsOnRoute[1]._waypointID),
-                        //    _progress = 0,
-                        //    _progressBar = "0 / " + tempRoute,
-                        //    _information = _navigationGraph.GetInstructionInformation(
-                        //        _nextWaypointStep,
-                        //        _currentRegionID,
-                        //        _currentWaypointID,
-                        //        previousRegionID,
-                        //        previousWaypointID,
-                        //        _waypointsOnRoute[_nextWaypointStep + 1]._regionID,
-                        //        _waypointsOnRoute[_nextWaypointStep + 1]._waypointID,
-                        //        _avoidConnectionTypes
-                        //        ),
-                        //    _currentWaypointGuid = _currentWaypointID,
-                        //    _nextWaypointGuid = _waypointsOnRoute[_nextWaypointStep + 1]._waypointID,
-                        //    _currentRegionGuid = _currentRegionID,
-                        //    _nextRegionGuid = _waypointsOnRoute[_nextWaypointStep + 1]._regionID,
-                        //    _turnDirectionDistance = _navigationGraph.GetDistanceOfLongHallway(regionWaypointPoint, 1, _waypointsOnRoute, _avoidConnectionTypes)
-                        //}
+               
                     });
                     _accumulateStraightDistance = _accumulateStraightDistance + navigationInstruction._information._distance;
                     _nextWaypointStep++;
@@ -277,102 +255,13 @@ namespace IndoorNavigation.Modules
                                         new List<WaypointBeaconsMapping>();
             if (nextStep == -1)
             {
-                //waypointClient._event._eventHandler += new EventHandler(CheckArrivedWaypoint);
-                //ibeaconCLient._event._eventHandler += new EventHandler(CheckArrivedWaypoint);
-                //IPSType regionIPSType;
+
                 List<Guid> allRegionIDs = new List<Guid>();
                 allRegionIDs = _navigationGraph.GetAllRegionIDs();
-                //bool haveLBeacon = false;
-                //bool haveIBeacon = false;
-                //waypointClient = new WaypointClient();
-                //waypointClient._event._eventHandler += new EventHandler(CheckArrivedWaypoint);
-                //ibeaconCLient = new IBeaconClient();
-                //ibeaconCLient._event._eventHandler += new EventHandler(CheckArrivedWaypoint);
 
-               //
-               // _iPSModules._event._eventHandler += new EventHandler(CheckArrivedWaypoint);
                 _iPSModules.AtStarting_ReadALLIPSType(allRegionIDs);
 
-                /*foreach (Guid regionGuid in allRegionIDs)
-                 {
-                    regionIPSType =
-                   _navigationGraph.GetRegionIPSType(regionGuid);
-                    
-                   if (IPSType.LBeacon == regionIPSType)
-                    {
-                        List<Guid> waypointIDsInWaypointClient =
-                        _navigationGraph.GetAllWaypointIDInOneRegion(regionGuid);
-
-                        foreach (Guid waypointID in waypointIDsInWaypointClient)
-                        {
-                            RegionWaypointPoint tempRegionWaypointInInitialWaypointClient = new RegionWaypointPoint();
-                            tempRegionWaypointInInitialWaypointClient._waypointID = waypointID;
-                            tempRegionWaypointInInitialWaypointClient._regionID = regionGuid;
-                            List<Guid> beaconIDs = new List<Guid>();
-                            Dictionary<Guid, int> tempBeaconThresholdInWaypointClient = new Dictionary<Guid, int>();
-                            if (IPSType.LBeacon == regionIPSType ||
-                                IPSType.iBeacon == regionIPSType)
-                            {
-                                beaconIDs = _navigationGraph
-                                            .GetAllBeaconIDInOneWaypointOfRegion(regionGuid,
-                                                                                 waypointID);
-                            }
-                            for(int i =0;i<beaconIDs.Count();i++)
-                            {
-                                tempBeaconThresholdInWaypointClient.Add(beaconIDs[i], _navigationGraph.GetBeaconRSSIThreshold(regionGuid, beaconIDs[i]));
-                            }
-                            monitorWaypointListInWaypointClient.Add(new WaypointBeaconsMapping
-                            {
-                                _WaypointIDAndRegionID = tempRegionWaypointInInitialWaypointClient,
-                                _Beacons = beaconIDs,
-                                _BeaconThreshold = tempBeaconThresholdInWaypointClient
-                            });
-                        }
-                        haveLBeacon = true;
-                    }
-                    else if (IPSType.iBeacon == regionIPSType)
-                    {
-                        List<Guid> waypointIDsInIBeaconClient =
-                        _navigationGraph.GetAllWaypointIDInOneRegion(regionGuid);
-
-                        foreach (Guid waypointID in waypointIDsInIBeaconClient)
-                        {
-                            RegionWaypointPoint tempRegionWaypointInInitialIBeaconClient = new RegionWaypointPoint();
-                            tempRegionWaypointInInitialIBeaconClient._waypointID = waypointID;
-                            tempRegionWaypointInInitialIBeaconClient._regionID = regionGuid;
-                            List<Guid> beaconIDs = new List<Guid>();
-                            Dictionary<Guid, int> tempBeaconThresholdInIBeaconClient = new Dictionary<Guid, int>();
-                            if (IPSType.LBeacon == regionIPSType ||
-                                IPSType.iBeacon == regionIPSType)
-                            {
-                                beaconIDs = _navigationGraph
-                                            .GetAllBeaconIDInOneWaypointOfRegion(regionGuid,
-                                                                                 waypointID);
-                            }
-                            for(int i = 0; i < beaconIDs.Count(); i++)
-                            {
-                                tempBeaconThresholdInIBeaconClient.Add(beaconIDs[i], _navigationGraph.GetBeaconRSSIThreshold(regionGuid,beaconIDs[i]));
-                            }
-                            monitorWaypointListInIBeaconClient.Add(new WaypointBeaconsMapping
-                            {
-                                _WaypointIDAndRegionID = tempRegionWaypointInInitialIBeaconClient,
-                                _Beacons = beaconIDs,
-                                _BeaconThreshold = tempBeaconThresholdInIBeaconClient
-                            });
-                        }
-                        haveIBeacon = true;
-                    }
-                }
-
-                if(haveLBeacon==true)
-                {
-                    waypointClient.SetWaypointList(monitorWaypointListInWaypointClient);
-                }
-
-                if(haveIBeacon==true)
-                {
-                    ibeaconCLient.SetWaypointList(monitorWaypointListInIBeaconClient);
-                }*/
+               
 
             }
             else
@@ -381,53 +270,11 @@ namespace IndoorNavigation.Modules
                 RegionWaypointPoint checkPoint = _waypointsOnRoute[nextStep];
 
                 _iPSModules.CompareToCurrentAndNextIPSType(_currentRegionID, checkPoint._regionID, _nextWaypointStep);
-                //IPSType nextRegionIPSType =
-                //    _navigationGraph.GetRegionIPSType(checkPoint._regionID);
-                //if (!nextRegionIPSType.Equals(_navigationGraph.GetRegionIPSType(_currentRegionID)))
-                //{
-                //    _IPSClient.Stop();
-                //    _IPSClient._event._eventHandler -= new EventHandler(CheckArrivedWaypoint);
-
-                //    if (IPSType.LBeacon == nextRegionIPSType)
-                //    {
-                //        Console.WriteLine("nextLBeacon");
-                //        _IPSClient = new WaypointClient();
-                //        _IPSClient._event._eventHandler += new EventHandler(CheckArrivedWaypoint);
-                //    }
-                //    else if (IPSType.iBeacon == nextRegionIPSType)
-                //    {
-                //        Console.WriteLine("nextiBeacon");
-                //        _IPSClient = new IBeaconClient();
-                //        _IPSClient._event._eventHandler += new EventHandler(CheckArrivedWaypoint);
-                //    }
-                //}
-
-                //List<Guid> beaconIDs = new List<Guid>();
-
-
-                ////Add nextWaypoint beacons' UUID
-                //if (IPSType.LBeacon == nextRegionIPSType ||
-                //   IPSType.iBeacon == nextRegionIPSType)
-                //{
-
-                //    beaconIDs =
-                //        _navigationGraph
-                //        .GetAllBeaconIDInOneWaypointOfRegion(checkPoint._regionID,
-                //                                             checkPoint._waypointID);
-                //}
+               
 
                 _iPSModules.AddNextWaypointInterestedGuid(checkPoint._regionID,checkPoint._waypointID);
 
-                //RegionWaypointPoint tempRegionWaypointoutInInitial = new RegionWaypointPoint();
-                //tempRegionWaypointoutInInitial._waypointID = checkPoint._waypointID;
-                //tempRegionWaypointoutInInitial._regionID = regionID;
-                //Dictionary<Guid, int> tempBeaconThresholdInitial = new Dictionary<Guid, int>();
-
-
-                //for (int i = 0; i < beaconIDs.Count(); i++)
-                //{
-                //    tempBeaconThresholdInitial.Add(beaconIDs[i], _navigationGraph.GetBeaconRSSIThreshold(regionID, beaconIDs[i]));
-                //}
+              
 
                 if (_nextWaypointStep + 1 < _waypointsOnRoute.Count())
                 {
@@ -436,105 +283,29 @@ namespace IndoorNavigation.Modules
                     {
                         _iPSModules.AddNextNextWaypointInterestedGuid(_waypointsOnRoute[_nextWaypointStep + 1]._regionID, _waypointsOnRoute[_nextWaypointStep + 1]._waypointID);
 
-                        //Dictionary<Guid, int> nextNextBeaconThreshold = new Dictionary<Guid, int>();
-                        //List<Guid> beaconOfNextNextWaypoint = new List<Guid>();
-                        //if (IPSType.LBeacon == nextRegionIPSType ||
-                        //   IPSType.iBeacon == nextRegionIPSType)
-                        //{
-
-                        //    beaconOfNextNextWaypoint =
-                        //        _navigationGraph
-                        //        .GetAllBeaconIDInOneWaypointOfRegion(_waypointsOnRoute[_nextWaypointStep + 1]._regionID,
-                        //                                             _waypointsOnRoute[_nextWaypointStep + 1]._waypointID);
-                        //}
-                        //for (int j = 0; j < beaconOfNextNextWaypoint.Count(); j++)
-                        //{
-                        //    nextNextBeaconThreshold.Add(beaconOfNextNextWaypoint[j], _navigationGraph.GetBeaconRSSIThreshold(_waypointsOnRoute[_nextWaypointStep + 1]._regionID, beaconOfNextNextWaypoint[j]));
-
-                        //}
-                        //RegionWaypointPoint nextNextWaypoint = new RegionWaypointPoint();
-                        //nextNextWaypoint = _waypointsOnRoute[_nextWaypointStep+1];
-
-                        //monitorWaypointList.Add(new WaypointBeaconsMapping
-                        //{
-                        //    _WaypointIDAndRegionID = nextNextWaypoint,
-                        //    _Beacons = beaconOfNextNextWaypoint,
-                        //    _BeaconThreshold = nextNextBeaconThreshold
-                        //});
+                       
                     }
                 }
 
-                //monitorWaypointList.Add(new WaypointBeaconsMapping
-                //{
-                //    _WaypointIDAndRegionID = tempRegionWaypointoutInInitial,
-                //    _Beacons = beaconIDs,
-                //    _BeaconThreshold = tempBeaconThresholdInitial
-                //});
-
-                //List<Guid> WrongbeaconIDs = new List<Guid>();
-                //WaypointBeaconsMapping waypointBeacons = new WaypointBeaconsMapping();
-                //Add possible wrong beacons' into monitorWaypointList that will give to IPSClient.
+           
                 if (_nextWaypointStep >= 1)
                 {
                     
-                    //waypointBeacons._Beacons = new List<Guid>();
+
 
                     if (_waypointsOnWrongWay[_waypointsOnRoute[_nextWaypointStep - 1]] != null)
                     {
-                        //Guid tempGuid = new Guid();
+
                         foreach (RegionWaypointPoint items in _waypointsOnWrongWay[_waypointsOnRoute[_nextWaypointStep - 1]])
                         {
 
                             _iPSModules.AddWrongWaypointInterestedGuid(items._regionID,items._waypointID);
-
-                            //for (int j = 0; j < _waypointsOnWrongWay[_waypointsOnRoute[_nextWaypointStep - 1]].Count(); j++)
-                            //{
-                            //    if (_waypointsOnWrongWay[_waypointsOnRoute[_nextWaypointStep - 1]][j]._waypointID == items._waypointID)
-                            //    {
-                            //        tempGuid = _waypointsOnWrongWay[_waypointsOnRoute[_nextWaypointStep - 1]][j]._regionID;
-                            //    }
-                            //}
-
-                            //WrongbeaconIDs = _navigationGraph
-                            //            .GetAllBeaconIDInOneWaypointOfRegion(tempGuid, items._waypointID);
-                            
-                            //RegionWaypointPoint tempRegionWaypointInWrongWay = new RegionWaypointPoint();
-                            //tempRegionWaypointInWrongWay._waypointID = items._waypointID;
-                            //tempRegionWaypointInWrongWay._regionID = tempGuid;
-                            //Console.WriteLine("waypoint ID : " + items._waypointID);
-                            //Dictionary<Guid, int> wrongWaypointsBeaconRSSI = new Dictionary<Guid, int>();
-
-                            //for(int i = 0; i<WrongbeaconIDs.Count();i++)
-                            //{
-                            //    wrongWaypointsBeaconRSSI.Add(WrongbeaconIDs[i],_navigationGraph.GetBeaconRSSIThreshold(tempGuid,WrongbeaconIDs[i]));
-                            //    Console.WriteLine("related guid of waypoint ID : " + WrongbeaconIDs[i]);
-                            //}
-
-                            //monitorWaypointList.Add(new WaypointBeaconsMapping
-                            //{
-                            //    _WaypointIDAndRegionID = tempRegionWaypointInWrongWay,
-                            //    _Beacons = WrongbeaconIDs,
-                            //    _BeaconThreshold = wrongWaypointsBeaconRSSI
-                            //});
                         }
                     }
                 }
-
-                //Print All beacons' Guid that will give to IPSClients
-                //foreach (WaypointBeaconsMapping waypointBeaconsMapping in monitorWaypointList)
-                //{
-                //    Console.WriteLine("Check mapping Current WaypointID: " + _currentWaypointID);
-                //    Console.WriteLine("Expected next Step : " + _waypointsOnRoute[_nextWaypointStep]._waypointID);
-
-                //    foreach (Guid guids in waypointBeaconsMapping._Beacons)
-                //    {
-                //        Console.WriteLine("ALL Interested Guid : " + guids);
-                //    }
-                //}
-                //_IPSClient.SetWaypointList(monitorWaypointList);
+          
                 _iPSModules.SetMonitorBeaconList();
             }
-
             
         }
 
@@ -545,9 +316,6 @@ namespace IndoorNavigation.Modules
             {
                 Thread.Sleep(500);
                 _iPSModules.OpenBeconScanning();
-               // _IPSClient.DetectWaypoints();
-                //waypointClient.DetectWaypoints();
-                //ibeaconCLient.DetectWaypoints();
             }
         }
 
@@ -664,6 +432,8 @@ namespace IndoorNavigation.Modules
                                   checkPoint._waypointID);
             }
 
+            
+
             // fill in all the path between waypoints in the same region / navigraph
             for (int i = 0; i < _waypointsOnRoute.Count() - 1; i++)
             {
@@ -710,6 +480,8 @@ namespace IndoorNavigation.Modules
                                   checkPoint._regionID,
                                   checkPoint._waypointID);
             }
+
+
 
             int nextStep = 1;
             _waypointsOnWrongWay = new Dictionary<RegionWaypointPoint, List<RegionWaypointPoint>>();
@@ -818,6 +590,8 @@ namespace IndoorNavigation.Modules
                 }
                 Console.WriteLine("\n");
             }
+
+            
         }
 
         public void AddPortalWrongWaypoint(Region tempRegion, RegionWaypointPoint locationRegionWaypoint, int nextStep, RegionWaypointPoint tempRegionWaypoint, Guid guid)
@@ -964,29 +738,9 @@ namespace IndoorNavigation.Modules
             {
                 Console.WriteLine("current Waypoint : " + _currentWaypointID);
                 _accumulateStraightDistance = 0;
-                //waypointClient._event._eventHandler -= new EventHandler(CheckArrivedWaypoint);
-                //ibeaconCLient._event._eventHandler -= new EventHandler(CheckArrivedWaypoint);
-                //waypointClient.Stop();
-                //ibeaconCLient.Stop();
-                //_IPSClient.Stop();
-                //_IPSClient._event._eventHandler -= new EventHandler(CheckArrivedWaypoint);
 
                 _iPSModules.CloseStartAllExistClient();
                 _iPSModules.CompareToCurrentAndNextIPSType(_currentRegionID, _currentRegionID, _nextWaypointStep);
-                //IPSType currentRegionIPSType =
-                //   _navigationGraph.GetRegionIPSType(_currentRegionID);
-                //if (IPSType.LBeacon == currentRegionIPSType)
-                //{
-                //    Console.WriteLine("In waypointClient");
-                //    _IPSClient = new WaypointClient();
-                //    _IPSClient._event._eventHandler += new EventHandler(CheckArrivedWaypoint);
-                //}
-                //else if (IPSType.iBeacon == currentRegionIPSType)
-                //{
-                //    Console.WriteLine("In iBeaconClient");
-                //    _IPSClient = new IBeaconClient();
-                //    _IPSClient._event._eventHandler += new EventHandler(CheckArrivedWaypoint);
-                //}
 
                 if (_currentRegionID.Equals(_destinationRegionID) &&
                     _currentWaypointID.Equals(_destinationWaypointID))

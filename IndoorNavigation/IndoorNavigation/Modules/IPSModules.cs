@@ -10,16 +10,12 @@
  *
  *      IndoorNavigation
  *
- * File Description:
  * 
- *      This class is used to select the route specified by the starting
- *      point, destination, and user preferences. When in navigation,
- *      the class will give the next waypoint, and when the user is in
- *      the wrong way, the class will re-route.
+ *     
  *      
  * Version:
  *
- *      1.0.0, 201911123eee3333e
+ *      1.0.0, 201911123
  * 
  * File Name:
  *
@@ -27,16 +23,11 @@
  *
  * Abstract:
  *
- *      Waypoint-based navigator is a mobile Bluetooth navigation application
- *      that runs on smart phones. It is structed to support anywhere 
- *      navigation. Indoors in areas covered by different indoor positioning 
- *      system (IPS) and outdoors covered by GPS. In particilar, it can rely
- *      on BeDIS (Building/environment Data and Information System) for
- *      indoor positioning. Using this IPS, the navigator does not need to 
- *      continuously monitor its own position, since the IPS broadcast to the 
- *      navigator the location of each waypoint. 
- *      This version makes use of Xamarin.Forms, which is a complete 
- *      cross-platform UI tookit that runs on both iOS and Android.
+ *      This file is used to adjust the IPS. We now have LBeacon and IBeacon. This file
+ *      is the intermedium of Session.cs and the different kinds of IPSClient. This file also will
+ *      get the interested beacon Guid and pass to IPS client. When the event handler get the
+ *      interested waypoint and region, this file will also pass the intersted waypint and region
+ *      to Session.
  *      
  * Authors:
  *
@@ -67,6 +58,7 @@ namespace IndoorNavigation.Modules
         private List<IIPSClient> _multipleClient;
         private IIPSClient _waypointClient;
         private IIPSClient _ibeaconCLient;
+        
         private bool haveLBeacon;
         private bool haveIBeacon;
         private bool haveGPS;
@@ -100,6 +92,7 @@ namespace IndoorNavigation.Modules
             _gps = new _addInterestedBeacon(ADDGPS);
         }
 
+        //TODO : if add new client, here needs to add a new function, like the format below
         public void ADDIBeacon(Guid regionGuid, List<Guid> waypointGuids)
         {
             IPSType ipsType = _navigationGraph.GetRegionIPSType(regionGuid);
@@ -209,6 +202,7 @@ namespace IndoorNavigation.Modules
             {
 
             }
+            //TODO: If add new IPSClient, here needs to add
         }
         // private static void Detect()
         public IPSType GetIPSType(Guid regionGuid)
@@ -219,6 +213,7 @@ namespace IndoorNavigation.Modules
             return regionIPSType;
         }
 
+        //TODO : If add new client, here needs to add new function just likes below.
         public void IsLBeaconType()
         {
             _IPSClient = new WaypointClient();
@@ -241,6 +236,7 @@ namespace IndoorNavigation.Modules
         //This function gets the matched waypoint and region from each Clients, then pass the waypoint and region information to Session
         public void PassMatchedWaypointAndRegionToSession(object sender, EventArgs args)
         {
+            CleanAllMappingBeaconList();
             RegionWaypointPoint matchedWaypointAndRegion = new RegionWaypointPoint();
             matchedWaypointAndRegion._waypointID = (args as WaypointSignalEventArgs)._detectedRegionWaypoint._waypointID;
             matchedWaypointAndRegion._regionID = (args as WaypointSignalEventArgs)._detectedRegionWaypoint._regionID;
@@ -276,6 +272,7 @@ namespace IndoorNavigation.Modules
                 case IPSType.GPS:
                     IsGPSType();
                     break;
+                //TODO;f add new client, here needs to add
             }
         }
 
@@ -284,24 +281,44 @@ namespace IndoorNavigation.Modules
             haveLBeacon = false;
             haveIBeacon = false;
             haveGPS = false;
+            //TODO: if add new client, here needs to add
         }
 
+        public void CleanAllMappingBeaconList()
+        {
+            _monitorIBeaconGuid = new List<WaypointBeaconsMapping>();
+            _monitorLBeaconGuid = new List<WaypointBeaconsMapping>();
+            //TODO: if add new client, here needs to add
+        }
+        //Qw set the possible interested beacon Guid to each client
         public void SetMonitorBeaconList()
         {
             if (haveLBeacon == true)
             {
                 _IPSClient.SetWaypointList(_monitorLBeaconGuid);
             }
-            else if (haveIBeacon==true)
+            if (haveIBeacon==true)
             {
+                for(int i = 0;i<_monitorIBeaconGuid.Count();i++)
+                {
+                    for(int j = 0;j<_monitorIBeaconGuid[i]._Beacons.Count();j++)
+                    {
+                        Console.WriteLine("Ibeacon Guid : " + _monitorIBeaconGuid[i]._Beacons[j].ToString());
+                        Console.WriteLine("IBeacon Threshold : " + _monitorIBeaconGuid[i]._BeaconThreshold[_monitorIBeaconGuid[i]._Beacons[j]].ToString());
+                    }
+                    
+                }
                 _IPSClient.SetWaypointList(_monitorIBeaconGuid);
             }
-            else if (haveGPS==true)
+            if (haveGPS==true)
             {
 
             }
+            //TODO:if add new client, here need to add.
         }
 
+        //At first, wee need to open all the client because the user does not know where they are. When we know where they are,
+        // we can then close all the client
         public void CloseStartAllExistClient()
         {
             if (haveLBeacon == true)
@@ -322,7 +339,7 @@ namespace IndoorNavigation.Modules
 
             }
         }
-
+        //Start beacon Scanning, TODO: If add new IPSClient, here needs to add new Detection
         public void OpenBeconScanning()
         {
             _IPSClient.DetectWaypoints();
@@ -330,6 +347,7 @@ namespace IndoorNavigation.Modules
             _waypointClient.DetectWaypoints();
         }
 
+        //Close All the event, TODO : if add new IPSCLient, remember here needs to modify
         public void Close()
         {
             _lbeacon -= new _addInterestedBeacon(ADDIBeacon);
