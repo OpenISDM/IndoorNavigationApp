@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<navigation_graph country='台灣' city_county='員林' industry_service='醫院' owner_organization='畢迪科技' building_name='Yuanlin Christian Hospital'>
+    <regions>
+        <region id='11111111-1111-1111-1111-111111111111' name='B1'/>
+        <region id='22222222-2222-2222-2222-222222222222' name='1st Floor'/>
+		<region id='33333333-3333-3333-3333-333333333333' name='2nd Floor'/>	
+	</regions>
+    <waypoints>
+        <waypoint id='00000000-0000-0000-0000-000000000001' name='Toilet'/>
+        <waypoint id='00000000-0000-0000-0000-000000000002' name='Urology'/>
+        <waypoint id='00000000-0000-0000-0000-000000000003' name='Corridor'/>
+        <waypoint id='00000000-0000-0000-0000-000000000004' name='B1 Cashier/Registration'/>
+        <waypoint id='00000000-0000-0000-0000-000000000005' name='Elevator Hall'/>
+		<waypoint id='00000000-0000-0000-0000-000000000006' name='Dentistry'/>
+        <waypoint id='00000000-0000-0000-0000-000000000007' name='Elevator'/>
+		<waypoint id='00000000-0000-0000-0000-000000000008' name='Elevator Hall'/>
+		<waypoint id='00000000-0000-0000-0000-000000000009' name='Breast Surgery'/>
+		<waypoint id='00000000-0000-0000-0000-000000000010' name='Physical examination'/>
+		<waypoint id='00000000-0000-0000-0000-000000000011' name='Chemotherapy'/>
+		<waypoint id='00000000-0000-0000-0000-000000000012' name='Otolaryngology'/>
+		<waypoint id='00000000-0000-0000-0000-000000000013' name='Pediatrics'/>
+		<waypoint id='00000000-0000-0000-0000-000000000014' name='Side Door'/>
+		<waypoint id='00000000-0000-0000-0000-000000000015' name='Store'/>
+		<waypoint id='00000000-0000-0000-0000-000000000016' name='Hall'/>
+		<waypoint id='00000000-0000-0000-0000-000000000017' name='Elevator'/>
+		<waypoint id='00000000-0000-0000-0000-000000000018' name='Front Door'/>
+		<waypoint id='00000000-0000-0000-0000-000000000019' name='Pharmacy'/>
+		<waypoint id='00000000-0000-0000-0000-000000000020' name='Escalator'/>
+		<waypoint id='00000000-0000-0000-0000-000000000021' name='Blood collection'/>
+		<waypoint id='00000000-0000-0000-0000-000000000022' name='General Medicine'/>
+		<waypoint id='00000000-0000-0000-0000-000000000023' name='Seat area'/>
+		<waypoint id='00000000-0000-0000-0000-000000000024' name='Elevator'/>
+		<waypoint id='00000000-0000-0000-0000-000000000025' name='Surgery'/>
+		<waypoint id='00000000-0000-0000-0000-000000000026' name='2F Cashier/Registration'/>
+		<waypoint id='00000000-0000-0000-0000-000000000027' name='Ophthalmology'/>
+    </waypoints>
+</navigation_graph>

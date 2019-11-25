@@ -86,6 +86,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
             string NTUH_YunLin = _resourceManager.GetString("HOSPITAL_NAME_STRING", ci).ToString();
             string Taipei_City_Hall = _resourceManager.GetString("TAIPEI_CITY_HALL_STRING", ci).ToString();
             string Lab = _resourceManager.GetString("LAB_STRING", ci).ToString();
+            string Yuanlin_Christian_Hospital = _resourceManager.GetString("YUANLIN_CHRISTIAN_HOSPITAL_STRING", ci).ToString();
             string loadFileName = "";
 
             if (userNaming == NTUH_YunLin)
@@ -100,6 +101,10 @@ namespace IndoorNavigation.Models.NavigaionLayer
             {
                 loadFileName = "Lab";
             }
+            else if (userNaming == Yuanlin_Christian_Hospital)
+            {
+                loadFileName = "Yuanlin Christian Hospital";
+            }
             return loadFileName;
         }
         public List<string>GiveGenerateMapName(string userNaming)
@@ -108,6 +113,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
             string NTUH_YunLin = _resourceManager.GetString("HOSPITAL_NAME_STRING", ci).ToString();
             string Taipei_City_Hall = _resourceManager.GetString("TAIPEI_CITY_HALL_STRING", ci).ToString();
             string Lab = _resourceManager.GetString("LAB_STRING", ci).ToString();
+            string Yuanlin_Christian_Hospital = _resourceManager.GetString("YUANLIN_CHRISTIAN_HOSPITAL_STRING", ci).ToString();
             List<string> loadFileName = new List<string>();
 
             if (userNaming == NTUH_YunLin)
@@ -124,6 +130,11 @@ namespace IndoorNavigation.Models.NavigaionLayer
             {
                 loadFileName.Add("Lab");
                 loadFileName.Add("Lab");
+            }
+            else if (userNaming == Yuanlin_Christian_Hospital)
+            {
+                loadFileName.Add("Yuanlin Christian Hospital");
+                loadFileName.Add("Yuanlin_Christian_Hospital");
             }
             return loadFileName;
         }

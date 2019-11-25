@@ -3,4 +3,5 @@
     <Location name='Lab' version='1.0' />    
     <Location name='NTUH Yunlin Branch' version='1.0' /> 
     <Location name='Taipei City Hall' version='1.0'/>
+    <Location name='Yuanlin Christian Hospital' version='1.0'/>
 </Map>

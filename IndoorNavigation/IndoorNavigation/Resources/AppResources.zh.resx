@@ -497,4 +497,8 @@
         <value>按下確定來更新圖資</value>
     </data>
     
+    <data name="YUANLIN_CHRISTIAN_HOSPITAL_STRING" xml:space="preserve">
+        <value>員林基督教醫院</value>
+    </data>
+    
 </root>

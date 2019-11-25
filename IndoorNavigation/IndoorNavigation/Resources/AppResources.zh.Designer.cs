@@ -760,5 +760,11 @@ namespace IndoorNavigation.Resources {
                 return ResourceManager.GetString("UPDATE_MAP_STRING", resourceCulture);
             }
         }
+        
+        internal static string YUANLIN_CHRISTIAN_HOSPITAL_STRING {
+            get {
+                return ResourceManager.GetString("YUANLIN_CHRISTIAN_HOSPITAL_STRING", resourceCulture);
+            }
+        }
     }
 }

@@ -150,10 +150,9 @@ namespace IndoorNavigation
 
                 // UpdateMap(location.UserNaming, navigationGraph);
                 var ci = CrossMultilingual.Current.CurrentCultureInfo;
-                string NTUH_YunLin = _resourceManager.GetString("HOSPITAL_NAME_STRING", ci).ToString();
-                string Taipei_City_Hall = _resourceManager.GetString("TAIPEI_CITY_HALL_STRING", ci).ToString();
-                string Lab = _resourceManager.GetString("LAB_STRING", ci).ToString();
-                string loadFileName="";
+                //string NTUH_YunLin = _resourceManager.GetString("HOSPITAL_NAME_STRING", ci).ToString();
+                //string Lab = _resourceManager.GetString("LAB_STRING", ci).ToString();
+               // string loadFileName="";
                 string map = _phoneInformation.GiveCurrentMapName(location.UserNaming);
                 
                 NavigationGraph navigationGraph = NavigraphStorage.LoadNavigationGraphXML(map);
@@ -238,6 +237,7 @@ namespace IndoorNavigation
             string NTUH_YunLin = _resourceManager.GetString("HOSPITAL_NAME_STRING", ci).ToString();
             string Taipei_City_Hall = _resourceManager.GetString("TAIPEI_CITY_HALL_STRING", ci).ToString();
             string Lab = _resourceManager.GetString("LAB_STRING", ci).ToString();
+            string Yuanlin_Christian_Hospital = _resourceManager.GetString("YUANLIN_CHRISTIAN_HOSPITAL_STRING", ci).ToString();
             string loadFileName = "";
 
             if (item.UserNaming == NTUH_YunLin)
@@ -251,6 +251,10 @@ namespace IndoorNavigation
             else if (item.UserNaming == Lab)
             {
                 loadFileName = "Lab";
+            }
+            else if (item.UserNaming == Yuanlin_Christian_Hospital)
+            {
+                loadFileName = "Yuanlin Christian Hospital";
             }
             if (item != null)
             {

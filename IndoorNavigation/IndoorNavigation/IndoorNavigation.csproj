@@ -48,6 +48,7 @@
     <Folder Include="Resources\NTUH_YunLin\" />
     <Folder Include="Resources\Taipei_City_Hall\" />
     <Folder Include="Resources\Lab\" />
+    <Folder Include="Resources\Yuanlin_Christian_Hospital\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Models\NavigationStructure.cs" />
@@ -92,6 +93,11 @@
     <EmbeddedResource Include="Resources\NTUH_YunLin\NTUH_YunLin_info_en-US.xml" />
     <EmbeddedResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall_info_zh.xml" />
     <EmbeddedResource Include="Resources\Map_Version.xml" />
+    <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_info_en-US.xml" />
+    <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_en-US.xml" />
+    <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital.xml" />
+    <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_zh.xml" />
+    <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_info_zh.xml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Views\PopUpPage\DownloadPopUpPage.xaml">
@@ -131,6 +137,11 @@
     <None Remove="Resources\NTUH_YunLin\NTUH_YunLin_Info_en-US.xml" />
     <None Remove="Resources\Taipei_City_Hall\Taipei_City_Hall_info_zh.xml" />
     <None Remove="Resources\Map_Version.xml" />
+    <None Remove="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_info_en-US.xml" />
+    <None Remove="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_en-US.xml" />
+    <None Remove="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital.xml" />
+    <None Remove="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_zh.xml" />
+    <None Remove="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_info_zh.xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Resources\AppResources.Designer.cs">

@@ -67,8 +67,7 @@ namespace IndoorNavigation.ViewModels
         const string _resourceId = "IndoorNavigation.Resources.AppResources";
         ResourceManager _resourceManager =
             new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
-        private const string _tapei_city_hall = "Taipei_City_Hall";
-        private const string _ntuh_yunlin = "NTUH_YunLin";
+
         public MainPageViewModel()
         {
             _returnedLocations = new ObservableRangeCollection<Location>();
@@ -83,14 +82,12 @@ namespace IndoorNavigation.ViewModels
 
             if (!Application.Current.Properties.ContainsKey("FirstUse"))
             {
-                
-                string NTUH_YunLin = _resourceManager.GetString("HOSPITAL_NAME_STRING", ci).ToString();
-                string Taipei_City_Hall = _resourceManager.GetString("TAIPEI_CITY_HALL_STRING", ci).ToString();
                 NavigraphStorage.GenerateFileRoute("NTUH Yunlin Branch", "NTUH_YunLin");
                 NavigraphStorage.GenerateFileRoute("Taipei City Hall", "Taipei_City_Hall");
+                NavigraphStorage.GenerateFileRoute("Yuanlin Christian Hospital", "Yuanlin_Christian_Hospital");
                 Application.Current.Properties["FirstUse"] = false;
             }
-
+         
 
             foreach (string naviGraphName in NavigraphStorage.GetAllNavigationGraphs())
             {

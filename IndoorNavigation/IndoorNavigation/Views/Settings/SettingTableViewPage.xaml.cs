@@ -396,6 +396,7 @@ namespace IndoorNavigation.Views.Settings
             _chooseMap.Add(_resourceManager.GetString("TAIPEI_CITY_HALL_STRING", ci));
             _chooseMap.Add(_resourceManager.GetString("HOSPITAL_NAME_STRING", ci));
             _chooseMap.Add(_resourceManager.GetString("LAB_STRING", ci));
+            _chooseMap.Add(_resourceManager.GetString("YUANLIN_CHRISTIAN_HOSPITAL_STRING", ci));
         }
 
         private async void HandleChooseMap()

@@ -497,4 +497,8 @@
         <value>Press OK to update Map</value>
     </data>
     
+    <data name="YUANLIN_CHRISTIAN_HOSPITAL_STRING" xml:space="preserve">
+        <value>Yuanlin Christian Hospital</value>
+    </data>
+    
 </root>

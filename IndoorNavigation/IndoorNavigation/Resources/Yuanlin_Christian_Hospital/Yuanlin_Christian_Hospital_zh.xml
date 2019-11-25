@@ -1,0 +1,29 @@
+<first_direction_XML country='Taiwan' city_county='YunLin' industry_service='hospital' owner_organization='BeDI' building_name='員林基督教醫院'>
+	<waypoint id="00000000-0000-0000-0000-000000000001" Landmark = "電梯" RelatedDirection = "0" FaceOrBack = "1"/>
+    <waypoint id="00000000-0000-0000-0000-000000000002" Landmark = "大廳" RelatedDirection = "4" FaceOrBack = "0"/>
+	<waypoint id="00000000-0000-0000-0000-000000000003" Landmark = "大廳" RelatedDirection = "4" FaceOrBack = "0"/>
+	<waypoint id="00000000-0000-0000-0000-000000000004" Landmark = "大廳" RelatedDirection = "4" FaceOrBack = "0"/>
+	<waypoint id="00000000-0000-0000-0000-000000000005" Landmark = "梯廳" RelatedDirection = "4" FaceOrBack = "1"/>
+	<waypoint id="00000000-0000-0000-0000-000000000006" Landmark = "大廳" RelatedDirection = "2" FaceOrBack = "0" />
+	<waypoint id="00000000-0000-0000-0000-000000000007" Landmark = "梯廳" RelatedDirection = "4" FaceOrBack = "1"/>
+	<waypoint id="00000000-0000-0000-0000-000000000008" Landmark = "梯廳" RelatedDirection = "0" FaceOrBack = "1"/>
+	<waypoint id="00000000-0000-0000-0000-000000000009" Landmark = "大廳" RelatedDirection = "2" FaceOrBack = "0"/>
+	<waypoint id="00000000-0000-0000-0000-000000000010" Landmark = "大廳" RelatedDirection = "6" FaceOrBack = "0"/>
+	<waypoint id="00000000-0000-0000-0000-000000000011" Landmark = "側門" RelatedDirection = "2" FaceOrBack = "1"/>
+	<waypoint id="00000000-0000-0000-0000-000000000012" Landmark = "走廊" RelatedDirection = "2" FaceOrBack = "0"/>
+	<waypoint id="00000000-0000-0000-0000-000000000013" Landmark = "大廳" RelatedDirection = "0" FaceOrBack = "0"/>
+	<waypoint id="00000000-0000-0000-0000-000000000014" Landmark = "大廳" RelatedDirection = "4" FaceOrBack = "0"/>
+	<waypoint id="00000000-0000-0000-0000-000000000015" Landmark = "大廳" RelatedDirection = "4" FaceOrBack = "0"/>
+	<waypoint id="00000000-0000-0000-0000-000000000016" Landmark = "大廳" RelatedDirection = "2" FaceOrBack = "0"/>
+	<waypoint id="00000000-0000-0000-0000-000000000017" Landmark = "大廳" RelatedDirection = "6" FaceOrBack = "0"/>
+	<waypoint id="00000000-0000-0000-0000-000000000018" Landmark = "前門" RelatedDirection = "0" FaceOrBack = "1"/>
+	<waypoint id="00000000-0000-0000-0000-000000000019" Landmark = "大廳" RelatedDirection = "6" FaceOrBack = "0"/>
+	<waypoint id="00000000-0000-0000-0000-000000000020" Landmark = "手扶梯" RelatedDirection = "4" FaceOrBack = "1"/>
+	<waypoint id="00000000-0000-0000-0000-000000000021" Landmark = "梯廳" RelatedDirection = "4" FaceOrBack = "0"/>
+	<waypoint id="00000000-0000-0000-0000-000000000022" Landmark = "內科" RelatedDirection = "2" FaceOrBack = "1"/>
+	<waypoint id="00000000-0000-0000-0000-000000000023" Landmark = "手扶梯" RelatedDirection = "0" FaceOrBack = "1"/>
+	<waypoint id="00000000-0000-0000-0000-000000000024" Landmark = "梯廳" RelatedDirection = "4" FaceOrBack = "1"/>
+	<waypoint id="00000000-0000-0000-0000-000000000025" Landmark = "外科" RelatedDirection = "2" FaceOrBack = "1"/>
+	<waypoint id="00000000-0000-0000-0000-000000000026" Landmark = "批價掛號櫃台" RelatedDirection = "4" FaceOrBack = "1"/>
+	<waypoint id="00000000-0000-0000-0000-000000000027" Landmark = "眼科" RelatedDirection = "2" FaceOrBack = "1"/>
+</first_direction_XML>

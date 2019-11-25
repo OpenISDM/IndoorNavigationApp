@@ -1,0 +1,29 @@
+<first_direction_XML country='Taiwan' city_county='YunLin' industry_service='hospital' owner_organization='BeDI' building_name='Yuanlin_Christian_Hospital'>
+    <waypoint id="00000000-0000-0000-0000-000000000001" Landmark = "Elevator" RelatedDirection = "0" FaceOrBack = "1"/>
+    <waypoint id="00000000-0000-0000-0000-000000000002" Landmark = "Hall" RelatedDirection = "4" FaceOrBack = "0"/>
+	<waypoint id="00000000-0000-0000-0000-000000000003" Landmark = "Hall" RelatedDirection = "4" FaceOrBack = "0"/>
+	<waypoint id="00000000-0000-0000-0000-000000000004" Landmark = "Hall" RelatedDirection = "4" FaceOrBack = "0"/>
+	<waypoint id="00000000-0000-0000-0000-000000000005" Landmark = "Elevator Hall" RelatedDirection = "4" FaceOrBack = "1"/>
+	<waypoint id="00000000-0000-0000-0000-000000000006" Landmark = "Hall" RelatedDirection = "2" FaceOrBack = "0" />
+	<waypoint id="00000000-0000-0000-0000-000000000007" Landmark = "Elevator Hall" RelatedDirection = "4" FaceOrBack = "1"/>
+	<waypoint id="00000000-0000-0000-0000-000000000008" Landmark = "Elevator Hall" RelatedDirection = "0" FaceOrBack = "1"/>
+	<waypoint id="00000000-0000-0000-0000-000000000009" Landmark = "Hall" RelatedDirection = "2" FaceOrBack = "0"/>
+	<waypoint id="00000000-0000-0000-0000-000000000010" Landmark = "Hall" RelatedDirection = "6" FaceOrBack = "0"/>
+	<waypoint id="00000000-0000-0000-0000-000000000011" Landmark = "Side Door" RelatedDirection = "2" FaceOrBack = "1"/>
+	<waypoint id="00000000-0000-0000-0000-000000000012" Landmark = "Corridor" RelatedDirection = "2" FaceOrBack = "0"/>
+	<waypoint id="00000000-0000-0000-0000-000000000013" Landmark = "Hall" RelatedDirection = "0" FaceOrBack = "0"/>
+	<waypoint id="00000000-0000-0000-0000-000000000014" Landmark = "Hall" RelatedDirection = "4" FaceOrBack = "0"/>
+	<waypoint id="00000000-0000-0000-0000-000000000015" Landmark = "Hall" RelatedDirection = "4" FaceOrBack = "0"/>
+	<waypoint id="00000000-0000-0000-0000-000000000016" Landmark = "Hall" RelatedDirection = "2" FaceOrBack = "0"/>
+	<waypoint id="00000000-0000-0000-0000-000000000017" Landmark = "Hall" RelatedDirection = "6" FaceOrBack = "0"/>
+	<waypoint id="00000000-0000-0000-0000-000000000018" Landmark = "Front Door" RelatedDirection = "0" FaceOrBack = "1"/>
+	<waypoint id="00000000-0000-0000-0000-000000000019" Landmark = "Hall" RelatedDirection = "6" FaceOrBack = "0"/>
+	<waypoint id="00000000-0000-0000-0000-000000000020" Landmark = "Escalator" RelatedDirection = "4" FaceOrBack = "1"/>
+	<waypoint id="00000000-0000-0000-0000-000000000021" Landmark = "Elevator Hall" RelatedDirection = "4" FaceOrBack = "0"/>
+	<waypoint id="00000000-0000-0000-0000-000000000022" Landmark = "General Medicine" RelatedDirection = "2" FaceOrBack = "1"/>
+	<waypoint id="00000000-0000-0000-0000-000000000023" Landmark = "Escalator" RelatedDirection = "0" FaceOrBack = "1"/>
+	<waypoint id="00000000-0000-0000-0000-000000000024" Landmark = "Elevator Hall" RelatedDirection = "4" FaceOrBack = "1"/>
+	<waypoint id="00000000-0000-0000-0000-000000000025" Landmark = "Surgery" RelatedDirection = "2" FaceOrBack = "1"/>
+	<waypoint id="00000000-0000-0000-0000-000000000026" Landmark = "Cashier/Registration" RelatedDirection = "4" FaceOrBack = "1"/>
+	<waypoint id="00000000-0000-0000-0000-000000000027" Landmark = "Ophthalmology" RelatedDirection = "2" FaceOrBack = "1"/>
+</first_direction_XML>
