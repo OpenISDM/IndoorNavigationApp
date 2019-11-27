@@ -58,7 +58,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
         public string GiveCurrentLanguage()
         {
-
+            //If add one more language, here needs to add
             if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == _en || CrossMultilingual.Current.CurrentCultureInfo.ToString() == _returnEnglish)
             {
                 return _returnEnglish;
@@ -75,7 +75,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
         public List<string> GiveAllLanguage()
         {
             List<string> giveAllLanguage = new List<string>();
-            giveAllLanguage.Add(_returnChinese);
+            giveAllLanguage.Add(_returnEnglish);
             giveAllLanguage.Add(_returnChinese);
             return giveAllLanguage;
         }

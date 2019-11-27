@@ -24,16 +24,11 @@
  *
  * Abstract:
  *
- *      Waypoint-based navigator is a mobile Bluetooth navigation application
- *      that runs on smart phones. It is structed to support anywhere
- *      navigation. Indoors in areas covered by different indoor positioning
- *      system (IPS) and outdoors covered by GPS. In particilar, it can rely on
- *      BeDIS (Building/environment Data and Information System) for indoor
- *      positioning. Using this IPS, the navigator does not need to
- *      continuously monitor its own position, since the IPS broadcast to the
- *      navigator the location of each waypoint.
- *      This version makes use of Xamarin.Forms, which is a complete
- *      cross-platform UI tookit that runs on both iOS and Android.
+ *      This file will call the bluetooth scanning code in both
+ *      IOS and Android. In Waypoint.cs, we match the LBeacon.
+ *      We will sort the guid we get and check if the beacon guid which has the
+ *      strongest threshold is our interested beacon or not, if not check the
+ *      second strongest threshold
  *
  * Authors:
  *
@@ -59,7 +54,7 @@ namespace IndoorNavigation.Modules.IPSClients
 
         private object _bufferLock;// = new object();
         private readonly EventHandler _beaconScanEventHandler;
-       
+        private const int _clockResetTime = 90000;
         public NavigationEvent _event { get; private set; }
         private List<BeaconSignalModel> _beaconSignalBuffer = new List<BeaconSignalModel>();
         private int rssiOption;
@@ -116,7 +111,7 @@ namespace IndoorNavigation.Modules.IPSClients
                 _beaconSignalBuffer.Where(c =>
                 c.Timestamp < DateTime.Now.AddMilliseconds(-500)));
 
-                if (watch.Elapsed.TotalMilliseconds >= 90000)
+                if (watch.Elapsed.TotalMilliseconds >= _clockResetTime)
                 {
                     watch.Stop();
                     watch.Reset();
@@ -134,6 +129,7 @@ namespace IndoorNavigation.Modules.IPSClients
                 _beaconSignalBuffer.Sort((x, y) => { return y.RSSI.CompareTo(x.RSSI); });
                 //BeaconSignalModel beaconSignalModel = new BeaconSignalModel();
                 //beaconSignalModel.UUID = new Guid("00000015-0000-2503-7431-000021564508");
+                
                 //_beaconSignalBuffer.Add(beaconSignalModel);
 
                 foreach (BeaconSignalModel beacon in _beaconSignalBuffer)

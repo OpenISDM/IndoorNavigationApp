@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <Map>
     <Location name='Lab' version='1.0' />    
-    <Location name='NTUH Yunlin Branch' version='1.0' /> 
-    <Location name='Taipei City Hall' version='1.0'/>
-    <Location name='Yuanlin Christian Hospital' version='1.0'/>
+    <Location name='NTUH_Yunlin' version='1.0' /> 
+    <Location name='Taipei_City_Hall' version='1.0'/>
+    <Location name='Yuanlin_Christian_Hospital' version='1.0'/>
 </Map>

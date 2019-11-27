@@ -357,9 +357,6 @@ namespace IndoorNavigation.Views.Settings
                 else
                 {
                     if (await DisplayAlert(_resourceManager.GetString("WARN_STRING", ci),
-                                           //_resourceManager.GetString("ASK_IF_CANCEL_MAP_STRING", ci),
-                                           //_resourceManager.GetString("MAP_STRING", ci),
-                                           //string.Format(":{0}？", CleanMapPicker.SelectedItem),
                                            string.Format(_resourceManager.GetString("ASK_IF_CANCEL_MAP_STRING", ci) + _resourceManager.GetString("MAP_STRING", ci) + ":{0}？", CleanMapPicker.SelectedItem),
                                            _resourceManager.GetString("OK_STRING", ci),
                                            _resourceManager.GetString("CANCEL_STRING", ci)))

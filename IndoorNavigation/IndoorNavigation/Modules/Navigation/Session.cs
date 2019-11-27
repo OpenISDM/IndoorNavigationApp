@@ -21,9 +21,10 @@
  *
  * Abstract:
  *
- *      1. This class used to decide which IPS we need to call.
- *      2. We use this class to switch the IPS.
- *      3. We read the beacon information in this class.
+ *    Calculate the best route and use waypoint and region to connect to a route,
+ *    and add the intersted waypoints that include next waypoint, next next waypoint
+ *    and wrongwaypoints.
+ *    When we get the matched 
  *   
  *
  * Authors:

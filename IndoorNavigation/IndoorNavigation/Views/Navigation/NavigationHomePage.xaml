@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             x:Class="IndoorNavigation.Views.Navigation.NavigationHomePage"
+             xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"   
+             Title="{Binding myProperty}">
+
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness">
+            <OnPlatform.Platforms>
+                <On Platform="iOS" Value="4, 5, 4, 25" />
+                <On Platform="Android" Value="0, 0, 0, 0" />
+                <On Platform="UWP" Value="0, 0, 0, 0" />
+            </OnPlatform.Platforms>
+        </OnPlatform>
+    </ContentPage.Padding>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="InfoButton" Text="{i18n:Translate PREFERENCES_STRING}" Clicked="InfoButton_Clicked"/>
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1.2*"/>
+                <RowDefinition Height="0.35*"/>
+                <RowDefinition Height="0.25*"/>
+                <RowDefinition Height="0.6*"/>
+                <RowDefinition Height="0.3*"/>
+                <RowDefinition Height="0.6*"/>
+                <RowDefinition Height="0.4*"/>
+                <RowDefinition Height="0.6*"/>
+                <RowDefinition Height="0.3*"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="35*"/>
+                <ColumnDefinition Width="35*"/>
+                <ColumnDefinition Width="35*"/>
+            </Grid.ColumnDefinitions>
+
+            <Image Grid.Row="0" Grid.ColumnSpan="3" Source="service_hospital_logo" Scale="0.9"/>
+
+            <Label Grid.Row="1" Grid.ColumnSpan="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                   Text="{Binding myProperty}" FontSize="Large" TextColor="Black" Margin="0, 0, 0, 0"/>
+
+            <Label Grid.Row="2" Grid.ColumnSpan="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                   Text="{i18n:Translate PICK_LOCATION_STRING}" FontSize="Default"  TextColor="Gray" Margin="0, 0, 0, 0"/>
+
+            <!-- Row 1 -->
+            <ImageButton x:Name="ClinicBtn" Grid.Row="3"  Grid.Column="0" Source="Clinics" BackgroundColor="Transparent" Clicked="ClinicList_Clicked" />
+            <Label Grid.Row="4" Grid.Column="0" Text="{i18n:Translate CATEGORY_CLINICS_STRING}" FontSize="Medium"  HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+
+            <ImageButton x:Name="CashierBtn" Grid.Row="3"  Grid.Column="1" Source="Cashier" BackgroundColor="Transparent" Clicked="Cashier_Clicked"/>
+            <Label Grid.Row="4" Grid.Column="1" Text="{i18n:Translate CATEGORY_CASHIER_STRING}" FontSize="Medium" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+
+            <ImageButton x:Name="PharmacyBtn" Grid.Row="3"  Grid.Column="2" Source="Pharmacy" BackgroundColor="Transparent" Clicked="Pharmacy_Clicked"/>
+            <Label Grid.Row="4" Grid.Column="2" Text="{i18n:Translate CATEGORY_PHARMACY_STRING}" FontSize="Medium" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+
+            <!-- Row 2 -->
+            <ImageButton x:Name="ExaminationRoomBtn" Grid.Row="5"  Grid.Column="0" Source="ExaminationRoom" BackgroundColor="Transparent" Clicked="ExaminationRoomList_Clicked"/>
+            <Label Grid.Row="6" Grid.Column="0" Text="{i18n:Translate CATEGORY_EXAMINATION_ROOM_STRING}" FontSize="Medium" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+
+            <ImageButton x:Name="BloodCollectionCounterBtn" Grid.Row="5"  Grid.Column="1" Source="BloodCollectionCounter" BackgroundColor="Transparent" Clicked="BloodCollectionCounter_Clicked"/>
+            <Label Grid.Row="6" Grid.Column="1" Text="{i18n:Translate CATEGORY_BLOOD_COLLECTION_STRING}" FontSize="Medium" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+
+            <ImageButton x:Name="ConvenienceStoreBtn" Grid.Row="5"  Grid.Column="2" Source="ConvenienceStore" BackgroundColor="Transparent" Clicked="ConvenienceStore_Clicked"/>
+            <Label Grid.Row="6" Grid.Column="2" Text="{i18n:Translate CATEGORY_CONVENIENCE_STORE_STRING}" FontSize="Medium" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+
+            <!-- Row 3 -->
+            <ImageButton x:Name="OthersBtn" Grid.Row="7"  Grid.Column="0" Source="Others" BackgroundColor="Transparent" Clicked="OthersList_Clicked"/>
+            <Label Grid.Row="8" Grid.Column="0" Text="{i18n:Translate CATEGORY_OTHERS_STRING}" FontSize="Medium" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+
+            <ImageButton x:Name="BathroomBtn" Grid.Row="7"  Grid.Column="1" Source="Bathroom" BackgroundColor="Transparent" Clicked="BathroomList_Clicked"/>
+            <Label Grid.Row="8" Grid.Column="1" Text="{i18n:Translate CATEGORY_BATH_ROOM_STRING}" FontSize="Medium" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+
+            <ImageButton x:Name="ExitBtn" Grid.Row="7"  Grid.Column="2" Source="Exit" BackgroundColor="Transparent" Clicked="ExitList_Clicked"/>
+            <Label Grid.Row="8" Grid.Column="2" Text="{i18n:Translate CATEGORY_EXIT_STRING}" FontSize="Medium" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+
+        </Grid>
+    </ContentPage.Content>
+
+</ContentPage>

@@ -20,20 +20,15 @@
  * 
  * File Name:
  *
- *      WaypointClient.cs
+ *      IBeaconClient.cs
  *
  * Abstract:
  *
- *      Waypoint-based navigator is a mobile Bluetooth navigation application
- *      that runs on smart phones. It is structed to support anywhere 
- *      navigation. Indoors in areas covered by different indoor positioning 
- *      system (IPS) and outdoors covered by GPS. In particilar, it can rely on 
- *      BeDIS (Building/environment Data and Information System) for indoor 
- *      positioning. Using this IPS, the navigator does not need to 
- *      continuously monitor its own position, since the IPS broadcast to the 
- *      navigator the location of each waypoint. 
- *      This version makes use of Xamarin.Forms, which is a complete 
- *      cross-platform UI tookit that runs on both iOS and Android.
+ *      This file will call the bluetooth scanning code in both
+ *      IOS and Android. In IBeaconClient.cs, we will store all the
+ *      signals we get in the buffer. And we will cancel some signals
+ *      that their threshold are too low. Yhen we calculate the threshold
+ *      and get the average.
  *
  * Authors:
  *
@@ -52,7 +47,7 @@ namespace IndoorNavigation.Modules.IPSClients
     class IBeaconClient : IIPSClient
     {
         private List<WaypointBeaconsMapping> _waypointBeaconsList = new List<WaypointBeaconsMapping>();
-
+        private const int _clockResetTime = 90000;
         private object _bufferLock;// = new object();
         private readonly EventHandler _beaconScanEventHandler;
         //private Dictionary<string, Ibea>
@@ -120,9 +115,7 @@ namespace IndoorNavigation.Modules.IPSClients
                 Dictionary<RegionWaypointPoint, List<BeaconSignal>> correctData = new Dictionary<RegionWaypointPoint, List<BeaconSignal>>();
 
                 
-                
-                Console.WriteLine("Time : " + watch.Elapsed.TotalMilliseconds);
-                if (watch.Elapsed.TotalMilliseconds >= 90000)
+                if (watch.Elapsed.TotalMilliseconds >= _clockResetTime)
                 {
                     watch.Stop();
                     watch.Reset();
@@ -131,11 +124,7 @@ namespace IndoorNavigation.Modules.IPSClients
                     Utility._ibeaconScan.StartScan();
 
                 }
-                //if (_beaconSignalBuffer.Count() >= 25)
-                //{
-                //    _beaconSignalBuffer = new List<BeaconSignalModel>();
-                //    _bufferLock = new object();
-                //}
+
 
                 //In ibsclient, a waypoint has at least two beacon UUIDs,
                 //We put all waypoint we get in scannedData
@@ -156,6 +145,8 @@ namespace IndoorNavigation.Modules.IPSClients
                 //_beaconSignalBuffer.Add(beaconSignalModel2);
                 //_beaconSignalBuffer.Add(beaconSignalModel3);
                 //_beaconSignalBuffer.Add(beaconSignalModel4);
+
+                //Mapping the interested beacon and cancel the beacon which has too low threshold
                 foreach (BeaconSignalModel beacon in _beaconSignalBuffer)
                 {
                     foreach (WaypointBeaconsMapping waypointBeaconsMapping in _waypointBeaconsList)
@@ -177,7 +168,7 @@ namespace IndoorNavigation.Modules.IPSClients
                     }
                 }
 
-
+                //Make sure we have got more than two interested guid in each waypoint
                 foreach(KeyValuePair < RegionWaypointPoint, List < BeaconSignal >>interestedBeacon in scannedData)
                 {
                     //Console.WriteLine("Key : " + interestedBeacon.Value);
@@ -227,36 +218,8 @@ namespace IndoorNavigation.Modules.IPSClients
                            
                             for (int i = min; i < max; i++)
                             {
-                            //    if (saveEachBeacons.Keys.Contains(calculateData.Value[i].UUID))
-                            //    {
-                            //        saveEachBeacons[calculateData.Value[i].UUID].Add(calculateData.Value[i].RSSI);
-                            //    }
-                            //    else
-                            //    {
-                            //        saveEachBeacons.Add(calculateData.Value[i].UUID, new List<int> { calculateData.Value[i].RSSI });
-                            //    }
                                 avgSignal += calculateData.Value[i].RSSI;
                             }
-
-                            //foreach (KeyValuePair<Guid, List<int>> calculate in saveEachBeacons)
-                            //{
-
-                            //    foreach (int value in calculate.Value)
-                            //    {
-                            //        averageSignal = averageSignal + value;
-                            //    }
-                            //    averageSignal = averageSignal / calculate.Value.Count();
-                            //    signalOfEachBeacon.Add(averageSignal);
-                            //    Console.WriteLine("First : " + averageSignal);
-                            //}
-
-                            //averageSignal = 0;
-                            //foreach (int tempInt in signalOfEachBeacon)
-                            //{
-                            //    averageSignal = averageSignal + tempInt;
-                            //}
-                            //averageSignal = averageSignal / signalOfEachBeacon.Count();
-                            //Console.WriteLine("First : " + averageSignal);
                             avgSignal = avgSignal / minus;
                         }
                         else
@@ -265,36 +228,8 @@ namespace IndoorNavigation.Modules.IPSClients
                             
                             foreach (BeaconSignal value in calculateData.Value)
                             {
-                            //if (saveEachBeacons.Keys.Contains(value.UUID))
-                            //    {
-                            //        saveEachBeacons[value.UUID].Add(value.RSSI);
-                            //    }
-                            //    else
-                            //    {
-                            //        saveEachBeacons.Add(value.UUID, new List<int> { value.RSSI });
-                            //    }
-
-
                                 avgSignal += value.RSSI;
                             }
-                            //foreach (KeyValuePair<Guid, List<int>> calculate in saveEachBeacons)
-                            //{
-
-                            //    foreach (int value in calculate.Value)
-                            //    {
-                            //        averageSignal = averageSignal + value;
-                            //    }
-                            //    averageSignal = averageSignal / calculate.Value.Count();
-                            //    signalOfEachBeacon.Add(averageSignal);
-                            //}
-
-
-                            //avgSignal = 0;
-                            //foreach (int tempInt in signalOfEachBeacon)
-                            //{
-                            //    averageSignal = averageSignal + tempInt;
-                            //}
-                            //averageSignal = averageSignal / signalOfEachBeacon.Count();
                             avgSignal = avgSignal / calculateData.Value.Count();
 
                         }
@@ -323,6 +258,7 @@ namespace IndoorNavigation.Modules.IPSClients
                     watch.Stop();
                     watch.Reset();
                     watch.Start();
+                    Console.WriteLine("Matched IBeacon");
                     _event.OnEventCall(new WaypointSignalEventArgs
                     {
                         _detectedRegionWaypoint = possibleRegionWaypoint
