@@ -24,7 +24,8 @@
  *    Calculate the best route and use waypoint and region to connect to a route,
  *    and add the intersted waypoints that include next waypoint, next next waypoint
  *    and wrongwaypoints.
- *    When we get the matched 
+ *    When we get the matched waypoint and region, we will check if it is correct
+ *    waypoint or wrong waypoint.
  *   
  *
  * Authors:
@@ -48,9 +49,6 @@ namespace IndoorNavigation.Modules
 {
     public class Session
     {
-        //private IIPSClient _IPSClient;
-        //private IIPSClient waypointClient;
-        //private IIPSClient ibeaconCLient;
         private int _nextWaypointStep;
 
         private List<RegionWaypointPoint> _waypointsOnRoute = new List<RegionWaypointPoint>();
@@ -91,9 +89,6 @@ namespace IndoorNavigation.Modules
             _event = new NavigationEvent();
            
             _navigationGraph = navigationGraph;
-            //_IPSClient = new WaypointClient();
-            //waypointClient = new WaypointClient();
-            //ibeaconCLient = new IBeaconClient();
 
             _destinationRegionID = destinationRegionID;
             _destinationWaypointID = destinationWaypointID;
@@ -106,10 +101,6 @@ namespace IndoorNavigation.Modules
             _isKeepDetection = true;
             _iPSModules = new IPSModules(_navigationGraph);
             _iPSModules._event._eventHandler += new EventHandler(CheckArrivedWaypoint);
-            /*
-            _IPSClient = new WaypointClient();
-            _IPSClient._event._eventHandler += new EventHandler(CheckArrivedWaypoint);
-            */
             _waypointDetectionThread = new Thread(() => InvokeIPSWork());
             _waypointDetectionThread.Start();
 
@@ -146,9 +137,6 @@ namespace IndoorNavigation.Modules
 
                     _isKeepDetection = false;
                     _iPSModules.Close();
-                    //_IPSClient.Stop();
-                    //ibeaconCLient.Stop();
-                    //waypointClient.Stop();
                     break;
                 }
 
@@ -163,7 +151,6 @@ namespace IndoorNavigation.Modules
                                   _destinationWaypointID);
 
                     _nextWaypointStep++;
-                    //_currentRegionID = _waypointsOnRoute[_nextWaypointStep]._regionID;
                     Guid _nextRegionID = _waypointsOnRoute[_nextWaypointStep]._regionID;
                     NavigateToNextWaypoint(_nextRegionID, _nextWaypointStep);
                 }
@@ -177,7 +164,7 @@ namespace IndoorNavigation.Modules
                                       _currentWaypointID);
                     _nextWaypointStep++;
                     Guid _nextRegionID = _waypointsOnRoute[_nextWaypointStep]._regionID;
-                    // _currentRegionID = _waypointsOnRoute[_nextWaypointStep]._regionID;
+
                     NavigateToNextWaypoint(_nextRegionID, _nextWaypointStep);
                 }
                 else if (_nextWaypointStep >= 1 && _waypointsOnWrongWay[_waypointsOnRoute[_nextWaypointStep - 1]].Contains(checkWrongRegionWaypoint) == true)
@@ -1015,11 +1002,6 @@ namespace IndoorNavigation.Modules
             _waypointsOnWrongWay = new Dictionary<RegionWaypointPoint, List<RegionWaypointPoint>>();
             _waypointsOnRoute = new List<RegionWaypointPoint>();
             _iPSModules._event._eventHandler -= new EventHandler(CheckArrivedWaypoint);
-            //waypointClient.Stop();
-            //ibeaconCLient.Stop();
-            //waypointClient._event._eventHandler -= new EventHandler(CheckArrivedWaypoint);
-            //ibeaconCLient._event._eventHandler -= new EventHandler(CheckArrivedWaypoint);
-            //_IPSClient._event._eventHandler -= new EventHandler(CheckArrivedWaypoint);
         }
 
         public enum NavigationResult
