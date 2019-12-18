@@ -133,7 +133,7 @@ namespace IndoorNavigation.Modules.IPSClients
                 //_beaconSignalBuffer.Sort((x, y) => { return y.RSSI.CompareTo(x.RSSI); });
                 _beaconSignalBuffer.Sort((x, y) => { return y.RSSI.CompareTo(x.RSSI); });
                 //BeaconSignalModel beaconSignalModel = new BeaconSignalModel();
-                //beaconSignalModel.UUID = new Guid("00000015-0000-2503-7431-000021564508");
+                //beaconSignalModel.UUID = new Guid("00000015-0000-0010-1001-000000101001");
                 //_beaconSignalBuffer.Add(beaconSignalModel);
 
                 foreach (BeaconSignalModel beacon in _beaconSignalBuffer)

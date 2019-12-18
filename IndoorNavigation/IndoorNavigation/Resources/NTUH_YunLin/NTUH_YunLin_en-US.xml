@@ -37,7 +37,7 @@
 	<waypoint id = "00000000-0000-0000-0000-000000000036" Landmark = "picture" RelatedDirection = "4" FaceOrBack = "0"/>
 	<waypoint id = "00000000-0000-0000-0000-000000000037" Landmark = "picture" RelatedDirection = "0" FaceOrBack = "0"/>
 	<waypoint id = "00000000-0000-0000-0000-000000000038" Landmark = "picture" RelatedDirection = "2" FaceOrBack = "0"/>
-	<waypoint id = "00000000-0000-0000-0000-000000000039" Landmark = "picture" RelatedDirection = "6" FaceOrBack = "0"/>
+	<waypoint id = "00000000-0000-0000-0000-000000000039" Landmark = "picture" RelatedDirection = "2" FaceOrBack = "0"/>
 	<waypoint id = "00000000-0000-0000-0000-000000000040" Landmark = "Male toilet" RelatedDirection = "4" FaceOrBack = "0"/>
 	<waypoint id = "00000000-0000-0000-0000-000000000041" Landmark = "Room 42~49 corridor exit" RelatedDirection = "6" FaceOrBack = "0"/>
 	<waypoint id = "00000000-0000-0000-0000-000000000042" Landmark = "Convenience store" RelatedDirection = "2" FaceOrBack = "0"/>
