@@ -39,13 +39,10 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.Threading;
-using Dijkstra.NET.Model;
-using Dijkstra.NET.Extensions;
 using IndoorNavigation.Models.NavigaionLayer;
 using IndoorNavigation.Models;
 using IndoorNavigation.Modules.IPSClients;
-using System.Diagnostics.Contracts;
+
 
 delegate void _addInterestedBeacon(Guid regionGuid, List<Guid> waypointGuids);
 delegate void _runClient();
@@ -54,15 +51,10 @@ namespace IndoorNavigation.Modules
 {
     public class IPSModules : IDisposable
     {
-        private IIPSClient _IPSClient;
-        private List<IIPSClient> _multipleClient;
-        private IIPSClient _waypointClient;
-        private IIPSClient _ibeaconCLient;
-        
-        private bool haveLBeacon;
-        private bool haveIBeacon;
-        private bool haveGPS;
-        private IPSModules _IPSModules;
+
+        private Dictionary<IPSType, IIPSClient> _multipleClient;
+        private Dictionary<IPSType, bool> _haveIPSKind;
+
         private List<WaypointBeaconsMapping> _monitorLBeaconGuid;
         private List<WaypointBeaconsMapping> _monitorIBeaconGuid;
         public NavigationEvent _event { get; private set; }
@@ -71,22 +63,26 @@ namespace IndoorNavigation.Modules
         private _addInterestedBeacon _ibeacon;
         private _addInterestedBeacon _gps;
         private int _firstStep = -1;
-        private bool _isKeepDetection;
 
         public IPSModules(NavigationGraph navigationGraph)
         {
-            _IPSClient = new WaypointClient();
-            _ibeaconCLient = new IBeaconClient();
-            _waypointClient = new WaypointClient();
-            _multipleClient = new List<IIPSClient>();
+            _multipleClient = new Dictionary<IPSType, IIPSClient>();
+
+            _multipleClient.Add(IPSType.LBeacon, new WaypointClient());
+            _multipleClient.Add(IPSType.iBeacon, new IBeaconClient());
+
+            _haveIPSKind = new Dictionary<IPSType, bool>();
+
+            _haveIPSKind.Add(IPSType.LBeacon, false);
+            _haveIPSKind.Add(IPSType.iBeacon, false);
+            _haveIPSKind.Add(IPSType.GPS, false);
+
             _event = new NavigationEvent();
             _navigationGraph = navigationGraph;
-            haveGPS = false;
-            haveIBeacon = false;
-            haveLBeacon = false;
+
             _monitorLBeaconGuid = new List<WaypointBeaconsMapping>();
             _monitorIBeaconGuid = new List<WaypointBeaconsMapping>();
-            _isKeepDetection = true;
+
             _lbeacon = new _addInterestedBeacon(ADDLBeacon);
             _ibeacon = new _addInterestedBeacon(ADDIBeacon);
             _gps = new _addInterestedBeacon(ADDGPS);
@@ -96,13 +92,10 @@ namespace IndoorNavigation.Modules
         public void ADDIBeacon(Guid regionGuid, List<Guid> waypointGuids)
         {
             IPSType ipsType = _navigationGraph.GetRegionIPSType(regionGuid);
-           
             if (ipsType == IPSType.iBeacon)
             {
-                haveIBeacon = true;
-                List<WaypointBeaconsMapping> tempIBeaconMapping = new List<WaypointBeaconsMapping>();
-                tempIBeaconMapping = FindTheMappingOfWaypointAndItsBeacon(regionGuid, waypointGuids);
-                _monitorIBeaconGuid.AddRange(tempIBeaconMapping);
+                _haveIPSKind[IPSType.iBeacon] = true;
+                _monitorIBeaconGuid.AddRange(FindTheMappingOfWaypointAndItsBeacon(regionGuid, waypointGuids));
             }
         }
         public void ADDLBeacon(Guid regionGuid, List<Guid> waypointGuids)
@@ -110,24 +103,22 @@ namespace IndoorNavigation.Modules
             IPSType ipsType = _navigationGraph.GetRegionIPSType(regionGuid);
             if (ipsType == IPSType.LBeacon)
             {
-                haveLBeacon = true;
-                List<WaypointBeaconsMapping> tempLBeaconMapping = new List<WaypointBeaconsMapping>();
-                tempLBeaconMapping = FindTheMappingOfWaypointAndItsBeacon(regionGuid, waypointGuids);
-                _monitorLBeaconGuid.AddRange(tempLBeaconMapping);
+                _haveIPSKind[IPSType.LBeacon] = true;
+                _monitorLBeaconGuid.AddRange(FindTheMappingOfWaypointAndItsBeacon(regionGuid, waypointGuids));
             }
         }
-        public void ADDGPS(Guid regionGuid, List<Guid>waypointGuids)
+        public void ADDGPS(Guid regionGuid, List<Guid> waypointGuids)
         {
             IPSType ipsType = _navigationGraph.GetRegionIPSType(regionGuid);
             if (ipsType == IPSType.GPS)
             {
-                haveGPS = true; 
+                _haveIPSKind[IPSType.GPS] = true;
             }
         }
         public List<WaypointBeaconsMapping> FindTheMappingOfWaypointAndItsBeacon(Guid regionGuid, List<Guid> waypoints)
         {
             List<WaypointBeaconsMapping> waypointBeaconsMappings = new List<WaypointBeaconsMapping>();
-            foreach(Guid waypointID in waypoints)
+            foreach (Guid waypointID in waypoints)
             {
                 RegionWaypointPoint regionWaypointPoint = new RegionWaypointPoint();
                 regionWaypointPoint._regionID = regionGuid;
@@ -135,7 +126,7 @@ namespace IndoorNavigation.Modules
                 List<Guid> beaconIDs = new List<Guid>();
                 beaconIDs = _navigationGraph.GetAllBeaconIDInOneWaypointOfRegion(regionGuid, waypointID);
                 Dictionary<Guid, int> beaconThresholdMapping = new Dictionary<Guid, int>();
-                for(int i = 0; i < beaconIDs.Count(); i++)
+                for (int i = 0; i < beaconIDs.Count(); i++)
                 {
                     beaconThresholdMapping.Add(beaconIDs[i], _navigationGraph.GetBeaconRSSIThreshold(regionGuid, beaconIDs[i]));
                 }
@@ -186,19 +177,19 @@ namespace IndoorNavigation.Modules
         // types of Clients that the map have. 
         public void StartAllExistClient()
         {
-            if (haveLBeacon == true)
+            if (_haveIPSKind[IPSType.LBeacon])
             {
-                _waypointClient = new WaypointClient();
-                _waypointClient._event._eventHandler += new EventHandler(PassMatchedWaypointAndRegionToSession);
-                _waypointClient.SetWaypointList(_monitorLBeaconGuid);
+                _multipleClient[IPSType.LBeacon] = new WaypointClient();
+                _multipleClient[IPSType.LBeacon]._event._eventHandler += new EventHandler(PassMatchedWaypointAndRegionToSession);
+                _multipleClient[IPSType.LBeacon].SetWaypointList(_monitorLBeaconGuid);
             }
-            if(haveIBeacon == true)
+            if (_haveIPSKind[IPSType.iBeacon])
             {
-                _ibeaconCLient = new IBeaconClient();
-                _ibeaconCLient._event._eventHandler += new EventHandler(PassMatchedWaypointAndRegionToSession);
-                _ibeaconCLient.SetWaypointList(_monitorIBeaconGuid);
+                _multipleClient[IPSType.iBeacon] = new IBeaconClient();
+                _multipleClient[IPSType.iBeacon]._event._eventHandler += new EventHandler(PassMatchedWaypointAndRegionToSession);
+                _multipleClient[IPSType.iBeacon].SetWaypointList(_monitorIBeaconGuid);
             }
-            if(haveGPS == true)
+            if (_haveIPSKind[IPSType.GPS])
             {
 
             }
@@ -208,31 +199,30 @@ namespace IndoorNavigation.Modules
         public IPSType GetIPSType(Guid regionGuid)
         {
             IPSType regionIPSType = new IPSType();
-            regionIPSType =
-                   _navigationGraph.GetRegionIPSType(regionGuid);
+            regionIPSType = _navigationGraph.GetRegionIPSType(regionGuid);
             return regionIPSType;
         }
 
+        #region There is some type, it will call those functions.
         //TODO : If add new client, here needs to add new function just likes below.
         public void IsLBeaconType()
         {
-            _IPSClient = new WaypointClient();
-           // _IPSClient.SetWaypointList(_monitorLBeaconGuid);
-            _IPSClient._event._eventHandler += new EventHandler(PassMatchedWaypointAndRegionToSession);
-            haveLBeacon = true;
+            _multipleClient[IPSType.LBeacon] = new WaypointClient();
+            _multipleClient[IPSType.LBeacon]._event._eventHandler += new EventHandler(PassMatchedWaypointAndRegionToSession);
+            _haveIPSKind[IPSType.LBeacon] = true;
         }
         public void IsIBeaconType()
         {
-            _IPSClient = new IBeaconClient();
-            //_IPSClient.SetWaypointList(_monitorIBeaconGuid);
-            _IPSClient._event._eventHandler += new EventHandler(PassMatchedWaypointAndRegionToSession);
-            haveIBeacon = true;
+            _multipleClient[IPSType.iBeacon] = new IBeaconClient();
+            _multipleClient[IPSType.iBeacon]._event._eventHandler += new EventHandler(PassMatchedWaypointAndRegionToSession);
+            _haveIPSKind[IPSType.iBeacon] = true;
         }
 
         public void IsGPSType()
         {
-            
+
         }
+        #endregion
         //This function gets the matched waypoint and region from each Clients, then pass the waypoint and region information to Session
         public void PassMatchedWaypointAndRegionToSession(object sender, EventArgs args)
         {
@@ -250,13 +240,14 @@ namespace IndoorNavigation.Modules
         {
             IPSType currentIPSType = _navigationGraph.GetRegionIPSType(currentRegionGuid);
             IPSType nextIPSType = _navigationGraph.GetRegionIPSType(nextRegionGuid);
-            if (!nextIPSType.Equals(currentIPSType)||firstStep==_firstStep)
+            if (!nextIPSType.Equals(currentIPSType) || firstStep == _firstStep)
             {
                 HaveBeaconAllFalse();
-                _IPSClient.Stop();
-                _IPSClient._event._eventHandler -= new EventHandler(PassMatchedWaypointAndRegionToSession);
+                CloseStartAllExistClient();                
                 OpenCurrentIPSClient(currentIPSType);
+                OpenCurrentIPSClient(nextIPSType);
             }
+            Console.WriteLine($">>IPSModules CompareToCurrentAndNextIPSType, currentType={currentIPSType}, nextType={nextIPSType}");
         }
 
         public void OpenCurrentIPSClient(IPSType currentIPSType)
@@ -272,15 +263,14 @@ namespace IndoorNavigation.Modules
                 case IPSType.GPS:
                     IsGPSType();
                     break;
-                //TODO;f add new client, here needs to add
+                    //TODO: if add new client, here needs to add
             }
         }
 
         public void HaveBeaconAllFalse()
         {
-            haveLBeacon = false;
-            haveIBeacon = false;
-            haveGPS = false;
+            foreach (IPSType type in Enum.GetValues(typeof(IPSType)))
+                _haveIPSKind[type] = false;
             //TODO: if add new client, here needs to add
         }
 
@@ -293,24 +283,15 @@ namespace IndoorNavigation.Modules
         //Qw set the possible interested beacon Guid to each client
         public void SetMonitorBeaconList()
         {
-            if (haveLBeacon == true)
+            if (_haveIPSKind[IPSType.LBeacon])
             {
-                _IPSClient.SetWaypointList(_monitorLBeaconGuid);
+                _multipleClient[IPSType.LBeacon].SetWaypointList(_monitorLBeaconGuid);
             }
-            if (haveIBeacon==true)
+            if (_haveIPSKind[IPSType.iBeacon])
             {
-                for(int i = 0;i<_monitorIBeaconGuid.Count();i++)
-                {
-                    for(int j = 0;j<_monitorIBeaconGuid[i]._Beacons.Count();j++)
-                    {
-                        Console.WriteLine("Ibeacon Guid : " + _monitorIBeaconGuid[i]._Beacons[j].ToString());
-                        Console.WriteLine("IBeacon Threshold : " + _monitorIBeaconGuid[i]._BeaconThreshold[_monitorIBeaconGuid[i]._Beacons[j]].ToString());
-                    }
-                    
-                }
-                _IPSClient.SetWaypointList(_monitorIBeaconGuid);
+                _multipleClient[IPSType.iBeacon].SetWaypointList(_monitorIBeaconGuid);
             }
-            if (haveGPS==true)
+            if (_haveIPSKind[IPSType.GPS])
             {
 
             }
@@ -321,20 +302,23 @@ namespace IndoorNavigation.Modules
         // we can then close all the client
         public void CloseStartAllExistClient()
         {
-            if (haveLBeacon == true)
+            Console.WriteLine(">>IPSmodule :: CloseStartAllExistClient");
+            if (_haveIPSKind[IPSType.LBeacon])
             {
-                _waypointClient.Stop();
+                Console.WriteLine(">>IPSmodule :: Close_LBeacon");
+                _multipleClient[IPSType.LBeacon].Stop();
                 _monitorLBeaconGuid = new List<WaypointBeaconsMapping>();
-                _waypointClient._event._eventHandler -= new EventHandler(PassMatchedWaypointAndRegionToSession);
-                
+                _multipleClient[IPSType.LBeacon]._event._eventHandler -= new EventHandler(PassMatchedWaypointAndRegionToSession);
+
             }
-            if (haveIBeacon == true)
+            if (_haveIPSKind[IPSType.iBeacon])
             {
-                _ibeaconCLient.Stop();
+                Console.WriteLine(">>IPSmodule :: Close_iBeacon");
+                _multipleClient[IPSType.iBeacon].Stop();
                 _monitorIBeaconGuid = new List<WaypointBeaconsMapping>();
-                _ibeaconCLient._event._eventHandler -= new EventHandler(PassMatchedWaypointAndRegionToSession);
+                _multipleClient[IPSType.iBeacon]._event._eventHandler -= new EventHandler(PassMatchedWaypointAndRegionToSession);
             }
-            if (haveGPS == true)
+            if (_haveIPSKind[IPSType.GPS])
             {
 
             }
@@ -342,26 +326,26 @@ namespace IndoorNavigation.Modules
         //Start beacon Scanning, TODO: If add new IPSClient, here needs to add new Detection
         public void OpenBeconScanning()
         {
-            _IPSClient.DetectWaypoints();
-            _ibeaconCLient.DetectWaypoints();
-            _waypointClient.DetectWaypoints();
+            Console.WriteLine(">>IPSmodule :: OpenBeaconScanning");
+            _multipleClient[IPSType.LBeacon].DetectWaypoints();
+            _multipleClient[IPSType.iBeacon].DetectWaypoints();
         }
 
         //Close All the event, TODO : if add new IPSCLient, remember here needs to modify
         public void Close()
         {
+            Console.WriteLine(">>IPSmodule :: Close");
             _lbeacon -= new _addInterestedBeacon(ADDIBeacon);
             _ibeacon -= new _addInterestedBeacon(ADDLBeacon);
             _gps -= new _addInterestedBeacon(ADDGPS);
             _monitorIBeaconGuid = new List<WaypointBeaconsMapping>();
             _monitorLBeaconGuid = new List<WaypointBeaconsMapping>();
-            _IPSClient._event._eventHandler -= new EventHandler(PassMatchedWaypointAndRegionToSession);
-            haveGPS = false;
-            haveIBeacon = false;
-            haveLBeacon = false;
+
+            HaveBeaconAllFalse();
         }
         public void Dispose()
         {
+            Console.WriteLine(">>IPSmodule :: Dispose");
             throw new NotImplementedException();
         }
     }
